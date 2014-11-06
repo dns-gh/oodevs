@@ -14,6 +14,7 @@ import (
 	"masa/sword/swapi/simu"
 	"masa/sword/sword"
 	"masa/sword/swtest"
+	"sync"
 	"time"
 )
 
@@ -251,14 +252,28 @@ func (s *TestSuite) TestListConnectedProfiles(c *C) {
 }
 
 type ModelListener struct {
-	events []swapi.ModelEvent
+	mutex   sync.Mutex
+	events  []swapi.ModelEvent
+	actions bool
 }
 
 func (m *ModelListener) Notify(event swapi.ModelEvent) {
+	m.mutex.Lock()
+	defer m.mutex.Unlock()
+	switch event.Tag {
+	case swapi.ActionCreate,
+		swapi.ActionUpdate,
+		swapi.ActionDelete:
+		if !m.actions {
+			return
+		}
+	}
 	m.events = append(m.events, event)
 }
 
 func (m *ModelListener) Check(c *C, events ...swapi.ModelEvent) {
+	m.mutex.Lock()
+	defer m.mutex.Unlock()
 	swtest.DeepEquals(c, m.events, events)
 	m.events = nil
 }

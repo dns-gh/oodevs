@@ -60,10 +60,12 @@
 #include "clients_kernel/CoordinateConverter.h"
 #include "dispatcher/Config.h"
 #include "dispatcher/Logger_ABC.h"
+#include "dispatcher/SimulationPublisher_ABC.h"
 #include "dispatcher/StaticModel.h"
 #include "dispatcher/Model_ABC.h"
 #include "protocol/Simulation.h"
 #include "protocol/Messenger.h"
+#include "protocol/SimulationSenders.h"
 #include "rpr/EntityTypeResolver.h"
 #include "rpr/EntityIdentifier.h"
 #include "tic/PlatformDelegateFactory.h"
@@ -265,9 +267,15 @@ void HlaPlugin::Receive( const sword::SimToClient& message )
         rpr::EntityIdentifier federateID(pXis_->attribute< unsigned short >( "dis-site", 1 ),
                 pXis_->attribute< unsigned short >( "dis-application", 1 ), 0xFFFF );
         pMessageController_->Dispatch( message.message(), message.has_context() ? message.context() : -1 );
+        if( message.message().has_control_send_current_state_end() && !pSimulationFacade_.get() )
+        {
+            simulation::MagicAction msg;
+            msg().set_type( sword::MagicAction::hide_actions );
+            msg().mutable_parameters();
+            msg.Send( simulationPublisher_ );
+        }
         if( message.message().has_control_end_tick() && !pSimulationFacade_.get() )
         {
-
             pSimulationTimeManager_.reset( new SimulationTimeManager( *pMessageController_ ) );
             pSideResolver_.reset( new SideResolver( dynamicModel_, logger_ ) );
             pFomSerializer_.reset( new FOM_Serializer( pXis_->attribute< int >( "netn-version", 1 ) ) );

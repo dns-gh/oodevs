@@ -59,7 +59,7 @@ MIL_PionOrderManager::~MIL_PionOrderManager()
 // Name: MIL_PionOrderManager::OnReceiveMission
 // Created: NLD 2003-01-10
 //-----------------------------------------------------------------------------
-uint32_t MIL_PionOrderManager::OnReceiveMission( const sword::UnitOrder& message )
+uint32_t MIL_PionOrderManager::OnReceiveMission( uint32_t clientId, const sword::UnitOrder& message )
 {
     if( pion_.GetAutomate().IsEngaged() )
         throw MASA_ORDER_EXCEPTION_MSG( error_unit_cannot_receive_order, "automat is engaged" );
@@ -79,7 +79,7 @@ uint32_t MIL_PionOrderManager::OnReceiveMission( const sword::UnitOrder& message
     if( !pMissionType || !IsMissionAvailable( *pMissionType ) )
         throw MASA_ORDER_EXCEPTION( error_invalid_mission );
     uint32_t id = AcquireId();
-    auto mission = boost::make_shared< MIL_PionMission >( *pMissionType, pion_, id, message.parameters() );
+    auto mission = boost::make_shared< MIL_PionMission >( *pMissionType, pion_, id, clientId, message.parameters() );
     MIL_OrderManager_ABC::ReplaceMission( mission );
     return id;
 }
@@ -90,7 +90,7 @@ uint32_t MIL_PionOrderManager::OnReceiveMission( const sword::UnitOrder& message
 // -----------------------------------------------------------------------------
 void MIL_PionOrderManager::OnReceiveMission( const MIL_MissionType_ABC& type )
 {
-    auto mission = boost::make_shared< MIL_PionMission >( type, pion_, AcquireId(), boost::shared_ptr< MIL_Mission_ABC >() );
+    auto mission = boost::make_shared< MIL_PionMission >( type, pion_, AcquireId(), 0, boost::shared_ptr< MIL_Mission_ABC >() );
     MIL_OrderManager_ABC::ReplaceMission( mission );
 }
 
@@ -98,7 +98,7 @@ void MIL_PionOrderManager::OnReceiveMission( const MIL_MissionType_ABC& type )
 // Name: MIL_PionOrderManager::OnReceiveFragOrder
 // Created: NLD 2006-11-21
 // -----------------------------------------------------------------------------
-void MIL_PionOrderManager::OnReceiveFragOrder( const sword::FragOrder& asn, const std::function< void( uint32_t ) >& sendAck )
+void MIL_PionOrderManager::OnReceiveFragOrder( uint32_t clientId, const sword::FragOrder& asn, const std::function< void( uint32_t ) >& sendAck )
 {
     if( pion_.GetRole< surrender::PHY_RoleInterface_Surrender >().IsSurrendered() )
         throw MASA_ORDER_EXCEPTION( error_unit_surrendered );
@@ -109,7 +109,7 @@ void MIL_PionOrderManager::OnReceiveFragOrder( const sword::FragOrder& asn, cons
         throw MASA_ORDER_EXCEPTION( error_invalid_frag_order );
     DEC_Representations& representation = pion_.GetRole<DEC_Representations>();
     const uint32_t id = AcquireId();
-    auto frag = boost::make_shared< MIL_FragOrder >( *pType, id );
+    auto frag = boost::make_shared< MIL_FragOrder >( *pType, id, clientId );
     frag->SetParameters( pion_.GetKnowledge(), asn.parameters() );
     representation.AddToOrdersCategory( frag );
     sendAck( id );

@@ -102,7 +102,6 @@ function( add_target target group dir )
     masa_has_item( shared "shared" ${options} )
     masa_has_item( test "test" ${options} )
     masa_has_item( vista "vista" ${options} )
-    masa_has_item( copyrun "copyrun" ${options} )
     masa_add_target( ${target} ${group} ${dir} OPTIONS ${options} )
     masa_set_output_directory( ${target}
         "${root_dir}/out/${platform}/release"
@@ -138,13 +137,6 @@ function( add_target target group dir )
         masa_set_target_output_name( ${target} ${debug} ${release} )
     endif()
 
-    if( copyrun )
-        # force copy on run directory so we don't get run directory
-        # issues on processes started by chrome embedded
-        add_custom_command( TARGET ${target} POST_BUILD COMMAND
-            ${CMAKE_COMMAND} -E copy_if_different $<TARGET_FILE:${target}> "${MASA_RUN}" )
-    endif()
-
     if( has_protocol )
         masa_add_target_include( ${target} "${CMAKE_CURRENT_BINARY_DIR}/protocol.out" )
         target_link_libraries( ${target} protocol )
@@ -177,11 +169,11 @@ target_link_libraries( timeline
 
 # timeline_client
 add_target( timeline_client timeline "applications/timeline_client"
-    OPTIONS executable win32 copyrun )
+    OPTIONS executable win32 )
 target_link_libraries( timeline_client timeline )
 
 # timeline_app
-add_target( timeline_app timeline "applications/timeline_app" OPTIONS qt executable copyrun )
+add_target( timeline_app timeline "applications/timeline_app" OPTIONS qt executable )
 target_link_libraries( timeline_app
     timeline
 )

@@ -38,9 +38,12 @@
 // Name: MIL_FragOrder constructor
 // Created: NLD 2006-11-21
 // -----------------------------------------------------------------------------
-MIL_FragOrder::MIL_FragOrder( const MIL_FragOrderType& type, uint32_t id )
-    : type_( type )
-    , id_  ( id )
+MIL_FragOrder::MIL_FragOrder( const MIL_FragOrderType& type,
+                              uint32_t id,
+                              uint32_t clientId )
+    : type_    ( type )
+    , id_      ( id )
+    , clientId_( clientId )
 {
     // NOTHING
 }
@@ -51,9 +54,11 @@ MIL_FragOrder::MIL_FragOrder( const MIL_FragOrderType& type, uint32_t id )
 // -----------------------------------------------------------------------------
 MIL_FragOrder::MIL_FragOrder( const MIL_FragOrderType& type,
                               const MIL_FragOrder& rhs,
-                              uint32_t id )
+                              uint32_t id,
+                              uint32_t clientId )
     : type_      ( type )
     , id_        ( id )
+    , clientId_  ( clientId )
     , parameters_( rhs.parameters_ )
 {
     // NOTHING
@@ -171,7 +176,7 @@ boost::shared_ptr< MIL_FragOrder > MIL_FragOrder::CreateFragOrder( std::string t
     if( !type )
         return boost::shared_ptr< MIL_FragOrder >();
     // incomplete order
-    return boost::make_shared< MIL_FragOrder >( *type, 0 );
+    return boost::make_shared< MIL_FragOrder >( *type, 0, 0 );
 }
 
 // -----------------------------------------------------------------------------
@@ -742,7 +747,7 @@ void MIL_FragOrder::Send( ActionManager& actions, client::FragOrder& message ) c
     message().set_name( type_.GetName() );
     message().set_id( id_ );
     message.Send( NET_Publisher_ABC::Publisher() );
-    actions.Send( actions.Register( message() ), 0, "" );
+    actions.Send( actions.Register( clientId_, message() ), 0, "" );
 }
 
 // -----------------------------------------------------------------------------

@@ -180,8 +180,8 @@ public:
 
     //! @name Network
     //@{
-    uint32_t OnReceiveOrder( const sword::CrowdOrder& msg );
-    void     OnReceiveFragOrder( const sword::FragOrder& msg, const std::function< void( uint32_t ) >& sendAck );
+    uint32_t OnReceiveOrder( uint32_t clientId, const sword::CrowdOrder& msg );
+    void     OnReceiveFragOrder( uint32_t clientId, const sword::FragOrder& msg, const std::function< void( uint32_t ) >& sendAck );
     void SendCreation( unsigned int context = 0 ) const;
     void SendFullState() const;
     void UpdateNetwork();

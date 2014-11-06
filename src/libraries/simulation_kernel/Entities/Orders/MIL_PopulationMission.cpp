@@ -37,8 +37,9 @@ BOOST_CLASS_EXPORT_IMPLEMENT( MIL_PopulationMission )
 MIL_PopulationMission::MIL_PopulationMission( const MIL_MissionType_ABC& type,
                                               MIL_Population& population,
                                               uint32_t id,
+                                              uint32_t clientId,
                                               const sword::MissionParameters& parameters )
-    : MIL_Mission_ABC       ( type, population.GetKnowledge(), id, parameters, boost::none )
+    : MIL_Mission_ABC       ( type, population.GetKnowledge(), id, clientId, parameters, boost::none )
     , population_           ( population )
     , bDIABehaviorActivated_( false )
 {
@@ -47,8 +48,9 @@ MIL_PopulationMission::MIL_PopulationMission( const MIL_MissionType_ABC& type,
 
 MIL_PopulationMission::MIL_PopulationMission( const MIL_MissionType_ABC& type,
                                               MIL_Population& population,
-                                              uint32_t id )
-    : MIL_Mission_ABC( type, population.GetKnowledge(), id,
+                                              uint32_t id,
+                                              uint32_t clientId )
+    : MIL_Mission_ABC( type, population.GetKnowledge(), id, clientId,
             boost::shared_ptr< MIL_Mission_ABC >() )
     , population_( population )
     , bDIABehaviorActivated_( false )
@@ -128,7 +130,7 @@ void MIL_PopulationMission::Send( ActionManager& actions ) const
     asn().set_name( GetName() );
     asn().set_id( GetId() );
     asn.Send( NET_Publisher_ABC::Publisher() );
-    const auto action = actions.Register( asn() );
+    const auto action = actions.Register( GetClientId(), asn() );
     if( action.created )
         actions.Send( action.id, 0, "" );
 }
@@ -146,11 +148,13 @@ template< typename Archive >
 void save_construct_data( Archive& archive, const MIL_PopulationMission* mission, const unsigned int /*version*/ )
 {
     const MIL_Population* const population = &mission->population_;
-    unsigned int idType = mission->type_.GetID();
-    uint32_t id = mission->GetId();
+    const unsigned int idType = mission->type_.GetID();
+    const uint32_t id = mission->GetId();
+    const uint32_t client = mission->GetClientId();
     archive << population;
     archive << idType;
     archive << id;
+    archive << client;
 }
 
 template< typename Archive >
@@ -161,14 +165,16 @@ void load_construct_data( Archive& archive, MIL_PopulationMission* mission, cons
         MIL_Population* population = 0;
         unsigned int idType = 0;
         uint32_t id = 0;
+        uint32_t client = 0;
         archive >> population;
         archive >> idType;
         archive >> id;
+        archive >> client;
         const MIL_MissionType_ABC* type = MIL_PopulationMissionType::Find( idType );
         if( !type )
             throw MASA_EXCEPTION( "unknown crowd mission type: "
                     + boost::lexical_cast< std::string >( idType ) );
-        ::new( mission ) MIL_PopulationMission( *type, *population, id );
+        ::new( mission ) MIL_PopulationMission( *type, *population, id, client );
     }
     catch( const std::exception& e )
     {
@@ -176,20 +182,8 @@ void load_construct_data( Archive& archive, MIL_PopulationMission* mission, cons
     }
 }
 
-// -----------------------------------------------------------------------------
-// Name: MIL_PopulationMission::load
-// Created: ABR 2012-02-13
-// -----------------------------------------------------------------------------
-void MIL_PopulationMission::load( MIL_CheckPointInArchive& file, const unsigned int )
+template< typename Archive >
+void MIL_PopulationMission::serialize( Archive& file, const unsigned int )
 {
-    file >> boost::serialization::base_object< MIL_Mission_ABC >( *this );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_PopulationMission::save
-// Created: ABR 2012-02-13
-// -----------------------------------------------------------------------------
-void MIL_PopulationMission::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
-{
-    file << boost::serialization::base_object< MIL_Mission_ABC >( *this );
+    file & boost::serialization::base_object< MIL_Mission_ABC >( *this );
 }

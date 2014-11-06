@@ -34,8 +34,9 @@
 MIL_AutomateMission::MIL_AutomateMission( const MIL_MissionType_ABC& type,
                                           MIL_Automate& automate,
                                           uint32_t id,
+                                          uint32_t clientId,
                                           const boost::shared_ptr< MIL_Mission_ABC >& parent )
-    : MIL_Mission_ABC          ( type, automate.GetKnowledge(), id, parent )
+    : MIL_Mission_ABC          ( type, automate.GetKnowledge(), id, clientId, parent )
     , automate_                ( automate )
     , bDIAMrtBehaviorActivated_( false )
     , bDIACdtBehaviorActivated_( false )
@@ -50,8 +51,9 @@ MIL_AutomateMission::MIL_AutomateMission( const MIL_MissionType_ABC& type,
 MIL_AutomateMission::MIL_AutomateMission( const MIL_MissionType_ABC& type,
                                           MIL_Automate& automate,
                                           uint32_t id,
+                                          uint32_t clientId,
                                           const sword::MissionParameters& parameters )
-    : MIL_Mission_ABC          ( type, automate.GetKnowledge(), id, parameters, automate.GetPosition() )
+    : MIL_Mission_ABC          ( type, automate.GetKnowledge(), id, clientId, parameters, automate.GetPosition() )
     , automate_                ( automate )
     , bDIAMrtBehaviorActivated_( false )
     , bDIACdtBehaviorActivated_( false )
@@ -65,8 +67,9 @@ MIL_AutomateMission::MIL_AutomateMission( const MIL_MissionType_ABC& type,
 // -----------------------------------------------------------------------------
 MIL_AutomateMission::MIL_AutomateMission( MIL_Automate& automate,
                                           const MIL_AutomateMission& rhs,
-                                          uint32_t id )
-    : MIL_Mission_ABC          ( rhs, automate.GetKnowledge(), id )
+                                          uint32_t id,
+                                          uint32_t clientId )
+    : MIL_Mission_ABC          ( rhs, automate.GetKnowledge(), id, clientId )
     , automate_                ( automate)
     , bDIAMrtBehaviorActivated_( false )
     , bDIACdtBehaviorActivated_( false )
@@ -89,7 +92,7 @@ MIL_AutomateMission::~MIL_AutomateMission()
 // -----------------------------------------------------------------------------
 boost::shared_ptr< MIL_Mission_ABC > MIL_AutomateMission::CreateCopy( MIL_Automate& target, uint32_t id ) const
 {
-    return boost::make_shared< MIL_AutomateMission >( target, *this, id );
+    return boost::make_shared< MIL_AutomateMission >( target, *this, id, GetClientId() );
 }
 
 // -----------------------------------------------------------------------------
@@ -176,7 +179,7 @@ void MIL_AutomateMission::Send( ActionManager& actions ) const
     asn().set_name( GetName() );
     asn().set_id( GetId() );
     asn.Send( NET_Publisher_ABC::Publisher() );
-    const auto action = actions.Register( asn() );
+    const auto action = actions.Register( GetClientId(), asn() );
     if( action.created )
         actions.Send( action.id, 0, "" );
 }

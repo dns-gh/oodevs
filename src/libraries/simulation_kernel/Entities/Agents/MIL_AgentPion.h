@@ -162,8 +162,8 @@ public:
     void OnReceiveUnitMagicAction( const sword::UnitMagicAction& msg, const tools::Resolver< MIL_Army_ABC >& armies, unsigned int nCtx,
                                    unsigned int clientId );
     void OnReceiveMagicActionMoveTo( const sword::UnitMagicAction& asn );
-    uint32_t OnReceiveOrder( const sword::UnitOrder& msg );
-    void OnReceiveFragOrder( const sword::FragOrder& msg, const std::function< void( uint32_t ) >& sendAck );
+    uint32_t OnReceiveOrder( uint32_t clientId, const sword::UnitOrder& msg );
+    void OnReceiveFragOrder( uint32_t clientId, const sword::FragOrder& msg, const std::function< void( uint32_t ) >& sendAck );
     void OnReceiveChangeSuperior( const MIL_EntityManager& manager, unsigned int automatId );
     void OnReceiveMagicActionMoveTo( const MT_Vector2D& vPosition ); // Magic move automate
     void SetExtensions( const MIL_DictionaryExtensions& ext );

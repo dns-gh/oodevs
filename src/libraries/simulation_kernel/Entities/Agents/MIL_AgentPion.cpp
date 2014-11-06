@@ -838,18 +838,18 @@ void MIL_AgentPion::SendKnowledge( unsigned int nCtx ) const
 // Name: MIL_AgentPion::OnReceiveOrder
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
-uint32_t MIL_AgentPion::OnReceiveOrder( const sword::UnitOrder& msg )
+uint32_t MIL_AgentPion::OnReceiveOrder( uint32_t clientId, const sword::UnitOrder& msg )
 {
-    return pOrderManager_->OnReceiveMission( msg );
+    return pOrderManager_->OnReceiveMission( clientId, msg );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentPion::OnReceiveFragOrder
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
-void MIL_AgentPion::OnReceiveFragOrder( const sword::FragOrder& msg, const std::function< void( uint32_t ) >& sendAck )
+void MIL_AgentPion::OnReceiveFragOrder( uint32_t clientId, const sword::FragOrder& msg, const std::function< void( uint32_t ) >& sendAck )
 {
-    pOrderManager_->OnReceiveFragOrder( msg, sendAck );
+    pOrderManager_->OnReceiveFragOrder( clientId, msg, sendAck );
 }
 
 // -----------------------------------------------------------------------------

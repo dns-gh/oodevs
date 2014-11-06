@@ -1685,6 +1685,8 @@ message MagicAction {
         //! parameters[0], Pathfind: the new name.
         //! Only the pathfind name can be changed.
         pathfind_update                    = 15;
+        //! Hide actions received on this connection from the timeline
+        hide_actions                       = 16;
     }
     required int32             type       = 1;
     required MissionParameters parameters = 2;

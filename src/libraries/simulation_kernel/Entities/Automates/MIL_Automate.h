@@ -192,8 +192,8 @@ public:
     virtual void SendFullState( unsigned int context = 0 ) const;
     void SendKnowledge( unsigned int context = 0 ) const;
 
-    uint32_t OnReceiveOrder( const sword::AutomatOrder& msg );
-    void OnReceiveFragOrder( const sword::FragOrder& msg, const std::function< void( uint32_t ) >& sendAck );
+    uint32_t OnReceiveOrder( uint32_t clientId, const sword::AutomatOrder& msg );
+    void OnReceiveFragOrder( uint32_t clientId, const sword::FragOrder& msg, const std::function< void( uint32_t ) >& sendAck );
     void OnReceiveSetAutomateMode( const sword::SetAutomatMode& msg );
     void OnReceiveUnitCreationRequest( const sword::UnitCreationRequest& msg, unsigned int nCtx );
     unsigned int OnReceiveUnitCreationRequest( const sword::UnitMagicAction& msg, unsigned int nCtx );

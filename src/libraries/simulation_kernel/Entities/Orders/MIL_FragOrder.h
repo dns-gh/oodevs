@@ -55,8 +55,13 @@ class MIL_FragOrder : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-             MIL_FragOrder( const MIL_FragOrderType& type, uint32_t id );
-             MIL_FragOrder( const MIL_FragOrderType& type, const MIL_FragOrder& rhs, uint32_t id );
+             MIL_FragOrder( const MIL_FragOrderType& type,
+                            uint32_t id,
+                            uint32_t clientId );
+             MIL_FragOrder( const MIL_FragOrderType& type,
+                            const MIL_FragOrder& rhs,
+                            uint32_t id,
+                            uint32_t clientId );
     virtual ~MIL_FragOrder();
     //@}
 
@@ -136,6 +141,7 @@ private:
     //@{
     const MIL_FragOrderType& type_;
     const uint32_t id_;
+    const uint32_t clientId_;
     std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > > parameters_;
     //@}
 };

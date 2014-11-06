@@ -1433,6 +1433,10 @@
         <source>Update pathfind</source>
         <translation>Mettre à jour un chemin</translation>
     </message>
+    <message>
+        <source>Hide actions</source>
+        <translation>Cacher les actions</translation>
+    </message>
 </context>
 <context>
     <name>sword::ObjectMagicAction::Type</name>

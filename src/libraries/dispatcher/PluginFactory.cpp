@@ -39,6 +39,38 @@
 using namespace dispatcher;
 using namespace plugins;
 
+struct PluginFactory::PluginPublisher : public SimulationPublisher_ABC
+{
+    PluginPublisher( SimulationPublisher_ABC& publisher,
+                     plugins::rights::RightsPlugin& rights,
+                     const std::string& name )
+        : publisher_( publisher )
+        , id_       ( rights.RegisterClient( "plugin://" + name ) )
+    {
+        // NOTHING
+    }
+
+    virtual ~PluginPublisher()
+    {
+        // NOTHING
+    }
+
+    virtual void Send( const sword::ClientToSim& msg )
+    {
+        auto copy = msg;
+        copy.set_client_id( id_ );
+        publisher_.Send( copy );
+    }
+
+    virtual void Send( const sword::DispatcherToSim& msg )
+    {
+        publisher_.Send( msg );
+    }
+
+    SimulationPublisher_ABC& publisher_;
+    const uint32_t id_;
+};
+
 // -----------------------------------------------------------------------------
 // Name: PluginFactory constructor
 // Created: SBO 2008-02-28
@@ -58,9 +90,9 @@ PluginFactory::PluginFactory( const Config& config, const boost::shared_ptr< Mod
     , rights_      ( new plugins::rights::RightsPlugin( *model_, *clients_,
         config_, *clients_, rootHandler_, *clients_, registrables, maxConnections, false ) )
     , checkpointFilter_( new CheckpointFilterPlugin( *rights_ ) )
-    , pOrder_      ( new plugins::order::OrderPlugin( config_, *model_, simulation_ ) )
     , services_    ( services )
 {
+    pOrder_.reset( new plugins::order::OrderPlugin( config_, *model_, MakePublisher( "order" ) ) );
     clients_->RegisterMessage( *this, &PluginFactory::Receive );
 
     // rootHandler_ is the root element of the plugin tree. Parent plugins can
@@ -72,13 +104,15 @@ PluginFactory::PluginFactory( const Config& config, const boost::shared_ptr< Mod
     rootHandler_.Add( checkpointFilter_ );
     checkpointFilter_->Add( rights_ );
     checkpointFilter_->Add( pOrder_ );
+    // do NOT wrap simulation publisher on dispatcher plugin or we will
+    // overwrite external client ids
     checkpointFilter_->Add( boost::make_shared< DispatcherPlugin >(
                 simulation_, *clients_, *rights_, *pOrder_, log ) );
 
     // Vision plugin prevents vision cones from reaching ClientsNetworker and
     // being broadcast.
     auto vision = boost::make_shared< vision::VisionPlugin >( *model_, *clients_,
-            simulation_, *rights_ );
+            MakePublisher( "vision" ), *rights_ );
     checkpointFilter_->Add( vision );
     vision->Add( clients_ );
 
@@ -103,6 +137,13 @@ void PluginFactory::Register( PluginFactory_ABC& factory )
     factories_.push_back( &factory );
 }
 
+SimulationPublisher_ABC& PluginFactory::MakePublisher( const std::string& name )
+{
+    auto publisher = std::make_shared< PluginPublisher >( simulation_, *rights_, name );
+    publishers_.push_back( publisher );
+    return *publisher;
+}
+
 // -----------------------------------------------------------------------------
 // Name: PluginFactory::Instanciate
 // Created: SBO 2008-02-28
@@ -113,7 +154,7 @@ void PluginFactory::Instanciate()
     checkpointFilter_->Add( boost::make_shared< messenger::MessengerPlugin >(
                 *clients_, *clients_, *clients_, config_, registrables_ ) );
     checkpointFilter_->Add( boost::make_shared< script::ScriptPlugin >(
-                *model_, config_, simulation_, *clients_, *clients_, *rights_, registrables_ ) );
+                *model_, config_, MakePublisher( "script" ), *clients_, *clients_, *rights_, registrables_ ) );
     checkpointFilter_->Add( boost::make_shared< score::ScorePlugin >(
                 *clients_, *clients_, *clients_, config_, registrables_ ) );
     checkpointFilter_->Add( boost::make_shared< logger::LoggerPlugin >( *model_,
@@ -152,7 +193,7 @@ void PluginFactory::ReadPlugin( const std::string& name, xml::xistream& xis )
         for( auto it = factories_.begin(); it != factories_.end(); ++it )
         {
             auto plugin = it->Create( name, xis, config_, *model_, staticModel_,
-                    simulation_, *clients_, *clients_ , *clients_, registrables_ );
+                    MakePublisher( name ), *clients_, *clients_ , *clients_, registrables_ );
             if( plugin )
                 checkpointFilter_->Add( plugin );
         }
@@ -223,7 +264,7 @@ void PluginFactory::LoadPlugin( const tools::Path& name, xml::xistream& xis )
         DestroyFunctor destroyFunction = LoadFunction< DestroyFunctor >( module, "DestroyInstance" );
         boost::shared_ptr< Logger_ABC > logger( new FileLogger( name + "_plugin.log", config_ ) );
         boost::shared_ptr< Plugin_ABC > plugin(
-                createFunction( *model_, staticModel_, simulation_, *clients_, config_, *logger, xis ),
+                createFunction( *model_, staticModel_, MakePublisher( name.ToUTF8() ), *clients_, config_, *logger, xis ),
                 // Note the lambda holds a reference to the logger
                 [logger, destroyFunction]( dispatcher::Plugin_ABC* p )
                 {

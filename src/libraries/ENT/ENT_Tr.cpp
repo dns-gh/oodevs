@@ -561,6 +561,7 @@ T_ConverterMagicActionType MagicActionTypeConverter_[] =
     T_ConverterMagicActionType( "debug_internal",                 QT_TRANSLATE_NOOP( "sword::MagicAction::Type", "Debug internal" ), sword::MagicAction::debug_internal),
     T_ConverterMagicActionType( "fire_order_on_location",         QT_TRANSLATE_NOOP( "sword::MagicAction::Type", "Strike order on location" ), sword::MagicAction::create_fire_order_on_location ),
     T_ConverterMagicActionType( "global_weather",                 QT_TRANSLATE_NOOP( "sword::MagicAction::Type", "Change Global Weather" ), sword::MagicAction::global_weather ),
+    T_ConverterMagicActionType( "hide_actions",                   QT_TRANSLATE_NOOP( "sword::MagicAction::Type", "Hide actions" ), sword::MagicAction::hide_actions ),
     T_ConverterMagicActionType( "local_weather",                  QT_TRANSLATE_NOOP( "sword::MagicAction::Type", "Change Local Weather" ), sword::MagicAction::local_weather ),
     T_ConverterMagicActionType( "local_weather_destruction",      QT_TRANSLATE_NOOP( "sword::MagicAction::Type", "Local Weather Destruction" ), sword::MagicAction::local_weather_destruction ),
     T_ConverterMagicActionType( "pathfind_creation",              QT_TRANSLATE_NOOP( "sword::MagicAction::Type", "Create pathfind" ), sword::MagicAction::pathfind_creation ),

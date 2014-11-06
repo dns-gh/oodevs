@@ -89,6 +89,7 @@ private:
     void Receive( const std::string& link, const sword::ClientToSim& msg );
     void ReadPlugin( const std::string& name, xml::xistream& xis );
     void LoadPlugin( const tools::Path& name, xml::xistream& xis );
+    SimulationPublisher_ABC& MakePublisher( const std::string& name );
     //@}
 
 private:
@@ -98,6 +99,8 @@ private:
     boost::shared_ptr< Model > model_;
     const dispatcher::StaticModel& staticModel_;
     SimulationPublisher_ABC& simulation_;
+    struct PluginPublisher;
+    std::vector< std::shared_ptr< PluginPublisher > > publishers_;
     boost::shared_ptr< ClientsNetworker > clients_;
     PluginContainer& rootHandler_;
     CompositeRegistrable& registrables_;
