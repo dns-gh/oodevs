@@ -337,21 +337,17 @@ void GLOptions::Remove( const std::string& name )
 
 namespace
 {
-    std::string GetName( const kernel::Entity_ABC& entity )
+    std::string GetLevel( const kernel::Entity_ABC& entity )
     {
         const auto knowledge = dynamic_cast< const kernel::AgentKnowledge_ABC* >( &entity );
-        if( knowledge )
-        {
-            if( knowledge->IsCommandPost() )
-                return "Headquarters";
-            return knowledge->GetLevel();
-        }
         const auto commandPost = entity.Retrieve< kernel::CommandPostAttributes_ABC >();
-        if( commandPost && commandPost->IsCommandPost() )
+        if( knowledge && knowledge->IsCommandPost() || commandPost && commandPost->IsCommandPost() )
             return "Headquarters";
-        return boost::algorithm::erase_all_copy(
-            entity.Get< kernel::TacticalHierarchies >().GetLevel(),
-            "levels/" );
+        return knowledge
+            ? knowledge->GetLevel()
+            : boost::algorithm::erase_all_copy(
+                entity.Get< kernel::TacticalHierarchies >().GetLevel(),
+                "levels/" );
     }
 }
 
@@ -361,7 +357,7 @@ namespace
 // -----------------------------------------------------------------------------
 float GLOptions::GetRatio( const kernel::Entity_ABC& entity ) const
 {
-    const auto name = "SymbolSize/" + GetName( entity );
+    const auto name = "SymbolSize/" + GetLevel( entity );
     return options_->Has( name ) ? options_->Get( name ).To< float >() : 1.f;
 }
 
