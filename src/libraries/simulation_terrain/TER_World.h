@@ -107,7 +107,7 @@ public:
     TER_LimitDataManager& GetLimitManager() const;
     boost::shared_ptr< TER_StaticData > GetStaticGraph() const;
     void SetPathfinder( const boost::shared_ptr< TER_Pathfinder >& pathfinder );
-    TER_Pathfinder& GetPathfinder() const;
+    TER_Pathfinder* GetPathfinder() const;
     //@}
 
 private:

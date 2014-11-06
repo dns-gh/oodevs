@@ -292,7 +292,7 @@ void TER_World::SetPathfinder( const boost::shared_ptr< TER_Pathfinder >& pathfi
     pathfinder_ = pathfinder;
 }
  
-TER_Pathfinder& TER_World::GetPathfinder() const
+TER_Pathfinder* TER_World::GetPathfinder() const
 {
-    return *pathfinder_;
+    return pathfinder_.get();
 }
