@@ -14,7 +14,6 @@ import (
 	"encoding/json"
 	"flag"
 	"fmt"
-	"io"
 	"io/ioutil"
 	. "launchpad.net/gocheck"
 	"log"
@@ -140,32 +139,27 @@ func MakeServerConfig(c *C) (string, map[string]interface{}) {
 type CmdContext struct {
 	name   string
 	cmd    *exec.Cmd
-	stdout *bytes.Buffer
-	stderr *bytes.Buffer
+	output *bytes.Buffer
 }
 
 func NewCmdContext(c *C, name string, cmd *exec.Cmd) *CmdContext {
-	stdout, err := cmd.StdoutPipe()
-	c.Assert(err, IsNil)
-	stderr, err := cmd.StderrPipe()
-	c.Assert(err, IsNil)
 	ctx := CmdContext{
 		name:   name,
 		cmd:    cmd,
-		stdout: &bytes.Buffer{},
-		stderr: &bytes.Buffer{},
+		output: &bytes.Buffer{},
 	}
-	go io.Copy(ctx.stdout, stdout)
-	go io.Copy(ctx.stderr, stderr)
-	err = cmd.Start()
+	cmd.Stdout = ctx.output
+	cmd.Stderr = ctx.output
+	err := cmd.Start()
 	c.Assert(err, IsNil)
 	return &ctx
 }
 
 func (ctx *CmdContext) Close(c *C) {
 	ctx.cmd.Process.Kill()
-	c.Log(ctx.name, " stdout:\n", ctx.stdout.String())
-	c.Log(ctx.name, " stderr:\n", ctx.stderr.String())
+	if output := ctx.output.String(); len(output) > 0 {
+		c.Log(ctx.name, ":\n", ctx.output.String())
+	}
 }
 
 func StartServer(c *C, cfg string) *CmdContext {
