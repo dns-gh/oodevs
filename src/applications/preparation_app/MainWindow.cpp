@@ -164,8 +164,8 @@ MainWindow::MainWindow( kernel::Controllers& controllers,
     textEditor_.reset( new gui::TextEditor( this ) );
 
     // Symbols
-    gui::SymbolIcons* symbols = new gui::SymbolIcons( this, *glProxy_ );
-    icons_.reset( new gui::EntitySymbols( *symbols, *strategy_ ) );
+    symbols_.reset( new gui::SymbolIcons() );
+    icons_.reset( new gui::EntitySymbols( *symbols_, *strategy_ ) );
 
     // Event strategy
     forward_.reset( new gui::CircularEventStrategy( controllers, *icons_, *strategy_, staticModel_.drawings_, *glProxy_ ) );
@@ -173,7 +173,6 @@ MainWindow::MainWindow( kernel::Controllers& controllers,
 
     // Main widget
     selector_.reset( new gui::GlSelector( this, *glProxy_, controllers, config, staticModel.detection_, *eventStrategy_, staticModel_.drawings_ ) );
-    connect( selector_.get(), SIGNAL( Widget2dChanged( gui::GlWidget* ) ), symbols, SLOT( OnWidget2dChanged( gui::GlWidget* ) ) );
     connect( selector_.get(), SIGNAL( Widget2dChanged( gui::GlWidget* ) ), forward_->GetSelectionMenu(), SLOT( OnWidget2dChanged( gui::GlWidget* ) ) );
     connect( selector_.get(), SIGNAL( Widget3dChanged( gui::Gl3dWidget* ) ), forward_->GetSelectionMenu(), SLOT( OnWidget3dChanged( gui::Gl3dWidget* ) ) );
 
@@ -191,11 +190,11 @@ MainWindow::MainWindow( kernel::Controllers& controllers,
 
     // Dialogs
     dialogContainer_.reset( new DialogContainer( this, controllers, model_, staticModel, profile, *strategy_, *colorController_,
-                                                 *icons_, config, *symbols, paramLayer, *glProxy_ ) );
+                                                 *icons_, config, *symbols_, paramLayer, *glProxy_ ) );
 
     // Dock widgets
     dockContainer_.reset( new DockContainer( this, controllers_, paramLayer, weatherLayer, profilerLayer, *icons_, *modelBuilder_, model_,
-                                             staticModel_, config_, *symbols, *strategy_, *glProxy_, *colorController_, profile ) );
+                                             staticModel_, config_, *symbols_, *strategy_, *glProxy_, *colorController_, profile ) );
 
     // ToolBars
     toolbarContainer_.reset( new ToolbarContainer( this, controllers, staticModel, *glProxy_, locationsLayer, paramLayer, *eventStrategy_, *model_.urban_, dialogContainer_->GetRemoveBlocksDialog(), dockContainer_->GetTerrainProfiler() ) );
@@ -500,18 +499,19 @@ void MainWindow::LoadExercise()
                 model_.scores_->Serialize( config_.GetScoresFile(), schemaWriter );
             return;
         }
-        SetProgression( 90, tools::translate( "MainWindow", "Generate symbols" ) );
-        icons_->GenerateSymbols( *model_.teams_ );
 
         loading_ = false;
         controllers_.ChangeMode( eModes_Prepare );
         emit CheckConsistency();
-        SetWindowTitle( !model_.GetLoadingErrors().empty() || model_.ghosts_->NeedSaving() || model_.HasConsistencyErrorsOnLoad() ||  model_.OldUrbanMode() );
+        SetWindowTitle( !model_.GetLoadingErrors().empty() || model_.ghosts_->NeedSaving() || model_.HasConsistencyErrorsOnLoad() || model_.OldUrbanMode() );
 
         // will move to GLMainProxy
         auto& options = *controllers_.options_.GetViewOptions();
         glProxy_->UpdateLayerOrder( options );
         selector_->Load();
+        symbols_->Initialize( selector_->GetWidget2d() );
+        SetProgression( 90, tools::translate( "MainWindow", "Generate symbols" ) );
+        icons_->GenerateSymbols( *model_.teams_ );
     }
     catch( const std::exception& e )
     {

@@ -127,8 +127,7 @@ void TaskerWidget::SetTasker( const kernel::Entity_ABC* entity )
     if( hasTasker )
         if( auto symbol = tasker_->Retrieve< kernel::TacticalHierarchies >() )
         {
-            pixmap = symbols_.GetSymbol( *tasker_, symbol->GetSymbol(), symbol->GetLevel(),
-                                         QSize( 64, 64 ), gui::EntitySymbols::eColorWithModifier );
+            pixmap = symbols_.GetSymbol( *tasker_, symbol->GetSymbol(), symbol->GetLevel(), gui::EntitySymbols::eColorWithModifier );
             pixmap = pixmap.scaled( QSize( 48, 48 ), Qt::KeepAspectRatio, Qt::SmoothTransformation );
         }
     symbolLabel_->setPixmap( pixmap );

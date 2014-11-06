@@ -97,6 +97,7 @@ public:
     virtual void DrawInfrastructureSymbol( const std::string& symbol, const geometry::Point2f& where, float factor, float thickness ) const;
     virtual void DrawApp6Symbol   ( const std::string& symbol, const geometry::Point2f& where, float factor = 1.f, float thickness = 1.f, unsigned int direction = 0 ) const;
     virtual void DrawApp6SymbolFixedSize( const std::string& symbol, const geometry::Point2f& where, float factor, unsigned int direction ) const;
+    virtual void DrawApp6SymbolFixedSize( const std::string& symbol, const geometry::Point2f& where, float factor ) const;
     virtual void DrawUnitSymbol( const std::string& symbol, const std::string& moveSymbol, const std::string& staticSymbol, const std::string& level, bool isMoving, const geometry::Point2f& where, float factor, unsigned int direction, float width, float depth ) const;
     virtual void DrawUnitSymbolAndTail( const std::string& symbol, const std::string& level, const T_PointVector& points ) const;
     virtual void DrawIcon         ( const char** xpm, const geometry::Point2f& where, float size = -1.f, float factor = 1.f, E_Unit unit = meters ) const;
@@ -128,7 +129,7 @@ private:
     float ComputeZoomFactor( float& factor, bool bVariableSize = true ) const;
     void DrawApp6Symbol( const std::string& symbol, const geometry::Point2f& where,
         float expectedWidth, const geometry::Rectangle2f& viewport, unsigned int printWidth, unsigned int printHeight,
-        unsigned int angle, float xFactor, float yFactor, float svgDeltaX = -20, float svgDeltaY = -80, bool checkAlpha = true ) const;
+        unsigned int angle, float xFactor, float yFactor, bool checkAlpha = true, float svgDeltaX = -20, float svgDeltaY = -80 ) const;
     void DrawTail( const T_PointVector& points, float width ) const;
     void DrawDiscPart( const geometry::Point2f& center, int glList, float angleDegrees, float radius, GLView_ABC::E_Unit unit ) const;
     float Radius( float radius, E_Unit unit ) const;
@@ -181,7 +182,6 @@ private:
 private:
     //! @name Member data
     //@{
-    const float baseWidth_;
     int windowHeight_;
     int windowWidth_;
     unsigned int circle_;

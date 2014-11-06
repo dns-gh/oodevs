@@ -3,7 +3,7 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2007 Mathématiques Appliquées SA (MASA)
+// Copyright (c) 2007 MASA Group
 //
 // *****************************************************************************
 
@@ -21,7 +21,7 @@ SymbolIcon::SymbolIcon( const std::string& symbol, const std::string& level /* =
     : symbol_( symbol )
     , level_ ( level )
     , color_ ( Qt::white )
-    , size_  ( 32, 32 )
+    , size_  ( 64, 64 )
 {
     // NOTHING
 }
@@ -59,25 +59,7 @@ void SymbolIcon::SetColor( const QColor& color )
 // -----------------------------------------------------------------------------
 void SymbolIcon::SetSize( unsigned size )
 {
-    SetSize( size, size );
-}
-
-// -----------------------------------------------------------------------------
-// Name: SymbolIcon::SetSize
-// Created: AGE 2007-10-31
-// -----------------------------------------------------------------------------
-void SymbolIcon::SetSize( unsigned width, unsigned height )
-{
-    SetSize( QSize( width, height ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: SymbolIcon::SetSize
-// Created: AGE 2007-10-31
-// -----------------------------------------------------------------------------
-void SymbolIcon::SetSize( const QSize& size )
-{
-    size_ = size;
+    size_ = QSize( size, size );
 }
 
 // -----------------------------------------------------------------------------

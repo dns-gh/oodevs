@@ -165,11 +165,7 @@ void UnitPreviewIcon::UpdateSymbol()
         if( selectedParent_ )
             icon.SetColor( colorStrategy_.FindColor( *selectedParent_ ) );
         icon.SetSize( 128 );
-        QPixmap img = icons_.GetSymbol( icon );
-        if( !img.isNull() )
-            icon_->setPixmap( img );
-        else
-            QTimer::singleShot( 100, this, SLOT( UpdateSymbol() ) );
+        icon_->setPixmap( icons_.GetSymbol( icon ) );
     }
 }
 

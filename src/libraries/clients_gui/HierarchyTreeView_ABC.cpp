@@ -233,12 +233,7 @@ const QPixmap* HierarchyTreeView_ABC::GetDecoration( const QModelIndex &index )
             const std::string symbolName = symbol->GetSymbol();
             const std::string levelName  = symbol->GetStaticSymbol().empty() ? symbol->GetLevel() : std::string();
             if( !symbolName.empty() || !levelName.empty() )
-            {
-                const QPixmap& pixmap = symbols_.GetSymbol( *entity, symbolName, levelName );
-                if( !pixmap.isNull() )
-                    return &pixmap;
-                const_cast< HierarchyTreeView_ABC* >( this )->doItemsLayout();
-            }
+                return &symbols_.GetSymbol( *entity, symbolName, levelName );
         }
         return emptyPixmap_;
     }

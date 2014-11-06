@@ -11,7 +11,6 @@
 #include "adaptation_app_pch.h"
 #include "ADN_Workspace.h"
 #include "moc_ADN_Workspace.cpp"
-
 #include "ADN_ActiveProtections_Data.h"
 #include "ADN_ActiveProtections_GUI.h"
 #include "ADN_AiEngine_Data.h"
@@ -31,7 +30,6 @@
 #include "ADN_DialogLog.h"
 #include "ADN_Disasters_Data.h"
 #include "ADN_Disasters_GUI.h"
-#include "ADN_Drawings_Data.h"
 #include "ADN_Drawings_GUI.h"
 #include "ADN_enums.h"
 #include "ADN_Resources_Data.h"

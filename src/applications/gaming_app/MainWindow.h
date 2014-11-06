@@ -44,6 +44,7 @@ namespace gui
     class ParametersLayer;
     class PreferencesDialog;
     class RichToolBar;
+    class SymbolIcons;
     class TerrainPicker;
     class TextEditor;
 }
@@ -118,7 +119,6 @@ public slots:
     void ToggleFullScreen();
     void ToggleDocks();
     void OnAddRaster();
-    void OnGenerateSymbols();
     void PlayPauseSoundControl( bool play );
     void OnUpdateGL();
     //@}
@@ -189,6 +189,7 @@ private:
     std::unique_ptr< DrawingsBuilder > drawingsBuilder_;
     std::unique_ptr< UnitStateDialog > unitStateDialog_;
     std::unique_ptr< gui::DisplayExtractor > displayExtractor_;
+    std::unique_ptr< gui::SymbolIcons > symbols_;
     //@}
 };
 

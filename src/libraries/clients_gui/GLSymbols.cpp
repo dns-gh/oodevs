@@ -26,6 +26,7 @@ using namespace svg;
 GLSymbols::GLSymbols( SvglRenderer& renderer )
     : renderer_( renderer )
     , archive_ ( new tools::zip::InputArchive( tools::GeneralConfig::BuildResourceChildFile( "symbols.pak" ) ) )
+    , alpha_( 1 )
 {
     // NOTHING
 }
@@ -36,6 +37,7 @@ GLSymbols::GLSymbols( SvglRenderer& renderer )
 // -----------------------------------------------------------------------------
 GLSymbols::~GLSymbols()
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -89,12 +91,13 @@ svg::Node_ABC* GLSymbols::Compile( std::string symbol, float lod, bool firstNode
             else
             {
                 svg::Node_ABC* node = 0;
-                archive_->ReadFile( symbolFile,
+                if( !archive_->ReadFile( symbolFile,
                     [&]( std::istream& s )
                     {
                         xml::xistreamstream xis( s );
                         node = renderer_.Compile( xis, lod );
-                    } );
+                    } ) )
+                    throw "not found";
                 return node;
             }
         }

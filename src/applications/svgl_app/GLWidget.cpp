@@ -8,8 +8,7 @@
 // *****************************************************************************
 
 #include "GLWidget.h"
-#include "svgl/svgl.h"
-#include "svgl/color.h"
+#include <svgl/svgl.h>
 #pragma warning(push, 0)
 #include <QtGui/qmessagebox.h>
 #include <QtGui/qcursor.h>
@@ -17,6 +16,9 @@
 #pragma warning(pop)
 #include <sstream>
 #include <iostream>
+#include <svgl/Style.h>
+#include <svgl/PropertyFactory.h>
+#include <svgl/ListLengthFactory.h>
 
 // -----------------------------------------------------------------------------
 // Name: GLWidget constructor
@@ -30,16 +32,17 @@ GLWidget::GLWidget( QWidget* parent, const std::string& filename )
     , references_( new svg::References() )
     , root_ ( 0 )
     , color_( new svg::Color( "rgb(128,224,255)" ) )
+    , factory_( new svg::PropertyFactory() )
+    , style_( new svg::Style( "stroke:black;fill:currentColor;stroke-width:4", *factory_ ) )
     , compile_( true )
 {
+    references_->Register( "border", *style_ );
     context_->PushProperty( svg::RenderingContext_ABC::color, *color_ );
-
     ComputeViewport();
     setFocusPolicy( Qt::StrongFocus );
     setMouseTracking( true );
     setAcceptDrops( true );
     setFocus();
-
     Parse( filename );
 }
 
@@ -49,7 +52,8 @@ GLWidget::GLWidget( QWidget* parent, const std::string& filename )
 // -----------------------------------------------------------------------------
 GLWidget::~GLWidget()
 {
-    context_->PopProperty( svg::RenderingContext_ABC::color );
+    delete style_;
+    delete factory_;
     delete color_;
     delete references_;
     delete context_;

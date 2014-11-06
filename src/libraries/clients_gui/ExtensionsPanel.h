@@ -32,7 +32,6 @@ namespace kernel
 namespace gui
 {
     class DiffusionListDialog;
-    class EntitySymbols;
     class RichGroupBox;
 
 // =============================================================================

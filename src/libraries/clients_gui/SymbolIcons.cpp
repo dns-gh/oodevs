@@ -3,7 +3,7 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2006 Mathématiques Appliquées SA (MASA)
+// Copyright (c) 2006 MASA Group
 //
 // *****************************************************************************
 
@@ -11,72 +11,100 @@
 #include "SymbolIcons.h"
 #include "moc_SymbolIcons.cpp"
 #include "GlWidget.h"
-#include "IconsRenderPass.h"
 
 using namespace gui;
 
-// -----------------------------------------------------------------------------
-// Name: SymbolIcons constructor
-// Created: AGE 2006-11-22
-// -----------------------------------------------------------------------------
-SymbolIcons::SymbolIcons( QObject* parent, gui::GLView_ABC& tools )
-    : QObject( parent )
-    , widget_       ( 0 )
-    , defaultSymbol_( 1, 1 )
-    , renderPass_   ( new IconsRenderPass( tools ) )
+SymbolIcons::SymbolIcons()
+    : defaultSymbol_( 1, 1 )
+    , context_( 0 )
+    , widget_( 0 )
 {
-    defaultSymbol_.fill( Qt::white );
+    // NOTHING
 }
 
-// -----------------------------------------------------------------------------
-// Name: SymbolIcons destructor
-// Created: AGE 2006-11-22
-// -----------------------------------------------------------------------------
 SymbolIcons::~SymbolIcons()
 {
     // NOTHING
 }
 
-// -----------------------------------------------------------------------------
-// Name: SymbolIcons::OnWidget2dChanged
-// Created: AGE 2007-03-09
-// -----------------------------------------------------------------------------
-void SymbolIcons::OnWidget2dChanged( gui::GlWidget* widget )
+namespace
 {
-    if( !widget_ && widget )
-        widget->AddPass( *renderPass_ );
-    widget_ = widget;
+    const int iconSize = 256;
+    const float viewSize = 600;
 }
 
-// -----------------------------------------------------------------------------
-// Name: SymbolIcons::GetSymbol
-// Created: AGE 2006-11-22
-// -----------------------------------------------------------------------------
-const QPixmap& SymbolIcons::GetSymbol( SymbolIcon symbol )
+void SymbolIcons::Initialize( gui::GlWidget* widget )
 {
-    std::replace( symbol.symbol_.begin(), symbol.symbol_.end(), '*', 'f' );
-    const QPixmap& result = icons_[ symbol ];
-    if( result.isNull() )
-        if( pending_.insert( symbol ).second )
-            renderPass_->CreateIcon( symbol, *this );
+    if( !widget )
+        throw MASA_EXCEPTION( "cannot initialize symbols icons with a null 2D widget" );
+    if( widget == widget_ )
+        return;
+    context_ = new QGLWidget( 0, widget );
+    context_->resize( iconSize, iconSize );
+    context_->makeCurrent();
+    glEnable( GL_LINE_SMOOTH );
+    glClearColor( 1, 1, 1, 0 );
+    glViewport( 0, 0, iconSize, iconSize );
+    glMatrixMode( GL_PROJECTION );
+    glLoadIdentity();
+    glMatrixMode( GL_MODELVIEW );
+    glLoadIdentity();
+    glOrtho( 0, viewSize, 0, viewSize, -300, 300 );
+    glEnableClientState( GL_VERTEX_ARRAY );
+    widget_ = widget;
+    connect( widget, SIGNAL( destroyed( QObject* ) ), this, SLOT( Destroyed( QObject* ) ) );
+    icons_.clear();
+}
+
+void SymbolIcons::Destroyed( QObject* /*object*/ )
+{
+    delete context_;
+    widget_ = 0;
+    context_ = 0;
+}
+
+void SymbolIcons::Draw( std::string symbol, const geometry::Point2f& center, float factor ) const
+{
+    if( symbol.empty() )
+        return;
+    std::replace( symbol.begin(), symbol.end(), '*', 'f' );
+    widget_->DrawApp6SymbolFixedSize( symbol, center, factor );
+}
+
+QPixmap SymbolIcons::GenerateSymbol( const SymbolIcon& symbol )
+{
+    context_->makeCurrent();
+    glClear( GL_COLOR_BUFFER_BIT );
+    widget_->SetCurrentColor( symbol.color_.red() / 255.f, symbol.color_.green() / 255.f, symbol.color_.blue() / 255.f );
+    if( symbol.symbol_.find( "infrastructures" ) == std::string::npos )
+    {
+        const geometry::Point2f center( 300, 100 );
+        Draw( symbol.symbol_, center, 1.f );
+        Draw( symbol.level_, center, 1.f );
+    }
+    else
+    {
+        const geometry::Point2f center( 220, 310 );
+        Draw( symbol.symbol_, center, 0.5f );
+    }
+    glFinish();
+    QImage image( iconSize, iconSize, QImage::Format_ARGB32 );
+    glReadPixels( 0, 0, iconSize, iconSize, GL_BGRA_EXT, GL_UNSIGNED_BYTE, image.bits() );
+    QPixmap result( image.mirror().smoothScale( symbol.size_ ) );
     return result;
 }
 
-// -----------------------------------------------------------------------------
-// Name: SymbolIcons::GetDefaultSymbol
-// Created: LGY 2011-07-26
-// -----------------------------------------------------------------------------
+const QPixmap& SymbolIcons::GetSymbol( const SymbolIcon& symbol )
+{
+    if( !context_ || !widget_ )
+        return GetDefaultSymbol();
+    QPixmap& result = icons_[ symbol ];
+    if( result.isNull() )
+        result = GenerateSymbol( symbol );
+    return result;
+}
+
 const QPixmap& SymbolIcons::GetDefaultSymbol() const
 {
     return defaultSymbol_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: SymbolIcons::AddIcon
-// Created: AGE 2007-10-31
-// -----------------------------------------------------------------------------
-void SymbolIcons::AddIcon( const SymbolIcon& task, const QPixmap& icon )
-{
-    icons_[ task ] = icon;
-    pending_.erase( task );
 }

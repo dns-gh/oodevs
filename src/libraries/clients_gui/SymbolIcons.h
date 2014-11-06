@@ -3,78 +3,51 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2006 Mathématiques Appliquées SA (MASA)
+// Copyright (c) 2006 MASA Group
 //
 // *****************************************************************************
 
 #ifndef __SymbolIcons_h_
 #define __SymbolIcons_h_
 
-#include "IconHandler_ABC.h"
 #include "SymbolIcon.h"
 
 namespace gui
 {
-    class GLView_ABC;
     class GlWidget;
-    class IconsRenderPass;
-}
 
-namespace gui
-{
 // =============================================================================
 /** @class  SymbolIcons
-    @brief  SymbolIcons
+    @brief  Symbol icons
 */
 // Created: AGE 2006-11-22
 // =============================================================================
-class SymbolIcons : public QObject
-                  , private IconHandler_ABC
+class SymbolIcons : QObject
 {
     Q_OBJECT
 
 public:
-    //! @name Constructors/Destructor
-    //@{
-             SymbolIcons( QObject* parent, GLView_ABC& tools );
+             SymbolIcons();
     virtual ~SymbolIcons();
-    //@}
 
-    //! @name Operations
-    //@{
-    const QPixmap& GetSymbol( SymbolIcon symbol );
+    void Initialize( gui::GlWidget* widget );
+
+    const QPixmap& GetSymbol( const SymbolIcon& symbol );
     const QPixmap& GetDefaultSymbol() const;
-    //@}
-
-public slots:
-    //! @name Slots
-    //@{
-    void OnWidget2dChanged( gui::GlWidget* );
-    //@}
 
 private:
-    //! @name Types
-    //@{
-    typedef std::map< SymbolIcon, QPixmap > T_Icons;
+    QPixmap GenerateSymbol( const SymbolIcon& symbol );
 
-    typedef std::set< SymbolIcon >           T_PendingIcons;
-    typedef T_PendingIcons::const_iterator CIT_PendingIcons;
-    //@}
+    void Draw( std::string symbol, const geometry::Point2f& center, float factor ) const;
 
-    //! @name Helpers
-    //@{
-    virtual void AddIcon( const SymbolIcon& task, const QPixmap& icon );
-    //@}
+private slots:
+    void Destroyed( QObject* );
 
 private:
-    //! @name Member data
-    //@{
-    GlWidget* widget_;
     QPixmap defaultSymbol_;
-    T_PendingIcons pending_;
-    T_Icons icons_;
-    std::unique_ptr< IconsRenderPass > renderPass_;
-    //@}
+    std::map< SymbolIcon, QPixmap > icons_;
+    QGLWidget* context_;
+    gui::GlWidget* widget_;
 };
 
 }

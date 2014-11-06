@@ -47,13 +47,7 @@ InfoSubordinateItem::~InfoSubordinateItem()
 QVariant InfoSubordinateItem::data( int role ) const
 {
     if( role == Qt::DecorationRole )
-    {
-        assert( listWidget() );
-        const QPixmap& p = icons_.GetSymbol( GetEntity() );
-        if( p.isNull() )
-            QTimer::singleShot( 0, listWidget(), SLOT( doItemsLayout() ) );
-        return QIcon( p );
-    }
+        return QIcon( icons_.GetSymbol( GetEntity() ) );
     return QListWidgetItem::data( role );
 }
 

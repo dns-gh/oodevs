@@ -206,3 +206,8 @@ void GlSelector::SetFocus()
     else if( widget3d_ )
         widget3d_->setFocus();
 }
+
+GlWidget* GlSelector::GetWidget2d() const
+{
+    return widget2d_.get();
+}

@@ -18,7 +18,6 @@
 #include "clients_kernel/SymbolFactory.h"
 #include "clients_kernel/SymbolRule.h"
 #include "tools/Loader_ABC.h"
-#include <boost/bind.hpp>
 
 QPixmap* ADN_Symbols_Data::SymbolsUnit::undefined_ = nullptr;
 
