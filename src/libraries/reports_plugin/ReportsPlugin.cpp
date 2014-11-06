@@ -80,8 +80,10 @@ bool ReportsPlugin::HandleClientTo( const M& msg, dispatcher::RewritingPublisher
     R reply;
     auto& ack = *reply.mutable_message()->mutable_list_reports_ack();
     ack.set_error_code( sword::ListReportsAck::no_error );
-    reports_->ListReports( *reply.mutable_message()->mutable_list_reports_ack(), message.max_count(),
-        message.has_report() ? message.report() : 0 );
+    reports_->ListReports( *reply.mutable_message()->mutable_list_reports_ack(),
+        message.max_count(),
+        message.has_report() ? boost::optional< unsigned int >( message.report() ) : boost::none,
+        message.has_tick() ? boost::optional< unsigned int >( message.tick() ) : boost::none );
     unicaster.Send( reply );
     return true;
 }

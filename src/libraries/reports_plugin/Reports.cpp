@@ -47,8 +47,8 @@ namespace
 }
 
 Reports::Reports( const tools::Path& filename )
-    : database_( new tools::Sql( filename ) )
-    , tick_    ( 0 )
+    : database_   ( new tools::Sql( filename ) )
+    , currentTick_( 0 )
 {
     MakeTable( *database_ );
 }
@@ -140,7 +140,7 @@ void Reports::AddReport( const sword::Report& report )
         st->Bind( static_cast< int >( report.type().id() ) );
         st->Bind( report.category() );
         st->Bind( report.time().data() );
-        st->Bind( tick_ );
+        st->Bind( currentTick_ );
         if( report.has_parameters() )
         {
             xml::xostringstream xos;
@@ -185,7 +185,24 @@ namespace
     }
 }
 
-void Reports::ListReports( sword::ListReportsAck& reports, unsigned int count, unsigned int from )
+namespace
+{
+    std::string CreateCondition( const boost::optional< unsigned int >& fromReport,
+                                 const boost::optional< unsigned int >& untilTick )
+    {
+        if( fromReport && untilTick )
+            return "WHERE tick <= ? and id >= ? ";
+        else if( fromReport )
+            return "WHERE id >= ? ";
+        else if( untilTick )
+            return "WHERE tick <= ? ";
+        return "";
+    }
+}
+
+void Reports::ListReports( sword::ListReportsAck& reports, unsigned int count,
+                           const boost::optional< unsigned int >& fromReport,
+                           const boost::optional< unsigned int >& untilTick )
 {
     try
     {
@@ -199,16 +216,18 @@ void Reports::ListReports( sword::ListReportsAck& reports, unsigned int count, u
             ",      tick "
             ",      parameters "
             "FROM   reports ";
-        if( from != 0 )
-            sql += "WHERE id >= ? ";
-        sql += "ORDER BY id ASC "
+        sql += CreateCondition( fromReport, untilTick ) +
+               "ORDER BY id ASC "
                "LIMIT  ? ";
 
         tools::Sql_ABC::T_Transaction tr = database_->Begin( false );
         tools::Sql_ABC::T_Statement st = database_->Prepare( *tr, sql );
-        if( from != 0 )
-            st->Bind( static_cast< int64_t >( from ) );
-        st->Bind( static_cast< int >( count + 1 ) );
+
+        if( untilTick )
+            st->Bind( static_cast< int >( *untilTick ) );
+        if( fromReport )
+            st->Bind( static_cast< int64_t >( *fromReport ) );
+        st->Bind( static_cast< int64_t >( count + 1 ) );
 
         while( st->Next() )
             MakeReport( reports, *st, count );
@@ -234,5 +253,5 @@ void Reports::Save( const tools::Path& filename )
 
 void Reports::SetTick( int tick )
 {
-    tick_ = tick;
+    currentTick_ = tick;
 }

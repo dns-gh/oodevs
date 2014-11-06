@@ -161,12 +161,15 @@ func (c *Client) ReplayStop() error {
 	return <-c.postReplay(msg, handler)
 }
 
-func (c *Client) ReplayListReports(maxCount, start uint32) ([]*sword.Report, uint32, error) {
+func (c *Client) ReplayListReports(maxCount, start, tick uint32) ([]*sword.Report, uint32, error) {
 	param := sword.ListReports{
 		MaxCount: proto.Uint32(maxCount),
 	}
 	if start != 0 {
 		param.Report = proto.Uint32(start)
+	}
+	if tick != 0 {
+		param.Tick = proto.Uint32(tick)
 	}
 	msg := &sword.ClientToReplay_Content{
 		ListReports: &param,

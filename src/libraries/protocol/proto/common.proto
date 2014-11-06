@@ -2877,11 +2877,14 @@ message ListEnabledVisionCones {
 // the enumeration: ListReports(max_count=10, next_report=X) returns at
 // most ten reports following the first set in reverse chronological
 // order".
+//! If tick is supplied, list reports until the tick value.
 message ListReports {
     //! Maximum number of reports to send
     required uint32 max_count = 1;
-    //! Report identifier to start enumeration
+    //! Next report identifier to start enumeration
     optional uint32 report    = 2;
+    //! The maximum tick
+    optional uint32 tick      = 3;
 }
 
 // Reports list returned for a ListReports request.

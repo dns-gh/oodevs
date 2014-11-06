@@ -690,10 +690,18 @@ func (s *TestSuite) TestReplayListReports(c *C) {
 		NewAdminOpts(ExCrossroadLog).EnableTestCommands())
 	defer stopSimAndClient(c, sim, client)
 
+	// Create reports
 	CreateReports(c, client)
 
-	_, err := client.Pause()
+	// Pause sim after 4 tick
+	tick, delay, err := client.Resume(4)
 	c.Assert(err, IsNil)
+
+	// Create reports
+	CreateReports(c, client)
+
+	tickBis := tick + delay
+	c.Assert(tickBis, Greater, tick)
 
 	// Get all reports
 	allReports, _, err := client.ListReports(math.MaxInt32, 0)
@@ -706,8 +714,14 @@ func (s *TestSuite) TestReplayListReports(c *C) {
 	client = loginAndWaitModel(c, replay, NewAdminOpts(""))
 	defer client.Close()
 
-	// Check reports in replay
-	replayReports, _, err := client.ReplayListReports(math.MaxInt32, 0)
+	// Check all reports in replay
+	replayReports, _, err := client.ReplayListReports(math.MaxInt32, 0, 0)
 	c.Assert(err, IsNil)
 	swtest.DeepEquals(c, allReports, replayReports)
+
+	// Check one part of reports in replay
+	reports, _, err := client.ReplayListReports(math.MaxInt32, 0, uint32(tick))
+	c.Assert(err, IsNil)
+	c.Assert(len(replayReports), Greater, len(reports))
+	swtest.DeepEquals(c, replayReports[len(replayReports)-len(reports):], reports)
 }
