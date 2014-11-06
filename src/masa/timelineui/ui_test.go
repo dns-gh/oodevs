@@ -9,6 +9,7 @@
 package ui
 
 import (
+	"bytes"
 	gouuid "code.google.com/p/go-uuid/uuid"
 	"encoding/json"
 	"flag"
@@ -135,22 +136,45 @@ func MakeServerConfig(c *C) (string, map[string]interface{}) {
 	return fh.Name(), model
 }
 
-func StartServer(c *C, cfg string) *exec.Cmd {
+type CmdContext struct {
+	name   string
+	cmd    *exec.Cmd
+	output *bytes.Buffer
+}
+
+func NewCmdContext(c *C, name string, cmd *exec.Cmd) *CmdContext {
+	ctx := CmdContext{
+		name:   name,
+		cmd:    cmd,
+		output: &bytes.Buffer{},
+	}
+	cmd.Stdout = ctx.output
+	cmd.Stderr = ctx.output
+	err := cmd.Start()
+	c.Assert(err, IsNil)
+	return &ctx
+}
+
+func (ctx *CmdContext) Close(c *C) {
+	ctx.cmd.Process.Kill()
+	if output := ctx.output.String(); len(output) > 0 {
+		c.Log(ctx.name, ":\n", ctx.output.String())
+	}
+}
+
+func StartServer(c *C, cfg string) *CmdContext {
 	server := filepath.Join(*BinDir, "timeline_server.exe")
 	_, err := os.Stat(server)
 	c.Assert(err, IsNil)
 	cmd := exec.Command(server,
 		"--port", strconv.Itoa(*Port+ServerWeb),
 		"--run", cfg,
-		"--log", filepath.Join(*RunDir, "timeline.log"),
 	)
 	cmd.Dir = *RunDir
-	err = cmd.Start()
-	c.Assert(err, IsNil)
-	return cmd
+	return NewCmdContext(c, "timeline_server", cmd)
 }
 
-func StartClient(c *C, command string, args ...string) *exec.Cmd {
+func StartClient(c *C, command string, args ...string) *CmdContext {
 	client := filepath.Join(*OutDir, "release", "timeline_app.exe")
 	_, err := os.Stat(client)
 	c.Assert(err, IsNil)
@@ -160,15 +184,13 @@ func StartClient(c *C, command string, args ...string) *exec.Cmd {
 			"--command", command,
 		}, args...)...)
 	cmd.Dir = *RunDir
-	err = cmd.Start()
-	c.Assert(err, IsNil)
-	return cmd
+	return NewCmdContext(c, "timeline_app", cmd)
 }
 
-func WaitCommand(c *C, client *exec.Cmd) {
+func WaitCommand(c *C, client *CmdContext) {
 	errors := make(chan error, 1)
 	go func() {
-		errors <- client.Wait()
+		errors <- client.cmd.Wait()
 	}()
 	select {
 	case <-time.After(DefaultTimeout):
@@ -199,18 +221,18 @@ func GetEvents(c *C, uuid string) []interface{} {
 func (s *TestSuite) TestServerConnects(c *C) {
 	script, _ := MakeServerConfig(c)
 	server := StartServer(c, script)
-	defer server.Process.Kill()
+	defer server.Close(c)
 	client := StartClient(c, "ready")
-	defer client.Process.Kill()
+	defer client.Close(c)
 	WaitCommand(c, client)
 }
 
 func (s *TestSuite) TestServerDeletes(c *C) {
 	script, model := MakeServerConfig(c)
 	server := StartServer(c, script)
-	defer server.Process.Kill()
+	defer server.Close(c)
 	client := StartClient(c, "delete", model["delete"].(string))
-	defer client.Process.Kill()
+	defer client.Close(c)
 	WaitCommand(c, client)
 	events := GetEvents(c, model["uuid"].(string))
 	c.Assert(events, HasLen, 0)
@@ -219,9 +241,9 @@ func (s *TestSuite) TestServerDeletes(c *C) {
 func CreateEvent(c *C, uuid string) {
 	script, model := MakeServerConfig(c)
 	server := StartServer(c, script)
-	defer server.Process.Kill()
+	defer server.Close(c)
 	client := StartClient(c, "create", uuid)
-	defer client.Process.Kill()
+	defer client.Close(c)
 	WaitCommand(c, client)
 	events := GetEvents(c, model["uuid"].(string))
 	c.Assert(events, HasLen, 2)
@@ -235,30 +257,30 @@ func (s *TestSuite) TestServerCreates(c *C) {
 func (s *TestSuite) TestServerReads(c *C) {
 	script, _ := MakeServerConfig(c)
 	server := StartServer(c, script)
-	defer server.Process.Kill()
+	defer server.Close(c)
 	uuid := gouuid.New()
 	client := StartClient(c, "read", uuid)
-	defer client.Process.Kill()
+	defer client.Close(c)
 	WaitCommand(c, client)
 }
 
 func (s *TestSuite) TestServerUpdates(c *C) {
 	script, _ := MakeServerConfig(c)
 	server := StartServer(c, script)
-	defer server.Process.Kill()
+	defer server.Close(c)
 	uuid := gouuid.New()
 	client := StartClient(c, "update", uuid)
-	defer client.Process.Kill()
+	defer client.Close(c)
 	WaitCommand(c, client)
 }
 
 func (s *TestSuite) TestServerSaveLoad(c *C) {
 	script, model := MakeServerConfig(c)
 	server := StartServer(c, script)
-	defer server.Process.Kill()
+	defer server.Close(c)
 	previousEvents := GetEvents(c, model["uuid"].(string))
 	client := StartClient(c, "saveload")
-	defer client.Process.Kill()
+	defer client.Close(c)
 	WaitCommand(c, client)
 	afterEvents := GetEvents(c, model["uuid"].(string))
 	swtest.DeepEquals(c, previousEvents, afterEvents)

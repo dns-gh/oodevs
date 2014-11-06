@@ -19,14 +19,15 @@ import (
 )
 
 var (
-	ErrServiceNameTaken = util.NewError(http.StatusConflict, "service name taken")
-	ErrInProgress       = util.NewError(http.StatusServiceUnavailable, "in progress")
-	ErrMissingClock     = util.NewError(http.StatusPreconditionFailed, "missing clock")
-	ErrServiceNotFound  = util.NewError(http.StatusNotFound, "service not found")
-	ErrTooManyClocks    = util.NewError(http.StatusConflict, "too many clocks")
-	ErrEventUuidTaken   = util.NewError(http.StatusConflict, "event uuid taken")
-	ErrUnknownSession   = util.NewError(http.StatusNotFound, "unknown session")
-	ErrUnknownEvent     = util.NewError(http.StatusNotFound, "unknown event")
+	ErrServiceNameTaken   = util.NewError(http.StatusConflict, "service name taken")
+	ErrMissingServiceName = util.NewError(http.StatusPreconditionFailed, "missing service name")
+	ErrInProgress         = util.NewError(http.StatusServiceUnavailable, "in progress")
+	ErrMissingClock       = util.NewError(http.StatusPreconditionFailed, "missing clock")
+	ErrServiceNotFound    = util.NewError(http.StatusNotFound, "service not found")
+	ErrTooManyClocks      = util.NewError(http.StatusConflict, "too many clocks")
+	ErrEventUuidTaken     = util.NewError(http.StatusConflict, "event uuid taken")
+	ErrUnknownSession     = util.NewError(http.StatusNotFound, "unknown session")
+	ErrUnknownEvent       = util.NewError(http.StatusNotFound, "unknown event")
 )
 
 type EventListener interface {
@@ -144,6 +145,9 @@ func (s *Session) numClocks() (int, bool) {
 }
 
 func (s *Session) AttachService(name string, service services.Service) error {
+	if len(name) == 0 {
+		return ErrMissingServiceName
+	}
 	_, ok := s.services[name]
 	if ok {
 		return ErrServiceNameTaken
