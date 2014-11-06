@@ -70,6 +70,7 @@ public:
     virtual void CreateFormation( int level );
     virtual kernel::Automat_ABC* ReplaceAutomat( kernel::Entity_ABC& original, const kernel::AutomatType& type );
     virtual void DeleteEntity( const kernel::Entity_ABC& entity );
+    virtual void ChangeSuperior( const kernel::Entity_ABC& entity );
     virtual void CreateCityOrDistrict( kernel::Entity_ABC* parent );
     virtual void DeleteBlocks( const std::vector< const kernel::UrbanObject_ABC* >& urbanObjects );
     bool CanCreateLine() const;

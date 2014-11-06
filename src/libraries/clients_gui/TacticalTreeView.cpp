@@ -17,11 +17,14 @@
 
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
+#include "clients_kernel/Drawing_ABC.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/Ghost_ABC.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
 #include "clients_kernel/Object_ABC.h"
+#include "clients_kernel/Pathfind_ABC.h"
 #include "clients_kernel/Profile_ABC.h"
+#include "clients_kernel/TacticalLine_ABC.h"
 #include "clients_kernel/Team_ABC.h"
 #include <boost/bind.hpp>
 
@@ -90,18 +93,29 @@ bool TacticalTreeView::CanChangeSuperior( const kernel::Entity_ABC& entity, cons
         if( &team1 != &team2 )
             return false;
     }
-    if( entity.GetTypeName() == kernel::Agent_ABC::typeName_ )
-        return superior.GetTypeName() == kernel::Automat_ABC::typeName_;
-    if( entity.GetTypeName() == kernel::Automat_ABC::typeName_ )
-        return superior.GetTypeName() == kernel::Formation_ABC::typeName_;
-    if( entity.GetTypeName() == kernel::Formation_ABC::typeName_ )
-        return superior.GetTypeName() == kernel::Formation_ABC::typeName_ && entity.GetId() != superior.GetId() ||
-                superior.GetTypeName() == kernel::Team_ABC::typeName_;
+    auto type = entity.GetTypeName();
+    auto superiorType = superior.GetTypeName();
+    if( type == kernel::Agent_ABC::typeName_ )
+        return superiorType == kernel::Automat_ABC::typeName_;
+    if( type == kernel::Automat_ABC::typeName_ )
+        return superiorType == kernel::Formation_ABC::typeName_;
+    if( type == kernel::Formation_ABC::typeName_ )
+        return superiorType == kernel::Formation_ABC::typeName_ && entity.GetId() != superior.GetId() ||
+                superiorType == kernel::Team_ABC::typeName_;
     if( const kernel::Ghost_ABC* ghost = dynamic_cast< const kernel::Ghost_ABC* >( &entity ) )
-        return ghost->GetGhostType() == eGhostType_Automat && superior.GetTypeName() == kernel::Formation_ABC::typeName_ ||
-                ghost->GetGhostType() == eGhostType_Agent && superior.GetTypeName() == kernel::Automat_ABC::typeName_;
-    if( entity.GetTypeName() == kernel::KnowledgeGroup_ABC::typeName_ )
-        return superior.GetTypeName() == kernel::Formation_ABC::typeName_;
+        return superiorType == kernel::Formation_ABC::typeName_ && ghost->GetGhostType() == eGhostType_Automat ||
+                superiorType == kernel::Automat_ABC::typeName_ && ghost->GetGhostType() == eGhostType_Agent;
+    if( type == kernel::KnowledgeGroup_ABC::typeName_ )
+        return superiorType == kernel::Formation_ABC::typeName_;
+    if( type == kernel::Pathfind_ABC::typeName_ )
+        return superiorType == kernel::Formation_ABC::typeName_ || superiorType == kernel::Automat_ABC::typeName_ ||
+                superiorType == kernel::Agent_ABC::typeName_ || superiorType == kernel::Team_ABC::typeName_;
+    if( type == kernel::Drawing_ABC::typeName_ )
+        return superiorType == kernel::Formation_ABC::typeName_ || superiorType == kernel::Automat_ABC::typeName_ ||
+                superiorType == kernel::Team_ABC::typeName_;
+    if( type == kernel::TacticalLine_ABC::typeName_ )
+        return superiorType == kernel::Formation_ABC::typeName_ || superiorType == kernel::Automat_ABC::typeName_ ||
+                superiorType == kernel::Team_ABC::typeName_;
     return false;
 }
 

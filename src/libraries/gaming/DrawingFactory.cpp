@@ -12,10 +12,12 @@
 #include "Drawing.h"
 #include "DrawingTools.h"
 #include "clients_kernel/Automat_ABC.h"
+#include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/EntityResolver_ABC.h"
 #include "clients_kernel/Formation_ABC.h"
-#include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/Location_ABC.h"
+#include "clients_kernel/SimpleHierarchies.h"
+#include "clients_kernel/TacticalHierarchies.h"
 #include "clients_gui/DrawingHelper.h"
 #include "clients_gui/DrawingPositions.h"
 #include "clients_gui/DrawingTemplate.h"
@@ -65,6 +67,7 @@ kernel::Drawing_ABC* DrawingFactory::CreateShape( const sword::ShapeCreation& me
 
     Drawing* drawing = new Drawing( controllers_, message, diffusionEntity, types_, *location, publisher_, converter_ );
     drawing->Attach< kernel::Positions >( *location );
+    drawing->Attach< kernel::TacticalHierarchies >( *new kernel::SimpleHierarchies< kernel::TacticalHierarchies >( *drawing, diffusionEntity ) );
     drawing->Polish();
     return drawing;
 }

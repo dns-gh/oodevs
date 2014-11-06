@@ -157,8 +157,9 @@ void PathfindLayer::NotifyContextMenu( const kernel::Pathfind_ABC& pathfind, ker
     target_ = &pathfind;
     selectedEntity_ = nullptr;
     selectedPathfind_ = &pathfind;
-    menu.InsertItem( "Itinerary", tr( "Edit" ), this, SLOT( OnEditPathfind() ) );
-    menu.InsertItem( "Itinerary", tr( "Delete" ), this, SLOT( OnDeletePathfind() ) );
+    menu.InsertItem( "Command", tr( "Edit" ), this, SLOT( OnEditPathfind() ) );
+    menu.InsertItem( "Command", tr( "Delete" ), this, SLOT( OnDeletePathfind() ) );
+    menu.InsertItem( "Command", tr( "Change superior" ), this, SLOT( OnChangeSuperior() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -534,6 +535,15 @@ bool PathfindLayer::OnDeletePathfind()
     return true;
 }
 
+void PathfindLayer::OnChangeSuperior()
+{
+    if( controllers_.GetCurrentMode() != eModes_Gaming ||
+        !selectedPathfind_ ||
+        !profile_.CanBeOrdered( *selectedPathfind_ ) )
+        return;
+    modelObserver_.ChangeSuperior( *selectedPathfind_ );
+}
+
 void PathfindLayer::OnEditPathfind()
 {
     if( !selectedPathfind_ )
@@ -585,13 +595,18 @@ bool PathfindLayer::ShouldDisplay( const kernel::Entity_ABC& entity )
     if( !filter_.IsSet( true, true, true ) )
         return false;
     const auto& pathfind = static_cast< const kernel::Pathfind_ABC& >( entity );
-    const auto& element = pathfind.GetUnit();
-    const auto* selection = selectedPathfind_ ? &selectedPathfind_->GetUnit() : selectedEntity_;
-    const bool selected = selection && IsSuperior( &element, *selection );
-    const bool superior = IsSuperior( selection, element );
-    if( !filter_.IsSet( selected, selected || superior, profile_.CanBeOrdered( element ) ) )
+    auto hierarchy = pathfind.Retrieve< kernel::TacticalHierarchies >();
+    if( !hierarchy )
         return false;
-    return gui::EntityLayer< kernel::Pathfind_ABC >::ShouldDisplay( entity );
+    const auto* element = hierarchy->GetSuperior();
+    if( !element )
+        return false;
+    const auto* selection = selectedPathfind_ ? &selectedPathfind_->GetUnit() : selectedEntity_;
+    const bool selected = selection && IsSuperior( element, *selection );
+    const bool superior = IsSuperior( selection, *element );
+    if( !filter_.IsSet( selected, selected || superior, profile_.CanBeOrdered( *element ) ) )
+        return false;
+    return gui::EntityLayer< kernel::Pathfind_ABC >::ShouldDisplay( *element );
 }
 
 void PathfindLayer::ActivateEntity( const kernel::Entity_ABC& entity )

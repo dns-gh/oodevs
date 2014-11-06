@@ -527,6 +527,10 @@ Reason: %3
         <source>Delete &apos;%1&apos;?</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Change superior</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>EquipmentTransferDialog</name>
@@ -2940,11 +2944,15 @@ This data can&apos;t be projected.</source>
 <context>
     <name>PathfindLayer</name>
     <message>
+        <source>Edit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Delete</source>
         <translation type="unfinished">حذف</translation>
     </message>
     <message>
-        <source>Edit</source>
+        <source>Change superior</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

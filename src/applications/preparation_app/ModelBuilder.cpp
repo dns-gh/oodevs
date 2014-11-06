@@ -281,6 +281,15 @@ void ModelBuilder::DeleteEntity( const kernel::Entity_ABC& entity )
 }
 
 // -----------------------------------------------------------------------------
+// Name: ModelBuilder::ChangeSuperior
+// Created: LDC 2014-11-06
+// -----------------------------------------------------------------------------
+void ModelBuilder::ChangeSuperior( const kernel::Entity_ABC&  )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
 // Name: ModelBuilder::OnConfirmDeletion
 // Created: SBO 2010-03-22
 // -----------------------------------------------------------------------------

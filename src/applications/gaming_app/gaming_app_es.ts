@@ -528,6 +528,10 @@ Motivo: %3</translation>
         <source>Delete &apos;%1&apos;?</source>
         <translation type="unfinished">¿Borrar &apos;%1&apos;?</translation>
     </message>
+    <message>
+        <source>Change superior</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>EquipmentTransferDialog</name>
@@ -2949,12 +2953,16 @@ Los datos no pueden ser proyectados.</translation>
 <context>
     <name>PathfindLayer</name>
     <message>
+        <source>Edit</source>
+        <translation type="unfinished">Editar</translation>
+    </message>
+    <message>
         <source>Delete</source>
         <translation type="unfinished">Borrar</translation>
     </message>
     <message>
-        <source>Edit</source>
-        <translation type="unfinished">Editar</translation>
+        <source>Change superior</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
