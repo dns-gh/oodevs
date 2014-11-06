@@ -1392,21 +1392,6 @@ Do you want to remove it?</translation>
     </message>
 </context>
 <context>
-    <name>gui::MiniViews</name>
-    <message>
-        <source>Miniviews</source>
-        <translation>Miniviews</translation>
-    </message>
-    <message>
-        <source>Remove miniview</source>
-        <translation>Remove miniview</translation>
-    </message>
-    <message>
-        <source>Add miniview</source>
-        <translation>Add miniview</translation>
-    </message>
-</context>
-<context>
     <name>gui::NBCPrototype_ABC</name>
     <message>
         <source>NBC parameters</source>

@@ -184,7 +184,7 @@ void GlSelector::InitializePasses()
 {
     if( !widget2d_ )
         return;
-    widget2d_->SetPassOrder( "icons,miniviews,main,fog,composition,tooltip" );
+    widget2d_->SetPassOrder( "icons,main,fog,composition,tooltip" );
     LayersRenderPass*  tooltip     = new LayersRenderPass ( *widget2d_, "tooltip", false );
     TextureRenderPass* main        = new TextureRenderPass( *widget2d_, "main", controllers_ );
     TextureRenderPass* fog         = new TextureRenderPass( *widget2d_, "fog", controllers_, "FogOfWar" );

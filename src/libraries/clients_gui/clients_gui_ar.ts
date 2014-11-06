@@ -1387,21 +1387,6 @@ Do you want to remove it?</source>
     </message>
 </context>
 <context>
-    <name>gui::MiniViews</name>
-    <message>
-        <source>Miniviews</source>
-        <translation type="unfinished">مينيفيوس</translation>
-    </message>
-    <message>
-        <source>Remove miniview</source>
-        <translation type="unfinished">إزالة مينيفيو</translation>
-    </message>
-    <message>
-        <source>Add miniview</source>
-        <translation type="unfinished">إضافة مينيفيو</translation>
-    </message>
-</context>
-<context>
     <name>gui::NBCPrototype_ABC</name>
     <message>
         <source>NBC parameters</source>

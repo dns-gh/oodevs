@@ -102,7 +102,6 @@
 #include "clients_gui/LocationsLayer.h"
 #include "clients_gui/Logger.h"
 #include "clients_gui/MetricsLayer.h"
-#include "clients_gui/MiniViews.h"
 #include "clients_gui/MiscLayer.h"
 #include "clients_gui/OrbatPanel.h"
 #include "clients_gui/ParametersLayer.h"
@@ -265,8 +264,7 @@ MainWindow::MainWindow( Controllers& controllers,
                                              *glProxy_, *factory, *strategy_, *symbols_, *icons_, *indicatorExportDialog,
                                              simulationController, *drawingsBuilder_, *displayExtractor_, converter, *unitStateDialog_ ) );
     logger.SetLogger( dockContainer_->GetLoggerPanel() );
-    connect( selector_.get(), SIGNAL( Widget2dChanged( gui::GlWidget* ) ), &dockContainer_->GetMiniView(), SLOT( OnWidget2dChanged( gui::GlWidget* ) ) );
-
+    
     // Tool bars
     AddToolBar( *this, new SIMControlToolbar( this, controllers, simulationController, network, dockContainer_->GetLoggerPanel() ), eModes_None, eModes_Default );
     AddToolBar( *this, new gui::DisplayToolbar( this, controllers ), eModes_Default );

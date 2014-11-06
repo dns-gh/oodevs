@@ -27,7 +27,6 @@ namespace gui
     class EntitySymbols;
     class GlProxy;
     class Logger;
-    class MiniViews;
     class ParametersLayer;
     class RichItemFactory;
     class SymbolIcons;
@@ -110,7 +109,6 @@ public:
     gui::Logger& GetLoggerPanel() const;
     ProfilingPanel& GetProfilingPanel() const;
     gui::TerrainProfiler& GetTerrainProfiler() const;
-    gui::MiniViews& GetMiniView() const;
     EventDockWidget& GetEventDockWidget() const;
     ItineraryEditionDockWidget& GetItineraryDockWidget() const;
     //@}
@@ -124,7 +122,6 @@ private:
     AfterAction* afterAction_;
     ProfilingPanel* profilingPanel_;
     gui::TerrainProfiler* terrainProfiler_;
-    gui::MiniViews* miniView_;
     TimelineDockWidget* timelineDockWidget_;
     EventDockWidget* eventDockWidget_;
     ItineraryEditionDockWidget* itineraryDockWidget_;
