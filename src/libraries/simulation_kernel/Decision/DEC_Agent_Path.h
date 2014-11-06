@@ -20,6 +20,11 @@ class DEC_AgentContext_ABC;
 class TER_PathComputer_ABC;
 class DEC_Rep_PathPoint;
 
+namespace sword
+{
+    class Pathfind;
+}
+
 //*****************************************************************************
 // Created: JDY 03-02-11
 // Last modified: JVT 03-11-26
@@ -27,14 +32,15 @@ class DEC_Rep_PathPoint;
 class DEC_Agent_Path : public DEC_PathResult
 {
 public:
-             DEC_Agent_Path( MIL_Agent_ABC& queryMaker, const T_PointVector& points, const DEC_PathType& pathType,
-                 const boost::shared_ptr< TER_PathComputer_ABC >& computer );
+             DEC_Agent_Path( MIL_Agent_ABC& queryMaker, const T_PointVector& points,
+                     const DEC_PathType& pathType );
     virtual ~DEC_Agent_Path();
 
     virtual void Cancel();
 
     const DEC_Agent_PathClass& GetPathClass() const;
     const T_PointVector& GetNextWaypoints() const;
+    void StartCompute( const sword::Pathfind& pathfind );
 
     virtual E_State GetState() const;
     virtual double GetLength() const;
