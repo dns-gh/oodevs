@@ -22,8 +22,6 @@
 #include "gaming/LogisticHelpers.h"
 #include "gaming/SupplyRecipientResourcesRequest.h"
 #include "gaming/SupplyResourceRequest.h"
-#include <boost/bind.hpp>
-#include "protocol/ServerPublisher_ABC.h"
 
 namespace
 {
@@ -50,10 +48,6 @@ namespace
     }
 }
 
-// -----------------------------------------------------------------------------
-// Name: LogisticsRequestsSupplyWidget constructor
-// Created: MMC 2013-09-16
-// -----------------------------------------------------------------------------
 LogisticsRequestsSupplyWidget::LogisticsRequestsSupplyWidget( QWidget* parent, kernel::Controllers& controllers, gui::DisplayExtractor& extractor,
                                                               const kernel::Profile_ABC& profile, const SimulationController& simulationController, Model& model )
     : LogisticConsignsWidget( parent, controllers, extractor, profile, simulationController, model, eSupply, GetRequestsHeader() )
@@ -73,39 +67,23 @@ LogisticsRequestsSupplyWidget::LogisticsRequestsSupplyWidget( QWidget* parent, k
     pDetailLayout_->insertWidget( 1, supplyTable_ );
 }
 
-// -----------------------------------------------------------------------------
-// Name: LogisticsRequestsSupplyWidget destructor
-// Created: MMC 2013-09-16
-// -----------------------------------------------------------------------------
 LogisticsRequestsSupplyWidget::~LogisticsRequestsSupplyWidget()
 {
     // NOTHING
 }
 
-// -----------------------------------------------------------------------------
-// Name: LogisticsRequestsSupplyWidget::Purge
-// Created: MMC 2013-09-16
-// -----------------------------------------------------------------------------
 void LogisticsRequestsSupplyWidget::Purge()
 {
     supplyTable_->Purge();
     LogisticConsignsWidget_ABC::Purge();
 }
 
-// -----------------------------------------------------------------------------
-// Name: LogisticsRequestsSupplyWidget::PurgeDetail
-// Created: MMC 2013-09-16
-// -----------------------------------------------------------------------------
 void LogisticsRequestsSupplyWidget::PurgeDetail()
 {
     supplyTable_->Purge();
     LogisticConsignsWidget_ABC::PurgeDetail();
 }
 
-// -----------------------------------------------------------------------------
-// Name: LogisticsRequestsSupplyWidget::GetRecipientsLinks
-// Created: MMC 2013-09-16
-// -----------------------------------------------------------------------------
 QString LogisticsRequestsSupplyWidget::GetRecipientsLinks( const LogSupplyConsign& consign, bool link )
 {
     QString recipients;
@@ -120,28 +98,20 @@ QString LogisticsRequestsSupplyWidget::GetRecipientsLinks( const LogSupplyConsig
     return recipients;
 }
 
-// -----------------------------------------------------------------------------
-// Name: LogisticsRequestsSupplyWidget::OnRequestSelected
-// Created: MMC 2013-09-16
-// -----------------------------------------------------------------------------
 void LogisticsRequestsSupplyWidget::OnRequestSelected( const LogisticsConsign_ABC& consign )
 {
     const LogSupplyConsign& c = static_cast< const LogSupplyConsign& >( consign );
-    detailsTable_->Add( tools::translate( "Logistic", "Recipient(s):" ),      GetRecipientsLinks( c, true ) );
+    detailsTable_->Add( tools::translate( "Logistic", "Recipient(s):" ), GetRecipientsLinks( c, true ) );
     detailsTable_->Add( tools::translate( "Logistic", "Transport provider:"), GetDisplayName( c.GetProviding() ) );
-    detailsTable_->Add( tools::translate( "Logistic", "Conveyor:" ),          GetDisplayName( c.GetConvoy() ) );
-    detailsTable_->Add( tools::translate( "Logistic", "Created:" ),           c.GetCreationTime() );
-    detailsTable_->Add( tools::translate( "Logistic", "Supplier:" ),          GetDisplayName( c.GetHandler() ) );
-    detailsTable_->Add( tools::translate( "Logistic", "State:"),              c.GetStatusDisplay() );
-    detailsTable_->Add( tools::translate( "Logistic", "Started:" ),           c.GetCurrentStartedTime() );
-    detailsTable_->Add( tools::translate( "Logistic", "Ending:" ),            SupervisionFilter( c.GetCurrentEndTime() ) );
+    detailsTable_->Add( tools::translate( "Logistic", "Conveyor:" ), GetDisplayName( c.GetConvoy() ) );
+    detailsTable_->Add( tools::translate( "Logistic", "Created:" ), c.GetCreationTime() );
+    detailsTable_->Add( tools::translate( "Logistic", "Supplier:" ), GetDisplayName( c.GetHandler() ) );
+    detailsTable_->Add( tools::translate( "Logistic", "State:"), c.GetStatusDisplay() );
+    detailsTable_->Add( tools::translate( "Logistic", "Started:" ), c.GetCurrentStartedTime() );
+    detailsTable_->Add( tools::translate( "Logistic", "Ending:" ), SupervisionFilter( c.GetCurrentEndTime() ) );
     FillSupplyTable( c );
 }
 
-// -----------------------------------------------------------------------------
-// Name: LogisticsRequestsSupplyWidget::DisplayHistory
-// Created: LGY 2014-01-28
-// -----------------------------------------------------------------------------
 void LogisticsRequestsSupplyWidget::DisplayHistory( const LogSupplyConsign::History& history )
 {
     const LogSupplyConsign& c = static_cast< const LogSupplyConsign& >( history.GetConsign() );
@@ -158,10 +128,6 @@ void LogisticsRequestsSupplyWidget::DisplayHistory( const LogSupplyConsign::Hist
     }
 }
 
-// -----------------------------------------------------------------------------
-// Name: LogisticsRequestsSupplyWidget::FillSupplyTable
-// Created: LGY 2014-01-28
-// -----------------------------------------------------------------------------
 void LogisticsRequestsSupplyWidget::FillSupplyTable( const LogSupplyConsign& consign )
 {
     supplyTable_->Purge();
@@ -185,10 +151,6 @@ void LogisticsRequestsSupplyWidget::FillSupplyTable( const LogSupplyConsign& con
     supplyTable_->resizeColumnsToContents();
 }
 
-// -----------------------------------------------------------------------------
-// Name: LogisticsRequestsSupplyWidget::NotifyUpdated
-// Created: ABR 2014-09-16
-// -----------------------------------------------------------------------------
 void LogisticsRequestsSupplyWidget::NotifyUpdated( const kernel::Entity_ABC& entity )
 {
     historyTable_->UpdateHandler( entity, GetDisplayName( &entity ) );

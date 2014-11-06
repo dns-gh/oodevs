@@ -10,11 +10,11 @@
 #ifndef __LogisticConsignsWidget_h_
 #define __LogisticConsignsWidget_h_
 
-#include "tools/ElementObserver_ABC.h"
-#include "clients_kernel/Entity_ABC.h"
 #include "LogisticConsignsWidget_ABC.h"
 #include "LogisticsRequestsTable.h"
+#include "clients_kernel/Entity_ABC.h"
 #include "gaming/LogisticsModel.h"
+#include "tools/ElementObserver_ABC.h"
 
 namespace kernel
 {
@@ -25,11 +25,8 @@ namespace kernel
 namespace gui
 {
     class DisplayExtractor;
-    class RichCheckBox;
 }
 
-class LogisticsRequestsTable;
-class LogisticsRequestsDetailsTable;
 class SimulationController;
 class LogisticsModel;
 
@@ -45,26 +42,20 @@ class LogisticConsignsWidget : public LogisticConsignsWidget_ABC
                              , public tools::ElementObserver_ABC< Request >
 {
 public:
-    //! @name Constructors/Destructor
-    //@{
     LogisticConsignsWidget( QWidget* parent, kernel::Controllers& controllers, gui::DisplayExtractor& extractor,
                             const kernel::Profile_ABC& profile, const SimulationController& simulationController, Model& model,
                             E_LogisticChain type, const QStringList& requestsHeader = QStringList() )
         : LogisticConsignsWidget_ABC( parent, controllers, extractor, profile, simulationController, model, requestsHeader )
         , type_( type )
-        {
-            controllers_.Update( *this );
-        }
+    {
+        controllers_.Update( *this );
+    }
     virtual ~LogisticConsignsWidget()
-        {
-            controllers_.Unregister( *this );
-        }
-    //@}
+    {
+        controllers_.Unregister( *this );
+    }
 
 public:
-    //! @name Operations
-    //@{
-
     virtual void FillCurrentModel( const kernel::Entity_ABC& entity )
     {
         if( !IsHistoryChecked() )
@@ -101,11 +92,8 @@ public:
             SelectRequest();
         }
     }
-    //@}
 
 protected:
-    //! @name Operations
-    //@{
     virtual void NotifyUpdated( const typename Request::History& history )
     {
         if( history.GetConsign().GetType() == type_ )
@@ -117,13 +105,9 @@ protected:
         if( requestSelected_ == &request )
             requestSelected_ = 0;
     }
-    //@}
 
 private:
-    //! @name Member data
-    //@{
     E_LogisticChain type_;
-    //@}
 };
 
 #endif // __LogisticConsignsWidget_h_

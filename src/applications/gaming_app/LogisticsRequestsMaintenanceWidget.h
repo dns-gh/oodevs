@@ -12,7 +12,6 @@
 
 #include "LogisticConsignsWidget.h"
 #include "gaming/LogMaintenanceConsign.h"
-#include <boost/noncopyable.hpp>
 
 class LogMaintenanceConsigns;
 class SimulationController;
@@ -27,20 +26,14 @@ class Model;
 class LogisticsRequestsMaintenanceWidget : public LogisticConsignsWidget< LogMaintenanceConsigns, LogMaintenanceConsign >
 {
 public:
-    //! @name Constructors/Destructor
-    //@{
              LogisticsRequestsMaintenanceWidget( QWidget* parent, kernel::Controllers& controllers,
                                                  gui::DisplayExtractor& extractor, const kernel::Profile_ABC& profile,
                                                  const SimulationController& simulationController, Model& model );
     virtual ~LogisticsRequestsMaintenanceWidget();
-    //@}
 
 private:
-    //! @name Helpers
-    //@{
     virtual void OnRequestSelected( const LogisticsConsign_ABC& consign );
     QString GetBreakdown( const LogMaintenanceConsign& consign );
-    //@}
 };
 
 #endif // __LogisticsRequestsMaintenanceWidget_h_
