@@ -25,7 +25,7 @@ namespace
             filename.Remove();
             if( config.HasCheckpoint() )
             {
-                const auto checkpointPath = config.GetCheckpointDirectory() / name.c_str();
+                const auto checkpointPath = config.GetCheckpointDirectory() / tools::Path::FromUTF8( name );
                 checkpointPath.Copy( filename, tools::Path::OverwriteIfExists );
             }
         }
