@@ -15,8 +15,6 @@
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/Profile_ABC.h"
-#include "clients_kernel/TacticalHierarchies.h"
-#include <boost/bind.hpp>
 
 using namespace kernel;
 using namespace gui;

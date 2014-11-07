@@ -58,6 +58,8 @@ public:
     virtual void Display( kernel::Displayer_ABC& displayer ) const;
     virtual sword::UnitIdentification::Level GetMaxPerceptionLevel() const;
     virtual geometry::Point2d GetPosition() const;
+    virtual std::string GetLevel() const;
+    virtual bool IsCommandPost() const;
     //@}
 
 private:
@@ -100,7 +102,7 @@ private:
     unsigned int nDirection_;
     unsigned int nSpeed_;
     const kernel::Team_ABC* team_;
-    bool bPC_; //$$$ A VIRER
+    bool bPC_;
     T_AutomatePerceptionVector automatePerceptions_;
     unsigned long surrendered_;
     bool bPrisoner_;

@@ -322,11 +322,12 @@ void AgentKnowledge::Draw( const geometry::Point2f& where, const gui::Viewport_A
     const bool isMoving = ( posture_ <= eUnitPosture_PostureArret );
     const float width = isMoving? 0.f : realAgent_.GetType().GetWidth();
     const float depth = isMoving? realAgent_.GetType().GetLength() : realAgent_.GetType().GetDepth();
-    std::string levelSymbol = ( nMaxPerceptionLevel_.IsSet() && nMaxPerceptionLevel_ >= levelPerception_ ) ? realAgent_.GetType().GetLevelSymbol() : std::string();
-    tools.DrawUnitSymbol( currentSymbol_, moveSymbol_, staticSymbol_, levelSymbol, isMoving, where, -tools.GetOptions().GetRatio( realAgent_ ), direction, width, depth );
-    bool app6 = isMoving ? moveSymbol_.empty() : staticSymbol_.empty();
+    const std::string levelSymbol = nLevel_ ? realAgent_.GetType().GetLevelSymbol() : std::string();
+    const float ratio = nLevel_ ? tools.GetOptions().GetRatio( realAgent_ ) : 1;
+    tools.DrawUnitSymbol( currentSymbol_, moveSymbol_, staticSymbol_, levelSymbol, isMoving, where, -ratio, direction, width, depth );
+    const bool app6 = isMoving ? moveSymbol_.empty() : staticSymbol_.empty();
     if( app6 && nMaxPerceptionLevel_.IsSet() && nMaxPerceptionLevel_ > eDetection )
-        tools.DrawApp6SymbolFixedSize( realAgent_.GetType().GetHQSymbol(), where, -tools.GetOptions().GetRatio( realAgent_ ), 0 );
+        tools.DrawApp6SymbolFixedSize( realAgent_.GetType().GetHQSymbol(), where, -ratio, 0 );
 }
 
 // -----------------------------------------------------------------------------
@@ -370,4 +371,14 @@ void AgentKnowledge::UpdateSymbol()
     currentNature_ = App6Symbol::FilterNature( realAgent_.GetType().GetNature().GetNature(), filter );
     if( levelPerception_ != eNotSeen && nLevel_ == eNatureLevel_None && nMaxPerceptionLevel_.IsSet() && nMaxPerceptionLevel_ >= levelPerception_ )
         nLevel_ = tools::NatureLevelFromString( realAgent_.GetType().GetNature().GetLevel() );
+}
+
+std::string AgentKnowledge::GetLevel() const
+{
+    return nLevel_ ? realAgent_.GetType().GetNature().GetLevel() : "";
+}
+
+bool AgentKnowledge::IsCommandPost() const
+{
+    return bIsPC_.IsSet() && bIsPC_;
 }

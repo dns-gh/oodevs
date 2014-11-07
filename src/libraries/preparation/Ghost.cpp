@@ -18,7 +18,6 @@
 #include "FormationModel.h"
 #include "ProfilesModel.h"
 #include "StaticModel.h"
-
 #include "clients_gui/GLOptions.h"
 #include "clients_gui/GLView_ABC.h"
 #include "clients_gui/LogisticHierarchiesBase.h"
@@ -33,7 +32,6 @@
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/DotationType.h"
 #include "clients_kernel/GhostPrototype.h"
-#include "clients_gui/MergingTacticalHierarchies.h"
 #include "clients_gui/PropertiesDictionary.h"
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/Styles.h"

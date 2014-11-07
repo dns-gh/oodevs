@@ -15,8 +15,6 @@
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Positions.h"
 #include "clients_kernel/Profile_ABC.h"
-#include "clients_kernel/TacticalHierarchies.h"
-#include <boost/bind.hpp>
 
 using namespace kernel;
 using namespace gui;

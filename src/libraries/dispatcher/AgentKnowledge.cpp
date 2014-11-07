@@ -278,3 +278,13 @@ geometry::Point2d AgentKnowledge::GetPosition() const
 {
     return position_;
 }
+
+std::string AgentKnowledge::GetLevel() const
+{
+    return "";
+}
+
+bool AgentKnowledge::IsCommandPost() const
+{
+    return bPC_;
+}

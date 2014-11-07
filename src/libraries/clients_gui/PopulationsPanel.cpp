@@ -9,14 +9,11 @@
 
 #include "clients_gui_pch.h"
 #include "PopulationsPanel.h"
-
 #include "SubObjectName.h"
 #include "PopulationTypesListView.h"
 #include "RichSpinBox.h"
-
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Formation_ABC.h"
-#include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/Tools.h"
 
