@@ -949,7 +949,6 @@ int DEC_AgentFunctions::GetPosture( const DEC_Decision_ABC* agent )
         default:
             throw MASA_EXCEPTION( "DEC_AgentFunctions::GetPosture: cannot be called for this entity" );
     }
-    return 0; // to hush the compiler
 }
 
 // -----------------------------------------------------------------------------
@@ -980,7 +979,6 @@ bool DEC_AgentFunctions::IsInCrowd( const DEC_Decision_ABC* agent, DEC_Decision_
         default:
             throw MASA_EXCEPTION( "DEC_AgentFunctions::GetPosture: cannot be called for this entity" );
     }
-    return false; // to hush the compiler
 }
 
 // -----------------------------------------------------------------------------
