@@ -3543,6 +3543,10 @@ Los datos no pueden ser proyectados.</translation>
         <source>All timeline files (*.ord *.timeline)</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Filter on selected entity</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>TimelineWebView</name>

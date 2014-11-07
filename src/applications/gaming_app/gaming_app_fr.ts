@@ -3548,6 +3548,10 @@ Ces données ne peuvent pas être projetées.</translation>
         <source>All timeline files (*.ord *.timeline)</source>
         <translation>Tous les fichiers timeline (*.ord *.timeline)</translation>
     </message>
+    <message>
+        <source>Filter on selected entity</source>
+        <translation>Filtrer sur l&apos;entité sélectionnée</translation>
+    </message>
 </context>
 <context>
     <name>TimelineWebView</name>

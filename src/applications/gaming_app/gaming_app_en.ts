@@ -3534,6 +3534,10 @@ This data can&apos;t be projected.</source>
         <source>All timeline files (*.ord *.timeline)</source>
         <translation>All timeline files (*.ord *.timeline)</translation>
     </message>
+    <message>
+        <source>Filter on selected entity</source>
+        <translation>Filter on selected entity</translation>
+    </message>
 </context>
 <context>
     <name>TimelineWebView</name>
