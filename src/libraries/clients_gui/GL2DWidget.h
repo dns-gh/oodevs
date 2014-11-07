@@ -7,58 +7,66 @@
 //
 // *****************************************************************************
 
-#ifndef __GL3DWidget_h_
-#define __GL3DWidget_h_
+#ifndef __GL2DWidget_h_
+#define __GL2DWidget_h_
 
-#include "GLViewBase.h"
-#include "GLView_ABC.h"
 #include "SetGlOptions.h"
-#include <graphics/Widget3D.h>
-#include <graphics/ViewFrustum.h>
-
-class EventStrategy_ABC;
+#include "GLView_ABC.h"
+#include "GLViewBase.h"
+#include "MapWidget_ABC.h"
+#include "MT_Tools/MT_Profiler.h"
+#include <graphics/MapWidget.h>
 
 namespace kernel
 {
-    class DetectionMap;
     class Controllers;
-}
-
-namespace tools
-{
-    class ExerciseConfig;
 }
 
 namespace gui
 {
-    class DrawingTypes;
-    class Layer;
-    class PickingSelector;
+    class IconLayout;
+    class GlRenderPass_ABC;
+    class FrameCounter;
 
 // =============================================================================
-/** @class  GL3DWidget
-    @brief  GL3DWidget
+/** @class  GL2DWidget
+    @brief  GL2DWidget
 */
-// Created: AGE 2006-03-28
+// Created: AGE 2006-03-15
 // =============================================================================
-class GL3DWidget : private SetGlOptions
-                 , public Widget3D
+class GL2DWidget : private SetGlOptions
+                 , public MapWidget
+                 , public MapWidget_ABC
                  , public GLViewBase
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             GL3DWidget( QWidget* pParent,
-                         GLView_ABC& parent,
+             GL2DWidget( QWidget* parentWidget,
+                         GLView_ABC& parentView,
                          float width,
                          float height,
-                         kernel::DetectionMap& elevation,
-                         EventStrategy_ABC& strategy,
+                         const std::shared_ptr< IconLayout >& iconLayout,
                          QGLWidget* shareWidget = 0 );
-    virtual ~GL3DWidget();
+    virtual ~GL2DWidget();
+    //@}
+
+    //! @name Passes
+    //@{
+    void SetPassOrder( const std::string& names );
+    void AddPass( GlRenderPass_ABC& pass );
+    void RemovePass( GlRenderPass_ABC& pass );
     //@}
 
 private:
+    //! @name MapWidget_ABC implementation
+    //@{
+    virtual void PaintLayers();
+    virtual unsigned int Width() const;
+    virtual unsigned int Height() const;
+    virtual geometry::Rectangle2f Viewport() const;
+    //@}
+
     //! @name Layers -> implementation
     //@{
     virtual void AddLayers( const T_LayersVector& layers );
@@ -90,14 +98,9 @@ private:
     virtual void WheelEvent( QWheelEvent* event );
     //@}
 
-    //! @name Tooltip helpers -> implementation
+    //! @name Tooltips helpers -> implementation
     //@{
     virtual geometry::Point2f MapToterrainCoordinates( int x, int y );
-    //@}
-
-    //! @name Common drawing tools -> hack
-    //@{
-    virtual void SetCurrentColor( float r, float g, float b, float a = 1 );
     //@}
 
     //! @name Drawing -> implementation
@@ -159,7 +162,7 @@ private:
     virtual void DrawIcon( const char** xpm,
                            const geometry::Point2f& where,
                            float size = -1.f,
-                           float factor = 1.f,
+                           float factore = 1.f,
                            E_Unit unit = meters ) const;
     virtual void DrawImage( const QImage& image,
                             const geometry::Point2f& where ) const;
@@ -210,20 +213,39 @@ private:
 
     //! @name Helpers
     //@{
-    void CenterView();
-    float ElevationAt( const geometry::Point2f& point ) const;
+    float ComputeZoomFactor( float& factor, bool bVariableSize = true ) const;
+    void DrawApp6( const std::string& symbol,
+                                const geometry::Point2f& where,
+                                float expectedWidth,
+                                const geometry::Rectangle2f& viewport,
+                                unsigned int printWidth,
+                                unsigned int printHeight,
+                                unsigned int direction,
+                                bool checkAlpha = true,
+                                float xFactor = 1.,
+                                float yFactor = 1.,
+                                float svgDeltaX = -20,
+                                float svgDeltaY = -80 ) const;
+    void DrawApp6SymbolScaledSize( const std::string& symbol,
+                                   const geometry::Point2f& where,
+                                   float factor,
+                                   unsigned int direction,
+                                   float width,
+                                   float depth ) const;
+    void DrawTail( const T_PointVector& points, float width ) const;
+    void DrawTextLabel( const std::string& message,
+                        const geometry::Point2f& where,
+                        int baseSize = 12 );
     bool IsInSelectionViewport( const geometry::Point2f& point ) const;
-    void UndoRotations() const;
+    void RenderPass( GlRenderPass_ABC& pass );
+    void UpdateStipple() const;
     //@}
 
     //! @name Qt events
     //@{
     virtual void dropEvent( QDropEvent* event );
-    virtual void mousePressEvent( QMouseEvent* );
-    virtual void mouseMoveEvent( QMouseEvent* );
-    virtual void mouseReleaseEvent( QMouseEvent* );
-    virtual void mouseDoubleClickEvent( QMouseEvent* );
     virtual void keyPressEvent( QKeyEvent* );
+    virtual void mousePressEvent( QMouseEvent* );
     virtual void enterEvent( QEvent* event );
     virtual void leaveEvent( QEvent* event );
     //@}
@@ -231,31 +253,46 @@ private:
     //! @name OpenGL
     //@{
     virtual void UpdateGL();
-    virtual void initializeGL();
     virtual void paintGL();
+    virtual void PickGL();
+    virtual void initializeGL();
     virtual void resizeGL( int w, int h );
-    virtual void Paint( const ViewFrustum& view );
+    //@}
+
+private:
+    //! @name Types
+    //@{
+    struct passLess
+    {
+        explicit passLess( const std::string& names ) : names_( names ) {}
+        bool operator()( GlRenderPass_ABC* lhs, GlRenderPass_ABC* rhs ) const;
+        std::string names_;
+    };
+    typedef std::multiset< GlRenderPass_ABC*, passLess > T_RenderPasses;
     //@}
 
 private:
     //! @name Member data
     //@{
-    float width_;
-    float height_;
-    kernel::DetectionMap& elevation_;
-    EventStrategy_ABC& strategy_;
-    T_LayersVector layers_;
-    float zRatio_;
-    unsigned int frame_;
-    bool isInitialized_;
-    ViewFrustum current_;
-    //picking
-    QPoint clickedPoint_;
     int windowHeight_;
     int windowWidth_;
+    unsigned int circle_;
+    unsigned int halfCircle_;
+    int minVisuScale_;
+    int maxVisuScale_;
+    geometry::Rectangle2f viewport_;
+    unsigned int frame_;
+    std::shared_ptr< IconLayout > iconLayout_;
+    T_RenderPasses passes_;
+    std::string currentPass_;
+    QFont currentFont_;
+    bool bMulti_;
+    float SymbolSize_;
+    std::unique_ptr< FrameCounter > fps_;
+    QPoint clickedPoint_;
     //@}
 };
 
 }
 
-#endif // __GL3DWidget_h_
+#endif // __GL2DWidget_h_

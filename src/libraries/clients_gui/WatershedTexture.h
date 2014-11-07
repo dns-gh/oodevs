@@ -40,12 +40,7 @@ public:
     //@{
     void Load( const kernel::Options& options );
     unsigned int CreateTexture();
-    //@}
-
-private:
-    //! @name Helpers
-    //@{
-    void Reset();
+    void Purge();
     //@}
 
 private:

@@ -38,7 +38,6 @@ class Lighting_ABC;
 
 namespace gui
 {
-    class ColorStrategy_ABC;
     class ContourLinesComputer;
     class ContourLinesObserver;
     class Elevation2dTexture;
@@ -77,6 +76,8 @@ public:
     //! @name Serialization
     //@{
     void Load();
+    void Purge();
+
     void Load( kernel::Settings& settings );
     void Save( kernel::Settings& settings );
     //@}
@@ -128,8 +129,6 @@ public:
     QColor ComputeUrbanColor( const kernel::UrbanObject_ABC& object ) const;
 
     const T_FireOptions& GetFireOptions( FireGroup group ) const;
-    void SetColorStrategy( ColorStrategy_ABC& strategy );
-    ColorStrategy_ABC& GetColorStrategy() const;
     //@}
 
 private:
@@ -147,7 +146,6 @@ private:
     const kernel::DetectionMap& map_;
     const kernel::EntityResolver_ABC& model_;
     const kernel::AccommodationTypes& accommodationTypes_;
-    ColorStrategy_ABC* colors_;
 
     // View options
     bool selected_;

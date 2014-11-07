@@ -1,3 +1,15 @@
+// *****************************************************************************
+//
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2014 MASA Group
+//
+// *****************************************************************************
+
+#ifndef GLColors_h
+#define GLColors_h
+
 #define COLOR_PARAM         0.9f, 0.4f, 0.4f, 1.0f
 #define COLOR_SEL_PARAM     1.0f, 0.6f, 0.6f, 1.0f
 
@@ -59,3 +71,5 @@
 #define COLOR_POPULATION_ATTITUDE_AGRESSIVE 1.0f, 0.0f, 0.0f
 
 #define GL_CROSSSIZE        100.0f
+
+#endif // GLColors_h

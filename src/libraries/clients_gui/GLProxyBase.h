@@ -3,71 +3,51 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2006 Mathématiques Appliquées SA (MASA)
+// Copyright (c) 2014 MASA Group
 //
 // *****************************************************************************
 
-#ifndef __GL3DWidget_h_
-#define __GL3DWidget_h_
+#ifndef GLProxyBase_h
+#define GLProxyBase_h
 
-#include "GLViewBase.h"
 #include "GLView_ABC.h"
-#include "SetGlOptions.h"
-#include <graphics/Widget3D.h>
-#include <graphics/ViewFrustum.h>
-
-class EventStrategy_ABC;
 
 namespace kernel
 {
-    class DetectionMap;
-    class Controllers;
-}
-
-namespace tools
-{
-    class ExerciseConfig;
+    struct FrustumInfos;
 }
 
 namespace gui
 {
-    class DrawingTypes;
-    class Layer;
-    class PickingSelector;
 
 // =============================================================================
-/** @class  GL3DWidget
-    @brief  GL3DWidget
+/** @class  GLProxyBase
+    @brief  GLProxyBase forwarded calls to GLTools_ABC methods to the current view
 */
-// Created: AGE 2006-03-28
+// Created: ABR 2014-06-23
 // =============================================================================
-class GL3DWidget : private SetGlOptions
-                 , public Widget3D
-                 , public GLViewBase
+class GLProxyBase : public GLView_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             GL3DWidget( QWidget* pParent,
-                         GLView_ABC& parent,
-                         float width,
-                         float height,
-                         kernel::DetectionMap& elevation,
-                         EventStrategy_ABC& strategy,
-                         QGLWidget* shareWidget = 0 );
-    virtual ~GL3DWidget();
+             GLProxyBase();
+    virtual ~GLProxyBase();
     //@}
 
-private:
-    //! @name Layers -> implementation
+    //! @name Proxy -> implementation
+    //@{
+    virtual void Register( const T_View& view );
+    virtual void Unregister( const T_View& view );
+    //@}
+
+    //! @name Layers -> forward to all children
     //@{
     virtual void AddLayers( const T_LayersVector& layers );
-    virtual bool MoveBelow( const std::shared_ptr< Layer_ABC >& lhs,
-                            const std::shared_ptr< Layer_ABC >& rhs );
     virtual void RemoveLayer( const T_Layer& layer );
     //@}
 
-    //! @name Frustum -> implementation
+    //! @name Frustum -> forward to active view
     //@{
     virtual FrustumInfos SaveFrustum() const;
     virtual void LoadFrustum( const FrustumInfos& infos );
@@ -78,10 +58,9 @@ private:
     virtual void Zoom( float width );
     virtual float Zoom() const;
     virtual void SetZoom( float zoom );
-    virtual float GetAdaptiveZoomFactor( bool bVariableSize = true ) const;
     //@}
 
-    //! @name Picking -> implementation
+    //! @name Picking -> forward to active view
     //@{
     virtual void FillSelection( const geometry::Point2f& point,
                                 T_ObjectsPicking& selection,
@@ -90,23 +69,24 @@ private:
     virtual void WheelEvent( QWheelEvent* event );
     //@}
 
-    //! @name Tooltip helpers -> implementation
+    //! @name Tooltip helpers -> forward to hovered view
     //@{
     virtual geometry::Point2f MapToterrainCoordinates( int x, int y );
     //@}
 
-    //! @name Common drawing tools -> hack
+    //! @name Drawing tools -> forward to all children
     //@{
-    virtual void SetCurrentColor( float r, float g, float b, float a = 1 );
+    virtual void UpdateGL();
+    virtual void SetCurrentCursor( const QCursor& cursor );
     //@}
 
-    //! @name Drawing -> implementation
+    //! @name Drawing operations -> forward to current view
     //@{
-    virtual void SetCurrentCursor( const QCursor& cursor );
+    virtual float GetAdaptiveZoomFactor( bool bVariableSize = true ) const;
     virtual std::string GetCurrentPass() const;
     virtual float LineWidth( float base ) const;
-    virtual unsigned short StipplePattern( int factor = 1 ) const;
     virtual float Pixels( const geometry::Point2f& at = geometry::Point2f() ) const;
+    virtual unsigned short StipplePattern( int factor = 1 ) const;
 
     virtual void DrawApp6Symbol( const std::string& symbol,
                                  const geometry::Point2f& where,
@@ -208,54 +188,14 @@ private:
                         const QFont& font ) const;
     //@}
 
-    //! @name Helpers
-    //@{
-    void CenterView();
-    float ElevationAt( const geometry::Point2f& point ) const;
-    bool IsInSelectionViewport( const geometry::Point2f& point ) const;
-    void UndoRotations() const;
-    //@}
-
-    //! @name Qt events
-    //@{
-    virtual void dropEvent( QDropEvent* event );
-    virtual void mousePressEvent( QMouseEvent* );
-    virtual void mouseMoveEvent( QMouseEvent* );
-    virtual void mouseReleaseEvent( QMouseEvent* );
-    virtual void mouseDoubleClickEvent( QMouseEvent* );
-    virtual void keyPressEvent( QKeyEvent* );
-    virtual void enterEvent( QEvent* event );
-    virtual void leaveEvent( QEvent* event );
-    //@}
-
-    //! @name OpenGL
-    //@{
-    virtual void UpdateGL();
-    virtual void initializeGL();
-    virtual void paintGL();
-    virtual void resizeGL( int w, int h );
-    virtual void Paint( const ViewFrustum& view );
-    //@}
-
-private:
+protected:
     //! @name Member data
     //@{
-    float width_;
-    float height_;
-    kernel::DetectionMap& elevation_;
-    EventStrategy_ABC& strategy_;
-    T_LayersVector layers_;
-    float zRatio_;
-    unsigned int frame_;
-    bool isInitialized_;
-    ViewFrustum current_;
-    //picking
-    QPoint clickedPoint_;
-    int windowHeight_;
-    int windowWidth_;
+    T_Views views_;
+    std::shared_ptr< GLView_ABC > defaultView_; // first view defined, used by default
     //@}
 };
 
-}
+} //! namespace gui
 
-#endif // __GL3DWidget_h_
+#endif // GLProxyBase_h

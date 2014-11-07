@@ -13,10 +13,10 @@
 
 #include "CompositionPass.h"
 #include "GlPlaceHolder.h"
-#include "GlWidget.h"
-#include "Gl3dWidget.h"
+#include "GL2DWidget.h"
+#include "GL3DWidget.h"
 #include "GLOptions.h"
-#include "GlProxy.h"
+#include "GL2D3DProxy.h"
 #include "IconLayout.h"
 #include "Layer.h"
 #include "LayersRenderPass.h"
@@ -36,19 +36,19 @@ using namespace kernel;
 // Created: AGE 2007-03-09
 // -----------------------------------------------------------------------------
 GLStackedWidget::GLStackedWidget( QWidget* parent,
-                                  GlProxy& proxy,
+                                  const GLView_ABC::T_View& proxy,
                                   const tools::ExerciseConfig& config,
                                   DetectionMap& map,
                                   EventStrategy_ABC& strategy,
-                                  const DrawingTypes& drawingTypes,
-                                  const IconLayout& iconLayout )
+                                  const std::shared_ptr< IconLayout >& iconLayout,
+                                  QGLWidget* shareWidget /* = 0 */ )
     : QStackedWidget( parent )
-    , proxy_       ( proxy )
-    , config_      ( config )
-    , map_         ( map )
-    , strategy_    ( strategy )
-    , drawingTypes_( drawingTypes )
-    , iconLayout_  ( iconLayout )
+    , proxy_( proxy )
+    , config_( config )
+    , map_( map )
+    , strategy_( strategy )
+    , iconLayout_( iconLayout )
+    , shareWidget_( shareWidget )
 {
     setObjectName( "GLStackedWidget" );
     insertWidget( eWidget_Empty, new GlPlaceHolder( this ) );
@@ -70,36 +70,41 @@ GLStackedWidget::~GLStackedWidget()
 // -----------------------------------------------------------------------------
 void GLStackedWidget::Load()
 {
-    if( widget2d_ && widget3d_ )
-    {
-        widget2d_->Load( config_ );
-        widget3d_->Load( config_ );
-        return;
-    }
+    if( widget2d_ || widget3d_ )
+        throw MASA_EXCEPTION( "GLStackedWidget already loaded" );
 
-    widget2d_ = std::make_shared< GlWidget >( this, proxy_, config_.GetTerrainWidth(),config_.GetTerrainHeight(), iconLayout_, drawingTypes_ );
-    widget3d_ = std::make_shared< Gl3dWidget >(this, proxy_, config_.GetTerrainWidth(), config_.GetTerrainHeight(), map_, strategy_, drawingTypes_, widget2d_.get() );
+    widget2d_ = std::make_shared< GL2DWidget >( this,
+                                                *proxy_,
+                                                config_.GetTerrainWidth(),
+                                                config_.GetTerrainHeight(),
+                                                iconLayout_,
+                                                shareWidget_ );
+    widget3d_ = std::make_shared< GL3DWidget >( this,
+                                                *proxy_,
+                                                config_.GetTerrainWidth(),
+                                                config_.GetTerrainHeight(),
+                                                map_,
+                                                strategy_,
+                                                shareWidget_ ? shareWidget_ : widget2d_.get() );
 
-    widget2d_->Load( config_ );
     widget2d_->Configure( strategy_ );
     auto movementLayer = std::make_shared< DragMovementLayer >( *widget2d_ );
     gui::connect( movementLayer.get(), SIGNAL( Translated() ), [&]() {
-        proxy_.GetOptions().SetLockedEntity( 0 );
+        proxy_->GetActiveOptions().SetLockedEntity( 0 );
     } );
     widget2d_->Configure( movementLayer );
-    widget3d_->Load( config_ );
-
-    proxy_.SetWidget2D( widget2d_ );
-    proxy_.SetWidget3D( widget3d_ );
     
     insertWidget( eWidget_2D, widget2d_.get() );
     insertWidget( eWidget_3D, widget3d_.get() );
 
-    connect( widget2d_.get(), SIGNAL( MouseMove( const geometry::Point2f& ) ), this, SIGNAL( MouseMove( const geometry::Point2f& ) ) );
-    connect( widget3d_.get(), SIGNAL( MouseMove( const geometry::Point3f& ) ), this, SIGNAL( MouseMove( const geometry::Point3f& ) ) );
+    connect( widget2d_.get(), SIGNAL( MouseMove( const geometry::Point2f& ) ),
+             this, SIGNAL( MouseMove( const geometry::Point2f& ) ) );
+    connect( widget3d_.get(), SIGNAL( MouseMove( const geometry::Point3f& ) ),
+             this, SIGNAL( MouseMove( const geometry::Point3f& ) ) );
 
     InitializePasses();
-    ChangeTo( controllers_.options_.GetOption( "3D" ).To< bool >() ? eWidget_3D : eWidget_2D );
+    ChangeTo( proxy_->GetCurrentOptions().Get( "3D" ).To< bool >() ? eWidget_3D : eWidget_2D );
+    //widget2d_->makeCurrent();
 }
 
 // -----------------------------------------------------------------------------
@@ -112,10 +117,15 @@ void GLStackedWidget::ChangeTo( E_Widget type )
     if( type == currentType )
         return;
 
+    if( currentType == eWidget_2D )
+        proxy_->Unregister( widget2d_ );
+    else if( currentType == eWidget_3D )
+        proxy_->Unregister( widget3d_ );
+
     if( type == eWidget_2D )
-        proxy_.ChangeTo( widget2d_ );
+        proxy_->Register( widget2d_ );
     else if( type == eWidget_3D )
-        proxy_.ChangeTo( widget3d_ );
+        proxy_->Register( widget3d_ );
 
     setCurrentIndex( type );
 }
@@ -142,12 +152,12 @@ void GLStackedWidget::InitializePasses()
     if( !widget2d_ )
         return;
     widget2d_->SetPassOrder( "main,fog,composition,tooltip" );
-    LayersRenderPass*  tooltip     = new LayersRenderPass ( *widget2d_, "tooltip", false );
-    TextureRenderPass* main        = new TextureRenderPass( *widget2d_, "main", proxy_ );
-    TextureRenderPass* fog         = new TextureRenderPass( *widget2d_, "fog", proxy_, "FogOfWar" );
-    GlRenderPass_ABC*  composition = new CompositionPass  ( *main, *fog, proxy_, "FogOfWar" );
+    auto tooltip = new LayersRenderPass( *widget2d_, "tooltip", false );
+    auto main = new TextureRenderPass( *widget2d_, "main", *proxy_ );
+    auto fog = new TextureRenderPass( *widget2d_, "fog", *proxy_, "FogOfWar" );
+    auto compo = new CompositionPass( *main, *fog, *proxy_, "FogOfWar" );
     widget2d_->AddPass( *tooltip );
-    widget2d_->AddPass( *composition );
+    widget2d_->AddPass( *compo );
     widget2d_->AddPass( *fog );
     widget2d_->AddPass( *main );
 }
@@ -165,10 +175,32 @@ void GLStackedWidget::SetFocus()
 }
 
 // -----------------------------------------------------------------------------
-// Name: GLStackedWidget::GetView
+// Name: GLStackedWidget::GetWidget2d
 // Created: ABR 2012-07-10
 // -----------------------------------------------------------------------------
-std::shared_ptr< GlWidget > GLStackedWidget::GetWidget2d()
+std::shared_ptr< GL2DWidget > GLStackedWidget::GetWidget2d() const
 {
     return widget2d_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: GLStackedWidget::GetProxy
+// Created: ABR 2012-07-10
+// -----------------------------------------------------------------------------
+std::shared_ptr< GLView_ABC > GLStackedWidget::GetProxy() const
+{
+    return proxy_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: GLStackedWidget::GetCurrentWidget
+// Created: ABR 2012-07-10
+// -----------------------------------------------------------------------------
+std::shared_ptr< QGLWidget > GLStackedWidget::GetCurrentWidget() const
+{
+    if( widget2d_ )
+        return widget2d_;
+    if( widget3d_ )
+        return widget2d_;
+    return std::shared_ptr< QGLWidget >();
 }

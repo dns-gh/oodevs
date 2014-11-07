@@ -39,7 +39,7 @@ WatershedTexture::WatershedTexture( const kernel::DetectionMap& map )
 // -----------------------------------------------------------------------------
 WatershedTexture::~WatershedTexture()
 {
-    Reset();
+    Purge();
 }
 
 // -----------------------------------------------------------------------------
@@ -57,7 +57,7 @@ void WatershedTexture::Load( const kernel::Options& options )
     const float alpha = options.Get( alphaOptionName ).To< float >();
     if( height == height_ && inverse == inverse_ && color == color_ && alpha == alpha_ )
         return;
-    Reset();
+    Purge();
     height_ = height;
     inverse_ = inverse;
     color_ = color;
@@ -65,10 +65,10 @@ void WatershedTexture::Load( const kernel::Options& options )
 }
 
 // -----------------------------------------------------------------------------
-// Name: WatershedTexture::Reset
+// Name: WatershedTexture::Purge
 // Created: ABR 2014-07-02
 // -----------------------------------------------------------------------------
-void WatershedTexture::Reset()
+void WatershedTexture::Purge()
 {
     glDeleteTextures( 1, &texture_ );
     texture_ = 0;

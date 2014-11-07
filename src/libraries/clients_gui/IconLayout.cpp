@@ -39,11 +39,18 @@ void IconLayout::AddIcon( const char** xpm, int x, int y )
     iconLocations_[ xpm ] = geometry::Point2f( float( x ), float( y ) );
 }
 
+namespace
+{
+    const geometry::Point2f noTranslation( 0, 0 );
+}
+
 // -----------------------------------------------------------------------------
 // Name: IconLayout::IconLocation
 // Created: SBO 2006-08-18
 // -----------------------------------------------------------------------------
 const geometry::Point2f& IconLayout::IconLocation( const char** xpm ) const
 {
+    if( iconLocations_.count( xpm ) == 0 )
+        return noTranslation;
     return iconLocations_.at( xpm );
 }

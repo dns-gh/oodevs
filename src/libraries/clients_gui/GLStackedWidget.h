@@ -10,14 +10,14 @@
 #ifndef __GLStackedWidget_h_
 #define __GLStackedWidget_h_
 
-namespace tools
-{
-    class ExerciseConfig;
-}
-
 namespace kernel
 {
     class DetectionMap;
+}
+
+namespace tools
+{
+    class ExerciseConfig;
 }
 
 class EventStrategy_ABC;
@@ -26,9 +26,9 @@ class QStackedWidget;
 namespace gui
 {
     class DrawingTypes;
-    class Gl3dWidget;
-    class GlProxy;
-    class GlWidget;
+    class GL2DWidget;
+    class GL3DWidget;
+    class GLView_ABC;
     class IconLayout;
     class Layer;
 
@@ -57,12 +57,12 @@ public:
     //! @name Constructors/Destructor
     //@{
              GLStackedWidget( QWidget* parent,
-                              GlProxy& proxy,
+                              const std::shared_ptr< GLView_ABC >& proxy,
                               const tools::ExerciseConfig& config,
                               kernel::DetectionMap& map,
                               EventStrategy_ABC& strategy,
-                              const DrawingTypes& drawingTypes,
-                              const IconLayout& iconLayout );
+                              const std::shared_ptr< IconLayout >& iconLayout,
+                              QGLWidget* shareWidget = 0 );
     virtual ~GLStackedWidget();
     //@}
 
@@ -72,17 +72,18 @@ public:
     void Close();
     void ChangeTo( E_Widget type );
     void SetFocus();
-    std::shared_ptr< GlWidget > GetWidget2d();
+    std::shared_ptr< GLView_ABC > GetProxy() const;
+    std::shared_ptr< GL2DWidget > GetWidget2d() const;
+    std::shared_ptr< QGLWidget > GetCurrentWidget() const;
     //@}
-
-    GlWidget* GetWidget2d() const;
 
 signals:
     //! @name Signals
     //@{
     void MouseMove( const geometry::Point2f& );
     void MouseMove( const geometry::Point3f& );
-    void UpdateGL();
+    void EnterEvent( const QWidget& );
+    void LeaveEvent();
     //@}
 
 private:
@@ -95,15 +96,15 @@ private:
 private:
     //! @name Member data
     //@{
-    GlProxy& proxy_;
     const tools::ExerciseConfig& config_;
     kernel::DetectionMap& map_;
     EventStrategy_ABC& strategy_;
-    const DrawingTypes& drawingTypes_;
-    const IconLayout& iconLayout_;
+    std::shared_ptr< IconLayout > iconLayout_;
+    QGLWidget* shareWidget_;
 
-    std::shared_ptr< GlWidget > widget2d_;
-    std::shared_ptr< Gl3dWidget > widget3d_;
+    std::shared_ptr< GLView_ABC > proxy_;
+    std::shared_ptr< GL2DWidget > widget2d_;
+    std::shared_ptr< GL3DWidget > widget3d_;
     //@}
 };
 

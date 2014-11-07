@@ -10,7 +10,7 @@
 #include "clients_gui_pch.h"
 #include "SymbolIcons.h"
 #include "moc_SymbolIcons.cpp"
-#include "GlWidget.h"
+#include "GL2DWidget.h"
 
 using namespace gui;
 
@@ -33,7 +33,7 @@ namespace
     const float viewSize = 600;
 }
 
-void SymbolIcons::Initialize( gui::GlWidget* widget )
+void SymbolIcons::Initialize( GL2DWidget* widget )
 {
     if( !widget )
         throw MASA_EXCEPTION( "cannot initialize symbols icons with a null 2D widget" );
