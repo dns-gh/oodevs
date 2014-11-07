@@ -30,7 +30,7 @@ namespace
     }
     void MakeTable( tools::Sql_ABC& db )
     {
-        tools::Sql_ABC::T_Transaction tr = db.Begin();
+        auto tr = db.Begin();
         Execute( *db.Prepare( *tr,
             "CREATE TABLE IF NOT EXISTS reports ("
             "  id           INTEGER PRIMARY KEY"
@@ -44,6 +44,14 @@ namespace
             ")" ) );
         db.Commit( *tr );
     }
+    void MakeIndex( tools::Sql_ABC& db )
+    {
+        auto tr = db.Begin();
+        Execute( *db.Prepare( *tr,
+            "CREATE INDEX IF NOT EXISTS index_tick"
+            "  ON reports (tick, id)" ) );
+        db.Commit( *tr );
+    }
 }
 
 Reports::Reports( const tools::Path& filename )
@@ -51,6 +59,7 @@ Reports::Reports( const tools::Path& filename )
     , currentTick_( 0 )
 {
     MakeTable( *database_ );
+    MakeIndex( *database_ );
 }
 
 Reports::~Reports()
