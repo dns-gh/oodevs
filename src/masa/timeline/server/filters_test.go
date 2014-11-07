@@ -14,6 +14,7 @@ import (
 	. "launchpad.net/gocheck"
 	"masa/sword/swapi"
 	"masa/sword/sword"
+	"masa/sword/swtest"
 	"masa/timeline/sdk"
 	"masa/timeline/services"
 	"masa/timeline/util"
@@ -123,7 +124,9 @@ func (f *Fixture) applyFilters(c *C, cfg services.EventFilterConfig, count int) 
 	// test filters on ReadEvents
 	events, err := f.controller.ReadEvents(f.session, cfg)
 	c.Assert(err, IsNil)
-	c.Assert(events, HasLen, count)
+	if len(events) != count {
+		c.Fatal(count, " != len of ", swtest.Stringify(events))
+	}
 	// test filters on observers
 	link, err := f.controller.RegisterObserver(f.session, cfg)
 	c.Assert(err, IsNil)
