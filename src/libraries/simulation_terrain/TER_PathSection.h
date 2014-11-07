@@ -31,10 +31,8 @@ public:
 
     //! @name Operations
     //@{
-    PathResultPtr Execute  ( TER_Pathfinder_ABC& pathfind,
-            unsigned int deadlineSeconds );
+    PathResultPtr Execute( TER_Pathfinder_ABC& pathfind, TerrainRule_ABC& rule );
     double GetLength() const;
-    void   Cancel   ();
     //@}
 
     //! @name Accessors
@@ -42,14 +40,11 @@ public:
     const MT_Vector2D&  GetPosStart () const;
     const MT_Vector2D&  GetPosEnd   () const; // $$$$ AGE 2005-02-25: ...
     void                SetPosStart ( const MT_Vector2D& point );
+    TerrainRule_ABC&    GetRule();
     //@}
 
 private:
-    class Canceler;
-
-private:
     std::unique_ptr< TerrainRule_ABC > rule_;
-    std::unique_ptr< Canceler > canceler_;
     MT_Vector2D startPoint_;
     const MT_Vector2D endPoint_;
     const bool needRefine_;

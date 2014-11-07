@@ -53,6 +53,8 @@ private:
     typedef std::vector< TER_PathSection* > T_PathSectionVector;
     typedef std::list< boost::shared_ptr< TER_PathPoint > > T_PathPoints;
 
+    class Canceler;
+
 private:
     MT_Profiler profiler_;
     std::size_t id_;
@@ -64,6 +66,8 @@ private:
     MT_Vector2D lastWaypoint_;
     std::vector< MT_Vector2D > computedWaypoints_;
     T_PathPoints resultList_;
+    // Kept as a class attribute to have a reference to cancel it asynchronously
+    std::unique_ptr< Canceler > canceler_;
 };
 
 #endif // __DEC_PathComputer_h_
