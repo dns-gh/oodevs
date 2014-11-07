@@ -611,7 +611,7 @@ end
 
 --- Returns the nearest element from the agent's position.
 -- @param elements List of DirectIA knowledges.
--- @return The nearest direc knowledge
+-- @return The nearest DirectIA knowledge
 integration.getNearestElement = function( elements )
     local nearestElement = elements[ 1 ] -- init
     for _, element in pairs ( elements ) do
