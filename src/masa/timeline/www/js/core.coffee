@@ -100,6 +100,7 @@ query_filters = [
     "sword_filter"
     "sword_filter_engaged"
     "sword_profile"
+    "sword_write_only"
 ]
 
 get_filters = ->
