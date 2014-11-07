@@ -609,10 +609,13 @@ integration.query.getEntitiesToCombatSupportPlatoonsTask = function( platoons )
     return platoonsToSupport
 end
 
+--- Returns the nearest element from the agent's position.
+-- @param elements List of DirectIA knowledges.
+-- @return The nearest direc knowledge
 integration.getNearestElement = function( elements )
     local nearestElement = elements[ 1 ] -- init
     for _, element in pairs ( elements ) do
-        if integration.distance( meKnowledge, element ) > integration.distance( meKnowledge, nearestElement ) then
+        if integration.distance( meKnowledge, element ) < integration.distance( meKnowledge, nearestElement ) then
             nearestElement = element
         end
     end
