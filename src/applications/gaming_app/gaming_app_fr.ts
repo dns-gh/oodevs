@@ -2587,10 +2587,6 @@ Ces données ne peuvent pas être projetées.</translation>
         <translation>Basculer affichage des fenêtres</translation>
     </message>
     <message>
-        <source>&amp;Windows</source>
-        <translation>&amp;Fenêtres</translation>
-    </message>
-    <message>
         <source>Unit detail</source>
         <translation>Détails des unités</translation>
     </message>

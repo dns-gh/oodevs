@@ -2572,10 +2572,6 @@ This data can&apos;t be projected.</source>
         <translation>&amp;Exercise</translation>
     </message>
     <message>
-        <source>&amp;Windows</source>
-        <translation>&amp;Windows</translation>
-    </message>
-    <message>
         <source>Help</source>
         <translation>Help</translation>
     </message>

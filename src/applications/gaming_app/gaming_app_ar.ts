@@ -2572,10 +2572,6 @@ This data can&apos;t be projected.</source>
         <translation type="unfinished">آند ممارسة</translation>
     </message>
     <message>
-        <source>&amp;Windows</source>
-        <translation type="unfinished">آند Windows</translation>
-    </message>
-    <message>
         <source>Help</source>
         <translation type="unfinished">تعليمات</translation>
     </message>

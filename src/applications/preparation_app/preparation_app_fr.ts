@@ -964,8 +964,8 @@ This data can&apos;t be projected.</source>
 Ces données ne peuvent pas être projetées.</translation>
     </message>
     <message>
-        <source>Generate symbolIcons_</source>
-        <translation type="unfinished"></translation>
+        <source>Generate symbols</source>
+        <translation>Génération des symboles</translation>
     </message>
 </context>
 <context>
@@ -1088,10 +1088,6 @@ Ces données ne peuvent pas être projetées.</translation>
     <message>
         <source>Creation wizard...</source>
         <translation>Assistant de création...</translation>
-    </message>
-    <message>
-        <source>&amp;Windows</source>
-        <translation>&amp;Fenêtres</translation>
     </message>
     <message>
         <source>About</source>

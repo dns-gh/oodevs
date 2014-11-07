@@ -964,7 +964,7 @@ This data can&apos;t be projected.</source>
         <translation type="unfinished">حدث خطأ أثناء تحميل النقطية المصدر.</translation>
     </message>
     <message>
-        <source>Generate symbolIcons_</source>
+        <source>Generate symbols</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1168,10 +1168,6 @@ This data can&apos;t be projected.</source>
     <message>
         <source>Performance...</source>
         <translation type="unfinished">الأداء...</translation>
-    </message>
-    <message>
-        <source>&amp;Windows</source>
-        <translation type="unfinished">آند Windows</translation>
     </message>
     <message>
         <source>&amp;?</source>

@@ -2575,10 +2575,6 @@ This data can&apos;t be projected.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&amp;Windows</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>&amp;?</source>
         <translation type="unfinished"></translation>
     </message>

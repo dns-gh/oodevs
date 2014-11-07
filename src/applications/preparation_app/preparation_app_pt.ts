@@ -963,7 +963,7 @@ This data can&apos;t be projected.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Generate symbolIcons_</source>
+        <source>Generate symbols</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1166,10 +1166,6 @@ This data can&apos;t be projected.</source>
     </message>
     <message>
         <source>Performance...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Windows</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

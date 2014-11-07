@@ -965,7 +965,7 @@ This data can&apos;t be projected.</source>
 Este dato no puede ser proyectado.</translation>
     </message>
     <message>
-        <source>Generate symbolIcons_</source>
+        <source>Generate symbols</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1089,10 +1089,6 @@ Este dato no puede ser proyectado.</translation>
     <message>
         <source>Creation wizard...</source>
         <translation>Asistente de creación...</translation>
-    </message>
-    <message>
-        <source>&amp;Windows</source>
-        <translation>&amp;Ventanas</translation>
     </message>
     <message>
         <source>About</source>

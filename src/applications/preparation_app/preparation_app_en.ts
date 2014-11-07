@@ -967,7 +967,7 @@ This data can&apos;t be projected.</translation>
         <translation>Error while loading Raster source.</translation>
     </message>
     <message>
-        <source>Generate symbolIcons_</source>
+        <source>Generate symbols</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1171,10 +1171,6 @@ This data can&apos;t be projected.</translation>
     <message>
         <source>Performance...</source>
         <translation>Performance...</translation>
-    </message>
-    <message>
-        <source>&amp;Windows</source>
-        <translation>&amp;Windows</translation>
     </message>
     <message>
         <source>&amp;?</source>

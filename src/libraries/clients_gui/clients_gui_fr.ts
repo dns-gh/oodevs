@@ -349,6 +349,17 @@
     </message>
 </context>
 <context>
+    <name>Tools</name>
+    <message>
+        <source>&amp;Windows</source>
+        <translation>&amp;Fenêtres</translation>
+    </message>
+    <message>
+        <source>Add new terrain view</source>
+        <translation>Ajouter une nouvelle vue</translation>
+    </message>
+</context>
+<context>
     <name>Urban</name>
     <message>
         <source>Urban block[%L1]</source>
@@ -973,109 +984,126 @@ Please check access permissions or write protection.</source>
     </message>
 </context>
 <context>
-    <name>gui::GisToolbar</name>
+    <name>gui::GLWidgetManager</name>
     <message>
-        <source>GIS tools</source>
-        <translation type="unfinished">Outils cartographiques</translation>
+        <source>Main view</source>
+        <translation>Vue principale</translation>
     </message>
-    <message>
-        <source>Watershed</source>
-        <translation type="unfinished">Montée des eaux</translation>
-    </message>
-    <message>
-        <source>Enable/disable watershed display</source>
-        <translation type="unfinished">Active/désactive la montée des eaux</translation>
-    </message>
-    <message>
-        <source>&lt;</source>
-        <translation type="unfinished">&lt;</translation>
-    </message>
-    <message>
-        <source>&gt;</source>
-        <translation type="unfinished">&gt;</translation>
-    </message>
-    <message>
-        <source>Display water below or above specified height</source>
-        <translation type="unfinished">Affiche l&apos;eau au dessous ou au dessus de l&apos;altitude spécifiée</translation>
-    </message>
-    <message>
-        <source>Set water height limit</source>
-        <translation type="unfinished">Définit l&apos;altitude limite de l&apos;eau</translation>
-    </message>
-    <message>
-        <source>Change watershed color</source>
-        <translation type="unfinished">Change la couleur de l&apos;eau</translation>
-    </message>
-    <message>
-        <source>Show terrain profiler tool</source>
-        <translation type="unfinished">Affiche l&apos;outil de coupe de terrain</translation>
-    </message>
-    <message>
-        <source>Contour lines</source>
-        <translation type="unfinished">Lignes de niveau</translation>
-    </message>
-    <message>
-        <source>Enable/disable contour lines display</source>
-        <translation type="unfinished">Activer/Désactiver l&apos;afficher des lignes de niveau</translation>
-    </message>
-    <message>
-        <source>Set contour lines height</source>
-        <translation type="unfinished">Définir la hauteur des lignes de niveau</translation>
-    </message>
-    <message>
-        <source>Change contour lines color</source>
-        <translation type="unfinished">Changer la couleur des lignes de niveau</translation>
-    </message>
-</context>
-<context>
-    <name>gui::GlProxy</name>
     <message>
         <source>config.ini</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Save configuration</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Configuration file (*.ini)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Load configuration</source>
-        <translation type="unfinished"></translation>
+        <translation>config.ini</translation>
     </message>
     <message>
         <source>Warning</source>
-        <translation type="unfinished"></translation>
+        <translation>Attention</translation>
+    </message>
+    <message>
+        <source>Unable to create a new terrain view with an invalid id: %1.</source>
+        <translation>Impossible de creer une nouvelle vue de terrain avec un id invalid: %1.</translation>
+    </message>
+    <message>
+        <source>The maximum number of terrain views has been reached.</source>
+        <translation>Le nombre maximum de vues du terrain est atteint.</translation>
+    </message>
+    <message>
+        <source>View %1</source>
+        <translation>Vue %1</translation>
+    </message>
+    <message>
+        <source>Save configuration</source>
+        <translation>Sauvegarder la configuration</translation>
+    </message>
+    <message>
+        <source>Configuration file (*.ini)</source>
+        <translation>Fichier de configuration(*.ini)</translation>
+    </message>
+    <message>
+        <source>Load configuration</source>
+        <translation>Charger une configuration</translation>
     </message>
     <message>
         <source>Unable to load configuration file &apos;%1&apos;.
 These settings are defined for the application &apos;%2&apos;, on the base &apos;%3&apos; and the exercise &apos;%4&apos;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible de charger le fichier de configuration &apos;%1&apos;.
+Ces paramètres sont définis pour l&apos;application &apos;%2&apos;, pour la base physique &apos;%3&apos; et pour l&apos;exercice &apos;%4&apos;.</translation>
+    </message>
+</context>
+<context>
+    <name>gui::GisToolbar</name>
+    <message>
+        <source>GIS tools</source>
+        <translation>Outils cartographiques</translation>
+    </message>
+    <message>
+        <source>Watershed</source>
+        <translation>Montée des eaux</translation>
+    </message>
+    <message>
+        <source>Enable/disable watershed display</source>
+        <translation>Active/désactive la montée des eaux</translation>
+    </message>
+    <message>
+        <source>&lt;</source>
+        <translation>&lt;</translation>
+    </message>
+    <message>
+        <source>&gt;</source>
+        <translation>&gt;</translation>
+    </message>
+    <message>
+        <source>Display water below or above specified height</source>
+        <translation>Affiche l&apos;eau au dessous ou au dessus de l&apos;altitude spécifiée</translation>
+    </message>
+    <message>
+        <source>Set water height limit</source>
+        <translation>Définit l&apos;altitude limite de l&apos;eau</translation>
+    </message>
+    <message>
+        <source>Change watershed color</source>
+        <translation>Change la couleur de l&apos;eau</translation>
+    </message>
+    <message>
+        <source>Show terrain profiler tool</source>
+        <translation>Affiche l&apos;outil de coupe de terrain</translation>
+    </message>
+    <message>
+        <source>Contour lines</source>
+        <translation>Lignes de niveau</translation>
+    </message>
+    <message>
+        <source>Enable/disable contour lines display</source>
+        <translation>Activer/Désactiver l&apos;afficher des lignes de niveau</translation>
+    </message>
+    <message>
+        <source>Set contour lines height</source>
+        <translation>Définir la hauteur des lignes de niveau</translation>
+    </message>
+    <message>
+        <source>Change contour lines color</source>
+        <translation>Changer la couleur des lignes de niveau</translation>
     </message>
 </context>
 <context>
     <name>gui::GradientPreferencesEditor</name>
     <message>
         <source>Copy preset</source>
-        <translation type="unfinished">Copier le dégradé</translation>
+        <translation>Copier le dégradé</translation>
     </message>
     <message>
         <source>Rename preset</source>
-        <translation type="unfinished">Renommer le dégradé</translation>
+        <translation>Renommer le dégradé</translation>
     </message>
     <message>
         <source>Delete preset</source>
-        <translation type="unfinished">Supprimer le dégradé</translation>
+        <translation>Supprimer le dégradé</translation>
     </message>
     <message>
         <source>Fit color gradient to viewport</source>
-        <translation type="unfinished"></translation>
+        <translation>Adapter le dégradé à la zone affichée</translation>
     </message>
     <message>
         <source>Gradient map</source>
-        <translation type="unfinished">Dégradé</translation>
+        <translation>Dégradé</translation>
     </message>
 </context>
 <context>
@@ -1783,7 +1811,7 @@ Voulez-vous le supprimer?</translation>
     </message>
     <message>
         <source>New name:</source>
-        <translation type="unfinished">Nouveau nom :</translation>
+        <translation>Nouveau nom :</translation>
     </message>
 </context>
 <context>
@@ -1952,35 +1980,35 @@ Voulez-vous le supprimer?</translation>
     </message>
     <message>
         <source>Direct fires</source>
-        <translation type="unfinished">Tirs directs</translation>
+        <translation>Tirs directs</translation>
     </message>
     <message>
         <source>Fumigen fires</source>
-        <translation type="unfinished">Tirs fumigènes</translation>
+        <translation>Tirs fumigènes</translation>
     </message>
     <message>
         <source>Explosive fires</source>
-        <translation type="unfinished">Tirs explosifs</translation>
+        <translation>Tirs explosifs</translation>
     </message>
     <message>
         <source>Illumination fires</source>
-        <translation type="unfinished">Tirs d&apos;illumination</translation>
+        <translation>Tirs d&apos;illumination</translation>
     </message>
     <message>
         <source>Neutralisation fires</source>
-        <translation type="unfinished">Tirs de neutralisation</translation>
+        <translation>Tirs de neutralisation</translation>
     </message>
     <message>
         <source>Mute sounds</source>
-        <translation type="unfinished">Désactiver les sons</translation>
+        <translation>Désactiver les sons</translation>
     </message>
     <message>
         <source>Ajust all sound volumes</source>
-        <translation type="unfinished">Ajuster tous les sons</translation>
+        <translation>Ajuster tous les sons</translation>
     </message>
     <message>
         <source>Sound directory :</source>
-        <translation type="unfinished">Répertoire du son :</translation>
+        <translation>Répertoire du son :</translation>
     </message>
 </context>
 <context>
