@@ -54,7 +54,6 @@ private:
     const MT_Vector2D endPoint_;
     const bool needRefine_;
     const bool useStrictClosest_;
-    unsigned int nAddedPoints_;
 };
 
 #endif // SIMULATION_TERRAIN_PATHSECTION_H
