@@ -243,11 +243,11 @@
     </message>
     <message>
         <source>Unable to set information job object</source>
-        <translation>Impossible d'initialiser l'objet de travail</translation>
+        <translation>Impossible d&apos;initialiser l&apos;objet de travail</translation>
     </message>
     <message>
         <source>Unable to assign process to job object</source>
-        <translation>Impossible d'assigner l'objet de travail au processus</translation>
+        <translation>Impossible d&apos;assigner l&apos;objet de travail au processus</translation>
     </message>
 </context>
 <context>
