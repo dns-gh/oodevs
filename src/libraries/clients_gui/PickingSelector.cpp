@@ -37,16 +37,17 @@ PickingSelector::~PickingSelector()
 // Created: LGY 2013-03-14
 // -----------------------------------------------------------------------------
 void PickingSelector::FillSelection( GLView_ABC::T_ObjectsPicking& selection,
-        const boost::optional< E_LayerTypes >& types, const std::function< void() >& paint )
+                                     const boost::optional< E_LayerTypes >& types,
+                                     const std::function< void() >& paint )
 {
     if( types )
         pickingLayers_.insert( *types );
     pickingMode_ = true;
     paint();
+    pickingMode_ = false;
     selection = pickObjects_;
     renderObjects_.clear();
     pickObjects_.clear();
-    pickingMode_ = false;
     pickingLayers_.clear();
 }
 
@@ -74,11 +75,12 @@ void PickingSelector::Picking( QPoint point, unsigned int windowHeight )
 // Name: PickingSelector::RenderPicking
 // Created: LGY 2013-03-14
 // -----------------------------------------------------------------------------
-void PickingSelector::RenderPicking( const GLView_ABC::T_ObjectPicking& object, std::function< void( float, float, float, float ) > setCurrentColor )
+void PickingSelector::RenderPicking( const GLView_ABC::T_ObjectPicking& object,
+                                     std::function< void( float, float, float, float ) > setCurrentColor )
 {
-    int red = std::rand() % 256;
-    int green = std::rand() % 256;
-    int blue = std::rand() % 256;
+    const int red = std::rand() % 256;
+    const int green = std::rand() % 256;
+    const int blue = std::rand() % 256;
     color_ = QColor( red, green, blue );
     setCurrentColor( red / 255.f, green / 255.f, blue / 255.f, 1.f );
     renderObjects_.push_back( std::make_tuple( red, green, blue, object ) );

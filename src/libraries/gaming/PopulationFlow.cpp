@@ -9,8 +9,10 @@
 
 #include "gaming_pch.h"
 #include "PopulationFlow.h"
+#include "clients_gui/GLColors.h"
 #include "clients_gui/GLOptions.h"
 #include "clients_gui/GLView_ABC.h"
+#include "clients_gui/PickingSelector.h"
 #include "clients_gui/Viewport_ABC.h"
 #include "clients_kernel/LocationVisitor_ABC.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
@@ -200,9 +202,11 @@ namespace
 // Name: PopulationFlow::Draw
 // Created: AGE 2006-03-23
 // -----------------------------------------------------------------------------
-void PopulationFlow::Draw( const Point2f& /*where*/, const gui::Viewport_ABC& , gui::GLView_ABC& tools ) const
+void PopulationFlow::Draw( const Point2f& /*where*/,
+                           const gui::Viewport_ABC&,
+                           gui::GLView_ABC& tools ) const
 {
-    const bool drawingMode = !tools.IsPickingMode();
+    const bool drawingMode = !tools.GetPickingSelector().IsPickingMode();
     glPushAttrib( GL_LINE_BIT );
         glLineWidth( 10.f );
         glPushAttrib( GL_CURRENT_BIT );

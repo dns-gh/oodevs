@@ -11,6 +11,7 @@
 #include "SvgLocationDrawer.h"
 #include "DrawingTemplate.h"
 #include "GLView_ABC.h"
+#include "PickingSelector.h"
 #include "Tools.h"
 #include "clients_kernel/Location_ABC.h"
 #include <boost/assign.hpp>
@@ -93,7 +94,7 @@ void SvgLocationDrawer::Draw( const kernel::Location_ABC& location, const geomet
     dashStyle_ = dashStyle;
     colorChanged_ = color_ != color;
     color_ = color;
-    if( !tools.IsPickingMode() )
+    if( !tools.GetPickingSelector().IsPickingMode() )
         color_.setAlphaF( tools.GetCurrentAlpha() );
     complement_ = Complement( color_ );
     glPushAttrib( GL_CURRENT_BIT );
@@ -219,7 +220,7 @@ void SvgLocationDrawer::VisitCurve( const T_PointVector& points )
 // -----------------------------------------------------------------------------
 void SvgLocationDrawer::VisitText( const QString& text, const QFont& font, const geometry::Point2f& point )
 {
-    if( tools_->IsPickingMode() )
+    if( tools_->GetPickingSelector().IsPickingMode() )
         tools::DrawPickingText( text, font, point, *tools_ );
     else
     {
@@ -249,14 +250,14 @@ void SvgLocationDrawer::DrawShape( const T& shape )
         context_->SetOpacity( static_cast< float >( color_.alphaF() ) );
         if( dashStyle_ != eSolid )
             context_->PushProperty( svg::RenderingContext_ABC::strokeDasharray, dashStyle_ == eDashed ? dashed_ : dashDot_ );
-        if( tools_->IsPickingMode() )
+        if( tools_->GetPickingSelector().IsPickingMode() )
             context_->EnablePickingMode( 5.f );
         style_.Draw( shape, *context_, tools_, zoom_ );
         if( dashStyle_ != eSolid )
             context_->PopProperty( svg::RenderingContext_ABC::strokeDasharray );
         context_->DisablePickingMode();
         context_->PopProperty( svg::RenderingContext_ABC::color );
-        if( overlined_ && !tools_->IsPickingMode() )
+        if( overlined_ && !tools_->GetPickingSelector().IsPickingMode() )
         {
             glLineWidth( 1 );
             glColor4f( complement_.red()   / 255.f,

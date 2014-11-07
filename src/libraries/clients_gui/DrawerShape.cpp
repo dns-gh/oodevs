@@ -16,6 +16,7 @@
 #include "DrawingTypes.h"
 #include "GLView_ABC.h"
 #include "ParametersLayer.h"
+#include "PickingSelector.h"
 #include "SvgLocationDrawer.h"
 
 #include "clients_kernel/Automat_ABC.h"
@@ -137,7 +138,7 @@ void DrawerShape::Translate( const geometry::Point2f& from, const geometry::Vect
 void DrawerShape::Draw( const geometry::Rectangle2f& viewport, const GLView_ABC& tools, bool overlined ) const
 {
     if( !isEditing_ )
-        drawer_->Draw( location_, viewport, tools, tools.IsPickingMode() ? tools.GetPickingColor() : color_,
+        drawer_->Draw( location_, viewport, tools, tools.GetPickingSelector().IsPickingMode() ? tools.GetPickingSelector().GetColor() : color_,
             overlined, dashStyle_, tools.GetAdaptiveZoomFactor() );
 }
 

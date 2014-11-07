@@ -11,6 +11,7 @@
 #include "WeaponRangeLayer.h"
 #include "gaming/Weapons.h"
 #include "clients_gui/GLOptions.h"
+#include "clients_gui/PickingSelector.h"
 #include "clients_gui/Viewport2d.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/OptionsController.h"
@@ -171,9 +172,11 @@ void WeaponRangeLayer::Reset()
     }
 }
 
-void WeaponRangeLayer::Draw( const kernel::Entity_ABC& entity, gui::Viewport_ABC& /*viewport*/, bool /*pickingMode*/ )
+void WeaponRangeLayer::Draw( const kernel::Entity_ABC& entity,
+                             gui::Viewport_ABC& /*viewport*/,
+                             bool /*pickingMode*/ )
 {
-    if( !ShouldDisplay( entity ) || !view_.ShouldDisplay( GetType() ) )
+    if( !ShouldDisplay( entity ) || !view_.GetPickingSelector().ShouldDisplay( GetType() ) )
         return;
     // SelectColor actually controls the result of ShouldDisplay
     strategy_.SelectColor( static_cast< const kernel::Agent_ABC& >( entity ) );
