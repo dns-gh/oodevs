@@ -233,6 +233,22 @@
         <source>Stopped</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Missing pid from QProcess</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unable to create job object</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unable to set information job object</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unable to assign process to job object</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>StartExercise</name>

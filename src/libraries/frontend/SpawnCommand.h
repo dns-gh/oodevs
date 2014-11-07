@@ -77,6 +77,7 @@ public:
     void AddExerciseArgument( const tools::Path& path );
     void AddSessionArgument( const tools::Path& path );
     void SetWorkingDirectory( const tools::Path& path );
+    void SetLogFile( const tools::Path& log, bool truncate );
     //@}
 
 private:

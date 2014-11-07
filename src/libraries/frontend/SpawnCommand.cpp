@@ -12,16 +12,40 @@
 
 #include "clients_kernel/tools.h"
 #include "tools/GeneralConfig.h"
+#include "tools/Log.h"
 #include "tools/Path.h"
 
-#pragma warning( push, 0 )
-#include <QProcess>
-#pragma warning( pop )
+#include <graphics/MapnikProcess.h>
+
 #include <windows.h>
 #include <boost/numeric/conversion/cast.hpp>
 #include <boost/make_shared.hpp>
 
 using namespace frontend;
+
+namespace
+{
+    std::shared_ptr< void > MakeAutoKill( const QProcess& process )
+    {
+        auto info = process.pid();
+        if( !info )
+            throw MASA_EXCEPTION( tools::translate( "SpawnCommand", "Missing pid from QProcess" ).toUtf8().constData() );
+        auto job = CreateJobObject( NULL, NULL );
+        if( !job )
+            throw MASA_EXCEPTION( tools::translate( "SpawnCommand", "Unable to create job object" ).toUtf8().constData() );
+        std::shared_ptr< void > rpy( job, CloseHandle );
+        JOBOBJECT_EXTENDED_LIMIT_INFORMATION jeli;
+        memset( &jeli, 0, sizeof jeli );
+        jeli.BasicLimitInformation.LimitFlags = JOB_OBJECT_LIMIT_KILL_ON_JOB_CLOSE;
+        bool valid = !!SetInformationJobObject( job, JobObjectExtendedLimitInformation, &jeli, sizeof jeli );
+        if( !valid )
+            throw MASA_EXCEPTION( tools::translate( "SpawnCommand", "Unable to set information job object" ).toUtf8().constData() );
+        valid = !!AssignProcessToJobObject( job, info->hProcess );
+        if( !valid )
+            throw MASA_EXCEPTION( tools::translate( "SpawnCommand", "Unable to assign process to job object").toUtf8().constData() );
+        return rpy;
+    }
+}
 
 tools::Path frontend::MakeBinaryName( const tools::Path& prefix )
 {
@@ -36,6 +60,7 @@ struct SpawnCommand::Private : public boost::noncopyable
 {
     Private( const tools::Path& exe )
         : exe( exe )
+        , truncate( false )
     {
         // NOTHING
     }
@@ -43,8 +68,12 @@ struct SpawnCommand::Private : public boost::noncopyable
     const tools::Path exe;
     tools::Path working;
     QStringList arguments;
-    boost::shared_ptr< QProcess > process;
+    boost::shared_ptr< graphics::Process > process;
     boost::shared_ptr< Process_ABC > attached;
+    tools::Path logname;
+    bool truncate;
+    std::unique_ptr< tools::Log > log;
+    std::shared_ptr< void > job;
 };
 
 // -----------------------------------------------------------------------------
@@ -67,7 +96,7 @@ SpawnCommand::SpawnCommand( const tools::GeneralConfig& config,
 // -----------------------------------------------------------------------------
 SpawnCommand::~SpawnCommand()
 {
-    // NOTHING
+    Stop();
 }
 
 // -----------------------------------------------------------------------------
@@ -116,19 +145,37 @@ void SpawnCommand::AddSessionArgument( const tools::Path& session )
     AddArgument( "session", session.ToUTF8() );
 }
 
+void SpawnCommand::SetLogFile( const tools::Path& path, bool truncate )
+{
+    private_->logname = path;
+    private_->truncate = truncate;
+}
+
 // -----------------------------------------------------------------------------
 // Name: SpawnCommand::Start
 // Created: AGE 2007-10-05
 // -----------------------------------------------------------------------------
 void SpawnCommand::Start()
 {
-    private_->process = boost::make_shared< QProcess >();
+    graphics::T_ProcessCallback logger = []( const std::string&, graphics::E_Process ){};
+    if( !private_->logname.IsEmpty() )
+    {
+        private_->log.reset( new tools::Log( private_->logname, 2, 0, private_->truncate, true ) );
+        logger = [&]( const std::string& data, graphics::E_Process )
+        {
+            private_->log->Write( data );
+        };
+    }
+    private_->process = boost::make_shared< graphics::Process >( logger );
     if( !private_->working.IsEmpty() )
         private_->process->setWorkingDirectory( QString::fromStdWString( private_->working.ToUnicode() ) );
     private_->process->start( QString::fromStdWString( private_->exe.ToUnicode() ), private_->arguments );
     const bool done = private_->process->waitForStarted();
     if( done )
+    {
+        private_->job = MakeAutoKill( *private_->process );
         return;
+    }
     const int exit = private_->process->exitCode();
     private_->process.reset();
     throw MASA_EXCEPTION( tools::translate( "SpawnCommand", "Could not start process: %1, error: %2" )
