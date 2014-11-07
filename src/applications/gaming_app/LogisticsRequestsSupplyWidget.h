@@ -3,7 +3,7 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2013 Mathématiques Appliquées SA (MASA)
+// Copyright (c) 2013 MASA Group
 //
 // *****************************************************************************
 
@@ -29,35 +29,23 @@ class LogisticsRequestsSupplyWidget : public LogisticConsignsWidget< LogSupplyCo
     Q_OBJECT
     
 public:
-    //! @name Constructors/Destructor
-    //@{
              LogisticsRequestsSupplyWidget( QWidget* parent, kernel::Controllers& controllers, gui::DisplayExtractor& extractor,
                                             const kernel::Profile_ABC& profile, const SimulationController& simulationController, Model& model );
     virtual ~LogisticsRequestsSupplyWidget();
-    //@}
 
 public:
-    //! @name Operations
-    //@{
     virtual void Purge();
-    //@}
 
 private:
-    //! @name Helpers
-    //@{
     virtual void PurgeDetail();
     virtual void OnRequestSelected( const LogisticsConsign_ABC& consign );
     QString GetRecipientsLinks( const LogSupplyConsign& consign, bool link );
     virtual void DisplayHistory( const LogSupplyConsign::History& history );
     void FillSupplyTable( const LogSupplyConsign& consign );
     virtual void NotifyUpdated( const kernel::Entity_ABC& entity );
-    //@}
 
 protected:
-    //! @name Data Members
-    //@{
     LogisticsRequestsSupplyTable* supplyTable_;
-    //@}
 };
 
 #endif // __LogisticsRequestsSupplyWidget_h_

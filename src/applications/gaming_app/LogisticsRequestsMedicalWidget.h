@@ -12,7 +12,6 @@
 
 #include "LogisticConsignsWidget.h"
 #include "gaming/LogMedicalConsign.h"
-#include <boost/noncopyable.hpp>
 
 class LogMedicalConsigns;
 class SimulationController;
@@ -26,20 +25,14 @@ class SimulationController;
 class LogisticsRequestsMedicalWidget : public LogisticConsignsWidget< LogMedicalConsigns, LogMedicalConsign >
 {
 public:
-    //! @name Constructors/Destructor
-    //@{
              LogisticsRequestsMedicalWidget( QWidget* parent, kernel::Controllers& controllers,
                                              gui::DisplayExtractor& extractor, const kernel::Profile_ABC& profile,
                                              const SimulationController& simulationController, Model& model );
     virtual ~LogisticsRequestsMedicalWidget();
-    //@}
 
 private:
-    //! @name Helpers
-    //@{
     virtual void OnRequestSelected( const LogisticsConsign_ABC& consign );
     QString GetInjury( const LogMedicalConsign& consign );
-    //@}
 };
 
 #endif // __LogisticsRequestsMedicalWidget_h_

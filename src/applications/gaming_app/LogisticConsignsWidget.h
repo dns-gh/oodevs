@@ -10,11 +10,11 @@
 #ifndef __LogisticConsignsWidget_h_
 #define __LogisticConsignsWidget_h_
 
-#include "tools/ElementObserver_ABC.h"
-#include "clients_kernel/Entity_ABC.h"
 #include "LogisticConsignsWidget_ABC.h"
 #include "LogisticsRequestsTable.h"
+#include "clients_kernel/Entity_ABC.h"
 #include "gaming/LogisticsModel.h"
+#include "tools/ElementObserver_ABC.h"
 
 namespace kernel
 {
@@ -25,11 +25,8 @@ namespace kernel
 namespace gui
 {
     class DisplayExtractor;
-    class RichCheckBox;
 }
 
-class LogisticsRequestsTable;
-class LogisticsRequestsDetailsTable;
 class SimulationController;
 class LogisticsModel;
 
@@ -45,26 +42,20 @@ class LogisticConsignsWidget : public LogisticConsignsWidget_ABC
                              , public tools::ElementObserver_ABC< Request >
 {
 public:
-    //! @name Constructors/Destructor
-    //@{
     LogisticConsignsWidget( QWidget* parent, kernel::Controllers& controllers, gui::DisplayExtractor& extractor,
                             const kernel::Profile_ABC& profile, const SimulationController& simulationController, Model& model,
                             E_LogisticChain type, const QStringList& requestsHeader = QStringList() )
         : LogisticConsignsWidget_ABC( parent, controllers, extractor, profile, simulationController, model, requestsHeader )
         , type_( type )
-        {
-            controllers_.Update( *this );
-        }
+    {
+        controllers_.Update( *this );
+    }
     virtual ~LogisticConsignsWidget()
-        {
-            controllers_.Unregister( *this );
-        }
-    //@}
+    {
+        controllers_.Unregister( *this );
+    }
 
 public:
-    //! @name Operations
-    //@{
-
     virtual void FillCurrentModel( const kernel::Entity_ABC& entity )
     {
         if( !IsHistoryChecked() )
@@ -74,11 +65,15 @@ public:
             logistic_helpers::VisitEntityAndSubordinatesUpToBaseLog( entity,
                 [&]( const kernel::Entity_ABC& entity )
                 {
-                    if( const Extension* pConsigns = entity.Retrieve< Extension >() )
-                    {
-                        consigns.insert( pConsigns->requested_.begin(), pConsigns->requested_.end() );
-                        consigns.insert( pConsigns->handled_.begin(), pConsigns->handled_.end() );
-                    }
+                    const auto pConsigns = entity.Retrieve< Extension >();
+                    if( !pConsigns )
+                        return;
+                    for( auto it = pConsigns->requested_.begin(); it != pConsigns->requested_.end(); ++it )
+                        if( IsActive( **it ) )
+                            consigns.insert( *it );
+                    for( auto it = pConsigns->handled_.begin(); it != pConsigns->handled_.end(); ++it )
+                        if( IsActive( **it ) )
+                            consigns.insert( *it );
                 } );
             for( auto it = consigns.begin(); it != consigns.end(); ++it )
                 DisplayRequest( **it );
@@ -101,11 +96,8 @@ public:
             SelectRequest();
         }
     }
-    //@}
 
 protected:
-    //! @name Operations
-    //@{
     virtual void NotifyUpdated( const typename Request::History& history )
     {
         if( history.GetConsign().GetType() == type_ )
@@ -117,13 +109,13 @@ protected:
         if( requestSelected_ == &request )
             requestSelected_ = 0;
     }
-    //@}
+    virtual bool IsActive( const Request& /*request*/ ) const
+    {
+        return true;
+    }
 
 private:
-    //! @name Member data
-    //@{
     E_LogisticChain type_;
-    //@}
 };
 
 #endif // __LogisticConsignsWidget_h_

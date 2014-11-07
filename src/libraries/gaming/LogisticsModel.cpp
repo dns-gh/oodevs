@@ -110,7 +110,7 @@ void LogisticsModel::DeleteConsign( unsigned long id )
 
 namespace
 {
-    template< typename U, typename E, typename C >
+    template< typename E, typename U, typename C >
     void UpdateLogistic( U* unit, U* newUnit, C& consign )
     {
         if( unit )
@@ -133,7 +133,7 @@ void LogisticsModel::UpdateConsign( const M& message )
         if( message.has_provider() && ( !handler || message.provider().id() != handler->GetId() ) )
         {
             kernel::Entity_ABC* entity = resolver_.FindEntity( message.provider().id() );
-            UpdateLogistic< kernel::Entity_ABC, E, C >( handler, entity, *consign );
+            UpdateLogistic< E >( handler, entity, *consign );
             handler = entity;
         }
         if( consign->Update( message, handler ) )
@@ -226,8 +226,7 @@ void LogisticsModel::UpdateSupplyConsign( const sword::LogSupplyHandlingUpdate& 
         if( message.has_convoyer() && ( !pPionLogConvoying || message.convoyer().id() != pPionLogConvoying->GetId() ) )
         {
             kernel::Agent_ABC* entity = resolver_.FindAgent( message.convoyer().id() );
-            UpdateLogistic< kernel::Agent_ABC, LogSupplyConsigns, LogSupplyConsign >(
-                pPionLogConvoying, entity, *consign );
+            UpdateLogistic< LogSupplyConsigns >( pPionLogConvoying, entity, *consign );
             pPionLogConvoying = entity;
         }
 
@@ -285,8 +284,7 @@ void LogisticsModel::UpdateFuneralConsign( const sword::LogFuneralHandlingUpdate
         if( message.has_handling_unit() )
         {
             kernel::Entity_ABC* entity = FindLogEntity( message.handling_unit() );
-            UpdateLogistic< kernel::Entity_ABC, LogFuneralConsigns, LogFuneralConsign >(
-                handler, entity, *consign );
+            UpdateLogistic< LogFuneralConsigns >( handler, entity, *consign );
             handler = entity;
         }
 
@@ -294,8 +292,7 @@ void LogisticsModel::UpdateFuneralConsign( const sword::LogFuneralHandlingUpdate
         if( message.has_convoying_unit() )
         {
             kernel::Agent_ABC* entity = resolver_.FindAgent( message.convoying_unit().id() );
-            UpdateLogistic< kernel::Agent_ABC, LogFuneralConsigns, LogFuneralConsign >(
-                convoy, entity, *consign );
+            UpdateLogistic< LogFuneralConsigns >( convoy, entity, *consign );
             convoy = entity;
         }
 
