@@ -20,6 +20,7 @@
 #include "simulation_terrain/TER_PathPoint.h"
 #include "simulation_terrain/TER_PathSection.h"
 #include "simulation_terrain/TER_Pathfinder_ABC.h"
+#include <pathfind/TerrainRule_ABC.h>
 #include <boost/make_shared.hpp>
 
 namespace
@@ -29,11 +30,76 @@ std::size_t computersId = 1;
 
 }  // namespace
 
+// TerrainRule_ABC proxy handling computation timeouts.
+class DEC_PathComputer::Canceler : public TerrainRule_ABC
+{
+public:
+    Canceler()
+        : rule_( 0 )
+        , stopTime_( 0 )
+        , canceled_( false )
+    {
+    }
+
+    void SetRule( TerrainRule_ABC* rule )
+    {
+        rule_ = rule;
+    }
+
+    void SetStopTime( unsigned int stopTime )
+    {
+        stopTime_ = stopTime;
+    }
+
+    // Note the difference between Cancel() and SetStopTime(0) is the former
+    // will not write an "aborted" message in the log file. Cancelling queries
+    // is part of pathfinding workflow.
+    void Cancel()
+    {
+        canceled_ = true;
+    }
+
+    virtual float EvaluateCost( const geometry::Point2f& from,
+                                const geometry::Point2f& to )
+    {
+        return rule_->EvaluateCost( from, to );
+    }
+
+    virtual float GetCost( const geometry::Point2f& from,
+                           const geometry::Point2f& to,
+                           const TerrainData& terrainTo,
+                           const TerrainData& terrainBetween,
+                           std::ostream* reason )
+    {
+        return rule_->GetCost( from, to, terrainTo, terrainBetween, reason );
+    }
+
+    virtual bool ShouldEndComputation()
+    {
+        if( canceled_ )
+            return true;
+        const auto now = static_cast< unsigned int >( time( 0 ) );
+        if( now >= stopTime_ )
+        {
+            MT_LOG_ERROR_MSG( "Pathfind computation aborted - timeout" );
+            canceled_ = true;
+            return true;
+        }
+        return false;
+    }
+
+private: 
+    TerrainRule_ABC* rule_;
+    unsigned int stopTime_;
+    bool canceled_;
+};
+
 DEC_PathComputer::DEC_PathComputer( std::size_t id )
     : id_( id )
     , computerId_( ::computersId++ )
     , nState_( TER_Path_ABC::eComputing )
     , bJobCanceled_( false )
+    , canceler_( new Canceler() )
 {
     // NOTHING
 }
@@ -106,6 +172,7 @@ void DEC_PathComputer::DoExecute( TER_Pathfinder_ABC& pathfind, unsigned int dea
 {
     if( pathSections_.empty() )
         throw MASA_EXCEPTION( "List of path sections is empty" );
+    canceler_->SetStopTime( deadlineSeconds );
     lastWaypoint_ = pathSections_.back()->GetPosEnd();
     computedWaypoints_.clear();
     nState_ = TER_Path_ABC::eComputing;
@@ -117,7 +184,8 @@ void DEC_PathComputer::DoExecute( TER_Pathfinder_ABC& pathfind, unsigned int dea
             return;
         }
         TER_PathSection& pathSection = **it;
-        const auto res = pathSection.Execute( pathfind, deadlineSeconds );
+        canceler_->SetRule( &pathSection.GetRule() );
+        const auto res = pathSection.Execute( pathfind, *canceler_ );
         for( auto ip = res->points.begin(); ip != res->points.end(); ++ip )
         {
             const geometry::Point2f p( *ip );
@@ -164,9 +232,8 @@ void DEC_PathComputer::DoExecute( TER_Pathfinder_ABC& pathfind, unsigned int dea
 boost::shared_ptr< TER_PathResult > DEC_PathComputer::Cancel()
 {
     bJobCanceled_ = true;
+    canceler_->Cancel();
     nState_ = TER_Path_ABC::eCanceled;
-    for( auto it = pathSections_.begin(); it != pathSections_.end(); ++it )
-        ( *it )->Cancel();
     const auto res = boost::make_shared< TER_PathResult >();
     res->state = TER_Path_ABC::eCanceled;
     return res;
