@@ -279,7 +279,7 @@ private:
     void InitializeSelectionners();
     void ChangeMode( int newMode );
     void ShowMenu( const QPoint& where );
-    void ClearSingleSelection();
+    void ClearSingleSelection( bool notify = true );
     void ClearMultipleSelection();
     void CleanSelectedMap();
     //@}

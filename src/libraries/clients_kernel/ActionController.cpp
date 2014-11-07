@@ -247,13 +247,21 @@ void ActionController::SetMultipleSelection( const GraphicalEntity_ABC::T_Graphi
 {
     if( blocked_ )
         return;
-    ClearSingleSelection();
+    ClearSingleSelection( false );
     ClearMultipleSelection();
+    bool hasMultipleSelection = false;
     for( auto it = selectables.begin(); it != selectables.end(); ++it )
     {
+        if( !IsSingleSelection( *it ) )
+            hasMultipleSelection = true;
         const Selectionner_ABC* selectionner = GetSelectionner( *it );
         if( selectionner )
             selectedMap_[ selectionner ].push_back( *it );
+    }
+    if( hasMultipleSelection )
+    {
+        Apply( &tools::SelectionObserver_ABC::BeforeSelection );
+        Apply( &tools::SelectionObserver_ABC::AfterSelection );
     }
     CleanSelectedMap(); // utile?
     Apply( & kernel::MultipleSelectionObserver_ABC::BeforeMultiSelection );
@@ -308,7 +316,7 @@ void ActionController::ShowMenu( const QPoint& where )
 // Name: ActionController::ClearSingleSelection
 // Created: JSR 2012-05-23
 // -----------------------------------------------------------------------------
-void ActionController::ClearSingleSelection()
+void ActionController::ClearSingleSelection( bool notify /* = true */)
 {
     if( !selectedMap_.empty() )
     {
@@ -322,8 +330,11 @@ void ActionController::ClearSingleSelection()
                 ++it;
         }
     }
-    Apply( & tools::SelectionObserver_ABC::BeforeSelection );
-    Apply( & tools::SelectionObserver_ABC::AfterSelection );
+    if( notify )
+    {
+        Apply( &tools::SelectionObserver_ABC::BeforeSelection );
+        Apply( &tools::SelectionObserver_ABC::AfterSelection );
+    }
 }
 
 // -----------------------------------------------------------------------------
