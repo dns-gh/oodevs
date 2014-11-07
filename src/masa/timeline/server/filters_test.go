@@ -269,6 +269,8 @@ func (t *TestSuite) TestFilters(c *C) {
 		"sword_filter", "i:1"), 1+1)
 	f.applyFilters(c, parseFilters(c,
 		"sword_filter", "a:1,f:3,p:2,c:1"), 16+1)
+	f.applyFilters(c, parseFilters(c,
+		"sword_filter", "u:0"), 1)
 
 	// test sword_filter_engaged: if activated, orders that were given to units by automata are not displayed
 	f.applyFilters(c, parseFilters(c,
