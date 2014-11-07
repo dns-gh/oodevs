@@ -16,6 +16,7 @@
 #include <boost/shared_ptr.hpp>
 #include <vector>
 
+struct PathResult;
 class TER_PathPoint;
 struct TER_PathResult;
 
@@ -41,6 +42,8 @@ private:
     virtual void AddResultPoint( const MT_Vector2D& vPos, const TerrainData& nObjectTypes, const TerrainData& nObjectTypesToNextPoint, bool beginPoint );
 
     void DoExecute( TER_Pathfinder_ABC& pathfind, unsigned int deadlineSeconds );
+    boost::shared_ptr< PathResult > ComputeSection( TER_Pathfinder_ABC& pathfinder,
+        TER_PathSection& section );
     void NotifyPartialSection();
     void NotifyCompletedSection();
     boost::optional< MT_Vector2D > DEC_PathComputer::GetLastPosition() const;
