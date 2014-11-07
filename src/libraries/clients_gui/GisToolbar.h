@@ -23,6 +23,7 @@ namespace kernel
 
 namespace gui
 {
+    class GLMainProxy;
     class TerrainProfiler;
     class ContourLinesObserver;
 
@@ -44,6 +45,7 @@ public:
     //@{
              GisToolbar( QMainWindow* parent,
                          kernel::Controllers& controllers,
+                         GLMainProxy& mainProxy,
                          const kernel::DetectionMap& detection,
                          gui::TerrainProfiler& terrainProfiler );
     virtual ~GisToolbar();
@@ -61,6 +63,7 @@ private slots:
 private:
     //! @name Helpers
     //@{
+    void UpdateContourLinesPercentage( const ContourLinesObserver* observer );
     virtual void NotifyUpdated( const kernel::ModelLoaded& model );
     virtual void NotifyUpdated( const ContourLinesObserver& observer );
     virtual void OptionChanged( const std::string& name, const kernel::OptionVariant& value );
