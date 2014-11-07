@@ -9,7 +9,6 @@
 
 #include "simulation_terrain_pch.h"
 #include "TER_PathSection.h"
-#include "TER_Pathfinder_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: TER_PathSection constructor
@@ -34,23 +33,6 @@ TER_PathSection::TER_PathSection( std::unique_ptr< TerrainRule_ABC > rule,
 TER_PathSection::~TER_PathSection()
 {
     // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: TER_PathSection::Execute
-// Created: AGE 2005-02-24
-// -----------------------------------------------------------------------------
-PathResultPtr TER_PathSection::Execute( TER_Pathfinder_ABC& pathfind,
-        TerrainRule_ABC& rule )
-{
-    geometry::Point2f from( float( startPoint_.rX_ ), float( startPoint_.rY_ ) );
-    geometry::Point2f to( float( endPoint_.rX_ ), float( endPoint_.rY_ ) );
-    if( needRefine_ )
-        pathfind.SetConfiguration( 1, 3 ); // $$$$ AGE 2005-03-30: whatever
-    pathfind.SetChoiceRatio( useStrictClosest_ ? 0.f : 0.1f );
-    const auto res = pathfind.ComputePath( from, to, rule );
-    pathfind.SetConfiguration( 0, 0 );
-    return res;
 }
 
 // -----------------------------------------------------------------------------
@@ -92,4 +74,14 @@ void TER_PathSection::SetPosStart( const MT_Vector2D& point )
 TerrainRule_ABC& TER_PathSection::GetRule()
 {
     return *rule_;
+}
+
+bool TER_PathSection::NeedRefine() const
+{
+    return needRefine_;
+}
+
+bool TER_PathSection::UseStrictClosest() const
+{
+    return useStrictClosest_;
 }

@@ -184,8 +184,7 @@ void DEC_PathComputer::DoExecute( TER_Pathfinder_ABC& pathfind, unsigned int dea
             return;
         }
         TER_PathSection& pathSection = **it;
-        canceler_->SetRule( &pathSection.GetRule() );
-        const auto res = pathSection.Execute( pathfind, *canceler_ );
+        const auto res = ComputeSection( pathfind, pathSection );
         for( auto ip = res->points.begin(); ip != res->points.end(); ++ip )
         {
             const geometry::Point2f p( *ip );
@@ -318,3 +317,18 @@ boost::optional< MT_Vector2D > DEC_PathComputer::GetLastPosition() const
     return resultList_.back()->GetPos();
 }
 
+boost::shared_ptr< PathResult > DEC_PathComputer::ComputeSection(
+        TER_Pathfinder_ABC& pathfind, TER_PathSection& section )
+{
+    const auto start = section.GetPosStart();
+    const auto end = section.GetPosEnd();
+    geometry::Point2f from( float( start.rX_ ), float( start.rY_ ) );
+    geometry::Point2f to( float( end.rX_ ), float( end.rY_ ) );
+    if( section.NeedRefine() )
+        pathfind.SetConfiguration( 1, 3 ); // $$$$ AGE 2005-03-30: whatever
+    canceler_->SetRule( &section.GetRule() );
+    pathfind.SetChoiceRatio( section.UseStrictClosest() ? 0.f : 0.1f );
+    const auto res = pathfind.ComputePath( from, to, *canceler_ );
+    pathfind.SetConfiguration( 0, 0 );
+    return res;
+}
