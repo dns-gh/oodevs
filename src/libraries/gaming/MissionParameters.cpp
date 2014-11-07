@@ -124,9 +124,12 @@ void MissionParameters::DoUpdate( const sword::FragOrder& message )
 // Name: MissionParameters::Draw
 // Created: SBO 2006-11-13
 // -----------------------------------------------------------------------------
-void MissionParameters::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GLView_ABC& tools ) const
+void MissionParameters::Draw( const geometry::Point2f& where,
+                              const gui::Viewport_ABC& viewport,
+                              gui::GLView_ABC& tools ) const
 {
-    if( !elements_.empty() && tools.GetOptions().ShouldDisplay( "MissionParameters" ) )
+    if( !elements_.empty() &&
+        tools.GetCurrentOptions().ShouldDisplay( "MissionParameters" ) )
         BOOST_REVERSE_FOREACH( const auto& content, elements_ )
             if( const Action_ABC* action = content.second )
             {

@@ -333,30 +333,33 @@ void Attributes::DisplayInSummary( Displayer_ABC& displayer ) const
 // Name: Attributes::Draw
 // Created: AGE 2006-03-17
 // -----------------------------------------------------------------------------
-void Attributes::Draw( const Point2f& where, const gui::Viewport_ABC& viewport, gui::GLView_ABC& tools ) const
+void Attributes::Draw( const Point2f& where,
+                       const gui::Viewport_ABC& viewport,
+                       gui::GLView_ABC& view ) const
 {
     const bool bEmptyGasTank = entity_.Get< kernel::Dotations_ABC >().IsEmptyGasTank();
-    if( entity_.IsAnAggregatedSubordinate()
-    || ! ( bDead_ || bRadioReceiverSilence_ || bRadioEmitterSilence_ || bRadarEnabled_ || bCommJammed_ || bUnderground_ || bEmptyGasTank )
-    || ! viewport.IsHotpointVisible() || !tools.GetOptions().ShouldDisplay( "UnitDetails" ) )
+    if( entity_.IsAnAggregatedSubordinate() ||
+        !( bDead_ || bRadioReceiverSilence_ || bRadioEmitterSilence_ || bRadarEnabled_ || bCommJammed_ || bUnderground_ || bEmptyGasTank ) ||
+        !viewport.IsHotpointVisible() ||
+        !view.GetCurrentOptions().ShouldDisplay( "UnitDetails" ) )
         return;
 
     const float size = 150.f;
-    const float factor = tools.GetOptions().GetRatio( entity_ );
+    const float factor = view.GetCurrentOptions().GetRatio( entity_ );
     glPushAttrib( GL_CURRENT_BIT );
-    glColor4f( 1, 1, 1, tools.GetCurrentAlpha() );
+    glColor4f( 1, 1, 1, view.GetCurrentAlpha() );
     if( bDead_ )
-        tools.DrawIcon( xpm_skull, where, size, factor, gui::GLView_ABC::pixels );
+        view.DrawIcon( xpm_skull, where, size, factor, gui::GLView_ABC::pixels );
     if( bRadioEmitterSilence_ )
-        tools.DrawIcon( xpm_silence_radio_outgoing, where, size, factor, gui::GLView_ABC::pixels );
+        view.DrawIcon( xpm_silence_radio_outgoing, where, size, factor, gui::GLView_ABC::pixels );
     if( bRadarEnabled_ )
-        tools.DrawIcon( xpm_radars_on, where, size, factor, gui::GLView_ABC::pixels );
+        view.DrawIcon( xpm_radars_on, where, size, factor, gui::GLView_ABC::pixels );
     if( bCommJammed_ )
-        tools.DrawIcon( xpm_brouillage, where, size, factor, gui::GLView_ABC::pixels );
+        view.DrawIcon( xpm_brouillage, where, size, factor, gui::GLView_ABC::pixels );
     if( bUnderground_ )
-        tools.DrawIcon( xpm_underground, where, size, factor, gui::GLView_ABC::pixels );
+        view.DrawIcon( xpm_underground, where, size, factor, gui::GLView_ABC::pixels );
     if( bEmptyGasTank )
-        tools.DrawIcon( xpm_gas, where, size, factor, gui::GLView_ABC::pixels );
+        view.DrawIcon( xpm_gas, where, size, factor, gui::GLView_ABC::pixels );
     glPopAttrib();
 }
 

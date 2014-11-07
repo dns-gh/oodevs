@@ -123,7 +123,7 @@ void Itinerary::DrawLines( GLView_ABC& view, const QColor& color, float width, b
 
 void Itinerary::DrawPoints( GLView_ABC& view, const QColor& color, const boost::optional< Hover >& hover, bool picking ) const
 {
-    const bool selected = view.GetOptions().IsDrawingSelection();
+    const bool selected = view.GetCurrentOptions().IsDrawingSelection();
     const auto& waypoints = waypoints_.empty() ? path_ : waypoints_;
     std::size_t i = 0;
     for( auto it = waypoints.begin(); it != waypoints.end(); ++it )

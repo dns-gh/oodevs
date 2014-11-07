@@ -10,6 +10,7 @@
 #include "gaming_pch.h"
 #include "Direction.h"
 #include "clients_kernel/Entity_ABC.h"
+#include "clients_gui/GLColors.h"
 #include "clients_gui/GLOptions.h"
 #include "clients_gui/GLView_ABC.h"
 #include "clients_gui/Viewport_ABC.h"
@@ -94,11 +95,15 @@ namespace
 // Name: Direction::Draw
 // Created: AGE 2007-12-17
 // -----------------------------------------------------------------------------
-void Direction::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GLView_ABC& tools ) const
+void Direction::Draw( const geometry::Point2f& where,
+                      const gui::Viewport_ABC& viewport,
+                      gui::GLView_ABC& view ) const
 {
-    if( !viewport.IsHotpointVisible() || !tools.GetOptions().ShouldDisplay( "Direction" ) || entity_.IsAnAggregatedSubordinate() )
+    if( !viewport.IsHotpointVisible() ||
+        !view.GetCurrentOptions().ShouldDisplay( "Direction" ) ||
+        entity_.IsAnAggregatedSubordinate() )
         return;
-    const float tailSize = fixedSize * tools.GetOptions().GetRatio( entity_ ) * tools.GetAdaptiveZoomFactor( false );
+    const float tailSize = fixedSize * view.GetCurrentOptions().GetRatio( entity_ ) * view.GetAdaptiveZoomFactor( false );
     const float arrowSize = tailSize * arrowHeightPercent;
     const geometry::Point2f tail = where + geometry::Vector2f( 0, -1 ) * tailSize;
     const geometry::Vector2f arrowWidth = direction_.Normal().Normalize() * arrowSize * arrowheadWidthPercent / 2;
@@ -107,9 +112,9 @@ void Direction::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& v
     glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT );
         glLineWidth( width );
         static const float color[4] = { COLOR_BLACK };
-        glColor4f( color[0], color[1], color[2], tools.GetCurrentAlpha() );
-        tools.DrawLine( where, tail, width );
-        tools.DrawLine( tail, arrowEnd, width );
-        DrawArrowhead( tools, arrowEnd, arrowCross + arrowWidth, arrowCross - arrowWidth );
+        glColor4f( color[0], color[1], color[2], view.GetCurrentAlpha() );
+        view.DrawLine( where, tail, width );
+        view.DrawLine( tail, arrowEnd, width );
+        DrawArrowhead( view, arrowEnd, arrowCross + arrowWidth, arrowCross - arrowWidth );
     glPopAttrib();
 }

@@ -10,7 +10,7 @@
 #include "clients_gui_pch.h"
 #include "PropertiesPanel.h"
 #include "moc_PropertiesPanel.cpp"
-#include "GlProxy.h"
+#include "GLView_ABC.h"
 #include "PropertyTreeView.h"
 #include "PropertyModel.h"
 #include "PropertyDelegate.h"
@@ -27,20 +27,24 @@ using namespace gui;
 // Name: PropertiesPanel constructor
 // Created: SBO 2008-04-08
 // -----------------------------------------------------------------------------
-PropertiesPanel::PropertiesPanel( QWidget* parent, kernel::Controllers& controllers, EditorFactory_ABC& factory,
-                                  PropertyDisplayer& displayer, PropertyDisplayer& comparator, const GlProxy& glProxy )
+PropertiesPanel::PropertiesPanel( QWidget* parent,
+                                  kernel::Controllers& controllers,
+                                  EditorFactory_ABC& factory,
+                                  PropertyDisplayer& displayer,
+                                  PropertyDisplayer& comparator,
+                                  const GLView_ABC& view )
     : QScrollArea( parent )
-    , controllers_     ( controllers )
-    , glProxy_         ( glProxy )
-    , selected_        ( 0 )
-    , view_            ( new PropertyTreeView( "propertyView" ) )
-    , delegate_        ( new PropertyDelegate( controllers.actions_, factory ) )
-    , model_           ( new PropertyModel( displayer ) )
+    , controllers_( controllers )
+    , view_( view )
+    , selected_( 0 )
+    , treeView_( new PropertyTreeView( "propertyView" ) )
+    , delegate_( new PropertyDelegate( controllers.actions_, factory ) )
+    , model_( new PropertyModel( displayer ) )
     , pMultiProperties_( new PropertiesGroupDictionary( controllers.controller_, comparator ) )
 {
-    view_->setModel( model_ );
-    view_->setItemDelegate( delegate_ );
-    setWidget( view_ );
+    treeView_->setModel( model_ );
+    treeView_->setItemDelegate( delegate_ );
+    setWidget( treeView_ );
     setWidgetResizable( true );
     connect( model_, SIGNAL( InternalItemChanged() ), this, SLOT( OnItemChanged() ) );
     controllers_.Register( *this );
@@ -88,13 +92,13 @@ void PropertiesPanel::NotifySelected( const kernel::Entity_ABC* element )
             if( gui::PropertiesDictionary* dictionary = const_cast< kernel::Entity_ABC* >( element )->Retrieve< gui::PropertiesDictionary >() )
             {
                 dictionary->Display( *model_ );
-                view_->Display();
+                treeView_->Display();
                 selected_ = element;
             }
     }
-    setWidget( view_ );
+    setWidget( treeView_ );
     if( element )
-        view_->setEnabled( glProxy_.ShouldEdit( *element ) );
+        treeView_->setEnabled( !view_.IsInAReadOnlyLayer( *element ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -108,7 +112,7 @@ void PropertiesPanel::NotifySelectionChanged( const std::vector< const kernel::U
         ClearSelection();
         pMultiProperties_->Fill( elements );
         pMultiProperties_->Display( *model_ );
-        view_->Display();
+        treeView_->Display();
         urbanObjects_ = elements;
     }
 }
@@ -151,12 +155,12 @@ void PropertiesPanel::NotifyCreated( const DictionaryUpdated& message )
 {
     if( selected_ && selected_->GetId() == message.GetEntity().GetId() )
     {
-        if( view_->Exist( message.GetEntry() ) )
+        if( treeView_->Exist( message.GetEntry() ) )
             NotifyUpdated( message );
         else if( PropertiesDictionary* dictionary = const_cast< kernel::Entity_ABC* >( selected_ )->Retrieve< PropertiesDictionary >() )
         {
             dictionary->Display( message.GetEntry(), *model_ );
-            view_->Display();
+            treeView_->Display();
         }
     }
 }
@@ -183,7 +187,7 @@ void PropertiesPanel::OnItemChanged()
 // -----------------------------------------------------------------------------
 void PropertiesPanel::ClearSelection()
 {
-    view_->SaveState();
+    treeView_->SaveState();
     selected_ = 0;
     urbanObjects_.clear();
     model_->clear();

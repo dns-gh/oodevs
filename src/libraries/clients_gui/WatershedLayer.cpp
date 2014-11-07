@@ -80,14 +80,14 @@ void WatershedLayer::Paint( const geometry::Rectangle2f& viewport )
 {
     if( !modelLoaded_ ||
         !ShouldDrawPass() ||
-        !view_.GetOptions().Get( "Watershed/Enabled" ).To< bool >() ||
+        !view_.GetCurrentOptions().Get( "Watershed/Enabled" ).To< bool >() ||
         !gl::HasMultiTexturing() )
         return;
 
     if( !layer_ )
         CreateLayer();
 
-    unsigned int texture = view_.GetOptions().GetWatershedTexture().CreateTexture();
+    unsigned int texture = view_.GetCurrentOptions().GetWatershedTexture().CreateTexture();
     if( texture == 0 )
         return;
 

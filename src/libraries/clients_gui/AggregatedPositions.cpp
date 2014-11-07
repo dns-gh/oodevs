@@ -9,6 +9,7 @@
 
 #include "clients_gui_pch.h"
 #include "AggregatedPositions.h"
+#include "GLColors.h"
 #include "GLOptions.h"
 #include "GLView_ABC.h"
 #include "Viewport_ABC.h"
@@ -169,7 +170,7 @@ bool AggregatedPositions::CanAggregate() const
 // -----------------------------------------------------------------------------
 void AggregatedPositions::Draw( const Point2f& where, const gui::Viewport_ABC& viewport, gui::GLView_ABC& view ) const
 {
-    if( viewport.IsHotpointVisible() && !entity_.IsAnAggregatedSubordinate() && view.GetOptions().IsAggregated( entity_ ) )
+    if( viewport.IsHotpointVisible() && !entity_.IsAnAggregatedSubordinate() && view.GetCurrentOptions().IsAggregated( entity_ ) )
         view.DrawCross( where, GL_CROSSSIZE, gui::GLView_ABC::pixels );
 }
 

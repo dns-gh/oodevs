@@ -100,9 +100,12 @@ void LogSupplyConsign::Update( const sword::SupplyRecipientResourceRequests& mes
 // Name: LogSupplyConsign::Draw
 // Created: AGE 2006-03-30
 // -----------------------------------------------------------------------------
-void LogSupplyConsign::Draw( const Point2f& , const gui::Viewport_ABC& viewport, gui::GLView_ABC& tools ) const
+void LogSupplyConsign::Draw( const Point2f&,
+                             const gui::Viewport_ABC& viewport,
+                             gui::GLView_ABC& tools ) const
 {
-    if( !pLogHandlingEntity_ || !tools.GetOptions().ShouldDisplay( "RealTimeLogistic" ) )
+    if( !pLogHandlingEntity_ ||
+        !tools.GetCurrentOptions().ShouldDisplay( "RealTimeLogistic" ) )
         return;
 
     Point2f from = logistic_helpers::GetLogisticPosition( *pLogHandlingEntity_, true );

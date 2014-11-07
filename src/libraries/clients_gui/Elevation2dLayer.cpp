@@ -85,12 +85,12 @@ void Elevation2dLayer::Paint( const geometry::Rectangle2f& viewport )
     if( !layer_ )
         CreateLayer();
 
-    auto& texture = view_.GetOptions().GetElevation2dTexture();
+    auto& texture = view_.GetCurrentOptions().GetElevation2dTexture();
     unsigned int textureId = texture->CreateTexture( GetAlpha() );
     if( textureId == 0 )
         return;
 
-    if( view_.GetOptions().Get( "Elevation/FitToViewPort" ).To< bool >() &&
+    if( view_.GetCurrentOptions().Get( "Elevation/FitToViewPort" ).To< bool >() &&
         viewport != texture->GetViewport() &&
         extrema_ )
         texture->SetViewport( viewport, *extrema_ );

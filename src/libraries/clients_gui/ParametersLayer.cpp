@@ -11,6 +11,7 @@
 #include "ParametersLayer.h"
 
 #include "CursorStrategy.h"
+#include "GLColors.h"
 #include "GLView_ABC.h"
 #include "LocationEditor_ABC.h"
 #include "ShapeHandler_ABC.h"

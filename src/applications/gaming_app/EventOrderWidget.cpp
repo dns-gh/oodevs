@@ -17,7 +17,7 @@
 #include "actions/ActionsModel.h"
 #include "actions_gui/MissionInterface.h"
 #include "clients_gui/Decisions_ABC.h"
-#include "clients_gui/GLToolColors.h"
+#include "clients_gui/GLColors.h"
 #include "clients_gui/EntitySymbols.h"
 #include "clients_gui/EventAction.h"
 #include "clients_gui/EventPresenter.h"

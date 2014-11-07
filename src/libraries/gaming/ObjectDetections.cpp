@@ -10,6 +10,7 @@
 #include "gaming_pch.h"
 #include "ObjectDetections.h"
 #include "Attr_Def.h"
+#include "clients_gui/GLColors.h"
 #include "clients_gui/GLOptions.h"
 #include "clients_gui/GLView_ABC.h"
 #include "clients_kernel/Controller.h"
@@ -59,9 +60,12 @@ void ObjectDetections::DoUpdate( const sword::ObjectDetection& message )
 // Name: ObjectDetections::Draw
 // Created: AGE 2006-04-10
 // -----------------------------------------------------------------------------
-void ObjectDetections::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& , gui::GLView_ABC& tools ) const
+void ObjectDetections::Draw( const geometry::Point2f& where,
+                             const gui::Viewport_ABC&,
+                             gui::GLView_ABC& tools ) const
 {
-    if( !tools.GetOptions().ShouldDisplay( "VisionLines" ) || perceivedObjects_.empty() )
+    if( !tools.GetCurrentOptions().ShouldDisplay( "VisionLines" ) ||
+        perceivedObjects_.empty() )
         return;
     static const float color[4] = { COLOR_DETECTED };
     glPushAttrib( GL_CURRENT_BIT | GL_LINE_BIT );

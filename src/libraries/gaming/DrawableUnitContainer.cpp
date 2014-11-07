@@ -109,11 +109,15 @@ namespace
 // Name: DrawableUnitContainer::Draw
 // Created: AGE 2006-10-06
 // -----------------------------------------------------------------------------
-void DrawableUnitContainer::Draw( const Entity_ABC& entity, const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GLView_ABC& tools, float factor ) const
+void DrawableUnitContainer::Draw( const Entity_ABC& entity,
+                                  const geometry::Point2f& where,
+                                  const gui::Viewport_ABC& viewport,
+                                  gui::GLView_ABC& view,
+                                  float factor ) const
 {
     if( !viewport.IsHotpointVisible() )
         return;
-    factor *= tools.GetOptions().GetRatio( entity );
+    factor *= view.GetCurrentOptions().GetRatio( entity );
     const kernel::TacticalHierarchies& hierarchies = entity.Get< kernel::TacticalHierarchies >();
     InitializeSymbol( hierarchies );
     if( HasStaticChild( hierarchies ) )
@@ -173,13 +177,13 @@ void DrawableUnitContainer::Draw( const Entity_ABC& entity, const geometry::Poin
         {
             PointComparator comparator( directionVector );
             std::sort( orderedPositions.begin(), orderedPositions.end(), comparator );
-            tools.DrawUnitSymbolAndTail( moveSymbol_, level_, orderedPositions );
+            view.DrawUnitSymbolAndTail( moveSymbol_, level_, orderedPositions );
         }
         else
-            tools.DrawUnitSymbol( symbol_, moveSymbol_, staticSymbol_, level_, isMoving, where, factor, udirection, isMoving ? 0 : minWidth * std::abs( factor ), isMoving ? depth : minDepth * std::abs( factor ) );
+            view.DrawUnitSymbol( symbol_, moveSymbol_, staticSymbol_, level_, isMoving, where, factor, udirection, isMoving ? 0 : minWidth * std::abs( factor ), isMoving ? depth : minDepth * std::abs( factor ) );
     }
     else
-        tools.DrawUnitSymbol( symbol_, "", "", level_, false, where, factor, 0, 0, 0 );
+        view.DrawUnitSymbol( symbol_, "", "", level_, false, where, factor, 0, 0, 0 );
 }
 
 // -----------------------------------------------------------------------------

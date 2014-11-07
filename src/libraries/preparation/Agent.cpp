@@ -110,7 +110,9 @@ void Agent::InitializeSymbol() const
 // Name: Agent::Draw
 // Created: SBO 2006-03-20
 // -----------------------------------------------------------------------------
-void Agent::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GLView_ABC& tools ) const
+void Agent::Draw( const geometry::Point2f& where,
+                  const gui::Viewport_ABC& viewport,
+                  gui::GLView_ABC& view ) const
 {
     if( viewport.IsHotpointVisible() && !IsAnAggregatedSubordinate() )
     {
@@ -118,7 +120,16 @@ void Agent::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewp
 
         float width = type_.GetWidth();
         float depth = type_.GetDepth();
-        tools.DrawUnitSymbol( symbolPath_, moveSymbol_, staticSymbol_, levelPath_, false, where, -tools.GetOptions().GetRatio( *this ), 0, width, depth );
+        view.DrawUnitSymbol( symbolPath_,
+                             moveSymbol_,
+                             staticSymbol_,
+                             levelPath_,
+                             false,
+                             where,
+                             -view.GetCurrentOptions().GetRatio( *this ),
+                             0,
+                             width,
+                             depth );
     }
 }
 

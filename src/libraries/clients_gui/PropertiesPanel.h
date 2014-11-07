@@ -26,7 +26,7 @@ namespace gui
 {
     class DictionaryUpdated;
     class EditorFactory_ABC;
-    class GlProxy;
+    class GLView_ABC;
     class PropertyDisplayer;
     class PropertiesGroupDictionary;
     class PropertyTreeView;
@@ -52,8 +52,12 @@ class PropertiesPanel : public QScrollArea
 public:
     //! @name Constructors/Destructor
     //@{
-             PropertiesPanel( QWidget* parent, kernel::Controllers& controllers, EditorFactory_ABC& factory,
-                              PropertyDisplayer& displayer, PropertyDisplayer& comparator, const GlProxy& glProxy );
+             PropertiesPanel( QWidget* parent,
+                              kernel::Controllers& controllers,
+                              EditorFactory_ABC& factory,
+                              PropertyDisplayer& displayer,
+                              PropertyDisplayer& comparator,
+                              const GLView_ABC& view );
     virtual ~PropertiesPanel();
     //@}
 
@@ -84,14 +88,14 @@ private:
 private:
     //! @name Member data
     //@{
-    kernel::Controllers&                          controllers_;
-    const GlProxy&                                glProxy_;
-    PropertyTreeView*                             view_;
-    PropertyModel*                                model_;
-    PropertyDelegate*                             delegate_;
-    const kernel::Entity_ABC*                     selected_;
+    kernel::Controllers& controllers_;
+    const GLView_ABC& view_;
+    PropertyTreeView* treeView_;
+    PropertyModel* model_;
+    PropertyDelegate* delegate_;
+    const kernel::Entity_ABC* selected_;
     std::vector< const kernel::UrbanObject_ABC* > urbanObjects_;
-    std::unique_ptr< PropertiesGroupDictionary >  pMultiProperties_;
+    std::unique_ptr< PropertiesGroupDictionary > pMultiProperties_;
     //@}
 };
 

@@ -64,7 +64,7 @@ std::string CompositionPass::GetName() const
 // -----------------------------------------------------------------------------
 void CompositionPass::Render( MapWidget_ABC& )
 {
-    if( !option_.empty() && !view_.GetOptions().Get( option_ ).To< bool >() ||
+    if( !option_.empty() && !view_.GetCurrentOptions().Get( option_ ).To< bool >() ||
         !gl::HasMultiTexturing() )
         return;
 

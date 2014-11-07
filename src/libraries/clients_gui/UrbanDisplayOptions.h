@@ -48,6 +48,7 @@ public:
     //! @name Operations
     //@{
     void Load( const kernel::Options& options );
+
     QColor ComputeUrbanColor( const kernel::UrbanObject_ABC& object ) const;
 
     const std::shared_ptr< Gradient >& GetDensityGradient() const;

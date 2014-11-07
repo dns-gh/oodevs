@@ -62,7 +62,6 @@ public:
 private:
     //! @name Member data
     //@{
-    const std::shared_ptr< kernel::Options > options_;
     const kernel::DetectionMap& map_;
     unsigned int texture_;
 

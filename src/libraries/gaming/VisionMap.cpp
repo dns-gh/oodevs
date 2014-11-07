@@ -9,6 +9,7 @@
 
 #include "gaming_pch.h"
 #include "VisionMap.h"
+#include "clients_gui/GLColors.h"
 #include "clients_gui/GLView_ABC.h"
 #include "clients_gui/Viewport_ABC.h"
 #include "clients_kernel/DetectionMap.h"

@@ -285,11 +285,17 @@ void ObjectPositions::VisitPath( const geometry::Point2f& first, const T_PointVe
 // Name: ObjectPositions::Draw
 // Created: SBO 2006-10-16
 // -----------------------------------------------------------------------------
-void ObjectPositions::Draw( const geometry::Point2f&, const gui::Viewport_ABC& viewport, gui::GLView_ABC& tools ) const
+void ObjectPositions::Draw( const geometry::Point2f&,
+                            const gui::Viewport_ABC& viewport,
+                            gui::GLView_ABC& tools ) const
 {
     if( ! viewport.IsVisible( boundingBox_ ) || points_.empty() )
         return;
-    tools.DrawTacticalGraphics( symbol_, *location_, tools.GetOptions().IsDrawingSelection(), type_.GetPointSize(), dynamic_cast< const kernel::Point* >( location_ ) != nullptr );
+    tools.DrawTacticalGraphics( symbol_,
+                                *location_,
+                                tools.GetCurrentOptions().IsDrawingSelection(),
+                                type_.GetPointSize(),
+                                dynamic_cast< const kernel::Point* >( location_ ) != nullptr );
 }
 
 // -----------------------------------------------------------------------------

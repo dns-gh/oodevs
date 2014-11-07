@@ -111,9 +111,11 @@ void LogisticConsigns_ABC< ConcreteExtension, Consign >::TerminateConsign( Consi
 // Created: SBO 2007-03-30
 // -----------------------------------------------------------------------------
 template< typename ConcreteExtension, typename Consign >
-void LogisticConsigns_ABC< ConcreteExtension, Consign >::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GLView_ABC& tools ) const
+void LogisticConsigns_ABC< ConcreteExtension, Consign >::Draw( const geometry::Point2f& where,
+                                                               const gui::Viewport_ABC& viewport,
+                                                               gui::GLView_ABC& tools ) const
 {
-    const auto& options = tools.GetOptions();
+    const auto& options = tools.GetCurrentOptions();
     if( !options.ShouldDisplay( "RealTimeLogistic" ) || ( handled_.empty() && requested_.empty() ) )
         return;
     // When the option is "on", we only display the handled request so their are not displayed two times.

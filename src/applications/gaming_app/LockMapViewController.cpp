@@ -70,7 +70,7 @@ void LockMapViewController::OnUnlockViewOnEntity()
 void LockMapViewController::LockViewOnEntity( const kernel::Entity_ABC* entity )
 {
     selected_ = 0;
-    view_.GetOptions().SetLockedEntity( entity );
+    view_.GetActiveOptions().SetLockedEntity( entity );
 }
 
 // -----------------------------------------------------------------------------
@@ -80,7 +80,7 @@ void LockMapViewController::LockViewOnEntity( const kernel::Entity_ABC* entity )
 void LockMapViewController::UpdateContextMenu( const kernel::Entity_ABC& entity, kernel::ContextMenu& menu )
 {
     selected_ = &entity;
-    if( view_.GetOptions().GetLockedEntity() == &entity )
+    if( view_.GetActiveOptions().GetLockedEntity() == &entity )
         menu.InsertItem( "Interface", tr( "Unlock view on entity" ), this, SLOT( OnUnlockViewOnEntity() ) );
     else
         menu.InsertItem( "Interface", tr( "Lock view on entity" ), this, SLOT( OnLockViewOnEntity() ) );

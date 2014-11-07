@@ -10,7 +10,7 @@
 #include "gaming_pch.h"
 #include "AmmoEffect.h"
 #include "Simulation.h"
-#include "clients_gui/GLView_ABC.h"
+#include "clients_gui/GLColors.h"
 #include "clients_gui/SoundEvent.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Controller.h"

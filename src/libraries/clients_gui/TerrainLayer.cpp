@@ -74,7 +74,7 @@ void TerrainLayer::NotifyUpdated( const ModelLoaded& modelLoaded )
 // -----------------------------------------------------------------------------
 void TerrainLayer::SetAlpha( float alpha )
 {
-    view_.GetOptions().GetTerrainSettings()->SetAlpha( alpha );
+    view_.GetActiveOptions().GetTerrainSettings()->SetAlpha( alpha );
     Layer2D::SetAlpha( alpha );
 }
 
@@ -84,7 +84,6 @@ void TerrainLayer::SetAlpha( float alpha )
 // -----------------------------------------------------------------------------
 void TerrainLayer::Paint( const geometry::Rectangle2f& viewport )
 {
-    const auto& options = view_.GetOptions();
     settings_ = options.GetTerrainSettings();
     if( !ShouldDrawPass() || !settings_ )
         return;

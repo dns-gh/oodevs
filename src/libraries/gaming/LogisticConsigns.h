@@ -10,6 +10,7 @@
 #ifndef __LogisticConsigns_h_
 #define __LogisticConsigns_h_
 
+#include "clients_gui/GLColors.h"
 #include "clients_gui/Drawable_ABC.h"
 #include "clients_kernel/Extension_ABC.h"
 

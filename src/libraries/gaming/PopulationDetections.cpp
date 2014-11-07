@@ -10,6 +10,7 @@
 #include "gaming_pch.h"
 #include "PopulationDetections.h"
 #include "Attr_def.h"
+#include "clients_gui/GLColors.h"
 #include "clients_gui/GLOptions.h"
 #include "clients_gui/GLView_ABC.h"
 #include "clients_gui/Viewport_ABC.h"
@@ -85,9 +86,11 @@ void PopulationDetections::NotifyDeleted( const kernel::PopulationPart_ABC& part
 // Name: PopulationDetections::Draw
 // Created: AGE 2006-04-10
 // -----------------------------------------------------------------------------
-void PopulationDetections::Draw( const geometry::Point2f&, const gui::Viewport_ABC& viewport, gui::GLView_ABC& tools ) const
+void PopulationDetections::Draw( const geometry::Point2f&,
+                                 const gui::Viewport_ABC& viewport,
+                                 gui::GLView_ABC& tools ) const
 {
-    if( tools.GetOptions().ShouldDisplay( "VisionLines" ) )
+    if( tools.GetCurrentOptions().ShouldDisplay( "VisionLines" ) )
     {
         const geometry::Point2f& center = entity_.Get< Positions >().GetPosition();
         if( !viewport.IsVisible( center ) )

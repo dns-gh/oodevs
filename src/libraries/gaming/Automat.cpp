@@ -48,9 +48,13 @@ Automat::~Automat()
 // Name: Automat::Draw
 // Created: LDC 2013-04-15
 // -----------------------------------------------------------------------------
-void Automat::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GLView_ABC& view ) const
+void Automat::Draw( const geometry::Point2f& where,
+                    const gui::Viewport_ABC& viewport,
+                    gui::GLView_ABC& view ) const
 {
-    if( !IsAnAggregatedSubordinate() && view.GetOptions().IsAggregated( *this ) && viewport.IsHotpointVisible() )
+    if( !IsAnAggregatedSubordinate() &&
+        view.GetCurrentOptions().IsAggregated( *this ) &&
+        viewport.IsHotpointVisible() )
         drawable_.Draw( *this, where, viewport, view, -1.5f );
 }
 

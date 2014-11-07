@@ -53,18 +53,23 @@ bool CommandPostAttributes::IsCommandPost() const
 // Name: CommandPostAttributes::Draw
 // Created: LGY 2011-11-03
 // -----------------------------------------------------------------------------
-void CommandPostAttributes::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GLView_ABC& tools ) const
+void CommandPostAttributes::Draw( const geometry::Point2f& where,
+                                  const gui::Viewport_ABC& viewport,
+                                  gui::GLView_ABC& view ) const
 {
     if( commandPost_ && !entity_.IsAnAggregatedSubordinate() )
     {
         if( viewport.IsHotpointVisible() )
-            tools.DrawApp6SymbolFixedSize( type_.GetHQSymbol(), where, -tools.GetOptions().GetRatio( entity_ ), 0 );
+            view.DrawApp6SymbolFixedSize( type_.GetHQSymbol(),
+                                          where,
+                                          -view.GetCurrentOptions().GetRatio( entity_ ),
+                                          0 );
 
         const kernel::Entity_ABC& automata = entity_.Get< kernel::TacticalHierarchies >().GetUp();
         if( const LogisticLinks* links = automata.Retrieve< LogisticLinks >() )
-            links->Draw( where, viewport, tools );
+            links->Draw( where, viewport, view );
         if( const DebugPoints* points = automata.Retrieve< DebugPoints >() )
-            points->Draw( where, viewport, tools );
+            points->Draw( where, viewport, view );
     }
 }
 

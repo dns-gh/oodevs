@@ -84,9 +84,12 @@ bool LogFuneralConsign::Update( const sword::LogFuneralHandlingUpdate& message, 
 // Name: LogFuneralConsign::Draw
 // Created: AGE 2006-03-30
 // -----------------------------------------------------------------------------
-void LogFuneralConsign::Draw( const Point2f& , const gui::Viewport_ABC& viewport, gui::GLView_ABC& tools ) const
+void LogFuneralConsign::Draw( const Point2f&,
+                              const gui::Viewport_ABC& viewport,
+                              gui::GLView_ABC& tools ) const
 {
-    if( ! handler_ || !tools.GetOptions().ShouldDisplay( "RealTimeLogistic" ) )
+    if( !handler_ ||
+        !tools.GetCurrentOptions().ShouldDisplay( "RealTimeLogistic" ) )
         return;
     const Point2f from = handler_->Get< Positions >().GetPosition();
     const Point2f to   = consumer_.Get< Positions >().GetPosition();

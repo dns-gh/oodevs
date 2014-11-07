@@ -107,7 +107,7 @@ void TacticalLinePositions_ABC::Draw( const geometry::Point2f&, const Viewport_A
 
     std::string symbol = owner_.Get< kernel::TacticalHierarchies >().GetSymbol();
     glPushAttrib( GL_CURRENT_BIT | GL_LINE_BIT );
-    if( tools.GetOptions().IsDrawingSelection() )
+    if( tools.GetCurrentOptions().IsDrawingSelection() )
         for( auto it = pointList_.begin(); it != pointList_.end(); ++it )
             tools.DrawDisc( *it, 5.f, GLView_ABC::pixels );
     glPopAttrib();

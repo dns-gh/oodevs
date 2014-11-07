@@ -21,7 +21,7 @@
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/tools.h"
 #include "clients_gui/EntitySymbols.h"
-#include "clients_gui/GLToolColors.h"
+#include "clients_gui/GLColors.h"
 #include "gaming/Attributes.h"
 #include "gaming/HumanFactors.h"
 #include "gaming/Reinforcements.h"

@@ -43,9 +43,11 @@ ConvexHulls::~ConvexHulls()
 // Name: ConvexHulls::Draw
 // Created: AGE 2007-05-30
 // -----------------------------------------------------------------------------
-void ConvexHulls::Draw( const Point2f& , const gui::Viewport_ABC& , gui::GLView_ABC& tools ) const
+void ConvexHulls::Draw( const Point2f&,
+                        const gui::Viewport_ABC&,
+                        gui::GLView_ABC& tools ) const
 {
-    if( tools.GetOptions().ShouldDisplay( "ConvexHulls" ) )
+    if( tools.GetCurrentOptions().ShouldDisplay( "ConvexHulls" ) )
     {
         Update();
         tools.DrawPolygon( hull_ );

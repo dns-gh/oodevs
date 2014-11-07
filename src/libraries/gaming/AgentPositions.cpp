@@ -9,6 +9,7 @@
 
 #include "gaming_pch.h"
 #include "AgentPositions.h"
+#include "clients_gui/GLColors.h"
 #include "clients_gui/GLOptions.h"
 #include "clients_gui/GLView_ABC.h"
 #include "clients_gui/Viewport_ABC.h"
@@ -116,9 +117,13 @@ void AgentPositions::Accept( kernel::LocationVisitor_ABC& visitor ) const
 // Name: AgentPositions::Draw
 // Created: AGE 2006-04-10
 // -----------------------------------------------------------------------------
-void AgentPositions::Draw( const Point2f& where, const gui::Viewport_ABC& viewport, gui::GLView_ABC& tools ) const
+void AgentPositions::Draw( const Point2f& where,
+                           const gui::Viewport_ABC& viewport,
+                           gui::GLView_ABC& tools ) const
 {
-    if( viewport.IsHotpointVisible() && tools.GetOptions().ShouldDisplay( "UnitDetails" ) && !agent_.IsAnAggregatedSubordinate() )
+    if( viewport.IsHotpointVisible() &&
+        tools.GetCurrentOptions().ShouldDisplay( "UnitDetails" ) &&
+        !agent_.IsAnAggregatedSubordinate() )
         tools.DrawCross( where, GL_CROSSSIZE, gui::GLView_ABC::pixels );
 }
 

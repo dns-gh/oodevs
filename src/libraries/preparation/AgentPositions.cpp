@@ -10,6 +10,7 @@
 #include "preparation_pch.h"
 #include "AgentPositions.h"
 #include "MoveableProxy.h"
+#include "clients_gui/GLColors.h"
 #include "clients_gui/GLView_ABC.h"
 #include "clients_gui/Viewport_ABC.h"
 #include "clients_kernel/Agent_ABC.h"

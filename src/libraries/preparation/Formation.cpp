@@ -111,12 +111,25 @@ void Formation::InitializeSymbol() const
 // Name: Formation::Draw
 // Created: LGY 2011-03-04
 // -----------------------------------------------------------------------------
-void Formation::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GLView_ABC& tools ) const
+void Formation::Draw( const geometry::Point2f& where,
+                      const gui::Viewport_ABC& viewport,
+                      gui::GLView_ABC& view ) const
 {
-    if( !IsAnAggregatedSubordinate() && tools.GetOptions().IsAggregated( *this ) && viewport.IsVisible( where ) )
+    if( !IsAnAggregatedSubordinate() &&
+        view.GetCurrentOptions().IsAggregated( *this ) &&
+        viewport.IsVisible( where ) )
     {
         InitializeSymbol();
-        tools.DrawUnitSymbol( symbolPath_, "", "", levelPath_, false, where, -tools.GetOptions().GetRatio( *this ), 0, 0, 0 );
+        view.DrawUnitSymbol( symbolPath_,
+                             "",
+                             "",
+                             levelPath_,
+                             false,
+                             where,
+                             -view.GetCurrentOptions().GetRatio( *this ),
+                             0,
+                             0,
+                             0 );
     }
 }
 

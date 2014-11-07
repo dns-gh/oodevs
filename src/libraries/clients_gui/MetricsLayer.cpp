@@ -9,6 +9,7 @@
 
 #include "clients_gui_pch.h"
 #include "MetricsLayer.h"
+#include "GLColors.h"
 #include "GLView_ABC.h"
 #include "InformationToolTip.h"
 #include "clients_kernel/DetectionMap.h"

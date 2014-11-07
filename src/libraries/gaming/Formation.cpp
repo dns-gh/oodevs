@@ -59,9 +59,13 @@ E_NatureLevel Formation::GetLevel() const
 // Name: Formation::Draw
 // Created: LGY 2011-03-08
 // -----------------------------------------------------------------------------
-void Formation::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GLView_ABC& view ) const
+void Formation::Draw( const geometry::Point2f& where,
+                      const gui::Viewport_ABC& viewport,
+                      gui::GLView_ABC& view ) const
 {
-    if( !IsAnAggregatedSubordinate() && view.GetOptions().IsAggregated( *this ) && viewport.IsHotpointVisible() )
+    if( !IsAnAggregatedSubordinate() &&
+        view.GetCurrentOptions().IsAggregated( *this ) &&
+        viewport.IsHotpointVisible() )
         drawable_.Draw( *this, where, viewport, view, -1.f );
 }
 

@@ -47,7 +47,7 @@ TextureRenderPass::~TextureRenderPass()
 // -----------------------------------------------------------------------------
 void TextureRenderPass::Render( MapWidget_ABC& widget )
 {
-    if( !option_.empty() && !view_.GetOptions().Get( option_ ).To< bool >() )
+    if( !option_.empty() && !view_.GetCurrentOptions().Get( option_ ).To< bool >() )
         return;
     if( !texture_ )
         CreateTexture();
