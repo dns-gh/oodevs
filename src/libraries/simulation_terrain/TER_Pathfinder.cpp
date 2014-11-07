@@ -118,6 +118,13 @@ boost::shared_ptr< TER_PathResult > TER_PathFuture::Get() const
     return path_;
 }
 
+void TER_PathFuture::Cancel()
+{
+    const auto res = boost::make_shared< TER_PathResult >();
+    res->state = TER_Path_ABC::eCanceled;
+    Set( res );
+}
+
 // -----------------------------------------------------------------------------
 // Name: TER_Pathfinder constructor
 // Created: NLD 2003-08-14
@@ -290,9 +297,7 @@ void TER_Pathfinder::ProcessRequest( TER_PathFinderThread& data, TER_PathfindReq
     const auto computer = rq.GetComputer();
     if( !computer )
     {
-        const auto res = boost::make_shared< TER_PathResult >();
-        res->state = TER_Path_ABC::eCanceled;
-        rq.GetFuture()->Set( res );
+        rq.GetFuture()->Cancel();
         return;
     }
 
@@ -318,10 +323,12 @@ void TER_Pathfinder::ProcessRequest( TER_PathFinderThread& data, TER_PathfindReq
     {
         MT_LOG_ERROR_MSG( "Exception caught in pathfinder thread : "
                 << tools::GetExceptionMsg( e ) );
+        rq.GetFuture()->Cancel();
     }
     catch( ... )
     {
         MT_LOG_ERROR_MSG( "Unknown exception caught in pathfinder thread" );
+        rq.GetFuture()->Cancel();
     }
 
     boost::mutex::scoped_lock locker( pathfindTimeMutex_ );

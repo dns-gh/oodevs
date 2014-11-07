@@ -51,6 +51,7 @@ public:
 
     void Set( const boost::shared_ptr< TER_PathResult >& path );
     boost::shared_ptr< TER_PathResult > Get() const;
+    void Cancel();
 
 private:
     mutable boost::mutex mutex_;
