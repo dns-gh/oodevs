@@ -43,7 +43,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Load( const GlProxy& );
+    virtual void Load( const GLView_ABC& );
     //@}
 
 private:

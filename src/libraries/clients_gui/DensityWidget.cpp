@@ -12,6 +12,7 @@
 #include "moc_DensityWidget.cpp"
 
 #include "ColorButton.h"
+#include "GLOptions.h"
 #include "Gradient.h"
 #include "GradientWidget.h"
 #include "OptionWidgets.h"
@@ -23,7 +24,6 @@
 #include "Tools.h"
 
 #include "clients_kernel/Controllers.h"
-#include "clients_kernel/Options.h"
 #include "clients_kernel/OptionsController.h"
 #include "clients_kernel/OptionVariant.h"
 
@@ -135,7 +135,7 @@ void DensityWidget::OnGradientEdited()
 // Name: DensityWidget::Load
 // Created: ABR 2014-08-06
 // -----------------------------------------------------------------------------
-void DensityWidget::Load( const kernel::Options& options,
+void DensityWidget::Load( const GLOptions& options,
                           const std::shared_ptr< Gradient >& gradient )
 {
     max_->setValue( options.Get( optionName_ + "/Max" ).To< float >() );

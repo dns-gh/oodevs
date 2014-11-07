@@ -14,12 +14,12 @@
 
 namespace kernel
 {
-    class Options;
     class OptionsController;
 }
 
 namespace gui
 {
+    class GLOptions;
     class Gradient;
     class GradientWidget;
 
@@ -45,7 +45,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Load( const kernel::Options& options,
+    virtual void Load( const GLOptions& options,
                        const std::shared_ptr< Gradient >& gradient );
     //@}
 

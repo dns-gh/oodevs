@@ -15,6 +15,7 @@
 namespace gui
 {
     class KeyModel;
+    class PreferencePanel_ABC;
 
 // =============================================================================
 /** @class  PreferencesList
@@ -29,13 +30,16 @@ class PreferencesList : public RichTreeView
 public:
     //! @name Constructors/Destructor
     //@{
-             PreferencesList( const QString& objectName, QStackedWidget& pages, QWidget* parent = 0 );
+             PreferencesList( const QString& objectName,
+                              QStackedWidget& pages,
+                              QWidget* parent = 0 );
     virtual ~PreferencesList();
     //@}
 
     //! @name Operations
     //@{
-    void AddPage( const QString& name, QWidget* widget );
+    void AddPage( const QString& name, PreferencePanel_ABC* widget );
+    PreferencePanel_ABC* GetCurrentWidget();
     //@}
 
 private slots:
@@ -45,11 +49,17 @@ private slots:
     //@}
 
 private:
+    //! @name Helpers
+    //@{
+    QString GetFullName( QStandardItem* item );
+    //@}
+
+private:
     //! @name Member data
     //@{
     QStackedWidget& pages_;
     KeyModel* model_;
-    std::map< QString, QWidget* > widgets_;
+    std::map< QString, PreferencePanel_ABC* > widgets_;
     //@}
 };
 

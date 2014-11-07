@@ -36,7 +36,7 @@ PreferencePanel_ABC::~PreferencePanel_ABC()
 // Name: PreferencePanel_ABC::Load
 // Created: ABR 2014-10-02
 // -----------------------------------------------------------------------------
-void PreferencePanel_ABC::Load( const GlProxy& )
+void PreferencePanel_ABC::Load( const GLView_ABC& )
 {
     // NOTHING
 }

@@ -10,17 +10,19 @@
 #include "clients_gui_pch.h"
 #include "PreferencesDialog.h"
 #include "moc_PreferencesDialog.cpp"
+#include "ActiveViewComboBox.h"
 #include "CoordinateSystemsPanel.h"
 #include "ElevationPanel.h"
 #include "RefreshRatePanel.h"
+#include "GLMainProxy.h"
 #include "GLOptions.h"
-#include "GlProxy.h"
 #include "GraphicsPanel.h"
 #include "LayersPanel.h"
 #include "LightingPanel.h"
 #include "PreferencesList.h"
 #include "resources.h"
 #include "RichPushButton.h"
+#include "SignalAdapter.h"
 #include "SubObjectName.h"
 #include "SymbolSizePanel.h"
 #include "TerrainSettings.h"
@@ -40,11 +42,33 @@ using namespace gui;
 PreferencesDialog::PreferencesDialog( QWidget* parent,
                                       Controllers& controllers,
                                       const kernel::StaticModel& model,
-                                      GlProxy& proxy )
+                                      GLMainProxy& mainProxy )
     : ModalDialog( parent, "PreferencesDialog", false )
     , controllers_( controllers )
-    , proxy_( proxy )
+    , mainProxy_( mainProxy )
 {
+    // ActiveCombo needs be created before the preference dialog register its observer,
+    // because we call UpdateComboVisibility below which is based on the number of item
+    // in the active combo.
+    activeCombo_ = new ActiveViewComboBox( mainProxy, "StatusActiveViewComboBox" );
+    mainProxy_.AddActiveChangeObserver( [ &]( const GLView_ABC::T_View& view ) {
+        if( !isVisible() || !view )
+            return;
+        Load( *view );
+    } );
+    mainProxy_.AddCreationObserver( [ &]( const GLView_ABC::T_View& view ) {
+        if( !isVisible() || !view )
+            return;
+        previousViewsOptions_[ view->GetID() ] = std::unique_ptr< GLOptions >( new GLOptions( view->GetActiveOptions() ) );
+        UpdateComboVisibility();
+    } );
+    mainProxy_.AddDeletionObserver( [&]( const GLView_ABC::T_View& view ) {
+        if( !isVisible() || !view )
+            return;
+        previousViewsOptions_.erase( view->GetID() );
+        UpdateComboVisibility();
+    } );
+
     SubObjectName subObject( "PreferencesDialog" );
     setCaption( tr( "Preferences" ) );
     setMinimumSize( 600, 600 );
@@ -58,6 +82,8 @@ PreferencesDialog::PreferencesDialog( QWidget* parent,
     title->setMargin( 10 );
     title->setBackgroundColor( Qt::white );
 
+    
+
     QLabel* icon = new QLabel();
     icon->setPixmap( MAKE_PIXMAP( option_general ) );
     icon->setMaximumWidth( 64 );
@@ -65,6 +91,9 @@ PreferencesDialog::PreferencesDialog( QWidget* parent,
 
     stack_ = new QStackedWidget();
     list_ = new PreferencesList( "preferencesList", *stack_ );
+    gui::connect( list_->selectionModel(), SIGNAL( currentChanged( const QModelIndex&, const QModelIndex& ) ), [ &]() {
+        UpdateComboVisibility();
+    } );
 
     RichPushButton* okButton = new RichPushButton( "ok", tr( "Ok" ) );
     RichPushButton* cancelButton = new RichPushButton( "cancel", tr( "Cancel" ) );
@@ -74,6 +103,7 @@ PreferencesDialog::PreferencesDialog( QWidget* parent,
     topLayout->setMargin( 0 );
     topLayout->addWidget( title );
     topLayout->addStretch( 1 );
+    topLayout->addWidget( activeCombo_ );
     topLayout->addWidget( icon );
 
     QHBoxLayout* contentLayout = new QHBoxLayout();
@@ -93,14 +123,14 @@ PreferencesDialog::PreferencesDialog( QWidget* parent,
 
     auto& options = controllers.options_;
     // common pages between preparation and gaming
-    AddPage( tr( "2D" ),                   *new LayersPanel( this, options, proxy ) );
-    AddPage( tr( "2D/Terrain" ),           *new GraphicsPanel( this, options ) );
-    AddPage( tr( "2D/Elevation" ),         *new ElevationPanel( this, options, model.detection_ ) );
-    AddPage( tr( "3D" ),                   *new LightingPanel( this, options ) );
-    AddPage( tr( "Coordinate System" ),    *new CoordinateSystemsPanel( this, options, model.coordinateConverter_ ) );
-    AddPage( tr( "Refresh Rate" ),         *new RefreshRatePanel( this, options ) );
-    AddPage( tr( "Symbol Sizes" ),         *new SymbolSizePanel( this, options ) );
-    AddPage( tr( "Visualisation Scales" ), *new VisualisationScalesPanel( this, options ) );
+    AddPage( tr( "2D" ),                   true,  *new LayersPanel( this, options, mainProxy ) );
+    AddPage( tr( "2D/Terrain" ),           true,  *new GraphicsPanel( this, options ) );
+    AddPage( tr( "2D/Elevation" ),         true,  *new ElevationPanel( this, options, model.detection_ ) );
+    AddPage( tr( "3D" ),                   true,  *new LightingPanel( this, options ) );
+    AddPage( tr( "Coordinate System" ),    false, *new CoordinateSystemsPanel( this, options, model.coordinateConverter_ ) );
+    AddPage( tr( "Refresh Rate" ),         false, *new RefreshRatePanel( this, options ) );
+    AddPage( tr( "Symbol Sizes" ),         true,  *new SymbolSizePanel( this, options ) );
+    AddPage( tr( "Visualisation Scales" ), true,  *new VisualisationScalesPanel( this, options ) );
 
     connect( okButton, SIGNAL( clicked() ), SLOT( accept() ) );
     connect( cancelButton, SIGNAL( clicked() ), SLOT( reject() ) );
@@ -122,11 +152,13 @@ PreferencesDialog::~PreferencesDialog()
 // Name: PreferencesDialog::AddPage
 // Created: SBO 2007-01-03
 // -----------------------------------------------------------------------------
-void PreferencesDialog::AddPage( const QString& name, PreferencePanel_ABC& page )
+void PreferencesDialog::AddPage( const QString& name,
+                                 bool showActiveCombo,
+                                 PreferencePanel_ABC& page )
 {
     list_->AddPage( name, &page );
     stack_->addWidget( &page );
-    panels_.push_back( &page );
+    panels_[ &page ] = showActiveCombo;
 }
 
 // -----------------------------------------------------------------------------
@@ -135,28 +167,27 @@ void PreferencesDialog::AddPage( const QString& name, PreferencePanel_ABC& page 
 // -----------------------------------------------------------------------------
 void PreferencesDialog::showEvent( QShowEvent * event )
 {
-    previousGeneralOptions_ = std::make_shared< kernel::Options >( *controllers_.options_.GetGeneralOptions() );
-    previousViewOptions_.reset( new GLOptions( proxy_.GetOptions() ) );
-    Load( proxy_ );
+    previousGeneralOptions_.reset( new kernel::Options( *controllers_.options_.GetGeneralOptions() ) );
+    previousViewsOptions_.clear();
+    mainProxy_.ApplyToViews( [ &]( const GLView_ABC::T_View& view ) {
+        previousViewsOptions_[ view->GetID() ] = std::unique_ptr< GLOptions >( new GLOptions( view->GetActiveOptions() ) );
+    } );
+    Load( mainProxy_ );
+    UpdateComboVisibility();
     QDialog::showEvent( event );
 }
 
 namespace
 {
     void RestoreOptions( kernel::Options& previousOptions,
-                         kernel::Options& currentOptions )
+                         const kernel::Options& currentOptions )
     {
-        std::vector< std::string > toDelete;
         // Update our previous values with changes done outside the preferences panel
-        // and remove the current values that were added.
         currentOptions.Apply( [ &]( const std::string& name, const OptionVariant& value, bool isInPreferencePanel ) {
-            if( !previousOptions.Has( name ) )
-                toDelete.push_back( name );
-            else if( !isInPreferencePanel )
+            if( !isInPreferencePanel )
                 previousOptions.Set( name, value );
 
         } );
-        std::for_each( toDelete.begin(), toDelete.end(), [ &]( const std::string& name ) { currentOptions.Remove( name ); } );
     }
 }
 
@@ -168,20 +199,24 @@ void PreferencesDialog::reject()
 {
     auto& optionsController = controllers_.options_;
     auto& generalOptions = *optionsController.GetGeneralOptions();
-    auto& viewOptions = *optionsController.GetViewOptions();
-
-    RestoreOptions( *previousViewOptions_->GetOptions(), viewOptions );
-    proxy_.GetOptions() = *previousViewOptions_;
-    optionsController.UpdateViewOptions();
-    previousViewOptions_.reset();
-
+    // restore general options
     RestoreOptions( *previousGeneralOptions_, generalOptions );
     generalOptions = *previousGeneralOptions_;
     optionsController.UpdateGeneralOptions();
     previousGeneralOptions_.reset();
-
-    proxy_.UpdateLayerOrder( viewOptions );
-    proxy_.GetOptions().Load();
+    // restore views options
+    for( auto it = previousViewsOptions_.begin(); it != previousViewsOptions_.end(); ++it )
+    {
+        auto view = mainProxy_.GetView( it->first );
+        if( !view )
+            throw MASA_EXCEPTION( "Unable to restore previous options." );
+        auto& previousOptions = *it->second;
+        auto& options = view->GetActiveOptions();
+        RestoreOptions( *previousOptions.GetOptions(), *options.GetOptions() );
+        options = previousOptions;
+    }
+    optionsController.UpdateViewOptions();
+    mainProxy_.UpdateLayerOrder();
     ModalDialog::reject();
 }
 
@@ -199,16 +234,28 @@ void PreferencesDialog::NotifyUpdated( const kernel::ModelUnLoaded& )
 // Name: PreferencesDialog::Load
 // Created: ABR 2014-10-01
 // -----------------------------------------------------------------------------
-void PreferencesDialog::Load( const GlProxy& )
+void PreferencesDialog::Load( const GLView_ABC& )
 {
     try
     {
         for( auto it = panels_.begin(); it != panels_.end(); ++it )
-            ( *it )->Load( proxy_ );
+            it->first->Load( mainProxy_ );
     }
     catch( std::exception& )
     {
         setVisible( false );
         throw;
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: PreferencesDialog::UpdateComboVisibility
+// Created: ABR 2014-08-06
+// -----------------------------------------------------------------------------
+void PreferencesDialog::UpdateComboVisibility()
+{
+    auto currentWidget = list_->GetCurrentWidget();
+    activeCombo_->setVisible( activeCombo_->count() > 1 &&
+                              currentWidget &&
+                              panels_.at( currentWidget ) );
 }

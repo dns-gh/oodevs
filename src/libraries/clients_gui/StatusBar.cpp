@@ -10,6 +10,7 @@
 #include "clients_gui_pch.h"
 #include "StatusBar.h"
 #include "moc_StatusBar.cpp"
+#include "ActiveViewComboBox.h"
 #include "LocationParser_ABC.h"
 #include "LocationParsers.h"
 #include "RichWidget.h"
@@ -55,7 +56,8 @@ StatusBar::StatusBar( kernel::Controllers& controllers,
                       QStatusBar* parent,
                       TerrainPicker& picker,
                       const DetectionMap& detection,
-                      const CoordinateConverter_ABC& converter )
+                      const CoordinateConverter_ABC& converter,
+                      GLMainProxy& mainProxy )
     : controllers_  ( controllers )
     , detection_    ( detection )
     , converter_    ( converter )
@@ -64,6 +66,10 @@ StatusBar::StatusBar( kernel::Controllers& controllers,
     , parent_       ( parent )
 {
     SubObjectName subObject( "statusBar" );
+
+    auto* activeCombo = new ActiveViewComboBox( mainProxy, "StatusActiveViewComboBox" );
+    parent->addWidget( activeCombo, 0, true );
+
     RichWidget< QToolButton >* toolButton = new RichWidget< QToolButton >( "toolButton", parent );
     toolButton->setPopupDelay( 0 );
     toolButton->adjustSize();

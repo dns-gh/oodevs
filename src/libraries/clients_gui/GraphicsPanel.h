@@ -41,7 +41,7 @@ public:
 private:
     //! @name PreferencePanel_ABC implementation
     //@{
-    virtual void Load( const GlProxy& );
+    virtual void Load( const GLView_ABC& );
     //@}
 
 private:

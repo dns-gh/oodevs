@@ -162,7 +162,7 @@ VisualisationScalesPanel::~VisualisationScalesPanel()
 // Name: VisualisationScalesPanel::Load
 // Created: ABR 2014-10-01
 // -----------------------------------------------------------------------------
-void VisualisationScalesPanel::Load( const GlProxy& )
+void VisualisationScalesPanel::Load( const GLView_ABC& )
 {
     options_.GetViewOptions()->Apply( [&]( const std::string& name, const kernel::OptionVariant& value, bool ) {
         if( name.find( strScale ) != 0 )

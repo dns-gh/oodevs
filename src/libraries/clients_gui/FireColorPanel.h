@@ -62,7 +62,7 @@ private:
     void SetupGroup( QLayout* root, const QString& header );
     void Save();
 
-    virtual void Load( const GlProxy& );
+    virtual void Load( const GLView_ABC& );
     virtual void NotifyUpdated( const kernel::ModelLoaded& );
 
 private slots:

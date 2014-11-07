@@ -12,7 +12,7 @@
 #include "moc_FireColorPanel.cpp"
 #include "ColorButton.h"
 #include "GLOptions.h"
-#include "GLProxy.h"
+#include "GLView_ABC.h"
 #include "resources.h"
 #include "RichPushButton.h"
 #include "SignalAdapter.h"
@@ -416,9 +416,9 @@ void FireColorPanel::NotifyUpdated( const kernel::ModelLoaded& )
     ctx_.karmas = new Model( karmas, this );
 }
 
-void FireColorPanel::Load( const GlProxy& view )
+void FireColorPanel::Load( const GLView_ABC& view )
 {
-    const auto& value = view.GetOptions().GetOptions()->Get( FireOption::GetOptionName( group_ ) );
+    const auto& value = view.GetActiveOptions().Get( FireOption::GetOptionName( group_ ) );
     ctx_.data = LoadFireOptions( value.To< QString >() );
     FillGrid();
 }

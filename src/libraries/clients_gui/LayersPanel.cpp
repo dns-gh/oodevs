@@ -11,7 +11,7 @@
 #include "clients_gui_pch.h"
 #include "LayersPanel.h"
 #include "moc_LayersPanel.cpp"
-#include "GlProxy.h"
+#include "GLView_ABC.h"
 #include "Layer_ABC.h"
 #include "OptionWidgets.h"
 #include "RichPushButton.h"
@@ -68,10 +68,10 @@ namespace
 // -----------------------------------------------------------------------------
 LayersPanel::LayersPanel( QWidget* parent,
                           kernel::OptionsController& options,
-                          GlProxy& proxy )
+                          GLView_ABC& view )
     : PreferencePanel_ABC( parent, "LayersPanel" )
     , options_( options )
-    , proxy_( proxy )
+    , view_( view )
     , dataModel_( this )
     , proxyModel_( this )
 {
@@ -143,12 +143,13 @@ LayersPanel::~LayersPanel()
 // Name: LayersPanel::Load
 // Created: ABR 2014-08-04
 // -----------------------------------------------------------------------------
-void LayersPanel::Load( const GlProxy& proxy )
+void LayersPanel::Load( const GLView_ABC& proxy )
 {
     // purge
     dataModel_.clear();
     // load
-    proxy.ApplyToLayers( [&]( const T_Layer& layer ) {
+    const auto& layers = proxy.GetActiveView().GetLayers();
+    std::for_each( layers.begin(), layers.end(), ( [&]( const T_Layer& layer ) {
         if( !layer->IsConfigurable() )
             return;
         const auto optionName = layer->GetOptionName();
@@ -164,7 +165,7 @@ void LayersPanel::Load( const GlProxy& proxy )
         item->setData( position, ePositionBackup );
         item->setData( alpha, eAlphaBackup );
         dataModel_.appendRow( QList< QStandardItem* >() << item );
-    } );
+    } ) );
     UpdateLeastAndMostVisible();
     layersListView_->selectionModel()->select( proxyModel_.index( 0, 0 ), QItemSelectionModel::SelectCurrent );
 }
@@ -226,7 +227,7 @@ void LayersPanel::OnRemoveDynamicLayer()
     if( !item )
         return;
     auto layer = item->data( eData ).value< T_Layer >();
-    proxy_.RemoveLayer( layer );
+    view_.RemoveLayer( layer );
     dataModel_.removeRow( item->index().row() );
 }
 
@@ -250,7 +251,7 @@ void LayersPanel::SwapSelection( int direction )
     SetItemPosition( options_, *targetItem, position );
     if( direction > 0 )
         std::swap( item, targetItem );
-    proxy_.MoveBelow( item->data( eData ).value< T_Layer >(),
+    view_.MoveBelow( item->data( eData ).value< T_Layer >(),
                       targetItem->data( eData ).value< T_Layer >() );
     UpdateLeastAndMostVisible();
 }

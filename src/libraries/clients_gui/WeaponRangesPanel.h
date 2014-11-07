@@ -38,7 +38,7 @@ public:
                                 const kernel::StaticModel& model );
     virtual ~WeaponRangesPanel();
 
-    virtual void Load( const GlProxy& );
+    virtual void Load( const GLView_ABC& );
 
 private:
     kernel::OptionsController& options_;
