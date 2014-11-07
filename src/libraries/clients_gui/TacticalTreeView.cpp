@@ -66,6 +66,12 @@ TacticalTreeView::TacticalTreeView( const QString& objectName,
                 Drop( *ghost, superior );
             else if( auto kg = dynamic_cast< kernel::KnowledgeGroup_ABC* >( &entity ) )
                 Drop( *kg, superior );
+            else if( auto line = dynamic_cast< kernel::TacticalLine_ABC* >( &entity ) )
+                Drop( *line, superior );
+            else if( auto drawing = dynamic_cast< kernel::Drawing_ABC* >( &entity ) )
+                Drop( *drawing, superior );
+            else if( auto pathfind = dynamic_cast< kernel::Pathfind_ABC* >( &entity ) )
+                Drop( *pathfind, superior );
         } );
 
     SetLessThanEntityFunctor( &tools::LessThanByPC );

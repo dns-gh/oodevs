@@ -10,6 +10,7 @@
 #include "actions_pch.h"
 #include "ActionsModel.h"
 #include "ActionPublisher.h"
+#include "clients_kernel/Pathfind_ABC.h"
 
 using namespace actions;
 
@@ -365,6 +366,35 @@ int ActionsModel::PublishRename( const kernel::Entity_ABC& entity, const QString
 {
     std::unique_ptr< Action_ABC > action( factory_.CreateRename( entity, name ) );
     return Publish( *action );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionsModel::PublishChangeTacticalLineSuperior
+// Created: LDC 2014-11-07
+// -----------------------------------------------------------------------------
+int ActionsModel::PublishChangeTacticalLineSuperior( kernel::TacticalLine_ABC& /*item*/, const kernel::Entity_ABC& /*target*/ )
+{
+    // FIXME TODO
+    return -1;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionsModel::PublishChangeDrawingSuperior
+// Created: LDC 2014-11-07
+// -----------------------------------------------------------------------------
+int ActionsModel::PublishChangeDrawingSuperior( kernel::Drawing_ABC& /*item*/, const kernel::Entity_ABC& /*target*/ )
+{
+    // FIXME TODO
+    return -1;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionsModel::PublishChangePathfindSuperior
+// Created: LDC 2014-11-07
+// -----------------------------------------------------------------------------
+int ActionsModel::PublishChangePathfindSuperior( kernel::Pathfind_ABC& item, const kernel::Entity_ABC& target )
+{
+    return item.ChangeSuperior( target );
 }
 
 // -----------------------------------------------------------------------------

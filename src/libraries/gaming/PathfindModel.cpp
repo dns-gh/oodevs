@@ -68,3 +68,10 @@ void PathfindModel::Delete( const sword::PathfindDestruction& msg )
 {
     T_Resolver::Delete( msg.id() );
 }
+
+void PathfindModel::Update( const sword::Pathfind& msg )
+{
+    kernel::Pathfind_ABC& pathfind = Get( msg.id() );
+    pathfind.UpdateMessage( msg, GetUnit( agents_, populations_, msg.request().unit().id() ) );
+    controller_.Update( pathfind );
+}

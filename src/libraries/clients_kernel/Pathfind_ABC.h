@@ -48,6 +48,8 @@ public:
     virtual sword::Pathfind GetCreationMessage() const = 0;
     virtual geometry::Point2f GetPosition() const = 0;
     virtual void NotifyDestruction() const = 0;
+    virtual int ChangeSuperior( const kernel::Entity_ABC& target ) = 0;
+    virtual void UpdateMessage( const sword::Pathfind& msg, const Entity_ABC& owner ) = 0;
     //@}
 
     //! @name Operations

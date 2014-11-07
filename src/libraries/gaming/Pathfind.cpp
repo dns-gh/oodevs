@@ -9,12 +9,12 @@
 
 #include "gaming_pch.h"
 #include "Pathfind.h"
+#include "PathfindHierarchies.h"
 #include "actions/ActionsModel.h"
 #include "clients_gui/GLView_ABC.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/Equipments_ABC.h"
 #include "clients_kernel/EquipmentType.h"
-#include "clients_kernel/SimpleHierarchies.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "protocol/Protocol.h"
 
@@ -78,17 +78,15 @@ Pathfind::Pathfind( Controller& controller,
                     const T_CanBeRenamedFunctor& canBeRenamedFunctor )
     : EntityImplementation< Pathfind_ABC >( controller, msg.id(), msg.request().has_name() ?
                         msg.request().name().c_str() : tools::translate( "Pathfind", "itinerary" ), canBeRenamedFunctor )
-    , controller_( controller )
     , actionsModel_( actionsModel )
-    , converter_( converter )
     , pathfind_( msg )
-    , entity_( entity )
+    , entity_( &entity )
     , itinerary_( converter, msg, edition )
     , visible_( true )
 {
     AddExtension( *this );
     Attach< kernel::Equipments_ABC >( *new Equipments( msg ) );
-    Attach< kernel::TacticalHierarchies >( *new SimpleHierarchies< kernel::TacticalHierarchies >( *this, &entity_ ) );
+    Attach< kernel::TacticalHierarchies >( *new PathfindHierarchies( *this ) );
     SetRenameObserver( [&]( const QString& name ){
         auto pathfind = pathfind_;
         pathfind.mutable_request()->set_name( name.toStdString() );
@@ -171,9 +169,19 @@ void Pathfind::SetHover( const boost::optional< Itinerary::Hover >& hover )
     hover_ = hover;
 }
 
+int Pathfind::ChangeSuperior( const kernel::Entity_ABC& target )
+{
+    entity_ = &target;
+    sword::Pathfind pathfind( pathfind_ );
+    auto request = pathfind.mutable_request();
+    request->set_name( name_ );
+    request->mutable_unit()->set_id( target.GetId() );
+    return actionsModel_.PublishUpdatePathfind( pathfind );
+}
+
 const kernel::Entity_ABC& Pathfind::GetUnit() const
 {
-    return entity_;
+    return *entity_;
 }
 
 void Pathfind::SetVisible( bool visible )
@@ -196,13 +204,11 @@ sword::Pathfind Pathfind::GetCreationMessage() const
     return pathfind_;
 }
 
-void Pathfind::DoUpdate( const sword::Pathfind& msg )
+void Pathfind::UpdateMessage( const sword::Pathfind& msg, const Entity_ABC& owner )
 {
-    if( msg.request().has_name() )
-    {
-        pathfind_ = msg;
-        Rename( QString::fromStdString( pathfind_.request().name() ) );
-    }
+    pathfind_ = msg;
+    Rename( QString::fromStdString( pathfind_.request().name() ) );
+    entity_ = &owner;
 }
 
 void Pathfind::NotifyDestruction() const

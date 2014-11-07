@@ -63,8 +63,9 @@ public:
 
     //! @name Operations
     //@{
-    void Create( const sword::Pathfind&            msg );
+    void Create( const sword::Pathfind& msg );
     void Delete( const sword::PathfindDestruction& msg );
+    void Update( const sword::Pathfind& msg );
     //@}
 
 private:

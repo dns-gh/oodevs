@@ -65,6 +65,9 @@ public:
     virtual void Drop( const kernel::Agent_ABC& item, const kernel::Entity_ABC& target );
     virtual void Drop( const kernel::Automat_ABC& item, const kernel::Entity_ABC& target);
     virtual void Drop( const kernel::Formation_ABC& item, const kernel::Entity_ABC& target);
+    virtual void Drop( kernel::TacticalLine_ABC& item, const kernel::Entity_ABC& target);
+    virtual void Drop( kernel::Drawing_ABC& item, const kernel::Entity_ABC& target);
+    virtual void Drop( kernel::Pathfind_ABC& item, const kernel::Entity_ABC& target);
     //@}
 
 private slots:

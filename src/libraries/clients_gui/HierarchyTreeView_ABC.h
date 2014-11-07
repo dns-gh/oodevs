@@ -15,16 +15,19 @@
 
 namespace kernel
 {
-    class Controllers;
-    class Hierarchies;
-    class Profile_ABC;
     class Agent_ABC;
+    class AgentType;
     class Automat_ABC;
+    class AutomatType;
+    class Controllers;
+    class Drawing_ABC;
     class Formation_ABC;
     class Ghost_ABC;
+    class Hierarchies;
     class KnowledgeGroup_ABC;
-    class AgentType;
-    class AutomatType;
+    class Pathfind_ABC;
+    class Profile_ABC;
+    class TacticalLine_ABC;
 }
 
 namespace gui
@@ -95,6 +98,9 @@ protected:
     virtual void Drop( const kernel::KnowledgeGroup_ABC& /*item*/, const kernel::Entity_ABC& /*target*/ ) {}
     virtual void Drop( const kernel::AgentType& /*item*/, kernel::Entity_ABC& /*target*/ ) {}
     virtual void Drop( const kernel::AutomatType& /*item*/, kernel::Entity_ABC& /*target*/ ) {}
+    virtual void Drop( kernel::TacticalLine_ABC& /*item*/, const kernel::Entity_ABC& /*target*/ ) {}
+    virtual void Drop( kernel::Drawing_ABC& /*item*/, const kernel::Entity_ABC& /*target*/ ) {}
+    virtual void Drop( kernel::Pathfind_ABC& /*item*/, const kernel::Entity_ABC& /*target*/ ) {}
     //@}
 
 signals:

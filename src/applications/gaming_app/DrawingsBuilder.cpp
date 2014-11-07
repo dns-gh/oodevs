@@ -114,7 +114,6 @@ void DrawingsBuilder::ChangeSuperior( const kernel::Entity_ABC& entity )
     changeSuperiorDialog_->Show( const_cast< kernel::Entity_ABC& >( entity ),
                                  tr( "Change superior" ),
                                  gui::ChangeSuperiorDialog::eTacticalSuperior );
-    // FIXME : Les dessins n'ont pas de TacticalHierarchy
 }
 
 void DrawingsBuilder::CreateCityOrDistrict( kernel::Entity_ABC* /*parent*/ )
