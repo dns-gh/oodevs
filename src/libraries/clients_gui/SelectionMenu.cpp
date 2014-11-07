@@ -146,7 +146,7 @@ QPixmap SelectionMenu::ExtractDrawingSample( const std::string& code, float r, f
 
     if( drawingTemplate )
     {
-        drawingTemplate->GenerateSamplePixmap( proxy_, r, g, b, markerPixelRatio );
+        drawingTemplate->GenerateSamplePixmap( r, g, b, markerPixelRatio );
         return drawingTemplate->GetSamplePixmap();
     }
 

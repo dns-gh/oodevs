@@ -251,7 +251,7 @@ void SvgLocationDrawer::DrawShape( const T& shape )
             context_->PushProperty( svg::RenderingContext_ABC::strokeDasharray, dashStyle_ == eDashed ? dashed_ : dashDot_ );
         if( tools_->IsPickingMode() )
             context_->EnablePickingMode( 5.f );
-        style_.Draw( shape, *context_, *tools_, zoom_ );
+        style_.Draw( shape, *context_, tools_, zoom_ );
         if( dashStyle_ != eSolid )
             context_->PopProperty( svg::RenderingContext_ABC::strokeDasharray );
         context_->DisablePickingMode();
