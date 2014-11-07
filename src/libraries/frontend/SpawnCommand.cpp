@@ -96,7 +96,7 @@ SpawnCommand::SpawnCommand( const tools::GeneralConfig& config,
 // -----------------------------------------------------------------------------
 SpawnCommand::~SpawnCommand()
 {
-    // NOTHING
+    Stop();
 }
 
 // -----------------------------------------------------------------------------
