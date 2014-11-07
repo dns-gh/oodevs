@@ -103,11 +103,11 @@ TER_PathSection::~TER_PathSection()
 // Created: AGE 2005-02-24
 // -----------------------------------------------------------------------------
 PathResultPtr TER_PathSection::Execute( TER_Pathfinder_ABC& pathfind,
-        unsigned int nComputationEndTime )
+        unsigned int deadlineSeconds )
 {
     geometry::Point2f from( float( startPoint_.rX_ ), float( startPoint_.rY_ ) );
     geometry::Point2f to( float( endPoint_.rX_ ), float( endPoint_.rY_ ) );
-    canceler_->SetStopTime( nComputationEndTime );
+    canceler_->SetStopTime( deadlineSeconds );
     if( needRefine_ )
         pathfind.SetConfiguration( 1, 3 ); // $$$$ AGE 2005-03-30: whatever
     pathfind.SetChoiceRatio( useStrictClosest_ ? 0.f : 0.1f );

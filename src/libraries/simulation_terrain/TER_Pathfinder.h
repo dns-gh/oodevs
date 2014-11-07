@@ -114,7 +114,7 @@ private:
     std::vector< std::unique_ptr< boost::thread > > threads_;
     const tools::Path dumpDir_; // empty if dump is disabled
     const std::set< size_t > dumpFilter_; // empty if no id filters
-    bool debugPath_;
+    const bool debugPath_;
 
     mutable boost::mutex mutex_;
     boost::condition condition_;

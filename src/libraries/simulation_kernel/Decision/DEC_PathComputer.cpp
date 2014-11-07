@@ -63,7 +63,7 @@ double DEC_PathComputer::GetLength() const
 }
 
 boost::shared_ptr< TER_PathResult > DEC_PathComputer::Execute( TER_Pathfinder_ABC& pathfind,
-        unsigned int deadline, bool debugPath )
+        unsigned int deadlineSeconds, bool debugPath )
 {
     if( !resultList_.empty() )
         throw MASA_EXCEPTION( "List of path points is not empty before running pathfind" );
@@ -78,7 +78,7 @@ boost::shared_ptr< TER_PathResult > DEC_PathComputer::Execute( TER_Pathfinder_AB
     pathfind.SetId( id_ );
     try
     {
-        DoExecute( pathfind, deadline );
+        DoExecute( pathfind, deadlineSeconds );
     }
     catch( const std::exception& e )
     {
@@ -102,7 +102,7 @@ boost::shared_ptr< TER_PathResult > DEC_PathComputer::Execute( TER_Pathfinder_AB
     return GetPathResult();
 }
 
-void DEC_PathComputer::DoExecute( TER_Pathfinder_ABC& pathfind, unsigned int deadline )
+void DEC_PathComputer::DoExecute( TER_Pathfinder_ABC& pathfind, unsigned int deadlineSeconds )
 {
     if( pathSections_.empty() )
         throw MASA_EXCEPTION( "List of path sections is empty" );
@@ -117,7 +117,7 @@ void DEC_PathComputer::DoExecute( TER_Pathfinder_ABC& pathfind, unsigned int dea
             return;
         }
         TER_PathSection& pathSection = **it;
-        const auto res = pathSection.Execute( pathfind, deadline );
+        const auto res = pathSection.Execute( pathfind, deadlineSeconds );
         for( auto ip = res->points.begin(); ip != res->points.end(); ++ip )
         {
             const geometry::Point2f p( *ip );

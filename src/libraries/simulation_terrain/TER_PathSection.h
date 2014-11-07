@@ -32,7 +32,7 @@ public:
     //! @name Operations
     //@{
     PathResultPtr Execute  ( TER_Pathfinder_ABC& pathfind,
-            unsigned int nComputationEndTime );
+            unsigned int deadlineSeconds );
     double GetLength() const;
     void   Cancel   ();
     //@}

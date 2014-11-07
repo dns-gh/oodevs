@@ -33,14 +33,14 @@ public:
 
     virtual double GetLength() const;
     virtual boost::shared_ptr< TER_PathResult > Execute( TER_Pathfinder_ABC& pathfind,
-            unsigned int deadline, bool debugPath );
+            unsigned int deadlineSeconds, bool debugPath );
     virtual boost::shared_ptr< TER_PathResult > Cancel();
     virtual void RegisterPathSection( TER_PathSection& section );
 
 private:
     virtual void AddResultPoint( const MT_Vector2D& vPos, const TerrainData& nObjectTypes, const TerrainData& nObjectTypesToNextPoint, bool beginPoint );
 
-    void DoExecute( TER_Pathfinder_ABC& pathfind, unsigned int deadline );
+    void DoExecute( TER_Pathfinder_ABC& pathfind, unsigned int deadlineSeconds );
     void NotifyPartialSection();
     void NotifyCompletedSection();
     boost::optional< MT_Vector2D > DEC_PathComputer::GetLastPosition() const;
