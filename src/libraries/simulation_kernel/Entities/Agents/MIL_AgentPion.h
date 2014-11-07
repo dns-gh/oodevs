@@ -83,7 +83,7 @@ public:
 
     //! @name Accessors
     //@{
-	virtual E_Kind GetKind() const;
+    virtual E_Kind GetKind() const;
     virtual DEC_KnowledgeBlackBoard_AgentPion& GetKnowledge() const;
     virtual const MIL_PionOrderManager& GetOrderManager() const;
     virtual MIL_PionOrderManager& GetOrderManager();

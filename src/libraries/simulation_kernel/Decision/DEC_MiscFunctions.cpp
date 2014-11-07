@@ -595,7 +595,7 @@ void DEC_MiscFunctions::Debug( const DEC_Decision_ABC* caller, const std::string
 {
     if( !MIL_AgentServer::GetWorkspace().GetConfig().UseDecDebug() )
         return;
-    MIL_Entity_ABC& entity = caller->GetEntity();
+    const MIL_Entity_ABC& entity = caller->GetEntity();
     MT_LOG_INFO_MSG( entity.GetType().GetName() << " " << entity.GetID() << " says : [" << message << "]" );
 }
 

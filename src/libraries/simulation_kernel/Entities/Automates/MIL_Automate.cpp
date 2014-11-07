@@ -1359,7 +1359,7 @@ unsigned int MIL_Automate::GetLogisticId() const
 
 MIL_Entity_ABC::E_Kind MIL_Automate::GetKind() const
 {
-	return eAutomate;
+    return eAutomate;
 }
 
 // -----------------------------------------------------------------------------

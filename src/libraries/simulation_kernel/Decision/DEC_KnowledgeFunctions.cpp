@@ -592,21 +592,21 @@ T_KnowledgeObjectDiaIDVector DEC_KnowledgeFunctions::GetObjectsInZone( const DEC
         throw MASA_EXCEPTION( "invalid parameter." );
     MIL_ObjectFilter filter( parameters );
     T_KnowledgeObjectDiaIDVector knowledges;
-	const DEC_KnowledgeBlackBoard_KnowledgeGroup* bbKg = 0;
-	switch( caller->GetEntity().GetKind() )
-	{
-		case MIL_Entity_ABC::ePion:
-			bbKg = caller->GetPion().GetKnowledgeGroup()->GetKnowledge();
-			break;
-		case MIL_Entity_ABC::eAutomate:
-			bbKg = caller->GetAutomate().GetKnowledgeGroup()->GetKnowledge();
-			break;
-		case MIL_Entity_ABC::ePopulation:
-			bbKg = caller->GetPopulation().GetKnowledgeGroup()->GetKnowledge();
-			break;
-		default:
-			throw MASA_EXCEPTION( "DEC_KnowledgeFunctions::GetObjectsInZone(): cannot be called for this agent" );
-	}
+    const DEC_KnowledgeBlackBoard_KnowledgeGroup* bbKg = 0;
+    switch( caller->GetEntity().GetKind() )
+    {
+        case MIL_Entity_ABC::ePion:
+            bbKg = caller->GetPion().GetKnowledgeGroup()->GetKnowledge();
+            break;
+        case MIL_Entity_ABC::eAutomate:
+            bbKg = caller->GetAutomate().GetKnowledgeGroup()->GetKnowledge();
+            break;
+        case MIL_Entity_ABC::ePopulation:
+            bbKg = caller->GetPopulation().GetKnowledgeGroup()->GetKnowledge();
+            break;
+        default:
+            throw MASA_EXCEPTION( "DEC_KnowledgeFunctions::GetObjectsInZone(): cannot be called for this agent" );
+    }
     if( bbKg )
     {
         T_KnowledgeObjectDiaIDVector knowledgesTmp;

@@ -1474,7 +1474,7 @@ MIL_Automate& MIL_AgentPion::GetAutomate()
 
 MIL_Entity_ABC::E_Kind MIL_AgentPion::GetKind() const
 {
-	return ePion;
+    return ePion;
 }
 
 // -----------------------------------------------------------------------------

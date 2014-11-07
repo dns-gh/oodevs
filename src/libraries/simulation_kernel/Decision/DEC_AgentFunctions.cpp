@@ -937,19 +937,19 @@ bool DEC_AgentFunctions::ChangeAutomate( MIL_Agent_ABC& callerAgent, DEC_Decisio
 // -----------------------------------------------------------------------------
 int DEC_AgentFunctions::GetPosture( const DEC_Decision_ABC* agent )
 {
-	switch( agent->GetEntity().GetKind() )
-	{
-		case MIL_Entity_ABC::ePion:
-		{
-			const PHY_RoleInterface_Posture& rolePosture = agent->GetPion().GetRole< PHY_RoleInterface_Posture >();
-			return static_cast< int >( rolePosture.GetPostureCompletionPercentage() >= 1. ? rolePosture.GetCurrentPosture().GetID() : rolePosture.GetLastPosture().GetID() );
-		}
-		case MIL_Entity_ABC::ePopulation:
-			return agent->GetPopulation().HasFlow() ? PHY_Posture::mouvement_.GetID() : PHY_Posture::poste_.GetID();
-		default:
-			throw MASA_EXCEPTION( "DEC_AgentFunctions::GetPosture: cannot be called for this entity" );
-	}
-	return 0; // to hush the compiler
+    switch( agent->GetEntity().GetKind() )
+    {
+        case MIL_Entity_ABC::ePion:
+        {
+            const PHY_RoleInterface_Posture& rolePosture = agent->GetPion().GetRole< PHY_RoleInterface_Posture >();
+            return static_cast< int >( rolePosture.GetPostureCompletionPercentage() >= 1. ? rolePosture.GetCurrentPosture().GetID() : rolePosture.GetLastPosture().GetID() );
+        }
+        case MIL_Entity_ABC::ePopulation:
+            return agent->GetPopulation().HasFlow() ? PHY_Posture::mouvement_.GetID() : PHY_Posture::poste_.GetID();
+        default:
+            throw MASA_EXCEPTION( "DEC_AgentFunctions::GetPosture: cannot be called for this entity" );
+    }
+    return 0; // to hush the compiler
 }
 
 // -----------------------------------------------------------------------------
@@ -967,20 +967,20 @@ bool DEC_AgentFunctions::IsInCity( const DEC_Decision_ABC* pAgent )
 // -----------------------------------------------------------------------------
 bool DEC_AgentFunctions::IsInCrowd( const DEC_Decision_ABC* agent, DEC_Decision_ABC* pion )
 {
-	switch( agent->GetEntity().GetKind() )
-	{
-		case MIL_Entity_ABC::ePion:
-			return agent->GetPion().Get< PHY_RoleInterface_Population >().HasCollision();
-		case MIL_Entity_ABC::ePopulation:
-		{
-			if( !pion )
-				throw MASA_EXCEPTION( "invalid parameter." );
-			return pion->GetPion().Get< PHY_RoleInterface_Population >().HasCollisionWithCrowd( agent->GetPopulation() );
-		}
-		default:
-			throw MASA_EXCEPTION( "DEC_AgentFunctions::GetPosture: cannot be called for this entity" );
-	}
-	return false; // to hush the compiler
+    switch( agent->GetEntity().GetKind() )
+    {
+        case MIL_Entity_ABC::ePion:
+            return agent->GetPion().Get< PHY_RoleInterface_Population >().HasCollision();
+        case MIL_Entity_ABC::ePopulation:
+        {
+            if( !pion )
+                throw MASA_EXCEPTION( "invalid parameter." );
+            return pion->GetPion().Get< PHY_RoleInterface_Population >().HasCollisionWithCrowd( agent->GetPopulation() );
+        }
+        default:
+            throw MASA_EXCEPTION( "DEC_AgentFunctions::GetPosture: cannot be called for this entity" );
+    }
+    return false; // to hush the compiler
 }
 
 // -----------------------------------------------------------------------------

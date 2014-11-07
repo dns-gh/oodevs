@@ -36,14 +36,14 @@ public:
     static int GetContaminatedHumans( const DEC_Decision_ABC* callerPopulation );
 
     // Effects
-	static void ResetPionMaxSpeed( DEC_Decision_ABC* callerPopulation );
-	static void SetPionMaxSpeed( DEC_Decision_ABC* callerPopulation, double speed );
+    static void ResetPionMaxSpeed( DEC_Decision_ABC* callerPopulation );
+    static void SetPionMaxSpeed( DEC_Decision_ABC* callerPopulation, double speed );
     static void SetAttitude( DEC_Decision_ABC* callerPopulation, unsigned int attitudeId );
     static unsigned int GetAttitude( const DEC_Decision_ABC* callerPopulation );
     static std::vector< boost::shared_ptr< TER_Localisation > > GetCurrentLocations ( const DEC_Decision_ABC* callerPopulation );
     static double GetUrbanBlockAngriness( const DEC_Decision_ABC* callerPopulation );
     static void ReintegrateUrbanBlock( DEC_Decision_ABC* callerPopulation );
-	static void HealWounded( DEC_Decision_ABC* callerPopulation );
+    static void HealWounded( DEC_Decision_ABC* callerPopulation );
     static void SetUrbanDestructionState( DEC_Decision_ABC* callerPopulation, bool state );
     static bool GetUrbanDestructionState( DEC_Decision_ABC* callerPopulation );
     static void SetDemonstrationState( DEC_Decision_ABC* callerPopulation, bool state );
@@ -60,6 +60,8 @@ public:
     static boost::shared_ptr<MT_Vector2D> GetKnowledgeObjectClosestPoint( const DEC_Decision_ABC* callerPopulation, boost::shared_ptr< DEC_Knowledge_Object > knowledge ) ;
     static int IsEnemy( const DEC_Decision_ABC* callerPopulation, boost::shared_ptr< DEC_Knowledge_Object > knowledge );
     static bool HasFlow( const DEC_Decision_ABC* population );
+    static std::vector< unsigned int > GetPionsAttacking( const DEC_Decision_ABC* callerPopulation );
+    static std::vector< unsigned int > GetPionsSecuring( const DEC_Decision_ABC* callerPopulation );
 
     // Move
     static bool HasReachedDestination( const DEC_Decision_ABC* callerPopulation, const MT_Vector2D* destination );
@@ -68,13 +70,12 @@ public:
 
     // Etat decisionnel
     static void NotifyDominationStateChanged( DEC_Decision_ABC* callerPopulation, double dominationState );
-	static unsigned int GetDeadHumans( const DEC_Decision_ABC* callerPopulation );
+    static unsigned int GetDeadHumans( const DEC_Decision_ABC* callerPopulation );
     static std::string  GetSzName( MIL_Population& callerPopulation );
     static double GetDominationState( DEC_Decision_ABC& callerPopulation );
     //@}
 
     static void SetMission( DEC_Decision_ABC* object, boost::shared_ptr< MIL_Mission_ABC > mission );
-
 };
 
 #endif // __DEC_PopulationFunctions_h_

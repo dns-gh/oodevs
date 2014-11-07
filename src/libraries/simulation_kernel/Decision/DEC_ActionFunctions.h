@@ -105,26 +105,26 @@ namespace
         return action->GetId();
     }
 
-	template< typename Entity >
-	Entity& GetEntity( DEC_Decision_ABC* );
+    template< typename Entity >
+    Entity& GetEntity( DEC_Decision_ABC* );
 
-	template<>
-	MIL_Entity_ABC& GetEntity( DEC_Decision_ABC* agent )
-	{
-		return agent->GetEntity();
-	}
+    template<>
+    MIL_Entity_ABC& GetEntity( DEC_Decision_ABC* agent )
+    {
+        return agent->GetEntity();
+    }
 
-	template<>
-	MIL_Population& GetEntity( DEC_Decision_ABC* agent )
-	{
-		return agent->GetPopulation();
-	}
+    template<>
+    MIL_Population& GetEntity( DEC_Decision_ABC* agent )
+    {
+        return agent->GetPopulation();
+    }
 
-	template<>
-	MIL_AgentPion& GetEntity( DEC_Decision_ABC* agent )
-	{
-		return agent->GetPion();
-	}
+    template<>
+    MIL_AgentPion& GetEntity( DEC_Decision_ABC* agent )
+    {
+        return agent->GetPion();
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -134,7 +134,7 @@ namespace
 template< typename ActionType >
 unsigned int DEC_ActionFunctions::StartAction( DEC_Decision_ABC* agent )
 {
-	typename ActionType::ActorType& caller = GetEntity< typename ActionType::ActorType >( agent );
+    auto& caller = GetEntity< typename ActionType::ActorType >( agent );
     return RegisterAction( caller, boost::make_shared< ActionType >( caller ) );
 }
 
@@ -145,7 +145,7 @@ unsigned int DEC_ActionFunctions::StartAction( DEC_Decision_ABC* agent )
 template< typename ActionType, typename T >
 unsigned int DEC_ActionFunctions::StartAction( DEC_Decision_ABC* agent, T arg )
 {
-	typename ActionType::ActorType& caller = GetEntity< typename ActionType::ActorType >( agent );
+    auto& caller = GetEntity< typename ActionType::ActorType >( agent );
     return RegisterAction( caller, boost::make_shared< ActionType >( caller, arg ) );
 }
 
@@ -156,7 +156,7 @@ unsigned int DEC_ActionFunctions::StartAction( DEC_Decision_ABC* agent, T arg )
 template< typename ActionType, typename T1, typename T2 >
 unsigned int DEC_ActionFunctions::StartAction( DEC_Decision_ABC* agent, T1 arg1, T2 arg2 )
 {
-	typename ActionType::ActorType& caller = GetEntity< typename ActionType::ActorType >( agent );
+    auto& caller = GetEntity< typename ActionType::ActorType >( agent );
     return RegisterAction( caller, boost::make_shared< ActionType >( caller, arg1, arg2 ) );
 }
 
@@ -167,7 +167,7 @@ unsigned int DEC_ActionFunctions::StartAction( DEC_Decision_ABC* agent, T1 arg1,
 template< typename ActionType, typename T1, typename T2, typename T3 >
 unsigned int DEC_ActionFunctions::StartAction( DEC_Decision_ABC* agent, T1 arg1, T2 arg2, T3 arg3 )
 {
-	typename ActionType::ActorType& caller = GetEntity< typename ActionType::ActorType >( agent );
+    auto& caller = GetEntity< typename ActionType::ActorType >( agent );
     return RegisterAction( caller, boost::make_shared< ActionType >( caller, arg1, arg2, arg3 ) );
 }
 
@@ -178,7 +178,7 @@ unsigned int DEC_ActionFunctions::StartAction( DEC_Decision_ABC* agent, T1 arg1,
 template< typename ActionType, typename T1, typename T2, typename T3, typename T4 >
 unsigned int DEC_ActionFunctions::StartAction( DEC_Decision_ABC* agent, T1 arg1, T2 arg2, T3 arg3, T4 arg4 )
 {
-	typename ActionType::ActorType& caller = GetEntity< typename ActionType::ActorType >( agent );
+    auto& caller = GetEntity< typename ActionType::ActorType >( agent );
     return RegisterAction( caller, boost::make_shared< ActionType >( caller, arg1, arg2, arg3, arg4 ) );
 }
 
@@ -189,7 +189,7 @@ unsigned int DEC_ActionFunctions::StartAction( DEC_Decision_ABC* agent, T1 arg1,
 template< typename ActionType, typename T1, typename T2, typename T3, typename T4, typename T5 >
 unsigned int DEC_ActionFunctions::StartAction( DEC_Decision_ABC* agent, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5 )
 {
-	typename ActionType::ActorType& caller = GetEntity< typename ActionType::ActorType >( agent );
+    auto& caller = GetEntity< typename ActionType::ActorType >( agent );
     return RegisterAction( caller, boost::make_shared< ActionType >( caller, arg1, arg2, arg3, arg4, arg5 ) );
 }
 

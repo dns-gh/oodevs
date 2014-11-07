@@ -73,12 +73,12 @@ const MIL_EntityType& MIL_Entity_ABC::GetType() const
 
 const MIL_OrderManager_ABC& MIL_Entity_ABC::GetOrderManager() const
 {
-	throw MASA_EXCEPTION( "unsupported method 'MIL_Entity_ABC::GetOrderManager()'" );
+    throw MASA_EXCEPTION( "unsupported method 'MIL_Entity_ABC::GetOrderManager()'" );
 }
 
 MIL_OrderManager_ABC& MIL_Entity_ABC::GetOrderManager()
 {
-	throw MASA_EXCEPTION( "unsupported method 'MIL_Entity_ABC::GetOrderManager()'" );
+    throw MASA_EXCEPTION( "unsupported method 'MIL_Entity_ABC::GetOrderManager()'" );
 }
 
 // -----------------------------------------------------------------------------

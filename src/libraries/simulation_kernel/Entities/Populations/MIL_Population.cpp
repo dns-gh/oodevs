@@ -1679,7 +1679,7 @@ const MIL_PopulationAttitude& MIL_Population::GetDefaultAttitude() const
 
 MIL_Entity_ABC::E_Kind MIL_Population::GetKind() const
 {
-	return ePopulation;
+    return ePopulation;
 }
 
 // -----------------------------------------------------------------------------

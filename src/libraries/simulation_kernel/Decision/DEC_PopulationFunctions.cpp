@@ -43,12 +43,12 @@
 
 void DEC_PopulationFunctions::ResetPionMaxSpeed( DEC_Decision_ABC* callerPopulation )
 {
-	callerPopulation->GetPopulation().ResetPionMaxSpeed();
+    callerPopulation->GetPopulation().ResetPionMaxSpeed();
 }
 
 void DEC_PopulationFunctions::SetPionMaxSpeed( DEC_Decision_ABC* callerPopulation, double speed )
 {
-	callerPopulation->GetPopulation().SetPionMaxSpeed( speed );
+    callerPopulation->GetPopulation().SetPionMaxSpeed( speed );
 }
 
 // -----------------------------------------------------------------------------
@@ -232,7 +232,7 @@ int DEC_PopulationFunctions::IsEnemy( const DEC_Decision_ABC* callerPopulation, 
 {
     if( !( pKnowledge && pKnowledge->IsValid() ) )
         return int( eTristate_DontKnow );
-	return int( pKnowledge->IsAnEnemy( callerPopulation->GetPopulation().GetArmy() ) );
+    return int( pKnowledge->IsAnEnemy( callerPopulation->GetPopulation().GetArmy() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -241,12 +241,12 @@ int DEC_PopulationFunctions::IsEnemy( const DEC_Decision_ABC* callerPopulation, 
 // -----------------------------------------------------------------------------
 void DEC_PopulationFunctions::NotifyDominationStateChanged( DEC_Decision_ABC* callerPopulation, double dominationState )
 {
-	callerPopulation->GetPopulation().GetDecision().NotifyDominationStateChanged( dominationState );
+    callerPopulation->GetPopulation().GetDecision().NotifyDominationStateChanged( dominationState );
 }
 
 unsigned int DEC_PopulationFunctions::GetDeadHumans( const DEC_Decision_ABC* callerPopulation )
 {
-	return callerPopulation->GetPopulation().GetDeadHumans();
+    return callerPopulation->GetPopulation().GetDeadHumans();
 }
 
 // -----------------------------------------------------------------------------
@@ -303,14 +303,14 @@ double DEC_PopulationFunctions::GetUrbanBlockAngriness( const DEC_Decision_ABC* 
 // -----------------------------------------------------------------------------
 void DEC_PopulationFunctions::ReintegrateUrbanBlock( DEC_Decision_ABC* callerPopulation )
 {
-	MIL_Population& population = callerPopulation->GetPopulation();
+    MIL_Population& population = callerPopulation->GetPopulation();
     population.GetOrderManager().CancelMission();
     population.ChangeComposition( 0, 0, 0, 0 );
 }
 
 void DEC_PopulationFunctions::HealWounded( DEC_Decision_ABC* callerPopulation )
 {
-	callerPopulation->GetPopulation().HealWounded();
+    callerPopulation->GetPopulation().HealWounded();
 }
 
 // -----------------------------------------------------------------------------
@@ -321,7 +321,7 @@ bool DEC_PopulationFunctions::HasReachedDestination( const DEC_Decision_ABC* cal
 {
     if( !destination )
         throw MASA_EXCEPTION( "invalid parameter." );
-	return callerPopulation->GetPopulation().HasReachedDestination( *destination );
+    return callerPopulation->GetPopulation().HasReachedDestination( *destination );
 }
 // -----------------------------------------------------------------------------
 // Name: DEC_PopulationFunctions::HasReachedBlockBorder
@@ -360,5 +360,15 @@ int DEC_PopulationFunctions::GetHealthyHumans( const DEC_Decision_ABC* callerPop
 // -----------------------------------------------------------------------------
 int DEC_PopulationFunctions::GetContaminatedHumans( const DEC_Decision_ABC* callerPopulation )
 {
-	return callerPopulation->GetPopulation().GetContaminatedHumans();
+    return callerPopulation->GetPopulation().GetContaminatedHumans();
+}
+
+std::vector< unsigned int > DEC_PopulationFunctions::GetPionsAttacking( const DEC_Decision_ABC* agent )
+{
+    return agent->GetPopulation().GetKnowledge().GetPionsAttacking();
+}
+
+std::vector< unsigned int > DEC_PopulationFunctions::GetPionsSecuring( const DEC_Decision_ABC* agent )
+{
+    return agent->GetPopulation().GetKnowledge().GetPionsSecuring();
 }

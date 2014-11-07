@@ -61,7 +61,7 @@ public:
 
     //! @name Accessors
     //@{
-	virtual E_Kind GetKind() const;
+    virtual E_Kind GetKind() const;
     virtual const MIL_PopulationType& GetType() const;
     const DEC_PopulationDecision& GetDecision() const;
     DEC_PopulationDecision& GetDecision();

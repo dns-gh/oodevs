@@ -385,7 +385,7 @@ void MIL_Inhabitant::OnReceiveMsgChangeHealthState( const sword::UnitMagicAction
 
 MIL_Entity_ABC::E_Kind MIL_Inhabitant::GetKind() const
 {
-	return eInhabitant;
+    return eInhabitant;
 }
 
 // -----------------------------------------------------------------------------

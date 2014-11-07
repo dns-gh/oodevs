@@ -11,7 +11,7 @@ class DEC_Decision_ABC;
 class DEC_EntityFunctions
 {
 public:
-	static void DecisionalState( const DEC_Decision_ABC* agent, const std::string& key, const std::string& value );
+    static void DecisionalState( const DEC_Decision_ABC* agent, const std::string& key, const std::string& value );
 };
 
 #endif // __DEC_EntityFunctions_h_

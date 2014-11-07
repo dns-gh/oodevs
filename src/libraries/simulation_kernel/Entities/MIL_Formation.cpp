@@ -330,7 +330,7 @@ void MIL_Formation::OnReceiveUnitMagicAction( const sword::UnitMagicAction& msg 
 
 MIL_Entity_ABC::E_Kind MIL_Formation::GetKind() const
 {
-	return eFormation;
+    return eFormation;
 }
 
 // -----------------------------------------------------------------------------

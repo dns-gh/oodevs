@@ -81,12 +81,6 @@ public:
     template< typename Archive > void serialize( Archive&, const unsigned int );
     //@}
 
-    //! @name DEC Functions
-    //@{
-	static std::vector< unsigned int > GetPionsAttacking( const DEC_Decision_ABC* agent );
-	static std::vector< unsigned int > GetPionsSecuring( const DEC_Decision_ABC* agent );
-    //@}
-
 private:
     //! @name CheckPoints
     //@{

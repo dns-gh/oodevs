@@ -80,16 +80,16 @@ namespace
         return 0;
     }
 
-	template< typename Entity >
-	int QueueForDecontamination( Entity& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
-	{
-		if( DecontaminationCapacity* pCapacity = IsValidObjectCapacity< DecontaminationCapacity >( pKnowledge ) )
-		{
-			pCapacity->QueueForDecontamination( callerAgent );
-			return static_cast< int >( eQueryValid );
-		}
-		return static_cast< int >( eQueryInvalid );
-	}
+    template< typename Entity >
+    int QueueForDecontamination( Entity& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
+    {
+        if( DecontaminationCapacity* pCapacity = IsValidObjectCapacity< DecontaminationCapacity >( pKnowledge ) )
+        {
+            pCapacity->QueueForDecontamination( callerAgent );
+            return static_cast< int >( eQueryValid );
+        }
+        return static_cast< int >( eQueryInvalid );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -99,17 +99,17 @@ namespace
 int DEC_KnowledgeObjectFunctions::QueueUnitForDecontamination( DEC_Decision_ABC* agent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
 {
     if( agent )
-	{
-		switch( agent->GetEntity().GetKind() )
-		{
-			case MIL_Entity_ABC::ePion:
-				return QueueForDecontamination( agent->GetPion(), pKnowledge );
-			case MIL_Entity_ABC::ePopulation:
-				return QueueForDecontamination( agent->GetPopulation(), pKnowledge );
-			default:
-				throw MASA_EXCEPTION( "DEC_KnowledgeObjectFunctions::QueueUnitForDecontamination(): cannot be called for this agent" );
-		}
-	}
+    {
+        switch( agent->GetEntity().GetKind() )
+        {
+            case MIL_Entity_ABC::ePion:
+                return QueueForDecontamination( agent->GetPion(), pKnowledge );
+            case MIL_Entity_ABC::ePopulation:
+                return QueueForDecontamination( agent->GetPopulation(), pKnowledge );
+            default:
+                throw MASA_EXCEPTION( "DEC_KnowledgeObjectFunctions::QueueUnitForDecontamination(): cannot be called for this agent" );
+        }
+    }
     return static_cast< int >( eQueryInvalid );
 }
 

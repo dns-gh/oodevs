@@ -290,8 +290,8 @@ void RegisterPopulationFunctions( sword::Brain& brain )
     brain.RegisterFunction( "_DEC_ReintegrateUrbanBlock", &DEC_PopulationFunctions::ReintegrateUrbanBlock );
     brain.RegisterFunction( "_DEC_Population_HealWounded", &DEC_PopulationFunctions::HealWounded );
 
-	// Move
-	brain.RegisterFunction( "_DEC_HasFlow", &DEC_PopulationFunctions::HasFlow );
+    // Move
+    brain.RegisterFunction( "_DEC_HasFlow", &DEC_PopulationFunctions::HasFlow );
     brain.RegisterFunction( "_DEC_Population_HasReachedBlockBorder", &DEC_PopulationFunctions::HasReachedBlockBorder );
     brain.RegisterFunction( "_DEC_Population_HasReachedDestination", &DEC_PopulationFunctions::HasReachedDestination );
     brain.RegisterFunction( "_DEC_Population_HasReachedDestinationCompletely", &DEC_PopulationFunctions::HasReachedDestinationCompletely );
@@ -319,8 +319,8 @@ void RegisterPopulationFunctions( sword::Brain& brain )
 
     // Knowledge agents
     brain.RegisterFunction( "DEC_Connaissance_EnAgent", &DEC_KnowledgeAgentFunctions::GetAgent );
-    brain.RegisterFunction< std::vector< unsigned int >, const DEC_Decision_ABC* >( "_DEC_Connaissances_PionsPrenantAPartie", &DEC_PopulationKnowledge::GetPionsAttacking );
-    brain.RegisterFunction< std::vector< unsigned int >, const DEC_Decision_ABC* >( "_DEC_Connaissances_PionsSecurisant", &DEC_PopulationKnowledge::GetPionsSecuring );
+    brain.RegisterFunction< std::vector< unsigned int >, const DEC_Decision_ABC* >( "_DEC_Connaissances_PionsPrenantAPartie", &DEC_PopulationFunctions::GetPionsAttacking );
+    brain.RegisterFunction< std::vector< unsigned int >, const DEC_Decision_ABC* >( "_DEC_Connaissances_PionsSecurisant", &DEC_PopulationFunctions::GetPionsSecuring );
 
     // Orders
     brain.RegisterFunction( "_DEC_AssignMissionCrowdParameter", &MIL_MissionParameterFactory::SetCrowdKnowledgeParameter );
@@ -430,7 +430,7 @@ void RegisterActionFunctions( sword::Brain& brain )
     brain.RegisterFunction( "DEC_Refugies_EstDebarqueDansCamp", &DEC_ActionFunctions::Refugees_IsUnloadedInCamp );
     brain.RegisterFunction( "DEC_Connaissance_TransportNombreAllerRetour", &DEC_ActionFunctions::GetNumberOfRoundTripToTransportKnowledge );
 
-	brain.RegisterFunction( "_DEC_StartDeplacement", &DEC_ActionFunctions::StartAction< PHY_ActionMove, boost::shared_ptr< TER_Path_ABC >, bool > );
+    brain.RegisterFunction( "_DEC_StartDeplacement", &DEC_ActionFunctions::StartAction< PHY_ActionMove, boost::shared_ptr< TER_Path_ABC >, bool > );
     brain.RegisterFunction( "_DEC_StartTirDirect", &DEC_ActionFunctions::StartAction< PHY_ActionDirectFirePion, boost::shared_ptr< DEC_Knowledge_Agent >, double, int, int > );
     brain.RegisterFunction( "_DEC_StartTirDirectDebarques", &DEC_ActionFunctions::StartAction< PHY_ActionDirectFirePionUsingOnlyLoadable, boost::shared_ptr< DEC_Knowledge_Agent >, double, int > );
     brain.RegisterFunction( "_DEC_StartTirDirectTransporteurs", &DEC_ActionFunctions::StartAction< PHY_ActionDirectFirePionUsingOnlyCarrier, boost::shared_ptr< DEC_Knowledge_Agent >, double, int > );
@@ -464,7 +464,7 @@ void RegisterActionFunctions( sword::Brain& brain )
     brain.RegisterFunction( "_DEC_StartInterrogateUnit", &DEC_ActionFunctions::StartAction< PHY_ActionInterrogate, boost::shared_ptr< DEC_Knowledge_Agent > > );
     brain.RegisterFunction( "_DEC_StartTraverserReseauSouterrain", &DEC_ActionFunctions::StartAction< PHY_ActionMoveUnderground, boost::shared_ptr< DEC_Knowledge_Object > > );
 
-	// Logistique
+    // Logistique
     brain.RegisterFunction( "_DEC_StartPreterVSRAM", &DEC_ActionFunctions::StartAction< PHY_ActionLendCollectionComposantes, DEC_Decision_ABC*, DEC_Decision_ABC*, unsigned int > );
     brain.RegisterFunction( "_DEC_StartPreterRemorqueurs", &DEC_ActionFunctions::StartAction< PHY_ActionLendHaulerComposantes, DEC_Decision_ABC*, DEC_Decision_ABC*, unsigned int > );
     brain.RegisterFunction( "_DEC_StartPreterComposantes", &DEC_ActionFunctions::StartAction< PHY_ActionLendSpecificComposantes, DEC_Decision_ABC*, DEC_Decision_ABC*, PHY_ComposanteTypePion*, unsigned int > );
@@ -474,7 +474,7 @@ void RegisterActionFunctions( sword::Brain& brain )
                 return DEC_ActionFunctions::StartAction< PHY_ActionConsumeResources >( agent, category, value, duration, MIL_Time_ABC::GetTime().GetTickDuration() );
     }));
 
-	// Transport / Heliportage
+    // Transport / Heliportage
     brain.RegisterFunction( "_DEC_Start_TransportEmbarquer", &DEC_ActionFunctions::StartAction< PHY_ActionTransportLoad > );
     brain.RegisterFunction( "_DEC_Start_TransportDebarquer", &DEC_ActionFunctions::StartAction< PHY_ActionTransportUnload, MT_Vector2D* > );
     brain.RegisterFunction( "_DEC_StartEmbarquerFouleDUneConcentration", &DEC_ActionFunctions::StartAction< crowdtransport::PHY_ActionLoadCrowd, int, unsigned int > );
@@ -1048,11 +1048,11 @@ void RegisterMiscellaneousFunctions( sword::Brain& brain )
 {
     brain.RegisterFunction( "DEC_GetSzName", &DEC_MiscFunctions::GetName );
 
-	// Mission
+    // Mission
     brain.RegisterFunction( "_DEC_FinMission", &DEC_OrdersFunctions::FinishMission );
 
-	// Knowledge objects
-	brain.RegisterFunction( "_DEC_ObjectKnowledgesInZone", &DEC_KnowledgeFunctions::GetObjectsInZone );
+    // Knowledge objects
+    brain.RegisterFunction( "_DEC_ObjectKnowledgesInZone", &DEC_KnowledgeFunctions::GetObjectsInZone );
 }
 
 void RegisterDebugFunctions( sword::Brain& brain )
@@ -1101,7 +1101,7 @@ void RegisterCommonUserFunctions( sword::Brain& brain, bool isMasalife )
     RegisterTransportFunctions( brain );
     RegisterMiscellaneousFunctions( brain );
     RegisterDebugFunctions( brain );
-	RegisterEntityFunctions( brain );
+    RegisterEntityFunctions( brain );
     DEC_CommunicationFunctions::Register( brain );
     DEC_TelepathyFunctions::Register( brain );
     MIL_FragOrder::Register( brain );

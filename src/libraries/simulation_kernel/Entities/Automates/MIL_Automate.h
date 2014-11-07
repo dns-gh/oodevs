@@ -103,7 +103,7 @@ public:
 
     //! @name Accessors
     //@{
-	virtual E_Kind GetKind() const;
+    virtual E_Kind GetKind() const;
     virtual const MIL_AutomateType& GetType() const;
     MIL_Army_ABC& GetArmy() const;
     boost::shared_ptr< MIL_KnowledgeGroup > GetKnowledgeGroup() const;

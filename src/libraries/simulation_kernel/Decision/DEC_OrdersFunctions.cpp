@@ -27,7 +27,7 @@
 // -----------------------------------------------------------------------------
 void DEC_OrdersFunctions::FinishMission( DEC_Decision_ABC* caller )
 {
-	caller->GetEntity().GetOrderManager().CancelMission();
+    caller->GetEntity().GetOrderManager().CancelMission();
 }
 
 //-----------------------------------------------------------------------------
