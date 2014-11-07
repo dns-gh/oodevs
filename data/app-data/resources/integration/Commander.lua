@@ -53,10 +53,16 @@ integration.commanderGetHQUnit = function( )
 end
 
 --- Returns the company of the agent
--- @param entity Simulation agent
+-- @param entity Simulation agent or company
 -- @return Simulation commander
 integration.getCommander = function( entity )
     return DEC_GetAutomate( entity )
+end
+
+--- Returns 'true' if the agent is a company (an automat). It returns 'false' otherwise
+-- @return Boolean, whether or not the agent is a company
+integration.isAutomat = function()
+    integration.getCommander( myself ) == myself
 end
 
 --- Returns true if the agent is contaminated, false otherwise
