@@ -11,6 +11,8 @@
 #include "PathfindModel.h"
 #include "Pathfind.h"
 #include "clients_kernel/Agent_ABC.h"
+#include "clients_kernel/Automat_ABC.h"
+#include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/Population_ABC.h"
 #include "clients_kernel/Profile_ABC.h"
 
@@ -18,12 +20,16 @@ PathfindModel::PathfindModel( kernel::Controller& controller,
                               actions::ActionsModel& actionsModel,
                               const tools::Resolver_ABC< kernel::Agent_ABC >& agents,
                               const tools::Resolver_ABC< kernel::Population_ABC >& populations,
+                              const tools::Resolver_ABC< kernel::Automat_ABC >& automats,
+                              const tools::Resolver_ABC< kernel::Formation_ABC >& formations,
                               const kernel::CoordinateConverter_ABC& converter,
                               const kernel::Profile_ABC& profile )
     : controller_( controller )
     , actionsModel_( actionsModel )
     , agents_( agents )
     , populations_( populations )
+    , automats_( automats )
+    , formations_( formations )
     , converter_( converter )
     , profile_( profile )
 {
@@ -44,11 +50,20 @@ namespace
 {
     kernel::Entity_ABC& GetUnit( const tools::Resolver_ABC< kernel::Agent_ABC >& agents,
                                  const tools::Resolver_ABC< kernel::Population_ABC >& populations,
+                                 const tools::Resolver_ABC< kernel::Automat_ABC >& automats,
+                                 const tools::Resolver_ABC< kernel::Formation_ABC >& formations,
                                  uint32_t id )
     {
-        if( auto popu = populations.Find( id ) )
-            return *popu;
-        return agents.Get( id );
+         kernel::Entity_ABC* result = populations.Find( id ) ;
+         if( result )
+             return *result;
+         result = agents.Find( id );
+         if( result )
+             return *result;
+         result = automats.Find( id );
+         if( result )
+             return *result;
+         return formations.Get( id );
     }
 }
 
@@ -56,7 +71,7 @@ void PathfindModel::Create( const sword::Pathfind& msg )
 {
     if( !T_Resolver::Find( msg.id() ) )
     {
-        auto& unit = GetUnit( agents_, populations_, msg.request().unit().id() );
+        auto& unit = GetUnit( agents_, populations_, automats_, formations_, msg.request().unit().id() );
         auto entity = new Pathfind( controller_, actionsModel_, converter_, unit, msg, false,
                                     [&]( const kernel::Pathfind_ABC& pathfind ){ return profile_.CanBeOrdered( pathfind.GetUnit() ); } );
         Register( msg.id(), *entity );
@@ -72,6 +87,6 @@ void PathfindModel::Delete( const sword::PathfindDestruction& msg )
 void PathfindModel::Update( const sword::Pathfind& msg )
 {
     kernel::Pathfind_ABC& pathfind = Get( msg.id() );
-    pathfind.UpdateMessage( msg, GetUnit( agents_, populations_, msg.request().unit().id() ) );
+    pathfind.UpdateMessage( msg, GetUnit( agents_, populations_, automats_, formations_, msg.request().unit().id() ) );
     controller_.Update( pathfind );
 }

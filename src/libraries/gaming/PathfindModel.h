@@ -51,6 +51,8 @@ public:
                             actions::ActionsModel& actionsModel,
                             const tools::Resolver_ABC< kernel::Agent_ABC >& agents,
                             const tools::Resolver_ABC< kernel::Population_ABC >& populations,
+                            const tools::Resolver_ABC< kernel::Automat_ABC >& automats,
+                            const tools::Resolver_ABC< kernel::Formation_ABC >& formations,
                             const kernel::CoordinateConverter_ABC& converter,
                             const kernel::Profile_ABC& profile );
     virtual ~PathfindModel();
@@ -82,6 +84,8 @@ private:
     const kernel::CoordinateConverter_ABC& converter_;
     const tools::Resolver_ABC< kernel::Agent_ABC >& agents_;
     const tools::Resolver_ABC< kernel::Population_ABC >& populations_;
+    const tools::Resolver_ABC< kernel::Automat_ABC >& automats_;
+    const tools::Resolver_ABC< kernel::Formation_ABC >& formations_;
     const kernel::Profile_ABC& profile_;
     //@}
 };
