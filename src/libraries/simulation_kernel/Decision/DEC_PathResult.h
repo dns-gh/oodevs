@@ -25,6 +25,7 @@ class MIL_Agent_ABC;
 class TER_Localisation;
 class TER_PathPoint;
 class TER_PathFuture;
+class TER_PathSection;
 class TER_Polygon;
 
 //*****************************************************************************
@@ -42,7 +43,7 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             DEC_PathResult( const DEC_PathType& pathType, unsigned int querierId );
+             DEC_PathResult( const DEC_PathType& pathType, unsigned int callerId );
     virtual ~DEC_PathResult();
     //@}
 
@@ -84,8 +85,8 @@ private:
     //@}
 
 protected:
+    void AddSection( const boost::shared_ptr< TER_PathSection >& section );
     void SetResult( T_PathPoints points );
-    DEC_PathComputer& GetComputer();
     const std::vector< MT_Vector2D >& GetComputedWaypoints() const;
     void RemoveComputedWaypoint();
     virtual void DoFinalize();
@@ -105,6 +106,8 @@ private:
     MT_Vector2D lastWaypoint_;
     std::vector< MT_Vector2D > computedWaypoints_;
     bool finalized_;
+    std::vector< boost::shared_ptr< TER_PathSection > > sections_;
+    const unsigned int callerId_;
     //@}
 };
 

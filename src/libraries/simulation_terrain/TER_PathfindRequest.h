@@ -17,6 +17,7 @@
 
 class TER_PathFuture;
 class TER_PathComputer_ABC;
+class TER_PathSection;
 
 // TER_PathfindRequest insulates TER_Path_ABC cleanup logic from
 // TER_PathFinderThread. While the cleanup code itself belongs to TER_Path_ABC,
@@ -29,6 +30,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              TER_PathfindRequest(
+                const std::vector< boost::shared_ptr< TER_PathSection > > sections,
                 const boost::shared_ptr< TER_PathComputer_ABC >& computer,
                 const sword::Pathfind& pathfind,
                 const boost::shared_ptr< TER_PathFuture >& future );
@@ -43,10 +45,13 @@ public:
     boost::shared_ptr< TER_PathComputer_ABC > GetComputer();
     const sword::Pathfind& GetPathfind() const;
     boost::shared_ptr< TER_PathFuture > GetFuture();
+    const std::vector< boost::shared_ptr< TER_PathSection > >& GetSections();
+    double GetLength() const;
 
 private:
     //! @name Member data
     //@{
+    const std::vector< boost::shared_ptr< TER_PathSection > > sections_;
     boost::weak_ptr< TER_PathComputer_ABC > computer_;
     const sword::Pathfind pathfind_;
     boost::shared_ptr< TER_PathFuture > future_;

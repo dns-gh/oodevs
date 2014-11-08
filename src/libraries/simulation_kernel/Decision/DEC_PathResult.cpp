@@ -27,12 +27,12 @@
 // Name: DEC_PathResult constructor
 // Created: NLD 2005-09-30
 // -----------------------------------------------------------------------------
-DEC_PathResult::DEC_PathResult( const DEC_PathType& pathType, unsigned int querierId )
+DEC_PathResult::DEC_PathResult( const DEC_PathType& pathType, unsigned int callerId )
     : pathType_( pathType )
     , bSectionJustStarted_( false )
-    , computer_( boost::make_shared< DEC_PathComputer >( querierId ) )
     , state_( TER_Path_ABC::eComputing )
     , finalized_( false )
+    , callerId_( callerId )
 {
     itCurrentPathPoint_ = resultList_.end();
 }
@@ -310,21 +310,21 @@ const DEC_PathType& DEC_PathResult::GetPathType() const
     return pathType_;
 }
 
-DEC_PathComputer& DEC_PathResult::GetComputer()
-{
-    return *computer_;
-}
-
 void DEC_PathResult::StartCompute( const sword::Pathfind& pathfind )
 {
+    computer_ = boost::make_shared< DEC_PathComputer >( callerId_ );
     auto& pathfinder = MIL_AgentServer::GetWorkspace().GetPathFindManager();
-    future_ = pathfinder.StartCompute( computer_, pathfind );
+    future_ = pathfinder.StartCompute( sections_, computer_, pathfind );
 }
 
 void DEC_PathResult::Cancel()
 {
-    future_ = boost::make_shared< TER_PathFuture >();
-    future_->Set( computer_->Cancel() );
+    if( !future_ )
+        future_ = boost::make_shared< TER_PathFuture >();
+    if( computer_ )
+        future_->Set( computer_->Cancel() );
+    else
+        future_->Cancel();
 }
 
 TER_Path_ABC::E_State DEC_PathResult::GetState() const
@@ -376,3 +376,7 @@ void DEC_PathResult::RemoveComputedWaypoint()
         computedWaypoints_.erase( computedWaypoints_.begin() );
 }
 
+void DEC_PathResult::AddSection( const boost::shared_ptr< TER_PathSection >& section )
+{
+    sections_.push_back( section );
+}

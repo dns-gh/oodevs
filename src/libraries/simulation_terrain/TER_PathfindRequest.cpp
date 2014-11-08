@@ -9,12 +9,15 @@
 
 #include "simulation_terrain_pch.h"
 #include "TER_PathfindRequest.h"
+#include "TER_PathSection.h"
 
 TER_PathfindRequest::TER_PathfindRequest(
+        const std::vector< boost::shared_ptr< TER_PathSection > > sections,
         const boost::shared_ptr< TER_PathComputer_ABC >& computer,
         const sword::Pathfind& pathfind,
         const boost::shared_ptr< TER_PathFuture >& future )
-    : computer_( computer )
+    : sections_( sections )
+    , computer_( computer )
     , pathfind_( pathfind )
     , future_( future )
 {
@@ -49,4 +52,17 @@ boost::shared_ptr< TER_PathFuture > TER_PathfindRequest::GetFuture()
 bool TER_PathfindRequest::IsItinerary() const
 {
     return pathfind_.has_result();
+}
+
+const std::vector< boost::shared_ptr< TER_PathSection > >& TER_PathfindRequest::GetSections()
+{
+    return sections_;
+}
+
+double TER_PathfindRequest::GetLength() const
+{
+   double length = 0;
+   for( auto it = sections_.begin(); it != sections_.end(); ++it )
+      length += (*it)->GetPosStart().Distance( (*it)->GetPosEnd() );
+   return length;
 }

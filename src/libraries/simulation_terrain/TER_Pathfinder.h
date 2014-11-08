@@ -27,6 +27,7 @@ class TER_PathfindRequest;
 class TER_PathComputer_ABC;
 class TER_PathFinderThread;
 class TER_PathfindRequest;
+class TER_PathSection;
 struct TER_PathResult;
 class TER_StaticData;
 
@@ -82,6 +83,7 @@ public:
     // when the computation terminates, successfully and on error. Note the
     // result never contains TER_Path_ABC::eComputing.
     boost::shared_ptr< TER_PathFuture > StartCompute(
+            const std::vector< boost::shared_ptr< TER_PathSection > > sections,
             const boost::shared_ptr< TER_PathComputer_ABC >& pPath,
             const sword::Pathfind& pathfind );
 

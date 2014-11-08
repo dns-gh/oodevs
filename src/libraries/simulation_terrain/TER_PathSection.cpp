@@ -54,15 +54,6 @@ const MT_Vector2D& TER_PathSection::GetPosEnd() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: TER_PathSection::GetLength
-// Created: AGE 2005-02-28
-// -----------------------------------------------------------------------------
-double TER_PathSection::GetLength() const
-{
-    return startPoint_.Distance( endPoint_ );
-}
-
-// -----------------------------------------------------------------------------
 // Name: TER_PathSection::SetPosStart
 // Created: CMA 2011-04-18
 // -----------------------------------------------------------------------------
@@ -85,3 +76,4 @@ bool TER_PathSection::UseStrictClosest() const
 {
     return useStrictClosest_;
 }
+
