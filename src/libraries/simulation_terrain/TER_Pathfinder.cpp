@@ -191,6 +191,7 @@ TER_Pathfinder::~TER_Pathfinder()
 // Created: NLD 2003-08-14
 // -----------------------------------------------------------------------------
 boost::shared_ptr< TER_PathFuture > TER_Pathfinder::StartCompute(
+        const std::vector< boost::shared_ptr< TER_PathSection > > sections,
         const boost::shared_ptr< TER_PathComputer_ABC >& path,
         const sword::Pathfind& pathfind )
 {
@@ -198,9 +199,9 @@ boost::shared_ptr< TER_PathFuture > TER_Pathfinder::StartCompute(
     // for now as the request object is private to the pathfinder. Make a local
     // struct later.
     const auto future = boost::make_shared< TER_PathFuture >();
-    auto p = boost::make_shared< TER_PathfindRequest >( path, pathfind, future );
+    auto p = boost::make_shared< TER_PathfindRequest >( sections, path, pathfind, future );
     boost::mutex::scoped_lock locker( mutex_ );
-    if( path->GetLength() > rDistanceThreshold_ )
+    if( p->GetLength() > rDistanceThreshold_ )
         longRequests_.push_back( p );
     else
         shortRequests_.push_back( p );
@@ -315,7 +316,7 @@ void TER_Pathfinder::ProcessRequest( TER_PathFinderThread& data, TER_PathfindReq
         profiler.Start();
         if( rq.IsItinerary() )
             wrapper = boost::make_shared< TER_EdgeMatcher >( wrapper, rq.GetPathfind() );
-        const auto res = computer->Execute( *wrapper, deadline, debugPath_ );
+        const auto res = computer->Execute( rq.GetSections(), *wrapper, deadline, debugPath_ );
         rq.GetFuture()->Set( res );
         duration = profiler.Stop();
     }

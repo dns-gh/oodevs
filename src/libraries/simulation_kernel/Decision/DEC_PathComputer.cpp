@@ -28,6 +28,34 @@ namespace
 
 std::size_t computersId = 1;
 
+std::string GetStateAsString( TER_Path_ABC::E_State state )
+{
+    switch( state )
+    {
+        case TER_Path_ABC::eInvalid    : return "Invalid";
+        case TER_Path_ABC::eComputing  : return "Computing";
+        case TER_Path_ABC::eValid      : return "Valid";
+        case TER_Path_ABC::eImpossible : return "Impossible";
+        case TER_Path_ABC::ePartial    : return "Partial";
+        case TER_Path_ABC::eCanceled   : return "Canceled";
+        default                        : return "UNKNOWN";
+    }
+}
+
+std::string GetPathAsString(
+    const std::vector< boost::shared_ptr< TER_PathSection > >& sections )
+{
+    std::stringstream strTmp;
+    strTmp << "   Path points : ";
+    if( !sections.empty() )
+    {
+       strTmp << sections.front()->GetPosStart();
+        for( auto itSection = sections.begin(); itSection != sections.end(); ++itSection )
+            strTmp << " -> " << ( *itSection )->GetPosEnd();
+    }
+    return strTmp.str();
+}
+
 }  // namespace
 
 // TerrainRule_ABC proxy handling computation timeouts.
@@ -106,8 +134,6 @@ DEC_PathComputer::DEC_PathComputer( std::size_t id )
 
 DEC_PathComputer::~DEC_PathComputer()
 {
-    for( auto it = pathSections_.begin(); it != pathSections_.end(); ++it )
-        delete *it;
 }
 
 boost::shared_ptr< TER_PathResult > DEC_PathComputer::GetPathResult() const
@@ -120,15 +146,9 @@ boost::shared_ptr< TER_PathResult > DEC_PathComputer::GetPathResult() const
     return res;
 }
 
-double DEC_PathComputer::GetLength() const
-{
-    double length = 0;
-    for( auto it = pathSections_.begin(); it != pathSections_.end(); ++it )
-        length += (*it)->GetLength();
-    return length;
-}
-
-boost::shared_ptr< TER_PathResult > DEC_PathComputer::Execute( TER_Pathfinder_ABC& pathfind,
+boost::shared_ptr< TER_PathResult > DEC_PathComputer::Execute(
+        const std::vector< boost::shared_ptr< TER_PathSection > >& sections,
+        TER_Pathfinder_ABC& pathfind,
         unsigned int deadlineSeconds, bool debugPath )
 {
     if( !resultList_.empty() )
@@ -138,13 +158,13 @@ boost::shared_ptr< TER_PathResult > DEC_PathComputer::Execute( TER_Pathfinder_AB
         MT_LOG_MESSAGE_MSG( "DEC_PathComputer::Execute: " << this << " computation begin" <<
                             ", Request: " << computerId_ <<
                             ", Entity: " << id_ );
-        MT_LOG_MESSAGE_MSG( GetPathAsString() );
+        MT_LOG_MESSAGE_MSG( GetPathAsString( sections ) );
         profiler_.Start();
     }
     pathfind.SetId( id_ );
     try
     {
-        DoExecute( pathfind, deadlineSeconds );
+        DoExecute( sections, pathfind, deadlineSeconds );
     }
     catch( const std::exception& e )
     {
@@ -162,21 +182,23 @@ boost::shared_ptr< TER_PathResult > DEC_PathComputer::Execute( TER_Pathfinder_AB
         MT_LOG_MESSAGE_MSG( "DEC_PathComputer::Execute: " << this <<
                             ", Request: " << computerId_ <<
                             ", Time: " << rComputationTime <<
-                            ", State: " << GetStateAsString() <<
+                            ", State: " << GetStateAsString( nState_ ) <<
                             ", Result: " << stream.str() );
     }
     return GetPathResult();
 }
 
-void DEC_PathComputer::DoExecute( TER_Pathfinder_ABC& pathfind, unsigned int deadlineSeconds )
+void DEC_PathComputer::DoExecute(
+        const std::vector< boost::shared_ptr< TER_PathSection > >& sections,
+        TER_Pathfinder_ABC& pathfind, unsigned int deadlineSeconds )
 {
-    if( pathSections_.empty() )
+    if( sections.empty() )
         throw MASA_EXCEPTION( "List of path sections is empty" );
     canceler_->SetStopTime( deadlineSeconds );
-    lastWaypoint_ = pathSections_.back()->GetPosEnd();
+    lastWaypoint_ = sections.back()->GetPosEnd();
     computedWaypoints_.clear();
     nState_ = TER_Path_ABC::eComputing;
-    for( auto it = pathSections_.begin(); it != pathSections_.end(); ++it )
+    for( auto it = sections.begin(); it != sections.end(); ++it )
     {
         if( bJobCanceled_ )
         {
@@ -201,7 +223,7 @@ void DEC_PathComputer::DoExecute( TER_Pathfinder_ABC& pathfind, unsigned int dea
                 nState_ = TER_Path_ABC::eCanceled;
                 return;
             }
-            else if( it == pathSections_.begin() && res->points.size() < 2 )
+            else if( it == sections.begin() && res->points.size() < 2 )
             {
                 nState_ = TER_Path_ABC::eImpossible;
                 return;
@@ -209,8 +231,8 @@ void DEC_PathComputer::DoExecute( TER_Pathfinder_ABC& pathfind, unsigned int dea
             else
             {
                 NotifyPartialSection();
-                T_PathSectionVector::iterator itNextPathSection = it + 1;
-                if( itNextPathSection == pathSections_.end() )
+                auto itNextPathSection = it + 1;
+                if( itNextPathSection == sections.end() )
                 {
                     nState_ = TER_Path_ABC::ePartial;
                     return;
@@ -236,34 +258,6 @@ boost::shared_ptr< TER_PathResult > DEC_PathComputer::Cancel()
     const auto res = boost::make_shared< TER_PathResult >();
     res->state = TER_Path_ABC::eCanceled;
     return res;
-}
-
-std::string DEC_PathComputer::GetStateAsString() const
-{
-    switch( nState_ )
-    {
-        case TER_Path_ABC::eInvalid    : return "Invalid";
-        case TER_Path_ABC::eComputing  : return "Computing";
-        case TER_Path_ABC::eValid      : return "Valid";
-        case TER_Path_ABC::eImpossible : return "Impossible";
-        case TER_Path_ABC::ePartial    : return "Partial";
-        case TER_Path_ABC::eCanceled   : return "Canceled";
-        default                        : return "UNKNOWN";
-    }
-}
-
-std::string DEC_PathComputer::GetPathAsString() const
-{
-    std::stringstream strTmp;
-    strTmp << "   Path points : " << pathSections_.front()->GetPosStart();
-    for( auto itSection = pathSections_.begin(); itSection != pathSections_.end(); ++itSection )
-        strTmp << " -> " << ( *itSection )->GetPosEnd();
-    return strTmp.str();
-}
-
-void DEC_PathComputer::RegisterPathSection( TER_PathSection& section )
-{
-    pathSections_.push_back( &section );
 }
 
 void DEC_PathComputer::AddResultPoint( const MT_Vector2D& vPos, const TerrainData& nObjectTypes, const TerrainData& nObjectTypesToNextPoint, bool beginPoint )

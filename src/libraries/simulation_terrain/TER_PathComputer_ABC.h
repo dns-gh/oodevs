@@ -42,11 +42,10 @@ public:
              TER_PathComputer_ABC() {}
     virtual ~TER_PathComputer_ABC() {}
 
-    virtual double GetLength() const = 0;
-    virtual boost::shared_ptr< TER_PathResult > Execute( TER_Pathfinder_ABC& pathfind,
-            unsigned int deadline, bool debugPath ) = 0;
+    virtual boost::shared_ptr< TER_PathResult > Execute(
+            const std::vector< boost::shared_ptr< TER_PathSection > >& sections,
+            TER_Pathfinder_ABC& pathfind, unsigned int deadline, bool debugPath ) = 0;
     virtual boost::shared_ptr< TER_PathResult > Cancel() = 0;
-    virtual void RegisterPathSection( TER_PathSection& section ) = 0;
 
     typedef std::list< boost::shared_ptr< TER_PathPoint > > T_PathPoints;
 };

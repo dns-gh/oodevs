@@ -25,14 +25,16 @@
 DEC_Population_Path::DEC_Population_Path( const MIL_Population& population,
         const T_PointVector& points )
     : DEC_PathResult( DEC_PathType::movement_, population.GetID() )
-    , context_( new DEC_PopulationContext( population, points ) )
 {
     if( points.empty() )
         throw MASA_EXCEPTION( "List of points is empty in population path initialization" );
+    const auto context = boost::make_shared< DEC_PopulationContext >( population, points );
     for( auto it = points.begin(); it != points.end() - 1; ++it )
     {
-        std::unique_ptr< TerrainRule_ABC > rule( new DEC_Population_PathfinderRule( context_ ) );
-        GetComputer().RegisterPathSection( *new TER_PathSection( std::move( rule ), *it, *(it + 1), false, false ) );
+        std::unique_ptr< TerrainRule_ABC > rule(
+                new DEC_Population_PathfinderRule( context ) );
+        AddSection( boost::make_shared< TER_PathSection >(
+                std::move( rule ), *it, *(it + 1), false, false ) );
     }
 }
 

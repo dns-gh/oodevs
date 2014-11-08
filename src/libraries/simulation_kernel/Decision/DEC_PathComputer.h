@@ -32,25 +32,22 @@ public:
              DEC_PathComputer( std::size_t id );
     virtual ~DEC_PathComputer();
 
-    virtual double GetLength() const;
-    virtual boost::shared_ptr< TER_PathResult > Execute( TER_Pathfinder_ABC& pathfind,
-            unsigned int deadlineSeconds, bool debugPath );
+    virtual boost::shared_ptr< TER_PathResult > Execute(
+            const std::vector< boost::shared_ptr< TER_PathSection > >& sections,
+            TER_Pathfinder_ABC& pathfind, unsigned int deadlineSeconds, bool debugPath );
     virtual boost::shared_ptr< TER_PathResult > Cancel();
-    virtual void RegisterPathSection( TER_PathSection& section );
 
 private:
     virtual void AddResultPoint( const MT_Vector2D& vPos, const TerrainData& nObjectTypes, const TerrainData& nObjectTypesToNextPoint, bool beginPoint );
 
-    void DoExecute( TER_Pathfinder_ABC& pathfind, unsigned int deadlineSeconds );
+    void DoExecute( const std::vector< boost::shared_ptr< TER_PathSection > >& sections,
+            TER_Pathfinder_ABC& pathfind, unsigned int deadlineSeconds );
     boost::shared_ptr< PathResult > ComputeSection( TER_Pathfinder_ABC& pathfinder,
         TER_PathSection& section );
     void NotifyPartialSection();
     void NotifyCompletedSection();
     boost::optional< MT_Vector2D > DEC_PathComputer::GetLastPosition() const;
     boost::shared_ptr< TER_PathResult > GetPathResult() const;
-
-    std::string DEC_PathComputer::GetPathAsString() const;
-    std::string DEC_PathComputer::GetStateAsString() const;
 
 private:
     typedef std::vector< TER_PathSection* > T_PathSectionVector;
@@ -65,7 +62,6 @@ private:
     const std::size_t computerId_;
     TER_Path_ABC::E_State nState_;
     bool bJobCanceled_;
-    T_PathSectionVector pathSections_;
     MT_Vector2D lastWaypoint_;
     std::vector< MT_Vector2D > computedWaypoints_;
     T_PathPoints resultList_;

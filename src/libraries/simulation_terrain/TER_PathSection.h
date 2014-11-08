@@ -33,7 +33,6 @@ public:
     const MT_Vector2D&  GetPosEnd   () const; // $$$$ AGE 2005-02-25: ...
     void                SetPosStart ( const MT_Vector2D& point );
     TerrainRule_ABC&    GetRule();
-    double              GetLength() const;
     bool                NeedRefine() const;
     bool                UseStrictClosest() const;
 
