@@ -19,7 +19,6 @@ namespace sword
     class Path;
 }
 
-class DEC_PathComputer;
 class DEC_PathType;
 class MIL_Agent_ABC;
 class TER_Localisation;
@@ -100,7 +99,6 @@ private:
     T_PathPoints::const_iterator itCurrentPathPoint_;
     const DEC_PathType& pathType_;
     bool bSectionJustStarted_;
-    boost::shared_ptr< DEC_PathComputer > computer_;
     boost::shared_ptr< TER_PathFuture > future_;
     TER_Path_ABC::E_State state_;
     MT_Vector2D lastWaypoint_;

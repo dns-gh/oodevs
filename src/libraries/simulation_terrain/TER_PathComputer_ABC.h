@@ -18,6 +18,7 @@
 #include <list>
 #include <vector>
 
+class TER_PathFuture;
 class TER_PathSection;
 class TER_Pathfinder_ABC;
 
@@ -44,8 +45,8 @@ public:
 
     virtual boost::shared_ptr< TER_PathResult > Execute(
             const std::vector< boost::shared_ptr< TER_PathSection > >& sections,
-            TER_Pathfinder_ABC& pathfind, unsigned int deadline, bool debugPath ) = 0;
-    virtual boost::shared_ptr< TER_PathResult > Cancel() = 0;
+            TER_Pathfinder_ABC& pathfind, TER_PathFuture& future,
+            unsigned int deadline, bool debugPath ) = 0;
 
     typedef std::list< boost::shared_ptr< TER_PathPoint > > T_PathPoints;
 };

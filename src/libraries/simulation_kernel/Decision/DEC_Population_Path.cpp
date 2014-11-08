@@ -12,7 +12,6 @@
 #include "DEC_Population_PathClass.h"
 #include "DEC_Population_PathfinderRule.h"
 #include "DEC_PopulationContext.h"
-#include "Decision/DEC_PathComputer.h"
 #include "Decision/DEC_PathType.h"
 #include "Entities/Populations/MIL_Population.h"
 #include "simulation_terrain/TER_PathSection.h"

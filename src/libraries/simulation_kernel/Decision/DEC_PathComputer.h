@@ -17,6 +17,7 @@
 #include <vector>
 
 struct PathResult;
+class TER_PathFuture;
 class TER_PathPoint;
 struct TER_PathResult;
 
@@ -34,16 +35,18 @@ public:
 
     virtual boost::shared_ptr< TER_PathResult > Execute(
             const std::vector< boost::shared_ptr< TER_PathSection > >& sections,
-            TER_Pathfinder_ABC& pathfind, unsigned int deadlineSeconds, bool debugPath );
-    virtual boost::shared_ptr< TER_PathResult > Cancel();
+            TER_Pathfinder_ABC& pathfind, TER_PathFuture& future,
+            unsigned int deadlineSeconds, bool debugPath );
 
 private:
     virtual void AddResultPoint( const MT_Vector2D& vPos, const TerrainData& nObjectTypes, const TerrainData& nObjectTypesToNextPoint, bool beginPoint );
 
     void DoExecute( const std::vector< boost::shared_ptr< TER_PathSection > >& sections,
-            TER_Pathfinder_ABC& pathfind, unsigned int deadlineSeconds );
+            TER_Pathfinder_ABC& pathfind, TER_PathFuture& future,
+            unsigned int deadlineSeconds );
     boost::shared_ptr< PathResult > ComputeSection( TER_Pathfinder_ABC& pathfinder,
-        TER_PathSection& section );
+        TER_PathSection& section, TER_PathFuture& future,
+        unsigned int deadlineSeconds );
     void NotifyPartialSection();
     void NotifyCompletedSection();
     boost::optional< MT_Vector2D > DEC_PathComputer::GetLastPosition() const;
@@ -53,20 +56,15 @@ private:
     typedef std::vector< TER_PathSection* > T_PathSectionVector;
     typedef std::list< boost::shared_ptr< TER_PathPoint > > T_PathPoints;
 
-    class Canceler;
-
 private:
     MT_Profiler profiler_;
     std::size_t id_;
     // Identify the current computation, for logging purpose
     const std::size_t computerId_;
     TER_Path_ABC::E_State nState_;
-    bool bJobCanceled_;
     MT_Vector2D lastWaypoint_;
     std::vector< MT_Vector2D > computedWaypoints_;
     T_PathPoints resultList_;
-    // Kept as a class attribute to have a reference to cancel it asynchronously
-    std::unique_ptr< Canceler > canceler_;
 };
 
 #endif // __DEC_PathComputer_h_

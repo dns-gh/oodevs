@@ -19,6 +19,7 @@
 #include "MT_Tools/MT_Line.h"
 #include "simulation_terrain/TER_PathPoint.h"
 #include "simulation_terrain/TER_PathSection.h"
+#include "simulation_terrain/TER_Pathfinder.h"
 #include "simulation_terrain/TER_Pathfinder_ABC.h"
 #include <pathfind/TerrainRule_ABC.h>
 #include <boost/make_shared.hpp>
@@ -56,41 +57,21 @@ std::string GetPathAsString(
     return strTmp.str();
 }
 
-}  // namespace
-
 // TerrainRule_ABC proxy handling computation timeouts.
-class DEC_PathComputer::Canceler : public TerrainRule_ABC
+class Canceler : public TerrainRule_ABC
 {
 public:
-    Canceler()
-        : rule_( 0 )
-        , stopTime_( 0 )
-        , canceled_( false )
+    Canceler( TerrainRule_ABC& rule, TER_PathFuture& future, unsigned int stopTime )
+        : rule_( rule )
+        , future_( future )
+        , stopTime_( stopTime )
     {
-    }
-
-    void SetRule( TerrainRule_ABC* rule )
-    {
-        rule_ = rule;
-    }
-
-    void SetStopTime( unsigned int stopTime )
-    {
-        stopTime_ = stopTime;
-    }
-
-    // Note the difference between Cancel() and SetStopTime(0) is the former
-    // will not write an "aborted" message in the log file. Cancelling queries
-    // is part of pathfinding workflow.
-    void Cancel()
-    {
-        canceled_ = true;
     }
 
     virtual float EvaluateCost( const geometry::Point2f& from,
                                 const geometry::Point2f& to )
     {
-        return rule_->EvaluateCost( from, to );
+        return rule_.EvaluateCost( from, to );
     }
 
     virtual float GetCost( const geometry::Point2f& from,
@@ -99,35 +80,35 @@ public:
                            const TerrainData& terrainBetween,
                            std::ostream* reason )
     {
-        return rule_->GetCost( from, to, terrainTo, terrainBetween, reason );
+        return rule_.GetCost( from, to, terrainTo, terrainBetween, reason );
     }
 
     virtual bool ShouldEndComputation()
     {
-        if( canceled_ )
+        if( future_.IsCanceled() )
             return true;
         const auto now = static_cast< unsigned int >( time( 0 ) );
         if( now >= stopTime_ )
         {
             MT_LOG_ERROR_MSG( "Pathfind computation aborted - timeout" );
-            canceled_ = true;
+            future_.Cancel();
             return true;
         }
         return false;
     }
 
 private: 
-    TerrainRule_ABC* rule_;
-    unsigned int stopTime_;
-    bool canceled_;
+    TerrainRule_ABC& rule_;
+    TER_PathFuture& future_;
+    const unsigned int stopTime_;
 };
+
+}  // namespace
 
 DEC_PathComputer::DEC_PathComputer( std::size_t id )
     : id_( id )
     , computerId_( ::computersId++ )
     , nState_( TER_Path_ABC::eComputing )
-    , bJobCanceled_( false )
-    , canceler_( new Canceler() )
 {
     // NOTHING
 }
@@ -148,7 +129,7 @@ boost::shared_ptr< TER_PathResult > DEC_PathComputer::GetPathResult() const
 
 boost::shared_ptr< TER_PathResult > DEC_PathComputer::Execute(
         const std::vector< boost::shared_ptr< TER_PathSection > >& sections,
-        TER_Pathfinder_ABC& pathfind,
+        TER_Pathfinder_ABC& pathfind, TER_PathFuture& future,
         unsigned int deadlineSeconds, bool debugPath )
 {
     if( !resultList_.empty() )
@@ -164,12 +145,11 @@ boost::shared_ptr< TER_PathResult > DEC_PathComputer::Execute(
     pathfind.SetId( id_ );
     try
     {
-        DoExecute( sections, pathfind, deadlineSeconds );
+        DoExecute( sections, pathfind, future, deadlineSeconds );
     }
     catch( const std::exception& e )
     {
         MT_LOG_ERROR_MSG( "DEC_PathComputer::Execute failed: " << e.what() );
-        bJobCanceled_ = true;
         nState_ = TER_Path_ABC::eCanceled;
         return GetPathResult();
     }
@@ -190,23 +170,18 @@ boost::shared_ptr< TER_PathResult > DEC_PathComputer::Execute(
 
 void DEC_PathComputer::DoExecute(
         const std::vector< boost::shared_ptr< TER_PathSection > >& sections,
-        TER_Pathfinder_ABC& pathfind, unsigned int deadlineSeconds )
+        TER_Pathfinder_ABC& pathfind, TER_PathFuture& future,
+        unsigned int deadlineSeconds )
 {
     if( sections.empty() )
         throw MASA_EXCEPTION( "List of path sections is empty" );
-    canceler_->SetStopTime( deadlineSeconds );
     lastWaypoint_ = sections.back()->GetPosEnd();
     computedWaypoints_.clear();
     nState_ = TER_Path_ABC::eComputing;
     for( auto it = sections.begin(); it != sections.end(); ++it )
     {
-        if( bJobCanceled_ )
-        {
-            nState_ = TER_Path_ABC::eCanceled;
-            return;
-        }
         TER_PathSection& pathSection = **it;
-        const auto res = ComputeSection( pathfind, pathSection );
+        const auto res = ComputeSection( pathfind, pathSection, future, deadlineSeconds );
         for( auto ip = res->points.begin(); ip != res->points.end(); ++ip )
         {
             const geometry::Point2f p( *ip );
@@ -218,7 +193,7 @@ void DEC_PathComputer::DoExecute(
             if( auto last = GetLastPosition() )
                 computedWaypoints_.push_back( *last );
 
-            if( bJobCanceled_ )
+            if( future.IsCanceled() )
             {
                 nState_ = TER_Path_ABC::eCanceled;
                 return;
@@ -242,22 +217,11 @@ void DEC_PathComputer::DoExecute(
             }
         }
         else if( auto last = GetLastPosition() )
-        {
-            computedWaypoints_.push_back( *last );
+        { computedWaypoints_.push_back( *last );
             NotifyCompletedSection();
         }
     }
     nState_ = TER_Path_ABC::eValid;
-}
-
-boost::shared_ptr< TER_PathResult > DEC_PathComputer::Cancel()
-{
-    bJobCanceled_ = true;
-    canceler_->Cancel();
-    nState_ = TER_Path_ABC::eCanceled;
-    const auto res = boost::make_shared< TER_PathResult >();
-    res->state = TER_Path_ABC::eCanceled;
-    return res;
 }
 
 void DEC_PathComputer::AddResultPoint( const MT_Vector2D& vPos, const TerrainData& nObjectTypes, const TerrainData& nObjectTypesToNextPoint, bool beginPoint )
@@ -312,7 +276,8 @@ boost::optional< MT_Vector2D > DEC_PathComputer::GetLastPosition() const
 }
 
 boost::shared_ptr< PathResult > DEC_PathComputer::ComputeSection(
-        TER_Pathfinder_ABC& pathfind, TER_PathSection& section )
+    TER_Pathfinder_ABC& pathfind, TER_PathSection& section, TER_PathFuture& future,
+    unsigned int deadlineSeconds )
 {
     const auto start = section.GetPosStart();
     const auto end = section.GetPosEnd();
@@ -320,9 +285,9 @@ boost::shared_ptr< PathResult > DEC_PathComputer::ComputeSection(
     geometry::Point2f to( float( end.rX_ ), float( end.rY_ ) );
     if( section.NeedRefine() )
         pathfind.SetConfiguration( 1, 3 ); // $$$$ AGE 2005-03-30: whatever
-    canceler_->SetRule( &section.GetRule() );
+    Canceler canceler( section.GetRule(), future, deadlineSeconds );
     pathfind.SetChoiceRatio( section.UseStrictClosest() ? 0.f : 0.1f );
-    const auto res = pathfind.ComputePath( from, to, *canceler_ );
+    const auto res = pathfind.ComputePath( from, to, canceler );
     pathfind.SetConfiguration( 0, 0 );
     return res;
 }
