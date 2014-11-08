@@ -99,6 +99,7 @@ boost::uint32_t PathfindDumper::s_idx_ = 0;
 }  // namespace
 
 TER_PathFuture::TER_PathFuture()
+    : canceled_( false )
 {
 }
 
@@ -109,7 +110,8 @@ TER_PathFuture::~TER_PathFuture()
 void TER_PathFuture::Set( const boost::shared_ptr< TER_PathResult >& path )
 {
     boost::mutex::scoped_lock lock( mutex_ );
-    path_ = path;
+    if( !canceled_ )
+        path_ = path;
 }
 
 boost::shared_ptr< TER_PathResult > TER_PathFuture::Get() const
@@ -120,9 +122,22 @@ boost::shared_ptr< TER_PathResult > TER_PathFuture::Get() const
 
 void TER_PathFuture::Cancel()
 {
-    const auto res = boost::make_shared< TER_PathResult >();
-    res->state = TER_Path_ABC::eCanceled;
-    Set( res );
+    boost::mutex::scoped_lock lock( mutex_ );
+    if( !canceled_ )
+    {
+        canceled_ = true;
+        path_ = boost::make_shared< TER_PathResult >();
+        path_->state = TER_Path_ABC::eCanceled;
+    }
+}
+
+bool TER_PathFuture::IsCanceled() const
+{
+    // What is important is canceled computations appear canceled from the
+    // client point of view. The computation does not have to end immediately
+    // or even end at all as long as it appears canceled. But IsCanceled()
+    // has to be fast, it is called repeatedly in pathfinder main loop.
+    return canceled_;
 }
 
 // -----------------------------------------------------------------------------
@@ -295,19 +310,15 @@ boost::shared_ptr< TER_PathfindRequest > TER_Pathfinder::GetMessage( unsigned in
 
 void TER_Pathfinder::ProcessRequest( TER_PathFinderThread& data, TER_PathfindRequest& rq )
 {
-    const auto computer = rq.GetComputer();
-    if( !computer )
-    {
-        rq.GetFuture()->Cancel();
-        return;
-    }
-
     const unsigned int deadline = nMaxComputationDuration_ == std::numeric_limits< unsigned int >::max()
         ? std::numeric_limits< unsigned int >::max()
         : static_cast< unsigned int >( std::time( 0 ) ) + nMaxComputationDuration_;
     double duration = 0;
     try
     {
+        const auto computer = rq.GetComputer();
+        if( !computer )
+            throw MASA_EXCEPTION( "invalid computer" );
         data.ProcessDynamicData();
         const auto pathfinder = data.GetPathfinder( !rq.IgnoreDynamicObjects() );
         boost::shared_ptr< TER_Pathfinder_ABC > wrapper =
@@ -316,7 +327,8 @@ void TER_Pathfinder::ProcessRequest( TER_PathFinderThread& data, TER_PathfindReq
         profiler.Start();
         if( rq.IsItinerary() )
             wrapper = boost::make_shared< TER_EdgeMatcher >( wrapper, rq.GetPathfind() );
-        const auto res = computer->Execute( rq.GetSections(), *wrapper, deadline, debugPath_ );
+        const auto res = computer->Execute(
+            rq.GetSections(), *wrapper, *rq.GetFuture(), deadline, debugPath_ );
         rq.GetFuture()->Set( res );
         duration = profiler.Stop();
     }

@@ -13,7 +13,6 @@
 #include "DEC_Agent_PathfinderRule.h"
 #include "DEC_AgentContext.h"
 #include "Decision/DEC_GeometryFunctions.h"
-#include "Decision/DEC_PathComputer.h"
 #include "Decision/DEC_PathType.h"
 #include "Decision/DEC_Rep_PathPoint_Front.h"
 #include "Decision/DEC_Rep_PathPoint_Lima.h"

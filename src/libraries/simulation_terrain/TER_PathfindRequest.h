@@ -13,7 +13,6 @@
 #include <protocol/Simulation.h>
 #include <boost/noncopyable.hpp>
 #include <boost/shared_ptr.hpp>
-#include <boost/weak_ptr.hpp>
 
 class TER_PathFuture;
 class TER_PathComputer_ABC;
@@ -52,7 +51,7 @@ private:
     //! @name Member data
     //@{
     const std::vector< boost::shared_ptr< TER_PathSection > > sections_;
-    boost::weak_ptr< TER_PathComputer_ABC > computer_;
+    boost::shared_ptr< TER_PathComputer_ABC > computer_;
     const sword::Pathfind pathfind_;
     boost::shared_ptr< TER_PathFuture > future_;
     //@}

@@ -36,7 +36,7 @@ bool TER_PathfindRequest::IgnoreDynamicObjects() const
 
 boost::shared_ptr< TER_PathComputer_ABC > TER_PathfindRequest::GetComputer()
 {
-    return computer_.lock();
+    return computer_;
 }
 
 const sword::Pathfind& TER_PathfindRequest::GetPathfind() const

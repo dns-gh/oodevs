@@ -21,7 +21,6 @@ namespace sword
 
 class ActionManager;
 class MIL_AgentPion;
-class DEC_PathComputer;
 class MIL_Population;
 class PathRequest;
 class PHY_ComposanteTypePion;
