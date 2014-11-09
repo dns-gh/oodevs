@@ -11,6 +11,7 @@ package simtests
 import (
 	. "launchpad.net/gocheck"
 	"masa/sword/swapi"
+	"masa/sword/swapi/phy"
 	"masa/sword/swtest"
 )
 
@@ -415,4 +416,30 @@ func (s *TestSuite) TestPathfindDeletingUnitsDeletesRelatedPathfinds(c *C) {
 		_, ok := data.Pathfinds[pathfind.Id]
 		return !ok
 	})
+}
+
+func testPathEdgeSplit(c *C, phydb *phy.PhysicalData, exercise string, points int) {
+	opts := NewAdminOpts(exercise)
+	sim, client := connectAndWaitModel(c, opts)
+	defer stopSimAndClient(c, sim, client)
+
+	from := swapi.Point{X: -15.9384, Y: 28.220}
+	to := swapi.Point{X: -15.71, Y: from.Y}
+	unit := CreateCombiVW(c, phydb, client, from)
+
+	path, err := client.UnitPathfindRequest(unit.Id, from, to)
+	c.Assert(err, IsNil)
+	c.Assert(len(path), Equals, points)
+}
+
+func (s *TestSuite) TestPathEdgesSplitOnElevationGrid(c *C) {
+	phydb := loadPhysicalData(c, "test")
+	// Two simulations have to be started because edge splitting cannot be
+	// disabled and elevation interpolation or another effect creates slopes
+	// in grad.xy terrain where there should be none. Instead, we use two
+	// exercises, one without elevation and one with and compare the same
+	// itinerary. Additional points should appear on the one where edges
+	// splitting occurs.
+	testPathEdgeSplit(c, phydb, ExCrossroadSmallTest, 15)
+	testPathEdgeSplit(c, phydb, ExGradXYTestEmpty, 18)
 }
