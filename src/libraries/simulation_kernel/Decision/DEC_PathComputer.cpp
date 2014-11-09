@@ -168,6 +168,57 @@ boost::shared_ptr< TER_PathResult > DEC_PathComputer::Execute(
     return GetPathResult();
 }
 
+namespace
+{
+
+DEC_PathComputer::T_PathPoints SplitEdgesOnElevationGrid(
+        const DEC_PathComputer::T_PathPoints& points )
+{
+    if( points.size() < 2 || !MIL_AgentServer::IsInitialized() )
+        return points;
+    DEC_PathComputer::T_PathPoints output;
+    const auto& elevation = MIL_AgentServer::GetWorkspace()
+        .GetMeteoDataManager().GetRawVisionData();
+
+    for( auto it = points.begin(); it != points.end(); ++it )
+    {
+        if( output.empty() || std::next( it ) == points.end() )
+        {
+            output.push_back( *it );
+            continue;
+        }
+        const auto p1 = *it;
+        const auto p2 = *std::next( it );
+        SlopeSpeedModifier slopeSpeedModifier;
+        SplitOnMajorGridLines( static_cast< int32_t >( elevation.GetCellSize() ),
+            p1->GetPos(), p2->GetPos(), [&]( MT_Vector2D from, MT_Vector2D to )
+            {
+                return slopeSpeedModifier.ComputeLocalSlope( elevation, from, to );
+            });
+        const auto& slopes = slopeSpeedModifier.GetSlopes();
+        for( auto is = slopes.begin(); is != slopes.end(); ++is )
+        {
+            auto ip = output.rbegin();
+            while( ip != output.rend() && !(*ip)->IsSlopeValid() )
+               (*ip++)->SetSlope( is->second ); 
+            if( is->second > 0 && ( is + 1 ) != slopes.end() )
+            {
+                const MT_Line segment( p1->GetPos(), p2->GetPos() );
+                const MT_Vector2D projected = segment.ProjectPointOnLine(
+                        ( is + 1 )->first );
+                const auto point = boost::make_shared< TER_PathPoint >(
+                    projected, p1->GetObjectTypes(),
+                    p1->GetObjectTypesToNextPoint(), false );
+                output.push_back( point );
+            }
+        }
+        output.push_back( p1 );
+    }
+    return output;
+}
+
+} // namespace
+
 void DEC_PathComputer::DoExecute(
         const std::vector< boost::shared_ptr< TER_PathSection > >& sections,
         TER_Pathfinder_ABC& pathfind, TER_PathFuture& future,
@@ -184,10 +235,18 @@ void DEC_PathComputer::DoExecute(
         const auto res = ComputeSection( pathfind, pathSection, future, deadlineSeconds );
         for( auto ip = res->points.begin(); ip != res->points.end(); ++ip )
         {
+            const auto first = ip == res->points.begin();
+            if( first && !resultList_.empty() )
+                // skip the first next point of the new section
+                continue;
             const geometry::Point2f p( *ip );
-            AddResultPoint( MT_Vector2D( p.X(), p.Y() ), ip->DataAtPoint(),
-                    ip->DataToNextPoint(), ip == res->points.begin() );
+            const auto point = boost::make_shared< TER_PathPoint >(
+                MT_Vector2D( ip->Point().X(), ip->Point().Y() ), ip->DataAtPoint(),
+                ip->DataToNextPoint(), ip == res->points.begin() );
+            resultList_.push_back( point );
         }
+        resultList_ = SplitEdgesOnElevationGrid( resultList_ );
+
         if( !res->found )
         {
             if( auto last = GetLastPosition() )
@@ -222,38 +281,6 @@ void DEC_PathComputer::DoExecute(
         }
     }
     nState_ = TER_Path_ABC::eValid;
-}
-
-void DEC_PathComputer::AddResultPoint( const MT_Vector2D& vPos, const TerrainData& nObjectTypes, const TerrainData& nObjectTypesToNextPoint, bool beginPoint )
-{
-    if( beginPoint && !resultList_.empty() )
-        // skip the first next point of the new section
-        return;
-    if( !resultList_.empty() && MIL_AgentServer::IsInitialized() )
-    {
-        SlopeSpeedModifier slopeSpeedModifier;
-        const PHY_RawVisionData& elevation = MIL_AgentServer::GetWorkspace().GetMeteoDataManager().GetRawVisionData();
-        auto decelerationFunc = boost::bind( &SlopeSpeedModifier::ComputeLocalSlope, &slopeSpeedModifier, boost::cref( elevation ), _1, _2 );
-        const MT_Vector2D& startPoint = resultList_.back()->GetPos();
-        SplitOnMajorGridLines( static_cast< int32_t >( elevation.GetCellSize() ),
-                startPoint, vPos, decelerationFunc );
-        const SlopeSpeedModifier::T_Slopes& slopes = slopeSpeedModifier.GetSlopes();
-        for( auto itSlope = slopes.begin(); itSlope != slopes.end(); ++itSlope )
-        {
-            auto itPoint = resultList_.rbegin();
-            while( itPoint != resultList_.rend() && !( *itPoint )->IsSlopeValid() )
-                ( *itPoint++ )->SetSlope( itSlope->second );
-            if( itSlope->second > 0 && itSlope + 1 != slopes.end() )
-            {
-                const MT_Line segment( startPoint, vPos );
-                const MT_Vector2D projected = segment.ProjectPointOnLine( ( itSlope + 1 )->first );
-                auto point = boost::make_shared< TER_PathPoint >( projected, nObjectTypes, nObjectTypesToNextPoint, beginPoint );
-                resultList_.push_back( point );
-            }
-        }
-    }
-    auto point = boost::make_shared< TER_PathPoint >( vPos, nObjectTypes, nObjectTypesToNextPoint, beginPoint );
-    resultList_.push_back( point );
 }
 
 void DEC_PathComputer::NotifyPartialSection()
