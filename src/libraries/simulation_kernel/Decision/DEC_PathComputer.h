@@ -30,6 +30,9 @@ struct TER_PathResult;
 class DEC_PathComputer : public TER_PathComputer_ABC
 {
 public:
+    typedef std::list< boost::shared_ptr< TER_PathPoint > > T_PathPoints;
+
+public:
              DEC_PathComputer( std::size_t id );
     virtual ~DEC_PathComputer();
 
@@ -39,8 +42,6 @@ public:
             unsigned int deadlineSeconds, bool debugPath );
 
 private:
-    virtual void AddResultPoint( const MT_Vector2D& vPos, const TerrainData& nObjectTypes, const TerrainData& nObjectTypesToNextPoint, bool beginPoint );
-
     void DoExecute( const std::vector< boost::shared_ptr< TER_PathSection > >& sections,
             TER_Pathfinder_ABC& pathfind, TER_PathFuture& future,
             unsigned int deadlineSeconds );
@@ -51,10 +52,6 @@ private:
     void NotifyCompletedSection();
     boost::optional< MT_Vector2D > DEC_PathComputer::GetLastPosition() const;
     boost::shared_ptr< TER_PathResult > GetPathResult() const;
-
-private:
-    typedef std::vector< TER_PathSection* > T_PathSectionVector;
-    typedef std::list< boost::shared_ptr< TER_PathPoint > > T_PathPoints;
 
 private:
     MT_Profiler profiler_;
