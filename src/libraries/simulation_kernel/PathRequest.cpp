@@ -11,6 +11,7 @@
 #include "PathRequest.h"
 
 #include "ActionManager.h"
+#include "Decision/DEC_PathResult.h"
 #include "MIL_AgentServer.h"
 #include "Network/NET_ASN_Tools.h"
 #include "Network/NET_Publisher_ABC.h"
@@ -132,6 +133,7 @@ bool PathRequest::Update( ActionManager& actions )
     const auto result = future_->Get();
     if( !result )
         return false;
+    result->points = SplitEdgesOnElevationGrid( result->points );
     const bool ok = result->state != TER_Path_ABC::eInvalid &&
         result->state != TER_Path_ABC::eImpossible;
     path_ = sword::PathResult();
