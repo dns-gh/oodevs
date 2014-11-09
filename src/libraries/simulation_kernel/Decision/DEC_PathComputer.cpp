@@ -9,12 +9,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_PathComputer.h"
-#include "MIL_AgentServer.h"
-#include "SlopeSpeedModifier.h"
-#include "Tools/MIL_Config.h"
-#include "meteo/PHY_MeteoDataManager.h"
-#include "meteo/RawVisionData/Elevation.h"
-#include "meteo/RawVisionData/PHY_RawVisionData.h"
 #include "MT_Tools/MT_Logger.h"
 #include "MT_Tools/MT_Line.h"
 #include "simulation_terrain/TER_PathPoint.h"
@@ -168,57 +162,6 @@ boost::shared_ptr< TER_PathResult > DEC_PathComputer::Execute(
     return GetPathResult();
 }
 
-namespace
-{
-
-DEC_PathComputer::T_PathPoints SplitEdgesOnElevationGrid(
-        const DEC_PathComputer::T_PathPoints& points )
-{
-    if( points.size() < 2 || !MIL_AgentServer::IsInitialized() )
-        return points;
-    DEC_PathComputer::T_PathPoints output;
-    const auto& elevation = MIL_AgentServer::GetWorkspace()
-        .GetMeteoDataManager().GetRawVisionData();
-
-    for( auto it = points.begin(); it != points.end(); ++it )
-    {
-        if( output.empty() || std::next( it ) == points.end() )
-        {
-            output.push_back( *it );
-            continue;
-        }
-        const auto p1 = *it;
-        const auto p2 = *std::next( it );
-        SlopeSpeedModifier slopeSpeedModifier;
-        SplitOnMajorGridLines( static_cast< int32_t >( elevation.GetCellSize() ),
-            p1->GetPos(), p2->GetPos(), [&]( MT_Vector2D from, MT_Vector2D to )
-            {
-                return slopeSpeedModifier.ComputeLocalSlope( elevation, from, to );
-            });
-        const auto& slopes = slopeSpeedModifier.GetSlopes();
-        for( auto is = slopes.begin(); is != slopes.end(); ++is )
-        {
-            auto ip = output.rbegin();
-            while( ip != output.rend() && !(*ip)->IsSlopeValid() )
-               (*ip++)->SetSlope( is->second ); 
-            if( is->second > 0 && ( is + 1 ) != slopes.end() )
-            {
-                const MT_Line segment( p1->GetPos(), p2->GetPos() );
-                const MT_Vector2D projected = segment.ProjectPointOnLine(
-                        ( is + 1 )->first );
-                const auto point = boost::make_shared< TER_PathPoint >(
-                    projected, p1->GetObjectTypes(),
-                    p1->GetObjectTypesToNextPoint(), false );
-                output.push_back( point );
-            }
-        }
-        output.push_back( p1 );
-    }
-    return output;
-}
-
-} // namespace
-
 void DEC_PathComputer::DoExecute(
         const std::vector< boost::shared_ptr< TER_PathSection > >& sections,
         TER_Pathfinder_ABC& pathfind, TER_PathFuture& future,
@@ -245,7 +188,6 @@ void DEC_PathComputer::DoExecute(
                 ip->DataToNextPoint(), ip == res->points.begin() );
             resultList_.push_back( point );
         }
-        resultList_ = SplitEdgesOnElevationGrid( resultList_ );
 
         if( !res->found )
         {

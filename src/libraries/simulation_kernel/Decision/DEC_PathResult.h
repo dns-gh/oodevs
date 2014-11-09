@@ -13,6 +13,7 @@
 #include "Knowledge/DEC_Knowledge_Def.h"
 #include "MT_Tools/Mt_Vector2DTypes.h"
 #include "simulation_terrain/TER_Path_ABC.h"
+#include <list>
 
 namespace sword
 {
@@ -26,6 +27,13 @@ class TER_PathPoint;
 class TER_PathFuture;
 class TER_PathSection;
 class TER_Polygon;
+
+// Enumerates the edges in "points" and introduces intermediate points to force
+// the path walker to evaluate non-zero slopes. Note input points are not
+// duplicated, instances are preserved and their slope information updated in
+// place.
+std::list< boost::shared_ptr< TER_PathPoint > > SplitEdgesOnElevationGrid(
+    const std::list< boost::shared_ptr< TER_PathPoint > >& points );
 
 //*****************************************************************************
 // Created: JDY 03-02-11
