@@ -39,6 +39,7 @@ public:
     virtual ~TER_PathComputer();
 
     boost::shared_ptr< TER_PathResult > Execute(
+        std::size_t requestId,
         const std::vector< boost::shared_ptr< TER_PathSection > >& sections,
         TER_Pathfinder_ABC& pathfind, TER_PathFuture& future,
         unsigned int deadlineSeconds, bool debugPath );
@@ -58,8 +59,6 @@ private:
 private:
     MT_Profiler profiler_;
     std::size_t id_;
-    // Identify the current computation, for logging purpose
-    const std::size_t computerId_;
     TER_Path_ABC::E_State nState_;
     MT_Vector2D lastWaypoint_;
     std::vector< MT_Vector2D > computedWaypoints_;

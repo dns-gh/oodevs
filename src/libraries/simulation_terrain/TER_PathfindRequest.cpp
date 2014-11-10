@@ -12,11 +12,12 @@
 #include "TER_PathSection.h"
 
 TER_PathfindRequest::TER_PathfindRequest(
-        std::size_t callerId,
+        std::size_t queryId, std::size_t callerId,
         const std::vector< boost::shared_ptr< TER_PathSection > > sections,
         const sword::Pathfind& pathfind,
         const boost::shared_ptr< TER_PathFuture >& future )
-    : callerId_( callerId )
+    : queryId_( queryId )
+    , callerId_( callerId )
     , sections_( sections )
     , pathfind_( pathfind )
     , future_( future )
@@ -65,4 +66,9 @@ double TER_PathfindRequest::GetLength() const
 std::size_t TER_PathfindRequest::GetCallerId() const
 {
     return callerId_;
+}
+
+std::size_t TER_PathfindRequest::GetQueryId() const
+{
+    return queryId_;
 }

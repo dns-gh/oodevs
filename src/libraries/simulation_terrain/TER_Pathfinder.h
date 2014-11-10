@@ -117,6 +117,7 @@ private:
     const tools::Path dumpDir_; // empty if dump is disabled
     const std::set< size_t > dumpFilter_; // empty if no id filters
     const bool debugPath_;
+    std::size_t queryId_;
 
     mutable boost::mutex mutex_;
     boost::condition condition_;
