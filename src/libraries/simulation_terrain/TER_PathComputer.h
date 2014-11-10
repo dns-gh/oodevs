@@ -35,11 +35,11 @@ public:
     typedef std::list< boost::shared_ptr< TER_PathPoint > > T_PathPoints;
 
 public:
-             TER_PathComputer( std::size_t id );
+             TER_PathComputer();
     virtual ~TER_PathComputer();
 
     boost::shared_ptr< TER_PathResult > Execute(
-        std::size_t requestId,
+        std::size_t requestId, std::size_t callerId,
         const std::vector< boost::shared_ptr< TER_PathSection > >& sections,
         TER_Pathfinder_ABC& pathfind, TER_PathFuture& future,
         unsigned int deadlineSeconds, bool debugPath );
@@ -58,7 +58,6 @@ private:
 
 private:
     MT_Profiler profiler_;
-    std::size_t id_;
     TER_Path_ABC::E_State nState_;
     MT_Vector2D lastWaypoint_;
     std::vector< MT_Vector2D > computedWaypoints_;

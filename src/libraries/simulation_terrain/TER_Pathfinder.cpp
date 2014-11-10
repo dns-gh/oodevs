@@ -319,7 +319,6 @@ void TER_Pathfinder::ProcessRequest( TER_PathFinderThread& data, TER_PathfindReq
     double duration = 0;
     try
     {
-        TER_PathComputer computer( rq.GetCallerId() );
         data.ProcessDynamicData();
         const auto pathfinder = data.GetPathfinder( !rq.IgnoreDynamicObjects() );
         boost::shared_ptr< TER_Pathfinder_ABC > wrapper =
@@ -328,8 +327,8 @@ void TER_Pathfinder::ProcessRequest( TER_PathFinderThread& data, TER_PathfindReq
         profiler.Start();
         if( rq.IsItinerary() )
             wrapper = boost::make_shared< TER_EdgeMatcher >( wrapper, rq.GetPathfind() );
-        const auto res = computer.Execute( rq.GetQueryId(), rq.GetSections(),
-                *wrapper, *rq.GetFuture(), deadline, debugPath_ );
+        const auto res = TER_PathComputer().Execute( rq.GetQueryId(), rq.GetCallerId(),
+                rq.GetSections(), *wrapper, *rq.GetFuture(), deadline, debugPath_ );
         rq.GetFuture()->Set( res );
         duration = profiler.Stop();
     }
