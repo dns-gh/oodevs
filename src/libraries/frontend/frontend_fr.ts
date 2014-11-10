@@ -234,20 +234,28 @@
         <translation>Arrêté</translation>
     </message>
     <message>
-        <source>Missing pid from QProcess</source>
-        <translation>Impossible de lire le pid du processus</translation>
+        <source>Missing pid from QProcess.
+
+%1</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Unable to create job object</source>
-        <translation>Impossible de créer un objet de travail</translation>
+        <source>Unable to create job object.
+
+%1</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Unable to set information job object</source>
-        <translation>Impossible d&apos;initialiser l&apos;objet de travail</translation>
+        <source>Unable to set information job object.
+
+%1</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Unable to assign process to job object</source>
-        <translation>Impossible d&apos;assigner l&apos;objet de travail au processus</translation>
+        <source>Unable to assign process to job object.
+
+%1</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

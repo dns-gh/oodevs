@@ -9,43 +9,15 @@
 
 #include "frontend_pch.h"
 #include "SpawnCommand.h"
-
 #include "clients_kernel/tools.h"
 #include "tools/GeneralConfig.h"
 #include "tools/Log.h"
-#include "tools/Path.h"
-
+#include <tools/Path.h>
 #include <graphics/MapnikProcess.h>
-
-#include <windows.h>
-#include <boost/numeric/conversion/cast.hpp>
 #include <boost/make_shared.hpp>
+#include <windows.h>
 
 using namespace frontend;
-
-namespace
-{
-    std::shared_ptr< void > MakeAutoKill( const QProcess& process )
-    {
-        auto info = process.pid();
-        if( !info )
-            throw MASA_EXCEPTION( tools::translate( "SpawnCommand", "Missing pid from QProcess" ).toUtf8().constData() );
-        auto job = CreateJobObject( NULL, NULL );
-        if( !job )
-            throw MASA_EXCEPTION( tools::translate( "SpawnCommand", "Unable to create job object" ).toUtf8().constData() );
-        std::shared_ptr< void > rpy( job, CloseHandle );
-        JOBOBJECT_EXTENDED_LIMIT_INFORMATION jeli;
-        memset( &jeli, 0, sizeof jeli );
-        jeli.BasicLimitInformation.LimitFlags = JOB_OBJECT_LIMIT_KILL_ON_JOB_CLOSE;
-        bool valid = !!SetInformationJobObject( job, JobObjectExtendedLimitInformation, &jeli, sizeof jeli );
-        if( !valid )
-            throw MASA_EXCEPTION( tools::translate( "SpawnCommand", "Unable to set information job object" ).toUtf8().constData() );
-        valid = !!AssignProcessToJobObject( job, info->hProcess );
-        if( !valid )
-            throw MASA_EXCEPTION( tools::translate( "SpawnCommand", "Unable to assign process to job object").toUtf8().constData() );
-        return rpy;
-    }
-}
 
 tools::Path frontend::MakeBinaryName( const tools::Path& prefix )
 {
@@ -151,13 +123,53 @@ void SpawnCommand::SetLogFile( const tools::Path& path, bool truncate )
     private_->truncate = truncate;
 }
 
+namespace
+{
+    QString GetLastErrorMessage()
+    {
+        LPVOID buffer;
+        FormatMessage(
+            FORMAT_MESSAGE_ALLOCATE_BUFFER |
+            FORMAT_MESSAGE_FROM_SYSTEM |
+            FORMAT_MESSAGE_IGNORE_INSERTS,
+            0,
+            GetLastError(),
+            MAKELANGID( LANG_NEUTRAL, SUBLANG_DEFAULT ),
+            (LPTSTR)&buffer,
+            0,
+            0 );
+        const QString result( static_cast< char* >( buffer ) );
+        LocalFree( buffer );
+        return result;
+    }
+
+    std::shared_ptr< void > MakeAutoKill( const QProcess& process )
+    {
+        const auto pid = process.pid();
+        if( !pid )
+            throw MASA_EXCEPTION( tools::translate( "SpawnCommand", "Missing pid from QProcess.\n\n%1" ).arg( GetLastErrorMessage() ).toStdString() );
+        const auto job = CreateJobObject( NULL, NULL );
+        if( !job )
+            throw MASA_EXCEPTION( tools::translate( "SpawnCommand", "Unable to create job object.\n\n%1" ).arg( GetLastErrorMessage() ).toStdString() );
+        std::shared_ptr< void > result( job, CloseHandle );
+        JOBOBJECT_EXTENDED_LIMIT_INFORMATION info;
+        memset( &info, 0, sizeof info );
+        info.BasicLimitInformation.LimitFlags = JOB_OBJECT_LIMIT_KILL_ON_JOB_CLOSE;
+        if( !SetInformationJobObject( job, JobObjectExtendedLimitInformation, &info, sizeof info ) )
+            throw MASA_EXCEPTION( tools::translate( "SpawnCommand", "Unable to set information job object.\n\n%1" ).arg( GetLastErrorMessage() ).toStdString() );
+        if( !AssignProcessToJobObject( job, pid->hProcess ) )
+            throw MASA_EXCEPTION( tools::translate( "SpawnCommand", "Unable to assign process to job object.\n\n%1").arg( GetLastErrorMessage() ).toStdString() );
+        return result;
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: SpawnCommand::Start
 // Created: AGE 2007-10-05
 // -----------------------------------------------------------------------------
 void SpawnCommand::Start()
 {
-    graphics::T_ProcessCallback logger = []( const std::string&, graphics::E_Process ){};
+    graphics::T_ProcessCallback logger = []( const std::string&, graphics::E_Process ) {};
     if( !private_->logname.IsEmpty() )
     {
         private_->log.reset( new tools::Log( private_->logname, 2, 0, private_->truncate, true ) );
@@ -180,7 +192,7 @@ void SpawnCommand::Start()
     private_->process.reset();
     throw MASA_EXCEPTION( tools::translate( "SpawnCommand", "Could not start process: %1, error: %2" )
             .arg( QString::fromStdWString( private_->exe.ToUnicode() ) + " " + private_->arguments.join( " " ) )
-            .arg( exit ).toUtf8().constData() );
+            .arg( exit ).toStdString() );
 }
 
 // -----------------------------------------------------------------------------
@@ -243,10 +255,9 @@ QString SpawnCommand::GetStatus() const
     auto state = private_->process ? private_->process->state() : QProcess::NotRunning;
     switch( state )
     {
-        case QProcess::Starting:   return tools::translate( "SpawnCommand", "Starting..." );
-        case QProcess::Running:    return tools::translate( "SpawnCommand", "Started" );
-        default:
-        case QProcess::NotRunning: return tools::translate( "SpawnCommand", "Stopped" );
+        case QProcess::Starting: return tools::translate( "SpawnCommand", "Starting..." );
+        case QProcess::Running:  return tools::translate( "SpawnCommand", "Started" );
+        default:                 return tools::translate( "SpawnCommand", "Stopped" );
     }
 }
 

@@ -234,20 +234,28 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Missing pid from QProcess</source>
-        <translation>Missing pid from QProcess</translation>
+        <source>Missing pid from QProcess.
+
+%1</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Unable to create job object</source>
-        <translation>Unable to create job object</translation>
+        <source>Unable to create job object.
+
+%1</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Unable to set information job object</source>
-        <translation>Unable to set information job object</translation>
+        <source>Unable to set information job object.
+
+%1</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Unable to assign process to job object</source>
-        <translation>Unable to assign process to job object</translation>
+        <source>Unable to assign process to job object.
+
+%1</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
