@@ -10,6 +10,7 @@
 #include "simulation_terrain_pch.h"
 #include "TER_Pathfinder.h"
 #include "TER_EdgeMatcher.h"
+#include "TER_PathComputer.h"
 #include "TER_Pathfinder.h"
 #include "TER_Pathfinder_ABC.h"
 #include "TER_PathFindRequest.h"
@@ -206,15 +207,16 @@ TER_Pathfinder::~TER_Pathfinder()
 // Created: NLD 2003-08-14
 // -----------------------------------------------------------------------------
 boost::shared_ptr< TER_PathFuture > TER_Pathfinder::StartCompute(
+        std::size_t callerId,
         const std::vector< boost::shared_ptr< TER_PathSection > > sections,
-        const boost::shared_ptr< TER_PathComputer_ABC >& path,
         const sword::Pathfind& pathfind )
 {
     // $$$$$ PMD: storing the callback in the request is not elegant but harmless
     // for now as the request object is private to the pathfinder. Make a local
     // struct later.
     const auto future = boost::make_shared< TER_PathFuture >();
-    auto p = boost::make_shared< TER_PathfindRequest >( sections, path, pathfind, future );
+    const auto p = boost::make_shared< TER_PathfindRequest >(
+            callerId, sections, pathfind, future );
     boost::mutex::scoped_lock locker( mutex_ );
     if( p->GetLength() > rDistanceThreshold_ )
         longRequests_.push_back( p );
@@ -316,9 +318,7 @@ void TER_Pathfinder::ProcessRequest( TER_PathFinderThread& data, TER_PathfindReq
     double duration = 0;
     try
     {
-        const auto computer = rq.GetComputer();
-        if( !computer )
-            throw MASA_EXCEPTION( "invalid computer" );
+        TER_PathComputer computer( rq.GetCallerId() );
         data.ProcessDynamicData();
         const auto pathfinder = data.GetPathfinder( !rq.IgnoreDynamicObjects() );
         boost::shared_ptr< TER_Pathfinder_ABC > wrapper =
@@ -327,7 +327,7 @@ void TER_Pathfinder::ProcessRequest( TER_PathFinderThread& data, TER_PathfindReq
         profiler.Start();
         if( rq.IsItinerary() )
             wrapper = boost::make_shared< TER_EdgeMatcher >( wrapper, rq.GetPathfind() );
-        const auto res = computer->Execute(
+        const auto res = computer.Execute(
             rq.GetSections(), *wrapper, *rq.GetFuture(), deadline, debugPath_ );
         rq.GetFuture()->Set( res );
         duration = profiler.Stop();

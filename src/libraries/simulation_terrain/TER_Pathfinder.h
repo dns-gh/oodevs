@@ -10,7 +10,6 @@
 #ifndef SIMULATION_TERRAIN_PATHFINDER
 #define SIMULATION_TERRAIN_PATHFINDER
 
-#include "TER_PathComputer_ABC.h"
 #include <tools/Path.h>
 #pragma warning( push, 0 )
 #include <boost/thread/mutex.hpp>
@@ -24,7 +23,6 @@
 
 class TER_DynamicData;
 class TER_PathfindRequest;
-class TER_PathComputer_ABC;
 class TER_PathFinderThread;
 class TER_PathfindRequest;
 class TER_PathSection;
@@ -85,8 +83,8 @@ public:
     // when the computation terminates, successfully and on error. Note the
     // result never contains TER_Path_ABC::eComputing.
     boost::shared_ptr< TER_PathFuture > StartCompute(
+            std::size_t callerId,
             const std::vector< boost::shared_ptr< TER_PathSection > > sections,
-            const boost::shared_ptr< TER_PathComputer_ABC >& pPath,
             const sword::Pathfind& pathfind );
 
     void AddDynamicData   ( const DynamicDataPtr& data );
