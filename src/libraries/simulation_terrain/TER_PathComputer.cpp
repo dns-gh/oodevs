@@ -7,14 +7,13 @@
 //
 // *****************************************************************************
 
-#include "simulation_kernel_pch.h"
-#include "DEC_PathComputer.h"
+#include "simulation_terrain_pch.h"
+#include "TER_PathComputer.h"
+#include "TER_PathPoint.h"
+#include "TER_PathSection.h"
+#include "TER_Pathfinder.h"
+#include "TER_Pathfinder_ABC.h"
 #include "MT_Tools/MT_Logger.h"
-#include "MT_Tools/MT_Line.h"
-#include "simulation_terrain/TER_PathPoint.h"
-#include "simulation_terrain/TER_PathSection.h"
-#include "simulation_terrain/TER_Pathfinder.h"
-#include "simulation_terrain/TER_Pathfinder_ABC.h"
 #include <pathfind/TerrainRule_ABC.h>
 #include <boost/make_shared.hpp>
 
@@ -99,7 +98,7 @@ private:
 
 }  // namespace
 
-DEC_PathComputer::DEC_PathComputer( std::size_t id )
+TER_PathComputer::TER_PathComputer( std::size_t id )
     : id_( id )
     , computerId_( ::computersId++ )
     , nState_( TER_Path_ABC::eComputing )
@@ -107,11 +106,11 @@ DEC_PathComputer::DEC_PathComputer( std::size_t id )
     // NOTHING
 }
 
-DEC_PathComputer::~DEC_PathComputer()
+TER_PathComputer::~TER_PathComputer()
 {
 }
 
-boost::shared_ptr< TER_PathResult > DEC_PathComputer::GetPathResult() const
+boost::shared_ptr< TER_PathResult > TER_PathComputer::GetPathResult() const
 {
     const auto res = boost::make_shared< TER_PathResult >();
     res->state = nState_;
@@ -121,7 +120,7 @@ boost::shared_ptr< TER_PathResult > DEC_PathComputer::GetPathResult() const
     return res;
 }
 
-boost::shared_ptr< TER_PathResult > DEC_PathComputer::Execute(
+boost::shared_ptr< TER_PathResult > TER_PathComputer::Execute(
         const std::vector< boost::shared_ptr< TER_PathSection > >& sections,
         TER_Pathfinder_ABC& pathfind, TER_PathFuture& future,
         unsigned int deadlineSeconds, bool debugPath )
@@ -130,7 +129,7 @@ boost::shared_ptr< TER_PathResult > DEC_PathComputer::Execute(
         throw MASA_EXCEPTION( "List of path points is not empty before running pathfind" );
     if( debugPath )
     {
-        MT_LOG_MESSAGE_MSG( "DEC_PathComputer::Execute: " << this << " computation begin" <<
+        MT_LOG_MESSAGE_MSG( "TER_PathComputer::Execute: " << this << " computation begin" <<
                             ", Request: " << computerId_ <<
                             ", Entity: " << id_ );
         MT_LOG_MESSAGE_MSG( GetPathAsString( sections ) );
@@ -143,7 +142,7 @@ boost::shared_ptr< TER_PathResult > DEC_PathComputer::Execute(
     }
     catch( const std::exception& e )
     {
-        MT_LOG_ERROR_MSG( "DEC_PathComputer::Execute failed: " << e.what() );
+        MT_LOG_ERROR_MSG( "TER_PathComputer::Execute failed: " << e.what() );
         nState_ = TER_Path_ABC::eCanceled;
         return GetPathResult();
     }
@@ -153,7 +152,7 @@ boost::shared_ptr< TER_PathResult > DEC_PathComputer::Execute(
         std::stringstream stream;
         if( ! resultList_.empty() )
             stream << "[" << resultList_.front()->GetPos() << "] -> [" << resultList_.back()->GetPos() << "]";
-        MT_LOG_MESSAGE_MSG( "DEC_PathComputer::Execute: " << this <<
+        MT_LOG_MESSAGE_MSG( "TER_PathComputer::Execute: " << this <<
                             ", Request: " << computerId_ <<
                             ", Time: " << rComputationTime <<
                             ", State: " << GetStateAsString( nState_ ) <<
@@ -162,7 +161,7 @@ boost::shared_ptr< TER_PathResult > DEC_PathComputer::Execute(
     return GetPathResult();
 }
 
-void DEC_PathComputer::DoExecute(
+void TER_PathComputer::DoExecute(
         const std::vector< boost::shared_ptr< TER_PathSection > >& sections,
         TER_Pathfinder_ABC& pathfind, TER_PathFuture& future,
         unsigned int deadlineSeconds )
@@ -225,26 +224,26 @@ void DEC_PathComputer::DoExecute(
     nState_ = TER_Path_ABC::eValid;
 }
 
-void DEC_PathComputer::NotifyPartialSection()
+void TER_PathComputer::NotifyPartialSection()
 {
     if( !resultList_.empty() )
         resultList_.back()->NotifyPartial();
 }
 
-void DEC_PathComputer::NotifyCompletedSection()
+void TER_PathComputer::NotifyCompletedSection()
 {
     if( !resultList_.empty() )
         resultList_.back()->NotifyWaypoint();
 }
 
-boost::optional< MT_Vector2D > DEC_PathComputer::GetLastPosition() const
+boost::optional< MT_Vector2D > TER_PathComputer::GetLastPosition() const
 {
     if( resultList_.empty() )
         return boost::none;
     return resultList_.back()->GetPos();
 }
 
-boost::shared_ptr< PathResult > DEC_PathComputer::ComputeSection(
+boost::shared_ptr< PathResult > TER_PathComputer::ComputeSection(
     TER_Pathfinder_ABC& pathfind, TER_PathSection& section, TER_PathFuture& future,
     unsigned int deadlineSeconds )
 {
