@@ -96,9 +96,8 @@ private:
 
 }  // namespace
 
-TER_PathComputer::TER_PathComputer( std::size_t id )
-    : id_( id )
-    , nState_( TER_Path_ABC::eComputing )
+TER_PathComputer::TER_PathComputer()
+    : nState_( TER_Path_ABC::eComputing )
 {
     // NOTHING
 }
@@ -118,22 +117,20 @@ boost::shared_ptr< TER_PathResult > TER_PathComputer::GetPathResult() const
 }
 
 boost::shared_ptr< TER_PathResult > TER_PathComputer::Execute(
-        std::size_t requestId,
+        std::size_t requestId, std::size_t callerId,
         const std::vector< boost::shared_ptr< TER_PathSection > >& sections,
         TER_Pathfinder_ABC& pathfind, TER_PathFuture& future,
         unsigned int deadlineSeconds, bool debugPath )
 {
-    if( !resultList_.empty() )
-        throw MASA_EXCEPTION( "List of path points is not empty before running pathfind" );
     if( debugPath )
     {
         MT_LOG_MESSAGE_MSG( "TER_PathComputer::Execute: " << this << " computation begin" <<
                             ", Request: " << requestId <<
-                            ", Entity: " << id_ );
+                            ", Entity: " << callerId );
         MT_LOG_MESSAGE_MSG( GetPathAsString( sections ) );
         profiler_.Start();
     }
-    pathfind.SetId( id_ );
+    pathfind.SetId( callerId );
     try
     {
         DoExecute( sections, pathfind, future, deadlineSeconds );
