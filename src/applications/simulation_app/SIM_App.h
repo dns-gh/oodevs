@@ -25,7 +25,6 @@ namespace tools
 }
 
 class MIL_Config;
-class MT_ConsoleLogger;
 class MT_FileLogger;
 
 //=============================================================================
@@ -34,38 +33,22 @@ class MT_FileLogger;
 class SIM_App : private boost::noncopyable
 {
 public:
-    //! @name Constructors/Destructor
-    //@{
-     SIM_App( HINSTANCE hinstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine,
-         int nCmdShow, int maxConnections, bool verbose );
+     SIM_App( int maxConnections, bool verbose );
     ~SIM_App();
-    //@}
 
-    //! @name Operations
-    //@{
     int Execute();
-    //@}
 
 private:
-    //! @name Helpers
-    //@{
     void Initialize();
-    void Run();
-
     void RunGUI();
     void AnimateIcon();
     void StartIconAnimation();
     void StopIconAnimation();
-
     static LRESULT CALLBACK MainWndProc( HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam );
-    //@}
 
 private:
-    //! @name Member data
-    //@{
     const int maxConnections_;
     const bool verbose_;
-
     std::unique_ptr< MIL_Config > config_;
     std::unique_ptr< tools::WinArguments > winArguments_;
     std::unique_ptr< MT_FileLogger > logger_;
@@ -75,9 +58,8 @@ private:
     int result_;
     HWND hWnd_;
     HINSTANCE hInstance_;
-    NOTIFYICONDATA TrayIcon_;
+    NOTIFYICONDATA trayIcon_;
     unsigned int nIconIndex_;
-    //@}
 };
 
 #endif // __SIM_App_h_

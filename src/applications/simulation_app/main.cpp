@@ -46,9 +46,7 @@ namespace
             }
     #endif
             GOOGLE_PROTOBUF_VERIFY_VERSION;
-            HINSTANCE hInstance = GetModuleHandle( NULL );
-            HINSTANCE prevInstance = GetModuleHandle( NULL );
-            app.reset( new SIM_App( hInstance, prevInstance, GetCommandLineW(), 0, maxConnections, verbose ) );
+            app.reset( new SIM_App( maxConnections, verbose ) );
             result = app->Execute();
         }
         catch( const FlexLmLicense::LicenseError& e )
