@@ -17,7 +17,7 @@
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
 #include "protocol/Serialization.h"
-#include "simulation_terrain/TER_PathComputer_ABC.h"
+#include "simulation_terrain/TER_Path_ABC.h"
 #include "simulation_terrain/TER_Pathfinder.h"
 
 #include <boost/serialization/optional.hpp>

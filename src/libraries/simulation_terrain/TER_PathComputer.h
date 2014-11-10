@@ -11,7 +11,8 @@
 #define SIMULATION_TERRAIN_PATHCOMPUTER_H
 
 #include "MT_Tools/MT_Profiler.h"
-#include "TER_PathComputer_ABC.h"
+#include "TER_Path_ABC.h"
+#include <boost/noncopyable.hpp>
 #include <boost/optional.hpp>
 #include <boost/shared_ptr.hpp>
 #include <vector>
@@ -19,6 +20,7 @@
 struct PathResult;
 class TER_PathFuture;
 class TER_PathPoint;
+class TER_PathSection;
 struct TER_PathResult;
 
 // =============================================================================
@@ -27,7 +29,7 @@ struct TER_PathResult;
 */
 // Created: MCO 2014-05-15
 // =============================================================================
-class TER_PathComputer : public TER_PathComputer_ABC
+class TER_PathComputer : private boost::noncopyable
 {
 public:
     typedef std::list< boost::shared_ptr< TER_PathPoint > > T_PathPoints;
@@ -36,10 +38,10 @@ public:
              TER_PathComputer( std::size_t id );
     virtual ~TER_PathComputer();
 
-    virtual boost::shared_ptr< TER_PathResult > Execute(
-            const std::vector< boost::shared_ptr< TER_PathSection > >& sections,
-            TER_Pathfinder_ABC& pathfind, TER_PathFuture& future,
-            unsigned int deadlineSeconds, bool debugPath );
+    boost::shared_ptr< TER_PathResult > Execute(
+        const std::vector< boost::shared_ptr< TER_PathSection > >& sections,
+        TER_Pathfinder_ABC& pathfind, TER_PathFuture& future,
+        unsigned int deadlineSeconds, bool debugPath );
 
 private:
     void DoExecute( const std::vector< boost::shared_ptr< TER_PathSection > >& sections,
