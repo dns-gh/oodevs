@@ -28,7 +28,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              TER_PathfindRequest(
-                std::size_t callerId,
+                std::size_t queryId, std::size_t callerId,
                 const std::vector< boost::shared_ptr< TER_PathSection > > sections,
                 const sword::Pathfind& pathfind,
                 const boost::shared_ptr< TER_PathFuture >& future );
@@ -38,6 +38,7 @@ public:
     bool IgnoreDynamicObjects() const;
     bool IsItinerary() const;
 
+    std::size_t GetQueryId() const;
     std::size_t GetCallerId() const;
     const sword::Pathfind& GetPathfind() const;
     boost::shared_ptr< TER_PathFuture > GetFuture();
@@ -47,6 +48,7 @@ public:
 private:
     //! @name Member data
     //@{
+    const size_t queryId_;
     const size_t callerId_;
     const std::vector< boost::shared_ptr< TER_PathSection > > sections_;
     const sword::Pathfind pathfind_;

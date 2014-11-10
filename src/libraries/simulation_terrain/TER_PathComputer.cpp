@@ -20,8 +20,6 @@
 namespace
 {
 
-std::size_t computersId = 1;
-
 std::string GetStateAsString( TER_Path_ABC::E_State state )
 {
     switch( state )
@@ -100,7 +98,6 @@ private:
 
 TER_PathComputer::TER_PathComputer( std::size_t id )
     : id_( id )
-    , computerId_( ::computersId++ )
     , nState_( TER_Path_ABC::eComputing )
 {
     // NOTHING
@@ -121,6 +118,7 @@ boost::shared_ptr< TER_PathResult > TER_PathComputer::GetPathResult() const
 }
 
 boost::shared_ptr< TER_PathResult > TER_PathComputer::Execute(
+        std::size_t requestId,
         const std::vector< boost::shared_ptr< TER_PathSection > >& sections,
         TER_Pathfinder_ABC& pathfind, TER_PathFuture& future,
         unsigned int deadlineSeconds, bool debugPath )
@@ -130,7 +128,7 @@ boost::shared_ptr< TER_PathResult > TER_PathComputer::Execute(
     if( debugPath )
     {
         MT_LOG_MESSAGE_MSG( "TER_PathComputer::Execute: " << this << " computation begin" <<
-                            ", Request: " << computerId_ <<
+                            ", Request: " << requestId <<
                             ", Entity: " << id_ );
         MT_LOG_MESSAGE_MSG( GetPathAsString( sections ) );
         profiler_.Start();
@@ -153,7 +151,7 @@ boost::shared_ptr< TER_PathResult > TER_PathComputer::Execute(
         if( ! resultList_.empty() )
             stream << "[" << resultList_.front()->GetPos() << "] -> [" << resultList_.back()->GetPos() << "]";
         MT_LOG_MESSAGE_MSG( "TER_PathComputer::Execute: " << this <<
-                            ", Request: " << computerId_ <<
+                            ", Request: " << requestId <<
                             ", Time: " << rComputationTime <<
                             ", State: " << GetStateAsString( nState_ ) <<
                             ", Result: " << stream.str() );

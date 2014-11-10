@@ -154,6 +154,7 @@ TER_Pathfinder::TER_Pathfinder( const boost::shared_ptr< TER_StaticData >& stati
     , dumpDir_( pathfindDir )
     , dumpFilter_( ParseFilter( pathfindFilter ) )
     , debugPath_( debugPath )
+    , queryId_( 1 )
     , nMaxComputationDuration_( maxComputationDuration )
     , rDistanceThreshold_     ( distanceThreshold )
     , treatedRequests_        ( 0 )
@@ -216,7 +217,7 @@ boost::shared_ptr< TER_PathFuture > TER_Pathfinder::StartCompute(
     // struct later.
     const auto future = boost::make_shared< TER_PathFuture >();
     const auto p = boost::make_shared< TER_PathfindRequest >(
-            callerId, sections, pathfind, future );
+            queryId_++, callerId, sections, pathfind, future );
     boost::mutex::scoped_lock locker( mutex_ );
     if( p->GetLength() > rDistanceThreshold_ )
         longRequests_.push_back( p );
@@ -327,8 +328,8 @@ void TER_Pathfinder::ProcessRequest( TER_PathFinderThread& data, TER_PathfindReq
         profiler.Start();
         if( rq.IsItinerary() )
             wrapper = boost::make_shared< TER_EdgeMatcher >( wrapper, rq.GetPathfind() );
-        const auto res = computer.Execute(
-            rq.GetSections(), *wrapper, *rq.GetFuture(), deadline, debugPath_ );
+        const auto res = computer.Execute( rq.GetQueryId(), rq.GetSections(),
+                *wrapper, *rq.GetFuture(), deadline, debugPath_ );
         rq.GetFuture()->Set( res );
         duration = profiler.Stop();
     }
