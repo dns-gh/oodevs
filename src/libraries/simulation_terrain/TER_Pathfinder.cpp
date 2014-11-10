@@ -43,18 +43,15 @@ std::set< size_t > ParseFilter( const std::string& filter )
 struct PathfindDumper : public TER_Pathfinder_ABC
                       , public boost::noncopyable
 {
-    PathfindDumper( const tools::Path& dump, const std::set< size_t >& filter,
-                     const boost::shared_ptr< TerrainPathfinder >& root )
-        : dump_  ( dump )
+    PathfindDumper( std::size_t callerId, const tools::Path& dump,
+                    const std::set< size_t >& filter,
+                    const boost::shared_ptr< TerrainPathfinder >& root )
+        : dump_( dump )
         , filter_( filter )
-        , root_  ( root )
-        , id_    ( 0 )
+        , root_( root )
+        , callerId_( callerId )
     {
         // NOTHING
-    }
-    virtual void SetId( size_t id )
-    {
-        id_ = id;
     }
     virtual void SetChoiceRatio( float ratio )
     {
@@ -69,7 +66,7 @@ struct PathfindDumper : public TER_Pathfinder_ABC
                               TerrainRule_ABC& rule )
     {
         const bool dump = !dump_.IsEmpty() &&
-            ( filter_.empty() || filter_.count( id_ ) );
+            ( filter_.empty() || filter_.count( callerId_ ) );
         if( dump )
         {
             PathfindFileDumper dumper( GetFilename(), rule );
@@ -82,7 +79,7 @@ private:
     {
         std::stringstream name;
         name << "pathfind_"
-             << id_
+             << callerId_
              << "_"
              << bii::atomic_inc32( &s_idx_ );
         return dump_ / name.str().c_str();
@@ -92,7 +89,7 @@ private:
     const tools::Path&        dump_;
     const std::set< size_t >& filter_;
     boost::shared_ptr< TerrainPathfinder> root_;
-    size_t                    id_;
+    const size_t              callerId_;
 };
 
 boost::uint32_t PathfindDumper::s_idx_ = 0;
@@ -322,7 +319,8 @@ void TER_Pathfinder::ProcessRequest( TER_PathFinderThread& data, TER_PathfindReq
         data.ProcessDynamicData();
         const auto pathfinder = data.GetPathfinder( !rq.IgnoreDynamicObjects() );
         boost::shared_ptr< TER_Pathfinder_ABC > wrapper =
-            boost::make_shared< PathfindDumper >( dumpDir_, dumpFilter_, pathfinder );
+            boost::make_shared< PathfindDumper >(
+                rq.GetCallerId(), dumpDir_, dumpFilter_, pathfinder );
         MT_Profiler profiler;
         profiler.Start();
         if( rq.IsItinerary() )
