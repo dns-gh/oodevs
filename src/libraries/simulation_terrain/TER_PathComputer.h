@@ -7,11 +7,11 @@
 //
 // *****************************************************************************
 
-#ifndef __DEC_PathComputer_h_
-#define __DEC_PathComputer_h_
+#ifndef SIMULATION_TERRAIN_PATHCOMPUTER_H
+#define SIMULATION_TERRAIN_PATHCOMPUTER_H
 
 #include "MT_Tools/MT_Profiler.h"
-#include "simulation_terrain/TER_PathComputer_ABC.h"
+#include "TER_PathComputer_ABC.h"
 #include <boost/optional.hpp>
 #include <boost/shared_ptr.hpp>
 #include <vector>
@@ -22,19 +22,19 @@ class TER_PathPoint;
 struct TER_PathResult;
 
 // =============================================================================
-/** @class  DEC_PathComputer
-    @brief  DEC_PathComputer
+/** @class  TER_PathComputer
+    @brief  TER_PathComputer
 */
 // Created: MCO 2014-05-15
 // =============================================================================
-class DEC_PathComputer : public TER_PathComputer_ABC
+class TER_PathComputer : public TER_PathComputer_ABC
 {
 public:
     typedef std::list< boost::shared_ptr< TER_PathPoint > > T_PathPoints;
 
 public:
-             DEC_PathComputer( std::size_t id );
-    virtual ~DEC_PathComputer();
+             TER_PathComputer( std::size_t id );
+    virtual ~TER_PathComputer();
 
     virtual boost::shared_ptr< TER_PathResult > Execute(
             const std::vector< boost::shared_ptr< TER_PathSection > >& sections,
@@ -50,7 +50,7 @@ private:
         unsigned int deadlineSeconds );
     void NotifyPartialSection();
     void NotifyCompletedSection();
-    boost::optional< MT_Vector2D > DEC_PathComputer::GetLastPosition() const;
+    boost::optional< MT_Vector2D > GetLastPosition() const;
     boost::shared_ptr< TER_PathResult > GetPathResult() const;
 
 private:
@@ -64,4 +64,4 @@ private:
     T_PathPoints resultList_;
 };
 
-#endif // __DEC_PathComputer_h_
+#endif // SIMULATION_TERRAIN_PATHCOMPUTER_H

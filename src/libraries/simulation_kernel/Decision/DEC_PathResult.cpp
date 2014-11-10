@@ -11,7 +11,6 @@
 #include "DEC_PathResult.h"
 #include "MIL_AgentServer.h"
 #include "Decision/DEC_PathType.h"
-#include "Decision/DEC_PathComputer.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "Network/NET_ASN_Tools.h"
@@ -21,10 +20,11 @@
 #include "meteo/PHY_MeteoDataManager.h"
 #include "meteo/RawVisionData/Elevation.h"
 #include "meteo/RawVisionData/PHY_RawVisionData.h"
-#include "simulation_terrain/TER_World.h"
+#include "simulation_terrain/TER_PathComputer.h"
 #include "simulation_terrain/TER_PathPoint.h"
 #include "simulation_terrain/TER_Pathfinder.h"
 #include "simulation_terrain/TER_Pathfinder_ABC.h"
+#include "simulation_terrain/TER_World.h"
 #include <boost/make_shared.hpp>
 
 std::list< boost::shared_ptr< TER_PathPoint > > SplitEdgesOnElevationGrid(
@@ -32,7 +32,7 @@ std::list< boost::shared_ptr< TER_PathPoint > > SplitEdgesOnElevationGrid(
 {
     if( points.size() < 2 || !MIL_AgentServer::IsInitialized() )
         return points;
-    DEC_PathComputer::T_PathPoints output;
+    TER_PathComputer::T_PathPoints output;
     const auto& elevation = MIL_AgentServer::GetWorkspace()
         .GetMeteoDataManager().GetRawVisionData();
 
@@ -362,7 +362,7 @@ const DEC_PathType& DEC_PathResult::GetPathType() const
 
 void DEC_PathResult::StartCompute( const sword::Pathfind& pathfind )
 {
-    const auto computer = boost::make_shared< DEC_PathComputer >( callerId_ );
+    const auto computer = boost::make_shared< TER_PathComputer >( callerId_ );
     auto& pathfinder = MIL_AgentServer::GetWorkspace().GetPathFindManager();
     future_ = pathfinder.StartCompute( sections_, computer, pathfind );
 }
