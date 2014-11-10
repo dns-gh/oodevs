@@ -130,7 +130,6 @@ boost::shared_ptr< TER_PathResult > TER_PathComputer::Execute(
         MT_LOG_MESSAGE_MSG( GetPathAsString( sections ) );
         profiler_.Start();
     }
-    pathfind.SetId( callerId );
     try
     {
         DoExecute( sections, pathfind, future, deadlineSeconds );
