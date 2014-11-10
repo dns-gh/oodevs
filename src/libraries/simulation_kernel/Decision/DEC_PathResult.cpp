@@ -20,7 +20,6 @@
 #include "meteo/PHY_MeteoDataManager.h"
 #include "meteo/RawVisionData/Elevation.h"
 #include "meteo/RawVisionData/PHY_RawVisionData.h"
-#include "simulation_terrain/TER_PathComputer_ABC.h"
 #include "simulation_terrain/TER_PathPoint.h"
 #include "simulation_terrain/TER_Pathfinder.h"
 #include "simulation_terrain/TER_Pathfinder_ABC.h"
