@@ -24,7 +24,6 @@
 #include "Entities/MIL_EntityManager_ABC.h"
 #include "Entities/Populations/MIL_Population.h"
 #include "Network/NET_Publisher_ABC.h"
-#include "simulation_terrain/TER_PathComputer.h"
 #include "simulation_terrain/TER_PathSection.h"
 #include "simulation_terrain/TER_Pathfinder.h"
 #include "simulation_terrain/TER_World.h"
@@ -157,13 +156,12 @@ void PathfindComputer::Compute( unsigned int callerId,
     const sword::PathfindRequest& message, unsigned int ctx, unsigned int clientId,
     const boost::optional< uint32_t >& magic )
 {
-    const auto computer = boost::make_shared< TER_PathComputer >( callerId );
     sword::Pathfind pathfind;
     *pathfind.mutable_request() = message;
-    const auto future = manager_.StartCompute( sections, computer, pathfind );
+    const auto future = manager_.StartCompute( callerId, sections, pathfind );
     const uint32_t id = ++ids_;
     results_[ id ] = boost::make_shared< PathRequest >(
-            computer, future, ctx, clientId, id, message, magic );
+            future, ctx, clientId, id, message, magic );
 }
 
 // -----------------------------------------------------------------------------

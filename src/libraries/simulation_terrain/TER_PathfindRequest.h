@@ -15,7 +15,6 @@
 #include <boost/shared_ptr.hpp>
 
 class TER_PathFuture;
-class TER_PathComputer_ABC;
 class TER_PathSection;
 
 // TER_PathfindRequest insulates TER_Path_ABC cleanup logic from
@@ -29,8 +28,8 @@ public:
     //! @name Constructors/Destructor
     //@{
              TER_PathfindRequest(
+                std::size_t callerId,
                 const std::vector< boost::shared_ptr< TER_PathSection > > sections,
-                const boost::shared_ptr< TER_PathComputer_ABC >& computer,
                 const sword::Pathfind& pathfind,
                 const boost::shared_ptr< TER_PathFuture >& future );
     virtual ~TER_PathfindRequest();
@@ -39,9 +38,7 @@ public:
     bool IgnoreDynamicObjects() const;
     bool IsItinerary() const;
 
-    // Returns the path computer or 0 if it was destroyed before the request
-    // could be processed.
-    boost::shared_ptr< TER_PathComputer_ABC > GetComputer();
+    std::size_t GetCallerId() const;
     const sword::Pathfind& GetPathfind() const;
     boost::shared_ptr< TER_PathFuture > GetFuture();
     const std::vector< boost::shared_ptr< TER_PathSection > >& GetSections();
@@ -50,8 +47,8 @@ public:
 private:
     //! @name Member data
     //@{
+    const size_t callerId_;
     const std::vector< boost::shared_ptr< TER_PathSection > > sections_;
-    boost::shared_ptr< TER_PathComputer_ABC > computer_;
     const sword::Pathfind pathfind_;
     boost::shared_ptr< TER_PathFuture > future_;
     //@}

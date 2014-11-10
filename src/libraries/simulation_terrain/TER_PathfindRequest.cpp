@@ -12,12 +12,12 @@
 #include "TER_PathSection.h"
 
 TER_PathfindRequest::TER_PathfindRequest(
+        std::size_t callerId,
         const std::vector< boost::shared_ptr< TER_PathSection > > sections,
-        const boost::shared_ptr< TER_PathComputer_ABC >& computer,
         const sword::Pathfind& pathfind,
         const boost::shared_ptr< TER_PathFuture >& future )
-    : sections_( sections )
-    , computer_( computer )
+    : callerId_( callerId )
+    , sections_( sections )
     , pathfind_( pathfind )
     , future_( future )
 {
@@ -32,11 +32,6 @@ TER_PathfindRequest::~TER_PathfindRequest()
 bool TER_PathfindRequest::IgnoreDynamicObjects() const
 {
     return pathfind_.request().ignore_dynamic_objects();
-}
-
-boost::shared_ptr< TER_PathComputer_ABC > TER_PathfindRequest::GetComputer()
-{
-    return computer_;
 }
 
 const sword::Pathfind& TER_PathfindRequest::GetPathfind() const
@@ -65,4 +60,9 @@ double TER_PathfindRequest::GetLength() const
    for( auto it = sections_.begin(); it != sections_.end(); ++it )
       length += (*it)->GetPosStart().Distance( (*it)->GetPosEnd() );
    return length;
+}
+
+std::size_t TER_PathfindRequest::GetCallerId() const
+{
+    return callerId_;
 }

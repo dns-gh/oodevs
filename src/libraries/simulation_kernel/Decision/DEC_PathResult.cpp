@@ -20,7 +20,7 @@
 #include "meteo/PHY_MeteoDataManager.h"
 #include "meteo/RawVisionData/Elevation.h"
 #include "meteo/RawVisionData/PHY_RawVisionData.h"
-#include "simulation_terrain/TER_PathComputer.h"
+#include "simulation_terrain/TER_PathComputer_ABC.h"
 #include "simulation_terrain/TER_PathPoint.h"
 #include "simulation_terrain/TER_Pathfinder.h"
 #include "simulation_terrain/TER_Pathfinder_ABC.h"
@@ -32,7 +32,7 @@ std::list< boost::shared_ptr< TER_PathPoint > > SplitEdgesOnElevationGrid(
 {
     if( points.size() < 2 || !MIL_AgentServer::IsInitialized() )
         return points;
-    TER_PathComputer::T_PathPoints output;
+    std::list< boost::shared_ptr< TER_PathPoint > > output;
     const auto& elevation = MIL_AgentServer::GetWorkspace()
         .GetMeteoDataManager().GetRawVisionData();
 
@@ -362,9 +362,8 @@ const DEC_PathType& DEC_PathResult::GetPathType() const
 
 void DEC_PathResult::StartCompute( const sword::Pathfind& pathfind )
 {
-    const auto computer = boost::make_shared< TER_PathComputer >( callerId_ );
     auto& pathfinder = MIL_AgentServer::GetWorkspace().GetPathFindManager();
-    future_ = pathfinder.StartCompute( sections_, computer, pathfind );
+    future_ = pathfinder.StartCompute( callerId_, sections_, pathfind );
 }
 
 void DEC_PathResult::Cancel()
