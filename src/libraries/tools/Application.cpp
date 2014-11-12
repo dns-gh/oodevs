@@ -35,6 +35,7 @@ using namespace tools;
 Application::Application( int icon1, int icon2 )
     : arguments_( new WinArguments( GetCommandLineW() ) )
     , quit_( new tools::WaitEvent() )
+    , result_( EXIT_SUCCESS )
     , hWnd_( 0 )
     , hInstance_( GetModuleHandle( 0 ) )
     , icon1_( icon1 )
@@ -190,6 +191,7 @@ int Application::Execute()
     ipc::Watch watch( *quit_ );
     while( !quit_->IsSignaled() && Update() )
         ;
+    quit_->Signal();
     StopIconAnimation();
     return result_;
 }
