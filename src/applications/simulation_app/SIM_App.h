@@ -31,6 +31,8 @@ private:
     virtual void Initialize();
     virtual bool Update();
 
+    void RunDispatcher();
+
 private:
     const int maxConnections_;
     std::unique_ptr< MIL_Config > config_;

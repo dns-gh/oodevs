@@ -43,29 +43,25 @@ SIM_App::~SIM_App()
     MT_LOG_UNREGISTER_LOGGER( *logger_ );
 }
 
-namespace
+void SIM_App::RunDispatcher()
 {
-    void RunDispatcher( const tools::WinArguments* winArguments, int maxConnections,
-        tools::WaitEvent* quit, int& result )
+    try
     {
-        try
+        dispatcher::DispatcherLoader loader( arguments_->Argc(),
+            const_cast< char** >( arguments_->Argv() ), maxConnections_ );
+        while( !quit_->IsSignaled() )
         {
-            dispatcher::DispatcherLoader loader( winArguments->Argc(),
-                const_cast< char** >( winArguments->Argv() ), maxConnections );
-            while( !quit->IsSignaled() )
-            {
-                if( !loader.Update() )
-                    throw MASA_EXCEPTION( "An error occured in dispatcher, see dispatcher.log for more information" );
-                quit->Wait( boost::posix_time::milliseconds( 25 ) );
-            }
+            if( !loader.Update() )
+                throw MASA_EXCEPTION( "An error occured in dispatcher, see dispatcher.log for more information" );
+            quit_->Wait( boost::posix_time::milliseconds( 25 ) );
         }
-        catch( const std::exception& e )
-        {
-            MT_LOG_FATAL_ERROR_MSG( "dispatcher: " << tools::GetStackTraceAndMessage( e ) );
-            result = EXIT_FAILURE;
-        }
-        quit->Signal();
     }
+    catch( const std::exception& e )
+    {
+        MT_LOG_FATAL_ERROR_MSG( "dispatcher: " << tools::GetStackTraceAndMessage( e ) );
+        result_ = EXIT_FAILURE;
+    }
+    quit_->Signal();
 }
 
 void SIM_App::Initialize()
@@ -75,11 +71,7 @@ void SIM_App::Initialize()
     if( config_->IsDispatcherEmbedded() )
     {
         MT_LOG_INFO_MSG( "Starting embedded dispatcher" );
-        dispatcher_.reset( new boost::thread(
-            [&]()
-            {
-                RunDispatcher( arguments_.get(), maxConnections_, quit_.get(), result_ );
-            } ) );
+        dispatcher_.reset( new boost::thread( [&]() { RunDispatcher(); } ) );
     }
     MIL_Random::Initialize(
         config_->GetRandomSeed(), config_->GetRandomGaussian(),
