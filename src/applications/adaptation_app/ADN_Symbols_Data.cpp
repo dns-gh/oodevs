@@ -361,7 +361,10 @@ void ADN_Symbols_Data::CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) 
         const auto& unitsInfos = ADN_Workspace::GetWorkspace().GetUnits().GetData().GetUnitsInfos();
         for( auto it = unitsInfos.begin(); it != unitsInfos.end(); ++it )
         {
-            const std::string& unitSymbol = ( *it )->ptrNatureSymbol_.GetData()->GetSymbol();
+            const SymbolsUnit* symbolUnit = ( *it )->ptrNatureSymbol_.GetData();
+            if( !symbolUnit )
+                continue;
+            const std::string& unitSymbol = symbolUnit->GetSymbol();
             const std::string symbol = unitSymbol.substr( 8, unitSymbol.size() - 8 );
             if( std::find( missingSymbols.begin(), missingSymbols.end(), symbol ) != missingSymbols.end() )
                 checker.AddError( eMissingSymbolForUnit, ( *it )->strName_.GetData(), eUnits, -1, symbol );
