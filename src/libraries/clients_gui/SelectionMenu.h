@@ -23,9 +23,7 @@ namespace gui
 {
     class ColorStrategy;
     class DrawingTypes;
-    class GlProxy;
-    class GlWidget;
-    class Gl3dWidget;
+    class GLMainProxy;
     class EntitySymbols;
 
 // =============================================================================
@@ -45,7 +43,7 @@ public:
                             EntitySymbols& entitySymbols,
                             ColorStrategy& colorStrategy,
                             DrawingTypes& drawingTypes,
-                            GlProxy& proxy );
+                            GLMainProxy& proxy );
     virtual ~SelectionMenu();
     //@}
 
@@ -84,7 +82,7 @@ private:
     EntitySymbols& entitySymbols_;
     ColorStrategy& colorStrategy_;
     DrawingTypes& drawingTypes_;
-    GlProxy& proxy_;
+    GLMainProxy& mainProxy_;
     geometry::Point2f point_;
     Layer_ABC::T_LayerElements extractedElements_;
     std::map< unsigned int, QPixmap > icons_;

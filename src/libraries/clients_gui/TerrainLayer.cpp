@@ -11,11 +11,12 @@
 #include "TerrainLayer.h"
 
 #include "GLOptions.h"
+#include "GLStackedWidget.h"
 #include "GLView_ABC.h"
+#include "GLWidgetManager.h"
 #include "TerrainSettings.h"
 #include "TerrainPicker.h"
 
-#include "clients_kernel/Controller.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/ModelLoaded.h"
 #include "clients_kernel/OptionVariant.h"
@@ -37,9 +38,11 @@ using namespace gui;
 // Created: AGE 2006-03-15
 // -----------------------------------------------------------------------------
 TerrainLayer::TerrainLayer( Controllers& controllers,
+                            const GLWidgetManager& glWidgetManager,
                             GLView_ABC& tools,
                             TerrainPicker& picker )
     : Layer2D( controllers, tools, eLayerTypes_Terrain )
+    , glWidgetManager_( glWidgetManager )
     , picker_( picker )
     , pickingEnabled_( true )
 {
@@ -63,6 +66,7 @@ TerrainLayer::~TerrainLayer()
 // -----------------------------------------------------------------------------
 void TerrainLayer::NotifyUpdated( const ModelLoaded& modelLoaded )
 {
+    Reset();
     graphicsDirectory_ = modelLoaded.config_.GetGraphicsDirectory();
     width_ = modelLoaded.config_.GetTerrainWidth();
     height_ = modelLoaded.config_.GetTerrainHeight();
@@ -84,6 +88,7 @@ void TerrainLayer::SetAlpha( float alpha )
 // -----------------------------------------------------------------------------
 void TerrainLayer::Paint( const geometry::Rectangle2f& viewport )
 {
+    const auto& options = view_.GetCurrentOptions();
     settings_ = options.GetTerrainSettings();
     if( !ShouldDrawPass() || !settings_ )
         return;
@@ -264,8 +269,10 @@ bool TerrainLayer::HandleMouseMove( QMouseEvent* mouse, const geometry::Point2f&
 // -----------------------------------------------------------------------------
 TerrainData TerrainLayer::Pick( int x, int y )
 {
-    if( !pickingEnabled_ )
+    auto currentWidget = glWidgetManager_.GetHoveredWidget()->GetCurrentWidget();
+    if( !pickingEnabled_ || !currentWidget )
         return TerrainData();
+    currentWidget->makeCurrent();
     if( layer_ )
         return layer_->PickTerrain( x, y );
     else if( noVBOlayer_ )

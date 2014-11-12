@@ -18,11 +18,10 @@
 #include "DrawingTypes.h"
 #include "EntitySymbols.h"
 #include "ImageWrapper.h"
-#include "Gl3dWidget.h"
 #include "GLOptions.h"
-#include "GlProxy.h"
+#include "GLMainProxy.h"
 #include "GLStackedWidget.h"
-#include "GlWidget.h"
+#include "GL2DWidget.h"
 #include "StandardIconProxyStyle.h"
 
 #include "clients_kernel/App6Symbol.h"
@@ -65,12 +64,12 @@ SelectionMenu::SelectionMenu( Controllers& controllers,
                               EntitySymbols& entitySymbols,
                               ColorStrategy& colorStrategy,
                               DrawingTypes& drawingTypes,
-                              GlProxy& proxy )
+                              GLMainProxy& mainProxy )
     : controllers_( controllers )
     , entitySymbols_( entitySymbols )
     , colorStrategy_( colorStrategy )
     , drawingTypes_( drawingTypes )
-    , proxy_( proxy )
+    , mainProxy_( mainProxy )
     , moreElements_( 0u )
     , current_( 0 )
 {
@@ -259,10 +258,10 @@ namespace
     class RichMenu : public kernel::ContextMenu
     {
     public:
-        explicit RichMenu( const std::shared_ptr< GlWidget >& parentWidget )
-            : kernel::ContextMenu( parentWidget.get() )
+        explicit RichMenu( GLView_ABC& view )
+            : kernel::ContextMenu( 0 )
             , button_( Qt::NoButton )
-            , parentWidget_( parentWidget )
+            , view_( view )
         {
         }
         virtual ~RichMenu() {}
@@ -277,14 +276,11 @@ namespace
         }
         virtual void wheelEvent( QWheelEvent* event )
         {
-            if( parent_ )
-                parent_->wheelEvent( event );
-            else
-                event->ignore();
+            view_.WheelEvent( event );
         }
 
     private:
-        std::shared_ptr< GlWidget > parentWidget_;
+        GLView_ABC& view_;
         Qt::MouseButton button_;
     };
 
@@ -308,9 +304,7 @@ namespace
 void SelectionMenu::GenerateMenu()
 {
     GenerateIcons();
-    RichMenu menu( proxy_.GetOptions().Get( "3D" ).To< bool >()
-                   ? std::shared_ptr< GlWidget >()
-                   : proxy_.GetOverflewWidget()->GetWidget2d() );
+    RichMenu menu( mainProxy_.GetHoveredView() );
     connect( &menu, SIGNAL( hovered( QAction* ) ), this, SLOT( OnSelectionChanged( QAction* ) ) );
 
     menu.setStyle( new StandardIconProxyStyle() );

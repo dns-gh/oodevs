@@ -23,6 +23,7 @@ namespace gui
 {
     class ColorStrategy;
     class DrawingTypes;
+    class GLMainProxy;
     class GLView_ABC;
     class SelectionMenu;
     class Selection;
@@ -42,20 +43,23 @@ class CircularEventStrategy : public QObject
 public:
     //! @name Constructors/Destructor
     //@{
-             CircularEventStrategy( kernel::Controllers& controllers );
+    explicit CircularEventStrategy( kernel::Controllers& controllers );
     virtual ~CircularEventStrategy();
     //@}
 
-    //! @name Settings
+    //! @name Operations
     //@{
+    void Initialize( kernel::Controllers& controllers,
+                     EntitySymbols& entitySymbols,
+                     ColorStrategy& colorStrategy,
+                     DrawingTypes& drawingTypes,
+                     const std::shared_ptr< GLMainProxy >& proxy,
+                     const T_Layer& defaultLayer,
+                     const T_LayersVector& layers );
     void SetExclusive( bool );
-    void SetSelectionMenu( const std::shared_ptr< SelectionMenu >& menu );
-    void SetView( const std::shared_ptr< GLView_ABC >& menu );
-    void SetDefaultLayer( const T_Layer& layer );
-    void SetLayers( const T_LayersVector& layers );
     //@}
 
-    //! @name Operations
+    //! @name EventStrategy_ABC
     //@{
     virtual void HandleKeyPress        ( QKeyEvent* key );
     virtual void HandleKeyRelease      ( QKeyEvent* key );
@@ -73,9 +77,6 @@ public:
 private:
     //! @name Helpers
     //@{
-    template< typename It, typename Functor >
-    bool Loop( It& use, It first, It begin, It end, Functor functor );
-
     template< typename Functor >
     bool Apply( Functor functor );
 
@@ -95,11 +96,12 @@ private slots:
 private:
     //! @name Member data
     //@{
+    kernel::Controllers& controllers_;
     std::unique_ptr< Selection > selection_;
     std::unique_ptr< QTimer > timer_;
     T_LayersVector layers_;
     T_Layer default_;
-    std::shared_ptr< SelectionMenu > menu_;
+    std::unique_ptr< SelectionMenu > menu_;
     std::shared_ptr< GLView_ABC > view_;
     bool exclusive_;
     bool tooltiped_;

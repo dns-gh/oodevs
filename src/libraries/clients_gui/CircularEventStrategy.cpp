@@ -10,6 +10,7 @@
 #include "clients_gui_pch.h"
 #include "CircularEventStrategy.h"
 #include "moc_CircularEventStrategy.cpp"
+#include "GLMainProxy.h"
 #include "GLView_ABC.h"
 #include "SelectionMenu.h"
 #include "Selection.h"
@@ -25,12 +26,14 @@ using namespace gui;
 // -----------------------------------------------------------------------------
 CircularEventStrategy::CircularEventStrategy( kernel::Controllers& controllers )
     : QObject()
+    , controllers_( controllers )
     , selection_( new Selection( controllers ) )
     , default_( 0 )
     , exclusive_( true )
     , timer_( new QTimer( this ) )
     , tooltiped_( false )
 {
+    timer_->setSingleShot( true );
     connect( timer_.get(), SIGNAL( timeout() ), SLOT( OnDisplayToolTip() ) );
 }
 
@@ -53,38 +56,20 @@ void CircularEventStrategy::SetExclusive( bool b )
 }
 
 // -----------------------------------------------------------------------------
-// Name: CircularEventStrategy::SetDefaultLayer
-// Created: AGE 2006-08-21
-// -----------------------------------------------------------------------------
-void CircularEventStrategy::SetDefaultLayer( const T_Layer& layer )
-{
-    default_ = layer;
-}
-
-// -----------------------------------------------------------------------------
 // Name: CircularEventStrategy::SetSelectionMenu
 // Created: ABR 2013-02-21
 // -----------------------------------------------------------------------------
-void CircularEventStrategy::SetSelectionMenu( const std::shared_ptr< SelectionMenu >& menu )
+void CircularEventStrategy::Initialize( kernel::Controllers& controllers,
+                                        EntitySymbols& entitySymbols,
+                                        ColorStrategy& colorStrategy,
+                                        DrawingTypes& drawingTypes,
+                                        const std::shared_ptr< GLMainProxy >& proxy,
+                                        const T_Layer& defaultLayer,
+                                        const T_LayersVector& layers )
 {
-    menu_ = menu;
-}
-
-// -----------------------------------------------------------------------------
-// Name: CircularEventStrategy::SetView
-// Created: ABR 2013-02-21
-// -----------------------------------------------------------------------------
-void CircularEventStrategy::SetView( const std::shared_ptr< GLView_ABC >& view )
-{
-    view_ = view;
-}
-
-// -----------------------------------------------------------------------------
-// Name: CircularEventStrategy::SetLayers
-// Created: AGE 2006-08-21
-// -----------------------------------------------------------------------------
-void CircularEventStrategy::SetLayers( const T_LayersVector& layers )
-{
+    menu_.reset( new SelectionMenu( controllers, entitySymbols, colorStrategy, drawingTypes, *proxy ) );
+    view_ = proxy;
+    default_ = defaultLayer;
     layers_ = layers;
 }
 
@@ -192,7 +177,7 @@ void CircularEventStrategy::HandleMousePress( QMouseEvent* mouse, const geometry
     if( !mouse || ( mouse->buttons() & mouse->button() ) == 0 ) // mouse release
         return;
 
-    // Extract elements with opengl picking
+    // Extract elements with openGl picking
     Layer_ABC::T_LayerElements extractedElements;
     RetrieveEntities( mouse, point, extractedElements );
 
@@ -300,7 +285,7 @@ void CircularEventStrategy::HandleMouseMove( QMouseEvent* mouse, const geometry:
     if( tooltiped_ )
         HideTooltip();
     timer_->start( 500 );
-    if( ! Apply( MouseFunctor( mouse, point, &Layer_ABC::HandleMouseMove ) ) && default_ )
+    if( !Apply( MouseFunctor( mouse, point, &Layer_ABC::HandleMouseMove ) ) && default_ )
         default_->HandleMouseMove( mouse, point );
 }
 
@@ -372,25 +357,26 @@ void CircularEventStrategy::HandleLeaveDragEvent( QDragLeaveEvent* event )
 // -----------------------------------------------------------------------------
 void CircularEventStrategy::OnDisplayToolTip()
 {
-    if( QApplication::activeWindow() && !QApplication::activePopupWidget() && view_ )
+    if( !QApplication::activeWindow() ||
+        QApplication::activePopupWidget() ||
+        !view_ ||
+        tooltiped_ ||
+        controllers_.GetCurrentMode() <= eModes_Default )
     {
-        if( !tooltiped_ && view_->HasFocus() )
-        {
-            GLView_ABC::T_ObjectsPicking selection;
-            geometry::Point2f point = view_->MapToterrainCoordinates( QCursor::pos().x(), QCursor::pos().y() );
-            view_->FillSelection( point, selection, boost::none );
-            if( !selection.empty() )
-                for( auto it = layers_.begin(); it != layers_.end(); ++it )
-                     if( ( *it )->ShowTooltip( selection.back() ) )
-                     {
-                         tooltiped_ = true;
-                         timer_->start( 10000 );
-                         return;
-                     }
-        }
-        else
-            HideTooltip();
+        HideTooltip();
+        return;
     }
+    GLView_ABC::T_ObjectsPicking selection;
+    geometry::Point2f point = view_->MapToterrainCoordinates( QCursor::pos().x(), QCursor::pos().y() );
+    view_->FillSelection( point, selection, boost::none );
+    if( !selection.empty() )
+        for( auto it = layers_.begin(); it != layers_.end(); ++it )
+            if( ( *it )->ShowTooltip( selection.back() ) )
+            {
+                tooltiped_ = true;
+                timer_->start( 10000 );
+                return;
+            }
 }
 
 // -----------------------------------------------------------------------------
