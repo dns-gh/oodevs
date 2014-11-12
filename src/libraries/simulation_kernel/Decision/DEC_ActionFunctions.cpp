@@ -53,23 +53,20 @@ unsigned int DEC_ActionFunctions::StopAction( MIL_Entity_ABC& caller, unsigned i
 
 void DEC_ActionFunctions::SuspendAction( const DEC_Decision_ABC* caller, unsigned int actionId )
 {
-    boost::shared_ptr< PHY_Action_ABC > pAction = caller->GetEntity().GetAction( actionId );
-    if( pAction.get() )
-        pAction->Suspend();
+    if( auto action = caller->GetEntity().GetAction( actionId ) )
+        action->Suspend();
 }
 
 void DEC_ActionFunctions::ResumeAction( const DEC_Decision_ABC* caller, unsigned int actionId )
 {
-    boost::shared_ptr< PHY_Action_ABC > pAction = caller->GetEntity().GetAction( actionId );
-    if( pAction.get() )
-        pAction->Resume();
+     if( auto action = caller->GetEntity().GetAction( actionId ) )
+        action->Resume();
 }
 
 unsigned int DEC_ActionFunctions::GetActionState( const DEC_Decision_ABC* caller, unsigned int actionId )
 {
-    boost::shared_ptr< PHY_Action_ABC > pAction = caller->GetEntity().GetAction( actionId );
-    if( pAction.get() )
-        return pAction->GetState();
+    if( auto action = caller->GetEntity().GetAction( actionId ) )
+        return action->GetState();
     return PHY_Action_ABC::eError;
 }
 

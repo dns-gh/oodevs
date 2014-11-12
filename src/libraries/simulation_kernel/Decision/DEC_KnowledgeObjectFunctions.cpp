@@ -100,11 +100,11 @@ int DEC_KnowledgeObjectFunctions::QueueUnitForDecontamination( DEC_Decision_ABC*
 {
     if( agent )
     {
-        switch( agent->GetEntity().GetKind() )
+        switch( agent->GetKind() )
         {
-            case MIL_Entity_ABC::ePion:
+            case DEC_Decision_ABC::ePion:
                 return QueueForDecontamination( agent->GetPion(), pKnowledge );
-            case MIL_Entity_ABC::ePopulation:
+            case DEC_Decision_ABC::ePopulation:
                 return QueueForDecontamination( agent->GetPopulation(), pKnowledge );
             default:
                 throw MASA_EXCEPTION( "DEC_KnowledgeObjectFunctions::QueueUnitForDecontamination(): cannot be called for this agent" );

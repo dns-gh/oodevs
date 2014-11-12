@@ -1472,11 +1472,6 @@ MIL_Automate& MIL_AgentPion::GetAutomate()
     return *pAutomate_;
 }
 
-MIL_Entity_ABC::E_Kind MIL_AgentPion::GetKind() const
-{
-    return ePion;
-}
-
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentPion::GetType
 // Created: NLD 2004-08-31

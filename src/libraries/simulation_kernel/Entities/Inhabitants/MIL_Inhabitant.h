@@ -58,7 +58,6 @@ public:
 
     //! @name Accessors
     //@{
-    virtual E_Kind GetKind() const;
     virtual MIL_Army_ABC& GetArmy() const;
     float GetAffinity( unsigned long teamID ) const;
     virtual bool CanEmitReports() const;

@@ -488,6 +488,11 @@ void DEC_AutomateDecision::NotifyCloseCombatStateChanged( E_CloseCombatState nSt
     }
 }
 
+DEC_Decision_ABC::E_Kind DEC_AutomateDecision::GetKind() const
+{
+    return eAutomate;
+}
+
 // -----------------------------------------------------------------------------
 // Name: DEC_AutomateDecision::GetAutomate
 // Created: NLD 2004-10-26

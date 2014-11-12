@@ -51,7 +51,6 @@ public:
 
     //! @name Accessors
     //@{
-    virtual E_Kind GetKind() const = 0;
     virtual boost::shared_ptr< MIL_KnowledgeGroup > GetKnowledgeGroup() const = 0;
     virtual const MIL_AgentType_ABC& GetType() const = 0;
     virtual bool IsMarkedForDestruction() const = 0;

@@ -383,11 +383,6 @@ void MIL_Inhabitant::OnReceiveMsgChangeHealthState( const sword::UnitMagicAction
     }
 }
 
-MIL_Entity_ABC::E_Kind MIL_Inhabitant::GetKind() const
-{
-    return eInhabitant;
-}
-
 // -----------------------------------------------------------------------------
 // Name: MIL_Inhabitant::GetArmy
 // Created: SLG 2010-11-29

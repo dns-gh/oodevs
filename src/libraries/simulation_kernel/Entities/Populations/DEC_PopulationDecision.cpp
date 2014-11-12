@@ -153,6 +153,11 @@ double DEC_PopulationDecision::GetDominationState() const
     return rDominationState_;
 }
 
+DEC_Decision_ABC::E_Kind DEC_PopulationDecision::GetKind() const
+{
+    return ePopulation;
+}
+
 // -----------------------------------------------------------------------------
 // Name: DEC_PopulationDecision::GetPopulation
 // Created: NLD 2004-10-26

@@ -50,6 +50,17 @@ public:
     //@}
 
 public:
+    //! @name Decision class kinds
+    //@{
+    enum E_Kind
+    {
+        ePion,
+        eAutomate,
+        ePopulation,
+    };
+    //@}
+
+public:
     //! @name Constructors/Destructor
     //@{
              DEC_Decision_ABC();
@@ -69,6 +80,7 @@ public:
     virtual void CallbackKnowledge( unsigned int, boost::shared_ptr< DEC_Knowledge_Object > value ) = 0;
     virtual void CallbackPerception( int id ) = 0;
     virtual const std::string& GetDIAType() const = 0;
+    virtual E_Kind GetKind() const = 0;
     virtual MIL_AgentPion& GetPion() const = 0;
     virtual MIL_Automate& GetAutomate() const = 0;
     virtual MIL_Population& GetPopulation() const = 0;

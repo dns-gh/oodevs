@@ -244,6 +244,11 @@ void DEC_RolePion_Decision::SendChangedState( client::UnitAttributes& msg ) cons
         SendFullState( msg );
 }
 
+DEC_Decision_ABC::E_Kind DEC_RolePion_Decision::GetKind() const
+{
+    return ePion;
+}
+
 // -----------------------------------------------------------------------------
 // Name: DEC_RolePion_Decision::GetAutomate
 // Created: MGD 2010-02-25

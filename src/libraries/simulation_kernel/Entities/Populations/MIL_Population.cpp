@@ -1677,11 +1677,6 @@ const MIL_PopulationAttitude& MIL_Population::GetDefaultAttitude() const
     return *pDefaultAttitude_;
 }
 
-MIL_Entity_ABC::E_Kind MIL_Population::GetKind() const
-{
-    return ePopulation;
-}
-
 // -----------------------------------------------------------------------------
 // Name: MIL_Population::GetType
 // Created: NLD 2005-09-28

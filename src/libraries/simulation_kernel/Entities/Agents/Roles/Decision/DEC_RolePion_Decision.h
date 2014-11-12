@@ -71,6 +71,7 @@ public:
 
     //! @name Accessors
     //@{
+    virtual E_Kind GetKind() const;
     virtual MIL_AgentPion&        GetPion         () const;
     virtual MIL_Automate&         GetAutomate     () const;
     virtual boost::shared_ptr< MIL_KnowledgeGroup > GetKnowledgeGroup() const;
@@ -78,7 +79,7 @@ public:
     const PHY_RoePopulation&      GetRoePopulation() const;
 
     virtual std::string           GetName         () const;
-    virtual MIL_OrderManager_ABC& GetOrderManager() const;
+    virtual MIL_OrderManager_ABC& GetOrderManager () const;
     virtual DEC_AutomateDecision* GetDecAutomate  ();
 
     virtual const std::string& GetDIAType() const;
