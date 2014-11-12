@@ -26,6 +26,7 @@ namespace kernel
 namespace gui
 {
     class TerrainPicker;
+    class GLMainProxy;
 }
 
 // =============================================================================
@@ -50,7 +51,8 @@ public:
                         const kernel::DetectionMap& detection,
                         const kernel::CoordinateConverter_ABC& converter,
                         kernel::Controllers& controllers,
-                        QDockWidget* profilingDock );
+                        QDockWidget* profilingDock,
+                        gui::GLMainProxy& mainProxy );
     virtual ~StatusBar();
     //@}
 

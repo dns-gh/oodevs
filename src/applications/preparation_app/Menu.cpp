@@ -28,7 +28,7 @@
 #include "clients_gui/AboutDialog.h"
 #include "clients_gui/HelpSystem.h"
 #include "clients_gui/ImageWrapper.h"
-#include "clients_gui/GlProxy.h"
+#include "clients_gui/GLWidgetManager.h"
 #include "clients_gui/ObjectNameManager.h"
 #include "clients_gui/OptionMenu.h"
 #include "clients_gui/ProfileDialog.h"
@@ -36,6 +36,7 @@
 #include "clients_gui/resources.h"
 #include "clients_gui/RichAction.h"
 #include "clients_gui/RichMenu.h"
+#include "clients_gui/Tools.h"
 #include "tools/GeneralConfig.h"
 
 int Menu::filtersIndex_ = 7;
@@ -78,13 +79,16 @@ namespace
 // Created: SBO 2006-04-28
 // -----------------------------------------------------------------------------
 Menu::Menu( const QString& objectName,
-            QMainWindow* pParent,
+            QMainWindow& mainWindow,
             kernel::Controllers& controllers,
-            gui::GlProxy& proxy,
+            gui::GLWidgetManager& glWidgetManager,
             const DialogContainer& dialogs,
             const QString& license )
-    : RichWidget< QMenuBar >( objectName, pParent )
+    : RichWidget< QMenuBar >( objectName, &mainWindow )
+    , mainWindow_( mainWindow )
     , controllers_( controllers )
+    , glWidgetManager_( glWidgetManager )
+    , windowMenu_( 0 )
 {
     // File
     gui::SubObjectName subObject( objectName );
@@ -113,7 +117,7 @@ Menu::Menu( const QString& objectName,
         saveAsAction_ = fileMenu_->InsertItem( "3", tools::translate( "Menu", "Save &As" ), parent(), SLOT( SaveAs() ), QKeySequence( Qt::CTRL + Qt::SHIFT + Qt::Key_S ) );
         saveAsAction_->setIcon( MAKE_ICON( saveas ) );
         AddModdedAction( saveAsAction_, eModes_Default, eModes_All ^ eModes_Default );
-        fileMenu_->InsertItem( "4", tools::translate( "Menu", "&Quit" ), pParent, SLOT( close() ), QKeySequence( Qt::CTRL + Qt::Key_Q ) );
+        fileMenu_->InsertItem( "4", tools::translate( "Menu", "&Quit" ), &mainWindow, SLOT( close() ), QKeySequence( Qt::CTRL + Qt::Key_Q ) );
         addMenu( fileMenu_->FillMenu() );
     }
     // Profile
@@ -168,13 +172,13 @@ Menu::Menu( const QString& objectName,
         boolMenu->AddItem( tools::translate( "Menu", "2D" ), false );
         boolMenu->AddItem( tools::translate( "Menu", "3D" ), true );
         menu->insertItem( MAKE_ICON( threed ), tools::translate( "Menu", "Display mode" ), boolMenu );
-        menu->insertItem( tools::translate( "Menu", "Toggle fullscreen mode" ), pParent, SLOT( ToggleFullScreen() ), Qt::Key_F12 );
-        menu->insertItem( tools::translate( "Menu", "Toggle dock windows" ), pParent, SLOT( ToggleDocks() ), Qt::Key_F11 );
+        menu->insertItem( tools::translate( "Menu", "Toggle fullscreen mode" ), &mainWindow, SLOT( ToggleFullScreen() ), Qt::Key_F12 );
+        menu->insertItem( tools::translate( "Menu", "Toggle dock windows" ), &mainWindow, SLOT( ToggleDocks() ), Qt::Key_F11 );
         menu->insertSeparator();
 
         menu->insertSeparator();
-        menu->addAction( tr( "Save configuration" ), &proxy, SLOT( OnSaveDisplaySettings() ) );
-        menu->addAction( tr( "Load configuration" ), &proxy, SLOT( OnLoadDisplaySettings() ) );
+        menu->addAction( tr( "Save configuration" ), &glWidgetManager_, SLOT( OnSaveDisplaySettings() ) );
+        menu->addAction( tr( "Load configuration" ), &glWidgetManager_, SLOT( OnLoadDisplaySettings() ) );
         QAction* action = action = menu->addAction( tools::translate( "Menu", "&Preferences..." ), &dialogs.GetPrefDialog(), SLOT( show() ), QKeySequence( Qt::CTRL + Qt::Key_P ) );
         AddModdedAction( action, eModes_Default, eModes_All ^ eModes_Default );
         addMenu( menu );
@@ -190,26 +194,20 @@ Menu::Menu( const QString& objectName,
         menu->InsertItem( "", tools::translate( "Menu", "Performance..."), &dialogs.GetPerformanceDialog(), SLOT( exec() ) );
         addMenu( menu->FillMenu() );
     }
-    // Windows
-    if( QMenu* menu = pParent->createPopupMenu() )
-    {
-        gui::ObjectNameManager::getInstance()->SetObjectName( this, objectName );
-        if( QAction* action = addMenu( menu ) )
-        {
-            action->setText( tools::translate( "Menu", "&Windows" ) );
-            AddModdedAction( action, eModes_LivingArea | eModes_Default, eModes_Prepare | eModes_Terrain );
-        }
-        gui::ObjectNameManager::getInstance()->RemoveRegisteredName( menu->objectName() );
-    }
     // Help
     {
         gui::RichMenu* menu = new gui::RichMenu( "aide", this, controllers_, tools::translate( "Menu", "&?" ) );
         menu->SetModes( eModes_None, eModes_All, true );
-        menu->InsertItem( "1", tools::translate( "Menu", "Help" ), pParent, SIGNAL( ShowHelp() ) );
+        menu->InsertItem( "1", tools::translate( "Menu", "Help" ), &mainWindow, SIGNAL( ShowHelp() ) );
         gui::AboutDialog* about = new gui::AboutDialog( this, license );
         menu->InsertItem( "2", tools::translate( "Menu", "About" ), about, SLOT( open() ) );
-        addMenu( menu->FillMenu() );
+        helpMenuAction_ = addMenu( menu->FillMenu() );
     }
+
+    // Window menu is generated each time the user clic on the menu bar,
+    // and inserted just before helpMenuAction_
+    mousePressEvent( 0 );
+
     // Filters
     {
         connect( &dialogs.GetFiltersDialog(), SIGNAL( RemoveFilterMenuEntry( const QString ) ), this, SLOT( RemoveFileMenuEntry( const QString ) ) );
@@ -299,4 +297,21 @@ QAction* Menu::GetSaveAction() const
 QAction* Menu::GetSaveAsAction() const
 {
     return saveAsAction_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Menu::mousePressEvent
+// Created: ABR 2014-06-17
+// -----------------------------------------------------------------------------
+void Menu::mousePressEvent( QMouseEvent* event )
+{
+    if( windowMenu_ )
+        delete windowMenu_;
+    //if( controllers_.GetCurrentMode() > eModes_Default )
+    //{
+        windowMenu_ = tools::CreateWindowMenu( controllers_, mainWindow_, glWidgetManager_ );
+        insertMenu( helpMenuAction_, windowMenu_ );
+    //}
+    if( event )
+        QMenuBar::mousePressEvent( event );
 }

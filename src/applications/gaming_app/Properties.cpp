@@ -39,11 +39,16 @@ PropertiesBase::~PropertiesBase()
 // Name: Properties constructor
 // Created: SBO 2006-10-27
 // -----------------------------------------------------------------------------
-Properties::Properties( QWidget* parent, kernel::Controllers& controllers, const gui::GlProxy& glProxy )
+Properties::Properties( QWidget* parent, kernel::Controllers& controllers, const gui::GLView_ABC& glProxy )
     : gui::RichDockWidget( controllers, parent, "properties-panel" )
 {
     setWindowTitle( tools::translate( "Properties", "Properties" ) );
-    setWidget( new gui::PropertiesPanel( this, controllers, *editorFactory_, *propertyDisplayer_, *propertyComparator_, glProxy ) );
+    setWidget( new gui::PropertiesPanel( this,
+                                         controllers,
+                                         *editorFactory_,
+                                         *propertyDisplayer_,
+                                         *propertyComparator_,
+                                         glProxy ) );
 }
 
 // -----------------------------------------------------------------------------

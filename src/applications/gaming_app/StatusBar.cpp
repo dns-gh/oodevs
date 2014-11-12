@@ -42,8 +42,9 @@ StatusBar::StatusBar( QStatusBar* parent,
                       const DetectionMap& detection,
                       const CoordinateConverter_ABC& converter,
                       Controllers& controllers,
-                      QDockWidget* profilingDock )
-    : gui::StatusBar( controllers, parent, picker, detection, converter )
+                      QDockWidget* profilingDock,
+                      gui::GLMainProxy& mainProxy )
+    : gui::StatusBar( controllers, parent, picker, detection, converter, mainProxy )
     , picker_( picker )
     , lastSimulationStatus_( false )
     , controllers_( controllers )

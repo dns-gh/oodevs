@@ -12,12 +12,15 @@
 #include "AutomatDecisions.h"
 #include "ColorButton.h"
 #include "SignalAdapter.h"
+#include "GLView_ABC.h"
+#include "GLDockWidget.h"
+#include "MergingTacticalHierarchies.h"
+#include "RichMenu.h"
 
-#include "clients_gui/GLView_ABC.h"
-#include "clients_gui/MergingTacticalHierarchies.h"
 #include "clients_kernel/App6Symbol.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/CommandPostAttributes_ABC.h"
+#include "clients_kernel/Controllers.h"
 #include "clients_kernel/Diplomacies_ABC.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/OptionsController.h"
@@ -216,4 +219,43 @@ geometry::Vector3f tools::StringToVector3f( const QString& vector )
     if( coords.size() != 3 )
         return geometry::Vector3f();
     return geometry::Vector3f( coords.at( 0 ).toFloat(), coords.at( 1 ).toFloat(), coords.at( 2 ).toFloat() );
+}
+
+QMenu* tools::CreateWindowMenu( kernel::Controllers& controllers, QWidget& parent, QObject& glWidgetManager )
+{
+    QMap< QString, QAction* > glActions;
+    auto glDockwidgets = qFindChildren< gui::GLDockWidget* >( &parent );
+    for( auto it = glDockwidgets.begin(); it != glDockwidgets.end(); ++it )
+    {
+        gui::GLDockWidget* widget = *it;
+        glActions[ widget->windowTitle() ] = widget->ToggleViewAction();
+    }
+    QList< QAction* > actions;
+    auto dockwidgets = qFindChildren< QDockWidget* >( &parent );
+    for( auto it = dockwidgets.begin(); it != dockwidgets.end(); ++it )
+    {
+        QDockWidget* widget = *it;
+        if( !widget->property( "notAppropriate" ).isValid() )
+            actions.push_back( widget->toggleViewAction() );
+    }
+    gui::RichMenu* menu = new gui::RichMenu( "rich_menu", &parent, controllers,
+                                             tools::translate( "Tools", "&Windows" ) );
+    menu->SetModes( eModes_Default, eModes_All, true );
+    menu->NotifyModeChanged( controllers.GetCurrentMode(), true, false );
+    if( controllers.GetCurrentMode() > eModes_Default )
+        menu->addAction( tools::translate( "Tools", "Add new terrain view" ),
+                         &glWidgetManager,
+                         SLOT( AddDockWidget() ),
+                         Qt::Key_F9 );
+    menu->addSeparator();
+    for( auto it = glActions.begin(); it != glActions.end(); ++it )
+        menu->addAction( *it );
+    menu->addSeparator();
+    for( auto it = actions.begin(); it != actions.end(); ++it )
+        menu->addAction( *it );
+    menu->addSeparator();
+    auto toolbars = qFindChildren< QToolBar* >( &parent );
+    for( auto it = toolbars.begin(); it != toolbars.end(); ++it )
+        menu->addAction( ( *it )->toggleViewAction() );
+    return menu;
 }

@@ -22,13 +22,14 @@
 #include "clients_gui/FireOption.h"
 #include "clients_gui/HelpSystem.h"
 #include "clients_gui/ImageWrapper.h"
-#include "clients_gui/GlProxy.h"
+#include "clients_gui/GLWidgetManager.h"
 #include "clients_gui/OptionMenu.h"
 #include "clients_gui/ProfileDialog.h"
 #include "clients_gui/resources.h"
 #include "clients_gui/RichAction.h"
 #include "clients_gui/RichToolBar.h"
 #include "clients_gui/SymbolSizeOptionChooser.h"
+#include "clients_gui/Tools.h"
 #include "gaming/AgentServerMsgMgr.h"
 #include "gaming/Network.h"
 #include "gaming/Profile.h"
@@ -146,33 +147,36 @@ namespace
 // Name: Menu constructor
 // Created: SBO 2006-04-28
 // -----------------------------------------------------------------------------
-Menu::Menu( QMainWindow* pParent,
+Menu::Menu( QMainWindow& mainWindow,
             kernel::Controllers& controllers,
             StaticModel& staticModel,
-            gui::GlProxy& proxy,
+            GLWidgetManager& glWidgetManager,
             QDialog& prefDialog,
             gui::ProfileDialog& profileDialog,
             Network& network,
             kernel::Logger_ABC& logger )
-    : QMenuBar( pParent )
+    : QMenuBar( &mainWindow )
+    , mainWindow_( mainWindow )
     , controllers_( controllers )
     , profileDialog_( profileDialog )
+    , glWidgetManager_( glWidgetManager )
+    , windowMenu_( 0 )
 {
     // File
     gui::RichMenu* menu = new gui::RichMenu( "file", this, controllers_, tr( "&File" ) );
     menu->SetModes( eModes_None, eModes_All, true );
     new ConnectionMenu( menu, controllers, network, logger );
     menu->insertSeparator();
-    menu->insertItem( tr( "&Quit" ), pParent, SLOT( close() ), Qt::CTRL + Qt::Key_Q );
+    menu->insertItem( tr( "&Quit" ), &mainWindow, SLOT( close() ), Qt::CTRL + Qt::Key_Q );
     addMenu( menu );
 
     // Display
     menu = new gui::RichMenu( "Settings", this, controllers_, tr( "&Settings" ) );
     menu->SetModes( eModes_Default, eModes_All ^ eModes_Default, true );
     kernel::ContextMenu* subMenu = new kernel::ContextMenu( menu );
-    gui::RichToolBar* toolBar = new gui::RichToolBar( controllers, pParent, "units toolbar" );
+    gui::RichToolBar* toolBar = new gui::RichToolBar( controllers, &mainWindow, "units toolbar" );
     toolBar->SetModes( eModes_Default, eModes_None, true );
-    pParent->addToolBar( toolBar );
+    mainWindow.addToolBar( toolBar );
     toolBar->setLabel( tr( "Units toolbar" ) );
 
     AddSubMenu4( toolBar, subMenu, tr( "Vision lines" )   , MakePixmap( "vision_lines" )   , controllers.options_, "VisionLines", kernel::FourStateOption::Selected() );
@@ -206,9 +210,9 @@ Menu::Menu( QMainWindow* pParent,
     menu->insertItem( tr( "Units..." ), subMenu );
 
     subMenu = new kernel::ContextMenu( menu );
-    toolBar = new gui::RichToolBar( controllers, pParent, "logistics toolbar" );
+    toolBar = new gui::RichToolBar( controllers, &mainWindow, "logistics toolbar" );
     toolBar->SetModes( eModes_Default, eModes_None, true );
-    pParent->addToolBar( toolBar );
+    mainWindow.addToolBar( toolBar );
     toolBar->setLabel( tr( "Logistics toolbar" ) );
     AddSubMenu4( toolBar, subMenu, tr( "Links" )            , MakePixmap( "logistic_links" )        , controllers.options_, "LogisticLinks" );
     AddSubMenu4( toolBar, subMenu, tr( "Missing links" )    , MakePixmap( "logistic_missing_links" ), controllers.options_, "MissingLogisticLinks" );
@@ -223,9 +227,9 @@ Menu::Menu( QMainWindow* pParent,
     menu->insertItem( tr( "Logistic..." ), subMenu );
 
     subMenu = new kernel::ContextMenu( menu );
-    toolBar = new gui::RichToolBar( controllers, pParent, "terrain toolbar" );
+    toolBar = new gui::RichToolBar( controllers, &mainWindow, "terrain toolbar" );
     toolBar->SetModes( eModes_Default, eModes_None, true );
-    pParent->addToolBar( toolBar );
+    mainWindow.addToolBar( toolBar );
     toolBar->setLabel( tr( "Terrain toolbar" ) );
     AddSubMenu3( toolBar, subMenu, tr( "Small texts" )   , MAKE_ICON( textsmall )    , controllers.options_, "SmallText" );
     AddSubMenu3( toolBar, subMenu, tr( "Large texts" )   , MAKE_ICON( textbig )      , controllers.options_, "BigText" );
@@ -253,7 +257,7 @@ Menu::Menu( QMainWindow* pParent,
         Q3HBox* populationBox = new Q3HBox( toolBar );
         QPushButton* populationEnabled = new QPushButton( tr( "Population" ), populationBox );
         populationEnabled->setToolTip( tr( "Show population display tool" ) );
-        PopulationOptionChooser* populationOptions = new PopulationOptionChooser( pParent, controllers, staticModel );
+        PopulationOptionChooser* populationOptions = new PopulationOptionChooser( &mainWindow, controllers, staticModel );
         toolBar->addWidget( populationBox );
         toolBar->addWidget( populationEnabled );
         connect( populationEnabled, SIGNAL( clicked() ), populationOptions, SLOT( Show() ) );
@@ -261,7 +265,7 @@ Menu::Menu( QMainWindow* pParent,
 
     subMenu->insertSeparator();
     {
-        new SymbolSizeOptionChooser( pParent, toolBar, MakePixmap( "symbol_increase" ), MakePixmap( "symbol_decrease" ), controllers );
+        new SymbolSizeOptionChooser( &mainWindow, toolBar, MakePixmap( "symbol_increase" ), MakePixmap( "symbol_decrease" ), controllers );
     }
 
     menu->insertItem( tr( "Terrain..." ), subMenu );
@@ -272,14 +276,14 @@ Menu::Menu( QMainWindow* pParent,
         boolMenu->AddItem( tr( "2D" ), false );
         boolMenu->AddItem( tr( "3D" ), true );
         menu->insertItem( MAKE_ICON( threed ), tr( "Display mode" ), boolMenu );
-        menu->insertItem( tr( "Toggle fullscreen mode" ), pParent, SLOT( ToggleFullScreen() ), Qt::Key_F12 );
-        menu->insertItem( tr( "Toggle dock windows" ), pParent, SLOT( ToggleDocks() ), Qt::Key_F11 );
+        menu->insertItem( tr( "Toggle fullscreen mode" ), &mainWindow, SLOT( ToggleFullScreen() ), Qt::Key_F12 );
+        menu->insertItem( tr( "Toggle dock windows" ), &mainWindow, SLOT( ToggleDocks() ), Qt::Key_F11 );
     }
 
     menu->insertSeparator();
-    QAction* action = menu->addAction( tr( "Save configuration" ), &proxy, SLOT( OnSaveDisplaySettings() ), Qt::CTRL + Qt::Key_S );
+    QAction* action = menu->addAction( tr( "Save configuration" ), &glWidgetManager_, SLOT( OnSaveDisplaySettings() ), Qt::CTRL + Qt::Key_S );
     AddModdedAction( action, eModes_Default, eModes_All ^ eModes_Default );
-    action = menu->addAction( tr( "Load configuration" ), &proxy, SLOT( OnLoadDisplaySettings() ), Qt::CTRL + Qt::Key_O );
+    action = menu->addAction( tr( "Load configuration" ), &glWidgetManager_, SLOT( OnLoadDisplaySettings() ), Qt::CTRL + Qt::Key_O );
     AddModdedAction( action, eModes_Default, eModes_All ^ eModes_Default );
     menu->insertSeparator();
     action = menu->addAction( tr( "&Preferences..." ), &prefDialog, SLOT( show() ), QKeySequence( Qt::CTRL + Qt::Key_P ) );
@@ -299,24 +303,17 @@ Menu::Menu( QMainWindow* pParent,
     menu->SetModes( eModes_Default, eModes_All ^ eModes_Default, true );
     addMenu( menu );
 
-    // Windows
-    if( QMenu* menu = pParent->createPopupMenu() )
-    {
-        if( QAction* action = addMenu( menu ) )
-        {
-            action->setText( tr( "&Windows" ) );
-            windowAction_ = new gui::RichAction( action, controllers_ );
-            windowAction_->SetModes( eModes_Default, eModes_All ^ eModes_Default, true );
-        }
-    }
-
     // Help
     menu = new gui::RichMenu( "help", this, controllers, tr( "&?" ) );
     menu->SetModes( eModes_None, eModes_All, true );
-    menu->insertItem( tr( "Help" ), pParent, SIGNAL( ShowHelp() ) );
+    menu->insertItem( tr( "Help" ), &mainWindow, SIGNAL( ShowHelp() ) );
     menu->insertSeparator();
     menu->insertItem( tr( "About" ), new AboutDialog( this, "" ), SLOT( exec() ) );
-    addMenu( menu );
+    helpMenuAction_ = addMenu( menu );
+
+    // Window menu is generated each time the user clic on the menu bar,
+    // and inserted just before helpMenuAction_
+    mousePressEvent( 0 );
 
     controllers_.Register( *this );
 }
@@ -329,7 +326,6 @@ Menu::~Menu()
 {
     for( std::vector< gui::RichAction* >::iterator it = moddedActions_.begin(); it != moddedActions_.end(); ++it )
         delete *it;
-    delete windowAction_;
     controllers_.Unregister( *this );
 }
 
@@ -354,4 +350,18 @@ void Menu::NotifyUpdated( const Profile& profile )
 {
     if( controllers_.GetCurrentMode() != eModes_Replay )
         setItemVisible( profileMenu_, profileDialog_.CanBeShown( profile ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Menu::mousePressEvent
+// Created: ABR 2014-06-17
+// -----------------------------------------------------------------------------
+void Menu::mousePressEvent( QMouseEvent* event )
+{
+    if( windowMenu_ )
+        delete windowMenu_;
+    windowMenu_ = tools::CreateWindowMenu( controllers_, mainWindow_, glWidgetManager_ );
+    insertMenu( helpMenuAction_, windowMenu_ );
+    if( event )
+        QMenuBar::mousePressEvent( event );
 }

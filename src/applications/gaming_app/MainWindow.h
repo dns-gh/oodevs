@@ -35,7 +35,8 @@ namespace gui
     class EntitySymbols;
     class ExclusiveEventStrategy;
     class FormationLayer;
-    class GlProxy;
+    class GLMainProxy;
+    class GLWidgetManager;
     class HelpSystem;
     class Layer_ABC;
     class LightingProxy;
@@ -169,7 +170,8 @@ private:
     std::unique_ptr< gui::TextEditor > textEditor_; // should move in parameter layer
     boost::shared_ptr< QProcess > process_; // should move in layers panel
 
-    std::shared_ptr< gui::GlProxy > glProxy_;
+    std::shared_ptr< gui::GLMainProxy > glProxy_;
+    std::unique_ptr< gui::GLWidgetManager > glWidgetManager_;
     std::shared_ptr< gui::SelectionMenu > selectionMenu_;
     std::unique_ptr< gui::CircularEventStrategy > forward_;
     std::unique_ptr< gui::ExclusiveEventStrategy > eventStrategy_;

@@ -87,13 +87,13 @@
 #include "clients_gui/ExclusiveEventStrategy.h"
 #include "clients_gui/FireColorPanel.h"
 #include "clients_gui/GisToolbar.h"
-#include "clients_gui/GlProxy.h"
-#include "clients_gui/GLOptions.h"
+#include "clients_gui/GLMainProxy.h"
+#include "clients_gui/GLStackedWidget.h"
+#include "clients_gui/GLWidgetManager.h"
 #include "clients_gui/GridLayer.h"
 #include "clients_gui/HelpSystem.h"
 #include "clients_gui/HighlightColorModifier.h"
 #include "clients_gui/IconLayout.h"
-#include "clients_gui/IconsRenderPass.h"
 #include "clients_gui/ImageWrapper.h"
 #include "clients_gui/InhabitantLayer.h"
 #include "clients_gui/InhabitantPanel.h"
@@ -164,17 +164,18 @@ MainWindow::MainWindow( Controllers& controllers,
                         const kernel::KnowledgeConverter_ABC& converter,
                         kernel::Workers& workers )
     : QMainWindow()
-    , controllers_       ( controllers )
-    , staticModel_       ( staticModel )
-    , model_             ( model )
-    , network_           ( network )
-    , config_            ( config )
-    , profile_           ( filter )
-    , workers_           ( workers )
-    , pColorController_  ( new ColorController( controllers_ ) )
-    , connected_         ( false )
-    , onPlanif_          ( false )
-    , drawingsBuilder_   ( new DrawingsBuilder( controllers_, profile_ ) )
+    , controllers_( controllers )
+    , staticModel_( staticModel )
+    , model_( model )
+    , network_( network )
+    , config_( config )
+    , profile_( filter )
+    , workers_( workers )
+    , pColorController_( new ColorController( controllers_ ) )
+    , connected_( false )
+    , onPlanif_( false )
+    , drawingsBuilder_( new DrawingsBuilder( controllers_, profile_ ) )
+    , glProxy_( std::make_shared< gui::GLMainProxy >( controllers_, filter, model.teams_ ) )
 {
     controllers_.modes_.SetMainWindow( this );
     controllers_.actions_.AddSelectionner( new Selectionner< actions::Action_ABC >() );
@@ -185,9 +186,15 @@ MainWindow::MainWindow( Controllers& controllers,
     forward_.reset( new gui::CircularEventStrategy( controllers_ ) );
     eventStrategy_.reset( new gui::ExclusiveEventStrategy( *forward_ ) );
 
+    // Color Strategy
+    strategy_.reset( new gui::ColorStrategy( controllers, *glProxy_, *pColorController_ ) );
+    strategy_->Add( std::unique_ptr< gui::ColorModifier_ABC >( new gui::SelectionColorModifier( controllers, *glProxy_, profile_ ) ) );
+    strategy_->Add( std::unique_ptr< gui::ColorModifier_ABC >( new gui::HighlightColorModifier( controllers, profile_ ) ) );
+    glProxy_->SetColorStrategy( *strategy_ ); // $$$$ MCO 2014-10-27: not that great...
+
     // Icons layout
     auto iconLayout = std::make_shared< gui::IconLayout >();
-    iconLayout->AddIcon( xpm_cadenas        , -260, 360 );
+    iconLayout->AddIcon( xpm_cadenas, -260, 360 );
     iconLayout->AddIcon( xpm_radars_on      ,  200, 270 );
     iconLayout->AddIcon( xpm_brouillage     ,  200, 50 );
     iconLayout->AddIcon( xpm_silence_radio_incoming,  100, 50 );
@@ -199,37 +206,27 @@ MainWindow::MainWindow( Controllers& controllers,
     iconLayout->AddIcon( xpm_construction   ,  200, 150 );
     iconLayout->AddIcon( xpm_observe        ,  200, 150 );
 
-    // GLProxy
-    glProxy_.reset( new gui::GlProxy( *this,
-                                      controllers,
-                                      config,
-                                      profile_,
-                                      staticModel,
-                                      model,
-                                      *eventStrategy_,
-                                      staticModel_.drawings_,
-                                      iconLayout,
-                                      std::make_shared< SimulationLighting >(controllers) ) );
-    gui::connect( glProxy_.get(), SIGNAL( OnUpdateGL() ), [&](){
+    // Central Widget
+    glWidgetManager_.reset( new gui::GLWidgetManager( *this,
+                                                      controllers,
+                                                      profile_,
+                                                      config,
+                                                      staticModel,
+                                                      model_,
+                                                      iconLayout,
+                                                      *eventStrategy_,
+                                                      *glProxy_,
+                                                      std::make_shared< SimulationLighting >( controllers ) ) );
+    gui::connect( glWidgetManager_.get(), SIGNAL( UpdateGL() ), [&]() {
         model_.agents_.Resolver< Agent_ABC >::Apply( []( Agent_ABC& agent ) { agent.Get< kernel::Positions >().Compute(); } );
     } );
 
     // Text editor
     textEditor_.reset( new gui::TextEditor( this ) );
 
-    // Strategy
-    strategy_.reset( new gui::ColorStrategy( controllers, *glProxy_, *pColorController_ ) );
-    strategy_->Add( std::unique_ptr< gui::ColorModifier_ABC >( new gui::SelectionColorModifier( controllers, *glProxy_, profile_ ) ) );
-    strategy_->Add( std::unique_ptr< gui::ColorModifier_ABC >( new gui::HighlightColorModifier( controllers, profile_ ) ) );
-    glProxy_->GetOptions().SetColorStrategy( *strategy_ ); // $$$$ MCO 2014-10-27: not that great...
-
     // Symbols
     symbolIcons_.reset( new gui::SymbolIcons() );
     icons_.reset( new gui::EntitySymbols( *symbolIcons_, *strategy_ ) );
-
-    // Selection Menu
-    selectionMenu_ = std::make_shared< gui::SelectionMenu >( controllers, *icons_, *strategy_, staticModel_.drawings_, *glProxy_ );
-    forward_->SetSelectionMenu( selectionMenu_ );
 
     //sound player
     firePlayer_.reset( new FirePlayer( controllers, profile_, simulation ) );
@@ -241,14 +238,14 @@ MainWindow::MainWindow( Controllers& controllers,
 
     lockMapViewController_.reset( new LockMapViewController( controllers, *glProxy_ ) );
     preferenceDialog_.reset( new gui::PreferencesDialog( this, controllers, staticModel, *glProxy_ ) );
-    preferenceDialog_->AddPage( tr( "2D/Population" ), *new gui::InhabitantPanel( preferenceDialog_.get(), controllers.options_ ) );
-    preferenceDialog_->AddPage( tr( "Fire colors/Direct" ), *new gui::FireColorPanel( preferenceDialog_.get(), controllers_, staticModel, gui::FIRE_GROUP_DIRECT ) );
-    preferenceDialog_->AddPage( tr( "Fire colors/Indirect" ), *new gui::FireColorPanel( preferenceDialog_.get(), controllers_, staticModel, gui::FIRE_GROUP_INDIRECT ) );
-    preferenceDialog_->AddPage( tr( "Orbat" ), *new gui::OrbatPanel( preferenceDialog_.get(), controllers.options_ ) );
-    preferenceDialog_->AddPage( tr( "Replay" ), *new gui::ReplayPanel( preferenceDialog_.get(), controllers.options_ ) );
-    preferenceDialog_->AddPage( tr( "Sound" ), *new gui::SoundPanel( preferenceDialog_.get(), controllers.options_, *firePlayer_ ) );
-    preferenceDialog_->AddPage( tr( "Weapon Ranges" ), *new gui::WeaponRangesPanel( preferenceDialog_.get(), controllers.options_, staticModel_ ) );
-    new VisionConesToggler( controllers, simulationController, this );
+    preferenceDialog_->AddPage( tr( "2D/Population" ),        true,  *new gui::InhabitantPanel( preferenceDialog_.get(), controllers.options_ ) );
+    preferenceDialog_->AddPage( tr( "Fire colors/Direct" ),   true,  *new gui::FireColorPanel( preferenceDialog_.get(), controllers_, staticModel, gui::FIRE_GROUP_DIRECT ) );
+    preferenceDialog_->AddPage( tr( "Fire colors/Indirect" ), true,  *new gui::FireColorPanel( preferenceDialog_.get(), controllers_, staticModel, gui::FIRE_GROUP_INDIRECT ) );
+    preferenceDialog_->AddPage( tr( "Orbat" ),                false, *new gui::OrbatPanel( preferenceDialog_.get(), controllers.options_ ) );
+    preferenceDialog_->AddPage( tr( "Replay" ),               false, *new gui::ReplayPanel( preferenceDialog_.get(), controllers.options_ ) );
+    preferenceDialog_->AddPage( tr( "Sound" ),                false, *new gui::SoundPanel( preferenceDialog_.get(), controllers.options_, *firePlayer_ ) );
+    preferenceDialog_->AddPage( tr( "Weapon Ranges" ),        true,  *new gui::WeaponRangesPanel( preferenceDialog_.get(), controllers.options_, staticModel_ ) );
+    new VisionConesToggler( controllers, simulationController, *glProxy_, this );
     new CommandFacade( this, controllers_, config, network.GetCommands(), *interpreter, *glProxy_, filter, staticModel.coordinateConverter_ );
     new ClientCommandFacade( this, controllers_, network_.GetMessageMgr() );
 
@@ -282,7 +279,7 @@ MainWindow::MainWindow( Controllers& controllers,
     AddToolBar( *this, new SIMControlToolbar( this, controllers, simulationController, network, dockContainer_->GetLoggerPanel() ), eModes_None, eModes_Default );
     AddToolBar( *this, new gui::DisplayToolbar( this, controllers ), eModes_Default );
     AddToolBar( *this, new EventToolbar( this, controllers, profile_ ), eModes_Default );
-    AddToolBar( *this, new gui::GisToolbar( this, controllers, staticModel_.detection_, dockContainer_->GetTerrainProfiler() ), eModes_Default );
+    AddToolBar( *this, new gui::GisToolbar( this, controllers, *glProxy_, staticModel_.detection_, dockContainer_->GetTerrainProfiler() ), eModes_Default );
     AddToolBar( *this, new gui::LocationEditorToolbar( this, controllers_, staticModel.coordinateConverter_, *glProxy_, locationsLayer ), eModes_Default );
     addToolBarBreak();
     AddToolBar( *this, new ReplayerToolbar( this, controllers, simulationController, network_.GetMessageMgr() ), eModes_Default | eModes_Gaming, eModes_Replay );
@@ -296,11 +293,11 @@ MainWindow::MainWindow( Controllers& controllers,
     CreateLayers( parameters, locationsLayer, meteoLayer, profilerLayer, simulation, *picker );
 
     // Menu bar & status bar
-    setMenuBar( new Menu( this, controllers, staticModel_, *glProxy_, *preferenceDialog_, *profileDialog, network_, logger ) );
-    StatusBar* pStatus = new StatusBar( statusBar(), *picker, staticModel_.detection_, staticModel_.coordinateConverter_, controllers_, &dockContainer_->GetProfilingPanel() );
+    setMenuBar( new Menu( *this, controllers, staticModel_, *glWidgetManager_, *preferenceDialog_, *profileDialog, network_, logger ) );
+    StatusBar* pStatus = new StatusBar( statusBar(), *picker, staticModel_.detection_, staticModel_.coordinateConverter_, controllers_, &dockContainer_->GetProfilingPanel(), *glProxy_ );
     pStatus->SetModes( eModes_Default, eModes_None, true );
-    connect( glProxy_.get(), SIGNAL( MouseMove( const geometry::Point2f& ) ), pStatus, SLOT( OnMouseMove( const geometry::Point2f& ) ) );
-    connect( glProxy_.get(), SIGNAL( MouseMove( const geometry::Point3f& ) ), pStatus, SLOT( OnMouseMove( const geometry::Point3f& ) ) );
+    connect( glWidgetManager_.get(), SIGNAL( MouseMove( const geometry::Point2f& ) ), pStatus, SLOT( OnMouseMove( const geometry::Point2f& ) ) );
+    connect( glWidgetManager_.get(), SIGNAL( MouseMove( const geometry::Point3f& ) ), pStatus, SLOT( OnMouseMove( const geometry::Point3f& ) ) );
 
     // Initialize
     setIcon( gui::Pixmap( tools::GeneralConfig::BuildResourceChildFile( "images/gui/logo32x32.png" ) ) );
@@ -324,7 +321,7 @@ MainWindow::~MainWindow()
         process_->kill();
     controllers_.Unregister( *this );
     dockContainer_.reset();
-    glProxy_.reset();
+    glWidgetManager_.reset();
 }
 
 // -----------------------------------------------------------------------------
@@ -369,7 +366,7 @@ void MainWindow::CreateLayers( const std::shared_ptr< gui::ParametersLayer >& pa
     layers[ eLayerTypes_Raster ]                 = std::make_shared< gui::RasterLayer >( controllers_, *glProxy_ );
     layers[ eLayerTypes_ResourceNetworks ]       = std::make_shared< gui::ResourceNetworksLayer >( controllers_, *glProxy_, *strategy_, profile_ );
     layers[ eLayerTypes_TacticalLines ]          = std::make_shared< LimitsLayer >( controllers_, *glProxy_, *strategy_, parameters, model_.tacticalLineFactory_, profile_, *drawingsBuilder_ );
-    layers[ eLayerTypes_Terrain ]                = std::make_shared< gui::TerrainLayer >( controllers_, *glProxy_, picker );
+    layers[ eLayerTypes_Terrain ]                = std::make_shared< gui::TerrainLayer >( controllers_, *glWidgetManager_, *glProxy_, picker );
     layers[ eLayerTypes_TerrainProfiler ]        = profiler;
     layers[ eLayerTypes_Tooltips ]               = tooltips;
     layers[ eLayerTypes_Urban ]                  = std::make_shared< gui::UrbanLayer >( controllers_, *glProxy_, *strategy_, profile_ );
@@ -384,15 +381,17 @@ void MainWindow::CreateLayers( const std::shared_ptr< gui::ParametersLayer >& pa
     layers[ eLayerTypes_TacticalLinesComposite ] = std::make_shared< gui::LayerComposite >( controllers_, *glProxy_, layers, eLayerTypes_TacticalLinesComposite );
     layers[ eLayerTypes_UnitsComposite ]         = std::make_shared< gui::LayerComposite >( controllers_, *glProxy_, layers, eLayerTypes_UnitsComposite );
     layers[ eLayerTypes_WeatherComposite ]       = std::make_shared< gui::LayerComposite >( controllers_, *glProxy_, layers, eLayerTypes_WeatherComposite );
-    // init proxy et circular strategy
-    glProxy_->SetLayers( gui::layers::GetDefaultDrawingOrder( layers, eModes_AllGaming ) );
-    forward_->SetLayers( gui::layers::GetEventOrder( layers, eModes_AllGaming ) );
-    forward_->SetDefaultLayer( layers.at( eLayerTypes_Default ) );
-    forward_->SetView( glProxy_ );
-    // init options
-    controllers_.options_.InitializeLayers( gui::layers::GetDefaultConfigurableOrder( layers, eModes_AllGaming ) );
-    // other init
+    // init
+    glProxy_->AddLayers( gui::layers::GetDefaultDrawingOrder( layers, eModes_AllGaming ) );
     glProxy_->SetTooltipsLayer( tooltips );
+    forward_->Initialize( controllers_,
+                          *icons_,
+                          *strategy_,
+                          staticModel_.drawings_,
+                          glProxy_,
+                          layers.at( eLayerTypes_Default ),
+                          gui::layers::GetEventOrder( layers, eModes_AllGaming ) );
+    controllers_.options_.InitializeLayers( gui::layers::GetDefaultConfigurableOrder( layers, eModes_AllGaming ) );
     connect( &dockContainer_->GetItineraryDockWidget(), SIGNAL( ItineraryAccepted() ), layers.at( eLayerTypes_Pathfinds ).get(), SLOT( OnAcceptEdit() ) );
     connect( &dockContainer_->GetItineraryDockWidget(), SIGNAL( ItineraryRejected() ), layers.at( eLayerTypes_Pathfinds ).get(), SLOT( OnRejectEdit() ) );
 }
@@ -415,8 +414,9 @@ void MainWindow::Load()
         dockContainer_->Load();
         controllers_.modes_.LoadOptions( eModes_Gaming );
         unitStateDialog_->Load();
-        glProxy_->Load( config_.GetSessionDir() );
-        symbolIcons_->Initialize( selector_->GetWidget2d() );
+        glWidgetManager_->Load( staticModel_.drawings_,
+                                config_.GetSessionDir() );
+        symbolIcons_->Initialize( glWidgetManager_->GetMainWidget()->GetWidget2d().get() );
     }
     catch( const xml::exception& e )
     {
@@ -431,9 +431,9 @@ void MainWindow::Load()
 // -----------------------------------------------------------------------------
 void MainWindow::Close()
 {
+    glWidgetManager_->Purge();
     controllers_.ChangeMode( eModes_Default );
     network_.Disconnect();
-    glProxy_->Purge();
     unitStateDialog_->Purge();
     dockContainer_->Purge();
     workers_.Terminate();
@@ -636,7 +636,7 @@ void MainWindow::OnAddRaster()
                 [&]( int exitCode, const tools::Path& output, const std::string& error )
                 {
                     if( !exitCode )
-                        glProxy_->SetLayers( gui::T_LayersVector( 1, std::make_shared< gui::RasterLayer >( controllers_, *glProxy_, output, dialog->GetName() ) ) );
+                        glProxy_->AddLayers( gui::T_LayersVector( 1, std::make_shared< gui::RasterLayer >( controllers_, *glProxy_, output, dialog->GetName() ) ) );
                     else
                         QMessageBox::warning( this, tr( "Error loading image file" ),
                             error.empty() ? tr( "Error while loading Raster source." ) : error.c_str() );

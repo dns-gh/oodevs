@@ -20,6 +20,11 @@ namespace kernel
     class OptionVariant;
 }
 
+namespace gui
+{
+    class GLMainProxy;
+}
+
 class SimulationController;
 class Profile;
 class Simulation;
@@ -39,7 +44,10 @@ class VisionConesToggler : public QObject
 public:
     //! @name Constructors/Destructor
     //@{
-             VisionConesToggler( kernel::Controllers& controllers, const SimulationController& simulationController, QObject* parent );
+             VisionConesToggler( kernel::Controllers& controllers,
+                                 const SimulationController& simulationController,
+                                 const gui::GLMainProxy& mainProxy,
+                                 QObject* parent );
     virtual ~VisionConesToggler();
     //@}
 
@@ -61,11 +69,9 @@ private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    bool displayCones_;
-    bool displaySurfaces_;
-    bool displayFog_;
-    bool connected_;
     const SimulationController& simulationController_;
+    const gui::GLMainProxy& mainProxy_;
+    bool connected_;
     //@}
 };
 

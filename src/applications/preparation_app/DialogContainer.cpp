@@ -36,7 +36,7 @@
 #include "UnitStateDialog.h"
 #include "clients_gui/LinkInterpreter.h"
 #include "clients_gui/AddRasterDialog.h"
-#include "clients_gui/GlProxy.h"
+#include "clients_gui/GLMainProxy.h"
 #include "clients_gui/ProfileDialog.h"
 #include "clients_gui/PreferencesDialog.h"
 #include "clients_gui/DisplayExtractor.h"
@@ -66,7 +66,7 @@ DialogContainer::DialogContainer( QWidget* parent,
                                   const tools::ExerciseConfig& config,
                                   gui::SymbolIcons& icons,
                                   const std::shared_ptr< gui::ParametersLayer >& paramLayer,
-                                  gui::GlProxy& proxy )
+                                  gui::GLMainProxy& glMainProxy )
     : QObject( parent )
 {
     displayExtractor_.reset( new gui::DisplayExtractor( parent ) );
@@ -86,11 +86,11 @@ DialogContainer::DialogContainer( QWidget* parent,
     new LogisticStocksDialog( parent, controllers, staticModel );
 
     std::vector< std::string > sounds;
-    prefDialog_ = new gui::PreferencesDialog( parent, controllers, staticModel, proxy );
-    prefDialog_->AddPage( tools::translate( "DialogContainer", "Orbat" ), *new preparation::OrbatPanel( prefDialog_, controllers.options_ ) );
+    prefDialog_ = new gui::PreferencesDialog( parent, controllers, staticModel, glMainProxy );
+    prefDialog_->AddPage( tools::translate( "DialogContainer", "Orbat" ), false, *new preparation::OrbatPanel( prefDialog_, controllers.options_ ) );
     profileDialog_ = new gui::ProfileDialog( parent, controllers, PreparationProfile::GetProfile(), symbols, model, *model.profiles_ );
     profileWizardDialog_ = new ProfileWizardDialog( parent, model );
-    scoreDialog_ = new ScoreDialog( "scoreDialog", parent, controllers, *model.scores_, paramLayer, staticModel, config, proxy );
+    scoreDialog_ = new ScoreDialog( "scoreDialog", parent, controllers, *model.scores_, paramLayer, staticModel, config, glMainProxy );
     successFactorDialog_ = new SuccessFactorDialog( parent, controllers, *model.successFactors_, staticModel.successFactorActionTypes_, *model.scores_ );
     exerciseDialog_ = new ExerciseDialog( parent, controllers, *model.exercise_, config );
     consistencyDialog_ = new ModelConsistencyDialog( parent, model, staticModel, controllers, const_cast< tools::RealFileLoaderObserver_ABC& >( static_cast< const tools::DefaultLoader& >( config.GetLoader() ).GetObserver() ) );

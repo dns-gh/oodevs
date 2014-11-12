@@ -24,7 +24,7 @@
 
 #include "clients_gui/Decisions_ABC.h"
 #include "clients_gui/EntityType.h"
-#include "clients_gui/GlProxy.h"
+#include "clients_gui/GLView_ABC.h"
 #include "clients_gui/LocationCreator.h"
 #include "clients_gui/Tools.h"
 
@@ -74,16 +74,16 @@ UnitMagicOrdersInterface::UnitMagicOrdersInterface( QWidget* parent,
                                                     const kernel::Time_ABC& simulation,
                                                     const std::shared_ptr< ::gui::ParametersLayer >& layer,
                                                     const kernel::Profile_ABC& profile,
-                                                    gui::GlProxy& proxy )
+                                                    gui::GLView_ABC& view )
     : QObject( parent )
-    , controllers_   ( controllers )
-    , actionsModel_  ( actionsModel )
-    , static_        ( staticModel )
-    , simulation_    ( simulation )
-    , profile_       ( profile )
-    , proxy_         ( proxy )
+    , controllers_( controllers )
+    , actionsModel_( actionsModel )
+    , static_( staticModel )
+    , simulation_( simulation )
+    , profile_( profile )
+    , view_( view )
     , selectedEntity_( controllers )
-    , magicMove_     ( false )
+    , magicMove_( false )
 {
     magicMoveLocation_ = new LocationCreator( 0, layer, *this );
     magicMoveLocation_->Allow( false, false, false, false, false );
@@ -363,7 +363,6 @@ void UnitMagicOrdersInterface::Move()
         controllers_.Register( *magicMoveLocation_ );
     magicMove_ = true;
     magicMoveLocation_->StartPoint();
-    proxy_.SetFocus();
 }
 
 // -----------------------------------------------------------------------------
