@@ -582,6 +582,7 @@ class SessionView extends Backbone.View
 
     initialize: (options) ->
         @id = options.id
+        @retry = 0
         @model = new Session {}, id: options.id
         events = new Events {}, id: options.id
         vertical = !convert_to_boolean url_query.horizontal
@@ -663,9 +664,12 @@ class SessionView extends Backbone.View
         @link.onclose = @on_ws_close
 
     on_ws_close: (event) =>
-        @observe()
+        @retry++
+        @retry = 60 if @retry > 60
+        setTimeout @observe, (@retry - 1) * 1000
 
     on_ws_message: (event) =>
+        @retry = 0
         msg = JSON.parse event.data
         switch msg.tag
             when "update_session"
