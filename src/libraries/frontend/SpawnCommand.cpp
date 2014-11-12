@@ -147,18 +147,18 @@ namespace
     {
         const auto pid = process.pid();
         if( !pid )
-            throw MASA_EXCEPTION( tools::translate( "SpawnCommand", "Missing pid from QProcess.\n\n%1" ).arg( GetLastErrorMessage() ).toStdString() );
+            throw MASA_EXCEPTION( tools::translate( "SpawnCommand", "Missing pid from process: %1" ).arg( GetLastErrorMessage() ).toStdString() );
         const auto job = CreateJobObject( NULL, NULL );
         if( !job )
-            throw MASA_EXCEPTION( tools::translate( "SpawnCommand", "Unable to create job object.\n\n%1" ).arg( GetLastErrorMessage() ).toStdString() );
+            throw MASA_EXCEPTION( tools::translate( "SpawnCommand", "Unable to create job object: %1" ).arg( GetLastErrorMessage() ).toStdString() );
         std::shared_ptr< void > result( job, CloseHandle );
         JOBOBJECT_EXTENDED_LIMIT_INFORMATION info;
         memset( &info, 0, sizeof info );
         info.BasicLimitInformation.LimitFlags = JOB_OBJECT_LIMIT_KILL_ON_JOB_CLOSE;
         if( !SetInformationJobObject( job, JobObjectExtendedLimitInformation, &info, sizeof info ) )
-            throw MASA_EXCEPTION( tools::translate( "SpawnCommand", "Unable to set information job object.\n\n%1" ).arg( GetLastErrorMessage() ).toStdString() );
+            throw MASA_EXCEPTION( tools::translate( "SpawnCommand", "Unable to set information job object: %1" ).arg( GetLastErrorMessage() ).toStdString() );
         if( !AssignProcessToJobObject( job, pid->hProcess ) )
-            throw MASA_EXCEPTION( tools::translate( "SpawnCommand", "Unable to assign process to job object.\n\n%1").arg( GetLastErrorMessage() ).toStdString() );
+            throw MASA_EXCEPTION( tools::translate( "SpawnCommand", "Unable to assign process to job object: %1").arg( GetLastErrorMessage() ).toStdString() );
         return result;
     }
 }

@@ -231,31 +231,23 @@
     </message>
     <message>
         <source>Stopped</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
-        <source>Missing pid from QProcess.
-
-%1</source>
-        <translation type="unfinished"></translation>
+        <source>Missing pid from process: %1</source>
+        <translation>Missing pid from process: %1</translation>
     </message>
     <message>
-        <source>Unable to create job object.
-
-%1</source>
-        <translation type="unfinished"></translation>
+        <source>Unable to create job object: %1</source>
+        <translation>Unable to create job object: %1</translation>
     </message>
     <message>
-        <source>Unable to set information job object.
-
-%1</source>
-        <translation type="unfinished"></translation>
+        <source>Unable to set information job object: %1</source>
+        <translation>Unable to set information job object: %1</translation>
     </message>
     <message>
-        <source>Unable to assign process to job object.
-
-%1</source>
-        <translation type="unfinished"></translation>
+        <source>Unable to assign process to job object: %1</source>
+        <translation>Unable to assign process to job object: %1</translation>
     </message>
 </context>
 <context>
