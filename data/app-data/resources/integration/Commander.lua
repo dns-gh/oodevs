@@ -61,8 +61,8 @@ end
 
 --- Returns 'true' if the agent is a company (an automat). It returns 'false' otherwise
 -- @return Boolean, whether or not the agent is a company
-integration.isAutomat = function()
-    integration.getCommander( myself ) == myself
+integration.isAutomat = function( entity )
+    integration.getCommander( entity ) == entity
 end
 
 --- Returns true if the agent is contaminated, false otherwise

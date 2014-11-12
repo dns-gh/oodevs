@@ -1117,7 +1117,7 @@ integration.isPointInUrbanBlockTrafficable = function( location, loaded )
     if not loaded then return 100 end
     local isTrafficable = false
     if not location.isPointInUrbanBlockTrafficableCache then
-        if integration.isAutomat() then 
+        if integration.isAutomat( myself ) then 
             local platoons = DEC_Automate_PionsAvecPC()
             for i = 1, #platoons do
                 if integration.isPointInUrbanBlockTrafficableForPlatoon( platoons[i], location.source ) then
