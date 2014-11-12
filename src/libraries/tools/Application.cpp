@@ -180,7 +180,7 @@ void Application::Initialize( const std::string& module )
     MT_LOG_STARTUP_MESSAGE( "----------------------------------------------------------------" );
     MT_LOG_INFO_MSG( "Command line: " << arguments_->GetCommandLine() );
     MT_LOG_INFO_MSG( "Starting simulation GUI" );
-    gui_.reset( new boost::thread( [&]() { RunGUI( module ); } ) );
+    gui_.reset( new boost::thread( [=]() { RunGUI( module ); } ) );
 }
 
 int Application::Execute()
