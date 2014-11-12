@@ -193,15 +193,12 @@ class VerticalLayout
         x1 = imin @get_replay_x() + 1, x2
         return @render_current x1, offset, x2
 
-    split_attributes: (end) ->
+    split_attributes: (h, end) ->
         offset = snap_to_grid end
-        return x1: offset, x2: offset
+        return y1: 0, y2: h, x1: offset, x2: offset
 
-    lane_split_attributes: -> @split_attributes @get_link_x()
-
-    replay_split_attributes: -> @split_attributes @get_lane_x()
-
-    split_size: (w, h) -> y2: h
+    lane_split_attributes:   (w, h) -> @split_attributes h, @get_link_x()
+    replay_split_attributes: (w, h) -> @split_attributes h, @get_lane_x()
 
     select: (w, h) -> h
 
@@ -481,15 +478,12 @@ class HorizontalLayout
         y2 = imax y1, @top_y @get_replay_y() + @iftop 1, 0
         return @render_current offset, y1, y2
 
-    split_attributes: (end) ->
+    split_attributes: (w, end) ->
         offset = snap_to_grid @top_y end
-        return y1: offset, y2: offset
+        return x1: 0, x2: w, y1: offset, y2: offset
 
-    lane_split_attributes: -> @split_attributes @get_link_y()
-
-    replay_split_attributes: -> @split_attributes @get_lane_y()
-
-    split_size: (w, h) -> x2: w
+    lane_split_attributes:   (w, h) -> @split_attributes w, @get_link_y()
+    replay_split_attributes: (w, h) -> @split_attributes w, @get_lane_y()
 
     select: (w, h) -> w
 
@@ -718,10 +712,6 @@ class Replay
 
     size: -> if @has_replay then 25 else 0
 
-    resize: (w, h) ->
-        @replay_split.attr @layout.split_size w, h
-        @replay_range.attr @layout.split_size w, h
-
     set_replay: (enabled) ->
         @has_replay = enabled
 
@@ -729,10 +719,13 @@ class Replay
         @start = start
         @end = end
 
+    resize: (w, h) ->
+        @w = w
+        @h = h
+
     render: ->
-        split_attributes = @layout.replay_split_attributes()
+        split_attributes = @layout.replay_split_attributes @w, @h
         split_attributes.visibility = @has_replay
-        @replay_split.attr split_attributes
         range_attributes = {}
         if @start? and @end? and @has_replay
             range_attributes = @layout.replay_range_attributes @start, @end
@@ -805,7 +798,6 @@ class Timeline
         @set_width @w
         @svg.attr height: @h
         @scale.range [0, @layout.select @w, @h]
-        @lane_split.attr @layout.split_size @w, @h
         @replay.resize @w, @h
         @rescale()
 
@@ -1289,7 +1281,7 @@ class Timeline
         grid = @svg.select("#grid")
         grid.call @grid
         grid.attr @layout.grid_attributes()
-        @lane_split.attr @layout.lane_split_attributes()
+        @lane_split.attr @layout.lane_split_attributes @w, @h
         zoom = @svg.call @zoom
         zoom.on "dblclick.zoom", null
         @replay.render()
