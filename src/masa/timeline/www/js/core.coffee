@@ -546,7 +546,7 @@ class EventsView extends Backbone.View
         for k, v of url_query
             unless v?.length
                 delete url_query[k]
-        window.location.search = "?" + $.param url_query
+        triggers.trigger "reset_link"
         return
 
 # a backbone model for one session
@@ -597,6 +597,7 @@ class SessionView extends Backbone.View
         @listenTo     @timeline, "current_edit_end",   @on_current_edit_end
         @listenTo     triggers,  "lock_updates",       @on_lock
         @listenTo     triggers,  "unlock_updates",     @on_unlock
+        @listenTo     triggers,  "reset_link",         @on_reset_link
         @model.fetch()
         @observe()
         return
@@ -653,8 +654,13 @@ class SessionView extends Backbone.View
         delete @locked
         @observe()
 
+    on_reset_link: =>
+        @on_lock()
+        @timeline.set_layout !convert_to_boolean url_query.horizontal
+        @on_unlock()
+
     observe: ->
-        return if @locked?
+        return if @locked? || @link?
         @first_update = true
         url = get_ws_url "/socket/#{@id}"
         query = get_filters()
@@ -705,7 +711,10 @@ redirect = ->
        success: (model, data) ->
            if _.isArray(data) && data.length > 0
                url_query.id = data[0].uuid
-               window.location.search = "?" + $.param url_query
+               if gaming
+                   render_page()
+               else
+                   window.location.search = "?" + $.param url_query
                return
            on_error i18n "Unable to find any session"
        error: ->
