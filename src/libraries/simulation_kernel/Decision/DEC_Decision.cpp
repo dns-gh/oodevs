@@ -244,6 +244,44 @@ void RegisterUnitFunctions( sword::Brain& brain )
     brain.RegisterFunction( "_DEC_Agent_EstDansFoule", &DEC_AgentFunctions::IsInCrowd );
 }
 
+void RegisterAutomatonFunctions( sword::Brain& brain )
+{
+    // Accessors
+    brain.RegisterFunction( "_DEC_Automate_PionsSansPC", &DEC_AutomateFunctions::GetPionsWithoutPC );
+    brain.RegisterFunction( "_DEC_Automate_PionPC", &DEC_AutomateFunctions::GetPionPC );
+    brain.RegisterFunction( "_DEC_Automate_AutomatesSubordonnes", &DEC_AutomateFunctions::GetAutomates );
+    brain.RegisterFunction( "_DEC_Automate_PionsMelee", &DEC_AutomateFunctions::GetPionsMelee );
+    brain.RegisterFunction( "_DEC_Automate_PionsGenie", &DEC_AutomateFunctions::GetPionsGenie );
+    brain.RegisterFunction( "_DEC_AutomateSuperieur_EstEmbraye", &DEC_AutomateFunctions::IsParentAutomateEngaged );
+    brain.RegisterFunction( "_DEC_Automate_PionsAvecPCCommunication", &DEC_AutomateFunctions::GetCommunicationPionsWithPC );
+    brain.RegisterFunction( "_DEC_Automate_PionsSansPCCommunication", &DEC_AutomateFunctions::GetCommunicationPionsWithoutPC );
+
+    // State
+    brain.RegisterFunction( "_DEC_Automate_ROE", &DEC_AutomateFunctions::GetRulesOfEngagementState );
+    brain.RegisterFunction( "_DEC_Automate_ChangeEtatROE", &DEC_AutomateFunctions::NotifyRulesOfEngagementStateChanged );
+    brain.RegisterFunction( "_DEC_Automate_ChangeEtatROEPopulation", &DEC_AutomateFunctions::NotifyRulesOfEngagementPopulationStateChanged );
+    brain.RegisterFunction( "_DEC_Automate_ROEPopulation", &DEC_AutomateFunctions::GetRoePopulation );
+    brain.RegisterFunction( "_DEC_Automate_isLogistic", &DEC_AutomateFunctions::IsLogistic );
+
+    // Agent accessors
+    brain.RegisterFunction( "_DEC_Automate_PionEstContamine", &DEC_AutomateFunctions::IsPionContaminated );
+    brain.RegisterFunction( "_DEC_Automate_PionEstEmpoisonne", &DEC_AutomateFunctions::IsPionIntoxicated );
+    brain.RegisterFunction( "_DEC_Automate_PionEstNeutralise", &DEC_AutomateFunctions::IsPionNeutralized );
+    brain.RegisterFunction( "_DEC_Automate_PionEstTransporte", &DEC_AutomateFunctions::IsPionTransported );
+    brain.RegisterFunction( "_DEC_Automate_PionRelevePion",  &DEC_AutomateFunctions::MakePionRelievePion );
+    brain.RegisterFunction( "_DEC_Automate_PionPeutReleverPion",  &DEC_AutomateFunctions::CanPionRelievePion );
+    brain.RegisterFunction( "_DEC_Automate_EstPointDansFuseauPion", &DEC_AutomateFunctions::IsPointInPionFuseau );
+    brain.RegisterFunction( "_DEC_Automate_PionPeutConstruireObjet", &DEC_AutomateFunctions::CanPionConstructObject );
+    brain.RegisterFunction( "_DEC_Automate_PionPeutConstruireObjetAvecLocalisation", &DEC_AutomateFunctions::CanPionConstructObjectWithLocalisation );
+    brain.RegisterFunction( "_DEC_Automate_PionPeutConstruireContournementObjet", &DEC_AutomateFunctions::CanPionBypassObject );
+    brain.RegisterFunction( "_DEC_Automate_PionPeutDetruireObjet", &DEC_AutomateFunctions::CanPionDestroyObject );
+    brain.RegisterFunction( "_DEC_Automate_PionPeutDevaloriserObjet", &DEC_AutomateFunctions::CanPionDemineObject );
+
+    // Logistics
+    brain.RegisterFunction( "_DEC_Automate_PcDeTC2", &DEC_LogisticFunctions::AutomateGetPcTC2 );
+    brain.RegisterFunction( "_DEC_DemandeDeRavitaillement", &DEC_LogisticFunctions::AutomateRequestSupply );
+}
+
 // -----------------------------------------------------------------------------
 // Name: RegisterPopulationFunctions
 // Created: LDC 2011-05-05
@@ -385,6 +423,26 @@ void RegisterAgentKnowledgeFunctions( sword::Brain& brain )
     brain.RegisterFunction( "DEC_Connaissance_GetRawMission", &DEC_KnowledgeAgentFunctions::GetMission );
     brain.RegisterFunction( "DEC_GetAgentIdFromKnowledge", &DEC_KnowledgeAgentFunctions::GetAgentIdFromKnowledge );
     brain.RegisterFunction( "DEC_ObtenirRenseignementCritiqueSurPion", &DEC_KnowledgeAgentFunctions::GetCriticalIntelligence );
+
+    brain.RegisterFunction( "_DEC_KnowledgeAgent_IsPerceptionLevelMax", &DEC_KnowledgeAgentFunctions::IsPerceptionLevelMax );
+}
+
+void RegisterPopulationKnowledgeFunctions( sword::Brain& brain )
+{
+    brain.RegisterFunction( "_DEC_KnowledgePopulation_Domination",  &DEC_KnowledgePopulationFunctions::GetDominationState );
+    brain.RegisterFunction( "_DEC_ConnaissancePopulation_EstDansZone", &DEC_KnowledgePopulationFunctions::IsInZone );
+    brain.RegisterFunction( "_DEC_KnowledgePopulation_GetBarycenter", &DEC_KnowledgePopulationFunctions::GetBarycenter );
+    brain.RegisterFunction( "_DEC_Crowd_GetHumansFromAllTypes", &DEC_KnowledgePopulationFunctions::GetHumansFromAllTypes );   
+}
+
+void RegisterKnowledgeFunctions( sword::Brain& brain )
+{
+    brain.RegisterFunction( "_DEC_Connaissances_PartageConnaissancesAvec", &DEC_KnowledgeFunctions::ShareKnowledgesWith );
+    brain.RegisterFunction( "_DEC_Connaissances_PartageConnaissancesDansZoneAvec", &DEC_KnowledgeFunctions::ShareKnowledgesInZoneWith );
+    brain.RegisterFunction( "_DEC_Knowledges_ObjectsInCircle", &DEC_KnowledgeFunctions::GetObjectsInCircle );
+    brain.RegisterFunction( "_DEC_Connaissances_ObjetsDansFuseau", &DEC_KnowledgeFunctions::GetObjectsInFuseau );
+    brain.RegisterFunction( "_DEC_Connaissances_UnitesEnnemiesVivantesPercuesParPion", &DEC_KnowledgeFunctions::GetLivingEnemiesPerceivedByPion );
+    brain.RegisterFunction( "_DEC_Connaissances_Populations", &DEC_KnowledgeFunctions::GetPopulations );
 }
 
 // -----------------------------------------------------------------------------
@@ -598,12 +656,34 @@ void RegisterGeometryFunctions( sword::Brain& brain)
     brain.RegisterFunction( "DEC_Geometrie_CalculerRetard", &DEC_GeometryFunctions::ComputeAutomatDelayFromSchedule );
     brain.RegisterFunction( "DEC_Geometrie_PionDerriere", &DEC_GeometryFunctions::ComputeBackestAgent );
     brain.RegisterFunction( "DEC_Geometrie_PionDevant", &DEC_GeometryFunctions::GetFrontestPion );
-    brain.RegisterFunction( "DEC_Geometry_Pion_SplitLocalisation", &DEC_GeometryFunctions::SplitPionLocalisationInParts );
     
     brain.RegisterFunction( "DEC_Geometrie_PosDeploiementMistralNasse",
         std::function< std::vector< boost::shared_ptr< MT_Vector2D > >( int, const MT_Vector2D*, float, float, float, const MT_Vector2D* ) >( boost::bind( &DEC_GeometryFunctions::ComputePosDeploiementASANasse, _1, _2, _3, _4, _5, _6 ) ) );
     brain.RegisterFunction( "DEC_Geometrie_PosDeploiementDoubleRideau",
         std::function< std::vector< boost::shared_ptr< MT_Vector2D > >( int, const MT_Vector2D*, float, float, float, const MT_Vector2D* ) >( boost::bind( &DEC_GeometryFunctions::ComputePosDeploiementASADoubleRideau, _1, _2, _3, _4, _5, _6 ) ) );
+
+    brain.RegisterFunction( "_DEC_Geometrie_CalculerBarycentreLocalisationDansFuseau", &DEC_GeometryFunctions::ComputeLocalisationBarycenterInFuseau );
+    brain.RegisterFunction( "_DEC_Geometry_SplitLocalisation", &DEC_GeometryFunctions::SplitLocalisationInParts );
+    brain.RegisterFunction( "_DEC_Geometrie_DecoupeFuseauEnTroncons", &DEC_GeometryFunctions::SplitLocalisationInSections );
+    brain.RegisterFunction( "_DEC_Geometrie_CalculerPositionObstacle", &DEC_GeometryFunctions::ComputeObstaclePosition );
+    brain.RegisterFunction( "_DEC_Geometrie_CalculerPointArrivee", &DEC_GeometryFunctions::ComputeDestPoint );
+    brain.RegisterFunction( "_DEC_Geometrie_CalculerPointDepart", &DEC_GeometryFunctions::ComputeStartPoint );
+    brain.RegisterFunction( "_DEC_Geometrie_EstPointDansFuseau",  &DEC_GeometryFunctions::IsPointInFuseau );
+    brain.RegisterFunction( "_DEC_Geometrie_CalculerPositionParRapportALima", &DEC_GeometryFunctions::ComputePointBeforeLima );
+    brain.RegisterFunction( "_DEC_Geometrie_CalculerPositionParRapportALimaDansFuseau", &DEC_GeometryFunctions::ComputePointBeforeLimaInFuseau );
+    brain.RegisterFunction( "_DEC_Geometrie_CalculerPositionsParRapportALima",  &DEC_GeometryFunctions::ComputePointsBeforeLima );
+    brain.RegisterFunction( "_DEC_Geometrie_StartCalculLignesAvantEtArriere", &DEC_GeometryFunctions::StartComputingFrontAndBackLines );
+    brain.RegisterFunction( "_DEC_Geometrie_StartCalculAutomateLignesAvantEtArriere", &DEC_GeometryFunctions::StartComputingAutomatFrontAndBackLines );
+    brain.RegisterFunction( "DEC_Geometrie_CalculerAutomateDistanceLigneArriere", &DEC_GeometryFunctions::ComputeDistanceAutomatFromBackLine );
+    brain.RegisterFunction( "_DEC_Geometrie_CalculerPointArriveePourPion", &DEC_GeometryFunctions::ComputeDestPointForPion );
+    brain.RegisterFunction( "_DEC_Geometrie_CalculerPointProcheLocalisationDansFuseau", &DEC_GeometryFunctions::ComputeNearestLocalisationPointInFuseau );
+    brain.RegisterFunction( "_DEC_Geometrie_CalculerPointProcheLocalisationNonClippeeDansFuseau", &DEC_GeometryFunctions::ComputeNearestUnclippedLocalisationPointInFuseau );
+    brain.RegisterFunction( "_DEC_Geometrie_CalculerRetardSurObjectifs", &DEC_GeometryFunctions::ComputeDelayFromScheduleAndObjectives );
+    brain.RegisterFunction( "_DEC_Geometrie_AdvanceAlongFuseau", &DEC_GeometryFunctions::ComputeAdvanceAlongFuseau );
+    brain.RegisterFunction( "_DEC_Geometrie_GetPointsLimas", &DEC_GeometryFunctions::GetPointsOnLimasInFuseau );
+
+    // ASA
+    brain.RegisterFunction( "_DEC_Geometrie_PosDeploiementASAOmni", &DEC_GeometryFunctions::ComputePosDeploiementASAOmni );
 }
 
 // -----------------------------------------------------------------------------
@@ -721,14 +801,39 @@ void RegisterListsManipulationFunctions( sword::Brain& brain )
 // -----------------------------------------------------------------------------
 void RegisterLogisticFunctions( sword::Brain& brain )
 {
+    // Maintenance
+    brain.RegisterFunction( "_DEC_Maintenance_ActiverChaine", &DEC_LogisticFunctions::MaintenanceEnableSystem );
+    brain.RegisterFunction( "_DEC_Maintenance_DesactiverChaine", &DEC_LogisticFunctions::MaintenanceDisableSystem );
+    brain.RegisterFunction( "_DEC_Maintenance_ChangerPriorites", &DEC_LogisticFunctions::MaintenanceChangePriorities );
+    brain.RegisterFunction( "_DEC_Maintenance_Priorites", &DEC_LogisticFunctions::GetAutomateMaintenancePriorities );
+    brain.RegisterFunction( "_DEC_Maintenance_ChangerPrioritesTactiques", &DEC_LogisticFunctions::MaintenanceChangeTacticalPriorities );
+    brain.RegisterFunction( "_DEC_Maintenance_PrioritesTactiques", &DEC_LogisticFunctions::GetAutomateMaintenanceTacticalPriorities );
+    brain.RegisterFunction( "_DEC_Maintenance_ChangerRegimeTravail", &DEC_LogisticFunctions::MaintenanceChangeWorkRate );
+    brain.RegisterFunction( "_DEC_Maintenance_RegimeTravail", &DEC_LogisticFunctions::GetAutomateMaintenanceWorkRate );
+
+    // Medical
     brain.RegisterFunction( "DEC_NecessiteEvacuationBlesses", &DEC_LogisticFunctions::HasWoundedHumansToEvacuate );
     brain.RegisterFunction( "DEC_EvacuerBlessesVersTC2", &DEC_LogisticFunctions::EvacuateWoundedHumansToTC2 );
     brain.RegisterFunction( "DEC_InterdireEvacuationAutomatiqueBlesses", &DEC_LogisticFunctions::ForbidWoundedHumansAutoEvacuation );
     brain.RegisterFunction( "DEC_AutoriserEvacuationAutomatiqueBlesses", &DEC_LogisticFunctions::AllowWoundedHumansAutoEvacuation );
-    brain.RegisterFunction( "DEC_EnforceAviationResources", &DEC_LogisticFunctions::EnforceAviationResources );
+    brain.RegisterFunction( "_DEC_Sante_ActiverChaine", &DEC_LogisticFunctions::MedicalEnableSystem );
+    brain.RegisterFunction( "_DEC_Sante_DesactiverChaine", &DEC_LogisticFunctions::MedicalDisableSystem );
+    brain.RegisterFunction( "_DEC_Sante_ActiverFonctionTri", &DEC_LogisticFunctions::MedicalEnableSortingFunction );
+    brain.RegisterFunction( "_DEC_Sante_DesactiverFonctionTri", &DEC_LogisticFunctions::MedicalDisableSortingFunction );
+    brain.RegisterFunction( "_DEC_Sante_ActiverFonctionSoin", &DEC_LogisticFunctions::MedicalEnableHealingFunction );
+    brain.RegisterFunction( "_DEC_Sante_DesactiverFonctionSoin", &DEC_LogisticFunctions::MedicalDisableHealingFunction );
+    brain.RegisterFunction( "_DEC_Sante_ChangerPriorites", &DEC_LogisticFunctions::MedicalChangePriorities );
+    brain.RegisterFunction( "_DEC_Sante_Priorites", &DEC_LogisticFunctions::GetAutomateMedicalPriorities );
+    brain.RegisterFunction( "_DEC_Sante_ChangerPrioritesTactiques", &DEC_LogisticFunctions::MedicalChangeTacticalPriorities );
+    brain.RegisterFunction( "_DEC_Sante_PrioritesTactiques", &DEC_LogisticFunctions::GetAutomateMedicalTacticalPriorities );
+
+    // Supply
     brain.RegisterFunction( "DEC_DemandeDeRavitaillement", &DEC_LogisticFunctions::PionRequestSupply );
+    brain.RegisterFunction( "DEC_EnforceAviationResources", &DEC_LogisticFunctions::EnforceAviationResources );
     brain.RegisterFunction( "DEC_Stock_ConnectToResourceNode", &DEC_LogisticFunctions::ConnectToResourceNode );
     brain.RegisterFunction( "DEC_Stock_DisconnectFromResourceNode", &DEC_LogisticFunctions::DisconnectFromResourceNode );
+    brain.RegisterFunction( "_DEC_Ravitaillement_ActiverChaine", &DEC_LogisticFunctions::SupplyEnableSystem );
+    brain.RegisterFunction( "_DEC_Ravitaillement_DesactiverChaine", &DEC_LogisticFunctions::SupplyDisableSystem );
 }
 
 // -----------------------------------------------------------------------------
@@ -790,6 +895,30 @@ void RegisterTypeFunctions( sword::Brain& brain )
     brain.RegisterMethod( "GetType", &DEC_RolePion_Decision::GetDIAType );
     brain.RegisterMethod( "GetType", &DEC_AutomateDecision::GetDIAType );
     brain.RegisterMethod( "GetType", &TER_PathPoint::GetDIAType );
+}
+
+void RegisterOrderFunctions( sword::Brain& brain )
+{
+    brain.RegisterFunction( "_DEC_FinMission", &DEC_OrdersFunctions::FinishMission );
+    brain.RegisterFunction( "_DEC_NouvelleMission", &DEC_OrdersFunctions::IsNewMissionStarted );
+    brain.RegisterFunction( "_DEC_GetLima", &DEC_OrdersFunctions::GetLima );
+    brain.RegisterFunction( "_DEC_GetLimasFromType", &DEC_OrdersFunctions::GetLimasFromType );
+    brain.RegisterFunction( "_DEC_ProchaineLimaHoraireNonFlagee", &DEC_OrdersFunctions::GetNextScheduledLima );
+    brain.RegisterFunction( "_DEC_Fuseau", &DEC_OrdersFunctions::GetFuseau );
+    brain.RegisterFunction( "_DEC_SetMissionLimaFlag", &DEC_OrdersFunctions::AutomateSetMissionLimaFlag );
+    brain.RegisterFunction( "_DEC_GetMissionLimaFlag", &DEC_OrdersFunctions::GetMissionLimaFlag );
+    brain.RegisterFunction( "_DEC_SetMissionLimaFlagHoraire", &DEC_OrdersFunctions::AutomateSetMissionLimaScheduleFlag );
+
+    // MRT / conduite
+    brain.RegisterFunction( "_DEC_MRT_CreerMissionPion", &DEC_OrdersFunctions::MRT_CreatePionMission );
+    brain.RegisterFunction( "_DEC_MRT_Valide", &DEC_OrdersFunctions::MRT_Validate );
+    brain.RegisterFunction( "_DEC_MRT_AffecteFuseaux", &DEC_OrdersFunctions::MRT_AffectFuseaux );
+    brain.RegisterFunction( "_DEC_CDT_CreerMissionPion", &DEC_OrdersFunctions::CDT_CreatePionMission );
+    brain.RegisterFunction( "_DEC_CDT_DonnerMissionPion_Mission", &DEC_OrdersFunctions::CDT_GivePionMission );
+    brain.RegisterFunction( "_DEC_CreerMissionAutomate", &DEC_OrdersFunctions::CreateAutomateMission );
+    brain.RegisterFunction( "_DEC_DonnerMissionAutomate_Mission", &DEC_OrdersFunctions::GiveAutomateMission );
+    brain.RegisterFunction( "_DEC_DonnerMissionAutomate", &DEC_OrdersFunctions::GiveAutomateMissionToAutomat );
+    brain.RegisterFunction( "_DEC_DecouperFuseau", &DEC_OrdersFunctions::SplitFuseau );
 }
 
 // -----------------------------------------------------------------------------
@@ -920,6 +1049,9 @@ void RegisterObjectFunctions( sword::Brain& brain )
     brain.RegisterFunction( "DEC_Agent_DecontamineConnaissance",
         std::function< int( boost::shared_ptr< DEC_Knowledge_Agent >, boost::shared_ptr< DEC_Knowledge_Object > ) >( boost::bind( &DEC_KnowledgeObjectFunctions::QueueKnowledgeForDecontamination, _1, _2 ) ) );
     brain.RegisterFunction( "DEC_Circulation_EquiperItineraireLogistique", &DEC_KnowledgeObjectFunctions::EquipLogisticRoute );
+
+    brain.RegisterFunction( "_DEC_CreerObjetSansDelais", &DEC_ObjectFunctions::MagicCreateObject );
+    brain.RegisterFunction( "_DEC_MagicGetOrCreateObject", &DEC_ObjectFunctions::MagicGetOrCreateObject );
     brain.RegisterFunction( "DEC_ObjectKnowledge_IsImpassable", &DEC_KnowledgeObjectFunctions::IsImpassable );
 }
 
@@ -1049,9 +1181,6 @@ void RegisterMiscellaneousFunctions( sword::Brain& brain )
 {
     brain.RegisterFunction( "DEC_GetSzName", &DEC_MiscFunctions::GetName );
 
-    // Mission
-    brain.RegisterFunction( "_DEC_FinMission", &DEC_OrdersFunctions::FinishMission );
-
     // Knowledge objects
     brain.RegisterFunction( "_DEC_ObjectKnowledgesInZone", &DEC_KnowledgeFunctions::GetObjectsInZone );
 }
@@ -1076,9 +1205,12 @@ void RegisterEntityFunctions( sword::Brain& brain )
 void RegisterCommonUserFunctions( sword::Brain& brain, bool isMasalife )
 {
     RegisterUnitFunctions( brain );
+    RegisterAutomatonFunctions( brain );
     RegisterPopulationFunctions( brain );
     RegisterActionFunctions( brain );
     RegisterAgentKnowledgeFunctions( brain );
+    RegisterPopulationKnowledgeFunctions( brain );
+    RegisterKnowledgeFunctions( brain );
     RegisterRepresentationFunctions( brain );
     RegisterGeometryFunctions( brain );
     RegisterUrbanBlockFunctions( brain );
@@ -1095,6 +1227,7 @@ void RegisterCommonUserFunctions( sword::Brain& brain, bool isMasalife )
     RegisterSpecificPointsFunctions( brain );
     RegisterTypeFunctions( brain );
     RegisterMissionParametersFunctions( brain, isMasalife );
+    RegisterOrderFunctions( brain );
     RegisterReportFunctions( brain );
     RegisterTelepathyFunctions( brain );
     RegisterItineraryFunctions( brain );

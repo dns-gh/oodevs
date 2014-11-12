@@ -854,7 +854,7 @@ bool DEC_AgentFunctions::SurrenderAutomat( MIL_Agent_ABC& callerAgent, DEC_Decis
 // -----------------------------------------------------------------------------
 std::vector< DEC_Decision_ABC* > DEC_AgentFunctions::GetPionsWithPC( const MIL_Agent_ABC& callerAgent )
 {
-    return DEC_AutomateFunctions::GetPionsWithPC( callerAgent.GetAutomate() );
+    return DEC_AutomateFunctions::GetPionsWithPC( &callerAgent.GetAutomate().GetDecision() );
 }
 
 // -----------------------------------------------------------------------------
@@ -863,7 +863,7 @@ std::vector< DEC_Decision_ABC* > DEC_AgentFunctions::GetPionsWithPC( const MIL_A
 // -----------------------------------------------------------------------------
 std::vector< DEC_Decision_ABC* > DEC_AgentFunctions::GetPionsWithoutPC( const MIL_Agent_ABC& callerAgent )
 {
-    return DEC_AutomateFunctions::GetPionsWithoutPC( callerAgent.GetAutomate() );
+    return DEC_AutomateFunctions::GetPionsWithoutPC( &callerAgent.GetAutomate().GetDecision() );
 }
 
 // -----------------------------------------------------------------------------
@@ -872,7 +872,7 @@ std::vector< DEC_Decision_ABC* > DEC_AgentFunctions::GetPionsWithoutPC( const MI
 // -----------------------------------------------------------------------------
 std::vector< DEC_Decision_ABC* > DEC_AgentFunctions::GetCommunicationPionsWithPC( const MIL_Agent_ABC& callerAgent )
 {
-    return DEC_AutomateFunctions::GetCommunicationPionsWithPC( callerAgent.GetAutomate() );
+    return DEC_AutomateFunctions::GetCommunicationPionsWithPC( &callerAgent.GetAutomate().GetDecision() );
 }
 
 // -----------------------------------------------------------------------------
@@ -881,7 +881,7 @@ std::vector< DEC_Decision_ABC* > DEC_AgentFunctions::GetCommunicationPionsWithPC
 // -----------------------------------------------------------------------------
 std::vector< DEC_Decision_ABC* > DEC_AgentFunctions::GetCommunicationPionsWithoutPC( const MIL_Agent_ABC& callerAgent )
 {
-    return DEC_AutomateFunctions::GetCommunicationPionsWithoutPC( callerAgent.GetAutomate() );
+    return DEC_AutomateFunctions::GetCommunicationPionsWithoutPC( &callerAgent.GetAutomate().GetDecision() );
 }
 
 // -----------------------------------------------------------------------------
@@ -890,7 +890,7 @@ std::vector< DEC_Decision_ABC* > DEC_AgentFunctions::GetCommunicationPionsWithou
 // -----------------------------------------------------------------------------
 DEC_Decision_ABC* DEC_AgentFunctions::GetPionPC( const MIL_Agent_ABC& callerAgent )
 {
-    return DEC_AutomateFunctions::GetPionPC( callerAgent.GetAutomate() );
+    return DEC_AutomateFunctions::GetPionPC( &callerAgent.GetAutomate().GetDecision() );
 }
 
 // -----------------------------------------------------------------------------
@@ -901,7 +901,7 @@ DEC_Decision_ABC* DEC_AgentFunctions::GetPionPCOfAutomate( const DEC_Decision_AB
 {
     if( !automat )
         throw MASA_EXCEPTION( "Invalid automat in DEC_AgentFunctions::GetPionPCOfAutomate" );
-    return DEC_AutomateFunctions::GetPionPC( automat->GetAutomate() );
+    return DEC_AutomateFunctions::GetPionPC( &automat->GetAutomate().GetDecision() );
 }
 
 // -----------------------------------------------------------------------------
@@ -912,7 +912,7 @@ std::vector< DEC_Decision_ABC* > DEC_AgentFunctions::GetPionsWithoutPCOfAutomate
 {
     if( !automat )
         throw MASA_EXCEPTION( "Invalid automat in DEC_AgentFunctions::GetPionsWithoutPCOfAutomate" );
-    return DEC_AutomateFunctions::GetPionsWithoutPC( automat->GetAutomate() );
+    return DEC_AutomateFunctions::GetPionsWithoutPC( &automat->GetAutomate().GetDecision() );
 }
 
 // -----------------------------------------------------------------------------

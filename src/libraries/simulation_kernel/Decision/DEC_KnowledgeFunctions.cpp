@@ -423,6 +423,27 @@ void DEC_KnowledgeFunctions::GetIdentifiableKnowledge( sword::Brain& brain, cons
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeFunctions::GetLivingEnemiesPerceivedByPion
+// Created: NLD 2006-04-18
+// -----------------------------------------------------------------------------
+T_ConstKnowledgeAgentVector DEC_KnowledgeFunctions::GetLivingEnemiesPerceivedByPion( const DEC_Decision_ABC* caller, const DEC_Decision_ABC* perceiver )
+{
+    if( !perceiver )
+        throw MASA_EXCEPTION( "invalid parameter." );
+    const MIL_AgentPion& source = perceiver->GetPion();
+    T_ConstKnowledgeAgentVector sourceKnowledge;
+    source.GetKnowledge().GetLivingEnemiesPerceived( sourceKnowledge );
+    T_ConstKnowledgeAgentVector results;
+    auto bbKg = caller->GetKnowledgeGroup()->GetKnowledge();
+    if( bbKg )
+    {
+        boost::shared_ptr< MIL_KnowledgeGroup > sourceKnowledgeGroup = source.GetKnowledgeGroup();
+        bbKg->TranslateKnowledges( sourceKnowledge, sourceKnowledgeGroup, results );
+    }
+    return results;
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeFunctions::GetNearbyRefugees
 // Created: NLD 2005-03-10
 // -----------------------------------------------------------------------------
@@ -473,6 +494,43 @@ bool DEC_KnowledgeFunctions::EnemyPresenceInCircle( const MIL_AgentPion& callerA
     if( bbKg )
         return bbKg->EnemyPresenceInCircle( *center, radius );
     return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeFunctions::ShareKnowledgesWith
+// Created: NLD 2004-11-08
+// -----------------------------------------------------------------------------
+void DEC_KnowledgeFunctions::ShareKnowledgesWith( const DEC_Decision_ABC* caller, DEC_Decision_ABC* receiver, float minutes )
+{
+    if( !receiver )
+        throw MASA_EXCEPTION( "invalid parameter." );        
+    auto receiverKg = receiver->GetAutomate().GetKnowledgeGroup();
+    auto bbKg = receiverKg->GetKnowledge();
+    if( !bbKg )
+        return;
+    boost::shared_ptr< MIL_KnowledgeGroup > callerKnowledgeGroup = caller->GetKnowledgeGroup();
+    if( receiverKg == callerKnowledgeGroup )
+        return;
+    const unsigned int sharingTimeStep = MIL_Time_ABC::GetTime().GetCurrentTimeStep() + unsigned int( MIL_Tools::ConvertMinutesToSim( minutes ) );
+    bbKg->GetKsSharing().ShareFromSource( callerKnowledgeGroup, sharingTimeStep );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeFunctions::ShareKnowledgesInZoneWith
+// Created: NLD 2004-11-08
+// -----------------------------------------------------------------------------
+void DEC_KnowledgeFunctions::ShareKnowledgesInZoneWith( const DEC_Decision_ABC* caller, DEC_Decision_ABC* receiver, const MT_Vector2D* center, float radius )
+{
+    if( !receiver )
+        throw MASA_EXCEPTION( "invalid parameter." );
+    auto receiverKg = receiver->GetAutomate().GetKnowledgeGroup();
+    auto bbKg = receiverKg->GetKnowledge();
+    if( !bbKg )
+        return;
+    boost::shared_ptr< MIL_KnowledgeGroup > callerKnowledgeGroup = caller->GetKnowledgeGroup();
+    if( receiverKg == callerKnowledgeGroup )
+        return;
+    bbKg->GetKsSharing().ShareFromSource( callerKnowledgeGroup, MIL_Time_ABC::GetTime().GetCurrentTimeStep(), *center, MIL_Tools::ConvertMeterToSim( radius ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -583,6 +641,21 @@ T_KnowledgeObjectDiaIDVector DEC_KnowledgeFunctions::GetDisasters( const MIL_Age
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeFunctions::GetObjectsInCircle
+// Created: NLD 2006-05-05
+// -----------------------------------------------------------------------------
+T_KnowledgeObjectDiaIDVector DEC_KnowledgeFunctions::GetObjectsInCircle( const DEC_Decision_ABC* caller, const MT_Vector2D* pCenter, double rRadius, const std::vector< std::string >& filters, bool nonActivatedObstacles )
+{
+    if( !pCenter )
+        throw MASA_EXCEPTION( "invalid parameter." );
+    MIL_ObjectFilter filter( filters );
+    T_KnowledgeObjectDiaIDVector knowledges;
+    if( DEC_BlackBoard_CanContainKnowledgeObject* container = caller->GetKnowledgeGroup()->GetKnowledgeObjectContainer() )
+        container->GetObjectsInCircle( knowledges, filter, *pCenter, rRadius, nonActivatedObstacles );
+    return knowledges;
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeFunctions::GetObjectsInZone
 // Created: NLD 2006-05-05
 // -----------------------------------------------------------------------------
@@ -597,6 +670,26 @@ T_KnowledgeObjectDiaIDVector DEC_KnowledgeFunctions::GetObjectsInZone( const DEC
     {
         T_KnowledgeObjectDiaIDVector knowledgesTmp;
         bbKg->GetKnowledgeObjectContainer().GetObjectsInZone( knowledgesTmp, filter, *pLoc );
+        knowledges.insert( knowledges.end(), knowledgesTmp.begin(), knowledgesTmp.end() );
+    }
+    return knowledges;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeFunctions::GetObjectsInFuseau
+// Created: NLD 2006-05-05
+// -----------------------------------------------------------------------------
+T_KnowledgeObjectDiaIDVector DEC_KnowledgeFunctions::GetObjectsInFuseau( const DEC_Decision_ABC* caller, const std::string& type )
+{
+    std::vector< std::string > types;
+    types.push_back( type );
+    MIL_ObjectFilter filter( types );
+    T_KnowledgeObjectDiaIDVector knowledges;
+    auto bbKg = caller->GetKnowledgeGroup()->GetKnowledge();
+    if( bbKg )
+    {
+        T_KnowledgeObjectDiaIDVector knowledgesTmp;
+        bbKg->GetKnowledgeObjectContainer().GetObjectsInZone( knowledgesTmp, filter, caller->GetOrderManager().GetFuseau() );
         knowledges.insert( knowledges.end(), knowledgesTmp.begin(), knowledgesTmp.end() );
     }
     return knowledges;
@@ -668,6 +761,19 @@ bool DEC_KnowledgeFunctions::IsPopulationAttacking( const MIL_AgentPion& callerA
             return callerAgent.GetKnowledge().IsPopulationAttacking( *pKnowledge );
     }
     return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeFunctions::GetPopulations
+// Created: NLD 2005-12-02
+// -----------------------------------------------------------------------------
+std::vector< unsigned int > DEC_KnowledgeFunctions::GetPopulations( const DEC_Decision_ABC* caller )
+{
+    std::vector< unsigned int > results;
+    auto bbKg = caller->GetKnowledgeGroup()->GetKnowledge();
+    if( bbKg )
+        bbKg->GetPopulations( results );
+    return results;
 }
 
 boost::shared_ptr< DEC_Knowledge_Agent > DEC_KnowledgeFunctions::GetAgentKnowledge(
