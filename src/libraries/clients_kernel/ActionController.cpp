@@ -268,9 +268,11 @@ void ActionController::SetMultipleSelection( const GraphicalEntity_ABC::T_Graphi
     if( !selectedMap_.empty() )
         for( auto it = selectedMap_.begin(); it!= selectedMap_.end(); ++it )
         {
-            it->second.front()->MultipleSelect( *this, it->second );
-            if( it->second.size() == 1 )
-                it->second.front()->Select( *this );
+            auto& vector = it->second;
+            const GraphicalEntity_ABC* entity = vector.front();
+            entity->MultipleSelect( *this, vector );
+            if( vector.size() == 1 )
+                entity->Select( *this );
         }
     Apply( & kernel::MultipleSelectionObserver_ABC::AfterMultiSelection );
 }
