@@ -1,140 +1,50 @@
-//*****************************************************************************
+// *****************************************************************************
 //
-// $Created: NLD 2002-08-07 $
-// $Archive: /MVW_v10/Build/SDK/SIM/src/SIM_App.cpp $
-// $Author: Nld $
-// $Modtime: 18/04/05 17:21 $
-// $Revision: 62 $
-// $Workfile: SIM_App.cpp $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
 //
-//*****************************************************************************
+// Copyright (c) 2005 MASA Group
+//
+// *****************************************************************************
 
 #include "simulation_app_pch.h"
 #include "SIM_App.h"
+#include "resource.h"
 #include "dispatcher/DispatcherLoader.h"
 #include "FileLoaderObserver.h"
-#include "MT_Tools/MT_ConsoleLogger.h"
 #include "MT_Tools/MT_FileLogger.h"
-#include "MT_Tools/MT_CrashHandler.h"
 #include "MT_Tools/MT_Logger.h"
-#include "resource.h"
-#include "simulation_kernel/CheckPoints/MIL_CheckPointManager.h"
 #include "simulation_kernel/MIL_AgentServer.h"
 #include "simulation_kernel/MIL_Random.h"
 #include "simulation_kernel/Tools/MIL_Config.h"
-#include "tools/ExerciseConfig.h"
-#include "tools/IpcWatch.h"
 #include "tools/WinArguments.h"
-#include <tools/Version.h>
 #include <tools/WaitEvent.h>
-#include <boost/bind.hpp>
-#include <boost/date_time/posix_time/posix_time.hpp>
 #include <boost/make_shared.hpp>
-#include <csignal>
-#include <ctime>
-#include <fcntl.h>
-#include <io.h>
+#include <boost/thread.hpp>
 
-#define MY_WM_NOTIFYICON WM_USER + 1
-
-#ifdef _DEBUG
-#   define MT_COMPILE_TYPE "Debug"
-#else
-#   define MT_COMPILE_TYPE "Release"
-#endif
-
-// -----------------------------------------------------------------------------
-// Name: SIM_App constructor
-// Created: RDS 2008-07-08
-// -----------------------------------------------------------------------------
-SIM_App::SIM_App( int maxConnections, bool verbose )
-    : maxConnections_( maxConnections )
-    , verbose_       ( verbose )
-    , config_        ( new MIL_Config( boost::make_shared< FileLoaderObserver >() ) )
-    , winArguments_  ( new tools::WinArguments( GetCommandLineW() ) )
-    , quit_          ( new tools::WaitEvent() )
-    , result_        ( EXIT_SUCCESS )
-    , hWnd_          ( 0 )
-    , hInstance_     ( GetModuleHandle( 0 ) )
-    , nIconIndex_    ( 0 )
+SIM_App::SIM_App( int maxConnections )
+    : tools::Application( IDI_ICON1, IDI_ICON2, WM_QUIT )
+    , maxConnections_( maxConnections )
+    , config_( new MIL_Config( boost::make_shared< FileLoaderObserver >() ) )
 {
-    config_->Parse( winArguments_->Argc(), const_cast< char** >( winArguments_->Argv() ) );
-    bool bClearPreviousLog = !config_->HasCheckpoint();
-    tools::ExerciseConfig* exerciceConfig = static_cast< tools::ExerciseConfig* >( config_.get() );
+    config_->Parse( arguments_->Argc(), const_cast< char** >( arguments_->Argv() ) );
     logger_.reset( new MT_FileLogger( config_->BuildSessionChildFile( "Sim.log" ),
-        exerciceConfig->GetSimLogFiles(), exerciceConfig->GetSimLogSize(),
-        exerciceConfig->GetSimLogLevel(), bClearPreviousLog,
-        MT_Logger_ABC::eSimulation, exerciceConfig->IsSimLogInBytes() ) );
+        config_->GetSimLogFiles(), config_->GetSimLogSize(),
+        config_->GetSimLogLevel(), !config_->HasCheckpoint(),
+        MT_Logger_ABC::eSimulation, config_->IsSimLogInBytes() ) );
     MT_LOG_REGISTER_LOGGER( *logger_ );
-    MT_LOG_STARTUP_MESSAGE( "----------------------------------------------------------------" );
-    MT_LOG_STARTUP_MESSAGE( "Sword Simulation - Version " << tools::GetFullVersion( "0.0.0.0.00000000" ) << " - " << MT_COMPILE_TYPE );
-    MT_LOG_STARTUP_MESSAGE( "Starting simulation - " << boost::posix_time::to_simple_string( boost::posix_time::second_clock::local_time() ) );
-    MT_LOG_STARTUP_MESSAGE( "----------------------------------------------------------------" );
-    MT_LOG_INFO_MSG( "Command line: " << winArguments_->GetCommandLine() );
-    MT_LOG_INFO_MSG( "Session: " << config_->GetSessionDir() );
 }
 
-//-----------------------------------------------------------------------------
-// Name: SIM_App destructor
-// Created: NLD 2002-08-07
-//-----------------------------------------------------------------------------
 SIM_App::~SIM_App()
 {
-    PostMessage( hWnd_, WM_COMMAND, IDM_QUIT, 0 );
-    quit_->Signal();
     if( dispatcher_ )
         dispatcher_->join();
-    if( gui_ )
-        gui_->join();
     MIL_AgentServer::DestroyWorkspace();
     MT_LOG_UNREGISTER_LOGGER( *logger_ );
 }
 
-// -----------------------------------------------------------------------------
-// Name: SIM_App::CALLBACK MainWndProc
-// Created: RDS 2008-07-10
-// -----------------------------------------------------------------------------
-LRESULT SIM_App::MainWndProc( HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam )
-{
-    SIM_App* application = reinterpret_cast< SIM_App* >( ::GetWindowLongPtr( hwnd, GWLP_USERDATA ) );
-    switch( uMsg )
-    {
-        case WM_CREATE:
-            break;
-        case MY_WM_NOTIFYICON:
-            if( lParam == WM_RBUTTONUP )
-            {
-                HMENU hmenu;
-                HMENU hpopup;
-                POINT pos;
-                GetCursorPos( &pos );
-                hmenu = LoadMenu( application->hInstance_, "LEMENU" );
-                hpopup = GetSubMenu( hmenu, 0 );
-                SetForegroundWindow( hwnd );
-                TrackPopupMenuEx( hpopup, 0, pos.x, pos.y, hwnd, 0 );
-                DestroyMenu( hmenu );
-            }
-            break;
-        case WM_CLOSE:
-        case WM_DESTROY:
-            PostQuitMessage( 0 );
-            break;
-        case WM_COMMAND:
-            if( LOWORD( wParam ) == IDM_QUIT )
-                PostQuitMessage( 0 );
-            break;
-        case WM_TIMER:
-            application->AnimateIcon();
-            break;
-        default:
-            return DefWindowProc( hwnd, uMsg, wParam, lParam );
-    }
-    return 0;
-}
-
 namespace
 {
-
     void RunDispatcher( const tools::WinArguments* winArguments, int maxConnections,
         tools::WaitEvent* quit, int& result )
     {
@@ -156,131 +66,28 @@ namespace
         }
         quit->Signal();
     }
-
-}  // namespace
-
-// -----------------------------------------------------------------------------
-// Name: SIM_App::RunGUI
-// Created: RDS 2008-07-09
-// -----------------------------------------------------------------------------
-void SIM_App::RunGUI()
-{
-    try
-    {
-        // Window
-        WNDCLASS wc;
-        wc.style = 0;
-        wc.lpfnWndProc = &SIM_App::MainWndProc;
-        wc.cbClsExtra = 0;
-        wc.cbWndExtra = 0;
-        wc.hInstance = hInstance_;
-        wc.hIcon = LoadIcon( 0, IDI_APPLICATION );
-        wc.hCursor = LoadCursor( 0, IDC_ARROW );
-        wc.hbrBackground = (HBRUSH)( 1 + COLOR_BTNFACE );
-        wc.lpszMenuName = 0;
-        wc.lpszClassName = "MaWinClass";
-        if( !RegisterClass( &wc ) )
-            return;
-        hWnd_ = CreateWindow( "MaWinClass", "Simulation", WS_OVERLAPPEDWINDOW,
-            CW_USEDEFAULT, CW_USEDEFAULT, 400, 300,
-            0, 0, hInstance_, 0 );
-        ::SetWindowLongPtr( hWnd_, GWLP_USERDATA, (LONG_PTR) this );
-        ShowWindow( hWnd_, SW_HIDE );
-
-        // Tray
-        ZeroMemory( &trayIcon_, sizeof( NOTIFYICONDATA ) );
-        trayIcon_.cbSize = sizeof( NOTIFYICONDATA );
-        trayIcon_.hWnd = hWnd_;
-        trayIcon_.uID = 0;
-        trayIcon_.hIcon = LoadIcon( hInstance_, MAKEINTRESOURCE( IDI_ICON1 ) );
-        trayIcon_.uCallbackMessage = MY_WM_NOTIFYICON;
-        trayIcon_.uFlags = NIF_ICON | NIF_MESSAGE | NIF_TIP;
-        strcpy_s( trayIcon_.szTip, "Simulation" );
-        Shell_NotifyIcon( NIM_ADD, &trayIcon_ );
-
-        MSG msg;
-        while( !quit_->IsSignaled() && GetMessageA( &msg, 0, 0, 0 ) )
-        {
-            TranslateMessage( &msg );
-            DispatchMessage( &msg );
-        }
-        Shell_NotifyIcon( NIM_DELETE, &trayIcon_ );
-    }
-    catch( const std::exception& e )
-    {
-        MT_LOG_FATAL_ERROR_MSG( "gui: " << tools::GetStackTraceAndMessage( e ) );
-    }
-    quit_->Signal();
 }
 
-// -----------------------------------------------------------------------------
-// Name: SIM_App::StartIconAnimation
-// Created: RDS 2008-07-18
-// -----------------------------------------------------------------------------
-void SIM_App::StartIconAnimation()
-{
-    SetTimer( hWnd_, 1, 1000, 0 );
-}
-
-// -----------------------------------------------------------------------------
-// Name: SIM_App::StopIconAnimation
-// Created: RDS 2008-07-24
-// -----------------------------------------------------------------------------
-void SIM_App::StopIconAnimation()
-{
-    KillTimer( hWnd_, 1 );
-}
-
-// -----------------------------------------------------------------------------
-// Name: SIM_App::AnimateIcon
-// Created: RDS 2008-07-11
-// -----------------------------------------------------------------------------
-void SIM_App::AnimateIcon()
-{
-    static const int NUM_ICON_FOR_ANIMATION = 2;
-    static int IconResourceArray[NUM_ICON_FOR_ANIMATION] = { IDI_ICON2, IDI_ICON1 };
-    nIconIndex_ = ( nIconIndex_ + 1 ) % NUM_ICON_FOR_ANIMATION;
-    HICON hIconAtIndex = LoadIcon( hInstance_, (LPCTSTR) MAKEINTRESOURCE( IconResourceArray[nIconIndex_] ) );
-    trayIcon_.cbSize = sizeof( NOTIFYICONDATA );
-    trayIcon_.hWnd = hWnd_;
-    trayIcon_.uID = 0;
-    trayIcon_.hIcon = hIconAtIndex;
-    trayIcon_.uFlags = NIF_ICON;
-    Shell_NotifyIcon( NIM_MODIFY, &trayIcon_ );
-    if( hIconAtIndex )
-        DestroyIcon( hIconAtIndex );
-}
-
-// -----------------------------------------------------------------------------
-// Name: SIM_App::Initialize
-// Created: NLD 2004-01-27
-// -----------------------------------------------------------------------------
 void SIM_App::Initialize()
 {
-    MT_LOG_INFO_MSG( "Starting simulation GUI" );
-    gui_.reset( new boost::thread( boost::bind( &SIM_App::RunGUI, this ) ) );
+    Application::Initialize( "Simulation" );
+    MT_LOG_INFO_MSG( "Session: " << config_->GetSessionDir() );
     if( config_->IsDispatcherEmbedded() )
     {
         MT_LOG_INFO_MSG( "Starting embedded dispatcher" );
-        dispatcher_.reset( new boost::thread( boost::bind( &RunDispatcher,
-            winArguments_.get(), maxConnections_, quit_.get(), boost::ref( result_ ) ) ) );
+        dispatcher_.reset( new boost::thread(
+            [&]()
+            {
+                RunDispatcher( arguments_.get(), maxConnections_, quit_.get(), result_ );
+            } ) );
     }
-    MIL_Random::Initialize( config_->GetRandomSeed(), config_->GetRandomGaussian(), config_->GetRandomDeviation(), config_->GetRandomMean() );
+    MIL_Random::Initialize(
+        config_->GetRandomSeed(), config_->GetRandomGaussian(),
+        config_->GetRandomDeviation(), config_->GetRandomMean() );
     MIL_AgentServer::CreateWorkspace( *config_ );
 }
 
-//-----------------------------------------------------------------------------
-// Name: SIM_App::Execute
-// Created: NLD 2002-08-07
-//-----------------------------------------------------------------------------
-int SIM_App::Execute()
+bool SIM_App::Update()
 {
-    Initialize();
-    StartIconAnimation();
-    tools::ipc::Watch watch( *quit_ );
-    while( !quit_->IsSignaled() )
-        if( !MIL_AgentServer::GetWorkspace().Update() )
-            break;
-    StopIconAnimation();
-    return result_;
+    return MIL_AgentServer::GetWorkspace().Update();
 }

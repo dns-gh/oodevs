@@ -3,25 +3,16 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2007 Mathématiques Appliquées SA (MASA)
+// Copyright (c) 2007 MASA Group
 //
 // *****************************************************************************
 
 #ifndef __App_h_
 #define __App_h_
 
-#include <string>
-#include <windows.h>
-#include <shellapi.h>
-#include <boost/noncopyable.hpp>
-#include <boost/thread.hpp>
+#include "tools/Application.h"
 
 class MT_FileLogger;
-
-namespace tools
-{
-    class WaitEvent;
-}
 
 namespace dispatcher
 {
@@ -35,32 +26,20 @@ namespace dispatcher
 */
 // Created: AGE 2007-04-10
 // =============================================================================
-class App : boost::noncopyable
+class App : public tools::Application
 {
 public:
      App( bool replayLog );
     ~App();
 
-    void Execute();
+private:
+    virtual void Initialize();
+    virtual bool Update();
 
 private:
-    void Initialize();
-    void RunGUI();
-    void StartIconAnimation();
-    void StopIconAnimation();
-    void AnimateIcon();
-    static LRESULT CALLBACK MainWndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
-
-private:
-    std::unique_ptr< dispatcher::Config > config_;
     std::unique_ptr< MT_FileLogger > logger_;
+    std::unique_ptr< dispatcher::Config > config_;
     std::unique_ptr< dispatcher::Replayer > replayer_;
-    std::unique_ptr< tools::WaitEvent > quit_;
-    HWND hWnd_;
-    HINSTANCE hInstance_;
-    NOTIFYICONDATA trayIcon_;
-    unsigned int nIconIndex_;
-    std::unique_ptr< boost::thread > gui_;
     bool test_;
 };
 
