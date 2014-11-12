@@ -704,9 +704,8 @@ class TickView extends Backbone.View
 
 class Replay
 
-    constructor: (layout, svg) ->
+    constructor: (svg) ->
         @has_replay = false
-        @layout = layout
         @replay_split = svg.append("line")
             .attr(id: "replay_splitter")
             .classed("splitter", true)
@@ -715,6 +714,9 @@ class Replay
             .classed("range", true)
 
     size: -> if @has_replay then 25 else 0
+
+    set_layout: (layout) ->
+        @layout = layout
 
     set_replay: (enabled) ->
         @has_replay = enabled
@@ -748,10 +750,6 @@ class Timeline
         @lane_size = 88
         lane = history_get().lane
         @lane_size = 0 | lane if lane?
-        if vertical
-            @layout = new VerticalLayout this
-        else
-            @layout = new HorizontalLayout this
         @model = model
         _.extend @, Backbone.Events
         @listenTo triggers, "check_cluster", @on_check
@@ -761,13 +759,11 @@ class Timeline
             .attr class: "screen"
         @scale = d3.time.scale.utc()
         @axis = d3.svg.axis()
-            .orient(@layout.orientation())
             .tickPadding(8)
             .tickSize(8)
             .tickFormat("") # disable svg text ticks
         @ticks = new TickList()
         @grid = d3.svg.axis()
-            .orient(@layout.orientation())
             .ticks(20)
             .tickPadding(0)
         @zoom = d3.behavior.zoom().on "zoom", @on_zoom
@@ -780,19 +776,30 @@ class Timeline
         @svg.append("path").attr class: "current"
         @svg.append("g").attr id: "links"
         @svg.append("g").attr id: "lanes"
-        @replay = new Replay @layout, @svg
+        @replay = new Replay @svg
         @lane_split = @svg.append("line")
             .attr(id: "lane_splitter")
             .classed("splitter", true)
-            .style(cursor: @layout.select "ns-resize", "ew-resize")
-            .call(d3.behavior.drag()
-                .on("dragstart", @lane_split_edit_start)
-                .on("drag",      @lane_split_edit_move)
-                .on("dragend",   @lane_split_edit_end))
         @lane_colors = d3.scale.category20()
         @curline = @svg.selectAll ".current"
         d3.select(@id).append("div").attr id: "nodes"
         d3.select(@id).append("div").attr id: "ticks"
+        @set_layout vertical
+
+    set_layout: (vertical) =>
+        if vertical
+            @layout = new VerticalLayout this
+        else
+            @layout = new HorizontalLayout this
+        @axis.orient @layout.orientation()
+        @grid.orient @layout.orientation()
+        @replay.set_layout @layout
+        @lane_split.style
+                cursor: @layout.select "ns-resize", "ew-resize"
+            .call(d3.behavior.drag()
+                .on("dragstart", @lane_split_edit_start)
+                .on("drag",      @lane_split_edit_move)
+                .on("dragend",   @lane_split_edit_end))
         @on_resize()
 
     # update svg rect & scale on window resizes
@@ -888,7 +895,7 @@ class Timeline
         lanes = @svg.select("#lanes").selectAll(".lane")
             .data(data, (d) -> d.id)
         that = this
-        placement = @layout.lane_orientation()
+        placement = => @layout.lane_orientation()
         lanes.enter()
             .append("rect")
             .each((d) ->
