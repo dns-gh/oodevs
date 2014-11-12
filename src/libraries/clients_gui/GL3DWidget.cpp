@@ -200,9 +200,9 @@ float GL3DWidget::LineWidth( float base ) const
     return base;
 }
 
-unsigned short GL3DWidget::StipplePattern( int factor /* = 1*/ ) const
+uint16_t GL3DWidget::StipplePattern( int factor /* = 1*/ ) const
 {
-    static unsigned short pattern[] = {
+    static const uint16_t pattern[ ] = {
         0x00FF, 0x01FE, 0x03FC, 0x07F8,
         0x0FF0, 0x1FE0, 0x3FC0, 0x7F80,
         0xFF00, 0xFE01, 0xFC03, 0xF807,

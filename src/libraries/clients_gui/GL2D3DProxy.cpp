@@ -74,7 +74,7 @@ GL2D3DProxy::~GL2D3DProxy()
 }
 
 // -----------------------------------------------------------------------------
-// Informations -> throw not implemented
+// Informations -> implementation
 // -----------------------------------------------------------------------------
 const QString& GL2D3DProxy::GetName() const
 {

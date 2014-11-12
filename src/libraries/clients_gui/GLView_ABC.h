@@ -330,7 +330,7 @@ public:
     virtual std::string GetCurrentPass() const = 0;
     virtual float LineWidth( float base ) const = 0;
     virtual float Pixels( const geometry::Point2f& at = geometry::Point2f() ) const = 0;
-    virtual unsigned short StipplePattern( int factor = 1 ) const = 0;
+    virtual uint16_t StipplePattern( int factor = 1 ) const = 0;
 
     virtual void DrawApp6Symbol( const std::string& symbol,
                                  const geometry::Point2f& where,

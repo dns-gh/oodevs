@@ -61,7 +61,7 @@ GL2DWidget::GL2DWidget( QWidget* parentWidget,
     , iconLayout_  ( iconLayout )
     , passes_      ( passLess( "" ) )
     , currentPass_ ()
-    , bMulti_      ( false )
+    , hasMultiTexturing_      ( false )
 {
     setAcceptDrops( true );
     if( context() != context_ || ! context_->isValid() )
@@ -125,7 +125,7 @@ void GL2DWidget::RemoveLayer( const T_Layer& layer )
 // -----------------------------------------------------------------------------
 void GL2DWidget::PaintLayers()
 {
-    if( bMulti_ )  // $$$$ LGY 2012-03-05: disable PaintLayers : crash in remote desktop
+    if( hasMultiTexturing_ )  // $$$$ LGY 2012-03-05: disable PaintLayers : crash in remote desktop
         MapWidget::PaintLayers();
 }
 
@@ -251,9 +251,9 @@ float GL2DWidget::LineWidth( float base ) const
     return base;
 }
 
-unsigned short GL2DWidget::StipplePattern( int factor /* = 1*/ ) const
+uint16_t GL2DWidget::StipplePattern( int factor /* = 1*/ ) const
 {
-    static unsigned short pattern[ ] = {
+    static const uint16_t pattern[] = {
         0x00FF, 0x01FE, 0x03FC, 0x07F8,
         0x0FF0, 0x1FE0, 0x3FC0, 0x7F80,
         0xFF00, 0xFE01, 0xFC03, 0xF807,
@@ -1024,8 +1024,8 @@ bool GL2DWidget::IsInSelectionViewport( const Point2f& point ) const
 void GL2DWidget::UpdateStipple() const
 {
     glEnable( GL_LINE_STIPPLE );
-    long time = clock();
-    unsigned short shift = ( unsigned short ) ( ( long ) ( time / 8 ) % 128 ) / 8;
+    auto time = clock();
+    auto shift = ( uint16_t ) ( ( int64_t ) ( time / 8 ) % 128 ) / 8;
     glLineStipple( 1, 0x0FFF << shift | 0x0FFF >> ( 16 - shift ) );
 }
 
@@ -1106,7 +1106,7 @@ void GL2DWidget::initializeGL()
     gl::Initialize();
     glEnable( GL_LINE_SMOOTH );
     glEnable( GL_BLEND );
-    bMulti_ = gl::HasMultiTexturing();
+    hasMultiTexturing_ = gl::HasMultiTexturing();
 }
 
 void GL2DWidget::resizeGL( int w, int h )
@@ -1118,7 +1118,7 @@ void GL2DWidget::resizeGL( int w, int h )
 
 void GL2DWidget::paintGL()
 {
-    if( !bMulti_ ) // $$$$ LGY 2012-03-05: disable painGL : crash in remote desktop
+    if( !hasMultiTexturing_ ) // $$$$ LGY 2012-03-05: disable painGL : crash in remote desktop
         return;
     SetCurrentView( this );
     ApplyOptions();
@@ -1133,7 +1133,7 @@ void GL2DWidget::paintGL()
 
 void GL2DWidget::PickGL()
 {
-    if( !bMulti_ ) // $$$$ LGY 2012-03-05: disable painGL : crash in remote desktop
+    if( !hasMultiTexturing_ ) // $$$$ LGY 2012-03-05: disable painGL : crash in remote desktop
         return;
     makeCurrent();
     SetCurrentView( this );

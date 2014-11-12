@@ -36,8 +36,6 @@ GLProxyBase::~GLProxyBase()
 // -----------------------------------------------------------------------------
 void GLProxyBase::Register( const std::shared_ptr< GLView_ABC >& view )
 {
-    if( !view )
-        throw MASA_EXCEPTION( "Unable to register a null view" );
     // store this view
     if( std::find( views_.begin(), views_.end(), view ) != views_.end() )
         throw MASA_EXCEPTION( "GLView_ABC already registered" );
@@ -49,8 +47,6 @@ void GLProxyBase::Register( const std::shared_ptr< GLView_ABC >& view )
 
 void GLProxyBase::Unregister( const std::shared_ptr< GLView_ABC >& view )
 {
-    if( !view )
-        throw MASA_EXCEPTION( "Unable to unregister a null view" );
     // reset default view if needed
     if( defaultView_ == view )
         defaultView_.reset();
@@ -153,9 +149,8 @@ void GLProxyBase::UpdateGL()
 
 void GLProxyBase::SetCurrentCursor( const QCursor& cursor )
 {
-    std::for_each( views_.begin(), views_.end(), [ &cursor ]( const T_View& view ) {
-        view->SetCurrentCursor( cursor );
-    } );
+    for( auto it = views_.begin(); it != views_.end(); ++it )
+        ( *it )->SetCurrentCursor( cursor );
 }
 
 // -----------------------------------------------------------------------------
@@ -176,7 +171,7 @@ float GLProxyBase::LineWidth( float base ) const
     return GetCurrentView().LineWidth( base );
 }
 
-unsigned short GLProxyBase::StipplePattern( int factor /* = 1*/ ) const
+uint16_t GLProxyBase::StipplePattern( int factor /* = 1*/ ) const
 {
     return GetCurrentView().StipplePattern( factor );
 }

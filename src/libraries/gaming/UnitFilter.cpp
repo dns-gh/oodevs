@@ -185,16 +185,8 @@ bool UnitFilter::IsPerceived( const kernel::Entity_ABC& entity ) const
 void UnitFilter::SetFilter( const Entity_ABC* entity, bool update /* = true */ )
 {
     filtered_ = entity;
-    if( entity )
-    {
-        tHierarchies_ = entity->Retrieve< TacticalHierarchies >();
-        cHierarchies_ = entity->Retrieve< CommunicationHierarchies >();
-    }
-    else
-    {
-        tHierarchies_ = 0;
-        cHierarchies_ = 0;
-    }
+    tHierarchies_ = entity ? entity->Retrieve< TacticalHierarchies >() : nullptr;
+    cHierarchies_ = entity ? entity->Retrieve< CommunicationHierarchies >() : nullptr;
     entity_ = tHierarchies_ && !cHierarchies_ ? &tHierarchies_->GetTop() : entity;
     if( !update )
         return;
