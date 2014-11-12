@@ -187,8 +187,7 @@ void TimelineToolBar::OnOrderFilterToggled( bool toggled )
     displayOrders_ = toggled;
     engagedFilter_->setEnabled( displayOrders_ );
     engagedFilter_->setCheckable( displayOrders_ );
-    if( !displayOrders_ )
-        engagedFilter_->setChecked( false );
+    engagedFilter_->setChecked( displayOrders_ ? displayEngaged_ : false );
     emit ServicesFilterChanged( GetServicesFilter() );
 }
 
