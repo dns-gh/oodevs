@@ -118,8 +118,7 @@ GLOptions& GLOptions::operator=( const GLOptions& other )
     controlled_ = other.controlled_;
     filterEntity_ = other.filterEntity_;
     lockedEntity_ = other.lockedEntity_;
-    aggregatedAutomats_ = other.aggregatedAutomats_;
-    aggregatedFormations_ = other.aggregatedFormations_;
+    aggregatedEntities_ = other.aggregatedEntities_;
     contourLinesComputer_ = other.contourLinesComputer_;
     lighting_ = other.lighting_->Clone();
     Load();
@@ -190,8 +189,7 @@ void GLOptions::Load( kernel::Settings& settings )
     settings.beginGroup( "Situation" );
     SetLockedEntity( FindEntity( model_, profile_, settings.value( "LockedEntity", 0u ).toUInt() ) );
     SetFilterEntity( FindEntity( model_, profile_, settings.value( "FilterEntity", 0u ).toUInt() ) );
-    StringToEntities( aggregatedAutomats_, model_, profile_, settings.value( "AggregatedAutomats", "" ).toString() );
-    StringToEntities( aggregatedFormations_, model_, profile_, settings.value( "AggregatedFormations", "" ).toString() );
+    StringToEntities( aggregatedEntities_, model_, profile_, settings.value( "AggregatedEntities", "" ).toString() );
     settings.endGroup();
 
     settings.beginGroup( "Display" );
@@ -211,8 +209,7 @@ void GLOptions::Save( kernel::Settings& settings )
     settings.beginGroup( "Situation" );
     settings.setValue( "LockedEntity", lockedEntity_ ? static_cast< unsigned int >( lockedEntity_->GetId() ) : 0u );
     settings.setValue( "FilterEntity", filterEntity_ ? static_cast< unsigned int >( filterEntity_->GetId() ) : 0u );
-    settings.setValue( "AggregatedAutomats", EntitiesToString( aggregatedAutomats_ ) );
-    settings.setValue( "AggregatedFormations", EntitiesToString( aggregatedFormations_ ) );
+    settings.setValue( "AggregatedEntities", EntitiesToString( aggregatedEntities_ ) );
     settings.endGroup();
 
     settings.beginGroup( "Display" );
@@ -415,10 +412,9 @@ void GLOptions::SetLockedEntity( const kernel::Entity_ABC* lockedEntity )
 // -----------------------------------------------------------------------------
 void GLOptions::Aggregate( const kernel::Entity_ABC& entity )
 {
-    if( entity.GetTypeName() == kernel::Automat_ABC::typeName_ )
-        aggregatedAutomats_.push_back( &entity );
-    else if( entity.GetTypeName() == kernel::Formation_ABC::typeName_ )
-        aggregatedFormations_.push_back( &entity );
+    if( entity.GetTypeName() == kernel::Automat_ABC::typeName_ ||
+        entity.GetTypeName() == kernel::Formation_ABC::typeName_ )
+        aggregatedEntities_.push_back( &entity );
 }
 
 // -----------------------------------------------------------------------------
@@ -428,31 +424,18 @@ void GLOptions::Aggregate( const kernel::Entity_ABC& entity )
 void GLOptions::Disaggregate( const kernel::Entity_ABC* entity /* = 0 */ )
 {
     if( !entity ) // disagregate all
-    {
-        aggregatedAutomats_.clear();
-        aggregatedFormations_.clear();
-        return;
-    }
-    aggregatedAutomats_.erase( std::remove( aggregatedAutomats_.begin(), aggregatedAutomats_.end(), entity ), aggregatedAutomats_.end() );
-    aggregatedFormations_.erase( std::remove( aggregatedFormations_.begin(), aggregatedFormations_.end(), entity ), aggregatedFormations_.end() );
+        aggregatedEntities_.clear();
+    else
+        aggregatedEntities_.erase( std::remove( aggregatedEntities_.begin(), aggregatedEntities_.end(), entity ), aggregatedEntities_.end() );
 }
 
 // -----------------------------------------------------------------------------
-// Name: GLOptions::GetAggregatedAutomats
+// Name: GLOptions::GetAggregatedEntities
 // Created: ABR 2014-07-08
 // -----------------------------------------------------------------------------
-const std::vector< const kernel::Entity_ABC* >& GLOptions::GetAggregatedAutomats() const
+const std::vector< const kernel::Entity_ABC* >& GLOptions::GetAggregatedEntities() const
 {
-    return aggregatedAutomats_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: GLOptions::GetAggregatedFormations
-// Created: ABR 2014-07-08
-// -----------------------------------------------------------------------------
-const std::vector< const kernel::Entity_ABC* >& GLOptions::GetAggregatedFormations() const
-{
-    return aggregatedFormations_;
+    return aggregatedEntities_;
 }
 
 // -----------------------------------------------------------------------------
@@ -461,8 +444,7 @@ const std::vector< const kernel::Entity_ABC* >& GLOptions::GetAggregatedFormatio
 // -----------------------------------------------------------------------------
 bool GLOptions::IsAggregated( const kernel::Entity_ABC& entity ) const
 {
-    return std::find( aggregatedAutomats_.begin(), aggregatedAutomats_.end(), &entity ) != aggregatedAutomats_.end() ||
-           std::find( aggregatedFormations_.begin(), aggregatedFormations_.end(), &entity ) != aggregatedFormations_.end();
+    return std::find( aggregatedEntities_.begin(), aggregatedEntities_.end(), &entity ) != aggregatedEntities_.end();
 }
 
 // -----------------------------------------------------------------------------

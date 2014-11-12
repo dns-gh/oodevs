@@ -352,14 +352,9 @@ void GLMainProxy::ApplyOptions()
     formationResolver_.Apply( []( const kernel::Formation_ABC& formation ){
         ToggleAggregation( formation, false );
     } );
-    const auto& aggregatedAutomats = options.GetAggregatedAutomats();
-    for( auto automat = aggregatedAutomats.begin(); automat != aggregatedAutomats.end(); ++automat )
-        if( *automat )
-            ToggleAggregation( **automat, true );
-    const auto& aggregatedFormations = options.GetAggregatedFormations();
-    for( auto formation = aggregatedFormations.begin(); formation != aggregatedFormations.end(); ++formation )
-        if( *formation )
-            ToggleAggregation( **formation, true );
+    const auto& entities = options.GetAggregatedEntities();
+    for( auto entity = entities.begin(); entity != entities.end(); ++entity )
+            ToggleAggregation( **entity, true );
 }
 
 GLOptions& GLMainProxy::GetActiveOptions()

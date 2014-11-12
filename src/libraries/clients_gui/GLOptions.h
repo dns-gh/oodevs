@@ -58,12 +58,13 @@ class GLOptions : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-    // create a GLOptions sharing kernel::Options pointer with OptionsController
+             // create a GLOptions sharing kernel::Options pointer with OptionsController
              GLOptions( kernel::Controllers& controllers,
                         const kernel::Profile_ABC& profile,
                         const kernel::StaticModel& staticModel,
                         const kernel::EntityResolver_ABC& model,
                         const std::shared_ptr< Lighting_ABC >& lighting );
+             // create a GLOptions by copy
              GLOptions( const GLOptions& other );
     virtual ~GLOptions();
     //@}
@@ -110,8 +111,7 @@ public:
     geometry::Point2f GetCenterPosition();
 
     bool IsAggregated( const kernel::Entity_ABC& entity ) const;
-    const std::vector< const kernel::Entity_ABC* >& GetAggregatedAutomats() const;
-    const std::vector< const kernel::Entity_ABC* >& GetAggregatedFormations() const;
+    const std::vector< const kernel::Entity_ABC* >& GetAggregatedEntities() const;
     void Aggregate( const kernel::Entity_ABC& entity );
     void Disaggregate( const kernel::Entity_ABC* entity = 0 ); // if entity == 0, disagregate all
 
@@ -164,9 +164,7 @@ private:
     // Exercise options
     kernel::SafePointer< kernel::Entity_ABC > filterEntity_;
     kernel::SafePointer< kernel::Entity_ABC > lockedEntity_;
-
-    std::vector< const kernel::Entity_ABC* > aggregatedAutomats_;
-    std::vector< const kernel::Entity_ABC* > aggregatedFormations_;
+    std::vector< const kernel::Entity_ABC* > aggregatedEntities_;
     //@}
 };
 
