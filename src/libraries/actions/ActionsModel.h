@@ -106,7 +106,7 @@ public:
     int PublishKnowledgeGroupUpdatePartyParent( const kernel::KnowledgeGroup_ABC& entity, const kernel::KnowledgeGroup_ABC& superior );
     int PublishRename( const kernel::Entity_ABC& entity, const QString& newName );
     int PublishChangeTacticalLineSuperior( kernel::TacticalLine_ABC& item, const kernel::Entity_ABC& target );
-    int PublishChangeDrawingSuperior( kernel::Drawing_ABC& item, const kernel::Entity_ABC& target );
+    void PublishChangeDrawingSuperior( kernel::Drawing_ABC& item, const kernel::Entity_ABC& target );
     int PublishChangePathfindSuperior( kernel::Pathfind_ABC& item, const kernel::Entity_ABC& target );
     //@}
 

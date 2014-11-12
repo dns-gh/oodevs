@@ -83,6 +83,7 @@ public:
 
     virtual void NotifyDestruction() const {}
     virtual const kernel::Location_ABC& GetLocation() const;
+    virtual void ChangeSuperior( const kernel::Entity_ABC& target );
     //@}
 
 protected:

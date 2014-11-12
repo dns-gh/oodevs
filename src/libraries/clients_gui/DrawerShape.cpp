@@ -316,3 +316,12 @@ void DrawerShape::CreateDictionary()
     const kernel::Entity_ABC& constEntity = *static_cast< const kernel::Entity_ABC* >( this );
     dictionary.Register( constEntity, tools::translate( "Info", "Info/Template" ), template_ );
 }
+
+// -----------------------------------------------------------------------------
+// Name: DrawerShape::ChangeSuperior
+// Created: LDC 2014-11-12
+// -----------------------------------------------------------------------------
+void DrawerShape::ChangeSuperior( const kernel::Entity_ABC& entity )
+{
+    entity_ = &entity;
+}

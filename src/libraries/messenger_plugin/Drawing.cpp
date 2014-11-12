@@ -193,6 +193,8 @@ void Drawing::Update( const sword::ShapeUpdateRequest& msg )
         text_ = msg.text();
     if( msg.has_font() )
         font_ = msg.font();
+    if( msg.has_diffusion() )
+        diffusion_ = msg.diffusion();
 }
 
 // -----------------------------------------------------------------------------

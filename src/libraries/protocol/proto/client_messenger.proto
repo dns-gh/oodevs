@@ -111,14 +111,15 @@ message ShapeCreationRequest {
     @todo rename into Drawing/Graphics
 */
 message ShapeUpdateRequest {
-    required Id               shape    = 1;
-    optional string           category = 2;
-    optional RgbColor         color    = 3;
-    optional string           pattern  = 4;
-    optional CoordLatLongList points   = 5;
-    optional string           name     = 6;
-    optional string           text     = 7;
-    optional string           font     = 8;
+    required Id               shape     = 1;
+    optional string           category  = 2;
+    optional RgbColor         color     = 3;
+    optional string           pattern   = 4;
+    optional CoordLatLongList points    = 5;
+    optional string           name      = 6;
+    optional string           text      = 7;
+    optional string           font      = 8;
+    optional Diffusion        diffusion = 9;
 }
 
 /** @struct ShapeDestructionRequest

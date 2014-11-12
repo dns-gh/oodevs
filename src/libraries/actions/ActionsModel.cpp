@@ -10,6 +10,7 @@
 #include "actions_pch.h"
 #include "ActionsModel.h"
 #include "ActionPublisher.h"
+#include "clients_kernel/Drawing_ABC.h"
 #include "clients_kernel/Pathfind_ABC.h"
 
 using namespace actions;
@@ -382,10 +383,9 @@ int ActionsModel::PublishChangeTacticalLineSuperior( kernel::TacticalLine_ABC& /
 // Name: ActionsModel::PublishChangeDrawingSuperior
 // Created: LDC 2014-11-07
 // -----------------------------------------------------------------------------
-int ActionsModel::PublishChangeDrawingSuperior( kernel::Drawing_ABC& /*item*/, const kernel::Entity_ABC& /*target*/ )
+void ActionsModel::PublishChangeDrawingSuperior( kernel::Drawing_ABC& drawing, const kernel::Entity_ABC& target )
 {
-    // FIXME TODO
-    return -1;
+    drawing.ChangeSuperior( target );
 }
 
 // -----------------------------------------------------------------------------
