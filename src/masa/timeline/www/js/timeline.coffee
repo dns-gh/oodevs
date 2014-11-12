@@ -202,6 +202,8 @@ class VerticalLayout
 
     select: (w, h) -> h
 
+    select_both: (w, h) -> [h, w]
+
     lane_attributes: ->
         w = @t.lane_size - 1
         get_y = (y) => imax 0, snap_to_grid @t.scale y
@@ -486,6 +488,8 @@ class HorizontalLayout
     replay_split_attributes: (w, h) -> @split_attributes w, @get_lane_y()
 
     select: (w, h) -> w
+
+    select_both: (w, h) -> [w, h]
 
     lane_attributes: ->
         h = @t.lane_size - 1
@@ -1294,8 +1298,9 @@ class Timeline
     rescale: ->
         @axis.scale @scale
         @grid.scale @scale
-        zoom = @layout.select @zoom.x, @zoom.y
-        zoom @scale
+        zooms = @layout.select_both @zoom.x, @zoom.y
+        zooms[0] @scale
+        zooms[1] d3.scale.identity()
         @render()
 
     get_scale_extent: (extent) ->
