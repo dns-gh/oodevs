@@ -16,6 +16,7 @@
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Diplomacies_ABC.h"
+#include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Updatable_ABC.h"
 #include "clients_gui/EntityHierarchies.h"
 #include "clients_gui/PropertiesDictionary.h"
@@ -72,9 +73,21 @@ void AgentHierarchiesCommunication::DoUpdate( const sword::UnitAttributes& messa
         if( jammed_ || radioReceiverDisabled_ || radioEmitterDisabled_ )
             UpdateSuperior( groupResolver_.Get( message.communications().knowledge_group().id() )  );
         else
-            UpdateSuperior( const_cast< kernel::Entity_ABC& >( *superior_ ) );
+        {
+            if( superior_ )
+                UpdateSuperior( const_cast< kernel::Entity_ABC& >( *superior_ ) );
+            else // unjamming
+            {
+                auto tactical = entity_.Retrieve< kernel::TacticalHierarchies >();
+                if( tactical )
+                {
+                    kernel::Entity_ABC* automat = const_cast< kernel::Entity_ABC* >( tactical->GetSuperior() );
+                    UpdateSuperior( *automat );
+                }
+            }
+        }
         if( wasSelected )
-          entity_.Select( controllers_.actions_ );
+            entity_.Select( controllers_.actions_ );
     }
 }
 
