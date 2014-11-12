@@ -88,6 +88,7 @@ signals:
     void KeywordFilterChanged( const std::string& keyword );
     void HideHierarchiesFilterChanged( const std::string& hierarchies );
     void ShowOnlyFilterChanged( const std::string& uuid, const std::string& name );
+    void SelectedFilterChanged( bool selected );
     //@}
 
 public slots:
@@ -98,6 +99,7 @@ public slots:
     void OnEngagedFilterToggled( bool toggled );
     void OnOrderFilterToggled( bool toggled );
     void OnTaskFilterToggled( bool toggled );
+    void OnSelectedFilterToggled( bool toggled );
     void OnFilterKeyword( const QString& keyword );
     void OnAddShowOnlyFilter();
     void OnHideChildren();
@@ -125,6 +127,7 @@ private:
     bool displayEngaged_;
     bool displayOrders_;
     bool displayTasks_;
+    bool displaySelected_;
     QMenu* filterMenu_;
     QAction* engagedFilter_;
     kernel::SafePointer< gui::Event > contextMenuEvent_;

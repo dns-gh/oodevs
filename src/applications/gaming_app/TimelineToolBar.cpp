@@ -37,6 +37,7 @@ TimelineToolBar::TimelineToolBar( kernel::Controllers& controllers,
     , displayEngaged_( false )
     , displayOrders_( true )
     , displayTasks_( true )
+    , displaySelected_( false )
     , contextMenuEvent_( controllers )
     , main_( true )
 {
@@ -57,6 +58,7 @@ TimelineToolBar::TimelineToolBar( const TimelineToolBar& other )
     , displayEngaged_( other.displayEngaged_ )
     , displayOrders_( other.displayOrders_ )
     , displayTasks_( other.displayTasks_ )
+    , displaySelected_( other.displaySelected_ )
     , contextMenuEvent_( other.contextMenuEvent_ )
     , showOnlyFilter_( other.showOnlyFilter_ )
     , hideHierarchiesFilter_( other.hideHierarchiesFilter_ )
@@ -115,10 +117,17 @@ void TimelineToolBar::Initialize()
     taskFilter->setCheckable( true );
     taskFilter->setChecked( displayTasks_ );
 
+    QAction* selectedFilter = new QAction( tr( "Filter on selected entity" ), this );
+    connect( selectedFilter, SIGNAL( toggled( bool ) ), this, SLOT( OnSelectedFilterToggled( bool ) ) );
+    selectedFilter->setCheckable( true );
+    selectedFilter->setChecked( displaySelected_ );
+
     filterMenu_->addAction( orderFilter );
     filterMenu_->addAction( engagedFilter_ );
     filterMenu_->addSeparator();
     filterMenu_->addAction( taskFilter );
+    filterMenu_->addSeparator();
+    filterMenu_->addAction( selectedFilter );
 
     if( !main_ )
         addAction( qApp->style()->standardIcon( QStyle::SP_DialogCancelButton ), tr( "Remove current view" ), this, SIGNAL( RemoveCurrentView() ) );
@@ -200,6 +209,16 @@ void TimelineToolBar::OnTaskFilterToggled( bool toggled )
 {
     displayTasks_ = toggled;
     emit ServicesFilterChanged( GetServicesFilter() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TimelineToolBar::OnSelectedFilterToggled
+// Created: JSR 2014-11-06
+// -----------------------------------------------------------------------------
+void TimelineToolBar::OnSelectedFilterToggled( bool toggled )
+{
+    displaySelected_ = toggled;
+    emit SelectedFilterChanged( displaySelected_ );
 }
 
 // -----------------------------------------------------------------------------

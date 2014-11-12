@@ -22,6 +22,7 @@
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/Inhabitant_ABC.h"
 #include "clients_kernel/Population_ABC.h"
+#include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/Tools.h"
 #include "gaming/Model.h"
@@ -42,7 +43,10 @@ TimelineDockWidget::TimelineDockWidget( QWidget* parent,
     : gui::RichDockWidget( controllers, parent, "timeline-dock-widget" )
     , config_( config )
     , gamingUuid_( model.GetUuid() )
+    , filterSelected_( false )
     , mainView_( 0 )
+    , filteredEntity_( controllers )
+    , selectedEntity_( controllers )
 {
     // Init
     setCaption( tr( "Timeline" ) );
@@ -120,7 +124,7 @@ void TimelineDockWidget::Disconnect()
 // Name: TimelineDockWidget::AddFilteredView
 // Created: ABR 2013-05-28
 // -----------------------------------------------------------------------------
-QWidget* TimelineDockWidget::AddView( bool main /* = false */,
+TimelineToolBar* TimelineDockWidget::AddView( bool main /* = false */,
                                       const std::string& name /* = "" */ )
 {
     TimelineToolBar* toolBar = main ? new TimelineToolBar( controllers_, config_, gamingUuid_ ) : new TimelineToolBar( *static_cast< TimelineToolBar* >( tabWidget_->widget( 0 ) ) );
@@ -138,10 +142,11 @@ QWidget* TimelineDockWidget::AddView( bool main /* = false */,
     connect( toolBar, SIGNAL( ServicesFilterChanged( const std::string& ) ), webView_.get(), SLOT( OnServicesFilterChanged( const std::string& ) ) );
     connect( toolBar, SIGNAL( KeywordFilterChanged( const std::string& ) ), webView_.get(), SLOT( OnKeywordFilterChanged( const std::string& ) ) );
     connect( toolBar, SIGNAL( HideHierarchiesFilterChanged( const std::string& ) ), webView_.get(), SLOT( OnHideHierarchiesFilterChanged( const std::string& ) ) );
+    connect( toolBar, SIGNAL( SelectedFilterChanged( bool ) ), this, SLOT( OnSelectedFilterChanged( bool ) ) );
     const int index = tabWidget_->addTab( toolBar, "" );
     tabWidget_->setTabText( index, main ? tr( "Main" ) : name.empty() ? tr( "View %1" ).arg( ++maxTabNumber_ ) : QString::fromStdString( name ) );
     tabWidget_->setCurrentIndex( index );
-    return tabWidget_->widget( index );
+    return toolBar;
 }
 
 namespace
@@ -191,9 +196,8 @@ void TimelineDockWidget::OnCurrentChanged( int index )
 
 namespace
 {
-    std::string GetEntityFilter( const kernel::Filter_ABC& filter )
+    std::string GetEntityFilter( const kernel::Entity_ABC* entity )
     {
-        auto entity = filter.GetFilteredEntity();
         if( !entity )
             return std::string();
         const auto& type = entity->GetTypeName();
@@ -219,6 +223,32 @@ namespace
 }
 
 // -----------------------------------------------------------------------------
+// Name: TimelineDockWidget::GetEntityFilter
+// Created: JSR 2014-11-07
+// -----------------------------------------------------------------------------
+std::string TimelineDockWidget::GetEntityFilter() const
+{
+    if( !filterSelected_ )
+        return ::GetEntityFilter( filteredEntity_ );
+    std::string result;
+    if( selectedEntity_ )
+    {
+        if( !filteredEntity_ || selectedEntity_ == filteredEntity_ )
+            result = ::GetEntityFilter( selectedEntity_ );
+        else
+        {
+            const kernel::TacticalHierarchies* hFiltered = filteredEntity_->Retrieve< kernel::TacticalHierarchies >();
+            const kernel::TacticalHierarchies* hSelected = selectedEntity_->Retrieve< kernel::TacticalHierarchies >();
+            if( hFiltered && hFiltered->IsSubordinateOf( *selectedEntity_ ) )
+                result = ::GetEntityFilter( filteredEntity_ );
+            else if( hSelected && hSelected->IsSubordinateOf( *filteredEntity_ ) )
+                result = ::GetEntityFilter( selectedEntity_ );
+        }
+    }
+    return result.empty() ? "u:0" : result;
+}
+
+// -----------------------------------------------------------------------------
 // Name: TimelineDockWidget::OnCurrentChanged
 // Created: LGY 2013-11-19
 // -----------------------------------------------------------------------------
@@ -233,17 +263,8 @@ void TimelineDockWidget::NotifyCreated( const kernel::Filter_ABC& filter )
 // -----------------------------------------------------------------------------
 void TimelineDockWidget:: NotifyUpdated( const kernel::Filter_ABC& filter )
 {
-    if( TimelineToolBar* main = static_cast< TimelineToolBar* >( mainView_ ) )
-    {
-        main->SetEntityFilter( GetEntityFilter( filter ) );
-        if( tabWidget_->currentIndex() == tabWidget_->indexOf( mainView_ ) )
-            webView_->UpdateFilters( main->GetEntityFilter(),
-                                     main->GetEngagedFilter(),
-                                     main->GetServicesFilter(),
-                                     main->GetKeywordFilter(),
-                                     main->GetHideHierarchiesFilter(),
-                                     main->GetShowOnlyFilter() );
-    }
+    filteredEntity_ = filter.GetFilteredEntity();
+    UpdateWebView();
 }
 
 // -----------------------------------------------------------------------------
@@ -303,6 +324,16 @@ void TimelineDockWidget::OnShowOnlyFilterChanged( const std::string& uuid, const
 }
 
 // -----------------------------------------------------------------------------
+// Name: TimelineDockWidget::OnSelectedFilterChanged
+// Created: JSR 2014-11-06
+// -----------------------------------------------------------------------------
+void TimelineDockWidget::OnSelectedFilterChanged( bool selected )
+{
+    filterSelected_ = selected;
+    UpdateWebView();
+}
+
+// -----------------------------------------------------------------------------
 // Name: TimelineDockWidget::NotifyUpdated
 // Created: ABR 2014-05-13
 // -----------------------------------------------------------------------------
@@ -314,4 +345,33 @@ void TimelineDockWidget::NotifyUpdated( const gui::Event& event )
         auto index = tabWidget_->indexOf( it->second );
         tabWidget_->setTabText( index, QString::fromStdString( event.GetEvent().name ) );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: TimelineDockWidget::NotifySelected
+// Created: JSR 2014-11-06
+// -----------------------------------------------------------------------------
+void TimelineDockWidget::NotifySelected( const kernel::Entity_ABC* element )
+{
+    selectedEntity_ = element;
+    if( filterSelected_ )
+        UpdateWebView();
+}
+
+// -----------------------------------------------------------------------------
+// Name: TimelineDockWidget::UpdateWebView
+// Created: JSR 2014-11-06
+// -----------------------------------------------------------------------------
+void TimelineDockWidget::UpdateWebView() const
+{
+    if( !mainView_ )
+        return;
+    mainView_->SetEntityFilter( GetEntityFilter() );
+    if( tabWidget_->currentIndex() == tabWidget_->indexOf( mainView_ ) )
+        webView_->UpdateFilters( mainView_->GetEntityFilter(),
+                                 mainView_->GetEngagedFilter(),
+                                 mainView_->GetServicesFilter(),
+                                 mainView_->GetKeywordFilter(),
+                                 mainView_->GetHideHierarchiesFilter(),
+                                 mainView_->GetShowOnlyFilter() );
 }

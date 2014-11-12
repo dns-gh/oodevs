@@ -43,6 +43,7 @@ public:
     const T* operator->() const { return &*element_; };
     SafePointer& operator=( const T* element ) { element_ = element; return *this; };
     SafePointer& operator=( const SafePointer& other );
+    bool operator==( const SafePointer& other ) const;
     T* ConstCast() const { return const_cast< T* >( element_ ); }
     //@}
 
@@ -132,6 +133,12 @@ SafePointer< T >& SafePointer< T >::operator=( const SafePointer& other )
     }
     element_ = other.element_;
     return *this;
+}
+
+template< typename T >
+bool SafePointer< T >::operator==( const SafePointer< T >& other ) const
+{
+    return controller_ == other.controller_ && element_ == other.element_;
 }
 
 }
