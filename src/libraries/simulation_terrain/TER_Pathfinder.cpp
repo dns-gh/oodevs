@@ -43,7 +43,7 @@ struct PathfindDumper : public TER_Pathfinder_ABC
                       , public boost::noncopyable
 {
     PathfindDumper( const tools::Path& dump, const std::set< size_t >& filter,
-                     boost::shared_ptr< TerrainPathfinder >& root )
+                     const boost::shared_ptr< TerrainPathfinder >& root )
         : dump_  ( dump )
         , filter_( filter )
         , root_  ( root )
@@ -308,7 +308,7 @@ void TER_Pathfinder::ProcessRequest( TER_PathFinderThread& data, TER_PathfindReq
     try
     {
         data.ProcessDynamicData();
-        auto pathfinder = data.GetPathfinder( !rq.IgnoreDynamicObjects() );
+        const auto pathfinder = data.GetPathfinder( !rq.IgnoreDynamicObjects() );
         boost::shared_ptr< TER_Pathfinder_ABC > wrapper =
             boost::make_shared< PathfindDumper >( dumpDir_, dumpFilter_, pathfinder );
         MT_Profiler profiler;
