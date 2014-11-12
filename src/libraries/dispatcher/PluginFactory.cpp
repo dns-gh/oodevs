@@ -160,7 +160,7 @@ void PluginFactory::Instanciate()
     checkpointFilter_->Add( boost::make_shared< logger::LoggerPlugin >( *model_,
                 staticModel_, config_, services_ ) );
     checkpointFilter_->Add( logistic::CreateLogisticPlugin( *model_, staticModel_, config_ ) );
-    checkpointFilter_->Add( boost::make_shared< reports::ReportsPlugin >( config_ ) );
+    checkpointFilter_->Add( boost::make_shared< reports::ReportsPlugin >( config_, false ) );
     tools::Xifstream xis( config_.GetSessionFile() );
     xis >> xml::start( "session" )
             >> xml::start( "config" )

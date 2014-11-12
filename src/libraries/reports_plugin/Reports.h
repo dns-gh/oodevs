@@ -11,6 +11,7 @@
 #define __Reports_h_
 
 #include "tools/Sql_ABC.h"
+#include <boost/optional.hpp>
 #include <boost/noncopyable.hpp>
 #include <memory>
 
@@ -41,17 +42,18 @@ public:
     //! @name Operations
     //@{
     void AddReport( const sword::Report& report );
-    void ListReports( sword::ListReportsAck& reports,
-                      unsigned int count, unsigned int from );
+    void ListReports( sword::ListReportsAck& reports, unsigned int count,
+                      const boost::optional< unsigned int >& fromReport,
+                      const boost::optional< unsigned int >& untilTick );
     void Save( const tools::Path& filename );
-    void Update( int tick );
+    void SetTick( int tick );
     //@}
 
 private:
     //! @name Member data
     //@{
     std::unique_ptr< tools::Sql_ABC > database_;
-    int tick_;
+    int currentTick_;
     //@}
 };
 }

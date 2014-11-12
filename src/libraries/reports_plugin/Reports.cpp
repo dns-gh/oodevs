@@ -30,7 +30,7 @@ namespace
     }
     void MakeTable( tools::Sql_ABC& db )
     {
-        tools::Sql_ABC::T_Transaction tr = db.Begin();
+        auto tr = db.Begin();
         Execute( *db.Prepare( *tr,
             "CREATE TABLE IF NOT EXISTS reports ("
             "  id           INTEGER PRIMARY KEY"
@@ -44,13 +44,22 @@ namespace
             ")" ) );
         db.Commit( *tr );
     }
+    void MakeIndex( tools::Sql_ABC& db )
+    {
+        auto tr = db.Begin();
+        Execute( *db.Prepare( *tr,
+            "CREATE INDEX IF NOT EXISTS index_tick"
+            "  ON reports (tick, id)" ) );
+        db.Commit( *tr );
+    }
 }
 
 Reports::Reports( const tools::Path& filename )
-    : database_( new tools::Sql( filename ) )
-    , tick_    ( 0 )
+    : database_   ( new tools::Sql( filename ) )
+    , currentTick_( 0 )
 {
     MakeTable( *database_ );
+    MakeIndex( *database_ );
 }
 
 Reports::~Reports()
@@ -69,7 +78,7 @@ namespace
         eParty,
         ePopulation
     };
-    boost::optional< std::pair< uint32_t, uint32_t > > TryGetTasker( const sword::Tasker& tasker )
+    boost::optional< std::pair< uint32_t, uint32_t > > TaskerToId( const sword::Tasker& tasker )
     {
         if( tasker.has_unit() )
             return std::make_pair( tasker.unit().id(), eUnit );
@@ -85,7 +94,7 @@ namespace
             return std::make_pair( tasker.population().id(), ePopulation );
         return boost::none;
     }
-    sword::Tasker TryGetTasker( int id, int type )
+    sword::Tasker IdToTasker( int id, int type )
     {
         sword::Tasker tasker;
         switch( type )
@@ -117,7 +126,7 @@ void Reports::AddReport( const sword::Report& report )
 {
     try
     {
-        const auto source = TryGetTasker( report.source() );
+        const auto source = TaskerToId( report.source() );
         if( !source )
             throw MASA_EXCEPTION( "Invalid tasker" );
 
@@ -140,7 +149,7 @@ void Reports::AddReport( const sword::Report& report )
         st->Bind( static_cast< int >( report.type().id() ) );
         st->Bind( report.category() );
         st->Bind( report.time().data() );
-        st->Bind( tick_ );
+        st->Bind( currentTick_ );
         if( report.has_parameters() )
         {
             xml::xostringstream xos;
@@ -171,7 +180,7 @@ namespace
             report.mutable_report()->set_id( static_cast< int32_t >( st.ReadInt64() ) );
             const auto sourceId = st.ReadInt();
             const auto sourceType = st.ReadInt();
-            *report.mutable_source() = TryGetTasker( sourceId, sourceType );
+            *report.mutable_source() = IdToTasker( sourceId, sourceType );
             report.mutable_type()->set_id( st.ReadInt() );
             report.set_category( sword::Report_EnumReportType( st.ReadInt() ) );
             report.mutable_time()->set_data( st.ReadText() );
@@ -185,7 +194,24 @@ namespace
     }
 }
 
-void Reports::ListReports( sword::ListReportsAck& reports, unsigned int count, unsigned int from )
+namespace
+{
+    std::string CreateCondition( const boost::optional< unsigned int >& fromReport,
+                                 const boost::optional< unsigned int >& untilTick )
+    {
+        if( fromReport && untilTick )
+            return "WHERE tick <= ? and id >= ? ";
+        else if( fromReport )
+            return "WHERE id >= ? ";
+        else if( untilTick )
+            return "WHERE tick <= ? ";
+        return "";
+    }
+}
+
+void Reports::ListReports( sword::ListReportsAck& reports, unsigned int count,
+                           const boost::optional< unsigned int >& fromReport,
+                           const boost::optional< unsigned int >& untilTick )
 {
     try
     {
@@ -199,16 +225,18 @@ void Reports::ListReports( sword::ListReportsAck& reports, unsigned int count, u
             ",      tick "
             ",      parameters "
             "FROM   reports ";
-        if( from != 0 )
-            sql += "WHERE id >= ? ";
-        sql += "ORDER BY id ASC "
+        sql += CreateCondition( fromReport, untilTick ) +
+               "ORDER BY id ASC "
                "LIMIT  ? ";
 
         tools::Sql_ABC::T_Transaction tr = database_->Begin( false );
         tools::Sql_ABC::T_Statement st = database_->Prepare( *tr, sql );
-        if( from != 0 )
-            st->Bind( static_cast< int64_t >( from ) );
-        st->Bind( static_cast< int >( count + 1 ) );
+
+        if( untilTick )
+            st->Bind( static_cast< int >( *untilTick ) );
+        if( fromReport )
+            st->Bind( static_cast< int64_t >( *fromReport ) );
+        st->Bind( static_cast< int64_t >( count + 1 ) );
 
         while( st->Next() )
             MakeReport( reports, *st, count );
@@ -232,7 +260,7 @@ void Reports::Save( const tools::Path& filename )
     }
 }
 
-void Reports::Update( int tick )
+void Reports::SetTick( int tick )
 {
-    tick_ = tick;
+    currentTick_ = tick;
 }

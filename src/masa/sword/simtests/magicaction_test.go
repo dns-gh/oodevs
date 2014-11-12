@@ -565,6 +565,21 @@ func CheckReportOrder(c *C, first, second *sword.Report) {
 	c.Assert(first.GetReport().GetId(), Lesser, second.GetReport().GetId())
 }
 
+func CreateReports(c *C, client *swapi.Client) {
+	// Create a bunch of reports
+	startMissionId := uint32(79)
+	unitId := getSomeUnit(c, client.Model.GetData()).Id
+	for i := 0; i < 10; i++ {
+		err := client.CreateReport(startMissionId, unitId)
+		c.Assert(err, IsNil)
+	}
+
+	// Create a report with a parameter
+	CBRNProtectionId := uint32(525)
+	err := client.CreateReport(CBRNProtectionId, unitId, swapi.MakeInt(345))
+	c.Assert(err, IsNil)
+}
+
 func (s *TestSuite) TestListReports(c *C) {
 	sim, client := connectAndWaitModel(c,
 		NewAdminOpts(ExCrossroadLog).EnableTestCommands())
@@ -575,18 +590,7 @@ func (s *TestSuite) TestListReports(c *C) {
 	c.Assert(err, IsNil)
 	c.Assert(len(reports), Equals, 0)
 
-	// Create a bunch of reports
-	startMissionId := uint32(79)
-	unitId := getSomeUnit(c, client.Model.GetData()).Id
-	for i := 0; i < 10; i++ {
-		err = client.CreateReport(startMissionId, unitId)
-		c.Assert(err, IsNil)
-	}
-
-	// Create a report with a parameter
-	CBRNProtectionId := uint32(525)
-	err = client.CreateReport(CBRNProtectionId, unitId, swapi.MakeInt(345))
-	c.Assert(err, IsNil)
+	CreateReports(c, client)
 
 	_, err = client.Pause()
 	c.Assert(err, IsNil)
@@ -620,18 +624,12 @@ func (s *TestSuite) TestListReports(c *C) {
 	}
 }
 
-func (s *TestSuite) TestListReportsAfterCheckpoint(c *C) {
+func (s *TestSuite) TestCheckpointListReports(c *C) {
 	sim, client := connectAndWaitModel(c,
 		NewAdminOpts(ExCrossroadLog).EnableTestCommands())
 	defer stopSimAndClient(c, sim, client)
 
-	// Create a bunch of reports
-	startMissionId := uint32(79)
-	unitId := getSomeUnit(c, client.Model.GetData()).Id
-	for i := 0; i < 10; i++ {
-		err := client.CreateReport(startMissionId, unitId)
-		c.Assert(err, IsNil)
-	}
+	CreateReports(c, client)
 
 	_, err := client.Pause()
 	c.Assert(err, IsNil)
@@ -685,4 +683,45 @@ func (s *TestSuite) TestHideActions(c *C) {
 	}
 	listenerA.Check(c, event)
 	listenerB.Check(c, event)
+}
+
+func (s *TestSuite) TestReplayListReports(c *C) {
+	sim, client := connectAndWaitModel(c,
+		NewAdminOpts(ExCrossroadLog).EnableTestCommands())
+	defer stopSimAndClient(c, sim, client)
+
+	// Create reports
+	CreateReports(c, client)
+
+	// Pause sim after 4 tick
+	tick, delay, err := client.Resume(4)
+	c.Assert(err, IsNil)
+
+	// Create reports
+	CreateReports(c, client)
+
+	tickBis := tick + delay
+	c.Assert(tickBis, Greater, tick)
+
+	// Get all reports
+	allReports, _, err := client.ListReports(math.MaxInt32, 0)
+	c.Assert(err, IsNil)
+
+	sim.Stop()
+	client.Close()
+	replay := startReplay(c, sim.Opts)
+	defer replay.Stop()
+	client = loginAndWaitModel(c, replay, NewAdminOpts(""))
+	defer client.Close()
+
+	// Check all reports in replay
+	replayReports, _, err := client.ReplayListReports(math.MaxInt32, 0, 0)
+	c.Assert(err, IsNil)
+	swtest.DeepEquals(c, allReports, replayReports)
+
+	// Check one part of reports in replay
+	reports, _, err := client.ReplayListReports(math.MaxInt32, 0, uint32(tick))
+	c.Assert(err, IsNil)
+	c.Assert(len(replayReports), Greater, len(reports))
+	swtest.DeepEquals(c, replayReports[len(replayReports)-len(reports):], reports)
 }

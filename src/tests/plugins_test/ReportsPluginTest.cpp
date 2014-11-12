@@ -62,8 +62,7 @@ namespace
             : tempDir( "testreportsplugin-", testOptions.GetTempDir() )
             , reports( new Reports( tempDir.Path() / "reports.db" ) )
         {
-            // tick 12
-            reports->Update( 12 );
+            reports->SetTick( 12 );
             FillReport( report1, 542, 0, sword::Report_EnumReportType_information,
                 "date1", CreateUnitTasker( 1234 ) );
             FillReport( report2, 541, 1, sword::Report_EnumReportType_operational,
@@ -71,8 +70,7 @@ namespace
             reports->AddReport( report1 );
             reports->AddReport( report2 );
 
-            // tick 14
-            reports->Update( 14 );
+            reports->SetTick( 14 );
             FillReport( report3, 540, 2, sword::Report_EnumReportType_exceptional_event,
                 "date3", CreateCrowdTasker( 123456 ) );
             FillParameters( report3 );
@@ -97,21 +95,44 @@ namespace
 BOOST_FIXTURE_TEST_CASE( list_all_reports, Fixture )
 {
     sword::ListReportsAck ack;
-    reports->ListReports( ack, 123, 0 );
+    reports->ListReports( ack, 0, boost::none, boost::none );
+    CheckReports( ack, std::vector< sword::Report >(), report3.report().id() );
+
+    ack.Clear();
+    reports->ListReports( ack, std::numeric_limits< int >::max(), boost::none, boost::none );
     CheckReports( ack, boost::assign::list_of< sword::Report >( report3 )( report2 )( report1 ) );
 }
 
 BOOST_FIXTURE_TEST_CASE( list_reports_one_by_one, Fixture )
 {
     sword::ListReportsAck ack;
-    reports->ListReports( ack, 1, 0 );
+    reports->ListReports( ack, 1, boost::none, boost::none );
     CheckReports( ack, boost::assign::list_of< sword::Report >( report3 ), report2.report().id() );
 
     ack.Clear();
-    reports->ListReports( ack, 1, report2.report().id() );
+    reports->ListReports( ack, 1, report2.report().id(), boost::none );
     CheckReports( ack, boost::assign::list_of< sword::Report >( report2 ), report1.report().id() );
 
     ack.Clear();
-    reports->ListReports( ack, 1, report1.report().id() );
+    reports->ListReports( ack, 1, report1.report().id(), boost::none );
+    CheckReports( ack, boost::assign::list_of< sword::Report >( report1 ) );
+}
+
+BOOST_FIXTURE_TEST_CASE( list_reports_with_maximum_tick, Fixture )
+{
+    sword::ListReportsAck ack;
+    reports->ListReports( ack, std::numeric_limits< int >::max(), boost::none, 10 );
+    CheckReports( ack, std::vector< sword::Report >() );
+
+    ack.Clear();
+    reports->ListReports( ack, std::numeric_limits< int >::max(), boost::none, 13 );
+    CheckReports( ack, boost::assign::list_of< sword::Report >( report2 )( report1 ) );
+
+    ack.Clear();
+    reports->ListReports( ack, 1, boost::none, 13 );
+    CheckReports( ack, boost::assign::list_of< sword::Report >( report2 ), report1.report().id() );
+
+    ack.Clear();
+    reports->ListReports( ack, 1, report1.report().id(), 13 );
     CheckReports( ack, boost::assign::list_of< sword::Report >( report1 ) );
 }

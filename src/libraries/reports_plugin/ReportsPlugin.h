@@ -11,6 +11,7 @@
 #define __ReportsPlugin_h_
 
 #include "dispatcher/Plugin_ABC.h"
+#include <boost/shared_ptr.hpp>
 #include <memory>
 
 namespace dispatcher
@@ -34,7 +35,7 @@ class ReportsPlugin : public dispatcher::Plugin_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ReportsPlugin( const tools::SessionConfig& config );
+             ReportsPlugin( const tools::SessionConfig& config, bool replay );
     virtual ~ReportsPlugin();
     //@}
 
@@ -43,7 +44,13 @@ public:
     virtual void Receive( const sword::SimToClient& msg );
     virtual bool HandleClientToSim( const sword::ClientToSim& msg,
         dispatcher::RewritingPublisher_ABC& unicaster, dispatcher::ClientPublisher_ABC& );
+    virtual bool HandleClientToReplay( const sword::ClientToReplay& msg,
+        dispatcher::RewritingPublisher_ABC& unicaster, dispatcher::ClientPublisher_ABC& );
     //@}
+
+private:
+    template< typename R, typename M >
+    bool HandleClientTo( const M& msg, dispatcher::RewritingPublisher_ABC& unicaster );
 
 private:
     //! @name Member data

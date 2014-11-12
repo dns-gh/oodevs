@@ -95,6 +95,7 @@ message ClientToReplay {
         optional ListLogisticRequests     list_logistic_requests      = 10;
         optional ControlEnableVisionCones control_toggle_vision_cones = 11;
         optional ListEnabledVisionCones   list_enabled_vision_cones   = 12;
+        optional ListReports              list_reports                = 13;
     }
     /** @property context
         @brief Identifies the request matching the response.
