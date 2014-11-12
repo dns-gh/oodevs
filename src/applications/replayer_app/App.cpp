@@ -14,6 +14,7 @@
 #include "MT_Tools/MT_FileLogger.h"
 #include "MT_Tools/MT_Logger.h"
 #include "tools/WinArguments.h"
+#include <tools/WaitEvent.h>
 
 using namespace dispatcher;
 
@@ -47,5 +48,8 @@ void App::Initialize()
 
 bool App::Update()
 {
-    return replayer_->Update() && !test_;
+    if( !replayer_->Update() || test_ )
+        return false;
+    quit_->Wait( boost::posix_time::milliseconds( 10 ) );
+    return true;
 }
