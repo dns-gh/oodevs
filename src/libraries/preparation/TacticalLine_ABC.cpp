@@ -79,3 +79,12 @@ void TacticalLine_ABC::NotifyDestruction()
 {
     // NOTHING
 }
+
+// -----------------------------------------------------------------------------
+// Name: TacticalLine_ABC::ChangeSuperior
+// Created: LDC 2014-11-12
+// -----------------------------------------------------------------------------
+void TacticalLine_ABC::ChangeSuperior( const kernel::Entity_ABC& )
+{
+
+}

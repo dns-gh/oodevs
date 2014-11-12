@@ -12,6 +12,7 @@
 #include "ActionPublisher.h"
 #include "clients_kernel/Drawing_ABC.h"
 #include "clients_kernel/Pathfind_ABC.h"
+#include "clients_kernel/TacticalLine_ABC.h"
 
 using namespace actions;
 
@@ -373,10 +374,9 @@ int ActionsModel::PublishRename( const kernel::Entity_ABC& entity, const QString
 // Name: ActionsModel::PublishChangeTacticalLineSuperior
 // Created: LDC 2014-11-07
 // -----------------------------------------------------------------------------
-int ActionsModel::PublishChangeTacticalLineSuperior( kernel::TacticalLine_ABC& /*item*/, const kernel::Entity_ABC& /*target*/ )
+void ActionsModel::PublishChangeTacticalLineSuperior( kernel::TacticalLine_ABC& line, const kernel::Entity_ABC& target )
 {
-    // FIXME TODO
-    return -1;
+    line.ChangeSuperior( target );
 }
 
 // -----------------------------------------------------------------------------

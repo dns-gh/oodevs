@@ -125,3 +125,18 @@ void TacticalLineHierarchies::WriteTo( sword::Diffusion& message ) const
     else if( diffusion_ == eFormation )
         message.mutable_formation()->set_id( GetSuperior()->GetId() );
 }
+
+// -----------------------------------------------------------------------------
+// Name: TacticalLineHierarchies::ChangeSuperior
+// Created: LDC 2014-11-12
+// -----------------------------------------------------------------------------
+void TacticalLineHierarchies::ChangeSuperior( const kernel::Entity_ABC& superior )
+{
+    if( dynamic_cast< const Automat_ABC* >( &superior ) != 0 )
+        diffusion_ = eAutomat;
+    else if( dynamic_cast< const Agent_ABC* >( &superior ) != 0 )
+        diffusion_ = eUnit;
+    else
+        diffusion_ = eFormation;
+    SetSuperior( &superior );
+}

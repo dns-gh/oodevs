@@ -88,6 +88,7 @@ protected:
 
     virtual void DoUpdate( const sword::PhaseLineUpdate& message );
     virtual void DoUpdate( const sword::LimitUpdate&  message );
+    virtual void ChangeSuperior( const kernel::Entity_ABC& superior );
     //@}
 
 private:

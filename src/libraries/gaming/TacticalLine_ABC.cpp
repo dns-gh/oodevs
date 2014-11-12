@@ -143,3 +143,13 @@ void TacticalLine_ABC::DoUpdate( const sword::LimitUpdate& message )
     SetName( QString::fromStdString( message.tactical_line().name() ) );
     Touch();
 }
+
+// -----------------------------------------------------------------------------
+// Name: TacticalLine_ABC::ChangeSuperior
+// Created: LDC 2014-11-12
+// -----------------------------------------------------------------------------
+void TacticalLine_ABC::ChangeSuperior( const kernel::Entity_ABC& superior )
+{
+    const_cast< TacticalLineHierarchies& >( static_cast< const TacticalLineHierarchies& >( Get< kernel::TacticalHierarchies >() ) ).ChangeSuperior( superior );
+    UpdateToSim( eStateModified );
+}

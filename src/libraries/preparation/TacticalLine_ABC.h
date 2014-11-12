@@ -67,6 +67,7 @@ private:
     virtual void NotifyDestruction();
     virtual void Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GLView_ABC& tools ) const;
     virtual void SerializeAttributes( xml::xostream& xos ) const;
+    virtual void ChangeSuperior( const kernel::Entity_ABC& superior);
     //@}
 };
 
