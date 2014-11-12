@@ -89,7 +89,7 @@ LRESULT Application::MainWndProc( HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lP
     return 0;
 }
 
-void Application::RunGUI()
+void Application::RunGUI( const std::string& module )
 {
     try
     {
@@ -104,10 +104,11 @@ void Application::RunGUI()
         wc.hCursor = LoadCursor( 0, IDC_ARROW );
         wc.hbrBackground = (HBRUSH)( 1 + COLOR_BTNFACE );
         wc.lpszMenuName = 0;
-        wc.lpszClassName = "MaWinClass";
+        wc.lpszClassName = "MyWinClass";
         if( !RegisterClass( &wc ) )
             return;
-        hWnd_ = CreateWindow( "MaWinClass", "Simulation", WS_OVERLAPPEDWINDOW,
+        hWnd_ = CreateWindow(
+            "MyWinClass", module.c_str(), WS_OVERLAPPEDWINDOW,
             CW_USEDEFAULT, CW_USEDEFAULT, 400, 300,
             0, 0, hInstance_, 0 );
         ::SetWindowLongPtr( hWnd_, GWLP_USERDATA, (LONG_PTR) this );
@@ -121,7 +122,7 @@ void Application::RunGUI()
         trayIcon_.hIcon = LoadIcon( hInstance_, MAKEINTRESOURCE( icon1_ ) );
         trayIcon_.uCallbackMessage = MY_WM_NOTIFYICON;
         trayIcon_.uFlags = NIF_ICON | NIF_MESSAGE | NIF_TIP;
-        strcpy_s( trayIcon_.szTip, "Simulation" );
+        strcpy_s( trayIcon_.szTip, module.c_str() );
         Shell_NotifyIcon( NIM_ADD, &trayIcon_ );
 
         MSG msg;
@@ -179,7 +180,7 @@ void Application::Initialize( const std::string& module )
     MT_LOG_STARTUP_MESSAGE( "----------------------------------------------------------------" );
     MT_LOG_INFO_MSG( "Command line: " << arguments_->GetCommandLine() );
     MT_LOG_INFO_MSG( "Starting simulation GUI" );
-    gui_.reset( new boost::thread( boost::bind( &Application::RunGUI, this ) ) );
+    gui_.reset( new boost::thread( [&]() { RunGUI( module ); } ) );
 }
 
 int Application::Execute()

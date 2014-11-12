@@ -47,7 +47,7 @@ protected:
     virtual void Initialize() = 0;
 
 private:
-    void RunGUI();
+    void RunGUI( const std::string& module );
     void AnimateIcon();
     void StartIconAnimation();
     void StopIconAnimation();
