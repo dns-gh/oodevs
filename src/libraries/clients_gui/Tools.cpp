@@ -226,27 +226,37 @@ QMenu* tools::CreateWindowMenu( kernel::Controllers& controllers, QWidget& paren
     QMap< QString, QAction* > glActions;
     auto glDockwidgets = qFindChildren< gui::GLDockWidget* >( &parent );
     for( auto it = glDockwidgets.begin(); it != glDockwidgets.end(); ++it )
+
     {
         gui::GLDockWidget* widget = *it;
         glActions[ widget->windowTitle() ] = widget->ToggleViewAction();
     }
-    QList< QAction* > actions;
+    QMap< QString, QAction* > actions;
     auto dockwidgets = qFindChildren< QDockWidget* >( &parent );
     for( auto it = dockwidgets.begin(); it != dockwidgets.end(); ++it )
     {
         QDockWidget* widget = *it;
-        if( !widget->property( "notAppropriate" ).isValid() )
-            actions.push_back( widget->toggleViewAction() );
+        if( !widget->property( "GLDockWidget" ).isValid() )
+            actions[ widget->windowTitle() ] = widget->toggleViewAction();
     }
+    QMap< QString, QAction* > toolBarActions;
+    auto toolbars = qFindChildren< QToolBar* >( &parent );
+    for( auto it = toolbars.begin(); it != toolbars.end(); ++it )
+    {
+        QToolBar* toolbar = *it;
+        if( auto action = toolbar->toggleViewAction() )
+            if( !action->text().isEmpty() )
+                toolBarActions[ action->text() ] = action;
+    }
+
     gui::RichMenu* menu = new gui::RichMenu( "rich_menu", &parent, controllers,
                                              tools::translate( "Tools", "&Windows" ) );
     menu->SetModes( eModes_Default, eModes_All, true );
     menu->NotifyModeChanged( controllers.GetCurrentMode(), true, false );
-    if( controllers.GetCurrentMode() > eModes_Default )
-        menu->addAction( tools::translate( "Tools", "Add new terrain view" ),
-                         &glWidgetManager,
-                         SLOT( AddDockWidget() ),
-                         Qt::Key_F9 );
+    menu->addAction( tools::translate( "Tools", "Add new terrain view" ),
+                     &glWidgetManager,
+                     SLOT( AddDockWidget() ),
+                     Qt::Key_F9 );
     menu->addSeparator();
     for( auto it = glActions.begin(); it != glActions.end(); ++it )
         menu->addAction( *it );
@@ -254,8 +264,7 @@ QMenu* tools::CreateWindowMenu( kernel::Controllers& controllers, QWidget& paren
     for( auto it = actions.begin(); it != actions.end(); ++it )
         menu->addAction( *it );
     menu->addSeparator();
-    auto toolbars = qFindChildren< QToolBar* >( &parent );
-    for( auto it = toolbars.begin(); it != toolbars.end(); ++it )
-        menu->addAction( ( *it )->toggleViewAction() );
+    for( auto it = toolBarActions.begin(); it != toolBarActions.end(); ++it )
+        menu->addAction( *it );
     return menu;
 }

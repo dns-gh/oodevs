@@ -35,7 +35,7 @@ GLDockWidget::GLDockWidget( kernel::Controllers& controllers,
     setMinimumSize( 200, 200 );
     auto center = parent.geometry().center();
     setGeometry( center.x() - 200, center.y() - 200, 400, 400 );
-    setProperty( "notAppropriate", QVariant( true ) );
+    setProperty( "GLDockWidget", QVariant( true ) );
     parent_.addDockWidget( Qt::LeftDockWidgetArea, this );
     
     NotifyModeChanged( controllers_.GetCurrentMode(), false, true );
