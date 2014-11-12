@@ -4,6 +4,18 @@
 # Copyright (c) 2013 Mathématiques Appliquées SA (MASA)
 # *****************************************************************************
 
+# transform <input> query into key/value object
+deparam = (input) ->
+    tokenizer = /([^&;=]+)=?([^&;]*)/g
+    decoder = (v) -> decodeURIComponent v.replace /\+/g, " "
+    params = {}
+    while token = tokenizer.exec input
+        key = decoder token[1]
+        continue unless key?.length
+        value = decoder token[2]
+        params[key] = if value?.length then value else null
+    return params
+
 # precompiled handlebar templates
 error_template = null
 event_template = null
@@ -14,25 +26,22 @@ triggers = null
 # gaming object, only defined when used inside gaming
 gaming = window.gaming
 # url parameters
-url_query = null
+url_query = deparam window.location.search.substring 1
 lang = "en"
-vertical = true
 
 # initialize function called when all scripts have been loaded
-@init = ->
+render_page = ->
     $.ajaxSetup cache: false # disable cache on IE
+    unless url_query.id?
+        return redirect()
+    if url_query.lang?
+        lang = url_query.lang
+    moment.lang(lang)
     error_template = Handlebars.compile $("#error_template").html()
     event_template = Handlebars.compile $("#event_template").html()
     tick_template  = Handlebars.compile $("#tick_template").html()
     event_settings_template = Handlebars.compile $("#event_settings_template").html()
     triggers = new Triggers()
-    url_query = parse_parameters()
-    if url_query.lang?
-        lang = url_query.lang
-    vertical = !convert_to_boolean url_query.horizontal
-    moment.lang(lang)
-    unless url_query.id?
-        return redirect()
     $("#session_container").show()
     if gaming?.enabled
         $(".top_bar, .sub_bar .btn-group").hide()
@@ -53,22 +62,6 @@ i18n = (source) ->
                         return message.Translation.Text
                     return source
     return source
-
-# transform <input> query into key/value object
-deparam = (input) ->
-    tokenizer = /([^&;=]+)=?([^&;]*)/g
-    decoder = (v) -> decodeURIComponent v.replace /\+/g, " "
-    params = {}
-    while token = tokenizer.exec input
-        key = decoder token[1]
-        continue unless key?.length
-        value = decoder token[2]
-        params[key] = if value?.length then value else null
-    return params
-
-# return url query parameters
-parse_parameters = ->
-    return deparam window.location.search.substring 1
 
 # convert any <value> to boolean
 convert_to_boolean = (value) ->
@@ -591,6 +584,7 @@ class SessionView extends Backbone.View
         @id = options.id
         @model = new Session {}, id: options.id
         events = new Events {}, id: options.id
+        vertical = !convert_to_boolean url_query.horizontal
         @timeline = new Timeline vertical, events
         @throttler = new EventThrottler @model, events, @timeline
         @events_view = new EventsView id: options.id, timeline: @timeline, model: events
@@ -713,4 +707,4 @@ redirect = ->
        error: ->
            on_error i18n "Network error"
 
-@init()
+render_page()
