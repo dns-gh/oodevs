@@ -127,9 +127,11 @@ QString ProfileFilter::GetFilter() const
 // Name: ProfileFilter::SetFilter
 // Created: LGY 2011-11-24
 // -----------------------------------------------------------------------------
-void ProfileFilter::SetFilter( const kernel::Entity_ABC& entity, bool update /* = true */ )
+void ProfileFilter::SetFilter( const kernel::Entity_ABC* entity, bool update /* = true */ )
 {
     pUnitFilter_->SetFilter( entity, update );
+    if( !entity )
+        profile_ = 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -140,16 +142,6 @@ void ProfileFilter::SetFilter( const kernel::Profile_ABC& profile )
 {
     profile_ = &profile;
     controller_.Update( *static_cast< Filter_ABC* >( this ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ProfileFilter::RemoveFilter
-// Created: LGY 2011-11-24
-// -----------------------------------------------------------------------------
-void ProfileFilter::RemoveFilter()
-{
-    profile_ = 0;
-    pUnitFilter_->RemoveFilter();
 }
 
 // -----------------------------------------------------------------------------
