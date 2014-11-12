@@ -1,12 +1,9 @@
 //{{NO_DEPENDENCIES}}
 // Microsoft Visual C++ generated include file.
-// Used by replayer_app.rc
 //
+#define IDR_MENU1                       107
 #define IDI_ICON1                       113
 #define IDI_ICON2                       115
-#define IDR_MENU1                       107
-#define ID_TRAYMENU_QUITTER             40001
-#define IDM_QUIT                        40002
 
 // Next default values for new objects
 //
