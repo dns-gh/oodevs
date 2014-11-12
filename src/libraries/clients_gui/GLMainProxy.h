@@ -46,7 +46,7 @@ public:
     //! @name Types
     //@{
     typedef std::function< void( const T_View& ) > T_GLObserver;
-    typedef std::vector< T_GLObserver >            T_GLObservers;
+    typedef std::map< QObject*, T_GLObserver >    T_GLObservers;
     //@}
 
 public:
@@ -63,9 +63,9 @@ public:
     void Load( const DrawingTypes& drawingTypes );
     void Purge();
 
-    void AddActiveChangeObserver( const T_GLObserver& activeChangeObserver );
-    void AddCreationObserver( const T_GLObserver& observer );
-    void AddDeletionObserver( const T_GLObserver& observer );
+    void AddActiveChangeObserver( QObject* parent, const T_GLObserver& activeChangeObserver );
+    void AddCreationObserver( QObject* parent, const T_GLObserver& observer );
+    void AddDeletionObserver( QObject* parent, const T_GLObserver& observer );
 
     void ApplyToOptions( const std::function< void( GLOptions& ) >& functor );
     void ApplyToOptions( const std::function< void( const GLOptions& ) >& functor ) const;

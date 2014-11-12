@@ -75,7 +75,7 @@ GLWidgetManager::GLWidgetManager( QMainWindow& mainWindow,
     , displayTimer_( new QTimer( this ) )
     , loading_( false )
 {
-    mainProxy_.AddActiveChangeObserver( [&]( const GLView_ABC::T_View& ) {
+    mainProxy_.AddActiveChangeObserver( this, [&]( const GLView_ABC::T_View& ) {
         ResetContourLinesObservers();
         mainProxy_.GetActiveOptions().GetContourLinesComputer()->SetContourLinesObserver( contourLinesObserver_ );
     } );

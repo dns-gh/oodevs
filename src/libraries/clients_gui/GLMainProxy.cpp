@@ -18,6 +18,7 @@
 #include "GLSymbols.h"
 #include "GlTooltip.h"
 #include "PickingSelector.h"
+#include "SignalAdapter.h"
 #include "SvglProxy.h"
 #include "SvglRenderer.h"
 #include "TacticalGraphics.h"
@@ -89,24 +90,33 @@ void GLMainProxy::Purge()
     renderer_.reset();
 }
 
-void GLMainProxy::AddActiveChangeObserver( const T_GLObserver& observer )
+void GLMainProxy::AddActiveChangeObserver( QObject* parent, const T_GLObserver& observer )
 {
-    activeChangeObservers_.push_back( observer );
+    gui::connect( parent, SIGNAL( destroyed( QObject* ) ), [=](){
+        activeChangeObservers_.erase( parent );
+    } );
+    activeChangeObservers_[ parent ] = observer;
     if( activeView_ )
         observer( activeView_ );
 }
 
-void GLMainProxy::AddCreationObserver( const T_GLObserver& observer )
+void GLMainProxy::AddCreationObserver( QObject* parent, const T_GLObserver& observer )
 {
-    creationObservers_.push_back( observer );
+    gui::connect( parent, SIGNAL( destroyed( QObject* ) ), [ = ]() {
+        creationObservers_.erase( parent );
+    } );
+    creationObservers_[ parent ] = observer;
     std::for_each( views_.begin(), views_.end(), [=]( const T_View& view ) {
         observer( view );
     } );
 }
 
-void GLMainProxy::AddDeletionObserver( const T_GLObserver& observer )
+void GLMainProxy::AddDeletionObserver( QObject* parent, const T_GLObserver& observer )
 {
-    deletionObservers_.push_back( observer );
+    gui::connect( parent, SIGNAL( destroyed( QObject* ) ), [=](){
+        deletionObservers_.erase( parent );
+    } );
+    deletionObservers_[ parent ] = observer;
 }
 
 void GLMainProxy::ApplyToOptions( const std::function< void( GLOptions& ) >& functor )
@@ -185,7 +195,7 @@ void GLMainProxy::Register( const std::shared_ptr< GLView_ABC >& view )
         activeView_ = view;
     std::for_each( creationObservers_.begin(),
                    creationObservers_.end(),
-                   [=]( const T_GLObserver& observer ) { observer( view ); } );
+                   [=]( const std::pair< QObject*, T_GLObserver >& observer ) { observer.second( view ); } );
 }
 
 void GLMainProxy::Unregister( const std::shared_ptr< GLView_ABC >& view )
@@ -199,7 +209,7 @@ void GLMainProxy::Unregister( const std::shared_ptr< GLView_ABC >& view )
         SetActiveView( *defaultView_ );
     std::for_each( deletionObservers_.begin(),
                    deletionObservers_.end(),
-                   [=]( const T_GLObserver& observer ) { observer( view ); } );
+                   [=]( const std::pair< QObject*, T_GLObserver >& observer ) { observer.second( view ); } );
 }
 
 namespace
@@ -282,7 +292,7 @@ void GLMainProxy::SetActiveView( GLView_ABC& view )
     profileFilter_.SetFilter( options.GetFilterEntity(), true );
     std::for_each( activeChangeObservers_.begin(),
                    activeChangeObservers_.end(),
-                   [=]( const T_GLObserver& observer ) { observer( activeView_ ); } );
+                   [=]( const std::pair< QObject*, T_GLObserver >& observer ) { observer.second( activeView_ ); } );
     // reset contour lines observer
     ApplyToOptions( []( GLOptions& options ) {
         options.GetContourLinesComputer()->SetContourLinesObserver( std::shared_ptr< ContourLinesObserver >() );

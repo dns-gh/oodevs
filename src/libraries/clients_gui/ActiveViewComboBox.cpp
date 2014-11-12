@@ -26,15 +26,15 @@ ActiveViewComboBox::ActiveViewComboBox( GLMainProxy& mainProxy,
                                         QWidget* parent /*= 0*/ )
     : QComboBox( parent, objectName )
 {
-    mainProxy.AddCreationObserver( [&]( const GLView_ABC::T_View& view ) {
+    mainProxy.AddCreationObserver( this, [&]( const GLView_ABC::T_View& view ) {
         addItem( view->GetName(), QVariant::fromValue( view ) );
         setEnabled( count() > 1 );
     } );
-    mainProxy.AddDeletionObserver( [&]( const GLView_ABC::T_View& view ) {
+    mainProxy.AddDeletionObserver( this, [ &]( const GLView_ABC::T_View& view ) {
         removeItem( findText( view->GetName() ) );
         setEnabled( count() > 1 );
     } );
-    mainProxy.AddActiveChangeObserver( [&]( const GLView_ABC::T_View& view ) {
+    mainProxy.AddActiveChangeObserver( this, [ &]( const GLView_ABC::T_View& view ) {
         setCurrentIndex( findText( view->GetName() ) );
     } );
     gui::connect( this, SIGNAL( activated( int ) ), [&]{

@@ -55,7 +55,7 @@ GisToolbar::GisToolbar( QMainWindow* parent,
     , detection_( detection )
     , progress_( 0 )
 {
-    mainProxy.AddActiveChangeObserver( [&]( const GLView_ABC::T_View& view ) {
+    mainProxy.AddActiveChangeObserver( this, [&]( const GLView_ABC::T_View& view ) {
         if( !progress_ )
             return;
         const auto& options = view->GetActiveOptions();

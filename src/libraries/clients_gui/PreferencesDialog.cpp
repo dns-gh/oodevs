@@ -51,18 +51,18 @@ PreferencesDialog::PreferencesDialog( QWidget* parent,
     // because we call UpdateComboVisibility below which is based on the number of item
     // in the active combo.
     activeCombo_ = new ActiveViewComboBox( mainProxy, "StatusActiveViewComboBox" );
-    mainProxy_.AddActiveChangeObserver( [ &]( const GLView_ABC::T_View& view ) {
+    mainProxy_.AddActiveChangeObserver( this, [&]( const GLView_ABC::T_View& view ) {
         if( !isVisible() || !view )
             return;
         Load( *view );
     } );
-    mainProxy_.AddCreationObserver( [ &]( const GLView_ABC::T_View& view ) {
+    mainProxy_.AddCreationObserver( this, [&]( const GLView_ABC::T_View& view ) {
         if( !isVisible() || !view )
             return;
         previousViewsOptions_[ view->GetID() ] = std::unique_ptr< GLOptions >( new GLOptions( view->GetActiveOptions() ) );
         UpdateComboVisibility();
     } );
-    mainProxy_.AddDeletionObserver( [&]( const GLView_ABC::T_View& view ) {
+    mainProxy_.AddDeletionObserver( this, [&]( const GLView_ABC::T_View& view ) {
         if( !isVisible() || !view )
             return;
         previousViewsOptions_.erase( view->GetID() );
