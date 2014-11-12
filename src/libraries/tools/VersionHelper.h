@@ -10,9 +10,6 @@
 #ifndef __VersionHelper_h_
 #define __VersionHelper_h_
 
-#include <string>
-#include <vector>
-
 namespace tools
 {
     const char* AppVersion();

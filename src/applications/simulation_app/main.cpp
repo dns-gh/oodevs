@@ -31,9 +31,9 @@ namespace
         int result = EXIT_FAILURE;
         try
         {
+            const bool verbose = winArgs.HasOption( "--verbose" );
             int maxConnections = 0;
     #if !defined( _DEBUG ) && ! defined( NO_LICENSE_CHECK )
-            const bool verbose = winArgs.HasOption( "--verbose" );
             license_gui::LicenseDialog::CheckLicense( "sword-runtime", !verbose );
             try
             {
@@ -44,11 +44,11 @@ namespace
             {
                 maxConnections = 1;
             }
-    #else
-            (void)winArgs;
     #endif
             GOOGLE_PROTOBUF_VERIFY_VERSION;
-            app.reset( new SIM_App( maxConnections ) );
+            HINSTANCE hInstance = GetModuleHandle( NULL );
+            HINSTANCE prevInstance = GetModuleHandle( NULL );
+            app.reset( new SIM_App( hInstance, prevInstance, GetCommandLineW(), 0, maxConnections, verbose ) );
             result = app->Execute();
         }
         catch( const FlexLmLicense::LicenseError& e )
