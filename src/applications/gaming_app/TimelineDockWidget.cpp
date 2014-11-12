@@ -26,6 +26,7 @@
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/Tools.h"
 #include "gaming/Model.h"
+#include "gaming/Profile.h"
 #include "MT_Tools/MT_Logger.h"
 #include <timeline/api.h>
 #include <boost/lexical_cast.hpp>
@@ -92,32 +93,24 @@ const boost::shared_ptr< TimelineWebView >& TimelineDockWidget::GetWebView() con
     return webView_;
 }
 
-// -----------------------------------------------------------------------------
-// Name: TimelineDockWidget::Connect
-// Created: ABR 2013-05-28
-// -----------------------------------------------------------------------------
-void TimelineDockWidget::Connect()
+void TimelineDockWidget::NotifyUpdated( const Profile& profile )
 {
+    if( !profile.IsLoggedIn() || mainView_ )
+        return;
     mainView_ = AddView( true );
-    connect( mainView_, SIGNAL( ShowOnlyFilterChanged( const std::string&, const std::string& ) ), 
+    connect( mainView_, SIGNAL( ShowOnlyFilterChanged( const std::string&, const std::string& ) ),
                         SLOT( OnShowOnlyFilterChanged( const std::string&, const std::string& ) ) );
     tabWidget_->setVisible( true );
-    if( webView_ )
-        webView_->Connect();
+    webView_->Connect();
 }
 
-// -----------------------------------------------------------------------------
-// Name: TimelineDockWidget::Disconnect
-// Created: ABR 2013-05-28
-// -----------------------------------------------------------------------------
-void TimelineDockWidget::Disconnect()
+void TimelineDockWidget::NotifyUpdated( const kernel::ModelUnLoaded& )
 {
     tabWidget_->setVisible( false );
     tabWidget_->clear();
     mainView_ = 0;
     maxTabNumber_= 0;
-    if( webView_ )
-        webView_->Disconnect();
+    webView_->Disconnect();
 }
 
 // -----------------------------------------------------------------------------

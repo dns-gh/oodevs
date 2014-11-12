@@ -26,6 +26,7 @@ namespace kernel
     class Controllers;
     class Entity_ABC;
     class Filter_ABC;
+    class ModelUnLoaded;
 }
 
 namespace tools
@@ -35,6 +36,7 @@ namespace tools
 
 class GamingConfig;
 class Model;
+class Profile;
 class TimelineWebView;
 class TimelineToolBar;
 
@@ -48,6 +50,8 @@ class TimelineDockWidget : public gui::RichDockWidget
                          , public tools::ElementObserver_ABC< kernel::Filter_ABC >
                          , public tools::ElementObserver_ABC< gui::Event >
                          , public tools::SelectionObserver< kernel::Entity_ABC >
+                         , public tools::ElementObserver_ABC< Profile >
+                         , public tools::ElementObserver_ABC< kernel::ModelUnLoaded >
 {
     Q_OBJECT
 
@@ -60,8 +64,6 @@ public:
 
     //! @name Operations
     //@{
-    void Connect();
-    void Disconnect();
     const boost::shared_ptr< TimelineWebView >& GetWebView() const;
     //@}
 
@@ -71,6 +73,8 @@ public:
     virtual void NotifyUpdated( const kernel::Filter_ABC& filter );
     virtual void NotifyUpdated( const gui::Event& event );
     virtual void NotifySelected( const kernel::Entity_ABC* element );
+    virtual void NotifyUpdated( const Profile& profile );
+    virtual void NotifyUpdated( const kernel::ModelUnLoaded& );
     //@}
 
 public slots:

@@ -80,7 +80,6 @@ DockContainer::DockContainer( QMainWindow* parent,
                               gui::DisplayExtractor& extractor,
                               const kernel::KnowledgeConverter_ABC& converter,
                               UnitStateDialog& unitStateDialog )
-    : timelineDockWidget_( 0 )
 {
     // Tools
     interfaceBuilder_.reset( new actions::gui::InterfaceBuilder( controllers,
@@ -218,11 +217,12 @@ DockContainer::DockContainer( QMainWindow* parent,
     // Timelines
     {
         // New Timeline
-        timelineDockWidget_ = new TimelineDockWidget( parent, controllers, config, model );
-        timelineDockWidget_->SetModes( eModes_Default );
-        parent->addDockWidget( Qt::TopDockWidgetArea, timelineDockWidget_ );
-        eventDockWidget_->SetTimelineHandler( timelineDockWidget_->GetWebView() );
-        QObject::connect( timelineDockWidget_->GetWebView().get(), SIGNAL( StartCreation( E_EventTypes, const QDateTime& ) ), &eventDockWidget_->GetPresenter(), SLOT( StartCreation( E_EventTypes, const QDateTime& ) ) );
+        auto timeline = new TimelineDockWidget( parent, controllers, config, model );
+        timeline->SetModes( eModes_Default );
+        parent->addDockWidget( Qt::TopDockWidgetArea, timeline );
+        eventDockWidget_->SetTimelineHandler( timeline->GetWebView() );
+        QObject::connect( timeline->GetWebView().get(), SIGNAL( StartCreation( E_EventTypes, const QDateTime& ) ),
+            &eventDockWidget_->GetPresenter(), SLOT( StartCreation( E_EventTypes, const QDateTime& ) ) );
     }
 
     // -----------------------------------------------------------------------------
@@ -257,8 +257,6 @@ DockContainer::~DockContainer()
 {
     delete afterAction_;
     delete eventDockWidget_;
-    if( timelineDockWidget_ )
-        delete timelineDockWidget_;
 }
 
 // -----------------------------------------------------------------------------
@@ -268,8 +266,6 @@ DockContainer::~DockContainer()
 void DockContainer::Purge()
 {
     orbatDockWidget_->Purge();
-    if( timelineDockWidget_ )
-        timelineDockWidget_->Disconnect();
 }
 
 // -----------------------------------------------------------------------------
@@ -279,8 +275,6 @@ void DockContainer::Purge()
 void DockContainer::Load()
 {
     orbatDockWidget_->Load();
-    if( timelineDockWidget_ )
-        timelineDockWidget_->Connect();
 }
 
 // -----------------------------------------------------------------------------
