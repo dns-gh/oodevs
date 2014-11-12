@@ -19,7 +19,7 @@
 using namespace dispatcher;
 
 App::App( bool replayLog )
-    : tools::Application( IDI_ICON1, IDI_ICON2, WM_QUIT )
+    : tools::Application( IDI_ICON1, IDI_ICON2 )
     , config_( new dispatcher::Config() )
     , test_( arguments_->HasOption( "--test" ) )
 {

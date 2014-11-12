@@ -32,21 +32,20 @@
 
 using namespace tools;
 
-Application::Application( int icon1, int icon2, int quit )
+Application::Application( int icon1, int icon2 )
     : arguments_( new WinArguments( GetCommandLineW() ) )
     , quit_( new tools::WaitEvent() )
     , hWnd_( 0 )
     , hInstance_( GetModuleHandle( 0 ) )
     , icon1_( icon1 )
     , icon2_( icon2 )
-    , q_( quit )
 {
     // NOTHING
 }
 
 Application::~Application()
 {
-    PostMessage( hWnd_, WM_COMMAND, q_, 0 );
+    PostMessage( hWnd_, WM_COMMAND, WM_QUIT, 0 );
     quit_->Signal();
     if( gui_ )
         gui_->join();
@@ -78,7 +77,7 @@ LRESULT Application::MainWndProc( HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lP
             PostQuitMessage( 0 );
             break;
         case WM_COMMAND:
-            if( LOWORD( wParam ) == application->q_ )
+            if( LOWORD( wParam ) == WM_QUIT )
                 PostQuitMessage( 0 );
             break;
         case WM_TIMER:

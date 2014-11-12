@@ -38,7 +38,7 @@ public:
     int Execute();
 
 protected:
-     Application( int icon1, int icon2, int quit );
+     Application( int icon1, int icon2 );
     ~Application();
 
     void Initialize( const std::string& module );
@@ -61,7 +61,7 @@ protected:
 private:
     std::unique_ptr< boost::thread > gui_;
     std::unique_ptr< boost::thread > dispatcher_;
-    int icon1_, icon2_, q_;
+    int icon1_, icon2_;
     HWND hWnd_;
     HINSTANCE hInstance_;
     NOTIFYICONDATA trayIcon_;

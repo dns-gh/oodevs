@@ -23,7 +23,7 @@
 #include <boost/thread.hpp>
 
 SIM_App::SIM_App( int maxConnections )
-    : tools::Application( IDI_ICON1, IDI_ICON2, WM_QUIT )
+    : tools::Application( IDI_ICON1, IDI_ICON2 )
     , maxConnections_( maxConnections )
     , config_( new MIL_Config( boost::make_shared< FileLoaderObserver >() ) )
 {
