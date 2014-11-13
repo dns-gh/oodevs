@@ -32,6 +32,7 @@ var (
 
 type EventListener interface {
 	CheckEvent(event *sdk.Event) error
+	CheckDeleteEvent(uuid string) error
 	UpdateEncodedEvents(events EventSlice, encoded []*sdk.Event)
 	DeleteEvents(events ...string)
 }
@@ -276,6 +277,16 @@ func (s EventListeners) CheckEvent(event *sdk.Event) error {
 	return nil
 }
 
+func (s EventListeners) CheckDeleteEvent(uuid string) error {
+	for _, listener := range s {
+		err := listener.CheckDeleteEvent(uuid)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
 func (s EventListeners) UpdateEncodedEvents(events EventSlice, encoded []*sdk.Event) {
 	for _, listener := range s {
 		listener.UpdateEncodedEvents(events, encoded)
@@ -467,6 +478,10 @@ func (s *Session) UpdateEvent(uuid string, msg *sdk.Event) (*sdk.Event, error) {
 
 func (s *Session) DeleteEvent(uuid string) error {
 	event := s.events.Find(uuid)
+	err := s.listeners.CheckDeleteEvent(uuid)
+	if err != nil {
+		return err
+	}
 	updates, encoded := EventSlice{}, []*sdk.Event{}
 	parent := &Event{}
 	if event != nil {
@@ -543,6 +558,10 @@ func (f *FilteredObserver) UpdateEncodedEvents(events EventSlice, encoded []*sdk
 }
 
 func (f *FilteredObserver) CheckEvent(event *sdk.Event) error {
+	return nil
+}
+
+func (f *FilteredObserver) CheckDeleteEvent(uuid string) error {
 	return nil
 }
 

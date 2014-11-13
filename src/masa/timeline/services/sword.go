@@ -507,6 +507,23 @@ func (s *Sword) updateReplay(event *sdk.Event) error {
 	return nil
 }
 
+func (s *Sword) deleteReplay(uuid string) {
+	for index, replay := range s.replays {
+		if replay.GetUuid() == uuid {
+			if index == 0 {
+				// Removing the first replay event fills the gap with the next one
+				s.replays[1].Begin = replay.Begin
+				s.observer.UpdateEvent(s.replays[1].GetUuid(), s.replays[1])
+			} else {
+				// Removing a replay event fills the gap with the previous one
+				s.replays[index-1].End = replay.End
+				s.observer.UpdateEvent(s.replays[index-1].GetUuid(), s.replays[index-1])
+			}
+			s.replays = append(s.replays[:index], s.replays[index+1:]...)
+		}
+	}
+}
+
 func (s *Sword) CheckEvent(event *sdk.Event) error {
 	// First event replay creation requires no check
 	if len(s.replays) == 0 {
@@ -565,6 +582,20 @@ func (s *Sword) CheckEvent(event *sdk.Event) error {
 	return ErrInvalidReplayEventParameter
 }
 
+func (s *Sword) CheckDeleteEvent(uuid string) (err error) {
+	err = nil
+	for _, replay := range s.replays {
+		if uuid == replay.GetUuid() {
+			// Cannot remove the last replay event
+			if len(s.replays) < 2 {
+				err = ErrInvalidReplayEventParameter
+			}
+			return
+		}
+	}
+	return
+}
+
 func (s *Sword) UpdateEvents(events ...*sdk.Event) {
 	for _, event := range events {
 		s.updateReplay(event)
@@ -575,6 +606,7 @@ func (s *Sword) UpdateEvents(events ...*sdk.Event) {
 
 func (s *Sword) DeleteEvents(events ...string) {
 	for _, uuid := range events {
+		s.deleteReplay(uuid)
 		delete(s.events, uuid)
 		delete(s.metadata, uuid)
 	}

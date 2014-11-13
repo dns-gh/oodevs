@@ -529,6 +529,10 @@ func (f *FakeService) CheckEvent(event *sdk.Event) error {
 	return nil
 }
 
+func (f *FakeService) CheckDeleteEvent(uuid string) error {
+	return nil
+}
+
 func (f *FakeService) UpdateEvents(events ...*sdk.Event) {
 	f.lock.Lock()
 	defer f.lock.Unlock()
@@ -1378,4 +1382,20 @@ func (t *TestSuite) TestChangeReplayRangeDates(c *C) {
 	c.Assert(event.GetUuid(), Equals, id)
 	c.Assert(end, Equals, replayBegin.Add(31*time.Second))
 	swapi.DeepCopy(validEvent, event)
+
+	// Removing a replay event fills the gap with the previous event
+	err = f.controller.DeleteEvent(f.session, splittedUuid)
+	c.Assert(err, IsNil)
+	msg = waitBroadcastTag(messages, sdk.MessageTag_delete_events)
+	c.Assert(msg, NotNil)
+	msg = waitBroadcastTag(messages, sdk.MessageTag_update_events)
+	c.Assert(msg, NotNil)
+	event = msg.GetEvents()[0]
+	end, _ = util.ParseTime(event.GetEnd())
+	c.Assert(event.GetUuid(), Equals, id)
+	c.Assert(end, Equals, replayEnd)
+
+	// Cannot remove the last event
+	err = f.controller.DeleteEvent(f.session, id)
+	c.Assert(err, NotNil)
 }
