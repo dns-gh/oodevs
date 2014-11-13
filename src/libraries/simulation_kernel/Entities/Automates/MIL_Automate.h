@@ -14,6 +14,7 @@
 #include "MIL_AutomateType.h"
 #include "Entities/MIL_Entity_ABC.h"
 #include "Entities/MIL_VisitableEntity_ABC.h"
+#include "Entities/Orders/MIL_AutomateOrderManager.h"
 #include "Entities/Specialisations/LOG/LogisticHierarchyOwner_ABC.h"
 #include <tools/Resolver.h>
 #include <map>
@@ -52,7 +53,6 @@ class MIL_DictionaryExtensions;
 class MIL_KnowledgeGroup;
 class MIL_AutomateLOG;
 class MIL_Object_ABC;
-class MIL_AutomateOrderManager;
 class PHY_DotationCategory;
 class MIL_DotationSupplyManager;
 class MIL_StockSupplyManager;
@@ -106,8 +106,8 @@ public:
     virtual const MIL_AutomateType& GetType() const;
     MIL_Army_ABC& GetArmy() const;
     boost::shared_ptr< MIL_KnowledgeGroup > GetKnowledgeGroup() const;
-    const MIL_AutomateOrderManager& GetOrderManager() const;
-    MIL_AutomateOrderManager& GetOrderManager();
+    virtual const MIL_AutomateOrderManager& GetOrderManager() const;
+    virtual MIL_AutomateOrderManager& GetOrderManager();
     MIL_AgentPion* GetPionPC() const;
     const T_PionVector& GetPions() const; // Including pion PC
     const T_AutomateVector& GetAutomates() const;

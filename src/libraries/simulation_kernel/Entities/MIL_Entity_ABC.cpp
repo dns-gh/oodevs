@@ -71,6 +71,16 @@ const MIL_EntityType& MIL_Entity_ABC::GetType() const
     throw MASA_EXCEPTION( "unsupported method 'MIL_Entity_ABC::GetType()'" );
 }
 
+const MIL_OrderManager_ABC& MIL_Entity_ABC::GetOrderManager() const
+{
+    throw MASA_EXCEPTION( "unsupported method 'MIL_Entity_ABC::GetOrderManager()'" );
+}
+
+MIL_OrderManager_ABC& MIL_Entity_ABC::GetOrderManager()
+{
+    throw MASA_EXCEPTION( "unsupported method 'MIL_Entity_ABC::GetOrderManager()'" );
+}
+
 // -----------------------------------------------------------------------------
 // Name: MIL_Entity_ABC::WriteODB
 // Created: RDS 2008-05-09

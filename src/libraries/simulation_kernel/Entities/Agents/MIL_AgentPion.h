@@ -84,8 +84,8 @@ public:
     //! @name Accessors
     //@{
     virtual DEC_KnowledgeBlackBoard_AgentPion& GetKnowledge() const;
-    const MIL_PionOrderManager& GetOrderManager() const;
-    MIL_PionOrderManager& GetOrderManager();
+    virtual const MIL_PionOrderManager& GetOrderManager() const;
+    virtual MIL_PionOrderManager& GetOrderManager();
     virtual DEC_Decision_ABC& GetDecision(); //$$$ Dérolifier DEC_Decision_ABC
     virtual const DEC_Decision_ABC& GetDecision() const; //$$$ Dérolifier DEC_Decision_ABC
 

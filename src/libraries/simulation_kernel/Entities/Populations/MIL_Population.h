@@ -13,6 +13,7 @@
 #include "MIL_PopulationType.h"
 #include "Entities/MIL_Entity_ABC.h"
 #include "Entities/MIL_VisitableEntity_ABC.h"
+#include "Entities/Orders/MIL_PopulationOrderManager.h"
 #include <tools/Set.h>
 #include <boost/scoped_ptr.hpp>
 
@@ -37,7 +38,6 @@ class MIL_KnowledgeGroup;
 class MIL_PopulationFlow;
 class MIL_PopulationConcentration;
 class MIL_PopulationElement_ABC;
-class MIL_PopulationOrderManager;
 class MIL_PopulationAttitude;
 class PHY_Volume;
 class PHY_FireResults_Population;
@@ -64,8 +64,8 @@ public:
     virtual const MIL_PopulationType& GetType() const;
     const DEC_PopulationDecision& GetDecision() const;
     DEC_PopulationDecision& GetDecision();
-    const MIL_PopulationOrderManager& GetOrderManager() const;
-    MIL_PopulationOrderManager& GetOrderManager();
+    virtual const MIL_PopulationOrderManager& GetOrderManager() const;
+    virtual MIL_PopulationOrderManager& GetOrderManager();
     double GetMaxSpeed() const;
     double GetDefaultFlowDensity() const;
     const MIL_PopulationAttitude& GetDefaultAttitude() const;

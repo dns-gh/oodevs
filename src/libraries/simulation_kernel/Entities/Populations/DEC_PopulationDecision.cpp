@@ -14,26 +14,7 @@
 #include "MIL_PopulationType.h"
 #include "Decision/DEC_Model_ABC.h"
 #include "Decision/DEC_Tools.h"
-#include "Entities/Orders/MIL_FragOrder.h"
-#include "Entities/Orders/MIL_Mission_ABC.h"
 #include "Entities/Orders/MIL_MissionType_ABC.h"
-#include "Entities/Orders/MIL_Report.h"
-#include "Decision/DEC_PopulationFunctions.h"
-#include "Decision/DEC_ActionFunctions.h"
-#include "Decision/DEC_MiscFunctions.h"
-#include "Decision/DEC_GeometryFunctions.h"
-#include "Decision/DEC_OrdersFunctions.h"
-#include "Decision/DEC_UrbanObjectFunctions.h"
-#include "Decision/DEC_KnowledgeObjectFunctions.h"
-#include "Decision/DEC_KnowledgeAgentFunctions.h"
-#include "Decision/DEC_AgentFunctions.h"
-#include "Entities/Orders/MIL_PopulationOrderManager.h"
-#include "Entities/Populations/Actions/PHY_Population_ActionMove.h"
-#include "Entities/Populations/Actions/PHY_Population_ActionMoveAlong.h"
-#include "Entities/Populations/Actions/PHY_Population_ActionFireOnPion.h"
-#include "Entities/Populations/Actions/PHY_Population_ActionFireOnPions.h"
-#include "Entities/Populations/Actions/PHY_Population_ActionBattle.h"
-#include "Entities/Populations/Actions/PHY_Population_ActionUrbanDestruction.h"
 #include "protocol/ClientSenders.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_PopulationDecision )
@@ -118,139 +99,8 @@ std::string DEC_PopulationDecision::GetGroupName()
 // Name: DEC_PopulationDecision::RegisterUserFunctions
 // Created: LDC 2009-04-09
 // -----------------------------------------------------------------------------
-void DEC_PopulationDecision::RegisterUserFunctions( sword::Brain& brain )
+void DEC_PopulationDecision::RegisterUserFunctions( sword::Brain& )
 {
-    // Knowledge objects
-    brain.RegisterFunction( "DEC_ObjectKnowledgesInZone",
-        std::function<  std::vector< boost::shared_ptr< DEC_Knowledge_Object > >( const TER_Localisation*, const std::vector< std::string >& ) >( boost::bind( &DEC_PopulationFunctions::GetObjectsInZone, boost::cref( GetPopulation() ), _1, _2 ) ) );
-    brain.RegisterFunction( "DEC_ObjectKnowledgesInCircle",
-        std::function< std::vector< boost::shared_ptr< DEC_Knowledge_Object > >( double, const std::vector< std::string >& ) >( boost::bind( &DEC_PopulationFunctions::GetObjectsInCircle, boost::ref( GetPopulation() ), _1, _2 ) ) );
-
-    // Actions
-    brain.RegisterFunction( "DEC__StopAction",
-        std::function< unsigned int ( unsigned int ) >( boost::bind( &DEC_ActionFunctions::StopAction< MIL_Population >, boost::ref( GetPopulation() ), _1 ) ) );
-    brain.RegisterFunction( "DEC_PauseAction",
-        std::function< void ( unsigned int ) >( boost::bind( &DEC_ActionFunctions::SuspendAction< MIL_Population >, boost::ref( GetPopulation() ), _1 ) ) );
-    brain.RegisterFunction( "DEC_ReprendAction",
-        std::function< void ( unsigned int ) >( boost::bind( &DEC_ActionFunctions::ResumeAction< MIL_Population >, boost::ref( GetPopulation() ), _1 ) ) );
-    brain.RegisterFunction( "DEC__StartDeplacement",
-        std::function< unsigned int( MT_Vector2D* ) >( boost::bind( &DEC_ActionFunctions::StartAction< PHY_Population_ActionMove, MT_Vector2D* >, boost::ref( GetPopulation() ), _1 ) ) );
-    brain.RegisterFunction( "DEC_StartDeplacementItineraire",
-        std::function< unsigned int( std::vector< boost::shared_ptr< MT_Vector2D > > ) >( boost::bind( &DEC_ActionFunctions::StartAction< PHY_Population_ActionMoveAlong, std::vector< boost::shared_ptr< MT_Vector2D > > >, boost::ref( GetPopulation() ), _1 ) ) );
-    brain.RegisterFunction( "DEC__StartTirSurPions",
-        std::function< unsigned int( float ) >( boost::bind( &DEC_ActionFunctions::StartAction< PHY_Population_ActionFireOnPions, float >, boost::ref( GetPopulation() ), _1 ) ) );
-    brain.RegisterFunction( "DEC__StartTirSurPion",
-        std::function< unsigned int( float, unsigned int ) >( boost::bind( &DEC_ActionFunctions::StartAction< PHY_Population_ActionFireOnPion, float, unsigned int >, boost::ref( GetPopulation() ), _1, _2 ) ) );
-    brain.RegisterFunction( "DEC_StartTirSurPion",
-        std::function< unsigned int( float, DEC_Decision_ABC* ) >( boost::bind( &DEC_ActionFunctions::StartAction< PHY_Population_ActionFireOnPion, float, DEC_Decision_ABC* >, boost::ref( GetPopulation() ), _1, _2 ) ) );
-    brain.RegisterFunction( "DEC_DetruireBlocUrbain",
-        std::function< unsigned int( MIL_UrbanObject_ABC* ) >( boost::bind( &DEC_ActionFunctions::StartAction< PHY_Population_ActionUrbanDestruction, MIL_UrbanObject_ABC* >, boost::ref( GetPopulation() ), _1 ) ) );
-    brain.RegisterFunction( "DEC_StartAgresserFoule",
-        std::function< unsigned int() >( boost::bind( &DEC_ActionFunctions::StartAction< PHY_Population_ActionBattle >, boost::ref( GetPopulation() ) ) ) );
-
-    // Self
-    brain.RegisterFunction( "DEC_GetPosition",
-        std::function< boost::shared_ptr< MT_Vector2D >() >( boost::bind( &DEC_PopulationFunctions::GetBarycenter, boost::cref( GetPopulation() ) ) ) );
-    brain.RegisterFunction( "DEC_GetNombrePersonne",
-        std::function< int () >( boost::bind( &DEC_PopulationFunctions::GetActualNumber, boost::cref( GetPopulation() ) ) ) );
-    brain.RegisterFunction( "DEC_GetNombrePersonneContaminee",
-        std::function< int () >( boost::bind( &DEC_PopulationFunctions::GetContaminatedHumans, boost::cref( GetPopulation() ) ) ) );
-
-    // Agents
-    brain.RegisterFunction( "DEC_Agent_EstDansFoule",
-        std::function< bool(  DEC_Decision_ABC* ) >( boost::bind( &DEC_PopulationFunctions::IsAgentInside, boost::ref( GetPopulation() ), _1 ) ) );
-
-    // Orders
-    brain.RegisterFunction( "DEC_AssignMissionCrowdParameter",
-        std::function< void( boost::shared_ptr< MIL_Mission_ABC >, const std::string&, int ) >( boost::bind( &MIL_MissionParameterFactory::SetCrowdKnowledgeParameter, this, _1, _2, _3 ) ) );
-    brain.RegisterFunction( "DEC_AssignMissionCrowdListParameter",
-        std::function< boost::shared_ptr<MIL_MissionParameter_ABC>( int ) >( boost::bind( &MIL_MissionParameterFactory::CreatePopulationKnowledge, this, _1 ) ) );
-
-    // Knowledge agents
-    brain.RegisterFunction( "DEC_Connaissance_EnAgent", &DEC_KnowledgeAgentFunctions::GetAgent );
-    brain.RegisterFunction( "DEC_Connaissances_PionsPrenantAPartie",
-            std::function< std::vector<unsigned int>() >(boost::bind(&DEC_PopulationKnowledge::GetPionsAttacking, boost::cref( GetPopulation().GetKnowledge() ) ) ) );
-    brain.RegisterFunction( "DEC_Connaissances_PionsSecurisant",
-            std::function< std::vector<unsigned int>() >(boost::bind(&DEC_PopulationKnowledge::GetPionsSecuring, boost::cref( GetPopulation().GetKnowledge() ) ) ) );
-
-    // Knowledge objects
-    brain.RegisterFunction( "DEC_ConnaissanceObjet_Distance",
-            std::function< float ( boost::shared_ptr< DEC_Knowledge_Object > ) >( boost::bind( &DEC_PopulationFunctions::GetKnowledgeObjectDistance, boost::cref( GetPopulation() ), _1 ) ) );
-    brain.RegisterFunction( "DEC_ConnaissanceObjet_PointPlusProche",
-            std::function< boost::shared_ptr< MT_Vector2D > ( boost::shared_ptr< DEC_Knowledge_Object > ) >( boost::bind( &DEC_PopulationFunctions::GetKnowledgeObjectClosestPoint, boost::cref( GetPopulation() ) ,_1 ) ) );
-    brain.RegisterFunction( "DEC_ConnaissanceObjet_EstEnnemi",
-            std::function< int ( boost::shared_ptr< DEC_Knowledge_Object > ) >( boost::bind( &DEC_PopulationFunctions::IsEnemy, boost::ref( GetPopulation() ), _1 ) ) );
-
-    // Debug
-    brain.RegisterFunction( "DEC_DebugAffichePoint"  ,
-            std::function< void ( const MT_Vector2D* ) > (boost::bind(&DEC_MiscFunctions::DebugDrawPoint, boost::cref( GetPopulation() ), _1 ) ) );
-    brain.RegisterFunction( "DEC_DebugAffichePoints" ,
-            std::function< void ( std::vector< boost::shared_ptr< MT_Vector2D > > ) > (boost::bind(&DEC_MiscFunctions::DebugDrawPoints, boost::cref( GetPopulation() ), _1  ) ) );
-    brain.RegisterFunction( "DEC_Debug",
-            std::function < void ( const std::string& ) > ( boost::bind( &DEC_MiscFunctions::Debug, boost::cref( GetPopulation() ) , "Population" , _1  ) ) );
-    brain.RegisterFunction( "DEC_Trace",
-        std::function< void ( const std::string& ) >( boost::bind( &DEC_MiscFunctions::Trace, boost::cref( GetPopulation() ), _1 ) ) );
-    brain.RegisterFunction( "DEC_DecisionalState",
-        std::function< void ( const std::string&, const std::string& ) >( boost::bind( &DEC_PopulationFunctions::DecisionalState, boost::cref( GetPopulation() ), _1, _2 ) ) );
-
-    // Effects
-    brain.RegisterFunction( "DEC_Population_RalentissementPion_ChangeVitesse",
-        std::function< void ( double ) >(boost::bind( &MIL_Population::SetPionMaxSpeed, boost::ref( GetPopulation() ), _1) ) );
-    brain.RegisterFunction( "DEC_Population_RalentissementPion_VitesseParDefaut",
-        boost::bind( &MIL_Population::ResetPionMaxSpeed,  boost::ref( GetPopulation() ) ) );
-    brain.RegisterFunction( "DEC_Population_ChangerAttitude",
-        std::function< void ( int ) >(boost::bind( &DEC_PopulationFunctions::SetAttitude, boost::ref( GetPopulation() ), _1 ) ) );
-    brain.RegisterFunction( "DEC_Population_Attitude",
-        std::function< int() >(boost::bind( &DEC_PopulationFunctions::GetAttitude, boost::ref( GetPopulation() ) ) ) );
-    brain.RegisterFunction( "DEC_Population_Positions",
-        std::function< std::vector< boost::shared_ptr< TER_Localisation > >() >(boost::bind( &DEC_PopulationFunctions::GetCurrentLocations, boost::cref( GetPopulation() ) ) ) );
-    brain.RegisterFunction( "DEC_Population_ChangeUrbanDestructionState",
-        std::function< void ( bool ) >(boost::bind( &DEC_PopulationFunctions::SetUrbanDestructionState, boost::ref( GetPopulation() ), _1 ) ) );
-    brain.RegisterFunction( "DEC_Population_UrbanDestructionState",
-        std::function< bool() >(boost::bind( &DEC_PopulationFunctions::GetUrbanDestructionState, boost::ref( GetPopulation() ) ) ) );
-    brain.RegisterFunction( "DEC_Population_ChangeDemonstrationState",
-        std::function< void ( bool ) >(boost::bind( &DEC_PopulationFunctions::SetDemonstrationState, boost::ref( GetPopulation() ), _1 ) ) );
-    brain.RegisterFunction( "DEC_Population_DemonstrationState",
-        std::function< bool() >(boost::bind( &DEC_PopulationFunctions::GetDemonstrationState, boost::ref( GetPopulation() ) ) ) );
-
-    // Move
-    brain.RegisterFunction( "DEC_Agent_NiveauInstallation", boost::bind( &DEC_PopulationFunctions::GetMovingState, boost::ref( GetPopulation() ) ) );
-    brain.RegisterFunction( "DEC_HasFlow", std::function< bool() >( boost::bind( &DEC_PopulationFunctions::HasFlow, boost::ref( GetPopulation() ) ) ) );
-    brain.RegisterFunction( "DEC_Population_HasReachedBlockBorder", std::function< bool( const MIL_UrbanObject_ABC* ) >( boost::bind( &DEC_PopulationFunctions::HasReachedBlockBorder, boost::ref( GetPopulation() ), _1 ) ) );
-    brain.RegisterFunction( "DEC_Population_HasReachedDestination", std::function< bool( const MT_Vector2D* ) >( boost::bind( &DEC_PopulationFunctions::HasReachedDestination, boost::ref( GetPopulation() ), _1 ) ) );
-    brain.RegisterFunction( "DEC_Population_HasReachedDestinationCompletely", std::function< bool( const MT_Vector2D* ) >( boost::bind( &DEC_PopulationFunctions::HasReachedDestinationCompletely, boost::ref( GetPopulation() ), _1 ) ) );
-
-    // Etats decisionnel
-    brain.RegisterFunction( "DEC_Population_ChangeEtatDomination",
-        std::function< void( double ) >( boost::bind( &DEC_PopulationFunctions::NotifyDominationStateChanged, boost::ref( GetPopulation() ), _1 ) ) );
-    brain.RegisterFunction( "DEC_Population_Morts",
-        std::function< unsigned int() >( boost::bind( &MIL_Population::GetDeadHumans, boost::ref( GetPopulation() ) ) ) );
-
-    // Representations
-    brain.RegisterFunction( "DEC_GetOrdersCategory",
-                            boost::bind( &DEC_MiscFunctions::GetOrdersCategory , boost::ref( GetPopulation() ) ) );
-    brain.RegisterFunction( "DEC_GetPointsCategory",
-                            boost::bind( &DEC_MiscFunctions::GetPointsCategory , boost::ref( GetPopulation() ) ) );
-    brain.RegisterFunction( "DEC_RemoveFromOrdersCategory",
-        std::function< void ( boost::shared_ptr< MIL_FragOrder > ) > ( boost::bind( &DEC_MiscFunctions::RemoveFromOrdersCategory , boost::ref( GetPopulation() ), _1 ) ) );
-    brain.RegisterFunction( "DEC_DeleteRepresentation",
-        std::function< void ( boost::shared_ptr< MIL_FragOrder > ) > ( boost::bind( &DEC_MiscFunctions::DeleteOrderRepresentation , boost::ref( GetPopulation() ), _1 ) ) );
-    brain.RegisterFunction( "DEC_RemoveFromPointsCategory",
-        std::function< void( boost::shared_ptr< TER_PathPoint > )>( boost::bind( &DEC_MiscFunctions::RemoveFromPointsCategory, boost::ref( GetPopulation() ), _1 ) ) );
-
-    // Former szName_, mission_, automate_:
-    brain.RegisterFunction( "DEC_FinMission", boost::bind( &DEC_OrdersFunctions::FinishMission< MIL_Population >, boost::ref( GetPopulation() ) ) );
-
-    //Security
-    brain.RegisterFunction( "DEC_GetUrbanBlockAngriness",
-        std::function< double() >( boost::bind( &DEC_PopulationFunctions::GetUrbanBlockAngriness, boost::ref( GetPopulation() ) ) ) );
-    brain.RegisterFunction( "DEC_ReintegrateUrbanBlock", std::function< void() >( boost::bind( &DEC_PopulationFunctions::ReintegrateUrbanBlock, boost::ref( GetPopulation() ) ) ) );
-    brain.RegisterFunction( "DEC_Population_HealWounded",
-        std::function< void() >( boost::bind( &MIL_Population::HealWounded, boost::ref( GetPopulation() ) ) ) );
-
-    // nbc
-    brain.RegisterFunction( "DEC_ConnaissanceObjet_DemandeDeDecontamination",
-        std::function< int( boost::shared_ptr< DEC_Knowledge_Object > ) >( boost::bind( &DEC_KnowledgeObjectFunctions::PopulationQueueForDecontamination, boost::ref( GetPopulation() ), _1 ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -301,6 +151,11 @@ void DEC_PopulationDecision::SendChangedState( client::CrowdUpdate& msg )
 double DEC_PopulationDecision::GetDominationState() const
 {
     return rDominationState_;
+}
+
+DEC_Decision_ABC::E_Kind DEC_PopulationDecision::GetKind() const
+{
+    return ePopulation;
 }
 
 // -----------------------------------------------------------------------------

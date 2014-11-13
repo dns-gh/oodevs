@@ -87,6 +87,12 @@ public:
         SetModel( model );
         StartDefaultBehavior();
     }
+
+    E_Kind GetKind() const
+    {
+        return ePopulation;
+    }
+
     void SetModel( const DEC_Model_ABC& model )
     {
         InitBrain( model.GetScriptFile(), model.GetName(), model.GetIncludePath(), "stubPopulation", false, false, model.GetIntegrationDir() );

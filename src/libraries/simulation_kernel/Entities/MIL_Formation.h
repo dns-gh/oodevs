@@ -83,7 +83,6 @@ public:
     MIL_AutomateLOG* FindLogisticManager() const;
     const MIL_Color& GetColor() const;
     virtual bool CanEmitReports() const;
-
     //@}
 
     //! @name Visitor

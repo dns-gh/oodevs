@@ -58,7 +58,7 @@ public:
     //@{
     static double GetRapForLocal( const MIL_AgentPion& callerAgent );
 
-	static T_ConstKnowledgeAgentVector GetAllAgentsInZone( const DEC_Decision_ABC* callerAgent, const TER_Localisation* area );
+    static T_ConstKnowledgeAgentVector GetAllAgentsInZone( const DEC_Decision_ABC* callerAgent, const TER_Localisation* area );
     static T_ConstKnowledgeAgentVector GetDetectedAgentsInFuseau( const MIL_AgentPion& callerAgent );
     static T_ConstKnowledgeAgentVector GetDetectedAgentsInZone( const MIL_AgentPion& callerAgent, const TER_Localisation* area );
     static T_ConstKnowledgeAgentVector GetEnemyAgentsInZone( const DEC_Decision_ABC* callerAgent, const TER_Localisation* area );
@@ -103,7 +103,7 @@ public:
     static T_KnowledgeObjectDiaIDVector GetDisasters( const MIL_AgentPion& callerAgent );
 
     template< typename T > static T_KnowledgeObjectDiaIDVector GetObjectsInCircle( const T& caller, const MT_Vector2D* pCenter, double rRadius, const std::vector< std::string >& filters, bool nonActivatedObstacles );
-    template< typename T > static T_KnowledgeObjectDiaIDVector GetObjectsInZone( const T& caller, const TER_Localisation* pLoc, const std::vector< std::string >& parameters );
+    static T_KnowledgeObjectDiaIDVector GetObjectsInZone( const DEC_Decision_ABC* caller, const TER_Localisation* pLoc, const std::vector< std::string >& parameters );
     template< typename T > static T_KnowledgeObjectDiaIDVector GetObjectsIntersectingInZone( const T& caller, const TER_Localisation* pLoc, const std::vector< std::string >& parameters );
     template< typename T > static T_KnowledgeObjectDiaIDVector GetObjectsInFuseau( const T& caller, const std::string& type );
     static T_KnowledgeObjectDiaIDVector GetObjectsWithCapacityInZone( const DEC_Decision_ABC* callerAgent, const std::string& capacity, const TER_Localisation* pLoc );
@@ -197,27 +197,6 @@ T_KnowledgeObjectDiaIDVector DEC_KnowledgeFunctions::GetObjectsInCircle( const T
     T_KnowledgeObjectDiaIDVector knowledges;
     if( DEC_BlackBoard_CanContainKnowledgeObject* container = caller.GetKnowledgeGroup()->GetKnowledgeObjectContainer() )
         container->GetObjectsInCircle( knowledges, filter, *pCenter, rRadius, nonActivatedObstacles );
-    return knowledges;
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_KnowledgeFunctions::GetObjectsInZone
-// Created: NLD 2006-05-05
-// -----------------------------------------------------------------------------
-template< typename T >
-T_KnowledgeObjectDiaIDVector DEC_KnowledgeFunctions::GetObjectsInZone( const T& caller, const TER_Localisation* pLoc, const std::vector< std::string >& parameters )
-{
-    if( !pLoc )
-        throw MASA_EXCEPTION( "invalid parameter." );
-    MIL_ObjectFilter filter( parameters );
-    T_KnowledgeObjectDiaIDVector knowledges;
-    auto bbKg = caller.GetKnowledgeGroup()->GetKnowledge();
-    if( bbKg )
-    {
-        T_KnowledgeObjectDiaIDVector knowledgesTmp;
-        bbKg->GetKnowledgeObjectContainer().GetObjectsInZone( knowledgesTmp, filter, *pLoc );
-        knowledges.insert( knowledges.end(), knowledgesTmp.begin(), knowledgesTmp.end() );
-    }
     return knowledges;
 }
 

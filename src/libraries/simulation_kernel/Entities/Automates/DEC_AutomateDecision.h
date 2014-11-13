@@ -75,6 +75,7 @@ public:
 
     //! @name Accessors
     //@{
+    virtual E_Kind GetKind() const;
     virtual MIL_Automate& GetAutomate() const;
     virtual boost::shared_ptr< MIL_KnowledgeGroup > GetKnowledgeGroup() const;
     virtual DEC_AutomateDecision* GetDecAutomate();

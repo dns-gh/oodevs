@@ -23,11 +23,13 @@ class DEC_Knowledge_Agent;
 class DEC_Knowledge_Object;
 class MIL_AgentPion;
 class MIL_Automate;
+class MIL_Entity_ABC;
 class MIL_FragOrderType;
 class MIL_KnowledgeGroup;
 class MIL_Mission_ABC;
 class MIL_MissionType_ABC;
 class MIL_OrderManager_ABC;
+class MIL_Population;
 
 class MT_Vector2D;
 class PHY_Action_ABC;
@@ -45,6 +47,17 @@ public:
     //! @name Types
     //@{
     typedef DEC_Decision_ABC RoleInterface;
+    //@}
+
+public:
+    //! @name Decision class kinds
+    //@{
+    enum E_Kind
+    {
+        ePion,
+        eAutomate,
+        ePopulation,
+    };
     //@}
 
 public:
@@ -67,8 +80,11 @@ public:
     virtual void CallbackKnowledge( unsigned int, boost::shared_ptr< DEC_Knowledge_Object > value ) = 0;
     virtual void CallbackPerception( int id ) = 0;
     virtual const std::string& GetDIAType() const = 0;
+    virtual E_Kind GetKind() const = 0;
     virtual MIL_AgentPion& GetPion() const = 0;
     virtual MIL_Automate& GetAutomate() const = 0;
+    virtual MIL_Population& GetPopulation() const = 0;
+    virtual MIL_Entity_ABC& GetEntity() const = 0;
     virtual unsigned int GetID() const = 0;
     virtual boost::shared_ptr< MIL_KnowledgeGroup > GetKnowledgeGroup() const = 0;
     virtual MIL_OrderManager_ABC& GetOrderManager() const = 0;

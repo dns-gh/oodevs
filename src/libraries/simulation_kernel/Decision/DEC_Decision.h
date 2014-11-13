@@ -72,6 +72,8 @@ public:
     virtual const std::string& GetDIAType() const;
     virtual MIL_AgentPion& GetPion() const;
     virtual MIL_Automate& GetAutomate() const;
+    virtual MIL_Population& GetPopulation() const;
+    virtual MIL_Entity_ABC& GetEntity() const;
     virtual unsigned int GetID() const;
     virtual boost::shared_ptr< MIL_KnowledgeGroup > GetKnowledgeGroup() const;
 
@@ -622,6 +624,18 @@ template< class T >
 MIL_Automate& DEC_Decision< T >::GetAutomate() const
 {
     throw MASA_EXCEPTION( "GetAutomate cannot be called for this Decision class" );
+}
+
+template< class T >
+MIL_Population& DEC_Decision< T >::GetPopulation() const
+{
+    throw MASA_EXCEPTION( "GetPopulation cannot be called for this Decision class" );
+}
+
+template< class T >
+MIL_Entity_ABC& DEC_Decision< T >::GetEntity() const
+{
+    return static_cast< MIL_Entity_ABC& >( *pEntity_ );
 }
 
 // -----------------------------------------------------------------------------

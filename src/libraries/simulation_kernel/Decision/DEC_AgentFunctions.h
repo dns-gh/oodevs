@@ -56,10 +56,10 @@ public:
     static void ActivateBlackout( MIL_Agent_ABC& callerAgent );
     static void ActivatePartialBlackout( MIL_Agent_ABC& callerAgent, bool report );
     static void DeactivateBlackout( MIL_Agent_ABC& callerAgent );
-    static int GetPosture( const MIL_Agent_ABC& callerAgent );
+    static int GetPosture( const DEC_Decision_ABC* agent );
     static int GetNbcSuitLevel( const MIL_Agent_ABC& callerAgent );
     static bool IsInCity( const DEC_Decision_ABC* pAgent );
-    static bool IsInCrowd( const MIL_Agent_ABC& callerAgent );
+    static bool IsInCrowd( const DEC_Decision_ABC* agent, DEC_Decision_ABC* pion );
     static std::string GetMilPionType( DEC_Decision_ABC* pion );
     static std::string GetMilPionName( DEC_Decision_ABC* pion );
     static void ImmunizeAgent( MIL_Agent_ABC& callerAgent );  // deprecated
@@ -223,9 +223,6 @@ public:
 
     static boost::shared_ptr< MIL_Mission_ABC > GetMission( DEC_Decision_ABC* pAgent );
     static bool HasMission( DEC_Decision_ABC* pAgent );
-
-    // Test / debug
-    static void DecisionalState( const MIL_Agent_ABC& callerAgent, const std::string& key, const std::string& value );
 
     // Relève
     static bool RelievePion( MIL_Agent_ABC& callerAgent, const DEC_Decision_ABC* agentToRelieve );

@@ -57,6 +57,7 @@
 #include "Entities/Objects/ActivableCapacity.h"
 #include "Entities/Objects/BypassAttribute.h"
 #include "Entities/Objects/MIL_ObjectType_ABC.h"
+#include "Entities/Populations/MIL_Population.h"
 #include "MIL_AgentServer.h"
 #include "meteo/PHY_MeteoDataManager.h"
 #include "meteo/RawVisionData/PHY_RawVisionData.h"
@@ -534,19 +535,6 @@ unsigned int DEC_AgentFunctions::GetTacticalFlyingHeight( const DEC_Decision_ABC
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_AgentFunctions::DecisionalState
-// Created: AGE 2007-05-31
-// -----------------------------------------------------------------------------
-void DEC_AgentFunctions::DecisionalState( const MIL_Agent_ABC& callerAgent, const std::string& key, const std::string& value )
-{
-    client::DecisionalState msg;
-    msg().mutable_source()->mutable_unit()->set_id( callerAgent.GetID() );
-    msg().set_key( key.c_str() );
-    msg().set_value( value.c_str() );
-    msg.Send( NET_Publisher_ABC::Publisher() );
-}
-
-// -----------------------------------------------------------------------------
 // Name: DEC_AgentFunctions::IsLoaded
 // Created: NLD 2004-10-18
 // -----------------------------------------------------------------------------
@@ -947,10 +935,20 @@ bool DEC_AgentFunctions::ChangeAutomate( MIL_Agent_ABC& callerAgent, DEC_Decisio
 // Name: DEC_AgentFunctions::GetPosture
 // Created: JVT 2005-01-31
 // -----------------------------------------------------------------------------
-int DEC_AgentFunctions::GetPosture( const MIL_Agent_ABC& callerAgent )
+int DEC_AgentFunctions::GetPosture( const DEC_Decision_ABC* agent )
 {
-    const PHY_RoleInterface_Posture& rolePosture = callerAgent.GetRole< PHY_RoleInterface_Posture >();
-    return static_cast< int >( rolePosture.GetPostureCompletionPercentage() >= 1. ? rolePosture.GetCurrentPosture().GetID() : rolePosture.GetLastPosture().GetID() );
+    switch( agent->GetKind() )
+    {
+        case DEC_Decision_ABC::ePion:
+        {
+            const PHY_RoleInterface_Posture& rolePosture = agent->GetPion().GetRole< PHY_RoleInterface_Posture >();
+            return static_cast< int >( rolePosture.GetPostureCompletionPercentage() >= 1. ? rolePosture.GetCurrentPosture().GetID() : rolePosture.GetLastPosture().GetID() );
+        }
+        case DEC_Decision_ABC::ePopulation:
+            return agent->GetPopulation().HasFlow() ? PHY_Posture::mouvement_.GetID() : PHY_Posture::poste_.GetID();
+        default:
+            throw MASA_EXCEPTION( "DEC_AgentFunctions::GetPosture: cannot be called for this entity" );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -966,9 +964,21 @@ bool DEC_AgentFunctions::IsInCity( const DEC_Decision_ABC* pAgent )
 // Name: DEC_AgentFunctions::IsInCrowd
 // Created: DDA 2011-05-13
 // -----------------------------------------------------------------------------
-bool DEC_AgentFunctions::IsInCrowd( const MIL_Agent_ABC& callerAgent )
+bool DEC_AgentFunctions::IsInCrowd( const DEC_Decision_ABC* agent, DEC_Decision_ABC* pion )
 {
-    return callerAgent.Get< PHY_RoleInterface_Population >().HasCollision();
+    switch( agent->GetKind() )
+    {
+        case DEC_Decision_ABC::ePion:
+            return agent->GetPion().Get< PHY_RoleInterface_Population >().HasCollision();
+        case DEC_Decision_ABC::ePopulation:
+        {
+            if( !pion )
+                throw MASA_EXCEPTION( "invalid parameter." );
+            return pion->GetPion().Get< PHY_RoleInterface_Population >().HasCollisionWithCrowd( agent->GetPopulation() );
+        }
+        default:
+            throw MASA_EXCEPTION( "DEC_AgentFunctions::GetPosture: cannot be called for this entity" );
+    }
 }
 
 // -----------------------------------------------------------------------------

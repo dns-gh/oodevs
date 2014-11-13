@@ -17,6 +17,7 @@
 #include "Knowledge/DEC_KnowledgeResolver_ABC.h"
 #include <tools/Set.h>
 
+class DEC_Decision_ABC;
 class MIL_Agent_ABC;
 class MIL_Population;
 class TER_Localisation;

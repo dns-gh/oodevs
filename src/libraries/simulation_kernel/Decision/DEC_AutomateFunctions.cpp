@@ -290,19 +290,6 @@ std::vector< DEC_Decision_ABC* > DEC_AutomateFunctions::GetPionsGenie( const MIL
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_AutomateFunctions::DecisionalState
-// Created: AGE 2007-05-31
-// -----------------------------------------------------------------------------
-void DEC_AutomateFunctions::DecisionalState( const MIL_Automate& callerAutomate, const std::string& key, const std::string& value )
-{
-    client::DecisionalState msg;
-    msg().mutable_source()->mutable_automat()->set_id( callerAutomate.GetID() );
-    msg().set_key  ( key.c_str() );
-    msg().set_value( value.c_str() );
-    msg.Send( NET_Publisher_ABC::Publisher() );
-}
-
-// -----------------------------------------------------------------------------
 // Name: DEC_AutomateFunctions::PionChangeAutomate
 // Created: NLD 2003-10-09
 // -----------------------------------------------------------------------------

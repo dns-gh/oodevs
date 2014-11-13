@@ -13,6 +13,7 @@
 #define __MIL_Agent_ABC_h_
 
 #include "simulation_kernel/Entities/MIL_Entity_ABC.h"
+#include "Entities/Orders/MIL_PionOrderManager.h"
 #include "MIL_AgentType_ABC.h"
 
 class DEC_Decision_ABC;
@@ -23,7 +24,6 @@ class MIL_AgentPion;
 class MIL_Army_ABC;
 class MIL_Automate;
 class MIL_KnowledgeGroup;
-class MIL_PionOrderManager;
 class MIL_Population;
 class MT_Vector2D;
 class TER_Agent_ABC;

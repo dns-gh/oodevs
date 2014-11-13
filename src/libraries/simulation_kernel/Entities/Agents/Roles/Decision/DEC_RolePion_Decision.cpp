@@ -244,6 +244,11 @@ void DEC_RolePion_Decision::SendChangedState( client::UnitAttributes& msg ) cons
         SendFullState( msg );
 }
 
+DEC_Decision_ABC::E_Kind DEC_RolePion_Decision::GetKind() const
+{
+    return ePion;
+}
+
 // -----------------------------------------------------------------------------
 // Name: DEC_RolePion_Decision::GetAutomate
 // Created: MGD 2010-02-25
@@ -1186,8 +1191,8 @@ void DEC_RolePion_Decision::ActivateBrainDebug( bool activate )
 // -----------------------------------------------------------------------------
 void DEC_RolePion_Decision::PostStartMission()
 {
-    internalMissionActions_.push_back( DEC_ActionFunctions::StartAction< PHY_ActionRecoLima, const MIL_LimaFunction& >( pion_, MIL_LimaFunction::LR_ ) );
-    internalMissionActions_.push_back( DEC_ActionFunctions::StartAction< PHY_ActionRecoLima, const MIL_LimaFunction& >( pion_, MIL_LimaFunction::LIA_ ) );
+    internalMissionActions_.push_back( DEC_ActionFunctions::StartAction< PHY_ActionRecoLima, const MIL_LimaFunction& >( this, MIL_LimaFunction::LR_ ) );
+    internalMissionActions_.push_back( DEC_ActionFunctions::StartAction< PHY_ActionRecoLima, const MIL_LimaFunction& >( this, MIL_LimaFunction::LIA_ ) );
 }
 
 // -----------------------------------------------------------------------------

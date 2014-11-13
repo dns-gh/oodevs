@@ -63,7 +63,8 @@ public:
 
     //! @name Accessors
     //@{
-    MIL_Population& GetPopulation() const;
+    virtual E_Kind GetKind() const;
+    virtual MIL_Population& GetPopulation() const;
     virtual boost::shared_ptr< MIL_KnowledgeGroup > GetKnowledgeGroup() const;
     double GetDominationState() const;
     bool HasStateChanged() const; // Etat decisionnel

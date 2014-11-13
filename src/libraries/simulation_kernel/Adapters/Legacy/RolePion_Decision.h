@@ -48,7 +48,6 @@ private:
     //! @name Helpers
     //@{
     void RegisterFunctions();
-    void RegisterControlActions();
     void RegisterActions();
     void RegisterPath();
     void RegisterRepresentations();

@@ -12,6 +12,7 @@
 #include "simulation_kernel_pch.h"
 #include "DEC_ActionFunctions.h"
 #include "Decision/DEC_Decision_ABC.h"
+#include "Entities/Actions/PHY_Action_ABC.h"
 #include "Entities/Agents/Actions/Transport/PHY_RoleAction_Transport.h"
 #include "Entities/Agents/Actions/CrowdTransport/PHY_RoleAction_CrowdTransport.h"
 #include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
@@ -21,6 +22,7 @@
 #include "Entities/Agents/Roles/Logistic/PHY_RoleInterface_Supply.h"
 #include "Entities/Agents/Roles/Transported/PHY_RolePion_Transported.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationStock.h"
+#include "Entities/MIL_Entity_ABC.h"
 #include "Entities/Objects/StockAttribute.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
@@ -35,6 +37,37 @@ namespace
     {
         return( !pKnowledge || !pKnowledge->IsValid() || !pCampKnowledge || !pCampKnowledge->IsValid() || !pCampKnowledge->GetObjectKnown() ); //|| pCampKnowledge->GetObjectKnown()->Retrieve< LogisticCapacity >() != 0 )
     }
+}
+
+unsigned int DEC_ActionFunctions::StopAction( const DEC_Decision_ABC* caller, unsigned int actionId )
+{
+    return StopAction( caller->GetEntity(), actionId );
+}
+
+unsigned int DEC_ActionFunctions::StopAction( MIL_Entity_ABC& caller, unsigned int actionId )
+{
+    if( actionId != 0 )
+        caller.UnregisterAction( actionId );
+    return 0;
+}
+
+void DEC_ActionFunctions::SuspendAction( const DEC_Decision_ABC* caller, unsigned int actionId )
+{
+    if( auto action = caller->GetEntity().GetAction( actionId ) )
+        action->Suspend();
+}
+
+void DEC_ActionFunctions::ResumeAction( const DEC_Decision_ABC* caller, unsigned int actionId )
+{
+     if( auto action = caller->GetEntity().GetAction( actionId ) )
+        action->Resume();
+}
+
+unsigned int DEC_ActionFunctions::GetActionState( const DEC_Decision_ABC* caller, unsigned int actionId )
+{
+    if( auto action = caller->GetEntity().GetAction( actionId ) )
+        return action->GetState();
+    return PHY_Action_ABC::eError;
 }
 
 // -----------------------------------------------------------------------------
