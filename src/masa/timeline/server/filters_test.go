@@ -266,18 +266,18 @@ func (t *TestSuite) TestFilters(c *C) {
 		"sword_profile": "crowd_1_only",
 	}, 2+1)
 
-	// test sword_write_only
+	// test sword_read_only
 	f.applyFilters(c, services.EventFilterConfig{
-		"sword_profile":    "party_1_only",
-		"sword_write_only": true,
+		"sword_profile":   "party_1_only",
+		"sword_read_only": false,
 	}, 0+1)
 	f.applyFilters(c, services.EventFilterConfig{
-		"sword_profile":    "f1_read_f3_write",
-		"sword_write_only": true,
+		"sword_profile":   "f1_read_f3_write",
+		"sword_read_only": false,
 	}, 3+1)
 	f.applyFilters(c, services.EventFilterConfig{
-		"sword_profile":    "f1_read_f3_write",
-		"sword_write_only": false,
+		"sword_profile":   "f1_read_f3_write",
+		"sword_read_only": true,
 	}, 11+1)
 
 	// test sword_filter

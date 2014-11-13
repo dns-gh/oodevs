@@ -25,6 +25,17 @@ func parseSwordProfileFilter(dst services.EventFilterConfig, req Getter) {
 	}
 }
 
+func parseSwordReadOnlyFilter(dst services.EventFilterConfig, req Getter) error {
+	if value := req.FormValue("sword_read_only"); len(value) > 0 {
+		readOnly, err := strconv.ParseBool(value)
+		if err != nil {
+			return fmt.Errorf("invalid sword_read_only format: %s", value)
+		}
+		dst["sword_read_only"] = readOnly
+	}
+	return nil
+}
+
 func parseSwordCustomFilter(dst services.EventFilterConfig, req Getter) error {
 	filter := req.FormValue("sword_filter")
 	if len(filter) == 0 {
@@ -129,6 +140,10 @@ func ParseEventFilterConfig(req Getter) (services.EventFilterConfig, error) {
 	parseSwordProfileFilter(config, req)
 	parseSwordEngagedFilter(config, req)
 	err := parseSwordCustomFilter(config, req)
+	if err != nil {
+		return nil, err
+	}
+	err = parseSwordReadOnlyFilter(config, req)
 	if err != nil {
 		return nil, err
 	}

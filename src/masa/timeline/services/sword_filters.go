@@ -209,7 +209,7 @@ func (s *Sword) addProfileFilter(dst *[]EventFilter, data *swapi.ModelData, conf
 	if !ok {
 		return
 	}
-	if writeOnly, ok := config["sword_write_only"].(bool); ok && writeOnly {
+	if readOnly, ok := config["sword_read_only"].(bool); ok && !readOnly {
 		clone := &swapi.Profile{}
 		swapi.DeepCopy(clone, profile)
 		profile = clone
