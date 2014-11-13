@@ -10,6 +10,8 @@
 #ifndef SIMULATION_TERRAIN_PATHFINDER
 #define SIMULATION_TERRAIN_PATHFINDER
 
+#include "TER_PathComputer_ABC.h"
+#include <tools/Path.h>
 #pragma warning( push, 0 )
 #include <boost/thread/mutex.hpp>
 #include <boost/thread/condition.hpp>
@@ -17,6 +19,7 @@
 #include <boost/thread.hpp>
 #include <boost/shared_ptr.hpp>
 #include <deque>
+#include <functional>
 #include <vector>
 
 class TER_DynamicData;
@@ -24,6 +27,7 @@ class TER_PathfindRequest;
 class TER_PathComputer_ABC;
 class TER_PathFinderThread;
 class TER_PathfindRequest;
+struct TER_PathResult;
 class TER_StaticData;
 
 namespace sword
@@ -38,6 +42,22 @@ namespace tools
 
 typedef boost::shared_ptr< TER_DynamicData > DynamicDataPtr;
 
+// Simple "future" for pathfind result, supporting only polling.
+class TER_PathFuture : private boost::noncopyable
+{
+public:
+     TER_PathFuture();
+    ~TER_PathFuture();
+
+    void Set( const boost::shared_ptr< TER_PathResult >& path );
+    boost::shared_ptr< TER_PathResult > Get() const;
+    void Cancel();
+
+private:
+    mutable boost::mutex mutex_;
+    boost::shared_ptr< TER_PathResult > path_;
+};
+
 // =============================================================================
 // Created: NLD 2003-08-14
 // =============================================================================
@@ -48,7 +68,8 @@ public:
                     unsigned int threads, double distanceThreshold,
                     double maxAvoidanceDistance, unsigned int maxEndConnections,
                     unsigned int maxComputationDuration,
-                    const tools::Path& pathfindDir, const std::string& pathfindFilter );
+                    const tools::Path& pathfindDir, const std::string& pathfindFilter,
+                    bool debugPath );
     virtual ~TER_Pathfinder();
 
     //! @name Main
@@ -56,7 +77,12 @@ public:
     // Returns computation time since last update.
     double Update();
     void UpdateInSimulationThread();
-    void StartCompute( const boost::shared_ptr< TER_PathComputer_ABC >& pPath,
+
+    // Starts computing a path, returned future will contain a valid result
+    // when the computation terminates, successfully and on error. Note the
+    // result never contains TER_Path_ABC::eComputing.
+    boost::shared_ptr< TER_PathFuture > StartCompute(
+            const boost::shared_ptr< TER_PathComputer_ABC >& pPath,
             const sword::Pathfind& pathfind );
 
     void AddDynamicData   ( const DynamicDataPtr& data );
@@ -86,6 +112,9 @@ private:
     const boost::shared_ptr< TER_StaticData > staticData_;
     std::vector< std::unique_ptr< TER_PathFinderThread > > pathfindData_;
     std::vector< std::unique_ptr< boost::thread > > threads_;
+    const tools::Path dumpDir_; // empty if dump is disabled
+    const std::set< size_t > dumpFilter_; // empty if no id filters
+    const bool debugPath_;
 
     mutable boost::mutex mutex_;
     boost::condition condition_;
@@ -94,11 +123,12 @@ private:
     double rDistanceThreshold_;
     unsigned int nMaxComputationDuration_;
     unsigned int treatedRequests_;
-    boost::mutex cleanAndDestroyMutex_;
-    std::vector< double > toCleanup_;
     bool bUseInSameThread_;
-    double pathfindTime_;
     bool stopped_;
+
+    boost::mutex pathfindTimeMutex_;
+    // Total computation time of terminated pathfinds since last Update() call
+    double pathfindTime_;
 };
 
 #endif // SIMULATION_TERRAIN_PATHFINDER

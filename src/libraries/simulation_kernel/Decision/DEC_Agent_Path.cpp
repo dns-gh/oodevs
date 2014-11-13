@@ -13,6 +13,7 @@
 #include "DEC_Agent_PathfinderRule.h"
 #include "DEC_AgentContext.h"
 #include "Decision/DEC_GeometryFunctions.h"
+#include "Decision/DEC_PathComputer.h"
 #include "Decision/DEC_PathType.h"
 #include "Decision/DEC_Rep_PathPoint_Front.h"
 #include "Decision/DEC_Rep_PathPoint_Lima.h"
@@ -26,7 +27,6 @@
 #include "Entities/Orders/MIL_Fuseau.h"
 #include "Entities/Orders/MIL_PionOrderManager.h"
 #include "MT_Tools/MT_Logger.h"
-#include "simulation_terrain/TER_PathComputer_ABC.h"
 #include "simulation_terrain/TER_PathSection.h"
 #include <boost/make_shared.hpp>
 
@@ -34,15 +34,14 @@
 // Name: DEC_Agent_Path constructor
 // Created: JDY 03-04-10
 //-----------------------------------------------------------------------------
-DEC_Agent_Path::DEC_Agent_Path( MIL_Agent_ABC& queryMaker, const T_PointVector& points, const DEC_PathType& pathType,
-    const boost::shared_ptr< TER_PathComputer_ABC >& computer )
-    : DEC_PathResult     ( pathType )
+DEC_Agent_Path::DEC_Agent_Path( MIL_Agent_ABC& queryMaker, const T_PointVector& points,
+    const DEC_PathType& pathType )
+    : DEC_PathResult     ( pathType, queryMaker.GetID() )
     , queryMaker_        ( queryMaker )
     , pathClass_         ( DEC_Agent_PathClass::GetPathClass( pathType, queryMaker ) )
     , initialWaypoints_  ( points )
     , nextWaypoints_     ( points.empty() ? points.begin() : points.begin() + 1, points.end() )
     , context_           ( new DEC_AgentContext( queryMaker, pathClass_, points, false ) )
-    , computer_          ( computer )
 {
     const bool refine = queryMaker.GetType().GetUnitType().CanFly() && !queryMaker.IsAutonomous();
     const bool useStrictClosest = !queryMaker.GetAutomate().GetOrderManager().GetFuseau().IsNull();
@@ -51,7 +50,7 @@ DEC_Agent_Path::DEC_Agent_Path( MIL_Agent_ABC& queryMaker, const T_PointVector& 
     for( auto it = points.begin(); it != points.end() - 1; ++it )
     {
         std::unique_ptr< TerrainRule_ABC > rule( new DEC_Agent_PathfinderRule( context_, *it, *(it + 1) ) );
-        computer_->RegisterPathSection( *new TER_PathSection( *computer_, std::move( rule ), *it, *(it + 1), refine, useStrictClosest ) );
+        GetComputer().RegisterPathSection( *new TER_PathSection( std::move( rule ), *it, *(it + 1), refine, useStrictClosest ) );
     }
     queryMaker.RegisterPath( *this );
 }
@@ -67,11 +66,6 @@ DEC_Agent_Path::~DEC_Agent_Path()
         if( auto p = boost::dynamic_pointer_cast< DEC_DIA_PathPoint >( *it ) )
             p->RemoveFromDIA( p );
     queryMaker_.UnregisterPath( *this );
-}
-
-void DEC_Agent_Path::Cancel()
-{
-    computer_->Cancel();
 }
 
 //-----------------------------------------------------------------------------
@@ -331,12 +325,8 @@ void DEC_Agent_Path::InsertLimas()
         InsertLima( *it );
 }
 
-void DEC_Agent_Path::Finalize()
+void DEC_Agent_Path::DoFinalize()
 {
-    if( !context_ )
-        return;
-    SetResult( computer_->GetResult() );
-    context_.reset();
     // Points avants
     if( queryMaker_.GetRole< PHY_RoleInterface_Location >().GetHeight() == 0 )
         InsertPointAvants();
@@ -350,13 +340,13 @@ void DEC_Agent_Path::Finalize()
 // -----------------------------------------------------------------------------
 void DEC_Agent_Path::NotifyPointReached( const T_PathPoints::const_iterator& itCurrentPathPoint )
 {
-    const T_PointVector& computedWaypoints = computer_->GetComputedWaypoints();
+    const T_PointVector& computedWaypoints = GetComputedWaypoints();
     if( nextWaypoints_.size() > 1 && computedWaypoints.size() > 1 &&
         static_cast< float >( (*itCurrentPathPoint)->GetPos().rX_ ) == static_cast< float >( computedWaypoints.front().rX_ ) &&
         static_cast< float >( (*itCurrentPathPoint)->GetPos().rY_ ) == static_cast< float >( computedWaypoints.front().rY_ ) )
     {
         nextWaypoints_.erase( nextWaypoints_.begin() );
-        computer_->RemoveComputedWaypoint();
+        RemoveComputedWaypoint();
     }
     DEC_PathResult::NotifyPointReached( itCurrentPathPoint );
 }
@@ -377,19 +367,4 @@ const DEC_Agent_PathClass& DEC_Agent_Path::GetPathClass() const
 const T_PointVector& DEC_Agent_Path::GetNextWaypoints() const
 {
     return nextWaypoints_;
-}
-
-TER_Path_ABC::E_State DEC_Agent_Path::GetState() const
-{
-    return computer_->GetState();
-}
-
-const MT_Vector2D& DEC_Agent_Path::GetLastWaypoint() const
-{
-    return computer_->GetLastWaypoint();
-}
-
-double DEC_Agent_Path::GetLength() const
-{
-    return computer_->GetLength();
 }

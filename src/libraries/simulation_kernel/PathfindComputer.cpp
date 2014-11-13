@@ -103,7 +103,7 @@ void PathfindComputer::Compute( MIL_AgentPion& pion, const sword::PathfindReques
     for( auto it = points.begin(); it != points.end() - 1; ++it )
     {
         std::unique_ptr< TerrainRule_ABC > rule( new DEC_Agent_PathfinderRule( context, *it, *(it + 1) ) );
-        computer->RegisterPathSection( *new TER_PathSection( *computer, std::move( rule ), *it, *(it + 1), false, false ) );
+        computer->RegisterPathSection( *new TER_PathSection( std::move( rule ), *it, *(it + 1), false, false ) );
     }
     Compute( computer, message, ctx, clientId, magic );
 }
@@ -123,7 +123,7 @@ void PathfindComputer::Compute( const MIL_Population& population, const sword::P
     for( auto it = points.begin(); it != points.end() - 1; ++it )
     {
         std::unique_ptr< TerrainRule_ABC > rule( new DEC_Population_PathfinderRule( context ) );
-        computer->RegisterPathSection( *new TER_PathSection( *computer, std::move( rule ), *it, *(it + 1), false, false ) );
+        computer->RegisterPathSection( *new TER_PathSection( std::move( rule ), *it, *(it + 1), false, false ) );
     }
     Compute( computer, message, ctx, clientId, magic );
 }
@@ -140,7 +140,7 @@ void PathfindComputer::Compute( const std::vector< const PHY_ComposanteTypePion*
     for( auto it = points.begin(); it != points.end() - 1; ++it )
     {
         std::unique_ptr< TerrainRule_ABC > rule( new DEC_Agent_PathfinderRule( context, *it, *(it + 1) ) );
-        computer->RegisterPathSection( *new TER_PathSection( *computer, std::move( rule ), *it, *(it + 1), false, false ) );
+        computer->RegisterPathSection( *new TER_PathSection( std::move( rule ), *it, *(it + 1), false, false ) );
     }
     Compute( computer, message, ctx, clientId, magic );
 }
@@ -152,11 +152,12 @@ void PathfindComputer::Compute( const std::vector< const PHY_ComposanteTypePion*
 void PathfindComputer::Compute( const boost::shared_ptr< DEC_PathComputer >& computer, const sword::PathfindRequest& message,
                                 unsigned int ctx, unsigned int clientId, const boost::optional< uint32_t >& magic )
 {
-    const uint32_t id = ++ids_;
-    results_[ id ] = boost::make_shared< PathRequest >( computer, ctx, clientId, id, message, magic );
     sword::Pathfind pathfind;
     *pathfind.mutable_request() = message;
-    manager_.StartCompute( computer, pathfind );
+    const auto future = manager_.StartCompute( computer, pathfind );
+    const uint32_t id = ++ids_;
+    results_[ id ] = boost::make_shared< PathRequest >(
+            computer, future, ctx, clientId, id, message, magic );
 }
 
 // -----------------------------------------------------------------------------

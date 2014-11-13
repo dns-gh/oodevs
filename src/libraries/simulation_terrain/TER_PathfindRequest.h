@@ -15,14 +15,8 @@
 #include <boost/shared_ptr.hpp>
 #include <boost/weak_ptr.hpp>
 
-namespace sword
-{
-    class Pathfind;
-}
-
+class TER_PathFuture;
 class TER_PathComputer_ABC;
-class TER_Pathfinder_ABC;
-class TER_Pathfinder;
 
 // TER_PathfindRequest insulates TER_Path_ABC cleanup logic from
 // TER_PathFinderThread. While the cleanup code itself belongs to TER_Path_ABC,
@@ -34,29 +28,28 @@ class TER_PathfindRequest: private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-             TER_PathfindRequest( TER_Pathfinder& manager,
+             TER_PathfindRequest(
                 const boost::shared_ptr< TER_PathComputer_ABC >& computer,
-                const sword::Pathfind& pathfind );
+                const sword::Pathfind& pathfind,
+                const boost::shared_ptr< TER_PathFuture >& future );
     virtual ~TER_PathfindRequest();
     //@}
 
     bool IgnoreDynamicObjects() const;
-
-    // Computes path and returned processing time in milliseconds.
-    double FindPath( TER_Pathfinder_ABC& pathfind );
-
-private:
-    //! @name Helpers
-    //@{
     bool IsItinerary() const;
-    //@}
+
+    // Returns the path computer or 0 if it was destroyed before the request
+    // could be processed.
+    boost::shared_ptr< TER_PathComputer_ABC > GetComputer();
+    const sword::Pathfind& GetPathfind() const;
+    boost::shared_ptr< TER_PathFuture > GetFuture();
 
 private:
     //! @name Member data
     //@{
-    TER_Pathfinder& manager_;
     boost::weak_ptr< TER_PathComputer_ABC > computer_;
     const sword::Pathfind pathfind_;
+    boost::shared_ptr< TER_PathFuture > future_;
     //@}
 };
 

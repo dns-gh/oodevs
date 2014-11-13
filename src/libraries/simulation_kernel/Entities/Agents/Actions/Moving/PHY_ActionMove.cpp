@@ -12,12 +12,10 @@
 #include "simulation_kernel_pch.h"
 #include "PHY_ActionMove.h"
 #include "DisasterImpactComputer.h"
-#include "MIL_AgentServer.h"
 #include "PHY_RoleAction_Moving.h"
 #include "Decision/DEC_Agent_Path.h"
 #include "Decision/DEC_Agent_PathClass.h"
 #include "Decision/DEC_Decision_ABC.h"
-#include "Decision/DEC_PathComputer.h"
 #include "Decision/DEC_PathWalker.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
@@ -196,9 +194,8 @@ void PHY_ActionMove::CreateNewPath()
     T_PointVector nextWaypoints = pMainPath_->GetNextWaypoints();
     nextWaypoints.insert( nextWaypoints.begin(), pion_.GetRole< PHY_RoleInterface_Location >().GetPosition() );
     const DEC_PathType& pathType = pMainPath_->GetPathType();
-    const auto computer = boost::make_shared< DEC_PathComputer >( pion_.GetID() );
-    const auto pNewPath = boost::make_shared< DEC_Agent_Path >( pion_, nextWaypoints, pathType, computer );
-    MIL_AgentServer::GetWorkspace().GetPathFindManager().StartCompute( computer, sword::Pathfind() );
+    const auto pNewPath = boost::make_shared< DEC_Agent_Path >( pion_, nextWaypoints, pathType );
+    pNewPath->StartCompute( sword::Pathfind() );
     role_.MoveCanceled( pMainPath_ );
     pMainPath_->Cancel();
     pMainPath_ = pNewPath;

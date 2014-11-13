@@ -17,7 +17,6 @@
 #include "Decision/DEC_Population_PathClass.h"
 #include "Decision/DEC_PathType.h"
 #include "Decision/DEC_PathWalker.h"
-#include "Decision/DEC_PathComputer.h"
 #include "Entities/MIL_EntityManager.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
@@ -34,7 +33,6 @@
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
 #include "simulation_kernel/PopulationCollisionNotificationHandler_ABC.h"
-#include "simulation_terrain/TER_Pathfinder.h"
 #include "simulation_terrain/TER_World.h"
 #include "simulation_terrain/TER_PopulationManager.h"
 #include "simulation_terrain/TER_PopulationFlowManager.h"
@@ -219,12 +217,10 @@ void MIL_PopulationFlow::ComputePathAlong( const std::vector< boost::shared_ptr<
         pTailPath_->Cancel();
         pTailPath_.reset();
     }
-    const auto headComputer = boost::make_shared< DEC_PathComputer >( GetPopulation().GetID() );
-    pHeadPath_ = boost::make_shared< DEC_Population_Path >( GetPopulation(), CreatePositions( GetHeadPosition(), headDestination ), headComputer );
-    MIL_AgentServer::GetWorkspace().GetPathFindManager().StartCompute( headComputer, sword::Pathfind() );
-    const auto tailComputer = boost::make_shared< DEC_PathComputer >( GetPopulation().GetID() );
-    pTailPath_ = boost::make_shared< DEC_Population_Path >( GetPopulation(), CreatePositions( GetTailPosition(), tailDestination ), tailComputer );
-    MIL_AgentServer::GetWorkspace().GetPathFindManager().StartCompute( tailComputer, sword::Pathfind() );
+    pHeadPath_ = boost::make_shared< DEC_Population_Path >( GetPopulation(), CreatePositions( GetHeadPosition(), headDestination ) );
+    pHeadPath_->StartCompute( sword::Pathfind() );
+    pTailPath_ = boost::make_shared< DEC_Population_Path >( GetPopulation(), CreatePositions( GetTailPosition(), tailDestination ) );
+    pTailPath_->StartCompute( sword::Pathfind() );
 }
 
 // -----------------------------------------------------------------------------

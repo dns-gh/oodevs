@@ -44,7 +44,6 @@ public:
     //@{
     unsigned int GetID() const;
     virtual E_State GetState() const = 0;
-    virtual double GetLength() const = 0;
     //@}
 
     //! @name Operators

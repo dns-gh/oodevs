@@ -15,7 +15,6 @@
 #include <pathfind/TerrainRule_ABC.h>
 
 class TER_Pathfinder_ABC;
-class TER_PathResult_ABC;
 
 // =============================================================================
 // @class  DEC_Tools
@@ -25,7 +24,7 @@ class TER_PathSection : private boost::noncopyable
 {
 public:
              TER_PathSection(
-                    TER_PathResult_ABC& result, std::unique_ptr< TerrainRule_ABC > rule,
+                    std::unique_ptr< TerrainRule_ABC > rule,
                     const MT_Vector2D& vStartPoint, const MT_Vector2D& vEndPoint,
                     bool needRefine, bool useStrictClosest );
     virtual ~TER_PathSection();
@@ -33,14 +32,13 @@ public:
     //! @name Operations
     //@{
     PathResultPtr Execute  ( TER_Pathfinder_ABC& pathfind,
-            unsigned int nComputationEndTime );
+            unsigned int deadlineSeconds );
     double GetLength() const;
     void   Cancel   ();
     //@}
 
     //! @name Accessors
     //@{
-    bool                IsImpossible() const;
     const MT_Vector2D&  GetPosStart () const;
     const MT_Vector2D&  GetPosEnd   () const; // $$$$ AGE 2005-02-25: ...
     void                SetPosStart ( const MT_Vector2D& point );
@@ -50,7 +48,6 @@ private:
     class Canceler;
 
 private:
-    TER_PathResult_ABC& result_;
     std::unique_ptr< TerrainRule_ABC > rule_;
     std::unique_ptr< Canceler > canceler_;
     MT_Vector2D startPoint_;
