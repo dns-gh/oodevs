@@ -186,7 +186,6 @@ namespace
         currentOptions.Apply( [ &]( const std::string& name, const OptionVariant& value, bool isInPreferencePanel ) {
             if( !isInPreferencePanel )
                 previousOptions.Set( name, value );
-
         } );
     }
 }
@@ -213,6 +212,12 @@ void PreferencesDialog::reject()
         auto& previousOptions = *it->second;
         auto& options = view->GetActiveOptions();
         RestoreOptions( *previousOptions.GetOptions(), *options.GetOptions() );
+        previousOptions.SetFilterEntity( options.GetFilterEntity() );
+        previousOptions.SetLockedEntity( options.GetLockedEntity() );
+        previousOptions.Disaggregate();
+        const auto& entities = options.GetAggregatedEntities();
+        for( auto entity = entities.begin(); entity != entities.end(); ++entity )
+            previousOptions.Aggregate( **entity );
         options = previousOptions;
     }
     optionsController.UpdateViewOptions();
