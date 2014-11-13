@@ -327,12 +327,12 @@ const std::string& MessageLoader::GetEndDateTime() const
 // -----------------------------------------------------------------------------
 void MessageLoader::ScanData()
 {
-    while( !quit_->IsSignaled() )
+    do
     {
         ScanDataFolders( false );
         init_->Signal();
-        quit_->Wait( boost::posix_time::seconds( 10 ) );
     }
+    while( !quit_->Wait( boost::posix_time::seconds( 10 ) ) );
 }
 
 namespace

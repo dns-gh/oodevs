@@ -48,8 +48,7 @@ void App::Initialize()
 
 bool App::Update()
 {
-    if( !replayer_->Update() || test_ )
-        return false;
-    quit_->Wait( boost::posix_time::milliseconds( 10 ) );
-    return true;
+    return replayer_->Update()
+        && !test_
+        && !quit_->Wait( boost::posix_time::milliseconds( 10 ) );
 }

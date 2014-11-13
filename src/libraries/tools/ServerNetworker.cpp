@@ -103,7 +103,8 @@ void ServerNetworker::Run()
     {
         service_->run();
         service_->reset();
-    } while( !quit_->Wait( boost::posix_time::milliseconds( 100 ) ) );
+    }
+    while( !quit_->Wait( boost::posix_time::milliseconds( 100 ) ) );
 }
 
 // -----------------------------------------------------------------------------
