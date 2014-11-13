@@ -84,25 +84,6 @@ has_end = (model) ->
     end = model.get "end"
     return end?.length > 0
 
-query_filters = [
-    "filter_hide_hierarchies"
-    "filter_keyword"
-    "filter_service"
-    "filter_show_only"
-    "register_service"
-    "sword_filter"
-    "sword_filter_engaged"
-    "sword_profile"
-    "sword_write_only"
-]
-
-get_filters = ->
-    query = {}
-    for it in query_filters
-        value = url_query[it]
-        query[it] = value if value?
-    return query
-
 # translate a <value> inside an handlebars template
 Handlebars.registerHelper "i18n", (value) ->
     return new Handlebars.SafeString i18n value
@@ -663,8 +644,7 @@ class SessionView extends Backbone.View
         return if @locked? || @link?
         @first_update = true
         url = get_ws_url "/socket/#{@id}"
-        query = get_filters()
-        url += "?" + $.param query unless _.isEmpty query
+        url += "?" + $.param url_query unless _.isEmpty url_query
         @link = new WebSocket url
         @link.onmessage = @on_ws_message
         @link.onclose = @on_ws_close
