@@ -40,7 +40,8 @@ int TimelineDockWidget::maxTabNumber_ = 0;
 TimelineDockWidget::TimelineDockWidget( QWidget* parent,
                                         kernel::Controllers& controllers,
                                         const GamingConfig& config,
-                                        Model& model )
+                                        Model& model,
+                                        gui::GLWidgetManager& glWidgetManager )
     : gui::RichDockWidget( controllers, parent, "timeline-dock-widget" )
     , config_( config )
     , gamingUuid_( model.GetUuid() )
@@ -59,7 +60,7 @@ TimelineDockWidget::TimelineDockWidget( QWidget* parent,
     tabWidget_->setMovable( true );
     contextMenu_ = new QMenu( this );
     contextMenu_->addAction( tr( "Rename view" ), this, SLOT( OnRenameTab() ) );
-    webView_.reset( new TimelineWebView( 0, config, controllers, model ) );
+    webView_.reset( new TimelineWebView( 0, config, controllers, model, glWidgetManager ) );
 
     // Main Layout
     QWidget* mainWidget = new QWidget();

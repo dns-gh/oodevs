@@ -19,6 +19,7 @@
 #include "actions/ActionTiming.h"
 #include "clients_gui/EventHelpers.h"
 #include "clients_gui/EventsModel.h"
+#include "clients_gui/GLWidgetManager.h"
 #include "clients_gui/TimelinePublisher.h"
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/ContextMenu.h"
@@ -50,11 +51,13 @@
 TimelineWebView::TimelineWebView( QWidget* parent,
                                   const GamingConfig& config,
                                   kernel::Controllers& controllers,
-                                  Model& model )
+                                  Model& model,
+                                  gui::GLWidgetManager& glWidgetManager )
     : QWidget( parent )
     , config_( config )
     , controllers_( controllers )
     , model_( model )
+    , glWidgetManager_( glWidgetManager )
     , server_( 0 )
     , creationSignalMapper_( 0 )
     , horizontal_( false )
@@ -317,6 +320,12 @@ void TimelineWebView::OnTriggeredEvents( const timeline::Events& events )
             {
                 QMessageBox::critical( this, tr( "Error" ), tr( "'%1' is not a valid drawing file." ).arg( drawingsPath.ToUTF8().c_str() ) );
             }
+        tools::Path configurationPath = tools::Path::FromUTF8( jsonPayload[ gui::event_helpers::configurationPathKey ] );
+        if( configurationPath.Exists() )
+        {
+            configurationPath.MakePreferred();
+            glWidgetManager_.LoadDisplaySettings( configurationPath );
+        }
     }
 }
 
