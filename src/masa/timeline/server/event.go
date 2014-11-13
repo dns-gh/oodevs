@@ -188,9 +188,9 @@ func (e *Event) needChildrenUpdate(next *Event) (*time.Duration, error) {
 }
 
 // Returns 'modified', 'triggered', 'updateChildren', 'error'
-// 'modified' indicate whether the event have been modified or not
-// 'triggered' indicate whether the event have been triggered or not
-// 'updateChildren' indicate whether the children of the event should be update or not
+// 'modified' indicates whether the event has been modified or not
+// 'triggered' indicates whether the event has been triggered or not
+// 'updateChildren' indicates whether the children of the event should be update or not
 // 'error' is not nil if the update is forbidden
 func (e *Event) Update(msg *sdk.Event, tick time.Time, events EventSlice) (bool, bool, bool, error) {
 	next, err := NewEvent(msg, events)
