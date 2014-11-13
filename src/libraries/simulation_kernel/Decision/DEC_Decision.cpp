@@ -920,6 +920,7 @@ void RegisterObjectFunctions( sword::Brain& brain )
     brain.RegisterFunction( "DEC_Agent_DecontamineConnaissance",
         std::function< int( boost::shared_ptr< DEC_Knowledge_Agent >, boost::shared_ptr< DEC_Knowledge_Object > ) >( boost::bind( &DEC_KnowledgeObjectFunctions::QueueKnowledgeForDecontamination, _1, _2 ) ) );
     brain.RegisterFunction( "DEC_Circulation_EquiperItineraireLogistique", &DEC_KnowledgeObjectFunctions::EquipLogisticRoute );
+    brain.RegisterFunction( "DEC_ObjectKnowledge_IsImpassable", &DEC_KnowledgeObjectFunctions::IsImpassable );
 }
 
 // -----------------------------------------------------------------------------
