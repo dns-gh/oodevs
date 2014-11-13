@@ -65,13 +65,17 @@ void CommandPostAttributes::CreateDictionary( gui::PropertiesDictionary& diction
 // Name: CommandPostAttributes::Draw
 // Created: SBO 2007-03-27
 // -----------------------------------------------------------------------------
-void CommandPostAttributes::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GLView_ABC& tools ) const
+void CommandPostAttributes::Draw( const geometry::Point2f& where,
+                                  const gui::Viewport_ABC& viewport,
+                                  gui::GLView_ABC& tools ) const
 {
     if( commandPost_ && !entity_.IsAnAggregatedSubordinate() )
     {
         if( viewport.IsHotpointVisible() )
-            tools.DrawApp6SymbolFixedSize( type_.GetHQSymbol(), where, -tools.GetOptions().GetRatio( entity_ ), 0 );
-
+            tools.DrawApp6SymbolFixedSize( type_.GetHQSymbol(),
+                                           where,
+                                           -tools.GetCurrentOptions().GetRatio( entity_ ),
+                                           0 );
         const kernel::Entity_ABC& superior = entity_.Get< kernel::TacticalHierarchies >().GetUp();
         if( const LogisticBaseStates* bl = static_cast< const LogisticBaseStates* >( superior.Retrieve< gui::LogisticHierarchiesBase >() ) )
             bl->Draw( where, viewport, tools );

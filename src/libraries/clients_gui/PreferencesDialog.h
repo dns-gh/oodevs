@@ -27,7 +27,8 @@ namespace gui
 {
     class Elevation2dLayer;
     class GLOptions;
-    class GlProxy;
+    class GLMainProxy;
+    class GLView_ABC;
     class PreferencesList;
     class PreferencePanel_ABC;
     class TerrainSettings;
@@ -50,7 +51,7 @@ public:
              PreferencesDialog( QWidget* parent,
                                 kernel::Controllers& controllers,
                                 const kernel::StaticModel& staticModel,
-                                GlProxy& proxy );
+                                GLMainProxy& view );
     virtual ~PreferencesDialog();
     //@}
 
@@ -59,7 +60,9 @@ public:
     virtual void showEvent( QShowEvent * event );
     virtual void reject();
 
-    void AddPage( const QString& name, PreferencePanel_ABC& page );
+    void AddPage( const QString& name,
+                  bool showActiveCombo,
+                  PreferencePanel_ABC& page );
     //@}
 
 signals:
@@ -71,24 +74,25 @@ signals:
 private:
     //! @name Helpers
     //@{
-    void Load( const GlProxy& );
+    void Load( const GLView_ABC& );
     virtual void NotifyUpdated( const kernel::ModelUnLoaded& );
+    void UpdateComboVisibility();
     //@}
 
 private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    GlProxy& proxy_;
-    std::shared_ptr< kernel::Options > previousGeneralOptions_;
-    std::unique_ptr< GLOptions > previousViewOptions_;
-    //std::vector< std::unique_ptr< GLOptions > > previousViewsOptions_;
+    GLMainProxy& mainProxy_;
+    std::unique_ptr< kernel::Options > previousGeneralOptions_;
+    std::map< int, std::unique_ptr< GLOptions > > previousViewsOptions_;
     PreferencesList* list_;
     QStackedWidget* stack_;
-    std::vector< PreferencePanel_ABC* > panels_;
+    std::map< PreferencePanel_ABC*, bool > panels_;
+    QComboBox* activeCombo_;
     //@}
 };
 
-}
+} //! namespace gui
 
 #endif // __PreferencesDialog_h_

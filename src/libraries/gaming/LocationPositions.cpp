@@ -9,6 +9,7 @@
 
 #include "gaming_pch.h"
 #include "LocationPositions.h"
+#include "clients_gui/GLColors.h"
 #include "clients_gui/GLOptions.h"
 #include "clients_gui/GLView_ABC.h"
 #include "clients_gui/Viewport_ABC.h"
@@ -93,12 +94,14 @@ void LocationPositions::Accept( kernel::LocationVisitor_ABC& visitor ) const
 // Name: LocationPositions::Draw
 // Created: AGE 2006-05-18
 // -----------------------------------------------------------------------------
-void LocationPositions::Draw( const geometry::Point2f& /*where*/, const gui::Viewport_ABC& viewport, gui::GLView_ABC& tools ) const
+void LocationPositions::Draw( const geometry::Point2f& /*where*/,
+                              const gui::Viewport_ABC& viewport,
+                              gui::GLView_ABC& tools ) const
 {
     if( ! viewport.IsVisible( boundingBox_ ) || points_.empty() )
         return;
 
-    const bool selected = tools.GetOptions().IsDrawingSelection();
+    const bool selected = tools.GetCurrentOptions().IsDrawingSelection();
     glPushAttrib( GL_LINE_BIT );
     if( selected )
     {

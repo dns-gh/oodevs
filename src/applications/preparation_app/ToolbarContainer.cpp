@@ -13,8 +13,9 @@
 #include "FileToolbar.h"
 #include "LocationEditorToolbar.h"
 #include "TerrainToolBar.h"
-#include "clients_gui/GisToolbar.h"
 #include "clients_gui/DisplayToolbar.h"
+#include "clients_gui/GisToolbar.h"
+#include "clients_gui/GLMainProxy.h"
 #include "ENT/ENT_Enums.h"
 #include "preparation/StaticModel.h"
 
@@ -25,7 +26,7 @@
 ToolbarContainer::ToolbarContainer( QMainWindow* parent,
                                     kernel::Controllers& controllers,
                                     const StaticModel& staticModel,
-                                    gui::GLView_ABC& view,
+                                    gui::GLMainProxy& mainProxy,
                                     const std::shared_ptr< gui::LocationsLayer >& layer,
                                     const std::shared_ptr< gui::ParametersLayer >& paramLayer,
                                     gui::ExclusiveEventStrategy& eventStrategy,
@@ -53,13 +54,13 @@ ToolbarContainer::ToolbarContainer( QMainWindow* parent,
     }
     // Location editor
     {
-        locationEditorToolbar_ = new LocationEditorToolbar( parent, controllers, staticModel.coordinateConverter_, view, layer );
+        locationEditorToolbar_ = new LocationEditorToolbar( parent, controllers, staticModel.coordinateConverter_, mainProxy, layer );
         locationEditorToolbar_->SetModes( eModes_Default | eModes_LivingArea, eModes_None, true );
         parent->addToolBar( locationEditorToolbar_ );
     }
     // GIS
     {
-        gui::RichToolBar* gisToolbar = new gui::GisToolbar( parent, controllers, staticModel.detection_, terrainProfiler );
+        gui::RichToolBar* gisToolbar = new gui::GisToolbar( parent, controllers, mainProxy, staticModel.detection_, terrainProfiler );
         gisToolbar->SetModes( eModes_Default | eModes_LivingArea, eModes_None, true );
         parent->addToolBar( gisToolbar );
     }

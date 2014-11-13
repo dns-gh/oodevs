@@ -11,16 +11,39 @@
 #include "Settings.h"
 #include "clients_kernel/TristateOption.h"
 #include "clients_kernel/FourStateOption.h"
+#include <tools/Path.h>
 #include <qtgui/qdesktopwidget.h>
 
 using namespace kernel;
 
 // -----------------------------------------------------------------------------
 // Name: Settings constructor
+// Created: ABR 2014-10-27
+// -----------------------------------------------------------------------------
+Settings::Settings()
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: Settings constructor
 // Created: APE 2004-06-01
 // -----------------------------------------------------------------------------
-Settings::Settings( const QString & organization, const QString & application )
-    : QSettings( organization, application )
+Settings::Settings( const QString& organization,
+                    const QString& application,
+                    QObject* parent /* = 0 */ )
+                    : QSettings( organization, application, parent )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: Settings constructor
+// Created: APE 2004-06-01
+// -----------------------------------------------------------------------------
+Settings::Settings( const tools::Path& filename,
+                    QObject* parent /* = 0 */ )
+    : QSettings( QString::fromStdWString( filename.ToUnicode() ), QSettings::IniFormat, parent )
 {
     // NOTHING
 }

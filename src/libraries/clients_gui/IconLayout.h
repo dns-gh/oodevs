@@ -10,6 +10,8 @@
 #ifndef __IconLayout_h_
 #define __IconLayout_h_
 
+#include <boost/noncopyable.hpp>
+
 namespace gui
 {
 
@@ -19,7 +21,7 @@ namespace gui
 */
 // Created: SBO 2006-08-18
 // =============================================================================
-class IconLayout
+class IconLayout : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -31,28 +33,16 @@ public:
     //! @name Operations
     //@{
     void AddIcon( const char** xpm, int x, int y );
-    const geometry::Point2f& IconLocation( const char** xpm );
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    IconLayout( const IconLayout& );            //!< Copy constructor
-    IconLayout& operator=( const IconLayout& ); //!< Assignment operator
-    //@}
-
-    //! @name Types
-    //@{
-    typedef std::map< const char**, geometry::Point2f > T_IconLocations;
+    const geometry::Point2f& IconLocation( const char** xpm ) const;
     //@}
 
 private:
     //! @name Member data
     //@{
-    T_IconLocations iconLocations_;
+    std::map< const char**, geometry::Point2f > iconLocations_;
     //@}
 };
 
-}
+} //! namespace gui
 
 #endif // __IconLayout_h_

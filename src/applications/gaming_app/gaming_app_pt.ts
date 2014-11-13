@@ -2575,10 +2575,6 @@ This data can&apos;t be projected.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&amp;Windows</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>&amp;?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2632,6 +2628,14 @@ This data can&apos;t be projected.</source>
     </message>
     <message>
         <source>Rules</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save configuration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Load configuration</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

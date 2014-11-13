@@ -346,6 +346,17 @@
     </message>
 </context>
 <context>
+    <name>Tools</name>
+    <message>
+        <source>&amp;Windows</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add new terrain view</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Urban</name>
     <message>
         <source>Urban block[%L1]</source>
@@ -966,6 +977,50 @@ Please check access permissions or write protection.</source>
     </message>
     <message>
         <source>Disaggregate</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>gui::GLWidgetManager</name>
+    <message>
+        <source>Main view</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>config.ini</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Warning</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unable to create a new terrain view with an invalid id: %1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The maximum number of terrain views has been reached.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>View %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save configuration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Configuration file (*.ini)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Load configuration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unable to load configuration file &apos;%1&apos;.
+These settings are defined for the application &apos;%2&apos;, on the base &apos;%3&apos; and the exercise &apos;%4&apos;.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

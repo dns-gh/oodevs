@@ -16,7 +16,7 @@
 
 namespace gui
 {
-    class GlProxy;
+    class GLView_ABC;
 
 // =============================================================================
 /** @class  PreferencePanel_ABC
@@ -35,7 +35,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Load( const GlProxy& );
+    virtual void Load( const GLView_ABC& );
     //@}
 };
 

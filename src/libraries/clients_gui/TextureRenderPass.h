@@ -13,13 +13,9 @@
 #include "LayersRenderPass.h"
 #include "clients_kernel/OptionsObserver_ABC.h"
 
-namespace kernel
-{
-    class Controllers;
-}
-
 namespace gui
 {
+    class GLView_ABC;
 
 // =============================================================================
 /** @class  TextureRenderPass
@@ -28,13 +24,14 @@ namespace gui
 // Created: SBO 2008-04-14
 // =============================================================================
 class TextureRenderPass : public LayersRenderPass
-                        , public tools::Observer_ABC
-                        , public kernel::OptionsObserver_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             TextureRenderPass( MapWidget_ABC& widget, const std::string& name, kernel::Controllers& controllers, const std::string& option = "" );
+             TextureRenderPass( MapWidget_ABC& widget,
+                                const std::string& name,
+                                const GLView_ABC& view,
+                                const std::string& option = "" );
     virtual ~TextureRenderPass();
     //@}
 
@@ -42,16 +39,9 @@ public:
     //@{
     virtual void Render( MapWidget_ABC& widget );
     void BindTexture() const;
-    virtual void OptionChanged( const std::string& name, const kernel::OptionVariant& value );
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    TextureRenderPass( const TextureRenderPass& );            //!< Copy constructor
-    TextureRenderPass& operator=( const TextureRenderPass& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     void CreateTexture();
@@ -60,13 +50,13 @@ private:
 private:
     //! @name Member data
     //@{
-    kernel::Controllers& controllers_;
+    const GLView_ABC& view_;
     unsigned int texture_;
     std::string option_;
     bool enabled_;
     //@}
 };
 
-}
+} //! namespace gui
 
 #endif // __TextureRenderPass_h_

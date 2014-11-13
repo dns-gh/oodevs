@@ -28,15 +28,14 @@ using namespace gui;
 TacticalGraphics::TacticalGraphics( const DrawingTypes& drawingTypes )
 {
     drawingTypes.Apply(
-        [&]( const DrawingCategory& category )
+        [&]( const DrawingCategory& category ) {
+        auto it = category.CreateIterator();
+        while( it.HasMoreElements() )
         {
-            auto it = category.CreateIterator();
-            while( it.HasMoreElements() )
-            {
-                const DrawingTemplate& drawing = it.NextElement();
-                templates_[ drawing.GetCode().toStdString() ] = &drawing;
-            }
-        } );
+            const DrawingTemplate& drawing = it.NextElement();
+            templates_[ drawing.GetCode().toStdString() ] = &drawing;
+        }
+    } );
 }
 
 // -----------------------------------------------------------------------------

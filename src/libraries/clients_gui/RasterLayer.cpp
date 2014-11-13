@@ -95,6 +95,7 @@ void RasterLayer::GenerateTexture( const tools::Path& texture )
 // -----------------------------------------------------------------------------
 void RasterLayer::NotifyUpdated( const kernel::ModelLoaded& modelLoaded )
 {
+    Reset();
     directory_ = modelLoaded.config_.GetGraphicsDirectory();
 }
 

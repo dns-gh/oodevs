@@ -113,8 +113,14 @@ void Contaminations::Display( Displayer_ABC& displayer ) const
 // Name: Contaminations::Draw
 // Created: AGE 2006-04-10
 // -----------------------------------------------------------------------------
-void Contaminations::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GLView_ABC& tools ) const
+void Contaminations::Draw( const geometry::Point2f& where,
+                           const gui::Viewport_ABC& viewport,
+                           gui::GLView_ABC& view ) const
 {
     if( contaminated_ && viewport.IsHotpointVisible() )
-        tools.DrawIcon( xpm_nbc, where, 150.f, tools.GetOptions().GetRatio( entity_ ), gui::GLView_ABC::pixels );
+        view.DrawIcon( xpm_nbc,
+                       where,
+                       150.f,
+                       view.GetCurrentOptions().GetRatio( entity_ ),
+                       gui::GLView_ABC::pixels );
 }

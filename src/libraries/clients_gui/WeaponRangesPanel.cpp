@@ -72,7 +72,7 @@ WeaponRangesPanel::~WeaponRangesPanel()
     // NOTHING
 }
 
-void WeaponRangesPanel::Load( const GlProxy& )
+void WeaponRangesPanel::Load( const GLView_ABC& )
 {
     volumeCombo_->blockSignals( true );
     indirectWeaponCombo_->blockSignals( true );

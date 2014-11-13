@@ -52,10 +52,15 @@ void ObjectKnowledgePositions::DoUpdate( const sword::ObjectKnowledgeUpdate& mes
 // Name: ObjectKnowledgePositions::Draw
 // Created: AGE 2006-05-19
 // -----------------------------------------------------------------------------
-void ObjectKnowledgePositions::Draw( const geometry::Point2f& /*where*/, const gui::Viewport_ABC& /*viewport*/, gui::GLView_ABC& tools ) const
+void ObjectKnowledgePositions::Draw( const geometry::Point2f& /*where*/,
+                                     const gui::Viewport_ABC& /*viewport*/,
+                                     gui::GLView_ABC& tools ) const
 {
     if( const kernel::Location_ABC* location = GetLocation() )
-        tools.DrawTacticalGraphics( knowledge_.GetSymbol(), *location, tools.GetOptions().IsDrawingSelection(), type_.GetPointSize(),
+        tools.DrawTacticalGraphics( knowledge_.GetSymbol(),
+                                    *location,
+                                    tools.GetCurrentOptions().IsDrawingSelection(),
+                                    type_.GetPointSize(),
             dynamic_cast< const kernel::Point* >( location ) != nullptr );
 }
 

@@ -965,7 +965,7 @@ Ces données ne peuvent pas être projetées.</translation>
     </message>
     <message>
         <source>Generate symbols</source>
-        <translation>Génération des symbols</translation>
+        <translation>Génération des symboles</translation>
     </message>
 </context>
 <context>
@@ -1090,10 +1090,6 @@ Ces données ne peuvent pas être projetées.</translation>
         <translation>Assistant de création...</translation>
     </message>
     <message>
-        <source>&amp;Windows</source>
-        <translation>&amp;Fenêtres</translation>
-    </message>
-    <message>
         <source>About</source>
         <translation>A propos</translation>
     </message>
@@ -1204,6 +1200,14 @@ Ces données ne peuvent pas être projetées.</translation>
     <message>
         <source>Grid type</source>
         <translation>Type de grille</translation>
+    </message>
+    <message>
+        <source>Save configuration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Load configuration</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

@@ -9,6 +9,8 @@
 
 #include "clients_gui_pch.h"
 #include "ResourceNetworksLayer.h"
+
+#include "PickingSelector.h"
 #include "ResourceNetwork_ABC.h"
 #include "Viewport_ABC.h"
 #include "clients_kernel/Object_ABC.h"
@@ -78,7 +80,7 @@ void ResourceNetworksLayer::NotifyDeleted( const kernel::Entity_ABC& entity )
 // -----------------------------------------------------------------------------
 void ResourceNetworksLayer::Draw( const kernel::Entity_ABC& entity, Viewport_ABC& viewport, bool /*pickingMode*/ )
 {
-    if( ShouldDisplay( entity ) && view_.ShouldDisplay( GetType() ) )
+    if( ShouldDisplay( entity ) && view_.GetPickingSelector().ShouldDisplay( GetType() ) )
         if( const ResourceNetwork_ABC* attribute = entity.Retrieve< ResourceNetwork_ABC >() )
         {
             const geometry::Point2f position = GetPosition( entity );

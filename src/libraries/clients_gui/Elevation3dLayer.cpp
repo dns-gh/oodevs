@@ -115,7 +115,7 @@ void Elevation3dLayer::Paint( const ViewFrustum& frustum )
         glPopAttrib();
     }
     glPushAttrib( GL_CURRENT_BIT | GL_TEXTURE_BIT | GL_LIGHTING_BIT );
-        view_.GetOptions().SetLighting();
+        view_.GetCurrentOptions().SetLighting();
         if( program_ )
         {
             program_->Use();

@@ -968,7 +968,7 @@ This data can&apos;t be projected.</translation>
     </message>
     <message>
         <source>Generate symbols</source>
-        <translation>Generate symbols</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1173,10 +1173,6 @@ This data can&apos;t be projected.</translation>
         <translation>Performance...</translation>
     </message>
     <message>
-        <source>&amp;Windows</source>
-        <translation>&amp;Windows</translation>
-    </message>
-    <message>
         <source>&amp;?</source>
         <translation>&amp;?</translation>
     </message>
@@ -1207,6 +1203,14 @@ This data can&apos;t be projected.</translation>
     <message>
         <source>Grid type</source>
         <translation>Grid type</translation>
+    </message>
+    <message>
+        <source>Save configuration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Load configuration</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

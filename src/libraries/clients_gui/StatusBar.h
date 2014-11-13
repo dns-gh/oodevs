@@ -22,12 +22,10 @@ namespace kernel
 
 namespace gui
 {
+    class GLMainProxy;
     class LocationParsers;
     class TerrainPicker;
-}
 
-namespace gui
-{
 // =============================================================================
 /** @class  StatusBar
     @brief  Status bar
@@ -48,7 +46,7 @@ public:
                         TerrainPicker& picker,
                         const kernel::DetectionMap& detection,
                         const kernel::CoordinateConverter_ABC& converter,
-                        QObject& selector );
+                        GLMainProxy& mainProxy );
     virtual ~StatusBar();
     //@}
 

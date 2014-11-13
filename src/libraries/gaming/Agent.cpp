@@ -87,7 +87,16 @@ void Agent::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewp
         const float depth = isMoving? type_.GetLength( !Get< Attributes >().bAmbianceSafety_ ) : type_.GetDepth();
         const float width = isMoving? 0 : type_.GetWidth();
         const unsigned int direction = isMoving ? direction_ : sensorsDirection_;
-        tools.DrawUnitSymbol( symbol_, moveSymbol_, staticSymbol_, level_, isMoving, where, -tools.GetOptions().GetRatio( *this ), direction, width, depth );
+        tools.DrawUnitSymbol( symbol_,
+                              moveSymbol_,
+                              staticSymbol_,
+                              level_,
+                              isMoving,
+                              where,
+                              -tools.GetCurrentOptions().GetRatio( *this ),
+                              direction,
+                              width,
+                              depth );
     }
 }
 

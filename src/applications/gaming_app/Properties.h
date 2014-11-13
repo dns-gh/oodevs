@@ -20,7 +20,7 @@ namespace kernel
 namespace gui
 {
     class EditorFactory_ABC;
-    class GlProxy;
+    class GLView_ABC;
     class PropertyDisplayer;
 }
 
@@ -60,7 +60,9 @@ class Properties : private PropertiesBase
 public:
     //! @name Constructors/Destructor
     //@{
-             Properties( QWidget* parent, kernel::Controllers& controllers, const gui::GlProxy& glProxy );
+             Properties( QWidget* parent,
+                         kernel::Controllers& controllers,
+                         const gui::GLView_ABC& glProxy );
     virtual ~Properties();
     //@}
 };

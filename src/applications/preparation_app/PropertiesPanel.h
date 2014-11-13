@@ -20,7 +20,7 @@ namespace kernel
 
 namespace gui
 {
-    class GlProxy;
+    class GLView_ABC;
     class PropertyDisplayer;
 }
 
@@ -42,7 +42,9 @@ class PropertiesPanelBase
 public:
     //! @name Constructors/Destructor
     //@{
-             PropertiesPanelBase( kernel::Controllers& controllers, Model& model, const StaticModel& staticModel,
+             PropertiesPanelBase( kernel::Controllers& controllers,
+                                  Model& model,
+                                  const StaticModel& staticModel,
                                   const tools::GeneralConfig& config );
     virtual ~PropertiesPanelBase();
     //@}
@@ -68,8 +70,12 @@ class PropertiesPanel : private PropertiesPanelBase
 public:
     //! @name Constructors/Destructor
     //@{
-             PropertiesPanel( QWidget* parent, kernel::Controllers& controllers, Model& model, const StaticModel& staticModel,
-                             const gui::GlProxy& glProxy, const tools::GeneralConfig& config );
+             PropertiesPanel( QWidget* parent,
+                              kernel::Controllers& controllers,
+                              Model& model,
+                              const StaticModel& staticModel,
+                              const gui::GLView_ABC& view,
+                              const tools::GeneralConfig& config );
     virtual ~PropertiesPanel();
     //@}
 };

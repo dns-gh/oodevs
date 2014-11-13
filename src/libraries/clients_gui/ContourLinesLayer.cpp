@@ -62,7 +62,7 @@ void ContourLinesLayer::NotifyUpdated( const kernel::ModelUnLoaded& )
 // -----------------------------------------------------------------------------
 void ContourLinesLayer::Paint( const geometry::Rectangle2f& )
 {
-    auto& options = view_.GetOptions();
+    auto& options = view_.GetCurrentOptions();
     if( !modelLoaded_ ||
         !ShouldDrawPass() ||
         !options.Get( "ContourLines/Enabled" ).To< bool >() )

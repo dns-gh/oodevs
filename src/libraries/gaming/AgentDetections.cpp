@@ -9,6 +9,7 @@
 
 #include "gaming_pch.h"
 #include "AgentDetections.h"
+#include "clients_gui/GLColors.h"
 #include "clients_gui/GLOptions.h"
 #include "clients_gui/GLView_ABC.h"
 #include "clients_kernel/Controller.h"
@@ -98,7 +99,9 @@ void AgentDetections::NotifyDeleted( const kernel::Agent_ABC& agent )
 // Name: AgentDetections::Draw
 // Created: AGE 2006-03-16
 // -----------------------------------------------------------------------------
-void AgentDetections::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& , gui::GLView_ABC& tools ) const
+void AgentDetections::Draw( const geometry::Point2f& where,
+                            const gui::Viewport_ABC&,
+                            gui::GLView_ABC& tools ) const
 {
     static const float colors[4][4] =
     {
@@ -107,7 +110,9 @@ void AgentDetections::Draw( const geometry::Point2f& where, const gui::Viewport_
         { COLOR_RECORDED },
         { COLOR_DETECTED }
     };
-    if( !tools.GetOptions().ShouldDisplay( "VisionLines" ) || detections_.empty() || holder_.IsAnAggregatedSubordinate() )
+    if( !tools.GetCurrentOptions().ShouldDisplay( "VisionLines" ) ||
+        detections_.empty() ||
+        holder_.IsAnAggregatedSubordinate() )
         return;
     glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT );
     for( auto it = detections_.begin(); it != detections_.end(); ++it )

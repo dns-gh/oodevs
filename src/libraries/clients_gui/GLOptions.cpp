@@ -53,7 +53,6 @@ GLOptions::GLOptions( kernel::Controllers& controllers,
     , map_( staticModel.detection_ )
     , model_( model )
     , accommodationTypes_( staticModel.accommodationTypes_ )
-    , colors_( 0 )
     , options_( controllers.options_.GetViewOptions() )
     , fires_( FIRE_GROUP_COUNT )
     , selected_( false )
@@ -79,7 +78,6 @@ GLOptions::GLOptions( kernel::Controllers& controllers,
 // -----------------------------------------------------------------------------
 GLOptions::GLOptions( const GLOptions& other )
     : controllers_( other.controllers_ )
-    , colors_( other.colors_ )
     , profile_( other.profile_ )
     , map_( other.map_ )
     , model_( other.model_ )
@@ -112,7 +110,7 @@ GLOptions::~GLOptions()
 GLOptions& GLOptions::operator=( const GLOptions& other )
 {
     if( !options_ || !other.options_ )
-        throw std::exception( "GLOptions operator= failed, no kernel::Options set." );
+        throw MASA_EXCEPTION( "GLOptions operator= failed, no kernel::Options set." );
     fires_ = other.fires_;
     *options_ = *other.options_;
     selected_ = other.selected_;
@@ -141,6 +139,12 @@ void GLOptions::Load()
     watershedTexture_->Load( *options_ );
     if( auto lighting = std::dynamic_pointer_cast< LightingProxy >( lighting_ ) )
         lighting->Load( *options_ );
+}
+
+void GLOptions::Purge()
+{
+    elevation2dTexture_->Purge();
+    watershedTexture_->Purge();
 }
 
 namespace
@@ -194,6 +198,7 @@ void GLOptions::Load( kernel::Settings& settings )
     options_->Purge();
     options_->Load( settings );
     settings.endGroup();
+    Purge();
     Load();
 }
 
@@ -310,7 +315,7 @@ namespace
 void GLOptions::Set( const std::string& name,
                      const kernel::OptionVariant& value )
 {
-    //options_->Set( name, value ); // will be needed when multi view will be present
+    options_->Set( name, value );
     if( std::find( watershedOptions.begin(), watershedOptions.end(), name ) != watershedOptions.end() ||
         name == "Layers/" + ENT_Tr::ConvertFromLayerTypes( eLayerTypes_WeatherComposite, ENT_Tr::eToSim ) + "/Alpha" )
         watershedTexture_->Load( *options_ );
@@ -318,8 +323,6 @@ void GLOptions::Set( const std::string& name,
         elevation2dTexture_->UpdateHillShadeValues( *options_ );
     else if( std::find( urbanOptions.begin(), urbanOptions.end(), name ) != urbanOptions.end() )
         urbanSetup_->Load( *options_ );
-    else if( name == "ContourLines/Height" )
-        contourLinesComputer_->SetHeight( value.To< int >() );
     else if( name.find( "FireRules/" ) == 0 )
         for( int i = 0; i < FIRE_GROUP_COUNT; ++i )
             if( name == FireOption::GetOptionName( static_cast< FireGroup >( i ) ) )
@@ -406,24 +409,6 @@ void GLOptions::SetLockedEntity( const kernel::Entity_ABC* lockedEntity )
     lockedEntity_ = lockedEntity;
 }
 
-namespace
-{
-    // this will move in the GLMainProxy::ApplyOptions soon
-    void Toggle( const kernel::Entity_ABC& entity, bool aggregate )
-    {
-        auto hierarchy = entity.Retrieve< kernel::TacticalHierarchies >();
-        if( !hierarchy )
-            return;
-        auto it = hierarchy->CreateSubordinateIterator();
-        while( it.HasMoreElements() )
-        {
-            auto& child = const_cast< kernel::Entity_ABC& >( it.NextElement() );
-            child.SetAggregatedSubordinate( aggregate );
-            Toggle( child, aggregate );
-        }
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: GLOptions::Aggregate
 // Created: ABR 2014-07-08
@@ -434,7 +419,6 @@ void GLOptions::Aggregate( const kernel::Entity_ABC& entity )
         aggregatedAutomats_.push_back( &entity );
     else if( entity.GetTypeName() == kernel::Formation_ABC::typeName_ )
         aggregatedFormations_.push_back( &entity );
-    Toggle( entity, true );
 }
 
 // -----------------------------------------------------------------------------
@@ -445,17 +429,12 @@ void GLOptions::Disaggregate( const kernel::Entity_ABC* entity /* = 0 */ )
 {
     if( !entity ) // disagregate all
     {
-        for( auto it = aggregatedAutomats_.begin(); it != aggregatedAutomats_.end(); ++it )
-            Toggle( **it, false );
-        for( auto it = aggregatedFormations_.begin(); it != aggregatedFormations_.end(); ++it )
-            Toggle( **it, false );
         aggregatedAutomats_.clear();
         aggregatedFormations_.clear();
         return;
     }
     aggregatedAutomats_.erase( std::remove( aggregatedAutomats_.begin(), aggregatedAutomats_.end(), entity ), aggregatedAutomats_.end() );
     aggregatedFormations_.erase( std::remove( aggregatedFormations_.begin(), aggregatedFormations_.end(), entity ), aggregatedFormations_.end() );
-    Toggle( *entity, false );
 }
 
 // -----------------------------------------------------------------------------
@@ -541,7 +520,7 @@ const std::shared_ptr< Elevation2dTexture >& GLOptions::GetElevation2dTexture() 
 }
 
 // -----------------------------------------------------------------------------
-// Name: std::shared_ptr< Lighting_ABC >& GLOptions::GetLighting
+// Name: GLOptions::GetLighting
 // Created: ABR 2014-08-05
 // -----------------------------------------------------------------------------
 const std::shared_ptr< Lighting_ABC >& GLOptions::GetLighting() const
@@ -578,7 +557,7 @@ QColor GLOptions::ComputeUrbanColor( const kernel::UrbanObject_ABC& object ) con
 }
 
 // -----------------------------------------------------------------------------
-// Name: std::shared_ptr< UrbanDisplayOptions >& GLOptions::GetUrbanDisplayOptions
+// Name: GLOptions::GetUrbanDisplayOptions
 // Created: ABR 2014-10-20
 // -----------------------------------------------------------------------------
 const std::shared_ptr< UrbanDisplayOptions >& GLOptions::GetUrbanDisplayOptions() const
@@ -589,16 +568,4 @@ const std::shared_ptr< UrbanDisplayOptions >& GLOptions::GetUrbanDisplayOptions(
 const T_FireOptions& GLOptions::GetFireOptions( FireGroup group ) const
 {
     return fires_[group];
-}
-
-void GLOptions::SetColorStrategy( ColorStrategy_ABC& strategy )
-{
-    colors_ = &strategy;
-}
-
-ColorStrategy_ABC& GLOptions::GetColorStrategy() const
-{
-    if( colors_ )
-        return *colors_;
-    throw MASA_EXCEPTION( "no color strategy" );
 }

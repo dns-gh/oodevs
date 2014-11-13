@@ -11,7 +11,7 @@
 #include "ElevationPanel.h"
 #include "moc_ElevationPanel.cpp"
 #include "GLOptions.h"
-#include "GlProxy.h"
+#include "GLView_ABC.h"
 #include "GradientPreferencesEditor.h"
 #include "OptionWidgets.h"
 #include "SignalAdapter.h"
@@ -61,7 +61,7 @@ ElevationPanel::~ElevationPanel()
 // Name: ElevationPanel::Load
 // Created: ABR 2014-08-05
 // -----------------------------------------------------------------------------
-void ElevationPanel::Load( const GlProxy& view )
+void ElevationPanel::Load( const GLView_ABC& view )
 {
-    gradientEditor_->SetElevation2dTexture( view.GetOptions().GetElevation2dTexture() );
+    gradientEditor_->SetElevation2dTexture( view.GetActiveOptions().GetElevation2dTexture() );
 }

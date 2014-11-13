@@ -122,7 +122,7 @@ AggregateToolbar::~AggregateToolbar()
 // -----------------------------------------------------------------------------
 void AggregateToolbar::Aggregate()
 {
-    auto& options = view_.GetOptions();
+    auto& options = view_.GetActiveOptions();
     automats_.Apply( [&]( const kernel::Automat_ABC& automat ) {
         options.Aggregate( automat );
     } );
@@ -134,7 +134,7 @@ void AggregateToolbar::Aggregate()
 // -----------------------------------------------------------------------------
 void AggregateToolbar::DisaggregateAll()
 {
-    view_.GetOptions().Disaggregate();
+    view_.GetActiveOptions().Disaggregate();
     for( unsigned int i = 0u; i < LEVELS.size(); ++i )
         levelMenu_->setItemChecked( i, false );
 }
@@ -148,7 +148,7 @@ void AggregateToolbar::Aggregate( int id )
 {
     const auto& level = LEVELS[ id ];
     levelMenu_->setItemChecked( id, true );
-    auto& options = view_.GetOptions();
+    auto& options = view_.GetActiveOptions();
     formations_.Apply( [&]( const kernel::Formation_ABC& formation ) {
         if( IsLess( ENT_Tr::ConvertFromNatureLevel( formation.GetLevel() ), level ) )
             options.Aggregate( formation );

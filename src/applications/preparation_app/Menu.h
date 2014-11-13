@@ -26,8 +26,9 @@ namespace kernel
 
 namespace gui
 {
-    class ItemFactory_ABC;
+    class GLWidgetManager;
     class HelpSystem;
+    class ItemFactory_ABC;
     class RichAction;
     class RichMenu;
 }
@@ -47,7 +48,12 @@ class Menu : public gui::RichWidget< QMenuBar >
 public:
     //! @name Constructors/Destructor
     //@{
-             Menu( const QString& objectName, QMainWindow* pParent, kernel::Controllers& controllers, const DialogContainer& dialogs, const QString& license );
+             Menu( const QString& objectName,
+                   QMainWindow& mainWindow,
+                   kernel::Controllers& controllers,
+                   gui::GLWidgetManager& glWidgetManager_,
+                   const DialogContainer& dialogs,
+                   const QString& license );
     virtual ~Menu();
     //@}
 
@@ -70,18 +76,23 @@ private:
     //! @name Helpers
     //@{
     void AddModdedAction( QAction* action, int hiddenModes = 0, int visibleModes = 0, bool visibleByDefault = true );
+    virtual void mousePressEvent( QMouseEvent* event );
     //@}
 
 private:
     //! @name Member data
     //@{
-    kernel::Controllers&            controllers_;
+    QMainWindow& mainWindow_;
+    kernel::Controllers& controllers_;
+    gui::GLWidgetManager& glWidgetManager_;
+    QMenu* windowMenu_;
     std::vector< gui::RichAction* > moddedActions_;
-    gui::RichMenu*                  fileMenu_;
-    QAction*                        newAction_;
-    QAction*                        openAction_;
-    QAction*                        saveAction_;
-    QAction*                        saveAsAction_;
+    gui::RichMenu* fileMenu_;
+    QAction* helpMenuAction_;
+    QAction* newAction_;
+    QAction* openAction_;
+    QAction* saveAction_;
+    QAction* saveAsAction_;
     //@}
 
 private:

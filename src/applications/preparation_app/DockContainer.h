@@ -22,7 +22,7 @@ namespace gui
 {
     class ColorStrategy_ABC;
     class EntitySymbols;
-    class GlProxy;
+    class GLView_ABC;
     class ParametersLayer;
     class RichView_ABC;
     class SymbolIcons;
@@ -70,7 +70,7 @@ public:
                             const tools::ExerciseConfig& config,
                             gui::SymbolIcons& symbols,
                             gui::ColorStrategy_ABC& colorStrategy,
-                            gui::GlProxy& glProxy,
+                            gui::GLView_ABC& glProxy,
                             ColorController& colorController,
                             const kernel::Profile_ABC& profile );
     virtual ~DockContainer();

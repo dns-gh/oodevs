@@ -11,8 +11,11 @@
 #include "GisToolbar.h"
 #include "moc_GisToolbar.cpp"
 #include "ColorButton.h"
+#include "ContourLinesComputer.h"
 #include "ContourLinesObserver.h"
 #include "ImageWrapper.h"
+#include "GLMainProxy.h"
+#include "GLOptions.h"
 #include "RichWidget.h"
 #include "SubObjectName.h"
 #include "TerrainProfiler.h"
@@ -44,12 +47,23 @@ namespace
 // -----------------------------------------------------------------------------
 GisToolbar::GisToolbar( QMainWindow* parent,
                         kernel::Controllers& controllers,
+                        GLMainProxy& mainProxy,
                         const kernel::DetectionMap& detection,
                         gui::TerrainProfiler& terrainProfiler )
     : RichToolBar( controllers, parent, "gistoolbar", tr( "GIS tools" ) )
-    , controllers_      ( controllers )
-    , detection_        ( detection )
+    , controllers_( controllers )
+    , detection_( detection )
+    , progress_( 0 )
 {
+    mainProxy.AddActiveChangeObserver( this, [&]( const GLView_ABC::T_View& view ) {
+        if( !progress_ )
+            return;
+        const auto& options = view->GetActiveOptions();
+        const auto* observer = options.Get( "ContourLines/Enabled" ).To< bool >()
+            ? options.GetContourLinesComputer()->GetContourLinesObserver().get() : 0;
+        UpdateContourLinesPercentage( observer );
+        progress_->setVisible( observer != 0 );
+    } );
     SubObjectName subObject( "GisToolbar" );
     auto& options = controllers_.options_;
 
@@ -130,8 +144,17 @@ void GisToolbar::NotifyUpdated( const kernel::ModelLoaded& /*model*/ )
 // -----------------------------------------------------------------------------
 void GisToolbar::NotifyUpdated( const ContourLinesObserver& observer )
 {
-    short percentage = observer.GetPercentage();
-    progress_->setText( percentage == 0 ? QString() : locale().toString( percentage ) + "% " );
+    UpdateContourLinesPercentage( &observer );
+}
+
+// -----------------------------------------------------------------------------
+// Name: GisToolbar::UpdateContourLinesPercentage
+// Created: ABR 2014-08-07
+// -----------------------------------------------------------------------------
+void GisToolbar::UpdateContourLinesPercentage( const ContourLinesObserver* observer )
+{
+    auto percentage = observer ? observer->GetPercentage() : 0;
+    progress_->setText( percentage ? locale().toString( percentage ) + "%" : QString() );
 }
 
 // -----------------------------------------------------------------------------

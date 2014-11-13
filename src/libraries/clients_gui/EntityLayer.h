@@ -31,7 +31,6 @@ namespace kernel
 namespace gui
 {
     class ColorStrategy_ABC;
-    class GlProxy;
     class LayerFilter_ABC;
     class InformationToolTip;
 }

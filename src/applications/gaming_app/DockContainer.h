@@ -25,7 +25,7 @@ namespace gui
     class ColorStrategy_ABC;
     class DisplayExtractor;
     class EntitySymbols;
-    class GlProxy;
+    class GLView_ABC;
     class Logger;
     class ParametersLayer;
     class RichItemFactory;
@@ -83,7 +83,7 @@ public:
                    const std::shared_ptr< gui::ParametersLayer >& paramLayer,
                    const std::shared_ptr< gui::TerrainProfilerLayer >& profilerLayer,
                    const std::shared_ptr< ::WeatherLayer >& weatherLayer,
-                   gui::GlProxy& proxy,
+                   gui::GLView_ABC& view,
                    gui::RichItemFactory& factory,
                    gui::ColorStrategy_ABC& colorStrategy,
                    gui::SymbolIcons& symbolIcons,

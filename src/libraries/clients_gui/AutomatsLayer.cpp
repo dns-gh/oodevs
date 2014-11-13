@@ -49,7 +49,7 @@ AutomatsLayer::~AutomatsLayer()
 void AutomatsLayer::Aggregate()
 {
     if( selected_ )
-        view_.GetOptions().Aggregate( *selected_ );
+        view_.GetActiveOptions().Aggregate( *selected_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -59,7 +59,7 @@ void AutomatsLayer::Aggregate()
 void AutomatsLayer::Disaggregate()
 {
     if( selected_ )
-        view_.GetOptions().Disaggregate( selected_ );
+        view_.GetActiveOptions().Disaggregate( selected_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -73,7 +73,7 @@ void AutomatsLayer::NotifyContextMenu( const Automat_ABC& automat, kernel::Conte
     selected_ = &automat;
     if( !automat.IsAnAggregatedSubordinate() )
     {
-        if( !view_.GetOptions().IsAggregated( automat ) )
+        if( !view_.GetActiveOptions().IsAggregated( automat ) )
             menu.InsertItem( "Interface", tr( "Aggregate" ), this, SLOT( Aggregate() ) );
         else
             menu.InsertItem( "Interface", tr( "Disaggregate" ), this, SLOT( Disaggregate() ) );
@@ -98,7 +98,7 @@ void AutomatsLayer::ContextMenu( const GraphicalEntity_ABC& selectable, const ge
 {
     const Entity_ABC& entity = static_cast< const Entity_ABC& >( selectable );
     const Automat_ABC& automat = static_cast< const Automat_ABC& >( selectable );
-    if( !entity.IsAnAggregatedSubordinate() && view_.GetOptions().IsAggregated( entity ) )
+    if( !entity.IsAnAggregatedSubordinate() && view_.GetActiveOptions().IsAggregated( entity ) )
         controllers_.actions_.ContextMenu( this, automat, entity, point, where );
 }
 

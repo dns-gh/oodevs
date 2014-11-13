@@ -2572,10 +2572,6 @@ This data can&apos;t be projected.</source>
         <translation type="unfinished">آند ممارسة</translation>
     </message>
     <message>
-        <source>&amp;Windows</source>
-        <translation type="unfinished">آند Windows</translation>
-    </message>
-    <message>
         <source>Help</source>
         <translation type="unfinished">تعليمات</translation>
     </message>
@@ -2633,6 +2629,14 @@ This data can&apos;t be projected.</source>
     </message>
     <message>
         <source>Rules</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save configuration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Load configuration</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

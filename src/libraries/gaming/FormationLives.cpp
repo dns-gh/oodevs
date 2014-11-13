@@ -41,10 +41,15 @@ FormationLives::~FormationLives()
 // Name: FormationLives::Draw
 // Created: LGY 2011-03-09
 // -----------------------------------------------------------------------------
-void FormationLives::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GLView_ABC& tools ) const
+void FormationLives::Draw( const geometry::Point2f& where,
+                           const gui::Viewport_ABC& viewport,
+                           gui::GLView_ABC& view ) const
 {
-    if( !formation_.IsAnAggregatedSubordinate() && tools.GetOptions().IsAggregated( formation_ ) && viewport.IsHotpointVisible() )
-        tools.DrawLife( where, GetLife(), tools.GetOptions().GetRatio( formation_ ) );
+    const auto& options = view.GetCurrentOptions();
+    if( !formation_.IsAnAggregatedSubordinate() && 
+        options.IsAggregated( formation_ ) &&
+        viewport.IsHotpointVisible() )
+        view.DrawLife( where, GetLife(), options.GetRatio( formation_ ) );
 }
 
 // -----------------------------------------------------------------------------

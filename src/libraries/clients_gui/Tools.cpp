@@ -12,12 +12,15 @@
 #include "AutomatDecisions.h"
 #include "ColorButton.h"
 #include "SignalAdapter.h"
+#include "GLView_ABC.h"
+#include "GLDockWidget.h"
+#include "MergingTacticalHierarchies.h"
+#include "RichMenu.h"
 
-#include "clients_gui/GLView_ABC.h"
-#include "clients_gui/MergingTacticalHierarchies.h"
 #include "clients_kernel/App6Symbol.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/CommandPostAttributes_ABC.h"
+#include "clients_kernel/Controllers.h"
 #include "clients_kernel/Diplomacies_ABC.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/OptionsController.h"
@@ -177,4 +180,91 @@ bool tools::HasSubordinate( const kernel::Entity_ABC& entity, const std::functio
         children = true;
     }
     return children;
+}
+
+QString tools::Point2fToString( const geometry::Point2f& point )
+{
+    return QString( "%1;%2" ).arg( point.X() ).arg( point.Y() );
+}
+
+QString tools::Point3fToString( const geometry::Point3f& point )
+{
+    return QString( "%1;%2;%3" ).arg( point.X() ).arg( point.Y() ).arg( point.Z() );
+}
+
+QString tools::Vector3fToString( const geometry::Vector3f& vector )
+{
+    return QString( "%1;%2;%3" ).arg( vector.X() ).arg( vector.Y() ).arg( vector.Z() );
+}
+
+geometry::Point2f tools::StringToPoint2f( const QString& point )
+{
+    const QStringList coords = point.split( ";" );
+    if( coords.size() != 2 )
+        return geometry::Point2f();
+    return geometry::Point2f( coords.at( 0 ).toFloat(), coords.at( 1 ).toFloat() );
+}
+
+geometry::Point3f tools::StringToPoint3f( const QString& point )
+{
+    const QStringList coords = point.split( ";" );
+    if( coords.size() != 3 )
+        return geometry::Point3f();
+    return geometry::Point3f( coords.at( 0 ).toFloat(), coords.at( 1 ).toFloat(), coords.at( 2 ).toFloat() );
+}
+
+geometry::Vector3f tools::StringToVector3f( const QString& vector )
+{
+    const QStringList coords = vector.split( ";" );
+    if( coords.size() != 3 )
+        return geometry::Vector3f();
+    return geometry::Vector3f( coords.at( 0 ).toFloat(), coords.at( 1 ).toFloat(), coords.at( 2 ).toFloat() );
+}
+
+QMenu* tools::CreateWindowMenu( kernel::Controllers& controllers, QWidget& parent, QObject& glWidgetManager )
+{
+    QMap< QString, QAction* > glActions;
+    auto glDockwidgets = qFindChildren< gui::GLDockWidget* >( &parent );
+    for( auto it = glDockwidgets.begin(); it != glDockwidgets.end(); ++it )
+
+    {
+        gui::GLDockWidget* widget = *it;
+        glActions[ widget->windowTitle() ] = widget->ToggleViewAction();
+    }
+    QMap< QString, QAction* > actions;
+    auto dockwidgets = qFindChildren< QDockWidget* >( &parent );
+    for( auto it = dockwidgets.begin(); it != dockwidgets.end(); ++it )
+    {
+        QDockWidget* widget = *it;
+        if( !widget->property( "GLDockWidget" ).isValid() )
+            actions[ widget->windowTitle() ] = widget->toggleViewAction();
+    }
+    QMap< QString, QAction* > toolBarActions;
+    auto toolbars = qFindChildren< QToolBar* >( &parent );
+    for( auto it = toolbars.begin(); it != toolbars.end(); ++it )
+    {
+        QToolBar* toolbar = *it;
+        if( auto action = toolbar->toggleViewAction() )
+            if( !action->text().isEmpty() )
+                toolBarActions[ action->text() ] = action;
+    }
+
+    gui::RichMenu* menu = new gui::RichMenu( "rich_menu", &parent, controllers,
+                                             tools::translate( "Tools", "&Windows" ) );
+    menu->SetModes( eModes_Default, eModes_All, true );
+    menu->NotifyModeChanged( controllers.GetCurrentMode(), true, false );
+    menu->addAction( tools::translate( "Tools", "Add new terrain view" ),
+                     &glWidgetManager,
+                     SLOT( AddDockWidget() ),
+                     Qt::Key_F9 );
+    menu->addSeparator();
+    for( auto it = glActions.begin(); it != glActions.end(); ++it )
+        menu->addAction( *it );
+    menu->addSeparator();
+    for( auto it = actions.begin(); it != actions.end(); ++it )
+        menu->addAction( *it );
+    menu->addSeparator();
+    for( auto it = toolBarActions.begin(); it != toolBarActions.end(); ++it )
+        menu->addAction( *it );
+    return menu;
 }

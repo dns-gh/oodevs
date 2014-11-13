@@ -11,8 +11,8 @@
 #include "InhabitantPanel.h"
 #include "moc_InhabitantPanel.cpp"
 #include "DensityWidget.h"
-#include "GlProxy.h"
 #include "GLOptions.h"
+#include "GLView_ABC.h"
 #include "RichGroupBox.h"
 #include "SubObjectName.h"
 #include "UrbanDisplayOptions.h"
@@ -57,13 +57,12 @@ InhabitantPanel::~InhabitantPanel()
 // Name: InhabitantPanel::Load
 // Created: ABR 2014-08-06
 // -----------------------------------------------------------------------------
-void InhabitantPanel::Load( const GlProxy& view )
+void InhabitantPanel::Load( const GLView_ABC& view )
 {
-    const auto& glOptions = view.GetOptions();
-    const auto& urbanOptions = glOptions.GetUrbanDisplayOptions();
-    const auto& options = glOptions.GetOptions();
-    if( !urbanOptions || !options )
+    const auto& options = view.GetActiveOptions();
+    const auto& urbanOptions = options.GetUrbanDisplayOptions();
+    if( !urbanOptions )
         throw MASA_EXCEPTION( "Invalid urban options" );
-    density_->Load( *options, urbanOptions->GetDensityGradient() );
-    accommodation_->Load( *options, urbanOptions->GetAccommodationGradient() );
+    density_->Load( options, urbanOptions->GetDensityGradient() );
+    accommodation_->Load( options, urbanOptions->GetAccommodationGradient() );
 }

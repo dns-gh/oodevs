@@ -12,6 +12,8 @@
 #include "Profile.h"
 #include "Simulation.h"
 #include "SimulationController.h"
+#include "clients_gui/GLMainProxy.h"
+#include "clients_gui/GLOptions.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/OptionVariant.h"
 #include "clients_kernel/FourStateOption.h"
@@ -23,14 +25,15 @@ using namespace kernel;
 // Name: VisionConesToggler constructor
 // Created: AGE 2007-07-11
 // -----------------------------------------------------------------------------
-VisionConesToggler::VisionConesToggler( Controllers& controllers, const SimulationController& simulationController, QObject* parent )
+VisionConesToggler::VisionConesToggler( Controllers& controllers,
+                                        const SimulationController& simulationController,
+                                        const gui::GLMainProxy& mainProxy,
+                                        QObject* parent )
     : QObject( parent )
-    , controllers_         ( controllers )
-    , displayCones_        ( false )
-    , displaySurfaces_     ( false )
-    , displayFog_          ( false )
-    , connected_           ( false )
+    , controllers_( controllers )
     , simulationController_( simulationController )
+    , mainProxy_( mainProxy )
+    , connected_( false )
 {
     controllers_.Register( *this );
 }
@@ -48,23 +51,10 @@ VisionConesToggler::~VisionConesToggler()
 // Name: VisionConesToggler::OptionChanged
 // Created: AGE 2007-07-11
 // -----------------------------------------------------------------------------
-void VisionConesToggler::OptionChanged( const std::string& name, const OptionVariant& value )
+void VisionConesToggler::OptionChanged( const std::string& name, const OptionVariant& )
 {
-    if( name == "VisionCones" )
-    {
-        displayCones_ = value.To< FourStateOption >().IsSet( true, true, true );
+    if( name == "VisionCones" || name == "VisionSurfaces" || name == "FogOfWar" )
         SendControlEnableVisionCones();
-    }
-    else if( name == "VisionSurfaces" )
-    {
-        displaySurfaces_ = value.To< FourStateOption >().IsSet( true, true, true );
-        SendControlEnableVisionCones();
-    }
-    else if( name == "FogOfWar" )
-    {
-        displayFog_ = value.To< bool >();
-        SendControlEnableVisionCones();
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -93,6 +83,12 @@ void VisionConesToggler::NotifyUpdated( const Simulation& simulation )
 // -----------------------------------------------------------------------------
 void VisionConesToggler::SendControlEnableVisionCones()
 {
+    bool display = false;
+    mainProxy_.ApplyToOptions( [&display]( const gui::GLOptions& options ) {
+        display |= options.Get( "VisionCones" ).To< FourStateOption >().IsSet( true, true, true ) ||
+                   options.Get( "VisionSurfaces" ).To< FourStateOption >().IsSet( true, true, true ) ||
+                   options.Get( "FogOfWar" ).To< bool >();
+    } );
     if( connected_ )
-        simulationController_.SendEnableVisionCones( displayCones_ || displaySurfaces_ || displayFog_ );
+        simulationController_.SendEnableVisionCones( display );
 }

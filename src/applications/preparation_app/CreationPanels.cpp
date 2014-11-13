@@ -11,7 +11,6 @@
 #include "CreationPanels.h"
 #include "clients_kernel/AgentTypes.h"
 #include "clients_gui/DrawerPanel.h"
-#include "clients_gui/GlProxy.h"
 #include "clients_gui/PopulationsPanel.h"
 #include "clients_gui/UnitsPanel.h"
 #include "preparation/Model.h"
@@ -39,16 +38,16 @@ CreationPanels::CreationPanels( QWidget* parent,
                                 gui::ColorStrategy_ABC& colorStrategy,
                                 const std::shared_ptr< gui::ParametersLayer >& paramLayer,
                                 const std::shared_ptr< gui::WeatherLayer >& weatherLayer,
-                                gui::GlProxy& glProxy,
+                                gui::GLView_ABC& view,
                                 ColorController& colorController )
     : Panels( "CreationPanels", parent )
 {
     gui::SubObjectName subObject( "CreationPanels" );
     AddPanel( new gui::UnitsPanel ( this, *this, controllers, staticModel.types_, icons, colorStrategy ) );
     AddPanel( new gui::PopulationsPanel( this, *this, controllers, ( tools::Resolver< PopulationType >&)( staticModel.types_ ) ) );
-    inhabitantCreationPanel_ = new InhabitantCreationPanel( this, *this, controllers, staticModel.types_, *model.agents_, paramLayer, glProxy );
+    inhabitantCreationPanel_ = new InhabitantCreationPanel( this, *this, controllers, staticModel.types_, *model.agents_, paramLayer, view );
     AddPanel( inhabitantCreationPanel_ );
-    objectCreationPanel_ = new ObjectCreationPanel( this, *this, controllers, staticModel, *model.objects_, *model.urban_, *model.weather_, model.teams_->GetNoSideTeam(), paramLayer, glProxy, config );
+    objectCreationPanel_ = new ObjectCreationPanel( this, *this, controllers, staticModel, *model.objects_, *model.urban_, *model.weather_, model.teams_->GetNoSideTeam(), paramLayer, view, config );
     AddPanel( objectCreationPanel_ );
     ghostPanel_ = new GhostsPanel( this, *this, controllers, model.GetSymbolsFactory(), icons, colorStrategy );
     AddPanel( ghostPanel_ );

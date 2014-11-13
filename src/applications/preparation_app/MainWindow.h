@@ -25,8 +25,8 @@ namespace gui
     class ColorStrategy;
     class EntitySymbols;
     class ExclusiveEventStrategy;
-    class GlProxy;
-    class GlSelector;
+    class GLMainProxy;
+    class GLWidgetManager;
     class HelpSystem;
     class Layer_ABC;
     class Painter_ABC;
@@ -136,12 +136,11 @@ private:
     bool                 loading_;
     bool                 needsSaving_;
 
-    // the following will move to GLOptions or GLMainProxy
-    std::unique_ptr< gui::GlSelector >             selector_;
-    std::unique_ptr< gui::GlProxy >                glProxy_;
-
     std::unique_ptr< gui::TextEditor >             textEditor_; // should move in parameter layers
+    boost::shared_ptr< QProcess >                  process_; // should move in layers panel
 
+    std::shared_ptr< gui::GLMainProxy >            glProxy_;
+    std::unique_ptr< gui::GLWidgetManager >        glWidgetManager_;
     std::unique_ptr< ModelBuilder >                modelBuilder_;
     std::unique_ptr< gui::CircularEventStrategy >  forward_;
     std::unique_ptr< gui::ExclusiveEventStrategy > eventStrategy_;
@@ -152,9 +151,8 @@ private:
     std::unique_ptr< gui::ColorStrategy >          strategy_;
     std::unique_ptr< Menu >                        menu_;
     std::unique_ptr< QProgressDialog >             progressDialog_;
-    boost::shared_ptr< QProcess >                  process_;
     std::unique_ptr< gui::EntitySymbols >          icons_;
-    std::unique_ptr< gui::SymbolIcons >            symbols_;
+    std::unique_ptr< gui::SymbolIcons >            symbolIcons_;
     //@}
 };
 

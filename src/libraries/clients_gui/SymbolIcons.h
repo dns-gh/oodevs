@@ -14,7 +14,8 @@
 
 namespace gui
 {
-    class GlWidget;
+    class GLView_ABC;
+    class GL2DWidget;
 
 // =============================================================================
 /** @class  SymbolIcons
@@ -22,7 +23,7 @@ namespace gui
 */
 // Created: AGE 2006-11-22
 // =============================================================================
-class SymbolIcons : QObject
+class SymbolIcons : public QObject
 {
     Q_OBJECT
 
@@ -30,7 +31,7 @@ public:
              SymbolIcons();
     virtual ~SymbolIcons();
 
-    void Initialize( gui::GlWidget* widget );
+    void Initialize( GL2DWidget* widget );
 
     const QPixmap& GetSymbol( const SymbolIcon& symbol );
     const QPixmap& GetDefaultSymbol() const;
@@ -47,9 +48,9 @@ private:
     QPixmap defaultSymbol_;
     std::map< SymbolIcon, QPixmap > icons_;
     QGLWidget* context_;
-    gui::GlWidget* widget_;
+    GLView_ABC* widget_;
 };
 
-}
+} //! namespace gui
 
 #endif // __SymbolIcons_h_

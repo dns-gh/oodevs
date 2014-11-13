@@ -18,9 +18,10 @@
 #include "DrawingTypes.h"
 #include "EntitySymbols.h"
 #include "ImageWrapper.h"
-#include "GlWidget.h"
-#include "Gl3dWidget.h"
 #include "GLOptions.h"
+#include "GLMainProxy.h"
+#include "GLStackedWidget.h"
+#include "GL2DWidget.h"
 #include "StandardIconProxyStyle.h"
 
 #include "clients_kernel/App6Symbol.h"
@@ -59,15 +60,16 @@ namespace
 // Name: SelectionMenu constructor
 // Created: ABR 2013-01-30
 // -----------------------------------------------------------------------------
-SelectionMenu::SelectionMenu( Controllers& controllers, EntitySymbols& entitySymbols, ColorStrategy& colorStrategy,
-                              DrawingTypes& drawingTypes, GLView_ABC& tools )
+SelectionMenu::SelectionMenu( Controllers& controllers,
+                              EntitySymbols& entitySymbols,
+                              ColorStrategy& colorStrategy,
+                              DrawingTypes& drawingTypes,
+                              GLMainProxy& mainProxy )
     : controllers_( controllers )
     , entitySymbols_( entitySymbols )
     , colorStrategy_( colorStrategy )
     , drawingTypes_( drawingTypes )
-    , tools_( tools )
-    , parent2d_( 0 )
-    , parent3d_( 0 )
+    , mainProxy_( mainProxy )
     , moreElements_( 0u )
     , current_( 0 )
 {
@@ -81,24 +83,6 @@ SelectionMenu::SelectionMenu( Controllers& controllers, EntitySymbols& entitySym
 SelectionMenu::~SelectionMenu()
 {
     // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: SelectionMenu::OnWidget2dChanged
-// Created: ABR 2013-02-21
-// -----------------------------------------------------------------------------
-void SelectionMenu::OnWidget2dChanged( gui::GlWidget* parent )
-{
-    parent2d_ = parent;
-}
-
-// -----------------------------------------------------------------------------
-// Name: SelectionMenu::OnWidget3dChanged
-// Created: LGY 2013-03-13
-// -----------------------------------------------------------------------------
-void SelectionMenu::OnWidget3dChanged( gui::Gl3dWidget* parent )
-{
-    parent3d_ = parent;
 }
 
 namespace
@@ -161,7 +145,7 @@ QPixmap SelectionMenu::ExtractDrawingSample( const std::string& code, float r, f
 
     if( drawingTemplate )
     {
-        drawingTemplate->GenerateSamplePixmap( tools_, r, g, b, markerPixelRatio );
+        drawingTemplate->GenerateSamplePixmap( r, g, b, markerPixelRatio );
         return drawingTemplate->GetSamplePixmap();
     }
 
@@ -187,7 +171,7 @@ void SelectionMenu::GenerateIcons()
                 continue;
 
             // Use something like that instead of the following crap when GraphicalEntity will be into clients_gui
-            // pixmap = graphicalEntity->GetPixmap( entitySymbols_, colorStrategy_, drawingTypes_, tools_ );
+            // pixmap = graphicalEntity->GetPixmap( entitySymbols_, colorStrategy_, drawingTypes_, proxy_ );
             if( const Entity_ABC* entity = dynamic_cast< const Entity_ABC* >( graphicalEntity ) )
             {
                 QPixmap& pixmap = icons_[ entity->GetId() ];
@@ -271,23 +255,18 @@ void SelectionMenu::GenerateIcons()
 
 namespace
 {
-    class Menu_ABC : public kernel::ContextMenu
+    class RichMenu : public kernel::ContextMenu
     {
     public:
-                 Menu_ABC( QWidget* parent ) : kernel::ContextMenu( parent ){}
-        virtual ~Menu_ABC() {}
-
-        virtual Qt::MouseButton GetButton() const = 0;
-    };
-
-    template< typename T >
-    class RichMenu : public Menu_ABC
-    {
-    public:
-        explicit RichMenu( T* parent ) : Menu_ABC( parent ), button_( Qt::NoButton ), parent_( parent ) {}
+        explicit RichMenu( GLView_ABC& view )
+            : kernel::ContextMenu( 0 )
+            , button_( Qt::NoButton )
+            , view_( view )
+        {
+        }
         virtual ~RichMenu() {}
 
-        virtual Qt::MouseButton GetButton() const { return button_; }
+        Qt::MouseButton GetButton() const { return button_; }
 
         virtual void mousePressEvent( QMouseEvent* event )
         {
@@ -297,16 +276,15 @@ namespace
         }
         virtual void wheelEvent( QWheelEvent* event )
         {
-            if( parent_ )
-                parent_->wheelEvent( event );
+            view_.WheelEvent( event );
         }
 
     private:
-        T* parent_;
+        GLView_ABC& view_;
         Qt::MouseButton button_;
     };
 
-    QAction* GenerateAction( const QString& tooltip, Menu_ABC& menu, QMouseEvent& event )
+    QAction* GenerateAction( const QString& tooltip, QMenu& menu, QMouseEvent& event )
     {
         if( event.button() == Qt::RightButton )
         {
@@ -326,19 +304,15 @@ namespace
 void SelectionMenu::GenerateMenu()
 {
     GenerateIcons();
-    std::unique_ptr< Menu_ABC > menu;
-    if( tools_.GetOptions().Get( "3D" ).To< bool >() )
-        menu.reset( new RichMenu< gui::Gl3dWidget >( 0 ) );
-    else
-        menu.reset( new RichMenu< gui::GlWidget >( 0 ) );
-    connect( menu.get(), SIGNAL( hovered( QAction* ) ), this, SLOT( OnSelectionChanged( QAction* ) ) );
+    RichMenu menu( mainProxy_.GetHoveredView() );
+    connect( &menu, SIGNAL( hovered( QAction* ) ), this, SLOT( OnSelectionChanged( QAction* ) ) );
 
-    menu->setStyle( new StandardIconProxyStyle() );
+    menu.setStyle( new StandardIconProxyStyle() );
 
     // merge with default menu
     if( mouseEvent_->button() == Qt::RightButton )
-        controllers_.actions_.ContextMenu( this, point_, kernel::Nothing(), *menu );
-    menu->FillMenu();
+        controllers_.actions_.ContextMenu( this, point_, kernel::Nothing(), menu );
+    menu.FillMenu();
 
     for( auto extractedPair = extractedElements_.begin(); extractedPair != extractedElements_.end(); ++extractedPair )
     {
@@ -346,7 +320,7 @@ void SelectionMenu::GenerateMenu()
         kernel::GraphicalEntity_ABC::T_GraphicalEntities& entities = extractedPair->second;
         if( !layer )
             continue;
-        menu->addSeparator()->setText( layer->GetName() );
+        menu.addSeparator()->setText( layer->GetName() );
         for( auto extractedElement = entities.begin(); extractedElement != entities.end(); ++extractedElement )
         {
             const GraphicalEntity_ABC* graphicalEntity = *extractedElement;
@@ -355,7 +329,7 @@ void SelectionMenu::GenerateMenu()
 
             if( const Entity_ABC* entity = dynamic_cast< const Entity_ABC* >( graphicalEntity ) )
             {
-                QAction* action = GenerateAction( entity->GetTooltip(), *menu, *mouseEvent_ );
+                QAction* action = GenerateAction( entity->GetTooltip(), menu, *mouseEvent_ );
                 if( !action )
                     continue;
                 action->setData( QVariant::fromValue( entity->GetId() ) );
@@ -378,17 +352,17 @@ void SelectionMenu::GenerateMenu()
 
     if( moreElements_!= 0u )
     {
-        QAction* action = menu->addAction( tr( "And %1 more elements..." ).arg( QString::number( moreElements_ ) ) );
+        QAction* action = menu.addAction( tr( "And %1 more elements..." ).arg( QString::number( moreElements_ ) ) );
         action->setEnabled( false );
         action->setFont( QFont( "Arial", -1, -1, true ) );
     }
 
-    if( QAction* resultingAction = menu->QMenu::exec( mouseEvent_->globalPos() ) )
+    if( QAction* resultingAction = menu.QMenu::exec( mouseEvent_->globalPos() ) )
     {
         const auto id = resultingAction->data().toUInt();
         auto it = entityLayer_.find( id );
         if( it != entityLayer_.end() )
-            ApplyMousePress( *it->second, id, &*mouseEvent_, menu->GetButton() );
+            ApplyMousePress( *it->second, id, &*mouseEvent_, menu.GetButton() );
     }
     icons_.clear();
     entityLayer_.clear();

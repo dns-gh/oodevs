@@ -80,9 +80,12 @@ bool LogMaintenanceConsign::Update( const sword::LogMaintenanceHandlingUpdate& m
 // Name: LogMaintenanceConsign::Draw
 // Created: AGE 2006-03-30
 // -----------------------------------------------------------------------------
-void LogMaintenanceConsign::Draw( const Point2f& , const gui::Viewport_ABC& viewport, gui::GLView_ABC& tools ) const
+void LogMaintenanceConsign::Draw( const Point2f&,
+                                  const gui::Viewport_ABC& viewport,
+                                  gui::GLView_ABC& tools ) const
 {
-    if( ! provider_ || !tools.GetOptions().ShouldDisplay( "RealTimeLogistic" ) )
+    if( !provider_ ||
+        !tools.GetCurrentOptions().ShouldDisplay( "RealTimeLogistic" ) )
         return;
     const Point2f from = logistic_helpers::GetLogisticPosition( *provider_ );
     const Point2f to   = logistic_helpers::GetLogisticPosition( consumer_ );

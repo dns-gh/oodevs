@@ -26,6 +26,7 @@ namespace kernel
 
 namespace gui
 {
+    class GLWidgetManager;
     class TerrainPicker;
     class TerrainSettings;
 
@@ -42,6 +43,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              TerrainLayer( kernel::Controllers& controllers,
+                           const GLWidgetManager& glWidgetManager,
                            GLView_ABC& tools,
                            TerrainPicker& picker );
     virtual ~TerrainLayer();
@@ -72,6 +74,7 @@ private:
 private:
     //! @name Member data
     //@{
+    const GLWidgetManager& glWidgetManager_;
     std::shared_ptr< TerrainSettings > settings_;
     TerrainPicker& picker_;
     bool pickingEnabled_;

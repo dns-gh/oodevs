@@ -21,7 +21,7 @@ namespace kernel
 
 namespace gui
 {
-    class GlSelector;
+    class GLView_ABC;
     class ParametersLayer;
 }
 
@@ -50,7 +50,7 @@ public:
                                    const kernel::Time_ABC& simulation,
                                    const std::shared_ptr< gui::ParametersLayer >& layer,
                                    const kernel::Profile_ABC& profile,
-                                   gui::GlSelector& selector );
+                                   gui::GLView_ABC& view );
     virtual ~MagicOrdersInterface();
     //@}
 };

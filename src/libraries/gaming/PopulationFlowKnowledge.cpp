@@ -11,7 +11,9 @@
 
 #include "gaming_pch.h"
 #include "PopulationFlowKnowledge.h"
+#include "clients_gui/GLColors.h"
 #include "clients_gui/GLView_ABC.h"
+#include "clients_gui/PickingSelector.h"
 #include "clients_gui/Viewport_ABC.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/Population_ABC.h"
@@ -158,11 +160,11 @@ void PopulationFlowKnowledge::Draw( const geometry::Point2f&, const gui::Viewpor
         for( unsigned int i = 0; i < flowParts_.size(); ++i )
         {
             const FlowPart& part = flowParts_[i];
-            if( !tools.IsPickingMode() )
+            if( !tools.GetPickingSelector().IsPickingMode() )
                 SelectColor( eAttitude_, color[ 3 ] );
             glLineWidth( 10.f );
             tools.DrawLines( part.flowPart_ );
-            if( !tools.IsPickingMode() )
+            if( !tools.GetPickingSelector().IsPickingMode() )
             {
                 glColor4f( color[0], color[1], color[2], 0.5f * ( 1.f + part.relevance_ * 0.01f ) );
                 glLineWidth( 8.f );

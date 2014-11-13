@@ -11,6 +11,7 @@
 #include "Layer.h"
 #include "moc_Layer.cpp"
 #include "GLView_ABC.h"
+#include "PickingSelector.h"
 #include "Viewport2d.h"
 #include "Viewport3d.h"
 #include "clients_kernel/Controllers.h"
@@ -105,7 +106,7 @@ bool Layer::ShouldDrawPass() const
     const auto currentPass = view_.GetCurrentPass();
     return IsEnabled()
         && ( descriptor_.passes_.empty() || currentPass.empty() || descriptor_.passes_.find( currentPass ) != std::string::npos )
-        && ( !view_.IsPickingMode() || IsPickable() );
+        && ( !view_.GetPickingSelector().IsPickingMode() || IsPickable() );
 }
 
 // -----------------------------------------------------------------------------

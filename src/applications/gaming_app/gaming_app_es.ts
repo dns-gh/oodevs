@@ -2586,10 +2586,6 @@ Los datos no pueden ser proyectados.</translation>
         <translation>Alternar ventanas ancladas</translation>
     </message>
     <message>
-        <source>&amp;Windows</source>
-        <translation>&amp;Ventanas</translation>
-    </message>
-    <message>
         <source>Unit detail</source>
         <translation>Detalles de unidad</translation>
     </message>
@@ -2635,6 +2631,14 @@ Los datos no pueden ser proyectados.</translation>
     </message>
     <message>
         <source>Default</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save configuration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Load configuration</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

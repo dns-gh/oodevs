@@ -966,7 +966,7 @@ Este dato no puede ser proyectado.</translation>
     </message>
     <message>
         <source>Generate symbols</source>
-        <translation>Generar símbolos</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1091,10 +1091,6 @@ Este dato no puede ser proyectado.</translation>
         <translation>Asistente de creación...</translation>
     </message>
     <message>
-        <source>&amp;Windows</source>
-        <translation>&amp;Ventanas</translation>
-    </message>
-    <message>
         <source>About</source>
         <translation>Acerca de</translation>
     </message>
@@ -1204,6 +1200,14 @@ Este dato no puede ser proyectado.</translation>
     </message>
     <message>
         <source>Grid type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save configuration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Load configuration</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

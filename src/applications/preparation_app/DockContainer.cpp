@@ -21,7 +21,7 @@
 #include "preparation/FormationModel.h"
 #include "preparation/Model.h"
 #include "clients_gui/ExtensionsPanel.h"
-#include "clients_gui/GlProxy.h"
+#include "clients_gui/GLView_ABC.h"
 #include "clients_gui/RichDockWidget.h"
 #include "clients_gui/TerrainProfiler.h"
 #include "clients_kernel/Tools.h"
@@ -43,7 +43,7 @@ DockContainer::DockContainer( QMainWindow* parent,
                               const tools::ExerciseConfig& config,
                               gui::SymbolIcons& symbols,
                               gui::ColorStrategy_ABC& colorStrategy,
-                              gui::GlProxy& glProxy,
+                              gui::GLView_ABC& glProxy,
                               ColorController& colorController,
                               const kernel::Profile_ABC& profile )
     : pCreationPanel_  ( 0 )

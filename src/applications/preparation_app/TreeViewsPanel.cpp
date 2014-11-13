@@ -23,7 +23,7 @@
 #include "clients_gui/ChangeSuperiorDialog.h"
 #include "clients_gui/DrawingsTreeView.h"
 #include "clients_gui/EntityTreeView.h"
-#include "clients_gui/GlProxy.h"
+#include "clients_gui/GL2D3DProxy.h"
 #include "clients_gui/LongNameHelper.h"
 #include "clients_gui/RenameInterface.h"
 #include "clients_gui/RichView.h"

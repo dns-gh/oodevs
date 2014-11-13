@@ -8,8 +8,8 @@
 // *****************************************************************************
 
 #include "clients_gui_pch.h"
-#include "GlProxy.h"
 #include "GraphicsPanel.h"
+#include "GLView_ABC.h"
 #include "GraphicPreferences.h"
 #include "clients_kernel/OptionsController.h"
 
@@ -44,7 +44,7 @@ GraphicsPanel::~GraphicsPanel()
 // Name: GraphicsPanel::ActiveOptionsChanged
 // Created: ABR 2014-08-01
 // -----------------------------------------------------------------------------
-void GraphicsPanel::Load( const GlProxy& view )
+void GraphicsPanel::Load( const GLView_ABC& view )
 {
-    preferences_->Load( view.GetOptions() );
+    preferences_->Load( view.GetActiveOptions() );
 }

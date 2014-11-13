@@ -182,16 +182,12 @@ bool UnitFilter::IsPerceived( const kernel::Entity_ABC& entity ) const
 // Name: UnitFilter::SetFilter
 // Created: AGE 2006-11-29
 // -----------------------------------------------------------------------------
-void UnitFilter::SetFilter( const Entity_ABC& entity, bool update /* = true */ )
+void UnitFilter::SetFilter( const Entity_ABC* entity, bool update /* = true */ )
 {
-    const auto tactical = entity.Retrieve< TacticalHierarchies >();
-    const auto comms = entity.Retrieve< CommunicationHierarchies >();
-    if( !tactical && !comms )
-        return;
-    filtered_ = &entity;
-    tHierarchies_ = tactical;
-    cHierarchies_ = comms;
-    entity_ = cHierarchies_ ? &entity : &tHierarchies_->GetTop();
+    filtered_ = entity;
+    tHierarchies_ = entity ? entity->Retrieve< TacticalHierarchies >() : nullptr;
+    cHierarchies_ = entity ? entity->Retrieve< CommunicationHierarchies >() : nullptr;
+    entity_ = tHierarchies_ && !cHierarchies_ ? &tHierarchies_->GetTop() : entity;
     if( !update )
         return;
     controller_.Update( *static_cast< Profile_ABC* >( this ) );
@@ -205,20 +201,6 @@ void UnitFilter::SetFilter( const Entity_ABC& entity, bool update /* = true */ )
 void UnitFilter::SetFilter( const  kernel::Profile_ABC& /*profile*/ )
 {
     // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: UnitFilter::RemoveFilter
-// Created: AGE 2006-11-29
-// -----------------------------------------------------------------------------
-void UnitFilter::RemoveFilter()
-{
-    filtered_ = 0;
-    entity_ = 0;
-    tHierarchies_ = 0;
-    cHierarchies_ = 0;
-    controller_.Update( *static_cast< Profile_ABC* >( this ) );
-    controller_.Update( *static_cast< Filter_ABC* >( this ) );
 }
 
 // -----------------------------------------------------------------------------

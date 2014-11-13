@@ -163,14 +163,16 @@ void VisionCones::Update() const
             new Updater( *const_cast< VisionCones* >( this ) ) ) );
 }
 
-void VisionCones::DrawMap( const gui::Viewport_ABC& viewport, const gui::GLView_ABC& tools ) const
+void VisionCones::DrawMap( const gui::Viewport_ABC& viewport,
+                           const gui::GLView_ABC& tools ) const
 {
     if( agent_.IsAnAggregatedSubordinate() )
         return;
-    if( tools.GetOptions().ShouldDisplay( "VisionCones" ) )
+    if( tools.GetCurrentOptions().ShouldDisplay( "VisionCones" ) )
         for( auto it = surfaces_.begin(); it != surfaces_.end(); ++it )
             (*it)->Draw( viewport, tools );
-    if( tools.GetOptions().ShouldDisplay( "VisionSurfaces" ) && map_->IsVisible( viewport ) )
+    if( tools.GetCurrentOptions().ShouldDisplay( "VisionSurfaces" ) &&
+        map_->IsVisible( viewport ) )
     {
         if( needUpdating_ )
         {

@@ -19,7 +19,6 @@ namespace kernel
 
 namespace gui
 {
-    class GlProxy;
 
 // =============================================================================
 /** @class  LayersPanel
@@ -36,14 +35,14 @@ public:
     //@{
              LayersPanel( QWidget* parent,
                           kernel::OptionsController& options,
-                          GlProxy& view );
+                          GLView_ABC& view );
     virtual ~LayersPanel();
     //@}
 
 private:
     //! @name PreferencePanel_ABC implementation
     //@{
-    virtual void Load( const GlProxy& proxy );
+    virtual void Load( const GLView_ABC& proxy );
     //@}
 
 private slots:
@@ -69,8 +68,7 @@ private:
     //! @name Member data
     //@{
     kernel::OptionsController& options_;
-    GlProxy& proxy_;
-
+    GLView_ABC& view_;
     QListView* layersListView_;
     QStandardItemModel dataModel_;
     QSortFilterProxyModel proxyModel_;

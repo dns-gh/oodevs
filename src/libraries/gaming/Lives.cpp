@@ -42,10 +42,12 @@ Lives::~Lives()
 // Name: Lives::Draw
 // Created: AGE 2006-04-10
 // -----------------------------------------------------------------------------
-void Lives::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GLView_ABC& tools ) const
+void Lives::Draw( const geometry::Point2f& where,
+                  const gui::Viewport_ABC& viewport,
+                  gui::GLView_ABC& view ) const
 {
     if( viewport.IsHotpointVisible() && !entity_.IsAnAggregatedSubordinate() )
-        tools.DrawLife( where, life_, tools.GetOptions().GetRatio( entity_ ) );
+        view.DrawLife( where, life_, view.GetCurrentOptions().GetRatio( entity_ ) );
 }
 
 // -----------------------------------------------------------------------------

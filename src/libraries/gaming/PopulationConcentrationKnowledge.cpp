@@ -12,6 +12,7 @@
 #include "gaming_pch.h"
 #include "PopulationConcentrationKnowledge.h"
 #include "PopulationConcentration.h"
+#include "clients_gui/GLColors.h"
 #include "clients_gui/GLView_ABC.h"
 #include "clients_gui/Viewport_ABC.h"
 #include "clients_kernel/Population_ABC.h"

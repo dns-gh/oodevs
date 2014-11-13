@@ -14,7 +14,7 @@
 // Name: PreparationProfile::GetProfile
 // Created: AGE 2006-11-21
 // -----------------------------------------------------------------------------
-const kernel::Profile_ABC& PreparationProfile::GetProfile()
+PreparationProfile& PreparationProfile::GetProfile()
 {
     static PreparationProfile profile;
     return profile;
@@ -91,4 +91,24 @@ bool PreparationProfile::IsSupervision() const
 bool PreparationProfile::HasTimeControl() const
 {
     return true;
+}
+
+QString PreparationProfile::GetFilter() const
+{
+    return "";
+}
+
+void PreparationProfile::SetFilter( const kernel::Entity_ABC*, bool )
+{
+    // NOTHING
+}
+
+void PreparationProfile::SetFilter( const kernel::Profile_ABC& )
+{
+    // NOTHING
+}
+
+const kernel::Entity_ABC* PreparationProfile::GetFilteredEntity() const
+{
+    return 0;
 }

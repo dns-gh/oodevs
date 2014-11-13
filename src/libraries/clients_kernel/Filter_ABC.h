@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __Filter_ABC_h_
-#define __Filter_ABC_h_
+#ifndef gui__Filter_ABC_h_
+#define gui__Filter_ABC_h_
 
 namespace kernel
 {
@@ -36,13 +36,12 @@ public:
     //! @name Operations
     //@{
     virtual QString GetFilter() const = 0;
-    virtual void SetFilter( const kernel::Entity_ABC& entity, bool update = true ) = 0;
+    virtual void SetFilter( const kernel::Entity_ABC* entity, bool update = true ) = 0;
     virtual void SetFilter( const kernel::Profile_ABC& profile ) = 0;
-    virtual void RemoveFilter() = 0;
     virtual const kernel::Entity_ABC* GetFilteredEntity() const = 0;
     //@}
 };
 
 } //! namespace kernel
 
-#endif // __Filter_ABC_h_
+#endif // gui__Filter_ABC_h_

@@ -10,6 +10,7 @@
 #include "clients_gui_pch.h"
 #include "PreferencesList.h"
 #include "moc_PreferencesList.cpp"
+#include "PreferencePanel_ABC.h"
 #include "KeyModel.h"
 #include "Tools.h"
 
@@ -19,7 +20,9 @@ using namespace gui;
 // Name: PreferencesList constructor
 // Created: SBO 2007-01-03
 // -----------------------------------------------------------------------------
-PreferencesList::PreferencesList( const QString& objectName, QStackedWidget& pages, QWidget* parent /* = 0 */ )
+PreferencesList::PreferencesList( const QString& objectName,
+                                  QStackedWidget& pages,
+                                  QWidget* parent /* = 0 */ )
     : RichTreeView( objectName, parent )
     , pages_( pages )
     , model_( new KeyModel() )
@@ -42,7 +45,7 @@ PreferencesList::~PreferencesList()
 // Name: PreferencesList::AddPage
 // Created: SBO 2007-01-03
 // -----------------------------------------------------------------------------
-void PreferencesList::AddPage( const QString& name, QWidget* widget )
+void PreferencesList::AddPage( const QString& name, PreferencePanel_ABC* widget )
 {
     QStandardItem* parent = model_->invisibleRootItem();
     QStringList path = QStringList::split( '/', name );
@@ -62,6 +65,8 @@ void PreferencesList::AddPage( const QString& name, QWidget* widget )
     }
     resizeColumnToContents( 0 );
     sortByColumn( 0, Qt::AscendingOrder );
+    if( model_->itemFromIndex( currentIndex() ) && model_->rowCount() > 0 )
+        setCurrentIndex( model_->index( 0, 0 ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -77,4 +82,32 @@ void PreferencesList::OnSelect( const QItemSelection& /*selected*/, const QItemS
         if( widget != widgets_.end() )
             pages_.setCurrentWidget( widget->second );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: PreferencesList::GetFullName
+// Created: ABR 2014-08-06
+// -----------------------------------------------------------------------------
+QString PreferencesList::GetFullName( QStandardItem* item )
+{
+    if( !item )
+        return QString();
+    QString name = item->text();
+    while( item->parent() )
+    {
+        name = item->parent()->text() + "/" + name;
+        item = item->parent();
+    }
+    return name;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PreferencesList::GetCurrentWidget
+// Created: ABR 2014-08-06
+// -----------------------------------------------------------------------------
+PreferencePanel_ABC* PreferencesList::GetCurrentWidget()
+{
+    if( auto item = model_->itemFromIndex( currentIndex() ) )
+        return widgets_.at( GetFullName( item ) );
+    return 0;
 }

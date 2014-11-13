@@ -19,7 +19,7 @@
 #include "actions/String.h"
 #include "actions/Bool.h"
 #include "actions/UnitMagicAction.h"
-#include "clients_gui/GlSelector.h"
+#include "clients_gui/GL2D3DProxy.h"
 #include "clients_gui/LocationCreator.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/DecisionalModel.h"
@@ -85,16 +85,16 @@ PopulationMagicOrdersInterface::PopulationMagicOrdersInterface( QWidget* parent,
                                                                 const Time_ABC& simulation,
                                                                 const std::shared_ptr< gui::ParametersLayer >& layer,
                                                                 const Profile_ABC& profile,
-                                                                gui::GlSelector& selector )
+                                                                gui::GLView_ABC& view )
     : QObject( parent )
-    , controllers_   ( controllers )
-    , actionsModel_  ( actionsModel )
-    , static_        ( staticModel )
-    , simulation_    ( simulation )
-    , profile_       ( profile )
-    , selector_      ( selector )
+    , controllers_( controllers )
+    , actionsModel_( actionsModel )
+    , static_( staticModel )
+    , simulation_( simulation )
+    , profile_( profile )
+    , view( view )
     , selectedEntity_( controllers )
-    , magicMove_     ( false )
+    , magicMove_( false )
 {
     magicMoveLocation_ = new LocationCreator( 0, layer, *this );
     magicMoveLocation_->Allow( false, false, false, false, false );
@@ -172,7 +172,6 @@ void PopulationMagicOrdersInterface::Move()
         controllers_.Register( *magicMoveLocation_ );
     magicMove_ = true;
     magicMoveLocation_->StartPoint();
-    selector_.SetFocus();
 }
 
 // -----------------------------------------------------------------------------

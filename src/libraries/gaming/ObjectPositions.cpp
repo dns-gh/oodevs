@@ -72,12 +72,17 @@ void ObjectPositions::DoUpdate( const sword::ObjectCreation& message )
 // Name: ObjectPositions::Draw
 // Created: SBO 2009-05-29
 // -----------------------------------------------------------------------------
-void ObjectPositions::Draw( const geometry::Point2f& /*where*/, const gui::Viewport_ABC& viewport, gui::GLView_ABC& tools ) const
+void ObjectPositions::Draw( const geometry::Point2f& /*where*/,
+                            const gui::Viewport_ABC& viewport,
+                            gui::GLView_ABC& tools ) const
 {
     if( const kernel::Location_ABC* location = GetLocation() )
     {
         if( viewport.IsVisible( boundingBox_ ) )
-            tools.DrawTacticalGraphics( symbol_, *location, tools.GetOptions().IsDrawingSelection(), type_.GetPointSize(),
+            tools.DrawTacticalGraphics( symbol_,
+                                        *location,
+                                        tools.GetCurrentOptions().IsDrawingSelection(),
+                                        type_.GetPointSize(),
                 dynamic_cast< const kernel::Point* >( location ) != nullptr );
     }
 }

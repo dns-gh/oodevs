@@ -174,16 +174,17 @@ namespace
         return Qt::red;
     }
 
-    boost::optional< QColor > GetFireColor( const GLOptions& options, const kernel::Entity_ABC& entity )
+    boost::optional< QColor > GetFireColor( const GLOptions& options,
+                                            ColorStrategy_ABC& colorStrategy,
+                                            const kernel::Entity_ABC& entity )
     {
-        auto& strategy = options.GetColorStrategy();
         const auto option = options.Has( GetFireIndicatorsOptionName() )
             ? static_cast< FireIndicators >( options.Get( GetFireIndicatorsOptionName() ).To< int >() )
             : FIRE_INDICATORS_DEFAULT;
         switch( option )
         {
-            case FIRE_INDICATORS_SIDE: return strategy.FindBaseColor( entity );
-            case FIRE_INDICATORS_UNIT: return strategy.FindColorWithModifiers( entity );
+            case FIRE_INDICATORS_SIDE: return colorStrategy.FindBaseColor( entity );
+            case FIRE_INDICATORS_UNIT: return colorStrategy.FindColorWithModifiers( entity );
             case FIRE_INDICATORS_RULE: return boost::none;
         }
         return Qt::red;
@@ -194,8 +195,8 @@ namespace
                                            const kernel::Entity_ABC& entity,
                                            const QString& name )
     {
-        const auto& gl = view.GetOptions();
-        if( const auto color = GetFireColor( gl, entity ) )
+        const auto& gl = view.GetCurrentOptions();
+        if( const auto color = GetFireColor( gl, view.GetColorStrategy(), entity ) )
             return std::make_shared< FireColor >( *color, view );
         const auto color = SelectColor( gl.GetFireOptions( group ), name, GetKarma( entity ) );
         return std::make_shared< FireColor >( color, view );

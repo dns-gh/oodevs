@@ -11,7 +11,6 @@
 #define __TooltipsLayer_h_
 
 #include "TooltipsLayer_ABC.h"
-#include "Layer.h"
 
 namespace kernel
 {
@@ -26,7 +25,7 @@ namespace gui
 */
 // Created: SBO 2008-04-11
 // =============================================================================
-class TooltipsLayer : public TooltipsLayer_ABC, public Layer
+class TooltipsLayer : public TooltipsLayer_ABC
 {
 public:
     explicit TooltipsLayer( kernel::Controllers& controllers, GLView_ABC& tools );

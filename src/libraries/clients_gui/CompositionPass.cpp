@@ -10,6 +10,8 @@
 #include "clients_gui_pch.h"
 #include "CompositionPass.h"
 #include "TextureRenderPass.h"
+#include "GLOptions.h"
+#include "GLView_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/OptionVariant.h"
 #include "tools/GeneralConfig.h"
@@ -23,17 +25,19 @@ using namespace gui;
 // Name: CompositionPass constructor
 // Created: SBO 2008-04-14
 // -----------------------------------------------------------------------------
-CompositionPass::CompositionPass( TextureRenderPass& first, TextureRenderPass& second, kernel::Controllers& controllers, const std::string& option /* = ""*/ )
-    : controllers_ ( controllers )
-    , first_       ( first )
-    , second_      ( second )
+CompositionPass::CompositionPass( TextureRenderPass& first,
+                                  TextureRenderPass& second,
+                                  const GLView_ABC& view,
+                                  const std::string& option /* = ""*/ )
+    : view_( view )
+    , first_( first )
+    , second_( second )
     , noiseTexture_( 0 )
     , ignoreShader_( false )
-    , option_      ( option )
-    , enabled_     ( option_.empty() )
-    , time_        ( 0 )
+    , option_( option )
+    , time_( 0 )
 {
-    controllers_.Register( *this );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -43,7 +47,6 @@ CompositionPass::CompositionPass( TextureRenderPass& first, TextureRenderPass& s
 CompositionPass::~CompositionPass()
 {
     glDeleteTextures( 1, &noiseTexture_ );
-    controllers_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -61,7 +64,8 @@ std::string CompositionPass::GetName() const
 // -----------------------------------------------------------------------------
 void CompositionPass::Render( MapWidget_ABC& )
 {
-    if( !enabled_ || !gl::HasMultiTexturing() )
+    if( !option_.empty() && !view_.GetCurrentOptions().Get( option_ ).To< bool >() ||
+        !gl::HasMultiTexturing() )
         return;
 
     glClear( GL_COLOR_BUFFER_BIT );
@@ -190,14 +194,4 @@ void CompositionPass::Initialize()
     {
         ignoreShader_ = true;
     }
-}
-
-// -----------------------------------------------------------------------------
-// Name: CompositionPass::OptionChanged
-// Created: SBO 2008-04-15
-// -----------------------------------------------------------------------------
-void CompositionPass::OptionChanged( const std::string& name, const kernel::OptionVariant& value )
-{
-    if( name == option_ )
-        enabled_ = value.To< bool >();
 }

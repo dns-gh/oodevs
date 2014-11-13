@@ -314,7 +314,9 @@ void AgentKnowledge::DisplayInSummary( kernel::Displayer_ABC& displayer ) const
 // Name: AgentKnowledge::Draw
 // Created: AGE 2006-05-17
 // -----------------------------------------------------------------------------
-void AgentKnowledge::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GLView_ABC& tools ) const
+void AgentKnowledge::Draw( const geometry::Point2f& where,
+                           const gui::Viewport_ABC& viewport,
+                           gui::GLView_ABC& view ) const
 {
     if( !viewport.IsVisible( where ) )
         return;
@@ -323,11 +325,11 @@ void AgentKnowledge::Draw( const geometry::Point2f& where, const gui::Viewport_A
     const float width = isMoving? 0.f : realAgent_.GetType().GetWidth();
     const float depth = isMoving? realAgent_.GetType().GetLength() : realAgent_.GetType().GetDepth();
     const std::string levelSymbol = nLevel_ ? realAgent_.GetType().GetLevelSymbol() : std::string();
-    const float ratio = nLevel_ ? tools.GetOptions().GetRatio( realAgent_ ) : 1;
-    tools.DrawUnitSymbol( currentSymbol_, moveSymbol_, staticSymbol_, levelSymbol, isMoving, where, -ratio, direction, width, depth );
+    const float ratio = nLevel_ ? view.GetCurrentOptions().GetRatio( realAgent_ ) : 1;
+    view.DrawUnitSymbol( currentSymbol_, moveSymbol_, staticSymbol_, levelSymbol, isMoving, where, -ratio, direction, width, depth );
     const bool app6 = isMoving ? moveSymbol_.empty() : staticSymbol_.empty();
     if( app6 && nMaxPerceptionLevel_.IsSet() && nMaxPerceptionLevel_ > eDetection )
-        tools.DrawApp6SymbolFixedSize( realAgent_.GetType().GetHQSymbol(), where, -ratio, 0 );
+        view.DrawApp6SymbolFixedSize( realAgent_.GetType().GetHQSymbol(), where, -ratio, 0 );
 }
 
 // -----------------------------------------------------------------------------

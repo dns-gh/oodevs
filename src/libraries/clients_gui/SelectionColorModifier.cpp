@@ -63,7 +63,7 @@ QColor SelectionColorModifier::Apply( const kernel::Entity_ABC& entity, const QC
     const bool selected = selectedEntity_ == &entity;
     const bool superiorSelected = selectedEntity_ && ( IsSubordinate< kernel::TacticalHierarchies >( entity, *selectedEntity_ )
                                                     || IsSubordinate< kernel::CommunicationHierarchies >( entity, *selectedEntity_ ) );
-    tools_.GetOptions().Select( selected, superiorSelected, profile_.CanBeOrdered( entity ) );
+    tools_.GetCurrentOptions().Select( selected, superiorSelected, profile_.CanBeOrdered( entity ) );
     if( selected )
         return SelectedColor( base );
     if( superiorSelected )

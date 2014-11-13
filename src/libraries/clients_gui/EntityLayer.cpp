@@ -10,8 +10,8 @@
 #include "clients_gui_pch.h"
 #include "EntityLayer.h"
 #include "DrawVisitor.h"
-#include "GlProxy.h"
 #include "InformationToolTip.h"
+#include "PickingSelector.h"
 #include "Viewport_ABC.h"
 #include "Viewport2d.h"
 #include "clients_kernel/Controllers.h"
@@ -70,7 +70,7 @@ void EntityLayerBase::Initialize( const geometry::Rectangle2f& extent )
 void EntityLayerBase::Paint( Viewport_ABC& viewport )
 {
     strategy_.SetAlpha( GetAlpha() );
-    bool pickingMode = view_.IsPickingMode();
+    bool pickingMode = view_.GetPickingSelector().IsPickingMode();
 
     // Draw the entities
     for( auto it = entities_.begin(); it != entities_.end(); ++it )
@@ -108,7 +108,7 @@ void EntityLayerBase::SetHotpoint( const kernel::Entity_ABC& /*entity*/, Viewpor
 // -----------------------------------------------------------------------------
 void EntityLayerBase::Draw( const Entity_ABC& entity, Viewport_ABC& viewport, bool pickingMode )
 {
-    if( ShouldDisplay( entity ) && view_.ShouldDisplay( GetType() ) )
+    if( ShouldDisplay( entity ) && view_.GetPickingSelector().ShouldDisplay( GetType() ) )
     {
         SelectColor( entity );
         const geometry::Point2f position = GetPosition( entity );

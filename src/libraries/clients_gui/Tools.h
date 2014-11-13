@@ -14,6 +14,7 @@
 
 namespace kernel
 {
+    class Controllers;
     class Entity_ABC;
     class Profile_ABC;
     class OptionsController;
@@ -25,8 +26,11 @@ namespace gui
     class GLView_ABC;
 }
 
-class QVBoxLayout;
+class QMenu;
+class QObject;
 class QStandardItemModel;
+class QVBoxLayout;
+class QWidget;
 
 namespace tools
 {
@@ -71,6 +75,16 @@ namespace tools
                     if( itemEntity->GetEntity() == &entity )
                         item->setText( itemEntity->GetName() );
     }
+
+    QString Point2fToString( const geometry::Point2f& point );
+    QString Point3fToString( const geometry::Point3f& point );
+    QString Vector3fToString( const geometry::Vector3f& vector );
+    geometry::Point2f StringToPoint2f( const QString& point );
+    geometry::Point3f StringToPoint3f( const QString& point );
+    geometry::Vector3f StringToVector3f( const QString& vector );
+
+    QMenu* CreateWindowMenu( kernel::Controllers& controllers, QWidget& parent, QObject& glWidgetManager );
+
 }  //! namespace tools
 
 #endif  // CLIENTS_GUI_TOOLS_H

@@ -55,21 +55,20 @@ const T_LayerTypesVector defaultDisplayOrder_ = ba::list_of
     ( eLayerTypes_Selection )
     ( eLayerTypes_Fog );
 
-// TODO: it's actually the inverse order, inverse it and inverse the loop algorithm in CircularEventStrategy
-const T_LayerTypesVector eventOrder_ = ba::list_of
-    ( eLayerTypes_Terrain )
-    ( eLayerTypes_Parameters )
-    ( eLayerTypes_UnitsComposite )
-    ( eLayerTypes_CrowdsComposite )
-    ( eLayerTypes_InhabitantsComposite )
-    ( eLayerTypes_ObjectsComposite )
-    ( eLayerTypes_ResourceNetworks )
-    ( eLayerTypes_Urban)
-    ( eLayerTypes_Selection)
-    ( eLayerTypes_TacticalLinesComposite )
-    ( eLayerTypes_Metric )
+const T_LayerTypesVector eventOrder_ = ba::list_of< E_LayerTypes >
+    ( eLayerTypes_Weather )
     ( eLayerTypes_Elevation3d )
-    ( eLayerTypes_Weather );
+    ( eLayerTypes_Metric )
+    ( eLayerTypes_TacticalLinesComposite )
+    ( eLayerTypes_Selection)
+    ( eLayerTypes_Urban)
+    ( eLayerTypes_ResourceNetworks )
+    ( eLayerTypes_ObjectsComposite )
+    ( eLayerTypes_InhabitantsComposite )
+    ( eLayerTypes_CrowdsComposite )
+    ( eLayerTypes_UnitsComposite )
+    ( eLayerTypes_Parameters )
+    ( eLayerTypes_Terrain );
 
 const layers::Descriptor descriptors_[] = {
     // type                               // passes                           // pick // config

@@ -41,7 +41,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Load( const GlProxy& view );
+    virtual void Load( const GLView_ABC& view );
     //@}
 
 private slots:

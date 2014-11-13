@@ -41,10 +41,15 @@ AutomatLives::~AutomatLives()
 // Name: AutomatLives::Draw
 // Created: AGE 2006-10-06
 // -----------------------------------------------------------------------------
-void AutomatLives::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GLView_ABC& tools ) const
+void AutomatLives::Draw( const geometry::Point2f& where,
+                         const gui::Viewport_ABC& viewport,
+                         gui::GLView_ABC& view ) const
 {
-    if( !automat_.IsAnAggregatedSubordinate() && tools.GetOptions().IsAggregated( automat_ ) && viewport.IsHotpointVisible() )
-        tools.DrawLife( where, GetLife(), tools.GetOptions().GetRatio( automat_ ) );
+    const auto& options = view.GetCurrentOptions();
+    if( !automat_.IsAnAggregatedSubordinate() &&
+        options.IsAggregated( automat_ ) &&
+        viewport.IsHotpointVisible() )
+        view.DrawLife( where, GetLife(), options.GetRatio( automat_ ) );
 }
 
 // -----------------------------------------------------------------------------

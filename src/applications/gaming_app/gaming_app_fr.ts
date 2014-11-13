@@ -2587,10 +2587,6 @@ Ces données ne peuvent pas être projetées.</translation>
         <translation>Basculer affichage des fenêtres</translation>
     </message>
     <message>
-        <source>&amp;Windows</source>
-        <translation>&amp;Fenêtres</translation>
-    </message>
-    <message>
         <source>Unit detail</source>
         <translation>Détails des unités</translation>
     </message>
@@ -2637,6 +2633,14 @@ Ces données ne peuvent pas être projetées.</translation>
     <message>
         <source>Rules</source>
         <translation>Règles</translation>
+    </message>
+    <message>
+        <source>Save configuration</source>
+        <translation>Sauvegarder configuration</translation>
+    </message>
+    <message>
+        <source>Load configuration</source>
+        <translation>Charger configuration</translation>
     </message>
 </context>
 <context>

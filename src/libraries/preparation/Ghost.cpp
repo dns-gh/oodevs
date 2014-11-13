@@ -143,12 +143,23 @@ void Ghost::InitializeSymbol() const
 // Name: Ghost::Draw
 // Created: ABR 2011-10-18
 // -----------------------------------------------------------------------------
-void Ghost::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GLView_ABC& tools ) const
+void Ghost::Draw( const geometry::Point2f& where,
+                  const gui::Viewport_ABC& viewport,
+                  gui::GLView_ABC& view ) const
 {
     if( viewport.IsHotpointVisible() )
     {
         InitializeSymbol();
-        tools.DrawUnitSymbol( symbol_, "", "", GetLevelSymbol(), false, where, -tools.GetOptions().GetRatio( *this ), 0, 0, 0 );
+        view.DrawUnitSymbol( symbol_,
+                             "",
+                             "",
+                             GetLevelSymbol(),
+                             false,
+                             where,
+                             -view.GetCurrentOptions().GetRatio( *this ),
+                             0,
+                             0,
+                             0 );
     }
 }
 

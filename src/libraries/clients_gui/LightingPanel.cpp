@@ -13,7 +13,7 @@
 #include "ButtonGroup.h"
 #include "DirectionWidget.h"
 #include "GLOptions.h"
-#include "GlProxy.h"
+#include "GLView_ABC.h"
 #include "LightingHelpers.h"
 #include "LightingProxy.h"
 #include "OptionWidgets.h"
@@ -125,10 +125,9 @@ LightingPanel::~LightingPanel()
 // Name: LightingPanel::Load
 // Created: ABR 2014-10-20
 // -----------------------------------------------------------------------------
-void LightingPanel::Load( const GlProxy& view )
+void LightingPanel::Load( const GLView_ABC& view )
 {
-    const auto& options = view.GetOptions();
-    lighting_ = std::dynamic_pointer_cast< LightingProxy >( options.GetLighting() );
+    lighting_ = std::dynamic_pointer_cast< LightingProxy >( view.GetActiveOptions().GetLighting() );
 }
 
 // -----------------------------------------------------------------------------

@@ -50,7 +50,7 @@ FormationLayer::~FormationLayer()
 void FormationLayer::Aggregate()
 {
     if( selected_ )
-        view_.GetOptions().Aggregate( *selected_ );
+        view_.GetActiveOptions().Aggregate( *selected_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -60,7 +60,7 @@ void FormationLayer::Aggregate()
 void FormationLayer::Disaggregate()
 {
     if( selected_ )
-        view_.GetOptions().Disaggregate( selected_ );
+        view_.GetActiveOptions().Disaggregate( selected_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -74,7 +74,7 @@ void FormationLayer::NotifyContextMenu( const kernel::Formation_ABC& formation, 
     selected_ = &formation;
     if( !formation.IsAnAggregatedSubordinate() )
     {
-        if( !view_.GetOptions().IsAggregated( formation )  )
+        if( !view_.GetActiveOptions().IsAggregated( formation )  )
             menu.InsertItem( "Interface", tr( "Aggregate" ), this, SLOT( Aggregate() ) );
         else
             menu.InsertItem( "Interface", tr( "Disaggregate" ), this, SLOT( Disaggregate() ) );
@@ -99,7 +99,7 @@ void FormationLayer::ContextMenu( const GraphicalEntity_ABC& selectable, const g
 {
     const Entity_ABC& entity = static_cast< const Entity_ABC& >( selectable );
     const Formation_ABC& formation = static_cast< const Formation_ABC& >( entity );
-    if( !formation.IsAnAggregatedSubordinate() && view_.GetOptions().IsAggregated( formation ) )
+    if( !formation.IsAnAggregatedSubordinate() && view_.GetActiveOptions().IsAggregated( formation ) )
         controllers_.actions_.ContextMenu( this, formation, entity, point, where );
 }
 

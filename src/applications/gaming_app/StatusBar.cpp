@@ -37,8 +37,14 @@ namespace
 // Name: StatusBar constructor
 // Created: SBO 2006-04-14
 // -----------------------------------------------------------------------------
-StatusBar::StatusBar( QStatusBar* parent, gui::TerrainPicker& picker, const DetectionMap& detection, const CoordinateConverter_ABC& converter, Controllers& controllers, QObject& selector, QDockWidget* profilingDock )
-    : gui::StatusBar( controllers, parent, picker, detection, converter, selector )
+StatusBar::StatusBar( QStatusBar* parent,
+                      gui::TerrainPicker& picker,
+                      const DetectionMap& detection,
+                      const CoordinateConverter_ABC& converter,
+                      Controllers& controllers,
+                      QDockWidget* profilingDock,
+                      gui::GLMainProxy& mainProxy )
+    : gui::StatusBar( controllers, parent, picker, detection, converter, mainProxy )
     , picker_( picker )
     , lastSimulationStatus_( false )
     , controllers_( controllers )

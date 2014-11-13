@@ -23,6 +23,7 @@ namespace kernel
 namespace gui
 {
     class ItemFactory_ABC;
+    class GLWidgetManager;
     class HelpSystem;
     class ProfileDialog;
     class RichAction;
@@ -43,12 +44,15 @@ class Menu : public QMenuBar
            , public tools::Observer_ABC
            , public tools::ElementObserver_ABC< Profile >
 {
+    Q_OBJECT
+
 public:
     //! @name Constructors/Destructor
     //@{
-             Menu( QMainWindow* parent,
+             Menu( QMainWindow& mainWindow,
                    kernel::Controllers& controllers,
                    StaticModel& staticModel,
+                   gui::GLWidgetManager& proxy,
                    QDialog& prefDialog,
                    gui::ProfileDialog& profileDialog,
                    Network& network,
@@ -59,14 +63,18 @@ public:
 private:
     virtual void NotifyUpdated( const Profile& profile );
     void AddModdedAction( QAction* action, int hiddenModes = 0, int visibleModes = 0, bool visibleByDefault = true );
+    void mousePressEvent( QMouseEvent* event );
 
 private:
     //! @name Member data
     //@{
+    QMainWindow& mainWindow_;
     kernel::Controllers& controllers_;
     gui::ProfileDialog& profileDialog_;
+    gui::GLWidgetManager& glWidgetManager_;
+    QMenu* windowMenu_;
+    QAction* helpMenuAction_;
     int profileMenu_;
-    gui::RichAction* windowAction_;
     std::vector< gui::RichAction* > moddedActions_;
     //@}
 };

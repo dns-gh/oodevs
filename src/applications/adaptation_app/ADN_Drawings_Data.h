@@ -20,11 +20,6 @@ namespace svg
     class TextRenderer;
 }
 
-namespace gui
-{
-    class GLView_ABC;
-}
-
 // =============================================================================
 /** @class  ADN_Drawings_Data
     @brief  ADN_Drawings_Data
@@ -86,7 +81,6 @@ private:
     T_DrawingsMap categoryMap_;
     T_DrawingInfoVector drawings_;
     std::unique_ptr< svg::TextRenderer > renderer_;
-    std::unique_ptr< gui::GLView_ABC > tools_;
     //@}
 };
 

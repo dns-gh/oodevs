@@ -79,19 +79,23 @@ void DecisionalStates::DoUpdate( const sword::UnitAttributes& message )
 // Name: DecisionalStates::Draw
 // Created: AGE 2007-05-31
 // -----------------------------------------------------------------------------
-void DecisionalStates::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GLView_ABC& tools ) const
+void DecisionalStates::Draw( const geometry::Point2f& where,
+                             const gui::Viewport_ABC& viewport,
+                             gui::GLView_ABC& view ) const
 {
-    if( viewport.IsHotpointVisible() && tools.GetOptions().ShouldDisplay( "DecisionalState" ) && !entity_.IsAnAggregatedSubordinate() )
+    if( viewport.IsHotpointVisible() &&
+        view.GetCurrentOptions().ShouldDisplay( "DecisionalState" ) &&
+        !entity_.IsAnAggregatedSubordinate() )
     {
-        const float factor = tools.GetOptions().GetRatio( entity_ ) * tools.GetAdaptiveZoomFactor( false );
+        const float factor = view.GetCurrentOptions().GetRatio( entity_ ) * view.GetAdaptiveZoomFactor( false );
         if( drawSauvegarde_ )
-            tools.DrawSvg( "sauvegarde.svg", where, factor );
+            view.DrawSvg( "sauvegarde.svg", where, factor );
         if( drawEclairage_ )
-            tools.DrawSvg( "eclairage.svg", where, factor );
+            view.DrawSvg( "eclairage.svg", where, factor );
         if( draw1stEchelon_ )
-            tools.DrawSvg( "1stechelon.svg", where, factor );
+            view.DrawSvg( "1stechelon.svg", where, factor );
         if( drawEtatOps_ || dead_ )
-            tools.DrawSvg( "opstatehs.svg", where, factor );
+            view.DrawSvg( "opstatehs.svg", where, factor );
     }
 }
 

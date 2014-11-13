@@ -502,6 +502,7 @@ void ContourLinesComputer::Conrec()
 void ContourLinesComputer::SetContourLinesObserver( const std::shared_ptr< ContourLinesObserver >& observer )
 {
     observer_ = observer;
+    UpdateObservers( 0 );
 }
 
 // -----------------------------------------------------------------------------

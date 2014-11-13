@@ -10,95 +10,8 @@
 #include "adaptation_app_pch.h"
 #include "ADN_Drawings_Data.h"
 #include "ADN_Project_Data.h"
-#include "clients_gui/GLView_ABC.h"
-#include "clients_gui/GlTooltip_ABC.h"
 #include "svgl/TextRenderer.h"
 #include "tools/Loader_ABC.h"
-
-namespace
-{
-    class GlToolsSymbols : public gui::GLView_ABC
-    {
-    public:
-        //! @name Constructors/Destructor
-        //@{
-                 GlToolsSymbols() : GLView_ABC() {}
-        virtual ~GlToolsSymbols() {}
-        //@}
-
-        //! @name Options
-        //@{
-        virtual gui::GLOptions& GetOptions() { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
-        virtual const gui::GLOptions& GetOptions() const { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
-
-        virtual void CenterOn( const geometry::Point2f& ) {}
-        virtual void Zoom( float ) {}
-        virtual geometry::Point2f GetCenter() const { return geometry::Point2f(); }
-
-        virtual geometry::Point2f MapToterrainCoordinates( int x, int y ){ return geometry::Point2f( ( float )x, ( float )y ); };
-        virtual bool HasFocus(){ return true; };
-
-        virtual bool ShouldDisplay( E_LayerTypes ) const { return false; }
-        //@}
-
-        //! @name Accessors
-        //@{
-        virtual std::string     GetCurrentPass() const { return ""; }
-        virtual float           Pixels( const geometry::Point2f& ) const { return 0.001f; } // $$$$ ABR 2011-04-21: hard coded
-        virtual unsigned short  StipplePattern( int ) const { return 0; }
-        virtual float           Zoom() const { return 0.f; }
-        virtual float           GetAdaptiveZoomFactor( bool ) const { return 0.f; }
-        virtual float           GetCurrentAlpha() const { return 1.f; }
-        virtual float           LineWidth( float base ) const { return base; };
-        //@}
-
-        //! @name Operations
-        //@{
-        virtual std::unique_ptr< gui::GlTooltip_ABC > CreateTooltip() const { return 0; }
-        virtual void SetCurrentColor  ( float, float, float, float ) {}
-        virtual void SetCurrentCursor ( const QCursor& ) {}
-        virtual void DrawCross        ( const geometry::Point2f&, float, E_Unit ) const {}
-        virtual void DrawLine         ( const geometry::Point2f&, const geometry::Point2f&, float ) const {}
-        virtual void DrawStippledLine ( const geometry::Point2f&, const geometry::Point2f& ) const {}
-        virtual void DrawLines        ( const T_PointVector& ) const {}
-        virtual void DrawRectangle    ( const T_PointVector& ) const {}
-        virtual void DrawPolygon      ( const T_PointVector& ) const {}
-        virtual void DrawSelectedPolygon( const T_PointVector& ) const {}
-        virtual void DrawDecoratedPolygon( const kernel::T_TessellatedPolygon&, const T_PointVector&,
-                                           const geometry::Point2f&, const std::string&, unsigned int ) {}
-        virtual void DrawArrow        ( const geometry::Point2f&, const geometry::Point2f&, float, E_Unit ) const {}
-        virtual void DrawCurvedArrow  ( const geometry::Point2f&, const geometry::Point2f&, float, float, E_Unit ) const {}
-        virtual void DrawArc          ( const geometry::Point2f&, const geometry::Point2f&, const geometry::Point2f&, float ) const {}
-        virtual void DrawCircle       ( const geometry::Point2f&, float, E_Unit ) const {}
-        virtual void DrawDisc         ( const geometry::Point2f&, float, E_Unit ) const {}
-        virtual void DrawHalfDisc     ( const geometry::Point2f&, float, float, E_Unit) const {}
-        virtual void DrawLife         ( const geometry::Point2f&, float, float, bool ) const {}
-        virtual void Print            ( const std::string&, const geometry::Point2f& ) const {}
-        virtual void Print            ( const std::string&, const geometry::Point2f&, const QFont& ) const {}
-        virtual void DrawInfrastructureSymbol( const std::string&, const geometry::Point2f&, float, float ) const {}
-        virtual void DrawApp6Symbol   ( const std::string&, const geometry::Point2f&, float, float, unsigned int ) const {}
-        virtual void DrawIcon         ( const char**, const geometry::Point2f&, float, float, E_Unit ) const {}
-        virtual void DrawImage        ( const QImage&, const geometry::Point2f& ) const {}
-        virtual void DrawCell         ( const geometry::Point2f& ) const {}
-        virtual void DrawSvg          ( const std::string&, const geometry::Point2f&, float, bool ) const {}
-        virtual void DrawTacticalGraphics( const std::string&, const kernel::Location_ABC&, bool, float, bool ) const {}
-        virtual void DrawApp6SymbolFixedSize( const std::string&, const geometry::Point2f&, float, unsigned int ) const {}
-        virtual void DrawUnitSymbol( const std::string&, const std::string&, const std::string&, const std::string&, bool, const geometry::Point2f&, float, unsigned int, float, float ) const {}
-        virtual void DrawUnitSymbolAndTail( const std::string&, const std::string&, const T_PointVector& ) const {}
-        virtual void FillSelection( const geometry::Point2f&, T_ObjectsPicking&,
-                const boost::optional< E_LayerTypes >& ) {};
-        virtual void RenderPicking( const T_ObjectPicking& ) {};
-        virtual bool IsPickingMode() const { return false; };
-        virtual void Picking() {};
-        virtual QColor GetPickingColor() const { return QColor() ; }
-        virtual void DrawShapeText( const QImage&, const geometry::Point2f& ) const {}
-        //@}
-    };
-}
-
-// -----------------------------------------------------------------------------
-// ADN_Drawings_Data
-// -----------------------------------------------------------------------------
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Drawings_Data constructor
@@ -107,7 +20,6 @@ namespace
 ADN_Drawings_Data::ADN_Drawings_Data()
     : ADN_Data_ABC( eDrawings )
     , renderer_( new svg::TextRenderer() )
-    , tools_   ( new GlToolsSymbols() )
 {
     // NOTHING
 }
@@ -146,10 +58,9 @@ void ADN_Drawings_Data::ReadArchive( xml::xistream& xis )
     xml::xistringstream xss( "<template name=' - ' type='default'>"
                              "    <segment/>"
                              "</template>" );
-
     std::unique_ptr< DrawingInfo > drawing;
     drawing.reset( new DrawingInfo( xss >> xml::start( "template" ), "tasks", "tasks", *renderer_ ) );
-    drawing->GenerateSamplePixmap( *tools_ );
+    drawing->GenerateSamplePixmap();
     drawings_.AddItem( drawing.release() );
 }
 
@@ -175,7 +86,7 @@ void ADN_Drawings_Data::ReadTemplate( xml::xistream& xis, const std::string& nam
     {
         std::unique_ptr< DrawingInfo > drawing;
         drawing.reset( new DrawingInfo( xis, name.c_str(), id.c_str(), *renderer_ ) );
-        drawing->GenerateSamplePixmap( *tools_ );
+        drawing->GenerateSamplePixmap();
         drawings_.AddItem( drawing.release() );
     }
     catch( const std::exception& e )

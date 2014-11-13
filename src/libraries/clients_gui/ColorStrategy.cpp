@@ -41,7 +41,9 @@ using namespace gui;
 // Name: ColorStrategy constructor
 // Created: AGE 2006-03-17
 // -----------------------------------------------------------------------------
-ColorStrategy::ColorStrategy( Controllers& controllers, GLView_ABC& tools, ColorModifier_ABC& colorController )
+ColorStrategy::ColorStrategy( Controllers& controllers,
+                              GLView_ABC& tools,
+                              ColorModifier_ABC& colorController )
     : controllers_    ( controllers )
     , tools_          ( tools )
     , colorController_( colorController )
@@ -313,7 +315,7 @@ void ColorStrategy::SelectColor( const UrbanObject_ABC& object )
 {
     if( const kernel::UrbanColor_ABC* attribute = object.Retrieve< kernel::UrbanColor_ABC >() )
     {
-        auto urbanColor = tools_.GetOptions().ComputeUrbanColor( object );
+        auto urbanColor = tools_.GetCurrentOptions().ComputeUrbanColor( object );
         const float alpha = ApplyModifiers( object, static_cast< float >( urbanColor.alphaF() ) );
         ApplyColor( urbanColor, alpha_ * alpha );
     }

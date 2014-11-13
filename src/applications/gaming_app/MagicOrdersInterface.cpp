@@ -29,10 +29,10 @@ MagicOrdersInterface::MagicOrdersInterface( QWidget* parent,
                                             const kernel::Time_ABC& simulation,
                                             const std::shared_ptr< gui::ParametersLayer >& layer,
                                             const kernel::Profile_ABC& profile,
-                                            gui::GlSelector& selector )
+                                            gui::GLView_ABC& view )
 {
-    new UnitMagicOrdersInterface( parent, controllers, actionsModel, staticModel, simulation, layer, profile, selector );
-    new PopulationMagicOrdersInterface( parent, controllers, actionsModel, staticModel, simulation, layer, profile, selector );
+    new UnitMagicOrdersInterface( parent, controllers, actionsModel, staticModel, simulation, layer, profile, view );
+    new PopulationMagicOrdersInterface( parent, controllers, actionsModel, staticModel, simulation, layer, profile, view );
     new ObjectMagicOrdersInterface( parent, controllers, actionsModel, profile );
     new KnowledgeGroupMagicOrdersInterface( parent, controllers, actionsModel, staticModel, simulation, profile, staticModel.types_ ); // LTO
 }
