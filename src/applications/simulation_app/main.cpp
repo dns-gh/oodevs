@@ -17,11 +17,9 @@
 #include "simulation_terrain/TER_Logger.h"
 #include <license_gui/LicenseDialog.h>
 #include <tools/win32/FlexLm.h>
-#include <tools/win32/CrashHandler.h>
 #pragma warning( push, 0 )
 #include <google/protobuf/message.h>
 #pragma warning( pop )
-#include <xeumeuleu/xml.hpp>
 
 namespace
 {
@@ -55,11 +53,7 @@ namespace
         {
             MT_LOG_FATAL_ERROR_MSG( e.CreateLoggerMsg() );
         }
-        catch( const xml::exception& e )
-        {
-            MT_LOG_FATAL_ERROR_MSG( tools::GetExceptionMsg( e ) );
-        }
-        catch( const tools::Exception& e )
+        catch( const std::exception& e )
         {
             MT_LOG_FATAL_ERROR_MSG( tools::GetStackTraceAndMessage( e ) );
         }
