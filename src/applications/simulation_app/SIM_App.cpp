@@ -50,11 +50,12 @@ void SIM_App::RunDispatcher()
     {
         dispatcher::DispatcherLoader loader( arguments_->Argc(),
             const_cast< char** >( arguments_->Argv() ), maxConnections_ );
-        while( !quit_->Wait( boost::posix_time::milliseconds( 25 ) ) )
+        do
         {
             if( !loader.Update() )
                 throw MASA_EXCEPTION( "An error occured in dispatcher, see dispatcher.log for more information" );
         }
+        while( !quit_->Wait( boost::posix_time::milliseconds( 25 ) ) );
     }
     catch( const std::exception& e )
     {
