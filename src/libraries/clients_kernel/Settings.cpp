@@ -102,54 +102,6 @@ QStringList Settings::SubEntriesList( const char* path )
     return subkeyList( path );
 }
 
-// -----------------------------------------------------------------------------
-// Name: Settings::WriteEntry
-// Created: APE 2004-06-01
-// -----------------------------------------------------------------------------
-void Settings::WriteMainWindowEntries( const QString& field, QWidget& widget )
-{
-    beginGroup( field );
-    writeEntry( "/width", widget.width() );
-    writeEntry( "/height", widget.height() );
-    writeEntry( "/x", widget.x() );
-    writeEntry( "/y", widget.y() );
-    writeEntry( "/visible", widget.isVisible() );
-    endGroup();
-}
-
-// -----------------------------------------------------------------------------
-// Name: Settings::RemoveEntry
-// Created: ABR 2011-05-27
-// -----------------------------------------------------------------------------
-void Settings::RemoveMainWindowEntries( const QString& field )
-{
-    beginGroup( field );
-    removeEntry( "/width" );
-    removeEntry( "/height" );
-    removeEntry( "/x" );
-    removeEntry( "/y" );
-    removeEntry( "/visible" );
-    endGroup();
-}
-
-// -----------------------------------------------------------------------------
-// Name: Settings::ReadEntry
-// Created: APE 2004-06-01
-// -----------------------------------------------------------------------------
-void Settings::ReadEntry( const QString& field, QWidget& widget, int nW, int nH, int nX, int nY, bool bVisible )
-{
-    beginGroup( field );
-    widget.resize( readNumEntry( "/width", nW ), readNumEntry( "/height", nH ) );
-    QPoint pos( readNumEntry( "/x", nX ), readNumEntry( "/y", nY ) );
-    if( QApplication::desktop()->screenNumber( pos ) != -1 )
-        widget.move( pos );
-    if( readBoolEntry( "/visible", bVisible ) )
-        widget.show();
-    else
-        widget.hide();
-    endGroup();
-}
-
 namespace
 {
     std::string AddType( const std::string& path, const char type )

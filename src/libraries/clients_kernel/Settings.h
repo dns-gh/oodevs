@@ -75,13 +75,6 @@ public:
     template< typename T >
     T Load( const std::string&, T defaultValue ) { return defaultValue; };
     //@}
-
-    //! @name Operations
-    //@{
-    void WriteMainWindowEntries( const QString& field, QWidget& widget );
-    void RemoveMainWindowEntries( const QString& field );
-    void ReadEntry( const QString& field, QWidget& widget, int nW, int nH, int nX, int nY, bool bVisible );
-    //@}
 };
 
 } //! namespace kernel
