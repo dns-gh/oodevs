@@ -14,6 +14,7 @@ import (
 	. "launchpad.net/gocheck"
 	"masa/sword/swapi"
 	"masa/sword/sword"
+	"masa/sword/swtest"
 	"masa/timeline/sdk"
 	"masa/timeline/services"
 	"masa/timeline/util"
@@ -123,7 +124,9 @@ func (f *Fixture) applyFilters(c *C, cfg services.EventFilterConfig, count int) 
 	// test filters on ReadEvents
 	events, err := f.controller.ReadEvents(f.session, cfg)
 	c.Assert(err, IsNil)
-	c.Assert(events, HasLen, count)
+	if len(events) != count {
+		c.Fatal(count, " != len of ", swtest.Stringify(events))
+	}
 	// test filters on observers
 	link, err := f.controller.RegisterObserver(f.session, cfg)
 	c.Assert(err, IsNil)
@@ -167,8 +170,14 @@ func (t *TestSuite) TestFilters(c *C) {
 		ReadOnlyCrowds: swapi.MakeIdList(1),
 		Supervisor:     proto.Bool(false),
 	})
+	f.server.CreateProfile(&sword.Profile{
+		Login:               proto.String("f1_read_f3_write"),
+		ReadOnlyFormations:  swapi.MakeIdList(1),
+		ReadWriteFormations: swapi.MakeIdList(3),
+		Supervisor:          proto.Bool(false),
+	})
 	f.sword.WaitFor(func(d *swapi.ModelData) bool {
-		return len(d.Profiles) == 5
+		return len(d.Profiles) == 6
 	})
 
 	// abuse wait command to create hierarchy
@@ -251,8 +260,25 @@ func (t *TestSuite) TestFilters(c *C) {
 		"sword_profile": "party_1_only",
 	}, 16+1)
 	f.applyFilters(c, services.EventFilterConfig{
+		"sword_profile": "f1_read_f3_write",
+	}, 11+1)
+	f.applyFilters(c, services.EventFilterConfig{
 		"sword_profile": "crowd_1_only",
 	}, 2+1)
+
+	// test sword_write_only
+	f.applyFilters(c, services.EventFilterConfig{
+		"sword_profile":    "party_1_only",
+		"sword_write_only": true,
+	}, 0+1)
+	f.applyFilters(c, services.EventFilterConfig{
+		"sword_profile":    "f1_read_f3_write",
+		"sword_write_only": true,
+	}, 3+1)
+	f.applyFilters(c, services.EventFilterConfig{
+		"sword_profile":    "f1_read_f3_write",
+		"sword_write_only": false,
+	}, 11+1)
 
 	// test sword_filter
 	f.applyFilters(c, parseFilters(c,

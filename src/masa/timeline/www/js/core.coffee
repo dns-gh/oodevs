@@ -4,6 +4,18 @@
 # Copyright (c) 2013 Mathématiques Appliquées SA (MASA)
 # *****************************************************************************
 
+# transform <input> query into key/value object
+deparam = (input) ->
+    tokenizer = /([^&;=]+)=?([^&;]*)/g
+    decoder = (v) -> decodeURIComponent v.replace /\+/g, " "
+    params = {}
+    while token = tokenizer.exec input
+        key = decoder token[1]
+        continue unless key?.length
+        value = decoder token[2]
+        params[key] = if value?.length then value else null
+    return params
+
 # precompiled handlebar templates
 error_template = null
 event_template = null
@@ -14,25 +26,22 @@ triggers = null
 # gaming object, only defined when used inside gaming
 gaming = window.gaming
 # url parameters
-url_query = null
+url_query = deparam window.location.search.substring 1
 lang = "en"
-vertical = true
 
 # initialize function called when all scripts have been loaded
-@init = ->
+render_page = ->
     $.ajaxSetup cache: false # disable cache on IE
+    unless url_query.id?
+        return redirect()
+    if url_query.lang?
+        lang = url_query.lang
+    moment.lang(lang)
     error_template = Handlebars.compile $("#error_template").html()
     event_template = Handlebars.compile $("#event_template").html()
     tick_template  = Handlebars.compile $("#tick_template").html()
     event_settings_template = Handlebars.compile $("#event_settings_template").html()
     triggers = new Triggers()
-    url_query = parse_parameters()
-    if url_query.lang?
-        lang = url_query.lang
-    vertical = !convert_to_boolean url_query.horizontal
-    moment.lang(lang)
-    unless url_query.id?
-        return redirect()
     $("#session_container").show()
     if gaming?.enabled
         $(".top_bar, .sub_bar .btn-group").hide()
@@ -53,22 +62,6 @@ i18n = (source) ->
                         return message.Translation.Text
                     return source
     return source
-
-# transform <input> query into key/value object
-deparam = (input) ->
-    tokenizer = /([^&;=]+)=?([^&;]*)/g
-    decoder = (v) -> decodeURIComponent v.replace /\+/g, " "
-    params = {}
-    while token = tokenizer.exec input
-        key = decoder token[1]
-        continue unless key?.length
-        value = decoder token[2]
-        params[key] = if value?.length then value else null
-    return params
-
-# return url query parameters
-parse_parameters = ->
-    return deparam window.location.search.substring 1
 
 # convert any <value> to boolean
 convert_to_boolean = (value) ->
@@ -100,6 +93,7 @@ query_filters = [
     "sword_filter"
     "sword_filter_engaged"
     "sword_profile"
+    "sword_write_only"
 ]
 
 get_filters = ->
@@ -552,7 +546,7 @@ class EventsView extends Backbone.View
         for k, v of url_query
             unless v?.length
                 delete url_query[k]
-        window.location.search = "?" + $.param url_query
+        triggers.trigger "reset_link"
         return
 
 # a backbone model for one session
@@ -588,8 +582,10 @@ class SessionView extends Backbone.View
 
     initialize: (options) ->
         @id = options.id
+        @retry = 0
         @model = new Session {}, id: options.id
         events = new Events {}, id: options.id
+        vertical = !convert_to_boolean url_query.horizontal
         @timeline = new Timeline vertical, events
         @throttler = new EventThrottler @model, events, @timeline
         @events_view = new EventsView id: options.id, timeline: @timeline, model: events
@@ -601,6 +597,7 @@ class SessionView extends Backbone.View
         @listenTo     @timeline, "current_edit_end",   @on_current_edit_end
         @listenTo     triggers,  "lock_updates",       @on_lock
         @listenTo     triggers,  "unlock_updates",     @on_unlock
+        @listenTo     triggers,  "reset_link",         @on_reset_link
         @model.fetch()
         @observe()
         return
@@ -657,8 +654,13 @@ class SessionView extends Backbone.View
         delete @locked
         @observe()
 
+    on_reset_link: =>
+        @on_lock()
+        @timeline.set_layout !convert_to_boolean url_query.horizontal
+        @on_unlock()
+
     observe: ->
-        return if @locked?
+        return if @locked? || @link?
         @first_update = true
         url = get_ws_url "/socket/#{@id}"
         query = get_filters()
@@ -668,9 +670,12 @@ class SessionView extends Backbone.View
         @link.onclose = @on_ws_close
 
     on_ws_close: (event) =>
-        @observe()
+        @retry++
+        @retry = 60 if @retry > 60
+        setTimeout @observe, (@retry - 1) * 1000
 
     on_ws_message: (event) =>
+        @retry = 0
         msg = JSON.parse event.data
         switch msg.tag
             when "update_session"
@@ -706,10 +711,13 @@ redirect = ->
        success: (model, data) ->
            if _.isArray(data) && data.length > 0
                url_query.id = data[0].uuid
-               window.location.search = "?" + $.param url_query
+               if gaming
+                   render_page()
+               else
+                   window.location.search = "?" + $.param url_query
                return
            on_error i18n "Unable to find any session"
        error: ->
            on_error i18n "Network error"
 
-@init()
+render_page()

@@ -209,6 +209,15 @@ func (s *Sword) addProfileFilter(dst *[]EventFilter, data *swapi.ModelData, conf
 	if !ok {
 		return
 	}
+	if writeOnly, ok := config["sword_write_only"].(bool); ok && writeOnly {
+		clone := &swapi.Profile{}
+		swapi.DeepCopy(clone, profile)
+		profile = clone
+		profile.ReadOnlyFormations = map[uint32]struct{}{}
+		profile.ReadOnlyAutomats = map[uint32]struct{}{}
+		profile.ReadOnlyParties = map[uint32]struct{}{}
+		profile.ReadOnlyCrowds = map[uint32]struct{}{}
+	}
 	*dst = append(*dst, func(event *sdk.Event) bool {
 		return s.filterProfile(data, profile, Ids{}, Ids{}, event) ||
 			s.filterMetadata(data, profile, Ids{}, Ids{}, event)

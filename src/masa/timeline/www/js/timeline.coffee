@@ -193,17 +193,16 @@ class VerticalLayout
         x1 = imin @get_replay_x() + 1, x2
         return @render_current x1, offset, x2
 
-    split_attributes: (end) ->
+    split_attributes: (h, end) ->
         offset = snap_to_grid end
-        return x1: offset, x2: offset
+        return y1: 0, y2: h, x1: offset, x2: offset
 
-    lane_split_attributes: -> @split_attributes @get_link_x()
-
-    replay_split_attributes: -> @split_attributes @get_lane_x()
-
-    split_size: (w, h) -> y2: h
+    lane_split_attributes:   (w, h) -> @split_attributes h, @get_link_x()
+    replay_split_attributes: (w, h) -> @split_attributes h, @get_lane_x()
 
     select: (w, h) -> h
+
+    select_both: (w, h) -> [h, w]
 
     lane_attributes: ->
         w = @t.lane_size - 1
@@ -481,17 +480,16 @@ class HorizontalLayout
         y2 = imax y1, @top_y @get_replay_y() + @iftop 1, 0
         return @render_current offset, y1, y2
 
-    split_attributes: (end) ->
+    split_attributes: (w, end) ->
         offset = snap_to_grid @top_y end
-        return y1: offset, y2: offset
+        return x1: 0, x2: w, y1: offset, y2: offset
 
-    lane_split_attributes: -> @split_attributes @get_link_y()
-
-    replay_split_attributes: -> @split_attributes @get_lane_y()
-
-    split_size: (w, h) -> x2: w
+    lane_split_attributes:   (w, h) -> @split_attributes w, @get_link_y()
+    replay_split_attributes: (w, h) -> @split_attributes w, @get_lane_y()
 
     select: (w, h) -> w
+
+    select_both: (w, h) -> [w, h]
 
     lane_attributes: ->
         h = @t.lane_size - 1
@@ -706,9 +704,8 @@ class TickView extends Backbone.View
 
 class Replay
 
-    constructor: (layout, svg) ->
+    constructor: (svg) ->
         @has_replay = false
-        @layout = layout
         @replay_split = svg.append("line")
             .attr(id: "replay_splitter")
             .classed("splitter", true)
@@ -718,9 +715,8 @@ class Replay
 
     size: -> if @has_replay then 25 else 0
 
-    resize: (w, h) ->
-        @replay_split.attr @layout.split_size w, h
-        @replay_range.attr @layout.split_size w, h
+    set_layout: (layout) ->
+        @layout = layout
 
     set_replay: (enabled) ->
         @has_replay = enabled
@@ -729,10 +725,13 @@ class Replay
         @start = start
         @end = end
 
+    resize: (w, h) ->
+        @w = w
+        @h = h
+
     render: ->
-        split_attributes = @layout.replay_split_attributes()
+        split_attributes = @layout.replay_split_attributes @w, @h
         split_attributes.visibility = @has_replay
-        @replay_split.attr split_attributes
         range_attributes = {}
         if @start? and @end? and @has_replay
             range_attributes = @layout.replay_range_attributes @start, @end
@@ -751,10 +750,6 @@ class Timeline
         @lane_size = 88
         lane = history_get().lane
         @lane_size = 0 | lane if lane?
-        if vertical
-            @layout = new VerticalLayout this
-        else
-            @layout = new HorizontalLayout this
         @model = model
         _.extend @, Backbone.Events
         @listenTo triggers, "check_cluster", @on_check
@@ -764,13 +759,11 @@ class Timeline
             .attr class: "screen"
         @scale = d3.time.scale.utc()
         @axis = d3.svg.axis()
-            .orient(@layout.orientation())
             .tickPadding(8)
             .tickSize(8)
             .tickFormat("") # disable svg text ticks
         @ticks = new TickList()
         @grid = d3.svg.axis()
-            .orient(@layout.orientation())
             .ticks(20)
             .tickPadding(0)
         @zoom = d3.behavior.zoom().on "zoom", @on_zoom
@@ -783,19 +776,30 @@ class Timeline
         @svg.append("path").attr class: "current"
         @svg.append("g").attr id: "links"
         @svg.append("g").attr id: "lanes"
-        @replay = new Replay @layout, @svg
+        @replay = new Replay @svg
         @lane_split = @svg.append("line")
             .attr(id: "lane_splitter")
             .classed("splitter", true)
-            .style(cursor: @layout.select "ns-resize", "ew-resize")
-            .call(d3.behavior.drag()
-                .on("dragstart", @lane_split_edit_start)
-                .on("drag",      @lane_split_edit_move)
-                .on("dragend",   @lane_split_edit_end))
         @lane_colors = d3.scale.category20()
         @curline = @svg.selectAll ".current"
         d3.select(@id).append("div").attr id: "nodes"
         d3.select(@id).append("div").attr id: "ticks"
+        @set_layout vertical
+
+    set_layout: (vertical) =>
+        if vertical
+            @layout = new VerticalLayout this
+        else
+            @layout = new HorizontalLayout this
+        @axis.orient @layout.orientation()
+        @grid.orient @layout.orientation()
+        @replay.set_layout @layout
+        @lane_split.style
+                cursor: @layout.select "ns-resize", "ew-resize"
+            .call(d3.behavior.drag()
+                .on("dragstart", @lane_split_edit_start)
+                .on("drag",      @lane_split_edit_move)
+                .on("dragend",   @lane_split_edit_end))
         @on_resize()
 
     # update svg rect & scale on window resizes
@@ -805,7 +809,6 @@ class Timeline
         @set_width @w
         @svg.attr height: @h
         @scale.range [0, @layout.select @w, @h]
-        @lane_split.attr @layout.split_size @w, @h
         @replay.resize @w, @h
         @rescale()
 
@@ -892,7 +895,7 @@ class Timeline
         lanes = @svg.select("#lanes").selectAll(".lane")
             .data(data, (d) -> d.id)
         that = this
-        placement = @layout.lane_orientation()
+        placement = => @layout.lane_orientation()
         lanes.enter()
             .append("rect")
             .each((d) ->
@@ -1289,7 +1292,7 @@ class Timeline
         grid = @svg.select("#grid")
         grid.call @grid
         grid.attr @layout.grid_attributes()
-        @lane_split.attr @layout.lane_split_attributes()
+        @lane_split.attr @layout.lane_split_attributes @w, @h
         zoom = @svg.call @zoom
         zoom.on "dblclick.zoom", null
         @replay.render()
@@ -1302,8 +1305,9 @@ class Timeline
     rescale: ->
         @axis.scale @scale
         @grid.scale @scale
-        zoom = @layout.select @zoom.x, @zoom.y
-        zoom @scale
+        zooms = @layout.select_both @zoom.x, @zoom.y
+        zooms[0] @scale
+        zooms[1] d3.scale.identity()
         @render()
 
     get_scale_extent: (extent) ->

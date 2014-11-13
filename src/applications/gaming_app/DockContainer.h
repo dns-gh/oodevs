@@ -55,7 +55,6 @@ class ProfilingPanel;
 class ProfileFilter;
 class Simulation;
 class StaticModel;
-class TimelineDockWidget;
 class SimulationController;
 class UnitStateDialog;
 class WeatherLayer;
@@ -122,7 +121,6 @@ private:
     AfterAction* afterAction_;
     ProfilingPanel* profilingPanel_;
     gui::TerrainProfiler* terrainProfiler_;
-    TimelineDockWidget* timelineDockWidget_;
     EventDockWidget* eventDockWidget_;
     ItineraryEditionDockWidget* itineraryDockWidget_;
     //@}
