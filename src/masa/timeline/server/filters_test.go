@@ -503,6 +503,23 @@ func (t *TestSuite) TestFiltersOnMagicActions(c *C) {
 	f.applyFilters(c, parseFilters(c,
 		"sword_profile", "supervisor",
 	), 10+1)
+	// combine profile & read_only
+	f.applyFilters(c, parseFilters(c,
+		"sword_profile", "party_1_only",
+		"sword_read_only", "false",
+	), 0+1)
+	f.applyFilters(c, parseFilters(c,
+		"sword_profile", "party_2_only",
+		"sword_read_only", "false",
+	), 0+1)
+	f.applyFilters(c, parseFilters(c,
+		"sword_profile", "party_1_supervisor",
+		"sword_read_only", "false",
+	), 9+1)
+	f.applyFilters(c, parseFilters(c,
+		"sword_profile", "supervisor",
+		"sword_read_only", "false",
+	), 10+1)
 	// combine both profile & custom profile
 	f.applyFilters(c, parseFilters(c,
 		"sword_profile", "party_1_supervisor",
