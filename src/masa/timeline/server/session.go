@@ -31,6 +31,7 @@ var (
 )
 
 type EventListener interface {
+	CheckEvent(event *sdk.Event) error
 	UpdateEncodedEvents(events EventSlice, encoded []*sdk.Event)
 	DeleteEvents(events ...string)
 }
@@ -265,6 +266,16 @@ func (s *Session) stopServices() error {
 	return nil
 }
 
+func (s EventListeners) CheckEvent(event *sdk.Event) error {
+	for _, listener := range s {
+		err := listener.CheckEvent(event)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
 func (s EventListeners) UpdateEncodedEvents(events EventSlice, encoded []*sdk.Event) {
 	for _, listener := range s {
 		listener.UpdateEncodedEvents(events, encoded)
@@ -407,6 +418,10 @@ func makeUpdate(event *Event) (EventSlice, []*sdk.Event) {
 }
 
 func (s *Session) CreateEvent(uuid string, msg *sdk.Event) (*sdk.Event, error) {
+	err := s.listeners.CheckEvent(msg)
+	if err != nil {
+		return nil, err
+	}
 	event, err := NewEvent(msg, s.events)
 	if err != nil {
 		return nil, err
@@ -424,6 +439,10 @@ func (s *Session) UpdateEvent(uuid string, msg *sdk.Event) (*sdk.Event, error) {
 	event := s.events.Find(uuid)
 	if event == nil {
 		return s.CreateEvent(uuid, msg)
+	}
+	err := s.listeners.CheckEvent(msg)
+	if err != nil {
+		return nil, err
 	}
 	modified, triggered, children, err := event.Update(msg, s.tick, s.events)
 	if err != nil {
@@ -521,6 +540,10 @@ func (f *FilteredObserver) update(events EventSlice, encoded []*sdk.Event, reset
 
 func (f *FilteredObserver) UpdateEncodedEvents(events EventSlice, encoded []*sdk.Event) {
 	f.update(events, encoded, false)
+}
+
+func (f *FilteredObserver) CheckEvent(event *sdk.Event) error {
+	return nil
 }
 
 func (f *FilteredObserver) UpdateTick(tick time.Time) {

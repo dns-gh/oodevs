@@ -42,7 +42,8 @@ type Service interface {
 }
 
 type EventListener interface {
-	UpdateEvents(events ...*sdk.Event) // create & update are merged
+	CheckEvent(event *sdk.Event) error  // validate event upon creation or update
+	UpdateEvents(events ...*sdk.Event)  // create & update are merged
 	DeleteEvents(events ...string)
 }
 

@@ -19,8 +19,13 @@ import (
 	"masa/sword/sword"
 	"masa/timeline/sdk"
 	"masa/timeline/util"
+	"net/http"
 	"net/url"
 	"time"
+)
+
+var (
+	ErrInvalidReplayEventParameter = util.NewError(http.StatusBadRequest, "invalid replay parameter")
 )
 
 type SwordStatus int
@@ -80,6 +85,7 @@ type Sword struct {
 	services  SwordServices                 // published sword services (like replay/simulation/aar)
 	startTime time.Time                     // exercise start date
 	endTime   time.Time                     // exercise end date
+	replays   []*sdk.Event                  // replay events list
 }
 
 func NewSword(log util.Logger, clock bool, name, address string) *Sword {
@@ -94,6 +100,7 @@ func NewSword(log util.Logger, clock bool, name, address string) *Sword {
 		orders:   Ids{},
 		actions:  Ids{},
 		services: SwordServices{},
+		replays:  []*sdk.Event{},
 	}
 }
 
@@ -386,16 +393,16 @@ func (s *Sword) closeAction(link *SwordLink, id string, err error) {
 	s.observer.CloseEvent(id, err, action.lock)
 }
 
-func isSwordEvent(event *sdk.Event) bool {
+func isSwordEvent(event *sdk.Event, scheme string, checkPayload bool) bool {
 	action := event.GetAction()
 	url, err := url.Parse(action.GetTarget())
 	if err != nil {
 		return false
 	}
-	if url.Scheme != "sword" {
+	if url.Scheme != scheme {
 		return false
 	}
-	return len(action.GetPayload()) > 0
+	return !checkPayload || checkPayload && len(action.GetPayload()) > 0
 }
 
 func (s *Sword) cacheEvent(event *sdk.Event, overwrite bool) *swapi.SwordMessage {
@@ -405,7 +412,7 @@ func (s *Sword) cacheEvent(event *sdk.Event, overwrite bool) *swapi.SwordMessage
 			return &msg
 		}
 	}
-	if !isSwordEvent(event) {
+	if !isSwordEvent(event, "sword", true) {
 		return nil
 	}
 	msg := swapi.SwordMessage{}
@@ -420,8 +427,147 @@ func (s *Sword) cacheEvent(event *sdk.Event, overwrite bool) *swapi.SwordMessage
 	return &msg
 }
 
+func checkTime(parameter string, replayBegin, replayEnd time.Time) (eventTime time.Time, err error) {
+	eventTime, err = util.ParseTime(parameter)
+	if err != nil || eventTime.Before(replayBegin) || eventTime.After(replayEnd) {
+		err = ErrInvalidReplayEventParameter
+	}
+	return
+}
+
+func checkBoundaries(event *sdk.Event, replayBegin, replayEnd time.Time) (begin, end time.Time, err error) {
+	begin, err = checkTime(event.GetBegin(), replayBegin, replayEnd)
+	if err != nil {
+		return
+	}
+	end, err = checkTime(event.GetEnd(), replayBegin, replayEnd)
+	return
+}
+
+func copyEvent(event *sdk.Event) *sdk.Event {
+	copy := &sdk.Event{}
+	swapi.DeepCopy(copy, event)
+	return copy
+}
+
+func (s *Sword) updateReplay(event *sdk.Event) error {
+	// check if the event has replay protocol
+	if !isSwordEvent(event, "replay", false) {
+		return nil
+	}
+	eventBegin, eventEnd, err := checkBoundaries(event, s.startTime, s.endTime)
+	if err != nil {
+		return err
+	}
+	// add first replay event
+	if len(s.replays) == 0 {
+		s.replays = append(s.replays, copyEvent(event))
+		return nil
+	}
+	// modifying replay event, filling all gaps
+	for index, replay := range s.replays {
+		if event.GetUuid() == replay.GetUuid() {
+			if event.GetBegin() != replay.GetBegin() && index > 0 {
+				s.replays[index-1].End = event.Begin
+				s.observer.UpdateEvent(s.replays[index-1].GetUuid(), s.replays[index-1])
+			} else if event.GetEnd() != replay.GetEnd() && index < len(s.replays)-1 {
+				s.replays[index+1].Begin = event.End
+				s.observer.UpdateEvent(s.replays[index+1].GetUuid(), s.replays[index+1])
+			}
+			s.replays[index] = copyEvent(event)
+			return nil
+		}
+	}
+	// splitting and creating a new replay event, filling all gaps
+	replaysCopy := []*sdk.Event{}
+	for _, replay := range s.replays {
+		replayBegin, _ := util.ParseTime(replay.GetBegin())
+		replayEnd, _ := util.ParseTime(replay.GetEnd())
+		if replayEnd == eventEnd && replayBegin.Before(eventBegin) {
+			// the old event takes the first part of the split, the new event the second
+			replay.End = event.Begin
+			event.Name = replay.Name
+			event.Info = replay.Info
+			replaysCopy = append(replaysCopy, replay)
+			replaysCopy = append(replaysCopy, copyEvent(event))
+			s.observer.UpdateEvent(replay.GetUuid(), replay)
+		} else if replayBegin == eventBegin && replayEnd.After(eventEnd) {
+			// the old event takes the second part of the split, the new event the first
+			replay.Begin = event.End
+			event.Name = replay.Name
+			event.Info = replay.Info
+			replaysCopy = append(replaysCopy, event)
+			replaysCopy = append(replaysCopy, replay)
+			s.observer.UpdateEvent(replay.GetUuid(), replay)
+		} else {
+			replaysCopy = append(replaysCopy, replay)
+		}
+	}
+	s.replays = replaysCopy
+	return nil
+}
+
+func (s *Sword) CheckEvent(event *sdk.Event) error {
+	// First event replay creation requires no check
+	if len(s.replays) == 0 {
+		return nil
+	}
+	// Checks if it is a replay event creation
+	if !isSwordEvent(event, "replay", false) {
+		return nil
+	}
+	// Cannot modify event outside replay boundaries
+	eventBegin, eventEnd, err := checkBoundaries(event, s.startTime, s.endTime)
+	if err != nil {
+		return err
+	}
+	// Cannot modify event with invalid range
+	if eventBegin == eventEnd || eventBegin.After(eventEnd) {
+		return ErrInvalidReplayEventParameter
+	}
+	// Checks event modifier
+	for index, replay := range s.replays {
+		if event.GetUuid() == replay.GetUuid() {
+			// Cannot modify both begin and end boundaries
+			if replay.GetBegin() != event.GetBegin() && replay.GetEnd() != event.GetEnd() {
+				return ErrInvalidReplayEventParameter
+			}
+			// Cannot create gap between events and replay boundaries
+			if index == 0 && eventBegin.After(s.startTime) || index == len(s.replays)-1 && eventEnd.Before(s.endTime) {
+				return ErrInvalidReplayEventParameter
+			}
+			// Cannot overlap more than one event
+			if index > 0 {
+				previousReplay, _ := util.ParseTime(s.replays[index-1].GetBegin())
+				if previousReplay.After(eventBegin) {
+					return ErrInvalidReplayEventParameter
+				}
+			}
+			if index < len(s.replays)-1 {
+				nextEnd, _ := util.ParseTime(s.replays[index+1].GetEnd())
+				if nextEnd.Before(eventEnd) {
+					return ErrInvalidReplayEventParameter
+				}
+			}
+			return nil
+		}
+	}
+	// Checks new replay event (see it like a split of an existing replay event)
+	for _, replay := range s.replays {
+		replayBegin, _ := util.ParseTime(replay.GetBegin())
+		replayEnd, _ := util.ParseTime(replay.GetEnd())
+		// Checks the split, the new event takes a part and the old event the other
+		if replayBegin == eventBegin && replayEnd.After(eventEnd) || replayEnd == eventEnd && replayBegin.Before(eventBegin) {
+			return nil
+		}
+	}
+	// If there is no valid modification or no valid creation, it's an error
+	return ErrInvalidReplayEventParameter
+}
+
 func (s *Sword) UpdateEvents(events ...*sdk.Event) {
 	for _, event := range events {
+		s.updateReplay(event)
 		s.cacheEvent(event, true)
 		s.cacheMetadata(event, true)
 	}
