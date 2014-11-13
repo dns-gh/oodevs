@@ -195,8 +195,7 @@ void SpawnCommand::Start()
     if( !private_->working.IsEmpty() )
         private_->process->setWorkingDirectory( QString::fromStdWString( private_->working.ToUnicode() ) );
     private_->process->start( QString::fromStdWString( private_->exe.ToUnicode() ), private_->arguments );
-    const bool done = private_->process->waitForStarted();
-    if( done )
+    if( private_->process->waitForStarted() )
         return;
     const int exit = private_->process->exitCode();
     private_->process.reset();
