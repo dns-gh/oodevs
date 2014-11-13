@@ -17,11 +17,9 @@
 #include "simulation_terrain/TER_Logger.h"
 #include <license_gui/LicenseDialog.h>
 #include <tools/win32/FlexLm.h>
-#include <tools/win32/CrashHandler.h>
 #pragma warning( push, 0 )
 #include <google/protobuf/message.h>
 #pragma warning( pop )
-#include <xeumeuleu/xml.hpp>
 
 namespace
 {
@@ -31,9 +29,9 @@ namespace
         int result = EXIT_FAILURE;
         try
         {
-            const bool verbose = winArgs.HasOption( "--verbose" );
             int maxConnections = 0;
     #if !defined( _DEBUG ) && ! defined( NO_LICENSE_CHECK )
+            const bool verbose = winArgs.HasOption( "--verbose" );
             license_gui::LicenseDialog::CheckLicense( "sword-runtime", !verbose );
             try
             {
@@ -44,22 +42,18 @@ namespace
             {
                 maxConnections = 1;
             }
+    #else
+            (void)winArgs;
     #endif
             GOOGLE_PROTOBUF_VERIFY_VERSION;
-            HINSTANCE hInstance = GetModuleHandle( NULL );
-            HINSTANCE prevInstance = GetModuleHandle( NULL );
-            app.reset( new SIM_App( hInstance, prevInstance, GetCommandLineW(), 0, maxConnections, verbose ) );
+            app.reset( new SIM_App( maxConnections ) );
             result = app->Execute();
         }
         catch( const FlexLmLicense::LicenseError& e )
         {
             MT_LOG_FATAL_ERROR_MSG( e.CreateLoggerMsg() );
         }
-        catch( const xml::exception& e )
-        {
-            MT_LOG_FATAL_ERROR_MSG( tools::GetExceptionMsg( e ) );
-        }
-        catch( const tools::Exception& e )
+        catch( const std::exception& e )
         {
             MT_LOG_FATAL_ERROR_MSG( tools::GetStackTraceAndMessage( e ) );
         }

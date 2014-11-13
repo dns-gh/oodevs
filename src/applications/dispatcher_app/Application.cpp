@@ -22,7 +22,7 @@ Application::Application( int argc, char** argv, int maxConnections )
     : quit_( new tools::WaitEvent() )
 {
     MT_LOG_STARTUP_MESSAGE( "----------------------------------------------------------------" );
-    MT_LOG_STARTUP_MESSAGE( "Sword Officer Training Dispatcher" );
+    MT_LOG_STARTUP_MESSAGE( "Sword Dispatcher" );
     MT_LOG_STARTUP_MESSAGE( "----------------------------------------------------------------" );
     dispatcher_.reset( new dispatcher::DispatcherLoader( argc, argv, maxConnections ) );
 }
@@ -43,6 +43,8 @@ Application::~Application()
 void Application::Execute( bool test )
 {
     tools::ipc::Watch watch( *quit_ );
-    do{}
-    while( dispatcher_->Update() && !test && !quit_->Wait( boost::posix_time::milliseconds( 10 ) ) );
+    while( dispatcher_->Update()
+        && !test
+        && !quit_->Wait( boost::posix_time::milliseconds( 10 ) ) )
+        ;
 }

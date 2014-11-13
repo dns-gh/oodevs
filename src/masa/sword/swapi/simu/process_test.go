@@ -95,7 +95,8 @@ func (s *TestSuite) TestSuccess(c *C) {
 	// just check the exit status
 	c.Assert(sim, NotNil, Commentf("simulation failed to start: %v", err))
 
-	sim.Wait(60 * time.Second)
+	ok := sim.Wait(60 * time.Second)
+	c.Assert(ok, Equals, true)
 	c.Assert(sim.Success(), Equals, true)
 
 	err = CheckSessionErrors(opts.GetSessionDir(), nil)
@@ -152,7 +153,8 @@ func (s *TestSuite) TestRotatingLogs(c *C) {
 	opts.SessionName = filepath.Base(sessionDir)
 	sim, err := StartSim(opts)
 	defer stopSim(c, sim)
-	sim.Wait(60 * time.Second)
+	ok := sim.Wait(60 * time.Second)
+	c.Assert(ok, Equals, true)
 	c.Assert(sim.Success(), Equals, true)
 
 	// Check log files
@@ -208,11 +210,14 @@ func (s *TestSuite) TestTimeOptions(c *C) {
 		opts.SessionName = filepath.Base(sessionDir)
 		sim, err := StartSim(opts)
 		defer sim.Stop()
-		sim.Wait(60 * time.Second)
+		ok := sim.Wait(60 * time.Second)
+		c.Assert(ok, Equals, true)
 		c.Assert(sim.Success(), Equals, false)
 		dmps, err := ListDmpFiles(opts.DebugDir)
 		c.Assert(err, IsNil)
 		c.Assert(dmps, HasLen, 0)
+		err = CheckSessionErrors(opts.GetSessionDir(), nil)
+		c.Assert(err, IsNil)
 	}
 }
 
