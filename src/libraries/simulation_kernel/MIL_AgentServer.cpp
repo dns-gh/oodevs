@@ -219,7 +219,7 @@ MIL_AgentServer::MIL_AgentServer( MIL_Config& config )
     nTimeStepDuration_ = config_.GetTimeStep();
     nTimeFactor_ = config_.GetTimeFactor();
 
-    MT_LOG_INFO_MSG( "Initializing terrain" );
+    MT_LOG_INFO_MSG( "Physical: " << config_.GetPhysicalBase() );
     MT_LOG_INFO_MSG( "Terrain: " << config_.GetTerrainFile() );
     TER_World::Initialize( config_ );
     MT_LOG_INFO_MSG( MT_FormatString( "Terrain size (w x h): %.2fkm x %.2fkm",
