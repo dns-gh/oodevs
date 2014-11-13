@@ -181,8 +181,8 @@ void PHY_Speeds::CheckInitialization( xml::xistream& xis )
         MT_LOG_WARNING_MSG( "Speed for " << MIL_Tools::GetLandTypeName( TerrainData( 0, 0, 0, static_cast< unsigned short >( 1 << lastIndex ) ) ) << " not initialized. Defaulted to " <<  MIL_Tools::ConvertSpeedSimToMos( rLinearSpeeds_[ lastIndex ] ) << " km/h." );
 
     }
-    if( rMaxSpeed_ == 0. )
-        throw MASA_EXCEPTION( xis.context() + "Composante's max speed is 0 km/h ..." );
+    if( rMaxSpeed_ == 0 )
+        throw MASA_EXCEPTION( xis.context() + "Composante max speed is 0 km/h" );
 }
 
 // -----------------------------------------------------------------------------
