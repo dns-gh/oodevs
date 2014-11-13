@@ -237,7 +237,15 @@ bool PHY_MedicalCollectionAmbulance::DoSearchForDestinationArea()
     {   
         auto it = consigns_.begin();
         if( it != consigns_.end() )
-            pDestinationArea_ = pLogisticManager->MedicalFindAlternativeHealingHandler( const_cast< PHY_MedicalHumanState& > ((*it)->GetHumanState() ) );
+        {
+            pDestinationArea_ = pLogisticManager->MedicalFindAlternativeHealingHandler( ( *it )->GetHumanState() );
+            MIL_AutomateLOG* pSuperior = pLogisticSuperior;
+            while( pSuperior && !pDestinationArea_ )
+            {
+                pDestinationArea_ = pSuperior->MedicalFindAlternativeHealingHandler( ( *it )->GetHumanState() );
+                pSuperior = pSuperior->GetLogisticHierarchy().GetPrimarySuperior();
+            }
+        }
         if( !pDestinationArea_ && !pLogisticSuperior )
             return true; // $$$ Bof : pour sortir les human states qui ne seront jamais traités
     }
