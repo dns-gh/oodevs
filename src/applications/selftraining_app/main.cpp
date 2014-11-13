@@ -11,6 +11,7 @@
 #include "Application.h"
 #include "clients_gui/ApplicationMonitor.h"
 #include "clients_kernel/Tools.h"
+#include "frontend/SpawnCommand.h"
 #include "tools/WinArguments.h"
 #include "tools/Main.h"
 #include "MT_Tools/MT_Logger.h"
@@ -26,6 +27,7 @@ namespace
         try
         {
             Application app( monitor, argc, argv );
+            frontend::KillSubprocessUponTermination();
             return app.Run();
         }
         catch( const std::exception& e )
