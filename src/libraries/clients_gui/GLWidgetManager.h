@@ -63,7 +63,7 @@ public:
     //! @name Types
     //@{
     typedef std::shared_ptr< GLStackedWidget >                T_GLStackedWidget;
-    typedef std::unique_ptr< GLDockWidget >                   T_GLDockWidget;
+    typedef std::shared_ptr< GLDockWidget >                   T_GLDockWidget;
     typedef std::function< void( const T_GLStackedWidget& ) > T_GLObserver;
     typedef std::vector< T_GLObserver >                       T_GLObservers;
     //@}
@@ -114,7 +114,6 @@ signals:
     void MouseMove( const geometry::Point2f& );
     void MouseMove( const geometry::Point3f& );
     void UpdateGL();
-    void DockWidgetClosed();
     //@}
 
 private:
@@ -155,7 +154,7 @@ private:
     bool loading_;
     std::auto_ptr< QTimer > displayTimer_;
     T_GLStackedWidget mainWidget_;
-    std::vector< T_GLDockWidget > dockWidgets_;
+    std::map< unsigned, T_GLDockWidget > dockWidgets_;
     //@}
 };
 

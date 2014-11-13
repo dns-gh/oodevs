@@ -1004,10 +1004,6 @@ Porfavor revisar permisos de acceso o proteccion de escritura.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>The maximum number of terrain views has been reached.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>View %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1026,6 +1022,14 @@ Porfavor revisar permisos de acceso o proteccion de escritura.</translation>
     <message>
         <source>Unable to load configuration file &apos;%1&apos;.
 These settings are defined for the application &apos;%2&apos;, on the base &apos;%3&apos; and the exercise &apos;%4&apos;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unable to create a new terrain view, id already used: %1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unable to create a new terrain view, no id available.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
