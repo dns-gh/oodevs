@@ -1029,6 +1029,10 @@ These settings are defined for the application &apos;%2&apos;, on the base &apos
         <source>Unable to create a new terrain view, no id available.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Use as main view</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>gui::GisToolbar</name>

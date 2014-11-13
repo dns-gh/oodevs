@@ -10,9 +10,9 @@
 #ifndef gui_GLWidgetManager_h
 #define gui_GLWidgetManager_h
 
+#include "clients_kernel/ContextMenuObserver_ABC.h"
 #include "clients_kernel/OptionsObserver_ABC.h"
 #include <tools/ElementObserver_ABC.h>
-
 namespace kernel
 {
     class Controllers;
@@ -56,6 +56,7 @@ class GLWidgetManager : public QObject
                       , public tools::Observer_ABC
                       , public kernel::OptionsObserver_ABC
                       , public tools::ElementObserver_ABC< kernel::Filter_ABC >
+                      , public kernel::ContextMenuObserver_ABC< geometry::Point2f >
 {
     Q_OBJECT
 
@@ -106,6 +107,7 @@ public slots:
     void OnDockWidgetClosed( const QWidget& widget );
     void OnSaveDisplaySettings();
     void OnLoadDisplaySettings();
+    void OnChangeMainView();
     //@}
 
 signals:
@@ -119,8 +121,8 @@ signals:
 private:
     //! @name Observers implementation
     //@{
-    virtual void OptionChanged( const std::string& name,
-                                const kernel::OptionVariant& value );
+    virtual void NotifyContextMenu( const geometry::Point2f&, kernel::ContextMenu& );
+    virtual void OptionChanged( const std::string& name, const kernel::OptionVariant& value );
     virtual void NotifyUpdated( const kernel::Filter_ABC& filter );
     //@}
 
@@ -128,10 +130,11 @@ private:
     //@{
     T_GLStackedWidget CreateStackedWidget( const std::shared_ptr< GLView_ABC >& proxy ) const;
     void RemoveStackedWidget( const T_GLStackedWidget& view );
-    void SaveView( kernel::Settings& settings, const T_GLStackedWidget& view );
-    void LoadView( kernel::Settings& settings, const T_GLStackedWidget& view );
+    void SaveView( kernel::Settings& settings, const T_GLStackedWidget& view, const QString& group = "" );
+    void LoadView( kernel::Settings& settings, const T_GLStackedWidget& view, const QString& group = "" );
     void PurgeViews();
     void SetContourLinesComputer( int height, GLOptions& options );
+    T_GLStackedWidget GetActiveWidget() const;
     T_GLStackedWidget GetStackedWidget( const std::function< bool( const T_GLStackedWidget& ) >& functor,
                                         const std::string& error ) const;
     void ResetContourLinesObservers();

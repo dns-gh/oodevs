@@ -177,9 +177,7 @@ void GLWidgetManager::OptionChanged( const std::string& name,
         displayTimer_->start( value.To< int >() );
     else if( name == "3D" )
     {
-        auto activeWidget = GetStackedWidget( [&]( const T_GLStackedWidget& stackedWidget ) {
-            return stackedWidget->GetProxy().get() == &mainProxy_.GetActiveView();
-        }, "Unable to find the active view" );
+        auto activeWidget = GetActiveWidget();
         if( activeWidget && activeWidget->currentIndex() != GLStackedWidget::eWidget_Empty )
             activeWidget->ChangeTo( value.To< bool >() ? GLStackedWidget::eWidget_3D : GLStackedWidget::eWidget_2D );
     }
@@ -320,6 +318,17 @@ GLWidgetManager::T_GLStackedWidget GLWidgetManager::GetHoveredWidget() const
     return GetStackedWidget( [&]( const T_GLStackedWidget& widget ){
         return widget->GetProxy().get() == &mainProxy_.GetHoveredView();
     }, "Unable to find the hovered view" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: GLWidgetManager::GetActiveWidget
+// Created: ABR 2014-06-16
+// -----------------------------------------------------------------------------
+GLWidgetManager::T_GLStackedWidget GLWidgetManager::GetActiveWidget() const
+{
+    return GetStackedWidget( [ &]( const T_GLStackedWidget& widget ) {
+        return widget->GetProxy().get() == &mainProxy_.GetActiveView();
+    }, "Unable to find the active view" );
 }
 
 namespace
@@ -472,12 +481,13 @@ void GLWidgetManager::LoadDisplaySettings( const tools::Path& filename )
 // Created: ABR 2014-07-16
 // -----------------------------------------------------------------------------
 void GLWidgetManager::SaveView( kernel::Settings& settings,
-                                const T_GLStackedWidget& stackedWidget )
+                                const T_GLStackedWidget& stackedWidget,
+                                const QString& group /* = "" */ )
 {
     if( !stackedWidget )
         return;
     auto view = stackedWidget->GetProxy();
-    settings.beginGroup( viewName.arg( view->GetID() ) );
+    settings.beginGroup( group.isEmpty() ? viewName.arg( view->GetID() ) : group );
     settings.setValue( "ViewID", view->GetID() );
     settings.beginGroup( "Situation" );
     view->SaveFrustum().Save( settings );
@@ -491,13 +501,14 @@ void GLWidgetManager::SaveView( kernel::Settings& settings,
 // Created: ABR 2014-07-16
 // -----------------------------------------------------------------------------
 void GLWidgetManager::LoadView( kernel::Settings& settings,
-                                const T_GLStackedWidget& stackedWidget )
+                                const T_GLStackedWidget& stackedWidget,
+                                const QString& group /* = "" */ )
 {
     if( !stackedWidget )
         return;
     auto view = stackedWidget->GetProxy();
     auto& options = view->GetActiveOptions();
-    settings.beginGroup( viewName.arg( view->GetID() ) );
+    settings.beginGroup( group.isEmpty() ? viewName.arg( view->GetID() ) : group );
     options.Load( settings );
     stackedWidget->ChangeTo( options.Get( "3D" ).To< bool >() ? GLStackedWidget::eWidget_3D : GLStackedWidget::eWidget_2D );
     SetContourLinesComputer( options.Get( "ContourLines/Height" ).To< int >(), options );
@@ -526,4 +537,19 @@ void GLWidgetManager::ResetContourLinesObservers()
     mainProxy_.ApplyToOptions( []( GLOptions& options ) {
         options.GetContourLinesComputer()->SetContourLinesObserver( std::shared_ptr< ContourLinesObserver >() );
     } );
+}
+
+void GLWidgetManager::NotifyContextMenu( const geometry::Point2f&, kernel::ContextMenu& menu )
+{
+    if( mainWidget_ != GetActiveWidget() )
+        menu.InsertItem( "Interface", tr( "Use as main view" ), this, SLOT( OnChangeMainView() ) );
+}
+
+void GLWidgetManager::OnChangeMainView()
+{
+    auto activeWidget = GetActiveWidget();
+    kernel::Settings settings;
+    SaveView( settings, activeWidget, "TMP" );
+    LoadView( settings, mainWidget_, "TMP" );
+    settings.remove( "TMP" );
 }

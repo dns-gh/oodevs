@@ -1031,6 +1031,10 @@ Ces paramètres sont définis pour l&apos;application &apos;%2&apos;, pour la ba
         <source>Unable to create a new terrain view, id already used: %1.</source>
         <translation>Impossible de créer une nouvelle vue, id déjà utilisée: %1.</translation>
     </message>
+    <message>
+        <source>Use as main view</source>
+        <translation>Utiliser comme vue principale</translation>
+    </message>
 </context>
 <context>
     <name>gui::GisToolbar</name>
