@@ -23,7 +23,6 @@ MOCK_BASE_CLASS( MockAgent, MIL_Agent_ABC )
     explicit MockAgent( xml::xistream& xis ) : MIL_Agent_ABC( xis ) {}
     explicit MockAgent( const std::string& name = "" ) : MIL_Agent_ABC( name ) {}
 
-	MOCK_METHOD( GetKind, 0 );
     MOCK_METHOD( GetID, 0 );
     MOCK_METHOD( GetArmy, 0 );
     MOCK_METHOD( GetKnowledgeGroup, 0 );
