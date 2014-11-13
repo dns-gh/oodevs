@@ -3538,7 +3538,7 @@ Ces données ne peuvent pas être projetées.</translation>
     </message>
     <message>
         <source>Add children events</source>
-        <translation>Ajouter des évenements fils</translation>
+        <translation>Ajouter des évènements fils</translation>
     </message>
     <message>
         <source>Hide children</source>
@@ -3555,6 +3555,10 @@ Ces données ne peuvent pas être projetées.</translation>
     <message>
         <source>Filter on selected entity</source>
         <translation>Filtrer sur l&apos;entité sélectionnée</translation>
+    </message>
+    <message>
+        <source>Display events on read-only entities</source>
+        <translation>Afficher les évènements sur les entitées en lecture seule</translation>
     </message>
 </context>
 <context>

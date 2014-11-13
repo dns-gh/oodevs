@@ -3551,6 +3551,10 @@ Los datos no pueden ser proyectados.</translation>
         <source>Filter on selected entity</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Display events on read-only entities</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>TimelineWebView</name>

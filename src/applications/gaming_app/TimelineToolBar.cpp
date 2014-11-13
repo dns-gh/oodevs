@@ -35,6 +35,7 @@ TimelineToolBar::TimelineToolBar( kernel::Controllers& controllers,
     , gamingUuid_( gamingUuid )
     , filters_( tr( "All timeline files (*.ord *.timeline)" ) )
     , displayEngaged_( false )
+    , displayReadOnly_( true )
     , displayOrders_( true )
     , displayTasks_( true )
     , displaySelected_( false )
@@ -56,6 +57,7 @@ TimelineToolBar::TimelineToolBar( const TimelineToolBar& other )
     , entityFilter_( other.entityFilter_ )
     , filters_( other.filters_ )
     , displayEngaged_( other.displayEngaged_ )
+    , displayReadOnly_( other.displayReadOnly_ )
     , displayOrders_( other.displayOrders_ )
     , displayTasks_( other.displayTasks_ )
     , displaySelected_( other.displaySelected_ )
@@ -122,12 +124,17 @@ void TimelineToolBar::Initialize()
     selectedFilter->setCheckable( true );
     selectedFilter->setChecked( displaySelected_ );
 
+    QAction* readOnlyFilter = new QAction( tr( "Display events on read-only entities" ), this );
+    connect( readOnlyFilter, SIGNAL( toggled( bool ) ), this, SLOT( OnReadOnlyFilterToggled( bool ) ) );
+    readOnlyFilter->setCheckable( true );
+    readOnlyFilter->setChecked( displayReadOnly_ );
+
     filterMenu_->addAction( orderFilter );
     filterMenu_->addAction( engagedFilter_ );
-    filterMenu_->addSeparator();
     filterMenu_->addAction( taskFilter );
     filterMenu_->addSeparator();
     filterMenu_->addAction( selectedFilter );
+    filterMenu_->addAction( readOnlyFilter );
 
     if( !main_ )
         addAction( qApp->style()->standardIcon( QStyle::SP_DialogCancelButton ), tr( "Remove current view" ), this, SIGNAL( RemoveCurrentView() ) );
@@ -185,6 +192,12 @@ void TimelineToolBar::OnEngagedFilterToggled( bool checked )
 {
     displayEngaged_ = checked;
     emit EngagedFilterToggled( GetEngagedFilter() );
+}
+
+void TimelineToolBar::OnReadOnlyFilterToggled( bool checked )
+{
+    displayReadOnly_ = checked;
+    emit ReadOnlyFilterToggled( checked );
 }
 
 // -----------------------------------------------------------------------------

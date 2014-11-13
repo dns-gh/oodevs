@@ -144,6 +144,7 @@ private slots:
     void OnSaveTimelineSessionFileRequested( const tools::Path& filename );
 
     void OnEngagedFilterToggled( bool checked );
+    void OnReadOnlyFilterToggled( bool checked );
     void OnServicesFilterChanged( const std::string& services );
     void OnKeywordFilterChanged( const std::string& keyword );
     void OnHideHierarchiesFilterChanged( const std::string& hierarchies );

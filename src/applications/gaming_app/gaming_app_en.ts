@@ -3542,6 +3542,10 @@ This data can&apos;t be projected.</source>
         <source>Filter on selected entity</source>
         <translation>Filter on selected entity</translation>
     </message>
+    <message>
+        <source>Display events on read-only entities</source>
+        <translation>Display events on read-only entities</translation>
+    </message>
 </context>
 <context>
     <name>TimelineWebView</name>
