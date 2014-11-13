@@ -211,7 +211,8 @@ void TER_PathComputer::DoExecute(
             }
         }
         else if( auto last = GetLastPosition() )
-        { computedWaypoints_.push_back( *last );
+        {
+            computedWaypoints_.push_back( *last );
             NotifyCompletedSection();
         }
     }
