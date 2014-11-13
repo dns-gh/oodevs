@@ -213,6 +213,8 @@ func (s *TestSuite) TestTimeOptions(c *C) {
 		dmps, err := ListDmpFiles(opts.DebugDir)
 		c.Assert(err, IsNil)
 		c.Assert(dmps, HasLen, 0)
+		err = CheckSessionErrors(opts.GetSessionDir(), nil)
+		c.Assert(err, IsNil)
 	}
 }
 
