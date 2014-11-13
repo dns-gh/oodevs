@@ -42,7 +42,7 @@ namespace
         const std::string timeString = xis.attribute( name, std::string() );
         if( tools::DecodeTime( timeString, seconds ) )
         {
-            time = seconds;
+            time = MIL_Tools::ConvertSecondsToSim( seconds );
             return true;
         }
         return false;
@@ -258,45 +258,32 @@ void PHY_RadarType::ReadTime( xml::xistream& xis, bool& bIsPCTime )
         if( ReadPcAndBaseTime( xis, "base-time", rDetectionTime_ ) )
             if( rDetectionTime_ < 0 )
                 throw MASA_EXCEPTION( xis.context() + "detection acquisition-time: base-time < 0" );
-            else
-                rDetectionTime_ = MIL_Tools::ConvertSecondsToSim( rDetectionTime_ );
 
         if( ReadPcAndBaseTime( xis, "command-post-time", rPcDetectionTime_ ) )
             if( rPcDetectionTime_ < 0 )
                 throw MASA_EXCEPTION( xis.context() + "detection acquisition-time: command-post-time < 0" );
             else
-            {
                 bIsPCTime = true;
-                rPcDetectionTime_ = MIL_Tools::ConvertSecondsToSim( rPcDetectionTime_ );
-            }
     }
     else if( acquisitionType == "recognition" )
     {
         if( ReadPcAndBaseTime( xis, "base-time", rRecognitionTime_ ) )
             if( rRecognitionTime_ < rDetectionTime_ )
-                throw MASA_EXCEPTION( xis.context() + "recoginition acquisition-time: base-time < detection base-time" );
-            else
-                rRecognitionTime_ = MIL_Tools::ConvertSecondsToSim( rRecognitionTime_ );
+                throw MASA_EXCEPTION( xis.context() + "recognition acquisition-time: base-time < detection base-time" );
 
         if( ReadPcAndBaseTime( xis, "command-post-time", rPcRecognitionTime_ ) )
             if( rPcRecognitionTime_ < rPcDetectionTime_ )
                 throw MASA_EXCEPTION( xis.context() + "recognition acquisition-time: command-post-time < detection command-post-time" );
-            else
-                rPcRecognitionTime_ = MIL_Tools::ConvertSecondsToSim( rPcRecognitionTime_ );
     }
     else if( acquisitionType == "identification" )
     {
         if( ReadPcAndBaseTime( xis, "base-time", rIdentificationTime_ ) )
             if( rIdentificationTime_ < rRecognitionTime_ )
                 throw MASA_EXCEPTION( xis.context() + "identification acquisition-time: base-time < recognition base-time" );
-            else
-                rIdentificationTime_ = MIL_Tools::ConvertSecondsToSim( rIdentificationTime_ );
 
         if( ReadPcAndBaseTime( xis, "command-post-time", rPcIdentificationTime_ ) )
             if( rPcIdentificationTime_ < rPcRecognitionTime_ )
                 throw MASA_EXCEPTION( xis.context() + "identification acquisition-time: command-post-time < recognition command-post-time" );
-            else
-                rPcIdentificationTime_ = MIL_Tools::ConvertSecondsToSim( rPcIdentificationTime_ );
     }
     else
         throw MASA_EXCEPTION( xis.context() + "Unknown acquisition-time: " + acquisitionType );
