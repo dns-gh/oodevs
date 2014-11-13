@@ -160,12 +160,15 @@ end
 --- Assign the given mission to the calling DirectIA agent with the sender as parameter (usually a follow mission )
 -- This method can only be called by an agent
 -- @param sender the DirectIA agent, the mission's parameter
--- @param missionName the name of the task associated to the mission 
-integration.communication.FollowMe = function( missionName, sender )
+-- @param missionName the name of the task associated to the mission
+-- @param withoutPosition Boolean, if true, the mission is issued without the "positions" parameter.
+integration.communication.FollowMe = function( missionName, sender, withoutPosition )
     local mission = DEC_CreerMissionPionVersPion( missionName )
     local followParam = DEC_AssignMissionPionListParameter( sender )   -- entities to folow: the sender of the message
     DEC_AssignMissionListParameter( mission, "entities", { followParam } )
-    DEC_AssignMissionListParameter( mission, "positions", NIL )        -- positions
+    if not withoutPosition then
+        DEC_AssignMissionListParameter( mission, "positions", NIL )    -- positions
+    end
     DEC_AssignMissionNumericTypeParameter( mission, "minDistance", 0 ) -- distance min 0 meters
     DEC_DonnerMissionPionVersPion( mission )                           -- Issue the mission
 end
