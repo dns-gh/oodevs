@@ -37,6 +37,7 @@ SIM_App::SIM_App( int maxConnections )
 
 SIM_App::~SIM_App()
 {
+    quit_->Signal();
     if( dispatcher_ )
         dispatcher_->join();
     MIL_AgentServer::DestroyWorkspace();
