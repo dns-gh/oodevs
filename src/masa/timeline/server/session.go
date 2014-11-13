@@ -31,7 +31,7 @@ var (
 )
 
 type EventListener interface {
-	UpdateEvents(events EventSlice, encoded []*sdk.Event)
+	UpdateEncodedEvents(events EventSlice, encoded []*sdk.Event)
 	DeleteEvents(events ...string)
 }
 
@@ -39,7 +39,7 @@ type DefaultEventListener struct {
 	services.EventListener
 }
 
-func (d DefaultEventListener) UpdateEvents(events EventSlice, encoded []*sdk.Event) {
+func (d DefaultEventListener) UpdateEncodedEvents(events EventSlice, encoded []*sdk.Event) {
 	d.EventListener.UpdateEvents(encoded...)
 }
 
@@ -265,9 +265,9 @@ func (s *Session) stopServices() error {
 	return nil
 }
 
-func (s EventListeners) UpdateEvents(events EventSlice, encoded []*sdk.Event) {
+func (s EventListeners) UpdateEncodedEvents(events EventSlice, encoded []*sdk.Event) {
 	for _, listener := range s {
-		listener.UpdateEvents(events, encoded)
+		listener.UpdateEncodedEvents(events, encoded)
 	}
 }
 
@@ -416,7 +416,7 @@ func (s *Session) CreateEvent(uuid string, msg *sdk.Event) (*sdk.Event, error) {
 	}
 	s.events.Append(event)
 	updates, encoded := makeUpdate(event)
-	s.listeners.UpdateEvents(updates, encoded)
+	s.listeners.UpdateEncodedEvents(updates, encoded)
 	return encoded[0], nil
 }
 
@@ -439,7 +439,7 @@ func (s *Session) UpdateEvent(uuid string, msg *sdk.Event) (*sdk.Event, error) {
 			encoded = append(encoded, child.Proto())
 		}
 	}
-	s.listeners.UpdateEvents(updates, encoded)
+	s.listeners.UpdateEncodedEvents(updates, encoded)
 	if triggered {
 		s.triggerEvent(event)
 	}
@@ -465,7 +465,7 @@ func (s *Session) DeleteEvent(uuid string) error {
 		delete(parent.children, event)
 	}
 	if len(updates) > 0 {
-		s.listeners.UpdateEvents(updates, encoded)
+		s.listeners.UpdateEncodedEvents(updates, encoded)
 	}
 	s.listeners.DeleteEvents(uuid)
 	return nil
@@ -519,7 +519,7 @@ func (f *FilteredObserver) update(events EventSlice, encoded []*sdk.Event, reset
 	f.observer.UpdateEvents(updated...)
 }
 
-func (f *FilteredObserver) UpdateEvents(events EventSlice, encoded []*sdk.Event) {
+func (f *FilteredObserver) UpdateEncodedEvents(events EventSlice, encoded []*sdk.Event) {
 	f.update(events, encoded, false)
 }
 
@@ -591,7 +591,7 @@ func (s *Session) RegisterObserver(config services.EventFilterConfig) SdkObserve
 	observer.UpdateTick(s.tick)
 	observer.UpdateSession(s.Proto())
 	observer.UpdateServices(s.getServices()...)
-	filtered.UpdateEvents(s.events, s.events.Proto())
+	filtered.UpdateEncodedEvents(s.events, s.events.Proto())
 	return filtered
 }
 
@@ -633,7 +633,7 @@ func (s *Session) CloseEvent(uuid string, done bool, err error, lock bool) (*sdk
 	modified := event.OnTrigger(done, err, lock)
 	encoded := event.Proto()
 	if modified {
-		s.listeners.UpdateEvents(EventSlice{event}, []*sdk.Event{encoded})
+		s.listeners.UpdateEncodedEvents(EventSlice{event}, []*sdk.Event{encoded})
 	}
 	return encoded, nil
 }
