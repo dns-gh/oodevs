@@ -405,6 +405,7 @@ void MainWindow::Load()
     try
     {
         controllers_.modes_.SaveOptions( eModes_Gaming );
+        glWidgetManager_->Purge();
         unitStateDialog_->Purge();
         dockContainer_->Purge();
         workers_.Terminate();
