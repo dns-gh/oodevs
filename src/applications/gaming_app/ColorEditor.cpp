@@ -60,7 +60,7 @@ ColorEditor::ColorEditor( QWidget* parent, kernel::Controllers& controllers,
     customLayout->addWidget( customButton_ );
     colorButton_ = new gui::ColorButton( "customEntityColorButton", this );
     customLayout->addWidget( colorButton_ );
-    gui::connect( customButton_, SIGNAL( toggled(bool) ), [=]{ colorButton_->setEnabled( customButton_->isChecked() ); } );
+    gui::connect( colorButton_, SIGNAL( clicked() ), [&]{ customButton_->setChecked( true ); } );
     mainLayout->addLayout( customLayout );
     // apply to subordinates
     subordinatesCheckBox_ = new gui::RichCheckBox( "applyToSubordinatesCheckBox", tr( "Apply to subordinates" ), this );
