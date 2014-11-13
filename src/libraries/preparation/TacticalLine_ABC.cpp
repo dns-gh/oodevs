@@ -13,6 +13,8 @@
 #include "tools/IdManager.h"
 #include "clients_gui/GLView_ABC.h"
 #include "clients_gui/PropertiesDictionary.h"
+#include "clients_kernel/TacticalHierarchies.h"
+#include "clients_kernel/TacticalLineHierarchies_ABC.h"
 #include "clients_kernel/Tools.h"
 #include <xeumeuleu/xml.hpp>
 
@@ -84,7 +86,16 @@ void TacticalLine_ABC::NotifyDestruction()
 // Name: TacticalLine_ABC::ChangeSuperior
 // Created: LDC 2014-11-12
 // -----------------------------------------------------------------------------
-void TacticalLine_ABC::ChangeSuperior( const kernel::Entity_ABC& )
-{
-
+void TacticalLine_ABC::ChangeSuperior( const kernel::Entity_ABC& superior )
+{    
+    auto superiorHierarchies = superior.Retrieve< kernel::TacticalHierarchies >();
+    if( superiorHierarchies )
+    {
+        auto& hierarchies = Get< kernel::TacticalHierarchies >();
+        auto previousSuperior = hierarchies.GetSuperior();
+        if( previousSuperior )
+            const_cast< kernel::TacticalHierarchies& >( previousSuperior->Get< kernel::TacticalHierarchies >() ).RemoveSubordinate( *this );
+        const_cast< kernel::TacticalHierarchies* >( superiorHierarchies )->AddSubordinate( *this );
+        static_cast< kernel::TacticalLineHierarchies_ABC& >( hierarchies ).SetSuperior( &superior );
+    }
 }

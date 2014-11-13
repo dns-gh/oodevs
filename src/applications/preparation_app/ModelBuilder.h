@@ -31,6 +31,11 @@ namespace kernel
     class UrbanObject_ABC;
 }
 
+namespace gui
+{
+    class ChangeSuperiorDialog;
+}
+
 class Model;
 
 // =============================================================================
@@ -76,6 +81,7 @@ public:
     bool CanCreateLine() const;
     void CreateLimit( const T_PointVector& points );
     void CreateLima( const T_PointVector& points );
+    void SetChangeSuperiorDialog( const std::shared_ptr< gui::ChangeSuperiorDialog >& changeSuperiorDialog );
     //@}
 
 public slots:
@@ -83,6 +89,7 @@ public slots:
     //@{
     void OnConfirmDeletion( int result );
     void OnDelete();
+    void OnChangeSuperior();
     void OnCreate();
     void OnCreateFormation( int level );
     void OnCreateCommunication();
@@ -123,8 +130,9 @@ private:
     kernel::SafePointer< kernel::Ghost_ABC >          selectedGhost_;
     kernel::SafePointer< kernel::Object_ABC >         selectedObject_;
     kernel::SafePointer< kernel::UrbanObject_ABC >    selectedUrbanObject_;
-    kernel::SafePointer< kernel::Entity_ABC >         toDelete_;
+    kernel::SafePointer< kernel::Entity_ABC >         currentEntity_;
     std::unique_ptr< QMessageBox >                    confirmation_;
+    std::shared_ptr< gui::ChangeSuperiorDialog >      changeSuperiorDialog_;
     const QString                                     property_;
     //@}
 };

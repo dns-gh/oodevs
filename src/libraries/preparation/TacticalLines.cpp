@@ -10,13 +10,15 @@
 #include "preparation_pch.h"
 #include "TacticalLines.h"
 #include "TacticalLine_ABC.h"
+#include "clients_kernel/TacticalHierarchies.h"
 #include <xeumeuleu/xml.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: TacticalLines constructor
 // Created: SBO 2006-11-07
 // -----------------------------------------------------------------------------
-TacticalLines::TacticalLines()
+TacticalLines::TacticalLines( const kernel::TacticalHierarchies& hierarchy )
+    : hierarchy_( hierarchy )
 {
     // NOTHING
 }
@@ -27,16 +29,7 @@ TacticalLines::TacticalLines()
 // -----------------------------------------------------------------------------
 TacticalLines::~TacticalLines()
 {
-    DeleteAll();
-}
-
-// -----------------------------------------------------------------------------
-// Name: TacticalLines::AddLine
-// Created: SBO 2006-11-07
-// -----------------------------------------------------------------------------
-void TacticalLines::AddLine( TacticalLine_ABC& line )
-{
-    Register( line.GetId(), line );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -45,10 +38,16 @@ void TacticalLines::AddLine( TacticalLine_ABC& line )
 // -----------------------------------------------------------------------------
 void TacticalLines::SerializeAttributes( xml::xostream& xos ) const
 {
-    for( auto it = elements_.begin(); it != elements_.end(); ++it )
+    tools::Iterator< const kernel::Entity_ABC& > it = hierarchy_.CreateSubordinateIterator();
+    while( it.HasMoreElements() )
     {
-        xos << xml::start( it->second->IsLimit() ? "limit" : "lima" );
-        it->second->GetInterfaces().Apply( &Serializable_ABC::SerializeAttributes, xos );
-        xos << xml::end;
+        const kernel::Entity_ABC& child = it.NextElement();
+        const kernel::TacticalLine_ABC* line = dynamic_cast< const kernel::TacticalLine_ABC* >( &child );
+        if( line )
+        {
+            xos << xml::start( line->IsLimit() ? "limit" : "lima" );
+            line->GetInterfaces().Apply( &Serializable_ABC::SerializeAttributes, xos );
+            xos << xml::end;
+        }
     }
 }

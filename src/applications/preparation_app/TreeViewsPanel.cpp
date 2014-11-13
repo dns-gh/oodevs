@@ -232,6 +232,7 @@ TreeViewsPanel::TreeViewsPanel( kernel::Controllers& controllers,
         Configure( richView, treeViews, aggregateToolbar, *renameInterface_, eModes_Terrain );
         addTab( richView, tools::translate( "DockContainer","Drawings" ) );
     }
+    modelBuilder.SetChangeSuperiorDialog( changeSuperiorDialog_ );
 }
 
 // -----------------------------------------------------------------------------

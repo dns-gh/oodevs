@@ -24,7 +24,7 @@ namespace kernel
 // =============================================================================
 class TacticalLineHierarchies_ABC : public kernel::SimpleHierarchies< kernel::TacticalHierarchies >
 {
-protected:
+public:
     //! @name Constructors/Destructor
     //@{
              TacticalLineHierarchies_ABC( kernel::Entity_ABC& holder, kernel::Entity_ABC* superior );
@@ -36,6 +36,7 @@ public:
     //@{
     virtual std::string GetSymbol() const;
     virtual std::string GetLevel() const;
+    void SetSuperior( const Entity_ABC* superior );
     //@}
 };
 

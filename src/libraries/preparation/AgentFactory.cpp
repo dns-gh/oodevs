@@ -103,7 +103,9 @@ kernel::Agent_ABC* AgentFactory::Create( kernel::Automat_ABC& parent, const kern
     gui::PropertiesDictionary& dictionary = result->Get< gui::PropertiesDictionary >();
     result->Attach< kernel::Positions >( *new AgentPositions( *result, static_.coordinateConverter_, controllers_.controller_, position, dictionary ) );
     result->Attach< gui::CriticalIntelligence >( *new gui::CriticalIntelligence( *result, controllers_.controller_, dictionary ) );
-    result->Attach< kernel::TacticalHierarchies >( *new AgentHierarchies( controllers_.controller_, *result, &parent, symbolsFactory_ ) );
+    kernel::TacticalHierarchies* hierarchies = new AgentHierarchies( controllers_.controller_, *result, &parent, symbolsFactory_ );
+    result->Attach( *hierarchies );
+    result->Attach( *new TacticalLines( *hierarchies ) );
     result->Attach( *new InitialState( static_, result->GetType().GetId() ) );
     result->Attach< Affinities >( *new AgentAffinities( *result, controllers_, model_, dictionary, tools::translate( "Affinities", "Affinities" ) ) );
     if( result->GetType().IsLogisticSupply() )
@@ -111,7 +113,6 @@ kernel::Agent_ABC* AgentFactory::Create( kernel::Automat_ABC& parent, const kern
     result->Attach( *new kernel::DictionaryExtensions( controllers_, "orbat-attributes", static_.extensions_ ) );
     result->Attach< kernel::CommandPostAttributes_ABC >( *new CommandPostAttributes( *result, type, dictionary, commandPost ) );
     result->Attach< kernel::Color_ABC >( *new Color( parent ) );
-    result->Attach( *new TacticalLines() );
     result->Polish();
     return result;
 }
@@ -128,7 +129,9 @@ kernel::Automat_ABC* AgentFactory::Create( kernel::Entity_ABC& parent, const ker
     result->Attach< kernel::Positions >( *new gui::AggregatedPositions( *result ) );
     const kernel::Karma& karma = parent.Get< kernel::TacticalHierarchies >().GetTop().Get< kernel::Diplomacies_ABC >().GetKarma();
     result->Attach< kernel::SymbolHierarchy_ABC >( *new Symbol( symbolsFactory_.GetSymbolBase( karma ), symbolsFactory_ ) );
-    result->Attach< kernel::TacticalHierarchies >( *new AutomatHierarchies( controllers_.controller_, *result, &parent ) );
+    kernel::TacticalHierarchies* hierarchies = new AutomatHierarchies( controllers_.controller_, *result, &parent );
+    result->Attach( *hierarchies );
+    result->Attach( *new TacticalLines( *hierarchies ) );
     result->Attach< gui::Decisions_ABC >( *new gui::AutomatDecisions( controllers_.controller_, *result, static_.types_.automatModels_ ) );
     kernel::Entity_ABC* kg = FindOrCreateKnowledgeGroup( parent );
     result->Attach< kernel::CommunicationHierarchies >( *new AutomatCommunications( controllers_.controller_, *result, kg ) );
@@ -137,7 +140,6 @@ kernel::Automat_ABC* AgentFactory::Create( kernel::Entity_ABC& parent, const ker
     result->Attach( *new gui::LogisticBase( controllers_, *result, dictionary, isTC2, isTC2, true ) );
     result->Attach< gui::LogisticHierarchiesBase >( *new LogisticBaseStates( controllers_.controller_, *result, static_.objectTypes_, dictionary, isTC2 ) );
 
-    result->Attach( *new TacticalLines() );
     result->Attach< kernel::Color_ABC >( *new Color( parent ) );
     result->Attach( *new kernel::DictionaryExtensions( controllers_, "orbat-attributes", static_.extensions_ ) );
     result->Polish();
@@ -235,7 +237,9 @@ kernel::Agent_ABC* AgentFactory::Create( xml::xistream& xis, kernel::Automat_ABC
     result->Attach< gui::CriticalIntelligence >( *new gui::CriticalIntelligence( xis, controllers_.controller_, *result, dictionary ) );
     const geometry::Point2f position = model_.ReadPosition( xis, result );
     result->Attach< kernel::Positions >( *new AgentPositions( *result, static_.coordinateConverter_, controllers_.controller_, position, dictionary ) );
-    result->Attach< kernel::TacticalHierarchies >( *new AgentHierarchies( controllers_.controller_, *result, &parent, symbolsFactory_ ) );
+    kernel::TacticalHierarchies* hierarchies = new AgentHierarchies( controllers_.controller_, *result, &parent, symbolsFactory_ );
+    result->Attach( *hierarchies );
+    result->Attach( *new TacticalLines( *hierarchies ) );
     result->Attach( *new InitialState( xis, static_, result->GetType().GetId() ) );
     result->Attach< Affinities >( *new AgentAffinities( xis, *result, controllers_, model_, dictionary, tools::translate( "Affinities", "Affinities" ) ) );
     result->Attach< kernel::CommandPostAttributes_ABC >( *new CommandPostAttributes( xis, *result, *type, dictionary ) );
@@ -243,7 +247,6 @@ kernel::Agent_ABC* AgentFactory::Create( xml::xistream& xis, kernel::Automat_ABC
         result->Attach( *new Stocks( xis, controllers_.controller_, static_.objectTypes_ ) );
     result->Attach( *new kernel::DictionaryExtensions( controllers_, "orbat-attributes", xis, static_.extensions_ ) );
     result->Attach< kernel::Color_ABC >( *new Color( xis ) );
-    result->Attach( *new TacticalLines() );
     result->Polish();
     return result;
 }
@@ -263,14 +266,15 @@ kernel::Automat_ABC* AgentFactory::Create( xml::xistream& xis, kernel::Entity_AB
     result->Attach< kernel::Positions >( *new gui::AggregatedPositions( *result ) );
     result->Attach< kernel::SymbolHierarchy_ABC >( *new Symbol( xis, std::string(), symbolsFactory_ ) );
     result->Attach< gui::Decisions_ABC >( *new gui::AutomatDecisions( xis, controllers_.controller_, *result, static_.types_.automatModels_ ) );
-    result->Attach< kernel::TacticalHierarchies >( *new AutomatHierarchies( controllers_.controller_, *result, &parent ) );
+    kernel::TacticalHierarchies* hierarchies = new AutomatHierarchies( controllers_.controller_, *result, &parent );
+    result->Attach( *hierarchies );
+    result->Attach( *new TacticalLines( *hierarchies ) );
     result->Attach< kernel::CommunicationHierarchies >( *new AutomatCommunications( xis, controllers_.controller_, *result, *model_.knowledgeGroups_ ) );
 
     bool isTC2 = type->IsTC2(); //$$ NAZE
     result->Attach( *new gui::LogisticBase( controllers_, *result, dictionary, isTC2, isTC2, true ) );
     result->Attach< gui::LogisticHierarchiesBase >( *new LogisticBaseStates( controllers_.controller_, *result, static_.objectTypes_, dictionary, isTC2 ) );
 
-    result->Attach( *new TacticalLines() );
     result->Attach( *new kernel::DictionaryExtensions( controllers_, "orbat-attributes", xis, static_.extensions_ ) );
     result->Attach< kernel::Color_ABC >( *new Color( xis ) );
     result->Polish();
@@ -337,7 +341,9 @@ kernel::Agent_ABC* AgentFactory::Create( kernel::Ghost_ABC& ghost, const kernel:
         kernel::Entity_ABC* tactSuperior = const_cast< kernel::Entity_ABC* >( ghostHierarchy->GetSuperior() );
         assert( tactSuperior );
 
-        result->Attach< kernel::TacticalHierarchies >( *new AgentHierarchies( controllers_.controller_, *result, tactSuperior, symbolsFactory_ ) );
+        kernel::TacticalHierarchies* hierarchies = new AgentHierarchies( controllers_.controller_, *result, tactSuperior, symbolsFactory_ );
+        result->Attach( *hierarchies );
+        result->Attach( *new TacticalLines( *hierarchies ) );
     }
     result->Attach( *new InitialState( static_, result->GetType().GetId() ) );
     result->Attach< Affinities >( *new AgentAffinities( *result, controllers_, model_, dictionary, tools::translate( "Affinities", "Affinities" ) ) );
@@ -346,7 +352,6 @@ kernel::Agent_ABC* AgentFactory::Create( kernel::Ghost_ABC& ghost, const kernel:
     result->Attach( *new kernel::DictionaryExtensions( controllers_, "orbat-attributes", static_.extensions_ ) );
     result->Attach< kernel::CommandPostAttributes_ABC >( *new CommandPostAttributes( *result, type, dictionary, ghost.Get< kernel::CommandPostAttributes_ABC >().IsCommandPost() ) );
     result->Attach< kernel::Color_ABC >( *new Color( ghost ) );
-    result->Attach( *new TacticalLines() );
     result->Polish();
     return result;
 }
@@ -371,7 +376,9 @@ kernel::Automat_ABC* AgentFactory::Create( kernel::Ghost_ABC& ghost, const kerne
         const kernel::TacticalHierarchies& ghostHierarchy = ghost.Get< kernel::TacticalHierarchies >();
         kernel::Entity_ABC* tactSuperior = const_cast< kernel::Entity_ABC* >( ghostHierarchy.GetSuperior() );
         assert( tactSuperior );
-        result->Attach< kernel::TacticalHierarchies >( *new AutomatHierarchies( controllers_.controller_, *result, tactSuperior ) );
+        kernel::TacticalHierarchies* hierarchies = new AutomatHierarchies( controllers_.controller_, *result, tactSuperior );
+        result->Attach( *hierarchies );
+        result->Attach( *new TacticalLines( *hierarchies ) );
         // Profile hierarchy
         //result->Attach< ProfileHierarchies_ABC >( *new ProfileHierarchies( controllers_.controller_, *result, tactSuperior ) );
         std::vector< std::string > readingProfiles = model_.profiles_->GetProfilesWhoCanRead( ghost );
@@ -414,7 +421,6 @@ kernel::Automat_ABC* AgentFactory::Create( kernel::Ghost_ABC& ghost, const kerne
                 logBaseStates->SetDotation( dotation.type_, dotation.quantity_ );
         }
     }
-    result->Attach( *new TacticalLines() );
     result->Attach< kernel::Color_ABC >( *new Color( ghost ) );
     result->Attach( *new kernel::DictionaryExtensions( controllers_, "orbat-attributes", static_.extensions_ ) );
     result->Polish();

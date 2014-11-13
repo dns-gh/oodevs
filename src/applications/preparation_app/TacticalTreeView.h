@@ -64,6 +64,8 @@ private:
     virtual void Drop( const kernel::KnowledgeGroup_ABC& item, const kernel::Entity_ABC& target );
     virtual void Drop( const kernel::AgentType& item, kernel::Entity_ABC& target );
     virtual void Drop( const kernel::AutomatType& item, kernel::Entity_ABC& target );
+    virtual void Drop( kernel::TacticalLine_ABC& item, const kernel::Entity_ABC& target );
+    virtual void Drop( kernel::Drawing_ABC& item, const kernel::Entity_ABC& target );
 
     virtual void NotifyContextMenu( const kernel::Team_ABC& agent, kernel::ContextMenu& menu );
     virtual void NotifyContextMenu( const kernel::Formation_ABC& agent, kernel::ContextMenu& menu );

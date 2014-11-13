@@ -28,7 +28,12 @@ TacticalLineHierarchies_ABC::TacticalLineHierarchies_ABC( Entity_ABC& holder, En
 // -----------------------------------------------------------------------------
 TacticalLineHierarchies_ABC::~TacticalLineHierarchies_ABC()
 {
-    // NOTHING
+    if( auto superior = GetSuperior() )
+    {
+        kernel::TacticalHierarchies* superiorHierarchy = const_cast< kernel::TacticalHierarchies* >( superior->Retrieve< kernel::TacticalHierarchies >() );
+        if( superiorHierarchy )
+            superiorHierarchy->UnregisterSubordinate( GetEntity() );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -55,4 +60,13 @@ std::string TacticalLineHierarchies_ABC::GetLevel() const
     if( !GetSuperior() )
         return std::string();
     return GetSuperior()->Get< TacticalHierarchies >().GetLevel();
+}
+
+// -----------------------------------------------------------------------------
+// Name: TacticalLineHierarchies_ABC::SetSuperior
+// Created: LDC 2014-11-13
+// -----------------------------------------------------------------------------
+void TacticalLineHierarchies_ABC::SetSuperior( const Entity_ABC* superior )
+{
+    SimpleHierarchies< kernel::TacticalHierarchies >::SetSuperior( superior );
 }

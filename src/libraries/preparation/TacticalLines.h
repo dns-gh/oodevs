@@ -15,6 +15,11 @@
 #include "clients_kernel/Extension_ABC.h"
 #include <tools/Resolver.h>
 
+namespace kernel
+{
+    class TacticalHierarchies;
+}
+
 // =============================================================================
 /** @class  TacticalLines
     @brief  TacticalLines
@@ -23,20 +28,14 @@
 // =============================================================================
 class TacticalLines : public kernel::Extension_ABC
                     , public kernel::Serializable_ABC
-                    , public tools::Resolver< TacticalLine_ABC >
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             TacticalLines();
+    explicit TacticalLines( const kernel::TacticalHierarchies& hierarchy );
     virtual ~TacticalLines();
     //@}
-
-    //! @name Operations
-    //@{
-    void AddLine( TacticalLine_ABC& line );
-    //@}
-
+    
 private:
     //! @name Copy/Assignment
     //@{
@@ -47,6 +46,11 @@ private:
     //! @name Helpers
     //@{
     virtual void SerializeAttributes( xml::xostream& ) const;
+    //@}
+
+    //! @name Data
+    //@{
+    const kernel::TacticalHierarchies& hierarchy_;
     //@}
 };
 
