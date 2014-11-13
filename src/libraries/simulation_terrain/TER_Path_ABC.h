@@ -10,6 +10,12 @@
 #ifndef SIMULATION_TERRAIN_PATH_ABC
 #define SIMULATION_TERRAIN_PATH_ABC
 
+#include "TER_PathPoint.h"
+#include "MT_Tools/MT_Vector2D.h"
+#include <boost/shared_ptr.hpp>
+#include <list>
+#include <vector>
+
 class TerrainData;
 class MT_Vector2D;
 class TER_Pathfinder_ABC;
@@ -61,6 +67,15 @@ protected:
 
 private:
     const unsigned int nID_;
+};
+
+// The result of a TER_PathComputer_ABC computation.
+struct TER_PathResult
+{
+    TER_Path_ABC::E_State state;
+    MT_Vector2D lastWaypoint;
+    std::vector< MT_Vector2D > computedWaypoints;
+    std::list< boost::shared_ptr< TER_PathPoint > > points;
 };
 
 #endif // SIMULATION_TERRAIN_PATH_ABC

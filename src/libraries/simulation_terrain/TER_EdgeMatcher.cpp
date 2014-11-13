@@ -61,11 +61,6 @@ TER_EdgeMatcher::TER_EdgeMatcher(
     // NOTHING
 }
 
-void TER_EdgeMatcher::SetId( size_t id )
-{
-    pathfinder_->SetId( id );
-}
-
 void TER_EdgeMatcher::SetChoiceRatio( float ratio )
 {
     pathfinder_->SetChoiceRatio( ratio );

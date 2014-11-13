@@ -11,11 +11,9 @@
 #define __DEC_Population_Path_h_
 
 #include "Decision/DEC_PathResult.h"
-#include "MT_Tools/MT_Profiler.h"
 #include <boost/shared_ptr.hpp>
 
 class MIL_Population;
-class DEC_PopulationContext_ABC;
 
 //*****************************************************************************
 // Created: JDY 03-02-11
@@ -29,13 +27,6 @@ public:
 
 private:
     DEC_Population_Path( const DEC_Population_Path& rhs ); // Copy only query parameters, not the result !
-
-private:
-    //! @name Member data
-    //@{
-    MT_Profiler profiler_;
-    boost::shared_ptr< DEC_PopulationContext_ABC > context_;
-    //@}
 };
 
 #endif // __DEC_Population_Path_h_
