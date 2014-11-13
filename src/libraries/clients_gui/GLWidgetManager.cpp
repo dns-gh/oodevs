@@ -238,8 +238,9 @@ GLDockWidget* GLWidgetManager::AddDockWidget( unsigned id /* = 0 */ )
 {
     if( controllers_.modes_.GetCurrentMode() <= eModes_Default )
         return 0;
+    bool wasFromMenu = id == 0;
     QString warning;
-    if( id == 0 ) // from menu clic / F9 shortcut
+    if( wasFromMenu ) // from menu clic / F9 shortcut
     {
         for( unsigned i = 1; id == 0 && i <= nbMaxGLDock; ++i )
             if( dockWidgets_.count( i ) == 0 )
@@ -268,6 +269,8 @@ GLDockWidget* GLWidgetManager::AddDockWidget( unsigned id /* = 0 */ )
     dockWidgets_[ id ] = std::make_shared< GLDockWidget >( controllers_, mainWindow_, stackedWidget );
     auto dockWidget = dockWidgets_[ id ].get();
     connect( dockWidget, SIGNAL( OnClose( const QWidget& ) ), SLOT( OnDockWidgetClosed( const QWidget& ) ) );
+    if( wasFromMenu )
+        mainProxy_.SetActiveView( *proxy );
     return dockWidget;
 }
 
