@@ -71,6 +71,14 @@ void ColorController::NotifyCreated( const kernel::Entity_ABC& entity )
         {
             colors_[ entity.GetId() ] = *color;
             UpdateHierarchies( entity );
+            return;
+        }
+    if( const auto hierarchy =  entity.Retrieve< kernel::TacticalHierarchies >() )
+        if( const auto superior = hierarchy->GetSuperior() )
+        {
+            auto it = colors_.find( superior->GetId() );
+            if( it != colors_.end() )
+                colors_[ entity.GetId() ] = it->second;
         }
 }
 
