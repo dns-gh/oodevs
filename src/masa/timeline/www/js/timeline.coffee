@@ -700,10 +700,11 @@ class TickView extends Backbone.View
 
 class Replay
 
-    constructor: (model, svg, scale) ->
+    constructor: (model, svg, scale, timeline) ->
         @model = model
-        @scale = scale
         @svg = svg
+        @scale = scale
+        @timeline = timeline
         @has_replay = false
         @svg.append("g").attr id: "replays"
         @replay_split = svg.append("line")
@@ -726,6 +727,33 @@ class Replay
         @w = w
         @h = h
 
+    on_range_hover: (el, d) ->
+        el = d3.select el
+        cursor = null
+        switch @timeline.get_range_zone el
+            when "top"    then cursor = "n-resize"
+            when "bottom" then cursor = "s-resize"
+            when "left"   then cursor = "w-resize"
+            when "right"  then cursor = "e-resize"
+        if (cursor == "n-resize" or cursor == "w-resize") and d.idx == 0
+            cursor = null
+        if (cursor == "s-resize" or cursor == "e-resize") and d.idx == (@model.replays.length - 1)
+            cursor = null
+        el.style cursor: cursor
+
+    range_drag_move: (el, d) ->
+        element = d3.select el
+        return unless @timeline.get_range_zone(element) != "middle"
+        return unless el.style.cursor != ""
+        @timeline.range_drag_move el, d
+        if d.idx != 0
+            previous = @model.replays[d.idx-1]
+            @model.get(previous.id).set end: format(d.min)
+        if d.idx != (@model.replays.length - 1)
+            next = @model.replays[d.idx+1]
+            @model.get(next.id).set begin: format(d.max)
+        @model.resync()
+
     render: ->
         split_attributes = @layout.replay_split_attributes @w, @h
         split_attributes.visibility = @has_replay
@@ -742,8 +770,30 @@ class Replay
             .each((d) ->
                 add_popover this, placement, that.model.get d.id
             )
+            .on("click", (d) ->
+                dom_stop_event d3.event
+                event = that.model.get d.id
+                triggers.trigger "select_events", id: d.id, data: [event]
+            )
+            .on("dblclick", (d) ->
+                dom_stop_event d3.event
+                event = that.model.get d.id
+                triggers.trigger "activate", event
+            )
+            .on("contextmenu", (d) ->
+                dom_stop_event d3.event
+                event = that.model.get d.id
+                return if is_readonly_event event
+                triggers.trigger "contextmenu", event
+            )
             .attr
                 class:  "replay_range"
+            .on("mousemove", (d) -> that.on_range_hover this, d )
+            .on("mouseout",  -> that.timeline.on_range_hover_out this)
+            .call d3.behavior.drag()
+            .on("dragstart", (d) -> that.timeline.range_drag_begin this, d)
+            .on("drag",      (d) -> that.range_drag_move  this, d)
+            .on("dragend",   (d) -> that.timeline.range_drag_end   this, d)
         replays.attr(@layout.replay_range_attributes())
         replays.exit()
             .remove()
@@ -787,7 +837,7 @@ class Timeline
         @svg.append("path").attr class: "current"
         @svg.append("g").attr id: "links"
         @svg.append("g").attr id: "lanes"
-        @replay = new Replay @model, @svg, @scale
+        @replay = new Replay @model, @svg, @scale, this
         @lane_split = @svg.append("line")
             .attr(id: "lane_splitter")
             .classed("splitter", true)

@@ -151,7 +151,7 @@ class Events extends Backbone.Collection
     resync: ->
         @models.sort @compare unless @sorted
         @sorted = true
-        @build_ranges() unless @ranges?
+        @build_ranges() unless @ranges? and @replays?
 
     # compute ranges coordinates
     build_ranges: ->
@@ -169,9 +169,14 @@ class Events extends Backbone.Collection
             d.parent = @get d.get "parent"
             d.parent?.children[d.id] = d
             return is_simple_event d
-        @replays = @models.filter (d) =>
-            [d.min, d.max] = get_minmax_event d
-            return is_replay_event d
+        replay_tree = new SegmentTree()
+        for it in @models
+            continue unless is_replay_event it
+            [min, max] = get_minmax_event it
+            replay_tree.add min, max,
+                id: it.id, idx: replay_tree.ranges.length
+        replay_tree.sync()
+        @replays = replay_tree.ranges
         @trigger "resync"
 
 is_readonly_event = (event) ->
