@@ -79,7 +79,7 @@ namespace controls
     T_Msg DeletedEvents         ( const T_Logger& log, const std::vector< std::string >& uuids, const Error& error );
     T_Msg LoadedEvents          ( const T_Logger& log, const Error& error );
     T_Msg SavedEvents           ( const T_Logger& log, const std::string& events, const Error& error );
-    T_Msg SelectedEvent         ( const T_Logger& log,  const Event& event );
+    T_Msg SelectedEvent         ( const T_Logger& log, const Event& event );
     T_Msg DeselectedEvent       ( const T_Logger& log );
     T_Msg ActivatedEvent        ( const T_Logger& log, const Event& event );
     T_Msg TriggeredEvents       ( const T_Logger& log, const Events& events );
