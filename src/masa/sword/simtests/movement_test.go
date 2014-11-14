@@ -13,7 +13,6 @@ import (
 	"masa/sword/swapi"
 	"masa/sword/swapi/phy"
 	"masa/sword/sword"
-	"masa/sword/swrun"
 	"os"
 	"path/filepath"
 	"regexp"
@@ -25,42 +24,21 @@ const (
 	CombiVWUnitId     = uint32(2)
 )
 
-func CreateCombiVW(c *C, phydb *phy.PhysicalData, client *swapi.Client,
-	pos swapi.Point) *swapi.Unit {
-
-	party := &swrun.Party{
-		Name: "party1",
-		Formations: []*swrun.Formation{
-			&swrun.Formation{
-				Name: "formation1",
-				Automats: []*swrun.Automat{
-					&swrun.Automat{
-						Name: "automat",
-						Type: "VW Combi Rally",
-						Units: []*swrun.Unit{
-							&swrun.Unit{
-								Name: "unit",
-								Type: "VW Combi",
-								Pos:  pos,
-							},
-						},
-					},
-				},
-			},
-		},
-	}
-	err := swrun.FindOrCreateEntities(client, phydb, party)
+func CreateCombiVW(c *C, client *swapi.Client, pos swapi.Point) *swapi.Unit {
+	model := client.Model.GetData()
+	f := getSomeFormation(c, model)
+	kg := getSomeKnowledgeGroup(c, model, f.PartyId)
+	automat, err := client.CreateAutomat(f.Id, CombiVWAutomatId, kg.Id)
 	c.Assert(err, IsNil)
-	unit := party.Formations[0].Automats[0].Units[0].Entity
-	err = client.SetAutomatMode(unit.AutomatId, false)
+	err = client.SetAutomatMode(automat.Id, false)
+	c.Assert(err, IsNil)
+	unit, err := client.CreateUnit(automat.Id, CombiVWUnitId, pos)
 	c.Assert(err, IsNil)
 	return unit
 }
 
-func checkSpeed(c *C, phydb *phy.PhysicalData, client *swapi.Client, from,
-	to swapi.Point, expectedSpeed int32) {
-
-	unit := CreateCombiVW(c, phydb, client, from)
+func checkSpeed(c *C, client *swapi.Client, from, to swapi.Point, expectedSpeed int32) {
+	unit := CreateCombiVW(c, client, from)
 	_, err := client.SendUnitOrder(unit.Id, MissionMoveTestId,
 		swapi.MakeParameters(swapi.MakeHeading(0), nil, nil, nil,
 			swapi.MakePointParam(to)))
@@ -80,7 +58,6 @@ func checkSpeed(c *C, phydb *phy.PhysicalData, client *swapi.Client, from,
 }
 
 func (s *TestSuite) TestSlopeSpeedModulation(c *C) {
-	phydb := loadPhysicalData(c, "test")
 	opts := NewAdminOpts(ExGradXYTestEmpty)
 	opts.DumpPathfinds("pf") // for test coverage
 	sim, client := connectAndWaitModel(c, opts)
@@ -93,7 +70,7 @@ func (s *TestSuite) TestSlopeSpeedModulation(c *C) {
 		if !upward {
 			from, to = to, from
 		}
-		checkSpeed(c, phydb, client, from, to, expectedSpeed)
+		checkSpeed(c, client, from, to, expectedSpeed)
 	}
 
 	// Speed formula is like:
@@ -117,7 +94,7 @@ func (s *TestSuite) TestSlopeSpeedModulation(c *C) {
 	// Does not accelerate when moving downward
 	checkSlopeSpeed(28.3023, int32(baseSpeed), false)
 	// Downslope can stop the move too
-	checkSpeed(c, phydb, client, swapi.Point{X: -15.7153, Y: 28.257},
+	checkSpeed(c, client, swapi.Point{X: -15.7153, Y: 28.257},
 		swapi.Point{X: -15.7787, Y: 28.2258}, 0)
 
 	found := false
@@ -135,18 +112,17 @@ func (s *TestSuite) TestSlopeSpeedModulation(c *C) {
 }
 
 func (s *TestSuite) TestTerrainSpeedModulation(c *C) {
-	phydb := loadPhysicalData(c, "test")
 	sim, client := connectAndWaitModel(c, NewAdminOpts(ExLandOfStripesEmpty))
 	defer stopSimAndClient(c, sim, client)
 
 	// 10km/h forest
 	lngForest, latForest := -15.732, 28.4374
-	checkSpeed(c, phydb, client, swapi.Point{X: lngForest, Y: latForest},
+	checkSpeed(c, client, swapi.Point{X: lngForest, Y: latForest},
 		swapi.Point{X: lngForest - 0.05, Y: latForest}, 10)
 
 	// 90km/h urbain
 	lngUrbain, latUrbain := -15.732, 28.3568
-	checkSpeed(c, phydb, client, swapi.Point{X: lngUrbain, Y: latUrbain},
+	checkSpeed(c, client, swapi.Point{X: lngUrbain, Y: latUrbain},
 		swapi.Point{X: lngUrbain - 0.05, Y: latUrbain}, 90)
 }
 

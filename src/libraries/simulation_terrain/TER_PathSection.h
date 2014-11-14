@@ -29,19 +29,32 @@ public:
                     bool needRefine, bool useStrictClosest );
     virtual ~TER_PathSection();
 
+    //! @name Operations
+    //@{
+    PathResultPtr Execute  ( TER_Pathfinder_ABC& pathfind,
+            unsigned int deadlineSeconds );
+    double GetLength() const;
+    void   Cancel   ();
+    //@}
+
+    //! @name Accessors
+    //@{
     const MT_Vector2D&  GetPosStart () const;
     const MT_Vector2D&  GetPosEnd   () const; // $$$$ AGE 2005-02-25: ...
     void                SetPosStart ( const MT_Vector2D& point );
-    TerrainRule_ABC&    GetRule();
-    bool                NeedRefine() const;
-    bool                UseStrictClosest() const;
+    //@}
+
+private:
+    class Canceler;
 
 private:
     std::unique_ptr< TerrainRule_ABC > rule_;
+    std::unique_ptr< Canceler > canceler_;
     MT_Vector2D startPoint_;
     const MT_Vector2D endPoint_;
     const bool needRefine_;
     const bool useStrictClosest_;
+    unsigned int nAddedPoints_;
 };
 
 #endif // SIMULATION_TERRAIN_PATHSECTION_H

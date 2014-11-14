@@ -21,11 +21,11 @@ namespace sword
 
 class ActionManager;
 class MIL_AgentPion;
+class DEC_PathComputer;
 class MIL_Population;
 class PathRequest;
 class PHY_ComposanteTypePion;
 class TER_Pathfinder;
-class TER_PathSection;
 
 // =============================================================================
 /** @class  PathfindComputer
@@ -80,10 +80,8 @@ private:
     void Compute( const std::vector< const PHY_ComposanteTypePion* >& equipments,
                   const sword::PathfindRequest& message,
                   unsigned int ctx, unsigned int clientId, const boost::optional< uint32_t >& magic );
-    void Compute( unsigned int callerId,
-           const std::vector< boost::shared_ptr< TER_PathSection > >& sections,
-           const sword::PathfindRequest& message, unsigned int ctx,
-           unsigned int clientId, const boost::optional< uint32_t >& magic );
+    void Compute( const boost::shared_ptr< DEC_PathComputer >& computer, const sword::PathfindRequest& message,
+                  unsigned int ctx, unsigned int clientId, const boost::optional< uint32_t >& magic );
     //@}
 
 private:

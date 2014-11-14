@@ -66,11 +66,6 @@ func findOrCreateUnit(client *swapi.Client, phydb *phy.PhysicalData,
 			return err
 		}
 		found = u
-	} else {
-		err := client.Teleport(swapi.MakeUnitTasker(found.Id), unit.Pos)
-		if err != nil {
-			return err
-		}
 	}
 	unit.Entity = found
 	return nil

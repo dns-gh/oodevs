@@ -11,77 +11,28 @@
 #include "DEC_PathResult.h"
 #include "MIL_AgentServer.h"
 #include "Decision/DEC_PathType.h"
+#include "Decision/DEC_PathComputer.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "Network/NET_ASN_Tools.h"
 #include "MIL_AgentServer.h"
 #include "MT_Tools/MT_Logger.h"
-#include "SlopeSpeedModifier.h"
-#include "meteo/PHY_MeteoDataManager.h"
-#include "meteo/RawVisionData/Elevation.h"
-#include "meteo/RawVisionData/PHY_RawVisionData.h"
+#include "simulation_terrain/TER_World.h"
 #include "simulation_terrain/TER_PathPoint.h"
 #include "simulation_terrain/TER_Pathfinder.h"
 #include "simulation_terrain/TER_Pathfinder_ABC.h"
-#include "simulation_terrain/TER_World.h"
 #include <boost/make_shared.hpp>
-
-std::list< boost::shared_ptr< TER_PathPoint > > SplitEdgesOnElevationGrid(
-    const std::list< boost::shared_ptr< TER_PathPoint > >& points )
-{
-    if( points.size() < 2 || !MIL_AgentServer::IsInitialized() )
-        return points;
-    std::list< boost::shared_ptr< TER_PathPoint > > output;
-    const auto& elevation = MIL_AgentServer::GetWorkspace()
-        .GetMeteoDataManager().GetRawVisionData();
-
-    for( auto it = points.begin(); it != points.end(); ++it )
-    {
-        if( output.empty() || std::next( it ) == points.end() )
-        {
-            output.push_back( *it );
-            continue;
-        }
-        const auto p1 = *it;
-        const auto p2 = *std::next( it );
-        SlopeSpeedModifier slopeSpeedModifier;
-        SplitOnMajorGridLines( static_cast< int32_t >( elevation.GetCellSize() ),
-            p1->GetPos(), p2->GetPos(), [&]( MT_Vector2D from, MT_Vector2D to )
-            {
-                return slopeSpeedModifier.ComputeLocalSlope( elevation, from, to );
-            });
-        const auto& slopes = slopeSpeedModifier.GetSlopes();
-        for( auto is = slopes.begin(); is != slopes.end(); ++is )
-        {
-            auto ip = output.rbegin();
-            while( ip != output.rend() && !(*ip)->IsSlopeValid() )
-               (*ip++)->SetSlope( is->second ); 
-            if( is->second > 0 && ( is + 1 ) != slopes.end() )
-            {
-                const MT_Line segment( p1->GetPos(), p2->GetPos() );
-                const MT_Vector2D projected = segment.ProjectPointOnLine(
-                        ( is + 1 )->first );
-                const auto point = boost::make_shared< TER_PathPoint >(
-                    projected, p1->GetObjectTypes(),
-                    p1->GetObjectTypesToNextPoint(), false );
-                output.push_back( point );
-            }
-        }
-        output.push_back( p1 );
-    }
-    return output;
-}
 
 // -----------------------------------------------------------------------------
 // Name: DEC_PathResult constructor
 // Created: NLD 2005-09-30
 // -----------------------------------------------------------------------------
-DEC_PathResult::DEC_PathResult( const DEC_PathType& pathType, unsigned int callerId )
+DEC_PathResult::DEC_PathResult( const DEC_PathType& pathType, unsigned int querierId )
     : pathType_( pathType )
     , bSectionJustStarted_( false )
+    , computer_( boost::make_shared< DEC_PathComputer >( querierId ) )
     , state_( TER_Path_ABC::eComputing )
     , finalized_( false )
-    , callerId_( callerId )
 {
     itCurrentPathPoint_ = resultList_.end();
 }
@@ -359,17 +310,21 @@ const DEC_PathType& DEC_PathResult::GetPathType() const
     return pathType_;
 }
 
+DEC_PathComputer& DEC_PathResult::GetComputer()
+{
+    return *computer_;
+}
+
 void DEC_PathResult::StartCompute( const sword::Pathfind& pathfind )
 {
     auto& pathfinder = MIL_AgentServer::GetWorkspace().GetPathFindManager();
-    future_ = pathfinder.StartCompute( callerId_, sections_, pathfind );
+    future_ = pathfinder.StartCompute( computer_, pathfind );
 }
 
 void DEC_PathResult::Cancel()
 {
-    if( !future_ )
-        future_ = boost::make_shared< TER_PathFuture >();
-    future_->Cancel();
+    future_ = boost::make_shared< TER_PathFuture >();
+    future_->Set( computer_->Cancel() );
 }
 
 TER_Path_ABC::E_State DEC_PathResult::GetState() const
@@ -400,7 +355,7 @@ void DEC_PathResult::Finalize()
     state_ = result->state;
     lastWaypoint_ = result->lastWaypoint;
     computedWaypoints_ = result->computedWaypoints;
-    resultList_ = SplitEdgesOnElevationGrid( result->points );
+    resultList_ = result->points;
     itCurrentPathPoint_ = resultList_.begin();
     DoFinalize();
 }
@@ -421,7 +376,3 @@ void DEC_PathResult::RemoveComputedWaypoint()
         computedWaypoints_.erase( computedWaypoints_.begin() );
 }
 
-void DEC_PathResult::AddSection( const boost::shared_ptr< TER_PathSection >& section )
-{
-    sections_.push_back( section );
-}

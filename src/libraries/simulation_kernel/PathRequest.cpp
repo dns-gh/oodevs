@@ -11,13 +11,11 @@
 #include "PathRequest.h"
 
 #include "ActionManager.h"
-#include "Decision/DEC_PathResult.h"
 #include "MIL_AgentServer.h"
 #include "Network/NET_ASN_Tools.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
 #include "protocol/Serialization.h"
-#include "simulation_terrain/TER_Path_ABC.h"
 #include "simulation_terrain/TER_Pathfinder.h"
 
 #include <boost/serialization/optional.hpp>
@@ -31,13 +29,15 @@ BOOST_CLASS_EXPORT_IMPLEMENT( PathRequest )
 // Name: PathRequest constructor
 // Created: LGY 2014-04-16
 // -----------------------------------------------------------------------------
-PathRequest::PathRequest( const boost::shared_ptr< TER_PathFuture >& future,
+PathRequest::PathRequest( const boost::shared_ptr< TER_PathComputer_ABC >& computer,
+                          const boost::shared_ptr< TER_PathFuture >& future,
                           unsigned int ctx,
                           unsigned int clientId,
                           uint32_t id,
                           const sword::PathfindRequest& message,
                           const boost::optional< uint32_t >& magic )
-    : future_( future )
+    : computer_( computer )
+    , future_( future )
     , ctx_( ctx )
     , clientId_( clientId )
     , id_( id )
@@ -132,7 +132,6 @@ bool PathRequest::Update( ActionManager& actions )
     const auto result = future_->Get();
     if( !result )
         return false;
-    result->points = SplitEdgesOnElevationGrid( result->points );
     const bool ok = result->state != TER_Path_ABC::eInvalid &&
         result->state != TER_Path_ABC::eImpossible;
     path_ = sword::PathResult();
@@ -219,6 +218,6 @@ void load_construct_data( Archive& ar, PathRequest* ptr, const unsigned int /*ve
     ar >> request;
     ar >> magic;
     // we don't care anymore about the future, our path is computed and ready to use
-    ::new( ptr ) PathRequest( nullptr, ctx, clientId, id, request, magic );
+    ::new( ptr ) PathRequest( nullptr, nullptr, ctx, clientId, id, request, magic );
 }
 

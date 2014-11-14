@@ -16,6 +16,7 @@
 class MIL_LimaOrder;
 class MIL_Agent_ABC;
 class DEC_Agent_PathClass;
+class DEC_AgentContext_ABC;
 class DEC_Rep_PathPoint;
 
 //*****************************************************************************
@@ -59,6 +60,7 @@ private:
     const DEC_Agent_PathClass& pathClass_;
     const T_PointVector initialWaypoints_;
     T_PointVector nextWaypoints_;
+    boost::shared_ptr< DEC_AgentContext_ABC > context_;
     //@}
 };
 

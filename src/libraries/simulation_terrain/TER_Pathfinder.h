@@ -10,6 +10,7 @@
 #ifndef SIMULATION_TERRAIN_PATHFINDER
 #define SIMULATION_TERRAIN_PATHFINDER
 
+#include "TER_PathComputer_ABC.h"
 #include <tools/Path.h>
 #pragma warning( push, 0 )
 #include <boost/thread/mutex.hpp>
@@ -23,9 +24,9 @@
 
 class TER_DynamicData;
 class TER_PathfindRequest;
+class TER_PathComputer_ABC;
 class TER_PathFinderThread;
 class TER_PathfindRequest;
-class TER_PathSection;
 struct TER_PathResult;
 class TER_StaticData;
 
@@ -51,10 +52,8 @@ public:
     void Set( const boost::shared_ptr< TER_PathResult >& path );
     boost::shared_ptr< TER_PathResult > Get() const;
     void Cancel();
-    bool IsCanceled() const;
 
 private:
-    bool canceled_;
     mutable boost::mutex mutex_;
     boost::shared_ptr< TER_PathResult > path_;
 };
@@ -83,8 +82,7 @@ public:
     // when the computation terminates, successfully and on error. Note the
     // result never contains TER_Path_ABC::eComputing.
     boost::shared_ptr< TER_PathFuture > StartCompute(
-            std::size_t callerId,
-            const std::vector< boost::shared_ptr< TER_PathSection > > sections,
+            const boost::shared_ptr< TER_PathComputer_ABC >& pPath,
             const sword::Pathfind& pathfind );
 
     void AddDynamicData   ( const DynamicDataPtr& data );
@@ -117,7 +115,6 @@ private:
     const tools::Path dumpDir_; // empty if dump is disabled
     const std::set< size_t > dumpFilter_; // empty if no id filters
     const bool debugPath_;
-    std::size_t queryId_;
 
     mutable boost::mutex mutex_;
     boost::condition condition_;

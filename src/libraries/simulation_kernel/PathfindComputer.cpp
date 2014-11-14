@@ -16,6 +16,7 @@
 #include "Decision/DEC_AgentContext.h"
 #include "Decision/DEC_Agent_PathClass.h"
 #include "Decision/DEC_EquipmentListContext.h"
+#include "Decision/DEC_PathComputer.h"
 #include "Decision/DEC_PathType.h"
 #include "Decision/DEC_PopulationContext.h"
 #include "Decision/DEC_Population_PathfinderRule.h"
@@ -96,16 +97,15 @@ void PathfindComputer::Compute( MIL_AgentPion& pion, const sword::PathfindReques
     const auto points = GetPositions( message, world_ );
     if( points.empty() )
         throw MASA_EXCEPTION( "invalid empty path point list" );
+    const auto computer = boost::make_shared< DEC_PathComputer >( pion.GetID() );
     const auto& pathClass = DEC_Agent_PathClass::GetPathClass( DEC_PathType::movement_, pion );
     const auto context = boost::make_shared< DEC_AgentContext >( pion, pathClass, points, message.ignore_dynamic_objects() );
-    std::vector< boost::shared_ptr< TER_PathSection > > sections;
     for( auto it = points.begin(); it != points.end() - 1; ++it )
     {
         std::unique_ptr< TerrainRule_ABC > rule( new DEC_Agent_PathfinderRule( context, *it, *(it + 1) ) );
-        sections.push_back( boost::make_shared< TER_PathSection >(
-                    std::move( rule ), *it, *(it + 1), false, false ) );
+        computer->RegisterPathSection( *new TER_PathSection( std::move( rule ), *it, *(it + 1), false, false ) );
     }
-    Compute( pion.GetID(), sections, message, ctx, clientId, magic );
+    Compute( computer, message, ctx, clientId, magic );
 }
 
 // -----------------------------------------------------------------------------
@@ -118,15 +118,14 @@ void PathfindComputer::Compute( const MIL_Population& population, const sword::P
     const auto points = GetPositions( message, world_ );
     if( points.empty() )
         throw MASA_EXCEPTION( "invalid empty path point list" );
+    const auto computer = boost::make_shared< DEC_PathComputer >( population.GetID() );
     const auto context = boost::make_shared< DEC_PopulationContext >( population, points );
-    std::vector< boost::shared_ptr< TER_PathSection > > sections;
     for( auto it = points.begin(); it != points.end() - 1; ++it )
     {
         std::unique_ptr< TerrainRule_ABC > rule( new DEC_Population_PathfinderRule( context ) );
-        sections.push_back( boost::make_shared< TER_PathSection >(
-                    std::move( rule ), *it, *(it + 1), false, false ) );
+        computer->RegisterPathSection( *new TER_PathSection( std::move( rule ), *it, *(it + 1), false, false ) );
     }
-    Compute( population.GetID(), sections, message, ctx, clientId, magic );
+    Compute( computer, message, ctx, clientId, magic );
 }
 
 void PathfindComputer::Compute( const std::vector< const PHY_ComposanteTypePion* >& equipments,
@@ -136,32 +135,29 @@ void PathfindComputer::Compute( const std::vector< const PHY_ComposanteTypePion*
     const auto points = GetPositions( message, world_ );
     if( points.empty() )
         throw MASA_EXCEPTION( "invalid empty path point list" );
+    const auto computer = boost::make_shared< DEC_PathComputer >( 0 );
     const auto context = boost::make_shared< DEC_EquipmentListContext >( equipments );
-    std::vector< boost::shared_ptr< TER_PathSection > > sections;
     for( auto it = points.begin(); it != points.end() - 1; ++it )
     {
         std::unique_ptr< TerrainRule_ABC > rule( new DEC_Agent_PathfinderRule( context, *it, *(it + 1) ) );
-        sections.push_back( boost::make_shared< TER_PathSection >(
-                    std::move( rule ), *it, *(it + 1), false, false ) );
+        computer->RegisterPathSection( *new TER_PathSection( std::move( rule ), *it, *(it + 1), false, false ) );
     }
-    Compute( 0, sections, message, ctx, clientId, magic );
+    Compute( computer, message, ctx, clientId, magic );
 }
 
 // -----------------------------------------------------------------------------
 // Name: PathfindComputer::Compute
 // Created: LGY 2014-03-03
 // -----------------------------------------------------------------------------
-void PathfindComputer::Compute( unsigned int callerId,
-    const std::vector< boost::shared_ptr< TER_PathSection > >& sections,
-    const sword::PathfindRequest& message, unsigned int ctx, unsigned int clientId,
-    const boost::optional< uint32_t >& magic )
+void PathfindComputer::Compute( const boost::shared_ptr< DEC_PathComputer >& computer, const sword::PathfindRequest& message,
+                                unsigned int ctx, unsigned int clientId, const boost::optional< uint32_t >& magic )
 {
     sword::Pathfind pathfind;
     *pathfind.mutable_request() = message;
-    const auto future = manager_.StartCompute( callerId, sections, pathfind );
+    const auto future = manager_.StartCompute( computer, pathfind );
     const uint32_t id = ++ids_;
     results_[ id ] = boost::make_shared< PathRequest >(
-            future, ctx, clientId, id, message, magic );
+            computer, future, ctx, clientId, id, message, magic );
 }
 
 // -----------------------------------------------------------------------------

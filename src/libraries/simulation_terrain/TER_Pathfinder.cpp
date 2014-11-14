@@ -10,7 +10,6 @@
 #include "simulation_terrain_pch.h"
 #include "TER_Pathfinder.h"
 #include "TER_EdgeMatcher.h"
-#include "TER_PathComputer.h"
 #include "TER_Pathfinder.h"
 #include "TER_Pathfinder_ABC.h"
 #include "TER_PathFindRequest.h"
@@ -43,15 +42,18 @@ std::set< size_t > ParseFilter( const std::string& filter )
 struct PathfindDumper : public TER_Pathfinder_ABC
                       , public boost::noncopyable
 {
-    PathfindDumper( std::size_t callerId, const tools::Path& dump,
-                    const std::set< size_t >& filter,
-                    const boost::shared_ptr< TerrainPathfinder >& root )
-        : dump_( dump )
+    PathfindDumper( const tools::Path& dump, const std::set< size_t >& filter,
+                     const boost::shared_ptr< TerrainPathfinder >& root )
+        : dump_  ( dump )
         , filter_( filter )
-        , root_( root )
-        , callerId_( callerId )
+        , root_  ( root )
+        , id_    ( 0 )
     {
         // NOTHING
+    }
+    virtual void SetId( size_t id )
+    {
+        id_ = id;
     }
     virtual void SetChoiceRatio( float ratio )
     {
@@ -66,7 +68,7 @@ struct PathfindDumper : public TER_Pathfinder_ABC
                               TerrainRule_ABC& rule )
     {
         const bool dump = !dump_.IsEmpty() &&
-            ( filter_.empty() || filter_.count( callerId_ ) );
+            ( filter_.empty() || filter_.count( id_ ) );
         if( dump )
         {
             PathfindFileDumper dumper( GetFilename(), rule );
@@ -79,7 +81,7 @@ private:
     {
         std::stringstream name;
         name << "pathfind_"
-             << callerId_
+             << id_
              << "_"
              << bii::atomic_inc32( &s_idx_ );
         return dump_ / name.str().c_str();
@@ -89,7 +91,7 @@ private:
     const tools::Path&        dump_;
     const std::set< size_t >& filter_;
     boost::shared_ptr< TerrainPathfinder> root_;
-    const size_t              callerId_;
+    size_t                    id_;
 };
 
 boost::uint32_t PathfindDumper::s_idx_ = 0;
@@ -97,7 +99,6 @@ boost::uint32_t PathfindDumper::s_idx_ = 0;
 }  // namespace
 
 TER_PathFuture::TER_PathFuture()
-    : canceled_( false )
 {
 }
 
@@ -108,8 +109,7 @@ TER_PathFuture::~TER_PathFuture()
 void TER_PathFuture::Set( const boost::shared_ptr< TER_PathResult >& path )
 {
     boost::mutex::scoped_lock lock( mutex_ );
-    if( !canceled_ )
-        path_ = path;
+    path_ = path;
 }
 
 boost::shared_ptr< TER_PathResult > TER_PathFuture::Get() const
@@ -120,22 +120,9 @@ boost::shared_ptr< TER_PathResult > TER_PathFuture::Get() const
 
 void TER_PathFuture::Cancel()
 {
-    boost::mutex::scoped_lock lock( mutex_ );
-    if( !canceled_ )
-    {
-        canceled_ = true;
-        path_ = boost::make_shared< TER_PathResult >();
-        path_->state = TER_Path_ABC::eCanceled;
-    }
-}
-
-bool TER_PathFuture::IsCanceled() const
-{
-    // What is important is canceled computations appear canceled from the
-    // client point of view. The computation does not have to end immediately
-    // or even end at all as long as it appears canceled. But IsCanceled()
-    // has to be fast, it is called repeatedly in pathfinder main loop.
-    return canceled_;
+    const auto res = boost::make_shared< TER_PathResult >();
+    res->state = TER_Path_ABC::eCanceled;
+    Set( res );
 }
 
 // -----------------------------------------------------------------------------
@@ -151,7 +138,6 @@ TER_Pathfinder::TER_Pathfinder( const boost::shared_ptr< TER_StaticData >& stati
     , dumpDir_( pathfindDir )
     , dumpFilter_( ParseFilter( pathfindFilter ) )
     , debugPath_( debugPath )
-    , queryId_( 1 )
     , nMaxComputationDuration_( maxComputationDuration )
     , rDistanceThreshold_     ( distanceThreshold )
     , treatedRequests_        ( 0 )
@@ -205,18 +191,16 @@ TER_Pathfinder::~TER_Pathfinder()
 // Created: NLD 2003-08-14
 // -----------------------------------------------------------------------------
 boost::shared_ptr< TER_PathFuture > TER_Pathfinder::StartCompute(
-        std::size_t callerId,
-        const std::vector< boost::shared_ptr< TER_PathSection > > sections,
+        const boost::shared_ptr< TER_PathComputer_ABC >& path,
         const sword::Pathfind& pathfind )
 {
     // $$$$$ PMD: storing the callback in the request is not elegant but harmless
     // for now as the request object is private to the pathfinder. Make a local
     // struct later.
     const auto future = boost::make_shared< TER_PathFuture >();
-    const auto p = boost::make_shared< TER_PathfindRequest >(
-            queryId_++, callerId, sections, pathfind, future );
+    auto p = boost::make_shared< TER_PathfindRequest >( path, pathfind, future );
     boost::mutex::scoped_lock locker( mutex_ );
-    if( p->GetLength() > rDistanceThreshold_ )
+    if( path->GetLength() > rDistanceThreshold_ )
         longRequests_.push_back( p );
     else
         shortRequests_.push_back( p );
@@ -310,6 +294,13 @@ boost::shared_ptr< TER_PathfindRequest > TER_Pathfinder::GetMessage( unsigned in
 
 void TER_Pathfinder::ProcessRequest( TER_PathFinderThread& data, TER_PathfindRequest& rq )
 {
+    const auto computer = rq.GetComputer();
+    if( !computer )
+    {
+        rq.GetFuture()->Cancel();
+        return;
+    }
+
     const unsigned int deadline = nMaxComputationDuration_ == std::numeric_limits< unsigned int >::max()
         ? std::numeric_limits< unsigned int >::max()
         : static_cast< unsigned int >( std::time( 0 ) ) + nMaxComputationDuration_;
@@ -319,14 +310,12 @@ void TER_Pathfinder::ProcessRequest( TER_PathFinderThread& data, TER_PathfindReq
         data.ProcessDynamicData();
         const auto pathfinder = data.GetPathfinder( !rq.IgnoreDynamicObjects() );
         boost::shared_ptr< TER_Pathfinder_ABC > wrapper =
-            boost::make_shared< PathfindDumper >(
-                rq.GetCallerId(), dumpDir_, dumpFilter_, pathfinder );
+            boost::make_shared< PathfindDumper >( dumpDir_, dumpFilter_, pathfinder );
         MT_Profiler profiler;
         profiler.Start();
         if( rq.IsItinerary() )
             wrapper = boost::make_shared< TER_EdgeMatcher >( wrapper, rq.GetPathfind() );
-        const auto res = TER_PathComputer().Execute( rq.GetQueryId(), rq.GetCallerId(),
-                rq.GetSections(), *wrapper, *rq.GetFuture(), deadline, debugPath_ );
+        const auto res = computer->Execute( *wrapper, deadline, debugPath_ );
         rq.GetFuture()->Set( res );
         duration = profiler.Stop();
     }

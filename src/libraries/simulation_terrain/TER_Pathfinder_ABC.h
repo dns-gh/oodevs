@@ -37,6 +37,7 @@ public:
 
     //! @name Operations
     //@{
+    virtual void SetId( size_t id ) = 0;
     virtual void SetChoiceRatio( float ratio ) = 0;
     virtual void SetConfiguration( unsigned nRefining, unsigned int nSubdivisions ) = 0;
     virtual PathResultPtr ComputePath( const geometry::Point2f& from,

@@ -13,6 +13,7 @@
 #include "DEC_Agent_PathfinderRule.h"
 #include "DEC_AgentContext.h"
 #include "Decision/DEC_GeometryFunctions.h"
+#include "Decision/DEC_PathComputer.h"
 #include "Decision/DEC_PathType.h"
 #include "Decision/DEC_Rep_PathPoint_Front.h"
 #include "Decision/DEC_Rep_PathPoint_Lima.h"
@@ -40,19 +41,16 @@ DEC_Agent_Path::DEC_Agent_Path( MIL_Agent_ABC& queryMaker, const T_PointVector& 
     , pathClass_         ( DEC_Agent_PathClass::GetPathClass( pathType, queryMaker ) )
     , initialWaypoints_  ( points )
     , nextWaypoints_     ( points.empty() ? points.begin() : points.begin() + 1, points.end() )
+    , context_           ( new DEC_AgentContext( queryMaker, pathClass_, points, false ) )
 {
     const bool refine = queryMaker.GetType().GetUnitType().CanFly() && !queryMaker.IsAutonomous();
     const bool useStrictClosest = !queryMaker.GetAutomate().GetOrderManager().GetFuseau().IsNull();
     if( points.empty() )
         throw MASA_EXCEPTION( "List of points is empty in population path initialization" );
-    const auto context = boost::make_shared< DEC_AgentContext >(
-            queryMaker, pathClass_, points, false );
     for( auto it = points.begin(); it != points.end() - 1; ++it )
     {
-        std::unique_ptr< TerrainRule_ABC > rule(
-            new DEC_Agent_PathfinderRule( context, *it, *(it + 1) ) );
-        AddSection( boost::make_shared< TER_PathSection >(
-            std::move( rule ), *it, *(it + 1), refine, useStrictClosest ) );
+        std::unique_ptr< TerrainRule_ABC > rule( new DEC_Agent_PathfinderRule( context_, *it, *(it + 1) ) );
+        GetComputer().RegisterPathSection( *new TER_PathSection( std::move( rule ), *it, *(it + 1), refine, useStrictClosest ) );
     }
     queryMaker.RegisterPath( *this );
 }

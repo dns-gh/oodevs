@@ -13,27 +13,19 @@
 #include "Knowledge/DEC_Knowledge_Def.h"
 #include "MT_Tools/Mt_Vector2DTypes.h"
 #include "simulation_terrain/TER_Path_ABC.h"
-#include <list>
 
 namespace sword
 {
     class Path;
 }
 
+class DEC_PathComputer;
 class DEC_PathType;
 class MIL_Agent_ABC;
 class TER_Localisation;
 class TER_PathPoint;
 class TER_PathFuture;
-class TER_PathSection;
 class TER_Polygon;
-
-// Enumerates the edges in "points" and introduces intermediate points to force
-// the path walker to evaluate non-zero slopes. Note input points are not
-// duplicated, instances are preserved and their slope information updated in
-// place.
-std::list< boost::shared_ptr< TER_PathPoint > > SplitEdgesOnElevationGrid(
-    const std::list< boost::shared_ptr< TER_PathPoint > >& points );
 
 //*****************************************************************************
 // Created: JDY 03-02-11
@@ -50,7 +42,7 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             DEC_PathResult( const DEC_PathType& pathType, unsigned int callerId );
+             DEC_PathResult( const DEC_PathType& pathType, unsigned int querierId );
     virtual ~DEC_PathResult();
     //@}
 
@@ -92,8 +84,8 @@ private:
     //@}
 
 protected:
-    void AddSection( const boost::shared_ptr< TER_PathSection >& section );
     void SetResult( T_PathPoints points );
+    DEC_PathComputer& GetComputer();
     const std::vector< MT_Vector2D >& GetComputedWaypoints() const;
     void RemoveComputedWaypoint();
     virtual void DoFinalize();
@@ -107,13 +99,12 @@ private:
     T_PathPoints::const_iterator itCurrentPathPoint_;
     const DEC_PathType& pathType_;
     bool bSectionJustStarted_;
+    boost::shared_ptr< DEC_PathComputer > computer_;
     boost::shared_ptr< TER_PathFuture > future_;
     TER_Path_ABC::E_State state_;
     MT_Vector2D lastWaypoint_;
     std::vector< MT_Vector2D > computedWaypoints_;
     bool finalized_;
-    std::vector< boost::shared_ptr< TER_PathSection > > sections_;
-    const unsigned int callerId_;
     //@}
 };
 
