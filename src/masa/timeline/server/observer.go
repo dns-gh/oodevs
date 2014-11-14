@@ -102,11 +102,10 @@ func (o *Observer) UpdateServices(services ...*sdk.Service) {
 }
 
 type ObserverService struct {
-	uuid            string
-	source          string
-	observer        SdkObserver
-	log             util.Logger
-	serviceObserver services.Observer
+	uuid     string
+	source   string
+	observer SdkObserver
+	log      util.Logger
 }
 
 func NewObserverService(uuid, source string, observer SdkObserver, log util.Logger) *ObserverService {
@@ -128,14 +127,11 @@ func (os *ObserverService) Proto(name string) *sdk.Service {
 	}
 }
 
-func (ObserverService) HasClock() bool { return false }
-func (ObserverService) IsLocked() bool { return false }
-func (ObserverService) Start() error   { return nil }
-func (ObserverService) Stop() error    { return nil }
-
-func (os *ObserverService) AttachObserver(observer services.Observer) {
-	os.serviceObserver = observer
-}
+func (*ObserverService) HasClock() bool                   { return false }
+func (*ObserverService) IsLocked() bool                   { return false }
+func (*ObserverService) Start() error                     { return nil }
+func (*ObserverService) Stop() error                      { return nil }
+func (*ObserverService) AttachObserver(services.Observer) {}
 
 func (os *ObserverService) Trigger(url url.URL, event *sdk.Event) error {
 	os.log.Printf("external[%v] -> action %v\n", os.uuid, event.GetUuid())
