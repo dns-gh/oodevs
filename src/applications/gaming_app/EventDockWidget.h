@@ -25,10 +25,10 @@
 namespace actions
 {
     class Action_ABC;
-    namespace gui
-    {
-        class InterfaceBuilder_ABC;
-    }
+namespace gui
+{
+    class InterfaceBuilder_ABC;
+}
 }
 
 namespace gui
@@ -140,6 +140,7 @@ private slots:
     //@{
     void OnEditClicked();
     void OnDeleteClicked();
+    void OnSplitClicked();
     //@}
 
 private:

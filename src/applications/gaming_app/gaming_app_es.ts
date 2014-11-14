@@ -652,6 +652,14 @@ Motivo: %3</translation>
         <source>Display</source>
         <translation>Mostrar</translation>
     </message>
+    <message>
+        <source>Split</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Merge</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>EventMagicWidget</name>
@@ -728,6 +736,17 @@ Motivo: %3</translation>
     <message>
         <source>Recipient</source>
         <translation type="unfinished">Receptor</translation>
+    </message>
+</context>
+<context>
+    <name>EventReplayWidget</name>
+    <message>
+        <source>Label</source>
+        <translation type="unfinished">Etiqueta</translation>
+    </message>
+    <message>
+        <source>Description</source>
+        <translation type="unfinished">Descripción</translation>
     </message>
 </context>
 <context>

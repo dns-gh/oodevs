@@ -129,7 +129,7 @@ void EventTopWidget::Purge()
 // -----------------------------------------------------------------------------
 void EventTopWidget::Build( const gui::EventViewState& state )
 {
-    E_EventTypes type = ( state.event_ ) ? state.event_->GetType() : eNbrEventTypes;
+    const E_EventTypes type = ( state.event_ ) ? state.event_->GetType() : eNbrEventTypes;
     const std::string& beginDate = ( state.event_ ) ? state.event_->GetEvent().begin : "";
     const std::string& endDate = ( state.event_ ) ? state.event_->GetEvent().end : "";
 
@@ -138,8 +138,9 @@ void EventTopWidget::Build( const gui::EventViewState& state )
     saveAction_->setEnabled( state.save_ );
     saveAsAction_->setEnabled( state.saveAs_ );
 
-    bool canHaveEndTime = type == eEventTypes_Task || type == eEventTypes_Multimedia;
+    const bool canHaveEndTime = type == eEventTypes_Task || type == eEventTypes_Multimedia || type == eEventTypes_Replay;
     hasEndDateTimeCheckbox_->setVisible( canHaveEndTime );
+    hasEndDateTimeCheckbox_->setEnabled( type != eEventTypes_Replay );
     endDateTimeEdit_->setVisible( canHaveEndTime );
     startDateLabel_->setText( canHaveEndTime ? tr( "Start" ) : "" );
 

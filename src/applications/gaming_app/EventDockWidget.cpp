@@ -18,6 +18,7 @@
 #include "EventReportWidget.h"
 #include "EventMagicWidget.h"
 #include "EventMarkerWidget.h"
+#include "EventReplayWidget.h"
 #include "EventTopWidget.h"
 #include "EventTaskWidget.h"
 
@@ -106,6 +107,7 @@ EventDockWidget::EventDockWidget( QWidget* parent,
     stack_->insertWidget( eEventTypes_Task  , new EventTaskWidget( *presenter_, controllers, entitySymbols,
                                                                    profile, model, simulation ) );
     stack_->insertWidget( eEventTypes_Marker, new EventMarkerWidget( *presenter_, config.BuildExerciseChildFile( "" ), model.GetUuid() ) );
+    stack_->insertWidget( eEventTypes_Replay, new EventReplayWidget( *presenter_ ) );
 
     AddDefaultView( views_, *stack_, eEventTypes_Report     , new EventReportWidget( *presenter_ ) );
     AddDefaultView( views_, *stack_, eEventTypes_Multimedia , new EventMultimediaWidget( *presenter_ ) );
@@ -258,6 +260,17 @@ void EventDockWidget::OnDeleteClicked()
 }
 
 // -----------------------------------------------------------------------------
+// Name: EventDockWidget::OnSplitClicked
+// Created: SLI 2014-11-13
+// -----------------------------------------------------------------------------
+void EventDockWidget::OnSplitClicked()
+{
+    if( selected_ )
+        timelineHandler_->SplitEvent( selected_->GetEvent() );
+    selected_ = 0;
+}
+
+// -----------------------------------------------------------------------------
 // Name: EventDockWidget::NotifyActivated
 // Created: ABR 2013-07-02
 // -----------------------------------------------------------------------------
@@ -285,8 +298,13 @@ void EventDockWidget::NotifyContextMenu( const gui::Event& event, kernel::Contex
     selected_ = &event;
     menu.InsertItem( "Command", event.GetEvent().done ? tr( "Display") : tr( "Edit" ),
                      this, SLOT( OnEditClicked() ) );
+    if( event.GetType() == eEventTypes_Replay )
+        menu.InsertItem( "Command", tr( "Split" ), this, SLOT( OnSplitClicked() ) );
     if( !event.GetEvent().done )
-        menu.InsertItem( "Command", tr( "Delete" ), this, SLOT( OnDeleteClicked() ) );
+    {
+        const QString label = event.GetType() == eEventTypes_Replay ? tr( "Merge" ) : tr( "Delete" );
+        menu.InsertItem( "Command", label, this, SLOT( OnDeleteClicked() ) );
+    }
 }
 
 // -----------------------------------------------------------------------------

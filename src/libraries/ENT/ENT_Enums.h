@@ -424,6 +424,7 @@ enum E_EventTypes
     eEventTypes_Task,
     eEventTypes_Multimedia,
     eEventTypes_Marker,
+    eEventTypes_Replay,
     eNbrEventTypes
 };
 

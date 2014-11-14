@@ -256,6 +256,10 @@
         <source>New marker</source>
         <translation>Nouveau marqueur</translation>
     </message>
+    <message>
+        <source>Replay range</source>
+        <translation>Zone de rejeu</translation>
+    </message>
 </context>
 <context>
     <name>EventOrderPresenter</name>

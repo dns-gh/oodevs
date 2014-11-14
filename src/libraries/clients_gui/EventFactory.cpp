@@ -79,6 +79,14 @@ Event* EventFactory::Create( E_EventTypes type, const timeline::Event* event /* 
             result->GetEvent().name = tools::translate( "EventFactory", "New marker" );
         }
         break;
+    case eEventTypes_Replay:
+        result = new Event( type, ( event ) ? *event : dummyEvent );
+        if( !event )
+        {
+            result->GetEvent().action.target = timeline_helpers::CreateEventTarget( EVENT_REPLAY_PROTOCOL, "" );
+            result->GetEvent().name = tools::translate( "EventFactory", "Replay range" );
+        }
+        break;
     case eEventTypes_Magic:
     case eEventTypes_Report:
     case eEventTypes_Multimedia:

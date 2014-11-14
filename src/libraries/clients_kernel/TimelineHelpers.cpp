@@ -55,6 +55,8 @@ namespace timeline_helpers
             return eEventTypes_Multimedia;
         if( scheme == EVENT_MARKER_PROTOCOL )
             return eEventTypes_Marker;
+        if( scheme == EVENT_REPLAY_PROTOCOL )
+            return eEventTypes_Replay;
         return eEventTypes_Task;
     }
 }

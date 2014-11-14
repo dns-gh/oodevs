@@ -511,6 +511,7 @@ T_ConverterEventTypes EventTypesConverter_[] =
     T_ConverterEventTypes( "task",              QT_TRANSLATE_NOOP( "ENT_Tr", "Task" ),              eEventTypes_Task ),
     T_ConverterEventTypes( "multimedia",        QT_TRANSLATE_NOOP( "ENT_Tr", "Multimedia" ),        eEventTypes_Multimedia ),
     T_ConverterEventTypes( "marker",            QT_TRANSLATE_NOOP( "ENT_Tr", "Marker" ),            eEventTypes_Marker ),
+    T_ConverterEventTypes( "replay",            QT_TRANSLATE_NOOP( "ENT_Tr", "Replay" ),            eEventTypes_Replay ),
     T_ConverterEventTypes( "", "", ( E_EventTypes )-1 )
 };
 

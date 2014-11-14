@@ -260,6 +260,10 @@
         <source>New marker</source>
         <translation>New marker</translation>
     </message>
+    <message>
+        <source>Replay range</source>
+        <translation>Replay range</translation>
+    </message>
 </context>
 <context>
     <name>EventOrderPresenter</name>

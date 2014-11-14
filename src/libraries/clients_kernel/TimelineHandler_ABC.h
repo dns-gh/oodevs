@@ -41,6 +41,7 @@ public:
     virtual void CreateEvent( const timeline::Event& event, bool select = false ) = 0;
     virtual void SelectEvent( const std::string& uuid ) = 0;
     virtual void EditEvent( const timeline::Event& event ) = 0;
+    virtual void SplitEvent( const timeline::Event& event ) = 0;
     virtual void DeleteEvent( const std::string& uuid ) = 0;
     virtual const std::string& GetCurrentParent() const = 0;
     //@}

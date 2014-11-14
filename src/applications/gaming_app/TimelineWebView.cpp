@@ -209,6 +209,30 @@ void TimelineWebView::EditEvent( const timeline::Event& event )
         server_->UpdateEvent( event );
 }
 
+namespace
+{
+    std::string ComputeHalfSplittedTime( const std::string& begin, const std::string& end )
+    {
+        const QDateTime beginTime = QDateTime::fromString( QString::fromStdString( begin ), EVENT_DATE_FORMAT );
+        const QDateTime endTime = QDateTime::fromString( QString::fromStdString( end ), EVENT_DATE_FORMAT );
+        const int duration = beginTime.secsTo( endTime );
+        return beginTime.addSecs( duration / 2 ).toString( EVENT_DATE_FORMAT ).toStdString();
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: TimelineWebView::SplitEvent
+// Created: SLI 2014-11-13
+// -----------------------------------------------------------------------------
+void TimelineWebView::SplitEvent( const timeline::Event& event )
+{
+    timeline::Event splitted = event;
+    const std::string splittedTime = ComputeHalfSplittedTime( event.begin, event.end );
+    splitted.begin = splittedTime;
+    splitted.uuid = timeline_helpers::GenerateUuid();
+    CreateEvent( splitted, true );
+}
+
 // -----------------------------------------------------------------------------
 // Name: TimelineWebView::DeleteEvent
 // Created: ABR 2013-05-17

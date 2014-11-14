@@ -651,6 +651,14 @@ Reason: %3
         <source>Display</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Split</source>
+        <translation>Split</translation>
+    </message>
+    <message>
+        <source>Merge</source>
+        <translation>Merge</translation>
+    </message>
 </context>
 <context>
     <name>EventMagicWidget</name>
@@ -727,6 +735,17 @@ Reason: %3
     <message>
         <source>Recipient</source>
         <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>EventReplayWidget</name>
+    <message>
+        <source>Label</source>
+        <translation>Label</translation>
+    </message>
+    <message>
+        <source>Description</source>
+        <translation>Description</translation>
     </message>
 </context>
 <context>
