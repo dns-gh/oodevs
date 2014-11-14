@@ -216,7 +216,7 @@ kernel::Agent_ABC* AgentFactory::Create( const sword::UnitCreation& message )
     result->Attach( *new LogSupplyConsigns( controllers_.controller_ ) );
     result->Attach( *new LogFuneralConsigns( controllers_.controller_ ) );
     result->Attach< kernel::CommunicationHierarchies >( *new AgentHierarchiesCommunication( controllers_, *result, model_.agents_, model_.knowledgeGroups_ ) );
-    result->Attach< kernel::TacticalHierarchies >     ( *new AgentHierarchies< kernel::TacticalHierarchies >     ( controllers_.controller_, *result, model_.agents_ ) );
+    result->Attach< kernel::TacticalHierarchies >( *new AgentHierarchies< kernel::TacticalHierarchies >( controllers_.controller_, *result, model_.agents_ ) );
     result->Attach< kernel::HumanFactors_ABC >( *new HumanFactors( *result, controllers_.controller_, dictionary ) );
     result->Attach( *new Reinforcements( *result, controllers_.controller_, model_.agents_, dictionary ) );
     result->Attach< kernel::Dotations_ABC >( *new Dotations( *result,controllers_.controller_, static_.objectTypes_, dictionary, model_.agents_, model_.teams_, model_.teams_ ) );
@@ -236,10 +236,8 @@ kernel::Agent_ABC* AgentFactory::Create( const sword::UnitCreation& message )
     result->Attach< kernel::DictionaryExtensions >( *new DictionaryExtensions( controllers_, "orbat-attributes", static_.extensions_ ) );
     result->Attach( *new PointingKnowledges() );
     AttachExtensions( *result );
-
     result->Update( message );
     result->Polish();
-
     return result;
 }
 
