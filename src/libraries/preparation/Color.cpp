@@ -92,8 +92,6 @@ Color::~Color()
 void Color::SerializeAttributes( xml::xostream& xos ) const
 {
     if( color_ )
-    {
-        T_Color color = *color_;
-        xos << xml::attribute( "color", RgbToHex( color.get< 0 >(), color.get< 1 >(), color.get< 2 >() ) );
-    }
+        xos << xml::attribute( "color",
+            RgbToHex( color_->get< 0 >(), color_->get< 1 >(), color_->get< 2 >() ) );
 }
