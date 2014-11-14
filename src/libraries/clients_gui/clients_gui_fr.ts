@@ -998,10 +998,6 @@ Please check access permissions or write protection.</source>
         <translation>Attention</translation>
     </message>
     <message>
-        <source>Unable to create a new terrain view with an invalid id: %1.</source>
-        <translation>Impossible de creer une nouvelle vue de terrain avec un id invalid: %1.</translation>
-    </message>
-    <message>
         <source>View %1</source>
         <translation>Vue %1</translation>
     </message>
@@ -1024,16 +1020,20 @@ These settings are defined for the application &apos;%2&apos;, on the base &apos
 Ces paramètres sont définis pour l&apos;application &apos;%2&apos;, pour la base physique &apos;%3&apos; et pour l&apos;exercice &apos;%4&apos;.</translation>
     </message>
     <message>
-        <source>Unable to create a new terrain view, no id available.</source>
-        <translation>Impossible de créer une nouvelle vue, aucune id disponible.</translation>
-    </message>
-    <message>
-        <source>Unable to create a new terrain view, id already used: %1.</source>
-        <translation>Impossible de créer une nouvelle vue, id déjà utilisée: %1.</translation>
-    </message>
-    <message>
         <source>Use as main view</source>
         <translation>Utiliser comme vue principale</translation>
+    </message>
+    <message>
+        <source>Unable to create a new terrain view, no identifier available.</source>
+        <translation>Impossible de créer une nouvelle vue, aucun identifiant disponible.</translation>
+    </message>
+    <message>
+        <source>Unable to create a new terrain view with an invalid identifier: %1.</source>
+        <translation>Impossible de creer une nouvelle vue de terrain avec un identifiant invalid: %1.</translation>
+    </message>
+    <message>
+        <source>Unable to create a new terrain view, identifier already in use: %1.</source>
+        <translation>Impossible de créer une nouvelle vue, identifiant déjà utilisé: %1.</translation>
     </message>
 </context>
 <context>

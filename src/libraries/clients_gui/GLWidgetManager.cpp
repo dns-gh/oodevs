@@ -245,12 +245,12 @@ GLDockWidget* GLWidgetManager::AddDockWidget( unsigned id /* = 0 */ )
             if( dockWidgets_.count( i ) == 0 )
                 id = i;
         if( id == 0 )
-            warning = tr( "Unable to create a new terrain view, no id available." );
+            warning = tr( "Unable to create a new terrain view, no identifier available." );
     }
     else if( id > nbMaxGLDock ) // from configuration file
-        warning = tr( "Unable to create a new terrain view with an invalid id: %1." ).arg( id );
+        warning = tr( "Unable to create a new terrain view with an invalid identifier: %1." ).arg( id );
     else if( dockWidgets_.count( id ) != 0 )
-        warning = tr( "Unable to create a new terrain view, id already used: %1." ).arg( id );
+        warning = tr( "Unable to create a new terrain view, identifier already in use: %1." ).arg( id );
     if( !warning.isEmpty() )
     {
         QMessageBox::warning( &mainWindow_, tr( "Warning" ), warning );

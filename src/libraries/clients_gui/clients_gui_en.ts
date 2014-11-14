@@ -1003,10 +1003,6 @@ Please check access permissions or write protection.</translation>
         <translation type="unfinished">Warning</translation>
     </message>
     <message>
-        <source>Unable to create a new terrain view with an invalid id: %1.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>View %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1028,15 +1024,19 @@ These settings are defined for the application &apos;%2&apos;, on the base &apos
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Unable to create a new terrain view, id already used: %1.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Unable to create a new terrain view, no id available.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Use as main view</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unable to create a new terrain view, no identifier available.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unable to create a new terrain view with an invalid identifier: %1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unable to create a new terrain view, identifier already in use: %1.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
