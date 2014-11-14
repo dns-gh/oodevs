@@ -140,6 +140,5 @@ func (os *ObserverService) AttachObserver(observer services.Observer) {
 func (os *ObserverService) Trigger(url url.URL, event *sdk.Event) error {
 	os.log.Printf("external[%v] -> action %v\n", os.uuid, event.GetUuid())
 	os.observer.TriggerEvents(event)
-	os.serviceObserver.CloseEvent(event.GetUuid(), nil, true)
 	return nil
 }
