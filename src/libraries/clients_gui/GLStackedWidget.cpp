@@ -104,7 +104,6 @@ void GLStackedWidget::Load()
 
     InitializePasses();
     ChangeTo( proxy_->GetCurrentOptions().Get( "3D" ).To< bool >() ? eWidget_3D : eWidget_2D );
-    //widget2d_->makeCurrent();
 }
 
 // -----------------------------------------------------------------------------
@@ -198,9 +197,10 @@ std::shared_ptr< GLView_ABC > GLStackedWidget::GetProxy() const
 // -----------------------------------------------------------------------------
 std::shared_ptr< QGLWidget > GLStackedWidget::GetCurrentWidget() const
 {
-    if( widget2d_ )
+    auto currentType = static_cast< E_Widget >( currentIndex() );
+    if( currentType == eWidget_2D )
         return widget2d_;
-    if( widget3d_ )
-        return widget2d_;
+    if( currentType == eWidget_3D )
+        return widget3d_;
     return std::shared_ptr< QGLWidget >();
 }
