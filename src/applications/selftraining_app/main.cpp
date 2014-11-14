@@ -36,7 +36,7 @@ QString GetLastErrorMessage()
         0 );
     const QString result( static_cast< char* >( buffer ) );
     LocalFree( buffer );
-    return result;
+    return result.trimmed();
 }
 
 std::shared_ptr< void > MakeSubprocessTerminationJob()
