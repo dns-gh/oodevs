@@ -63,6 +63,7 @@ private:
     //! @name Helpers
     //@{
     virtual void Update();
+    virtual void PublishRename();
     //@}
 
     //! @name Helpers

@@ -30,11 +30,6 @@ namespace sword
     class PathResult;
 }
 
-namespace actions
-{
-    class ActionsModel;
-}
-
 // =============================================================================
 /** @class  Note
     @brief  Note
@@ -92,9 +87,14 @@ public:
     //@}
 
 private:
+    //! @name Methods
+    //@{
+    virtual void PublishRename();
+    //@}
+
+private:
     //! @name Member data
     //@{
-    actions::ActionsModel& actionsModel_;
     sword::Pathfind pathfind_;
     const kernel::Entity_ABC* entity_;
     Itinerary itinerary_;

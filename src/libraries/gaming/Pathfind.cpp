@@ -77,8 +77,7 @@ Pathfind::Pathfind( Controller& controller,
                     bool edition,
                     const T_CanBeRenamedFunctor& canBeRenamedFunctor )
     : EntityImplementation< Pathfind_ABC >( controller, msg.id(), msg.request().has_name() ?
-                        msg.request().name().c_str() : tools::translate( "Pathfind", "itinerary" ), canBeRenamedFunctor )
-    , actionsModel_( actionsModel )
+                        msg.request().name().c_str() : tools::translate( "Pathfind", "itinerary" ), &actionsModel, canBeRenamedFunctor )
     , pathfind_( msg )
     , entity_( &entity )
     , itinerary_( converter, msg, edition )
@@ -87,11 +86,6 @@ Pathfind::Pathfind( Controller& controller,
     AddExtension( *this );
     Attach< kernel::Equipments_ABC >( *new Equipments( msg ) );
     Attach< kernel::TacticalHierarchies >( *new PathfindHierarchies( *this ) );
-    SetRenameObserver( [&]( const QString& name ){
-        auto pathfind = pathfind_;
-        pathfind.mutable_request()->set_name( name.toStdString() );
-        actionsModel_.PublishUpdatePathfind( pathfind );
-    } );
 }
 
 Pathfind::~Pathfind()
@@ -176,7 +170,7 @@ int Pathfind::ChangeSuperior( const kernel::Entity_ABC& target )
     auto request = pathfind.mutable_request();
     request->set_name( name_ );
     request->mutable_unit()->set_id( target.GetId() );
-    return actionsModel_.PublishUpdatePathfind( pathfind );
+    return actionsModel_->PublishUpdatePathfind( pathfind );
 }
 
 const kernel::Entity_ABC& Pathfind::GetUnit() const
@@ -213,5 +207,12 @@ void Pathfind::UpdateMessage( const sword::Pathfind& msg, const Entity_ABC& owne
 
 void Pathfind::NotifyDestruction() const
 {
-    actionsModel_.PublishDestroyPathfind( GetId() );
+    actionsModel_->PublishDestroyPathfind( GetId() );
+}
+
+void Pathfind::PublishRename()
+{
+    auto pathfind = pathfind_;
+    pathfind.mutable_request()->set_name( name_.toStdString() );
+    actionsModel_->PublishUpdatePathfind( pathfind );
 }

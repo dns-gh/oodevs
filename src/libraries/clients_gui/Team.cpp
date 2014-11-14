@@ -26,8 +26,9 @@ using namespace gui;
 Team::Team( Controllers& controllers,
             unsigned long id,
             const QString& name,
+            actions::ActionsModel* actionsModel,
             const T_CanBeRenamedFunctor& canBeRenamedFunctor /* = T_CanBeRenamedFunctor() */ )
-    : EntityImplementation< Team_ABC >( controllers.controller_, id, name, canBeRenamedFunctor )
+    : EntityImplementation< Team_ABC >( controllers.controller_, id, name, actionsModel, canBeRenamedFunctor )
     , controllers_( controllers )
 {
     // NOTHING

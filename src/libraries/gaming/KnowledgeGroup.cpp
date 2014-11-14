@@ -34,8 +34,9 @@ KnowledgeGroup::KnowledgeGroup( unsigned long nId,
                                 kernel::Controller& controller,
                                 const std::string& type,
                                 const tools::Resolver_ABC< kernel::KnowledgeGroupType, std::string >& types,
+                                actions::ActionsModel& actionsModel,
                                 const T_CanBeRenamedFunctor& canBeRenamedFunctor )
-    : gui::EntityImplementation< kernel::KnowledgeGroup_ABC >( controller, nId, ComputeName( name, nId ), canBeRenamedFunctor )
+    : gui::EntityImplementation< kernel::KnowledgeGroup_ABC >( controller, nId, ComputeName( name, nId ), &actionsModel, canBeRenamedFunctor )
     , type_( type )
     , types_( types )
     , activated_( true )

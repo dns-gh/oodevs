@@ -39,8 +39,9 @@ namespace
 // -----------------------------------------------------------------------------
 Team::Team( const sword::PartyCreation& message,
             kernel::Controllers& controllers,
+            actions::ActionsModel& actionsModel,
             const T_CanBeRenamedFunctor& canBeRenamedFunctor )
-    : gui::Team( controllers, message.party().id(), QString( message.name().c_str() ), canBeRenamedFunctor )
+    : gui::Team( controllers, message.party().id(), QString( message.name().c_str() ), &actionsModel, canBeRenamedFunctor )
     , karma_( MakeKarma( message.type() ) )
 {
     AddExtension( *this );

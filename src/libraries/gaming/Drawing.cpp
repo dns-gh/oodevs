@@ -53,7 +53,6 @@ Drawing::Drawing( kernel::Controllers& controllers,
 {
     SetLocation( message.shape().points() );
     SetText( message.shape() );
-    SetRenameObserver( [&]( const QString& ) { SendUpdateRequest(); } );
 }
 
 // -----------------------------------------------------------------------------
@@ -108,6 +107,15 @@ void Drawing::NotifyDestruction() const
 // Created: SBO 2008-06-05
 // -----------------------------------------------------------------------------
 void Drawing::Update()
+{
+    SendUpdateRequest();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Drawing::PublishRename
+// Created: LDC 2014-11-14
+// -----------------------------------------------------------------------------
+void Drawing::PublishRename()
 {
     SendUpdateRequest();
 }

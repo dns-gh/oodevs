@@ -27,8 +27,9 @@ using namespace kernel;
 // -----------------------------------------------------------------------------
 Formation::Formation( const sword::FormationCreation& message,
                       Controller& controller,
+                      actions::ActionsModel& actionsModel,
                       const T_CanBeRenamedFunctor& canBeRenamedFunctor )
-    : EntityImplementation< Formation_ABC >( controller, message.formation().id(), QString( message.name().c_str() ), canBeRenamedFunctor )
+    : EntityImplementation< Formation_ABC >( controller, message.formation().id(), QString( message.name().c_str() ), &actionsModel, canBeRenamedFunctor )
     , controller_   ( controller )
     , level_        ( static_cast< E_NatureLevel >( message.level() ) )
 {

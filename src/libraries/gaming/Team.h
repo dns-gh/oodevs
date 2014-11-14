@@ -41,6 +41,7 @@ public:
     //@{
              Team( const sword::PartyCreation& message,
                    kernel::Controllers& controllers,
+                   actions::ActionsModel& actionsModel,
                    const T_CanBeRenamedFunctor& canBeRenamedFunctor );
     virtual ~Team();
     //@}

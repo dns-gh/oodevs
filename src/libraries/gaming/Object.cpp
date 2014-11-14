@@ -29,8 +29,9 @@ Object::Object( const sword::ObjectCreation& message,
                 Controller& controller,
                 const CoordinateConverter_ABC& converter,
                 const tools::Resolver_ABC< kernel::ObjectType, std::string >& typeResolver,
+                actions::ActionsModel& actionsModel,
                 const T_CanBeRenamedFunctor& canBeRenamedFunctor )
-    : gui::EntityImplementation< Object_ABC >( controller, message.object().id(), QString( message.name().c_str() ), canBeRenamedFunctor )
+    : gui::EntityImplementation< Object_ABC >( controller, message.object().id(), QString( message.name().c_str() ), &actionsModel, canBeRenamedFunctor )
     , converter_        ( converter )
     , type_             ( typeResolver.Get( message.type().id() ) )
 {

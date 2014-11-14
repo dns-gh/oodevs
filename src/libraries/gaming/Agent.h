@@ -52,6 +52,7 @@ public:
             Agent( const sword::UnitCreation& message,
                    kernel::Controller& controller,
                    const tools::Resolver_ABC< kernel::AgentType >& resolver,
+                   actions::ActionsModel& actionsModel,
                    const T_CanBeRenamedFunctor& canBeRenamedFunctor );
     virtual ~Agent();
     //@}

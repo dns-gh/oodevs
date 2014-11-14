@@ -44,6 +44,7 @@ public:
                              kernel::Controller& controller,
                              const std::string& sType,
                              const tools::Resolver_ABC< kernel::KnowledgeGroupType, std::string >& types,
+                             actions::ActionsModel& actionsModel,
                              const T_CanBeRenamedFunctor& canBeRenamedFunctor );
     virtual ~KnowledgeGroup();
     //@}

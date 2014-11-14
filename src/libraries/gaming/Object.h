@@ -47,6 +47,7 @@ public:
                      kernel::Controller& controller,
                      const kernel::CoordinateConverter_ABC& converter,
                      const tools::Resolver_ABC< kernel::ObjectType, std::string >& typeResolver,
+                     actions::ActionsModel& actionsModel,
                      const T_CanBeRenamedFunctor& canBeRenamedFunctor );
     virtual ~Object();
     //@}

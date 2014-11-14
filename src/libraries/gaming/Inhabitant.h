@@ -56,6 +56,7 @@ public:
                          const UrbanModel& model,
                          const kernel::InhabitantType& type,
                          const tools::Resolver_ABC< kernel::DotationType >& dotationResolver,
+                         actions::ActionsModel& actionsModel,
                          const T_CanBeRenamedFunctor& canBeRenamedFunctor );
     virtual ~Inhabitant();
     //@}

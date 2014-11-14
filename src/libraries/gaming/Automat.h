@@ -46,6 +46,7 @@ public:
              Automat( const sword::AutomatCreation& message,
                       kernel::Controller& controller,
                       const kernel::AutomatType& type,
+                      actions::ActionsModel& actionsModel,
                       const T_CanBeRenamedFunctor& canBeRenamedFunctor );
     virtual ~Automat();
     //@}

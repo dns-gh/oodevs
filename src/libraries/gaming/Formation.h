@@ -43,6 +43,7 @@ public:
     //@{
              Formation( const sword::FormationCreation& message,
                         kernel::Controller& controller,
+                        actions::ActionsModel& actionsModel,
                         const T_CanBeRenamedFunctor& canBeRenamedFunctor );
     virtual ~Formation();
     //@}

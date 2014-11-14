@@ -78,8 +78,7 @@ TeamFactory::~TeamFactory()
 // -----------------------------------------------------------------------------
 kernel::Team_ABC* TeamFactory::CreateTeam( const sword::PartyCreation& message )
 {
-    Team* result = new Team( message, controllers_, [=]( const kernel::Team_ABC& team ){ return profile_.CanDoMagic( team ); } );
-    result->SetRenameObserver( [=]( const QString& name ){ actionsModel_.PublishRename( *result, name ); } );
+    Team* result = new Team( message, controllers_, actionsModel_, [=]( const kernel::Team_ABC& team ){ return profile_.CanDoMagic( team ); } );
     gui::PropertiesDictionary& dico = result->Get< gui::PropertiesDictionary >();
     result->Attach( *new UrbanKnowledges( *result, controllers_.controller_, model_.urbanKnowledgeFactory_ ) );
     result->Attach< kernel::Diplomacies_ABC > ( *new Diplomacies( controllers_.controller_, model_.teams_ ) );
@@ -125,8 +124,8 @@ kernel::Team_ABC* TeamFactory::CreateNoSideTeam()
 {
     auto* result = new gui::EntityImplementation< kernel::Team_ABC >( controllers_.controller_, 0,
                                                                       tools::translate( "TeamFactory", "No side" ),
+                                                                      &actionsModel_,
                                                                       [=]( const kernel::Team_ABC& team ){ return profile_.CanDoMagic( team ); } );
-    result->SetRenameObserver( [=]( const QString& name ){ actionsModel_.PublishRename( *result, name ); } );
     result->Attach< kernel::Diplomacies_ABC >( *new NoSideDiplomacy() );
     result->Attach< kernel::TacticalHierarchies >( *new TeamTacticalHierarchies( controllers_.controller_, *result ) );
     result->Update( kernel::InstanciationComplete() );
@@ -144,9 +143,8 @@ kernel::Formation_ABC* TeamFactory::CreateFormation( const sword::FormationCreat
         static_cast< kernel::Entity_ABC*>( &model_.teams_.Resolver< kernel::Formation_ABC >::Get( message.parent().id() ) ) :
         static_cast< kernel::Entity_ABC*>( &model_.teams_.Resolver< kernel::Team_ABC >::Get( message.party().id() ) );
 
-    Formation* result = new Formation( message, controllers_.controller_,
+    Formation* result = new Formation( message, controllers_.controller_, actionsModel_,
                                        [=]( const kernel::Formation_ABC& formation ){ return profile_.CanDoMagic( formation ); } );
-    result->SetRenameObserver( [=]( const QString& name ){ actionsModel_.PublishRename( *result, name ); } );
     result->Attach< Lives_ABC >( *new FormationLives( *result ) );
     gui::PropertiesDictionary& dico = result->Get< gui::PropertiesDictionary >();
     std::string symbol = message.has_app6symbol() ? message.app6symbol() : std::string();

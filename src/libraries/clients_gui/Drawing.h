@@ -57,6 +57,7 @@ protected:
     //! @name Helpers
     //@{
     virtual void Update() = 0;
+    virtual void PublishRename();
     //@}
 
     //! @name Member Data

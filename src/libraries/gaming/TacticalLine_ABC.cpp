@@ -26,14 +26,13 @@ TacticalLine_ABC::TacticalLine_ABC( kernel::Controller& controller,
                                     Publisher_ABC& publisher,
                                     const kernel::CoordinateConverter_ABC& converter,
                                     const T_CanBeRenamedFunctor& canBeRenamedFunctor )
-    : gui::EntityImplementation< kernel::TacticalLine_ABC >( controller, id, baseName, canBeRenamedFunctor )
+    : gui::EntityImplementation< kernel::TacticalLine_ABC >( controller, id, baseName, 0, canBeRenamedFunctor )
     , controller_( controller )
     , converter_ ( converter )
     , publisher_ ( publisher )
     , id_        ( id )
 {
     AddExtension( *this );
-    SetRenameObserver( [&]( const QString& ){ UpdateToSim( eStateModified ); } );
 }
 
 // -----------------------------------------------------------------------------
@@ -151,5 +150,14 @@ void TacticalLine_ABC::DoUpdate( const sword::LimitUpdate& message )
 void TacticalLine_ABC::ChangeSuperior( const kernel::Entity_ABC& superior )
 {
     const_cast< TacticalLineHierarchies& >( static_cast< const TacticalLineHierarchies& >( Get< kernel::TacticalHierarchies >() ) ).ChangeSuperior( superior );
+    UpdateToSim( eStateModified );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TacticalLine_ABC::PublishRename
+// Created: LDC 2014-11-14
+// -----------------------------------------------------------------------------
+void TacticalLine_ABC::PublishRename()
+{
     UpdateToSim( eStateModified );
 }

@@ -59,6 +59,7 @@ public:
                          kernel::Controllers& controllers,
                          const kernel::CoordinateConverter_ABC& converter,
                          const kernel::PopulationType& type,
+                         actions::ActionsModel& actionsModel,
                          const T_CanBeRenamedFunctor& canBeRenamedFunctor );
     virtual ~Population();
     //@}

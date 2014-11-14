@@ -26,8 +26,9 @@ using namespace kernel;
 Automat::Automat( const sword::AutomatCreation& message,
                   Controller& controller,
                   const kernel::AutomatType& type,
+                  actions::ActionsModel& actionsModel,
                   const T_CanBeRenamedFunctor& canBeRenamedFunctor )
-    : EntityImplementation< Automat_ABC >( controller, message.automat().id(), QString( message.name().c_str() ), canBeRenamedFunctor )
+    : EntityImplementation< Automat_ABC >( controller, message.automat().id(), QString( message.name().c_str() ), &actionsModel, canBeRenamedFunctor )
     , type_( type )
 {
     if( name_.isEmpty() )

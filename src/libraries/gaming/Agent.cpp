@@ -33,8 +33,9 @@ using namespace kernel;
 Agent::Agent( const sword::UnitCreation& message,
               Controller& controller,
               const tools::Resolver_ABC< AgentType >& resolver,
+              actions::ActionsModel& actionsModel,
               const T_CanBeRenamedFunctor& canBeRenamedFunctor )
-    : EntityImplementation< Agent_ABC >( controller, message.unit().id(), QString( message.name().c_str() ), canBeRenamedFunctor )
+    : EntityImplementation< Agent_ABC >( controller, message.unit().id(), QString( message.name().c_str() ), &actionsModel, canBeRenamedFunctor )
     , type_       ( resolver.Get( message.type().id() ) )
     , controller_( controller )
     , initialized_( false )

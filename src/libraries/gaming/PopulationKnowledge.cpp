@@ -33,7 +33,7 @@ PopulationKnowledge::PopulationKnowledge( const KnowledgeGroup_ABC& group,
                                           const CoordinateConverter_ABC& converter,
                                           const tools::Resolver_ABC< Population_ABC >& resolver,
                                           const sword::CrowdKnowledgeCreation& message )
-    : EntityImplementation< PopulationKnowledge_ABC >( controller, message.knowledge().id(), "", []( const PopulationKnowledge_ABC& ){ return false; } )
+    : EntityImplementation< PopulationKnowledge_ABC >( controller, message.knowledge().id(), "", 0, []( const PopulationKnowledge_ABC& ){ return false; } )
     , group_     ( group )
     , controller_( controller )
     , converter_ ( converter )

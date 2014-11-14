@@ -37,8 +37,9 @@ Population::Population( const sword::CrowdCreation& message,
                         Controllers& controllers,
                         const CoordinateConverter_ABC& converter,
                         const kernel::PopulationType& type,
+                        actions::ActionsModel& actionsModel,
                         const T_CanBeRenamedFunctor& canBeRenamedFunctor )
-    : EntityImplementation< Population_ABC >( controllers.controller_, message.crowd().id(), QString( message.name().c_str() ), canBeRenamedFunctor )
+    : EntityImplementation< Population_ABC >( controllers.controller_, message.crowd().id(), QString( message.name().c_str() ), &actionsModel, canBeRenamedFunctor )
     , controllers_         ( controllers )
     , converter_           ( converter )
     , male_                ( static_cast< unsigned int >( 100 * message.repartition().male() + 0.5f ) )

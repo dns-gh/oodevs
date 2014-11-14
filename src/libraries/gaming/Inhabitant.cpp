@@ -44,8 +44,9 @@ Inhabitant::Inhabitant( const sword::PopulationCreation& message,
                         const UrbanModel& model,
                         const kernel::InhabitantType& type,
                         const tools::Resolver_ABC< DotationType >& dotationResolver,
+                        actions::ActionsModel& actionsModel,
                         const T_CanBeRenamedFunctor& canBeRenamedFunctor )
-    : EntityImplementation< Inhabitant_ABC >( controller, message.id().id(), QString( message.name().c_str() ), canBeRenamedFunctor )
+    : EntityImplementation< Inhabitant_ABC >( controller, message.id().id(), QString( message.name().c_str() ), &actionsModel, canBeRenamedFunctor )
     , controller_      ( controller )
     , male_            ( ToInt( type.GetMalePercentage() ) )
     , female_          ( ToInt( type.GetFemalePercentage() ) )
