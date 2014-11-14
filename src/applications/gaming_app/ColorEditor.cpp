@@ -99,7 +99,7 @@ namespace
 
     QColor FindBaseColor( const kernel::Entity_ABC& entity, gui::ColorStrategy_ABC& strategy )
     {
-        if( const kernel::Color_ABC* color = entity.Retrieve< kernel::Color_ABC >() )
+        if( auto color = entity.Retrieve< kernel::Color_ABC >() )
             return ToColor( static_cast< const Color& >( *color ).GetBaseColor() );
         return strategy.FindBaseColor( entity );
     }
@@ -107,13 +107,13 @@ namespace
     void ApplyDefaultColor( const kernel::Entity_ABC& entity, gui::ColorStrategy_ABC& strategy,
                             gui::ColorEditor_ABC& colorEditor, bool applyToSubordinates )
     {
-        QColor baseColor = FindBaseColor( entity, strategy );
-        if( kernel::Color_ABC* color = const_cast< kernel::Color_ABC* >( entity.Retrieve< kernel::Color_ABC >() ) )
+        const QColor baseColor = FindBaseColor( entity, strategy );
+        if( auto color = const_cast< kernel::Color_ABC* >( entity.Retrieve< kernel::Color_ABC >() ) )
             color->ChangeColor( baseColor );
         colorEditor.Add( entity, baseColor, false, true );
         if( !applyToSubordinates )
             return;
-        if( const kernel::TacticalHierarchies* pTacticalHierarchies =  entity.Retrieve< kernel::TacticalHierarchies >() )
+        if( auto pTacticalHierarchies =  entity.Retrieve< kernel::TacticalHierarchies >() )
             for( auto it = pTacticalHierarchies->CreateSubordinateIterator(); it.HasMoreElements(); )
                 ApplyDefaultColor( it.NextElement(), strategy, colorEditor, applyToSubordinates );
     }
