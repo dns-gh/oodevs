@@ -113,8 +113,5 @@ TraceGraph = function( trace ) DEC_Trace( trace ) end
 
 -- Allow masalife_brain plugin to output messages
 LogMessage = function ( tag, message )
-    -- Make sure we do nothing if this function is called while in a restricted environment
-    if DEC_Trace then
-        DEC_Trace( "[" .. tag .. "] " .. message ) 
-    end
+    DEC_Trace( "[" .. tag .. "] " .. message )
 end

@@ -30,7 +30,16 @@ function DEC_Debug( message )
 end
 
 function DEC_Trace( message )
-    _DEC_Trace( myself, message )
+    -- Make sure we do nothing if this function is called while the brain is
+    -- under construction (e.g., by 'LogMessage')
+    -- As soon as _DEC_Trace is defined, we redefine this function for all
+    -- subsequent calls
+    if _DEC_Trace then
+        DEC_Trace = function ( message )
+            _DEC_Trace( myself, message )
+        end
+        DEC_Trace( message )
+    end
 end
 
 function DEC_DecisionalState( key, value )
