@@ -96,18 +96,15 @@ func (f *FakeSwordFilter) FormValue(key string) string {
 	return f.data[key]
 }
 
-func parseFiltersWith(c *C, filter *FakeSwordFilter) services.EventFilterConfig {
-	cfg, err := ParseEventFilterConfig(filter)
+func parseFilters(c *C, values ...string) services.EventFilterConfig {
+	c.Assert(len(values)&1, Equals, 0)
+	data := map[string]string{}
+	for i := 0; i < len(values); i += 2 {
+		data[values[i]] = values[i+1]
+	}
+	cfg, err := ParseEventFilterConfig(&FakeSwordFilter{data})
 	c.Assert(err, IsNil)
 	return cfg
-}
-
-func parseFilters(c *C, key, value string) services.EventFilterConfig {
-	return parseFiltersWith(c, &FakeSwordFilter{
-		data: map[string]string{
-			key: value,
-		},
-	})
 }
 
 func countEvents(counter chan<- int, link <-chan interface{}) {
@@ -247,56 +244,64 @@ func (t *TestSuite) TestFilters(c *C) {
 	f.applyFilters(c, services.EventFilterConfig{}, 23)
 
 	// test sword_profile
-	f.applyFilters(c, services.EventFilterConfig{
-		"sword_profile": "automat_1_only",
-	}, 5+1)
-	f.applyFilters(c, services.EventFilterConfig{
-		"sword_profile": "formation_1_only",
-	}, 8+1)
-	f.applyFilters(c, services.EventFilterConfig{
-		"sword_profile": "formation_2_only",
-	}, 12+1)
-	f.applyFilters(c, services.EventFilterConfig{
-		"sword_profile": "party_1_only",
-	}, 16+1)
-	f.applyFilters(c, services.EventFilterConfig{
-		"sword_profile": "f1_read_f3_write",
-	}, 11+1)
-	f.applyFilters(c, services.EventFilterConfig{
-		"sword_profile": "crowd_1_only",
-	}, 2+1)
+	f.applyFilters(c, parseFilters(c,
+		"sword_profile", "automat_1_only",
+	), 5+1)
+	f.applyFilters(c, parseFilters(c,
+		"sword_profile", "formation_1_only",
+	), 8+1)
+	f.applyFilters(c, parseFilters(c,
+		"sword_profile", "formation_2_only",
+	), 12+1)
+	f.applyFilters(c, parseFilters(c,
+		"sword_profile", "party_1_only",
+	), 16+1)
+	f.applyFilters(c, parseFilters(c,
+		"sword_profile", "f1_read_f3_write",
+	), 11+1)
+	f.applyFilters(c, parseFilters(c,
+		"sword_profile", "crowd_1_only",
+	), 2+1)
 
-	// test sword_write_only
-	f.applyFilters(c, services.EventFilterConfig{
-		"sword_profile":    "party_1_only",
-		"sword_write_only": true,
-	}, 0+1)
-	f.applyFilters(c, services.EventFilterConfig{
-		"sword_profile":    "f1_read_f3_write",
-		"sword_write_only": true,
-	}, 3+1)
-	f.applyFilters(c, services.EventFilterConfig{
-		"sword_profile":    "f1_read_f3_write",
-		"sword_write_only": false,
-	}, 11+1)
+	// test sword_read_only
+	f.applyFilters(c, parseFilters(c,
+		"sword_profile", "party_1_only",
+		"sword_read_only", "false",
+	), 0+1)
+	f.applyFilters(c, parseFilters(c,
+		"sword_profile", "f1_read_f3_write",
+		"sword_read_only", "false",
+	), 3+1)
+	f.applyFilters(c, parseFilters(c,
+		"sword_profile", "f1_read_f3_write",
+		"sword_read_only", "true",
+	), 11+1)
 
 	// test sword_filter
 	f.applyFilters(c, parseFilters(c,
-		"sword_filter", "u:1,u:2"), 3+1)
+		"sword_filter", "u:1,u:2",
+	), 3+1)
 	f.applyFilters(c, parseFilters(c,
-		"sword_filter", "a:1"), 5+1)
+		"sword_filter", "a:1",
+	), 5+1)
 	f.applyFilters(c, parseFilters(c,
-		"sword_filter", "f:3"), 3+1)
+		"sword_filter", "f:3",
+	), 3+1)
 	f.applyFilters(c, parseFilters(c,
-		"sword_filter", "p:2"), 6+1)
+		"sword_filter", "p:2",
+	), 6+1)
 	f.applyFilters(c, parseFilters(c,
-		"sword_filter", "c:1"), 2+1)
+		"sword_filter", "c:1",
+	), 2+1)
 	f.applyFilters(c, parseFilters(c,
-		"sword_filter", "i:1"), 1+1)
+		"sword_filter", "i:1",
+	), 1+1)
 	f.applyFilters(c, parseFilters(c,
-		"sword_filter", "a:1,f:3,p:2,c:1"), 16+1)
+		"sword_filter", "a:1,f:3,p:2,c:1",
+	), 16+1)
 	f.applyFilters(c, parseFilters(c,
-		"sword_filter", "u:0"), 1)
+		"sword_filter", "u:0",
+	), 1)
 
 	// test sword_filter_engaged: if activated, orders that were given to units by automata are not displayed
 	f.applyFilters(c, parseFilters(c,
@@ -415,9 +420,9 @@ func (t *TestSuite) TestIncompleteMissionsAreVisibleByAnyProfile(c *C) {
 	f.addSwordEvent(c, "i1", "some_name", f.getSomeFragOrder(c, swapi.MakePopulationTasker(0)))
 
 	f.applyFilters(c, services.EventFilterConfig{}, 9)
-	f.applyFilters(c, services.EventFilterConfig{
-		"sword_profile": "party_1_only",
-	}, 9)
+	f.applyFilters(c, parseFilters(c,
+		"sword_profile", "party_1_only",
+	), 9)
 }
 
 func (t *TestSuite) TestFiltersOnMagicActions(c *C) {
@@ -486,31 +491,44 @@ func (t *TestSuite) TestFiltersOnMagicActions(c *C) {
 	f.applyFilters(c, services.EventFilterConfig{}, 10+1)
 
 	// test sword_profile
-	f.applyFilters(c, services.EventFilterConfig{
-		"sword_profile": "party_1_only",
-	}, 2+1)
-	f.applyFilters(c, services.EventFilterConfig{
-		"sword_profile": "party_2_only",
-	}, 1+1)
-	f.applyFilters(c, services.EventFilterConfig{
-		"sword_profile": "party_1_supervisor",
-	}, 9+1)
-	f.applyFilters(c, services.EventFilterConfig{
-		"sword_profile": "supervisor",
-	}, 10+1)
+	f.applyFilters(c, parseFilters(c,
+		"sword_profile", "party_1_only",
+	), 2+1)
+	f.applyFilters(c, parseFilters(c,
+		"sword_profile", "party_2_only",
+	), 1+1)
+	f.applyFilters(c, parseFilters(c,
+		"sword_profile", "party_1_supervisor",
+	), 9+1)
+	f.applyFilters(c, parseFilters(c,
+		"sword_profile", "supervisor",
+	), 10+1)
+	// combine profile & read_only
+	f.applyFilters(c, parseFilters(c,
+		"sword_profile", "party_1_only",
+		"sword_read_only", "false",
+	), 0+1)
+	f.applyFilters(c, parseFilters(c,
+		"sword_profile", "party_2_only",
+		"sword_read_only", "false",
+	), 0+1)
+	f.applyFilters(c, parseFilters(c,
+		"sword_profile", "party_1_supervisor",
+		"sword_read_only", "false",
+	), 9+1)
+	f.applyFilters(c, parseFilters(c,
+		"sword_profile", "supervisor",
+		"sword_read_only", "false",
+	), 10+1)
 	// combine both profile & custom profile
-	f.applyFilters(c, parseFiltersWith(c, &FakeSwordFilter{
-		data: map[string]string{
-			"sword_profile": "party_1_supervisor",
-			"sword_filter":  "i:1",
-		},
-	}), 1+2) // ima1 + ma1 + i0
-	f.applyFilters(c, parseFiltersWith(c, &FakeSwordFilter{
-		data: map[string]string{
-			"sword_profile": "party_1_only",
-			"sword_filter":  "i:1",
-		},
-	}), 0+1) // i0
+	f.applyFilters(c, parseFilters(c,
+		"sword_profile", "party_1_supervisor",
+		"sword_filter", "i:1",
+	), 1+2) // ima1 + ma1 + i0
+	f.applyFilters(c, parseFilters(c,
+		"sword_profile", "party_1_only",
+		"sword_filter", "i:1",
+	), 0+1) // i0
 }
 
 func (t *TestSuite) TestFiltersHierarchy(c *C) {
@@ -628,21 +646,21 @@ func (t *TestSuite) TestFiltersMetadata(c *C) {
 	// ensure we do get all our events
 	f.applyFilters(c, services.EventFilterConfig{}, 9)
 	// test sword_profile
-	f.applyFilters(c, services.EventFilterConfig{
-		"sword_profile": "party_1_only",
-	}, 7+2)
-	f.applyFilters(c, services.EventFilterConfig{
-		"sword_profile": "formation_2_only",
-	}, 4+2)
-	f.applyFilters(c, services.EventFilterConfig{
-		"sword_profile": "formation_3_only",
-	}, 3+2)
-	f.applyFilters(c, services.EventFilterConfig{
-		"sword_profile": "automat_4_only",
-	}, 2+2)
-	f.applyFilters(c, services.EventFilterConfig{
-		"sword_profile": "crowd_6_only",
-	}, 1+2)
+	f.applyFilters(c, parseFilters(c,
+		"sword_profile", "party_1_only",
+	), 7+2)
+	f.applyFilters(c, parseFilters(c,
+		"sword_profile", "formation_2_only",
+	), 4+2)
+	f.applyFilters(c, parseFilters(c,
+		"sword_profile", "formation_3_only",
+	), 3+2)
+	f.applyFilters(c, parseFilters(c,
+		"sword_profile", "automat_4_only",
+	), 2+2)
+	f.applyFilters(c, parseFilters(c,
+		"sword_profile", "crowd_6_only",
+	), 1+2)
 
 	// test sword_filter
 	f.applyFilters(c, parseFilters(c,
@@ -666,9 +684,10 @@ func (t *TestSuite) TestFiltersMetadata(c *C) {
 	event.Metadata = nil
 	_, err := f.controller.UpdateEvent(f.session, event.GetUuid(), event)
 	c.Assert(err, IsNil)
-	f.applyFilters(c, services.EventFilterConfig{
-		"sword_profile": "automat_4_only",
-	}, 2+3)
 	f.applyFilters(c, parseFilters(c,
-		"sword_filter", "a:4"), 2+3)
+		"sword_profile", "automat_4_only",
+	), 2+3)
+	f.applyFilters(c, parseFilters(c,
+		"sword_filter", "a:4",
+	), 2+3)
 }

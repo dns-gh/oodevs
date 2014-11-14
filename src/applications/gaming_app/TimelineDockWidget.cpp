@@ -133,6 +133,7 @@ TimelineToolBar* TimelineDockWidget::AddView( bool main /* = false */,
     connect( toolBar, SIGNAL( SaveTimelineSessionFileRequest( const tools::Path& ) ), webView_.get(), SLOT( OnSaveTimelineSessionFileRequested( const tools::Path& ) ) );
     connect( toolBar, SIGNAL( ToggleLayoutOrientation() ), webView_.get(), SLOT( OnToggleLayoutOrientation() ) );
     connect( toolBar, SIGNAL( EngagedFilterToggled( bool ) ), webView_.get(), SLOT( OnEngagedFilterToggled( bool ) ) );
+    connect( toolBar, SIGNAL( ReadOnlyFilterToggled( bool ) ), webView_.get(), SLOT( OnReadOnlyFilterToggled( bool ) ) );
     connect( toolBar, SIGNAL( ServicesFilterChanged( const std::string& ) ), webView_.get(), SLOT( OnServicesFilterChanged( const std::string& ) ) );
     connect( toolBar, SIGNAL( KeywordFilterChanged( const std::string& ) ), webView_.get(), SLOT( OnKeywordFilterChanged( const std::string& ) ) );
     connect( toolBar, SIGNAL( HideHierarchiesFilterChanged( const std::string& ) ), webView_.get(), SLOT( OnHideHierarchiesFilterChanged( const std::string& ) ) );

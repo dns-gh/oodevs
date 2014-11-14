@@ -653,6 +653,14 @@ void TimelineWebView::OnSavedEvents( const std::string& content, const timeline:
     os.close();
 }
 
+namespace
+{
+    std::string boolToString( bool value )
+    {
+        return value ? "true" : "false";
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: TimelineWebView::OnToggleLayoutOrientation
 // Created: ABR 2013-10-25
@@ -663,7 +671,7 @@ void TimelineWebView::OnToggleLayoutOrientation()
     {
         horizontal_ = !horizontal_;
         server_->UpdateQuery( boost::assign::map_list_of
-            ( "horizontal", horizontal_ ? "true" : "false" ) );
+            ( "horizontal", boolToString( horizontal_ ) ) );
     }
 }
 
@@ -675,7 +683,14 @@ void TimelineWebView::OnEngagedFilterToggled( bool displayEngaged )
 {
     if( server_ )
         server_->UpdateQuery( boost::assign::map_list_of
-            ( "sword_filter_engaged", displayEngaged ? "false" : "true" ) );
+            ( "sword_filter_engaged", boolToString( !displayEngaged ) ) );
+}
+
+void TimelineWebView::OnReadOnlyFilterToggled( bool displayReadOnly )
+{
+    if( server_ )
+        server_->UpdateQuery( boost::assign::map_list_of
+            ( "sword_read_only", boolToString( displayReadOnly ) ) );
 }
 
 // -----------------------------------------------------------------------------

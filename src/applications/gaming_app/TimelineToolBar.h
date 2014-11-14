@@ -84,6 +84,7 @@ signals:
     void SaveTimelineSessionFileRequest( const tools::Path& path );
 
     void EngagedFilterToggled( bool checked );
+    void ReadOnlyFilterToggled( bool checked );
     void ServicesFilterChanged( const std::string& services );
     void KeywordFilterChanged( const std::string& keyword );
     void HideHierarchiesFilterChanged( const std::string& hierarchies );
@@ -97,6 +98,7 @@ public slots:
     void OnLoadOrderFile();
     void OnSaveOrderFile();
     void OnEngagedFilterToggled( bool toggled );
+    void OnReadOnlyFilterToggled( bool toggled );
     void OnOrderFilterToggled( bool toggled );
     void OnTaskFilterToggled( bool toggled );
     void OnSelectedFilterToggled( bool toggled );
@@ -125,6 +127,7 @@ private:
     std::string keywordFilter_;
     QString filters_;
     bool displayEngaged_;
+    bool displayReadOnly_;
     bool displayOrders_;
     bool displayTasks_;
     bool displaySelected_;
