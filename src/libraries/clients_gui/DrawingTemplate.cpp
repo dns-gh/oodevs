@@ -445,14 +445,19 @@ void DrawingTemplate::GenerateSamplePixmap( float r /*= -1*/, float g /*= -1*/, 
 // -----------------------------------------------------------------------------
 void DrawingTemplate::DrawSample()
 {
+    int oldViewport[ 4 ];
+    glGetIntegerv( GL_VIEWPORT, oldViewport );
+    glViewport( 0, 0, SYMBOL_ICON_SIZE, SYMBOL_ICON_SIZE );
+
     glPushAttrib( GL_CURRENT_BIT | GL_LINE_BIT );
     glEnable( GL_LINE_SMOOTH );
-    glPushMatrix();
     glMatrixMode( GL_PROJECTION );
+    glPushMatrix();
     glLoadIdentity();
     glMatrixMode( GL_MODELVIEW );
+    glPushMatrix();
     glLoadIdentity();
-    glViewport( 0, 0, SYMBOL_ICON_SIZE, SYMBOL_ICON_SIZE ); 
+
     glOrtho( 0.0f, SYMBOL_ICON_SIZE, 0.0f, SYMBOL_ICON_SIZE, 0, 1);
     glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 
@@ -505,7 +510,11 @@ void DrawingTemplate::DrawSample()
     glEnd();
 
     glPopMatrix();
+    glMatrixMode( GL_PROJECTION );
+    glPopMatrix(); 
     glPopAttrib();
+
+    glViewport( oldViewport[ 0 ], oldViewport[ 1 ], oldViewport[ 2 ], oldViewport[ 3 ] );
 }
 
 // -----------------------------------------------------------------------------
