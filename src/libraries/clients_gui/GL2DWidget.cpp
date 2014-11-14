@@ -487,7 +487,6 @@ void GL2DWidget::DrawArc( const Point2f& center,
     }
 
     const float deltaAngle = ( maxAngle - minAngle ) / 24.f + 1e-6f;
-    glMatrixMode(GL_MODELVIEW);
     glPushAttrib( GL_LINE_BIT );
     glEnable( GL_LINE_SMOOTH );
     glLineWidth( width );
@@ -547,7 +546,6 @@ namespace
         radius = Radius( radius, unit, pixels );
         glPushAttrib( GL_LINE_BIT );
         glEnable( GL_LINE_SMOOTH );
-        glMatrixMode(GL_MODELVIEW);
         glPushMatrix();
             glTranslatef( center.X(), center.Y(), 0.f );
             glScalef( radius, radius, 1.f );
@@ -569,7 +567,6 @@ void GL2DWidget::DrawCircle( const Point2f& center,
     radius = Radius( radius, unit, Pixels() );
     glPushAttrib( GL_LINE_BIT );
     glEnable( GL_LINE_SMOOTH );
-    glMatrixMode( GL_MODELVIEW );
     glPushMatrix();
         glTranslatef( center.X(), center.Y(), 0.f );
         glScalef    ( radius, radius, 1.f );
@@ -927,7 +924,6 @@ void GL2DWidget::DrawApp6( const std::string& symbol,
     gl::Initialize();
     glPushAttrib( GL_CURRENT_BIT | GL_LINE_BIT );
     glEnable( GL_LINE_SMOOTH );
-        glMatrixMode( GL_MODELVIEW );
         glPushMatrix();
             glTranslatef( center.X(), center.Y(), 0.0f );
             glRotatef( - (GLfloat)direction, 0, 0, 1 );
