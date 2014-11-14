@@ -19,6 +19,7 @@
 namespace gui
 {
     class Event;
+    class GLWidgetManager;
 }
 
 namespace kernel
@@ -58,7 +59,7 @@ class TimelineDockWidget : public gui::RichDockWidget
 public:
     //! @name Constructors/Destructor
     //@{
-             TimelineDockWidget( QWidget* parent, kernel::Controllers& controllers, const GamingConfig& config, Model& model );
+             TimelineDockWidget( QWidget* parent, kernel::Controllers& controllers, const GamingConfig& config, Model& model, gui::GLWidgetManager& glWidgetManager );
     virtual ~TimelineDockWidget();
     //@}
 

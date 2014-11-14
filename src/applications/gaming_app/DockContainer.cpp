@@ -70,6 +70,7 @@ DockContainer::DockContainer( QMainWindow* parent,
                               const std::shared_ptr< gui::TerrainProfilerLayer >& profilerLayer,
                               const std::shared_ptr< ::WeatherLayer >& weatherLayer,
                               gui::GLView_ABC& view,
+                              gui::GLWidgetManager& glWidgetManager,
                               gui::RichItemFactory& factory,
                               gui::ColorStrategy_ABC& colorStrategy,
                               gui::SymbolIcons& symbolIcons,
@@ -217,7 +218,7 @@ DockContainer::DockContainer( QMainWindow* parent,
     // Timelines
     {
         // New Timeline
-        auto timeline = new TimelineDockWidget( parent, controllers, config, model );
+        auto timeline = new TimelineDockWidget( parent, controllers, config, model, glWidgetManager );
         timeline->SetModes( eModes_Default );
         parent->addDockWidget( Qt::TopDockWidgetArea, timeline );
         eventDockWidget_->SetTimelineHandler( timeline->GetWebView() );

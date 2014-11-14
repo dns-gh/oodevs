@@ -271,7 +271,7 @@ MainWindow::MainWindow( Controllers& controllers,
     // Dock widgets
     dockContainer_.reset( new DockContainer( this, controllers_, staticModel, model, network_, simulation, config, filter,
                                              parameters, profilerLayer, meteoLayer,
-                                             *glProxy_, *factory, *strategy_, *symbolIcons_, *icons_, *indicatorExportDialog,
+                                             *glProxy_, *glWidgetManager_, *factory, *strategy_, *symbolIcons_, *icons_, *indicatorExportDialog,
                                              simulationController, *drawingsBuilder_, *displayExtractor_, converter, *unitStateDialog_ ) );
     logger.SetLogger( dockContainer_->GetLoggerPanel() );
 

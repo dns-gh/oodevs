@@ -20,6 +20,7 @@
 namespace gui
 {
     class Event;
+    class GLWidgetManager;
 }
 
 namespace kernel
@@ -65,7 +66,8 @@ public:
              TimelineWebView( QWidget* parent,
                               const GamingConfig& config,
                               kernel::Controllers& controllers,
-                              Model& model );
+                              Model& model,
+                              gui::GLWidgetManager& glWidgetManager );
     virtual ~TimelineWebView();
     //@}
 
@@ -158,6 +160,7 @@ private:
     const GamingConfig& config_;
     kernel::Controllers& controllers_;
     Model& model_;
+    gui::GLWidgetManager& glWidgetManager_;
 
     boost::scoped_ptr< timeline::Server_ABC > server_;
     boost::shared_ptr< timeline::Event > selected_;
