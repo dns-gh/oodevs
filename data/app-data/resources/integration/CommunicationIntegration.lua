@@ -144,7 +144,7 @@ integration.communication.StartMissionPion = function( content  )
 end
 
 --- Assign the mission to the calling DirectIA agent
--- This method can only be called by an agent
+-- This method can only be called by a disengaged agent
 -- @param content a table with the following entries:
 -- <ul><li> mission_type string the type of the mission </li>
 -- <li> echelon the echelon (eEtatEchelon_None; eEtatEchelon_Second; eEtatEchelon_First; eEtatEchelon_Scout; eEtatEchelon_Reserve )</li>
@@ -155,22 +155,6 @@ integration.communication.StartMissionPionVersPion = function( content )
   fillParameters( mission, content.mission_objectives ) 
   DEC_DonnerMissionPionVersPion( mission )
   F_Pion_SeteEtatEchelon( meKnowledge.source, content.echelon ) 
-end
-
---- Assign the given mission to the calling DirectIA agent with the sender as parameter (usually a follow mission )
--- This method can only be called by an agent
--- @param sender the DirectIA agent, the mission's parameter
--- @param missionName the name of the task associated to the mission
--- @param withoutPosition Boolean, if true, the mission is issued without the "positions" parameter.
-integration.communication.FollowMe = function( missionName, sender, withoutPosition )
-    local mission = DEC_CreerMissionPionVersPion( missionName )
-    local followParam = DEC_AssignMissionPionListParameter( sender )   -- entities to folow: the sender of the message
-    DEC_AssignMissionListParameter( mission, "entities", { followParam } )
-    if not withoutPosition then
-        DEC_AssignMissionListParameter( mission, "positions", NIL )    -- positions
-    end
-    DEC_AssignMissionNumericTypeParameter( mission, "minDistance", 0 ) -- distance min 0 meters
-    DEC_DonnerMissionPionVersPion( mission )                           -- Issue the mission
 end
 
 --- Assign the given mission to the calling DirectIA agent with the waypoints as parameter (usually a moveTo mission )
@@ -590,4 +574,17 @@ end
 -- @return String, the type (for Simulation fragmentary order it returns his name, for Simulation agent or crowd it returns the type define in Adaptation tool )
 integration.getAnyType = function( any )
     return any:GetType()
+end
+
+--- Assign the given mission to the calling DirectIA agent with the sender as parameter (usually a follow mission )
+-- This method can only be called by a disengaged agent
+-- @param sender the DirectIA agent, the mission's parameter
+-- @param missionName the name of the task associated to the mission
+integration.communication.FollowMe = function( missionName, sender )
+    local mission = DEC_CreerMissionPionVersPion( missionName )
+    local followParam = DEC_AssignMissionPionListParameter( sender )   -- entities to folow: the sender of the message
+    DEC_AssignMissionListParameter( mission, "entities", { followParam } )
+    DEC_AssignMissionListParameter( mission, "positions", NIL )        -- positions
+    DEC_AssignMissionNumericTypeParameter( mission, "minDistance", 0 ) -- distance min 0 meters
+    DEC_DonnerMissionPionVersPion( mission )                           -- Issue the mission
 end
