@@ -1082,6 +1082,7 @@ void GL2DWidget::initializeGL()
 
 void GL2DWidget::resizeGL( int w, int h )
 {
+    makeCurrent();
     windowHeight_ = h;
     windowWidth_ = w;
     MapWidget::resizeGL( w, h );

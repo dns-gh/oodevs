@@ -863,6 +863,7 @@ void GL3DWidget::Paint( const ViewFrustum& view )
 
 void GL3DWidget::resizeGL( int w, int h )
 {
+    makeCurrent();
     windowHeight_ = h;
     windowWidth_ = w;
     Widget3D::resizeGL( w, h );
