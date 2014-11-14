@@ -10,7 +10,6 @@
 #include "frontend_pch.h"
 #include "SpawnCommand.h"
 #include "clients_kernel/tools.h"
-#include "MT_Tools/MT_Logger.h"
 #include "tools/GeneralConfig.h"
 #include "tools/Log.h"
 #include <tools/Path.h>
@@ -27,59 +26,6 @@ tools::Path frontend::MakeBinaryName( const tools::Path& prefix )
 #else
     return prefix + tools::Path::FromUTF8( ".exe" );
 #endif
-}
-
-namespace
-{
-
-QString GetLastErrorMessage()
-{
-    LPVOID buffer;
-    FormatMessage(
-        FORMAT_MESSAGE_ALLOCATE_BUFFER |
-        FORMAT_MESSAGE_FROM_SYSTEM |
-        FORMAT_MESSAGE_IGNORE_INSERTS,
-        0,
-        GetLastError(),
-        MAKELANGID( LANG_NEUTRAL, SUBLANG_DEFAULT ),
-        (LPTSTR)&buffer,
-        0,
-        0 );
-    const QString result( static_cast< char* >( buffer ) );
-    LocalFree( buffer );
-    return result;
-}
-
-std::shared_ptr< void > MakeSubprocessTerminationJob()
-{
-    const auto job = CreateJobObject( NULL, NULL );
-    if( !job )
-        throw MASA_EXCEPTION( tools::translate( "SpawnCommand", "Unable to create job object: %1" ).arg( GetLastErrorMessage() ).toStdString() );
-    std::shared_ptr< void > result( job, CloseHandle );
-    JOBOBJECT_EXTENDED_LIMIT_INFORMATION info;
-    memset( &info, 0, sizeof info );
-    info.BasicLimitInformation.LimitFlags = JOB_OBJECT_LIMIT_KILL_ON_JOB_CLOSE;
-    if( !SetInformationJobObject( job, JobObjectExtendedLimitInformation, &info, sizeof info ) )
-        throw MASA_EXCEPTION( tools::translate( "SpawnCommand", "Unable to set information job object: %1" ).arg( GetLastErrorMessage() ).toStdString() );
-    const auto h = ::GetCurrentProcess();
-    if( !AssignProcessToJobObject( job, h ) )
-        throw MASA_EXCEPTION( tools::translate( "SpawnCommand", "Unable to assign process to job object: %1").arg( GetLastErrorMessage() ).toStdString() );
-    return result;
-}
-
-} // namespace
-
-void frontend::KillSubprocessUponTermination()
-{
-    try
-    {
-        const static auto job = MakeSubprocessTerminationJob();
-    }
-    catch( const std::exception& e )
-    {
-        MT_LOG_ERROR_MSG( "subprocess termination job failed: " << tools::GetExceptionMsg( e ) );
-    }
-
 }
 
 struct SpawnCommand::Private : public boost::noncopyable

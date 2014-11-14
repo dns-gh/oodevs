@@ -31,7 +31,6 @@ namespace tools
 namespace frontend
 {
     tools::Path MakeBinaryName( const tools::Path& prefix );
-    void KillSubprocessUponTermination();
 
 // =============================================================================
 /** @class  SpawnCommand
