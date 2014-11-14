@@ -276,7 +276,7 @@ func (c *Controller) CloseEvent(uuid, event string, msg *sdk.CloseEvent) (*sdk.E
 		if code != 0 || len(text) > 0 {
 			err = util.NewError(code, text)
 		}
-		return session.CloseEvent(event, err, msg.GetLock())
+		return session.CloseEvent(event, msg.GetDone(), err, msg.GetLock())
 	})
 	if err != nil {
 		return nil, err
@@ -326,7 +326,7 @@ func (c *ControllerObserver) Tick(tick time.Time) {
 
 func (c *ControllerObserver) CloseEvent(uuid string, err error, lock bool) {
 	c.controller.post(c.session, func(session *Session) {
-		session.CloseEvent(uuid, err, lock)
+		session.CloseEvent(uuid, err == nil, err, lock)
 	})
 }
 

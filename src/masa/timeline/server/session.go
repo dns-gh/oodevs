@@ -625,12 +625,12 @@ func (s *Session) Tick(tick time.Time) {
 	}
 }
 
-func (s *Session) CloseEvent(uuid string, err error, lock bool) (*sdk.Event, error) {
+func (s *Session) CloseEvent(uuid string, done bool, err error, lock bool) (*sdk.Event, error) {
 	event := s.events.Find(uuid)
 	if event == nil {
 		return nil, ErrUnknownEvent
 	}
-	modified := event.OnTrigger(err, lock)
+	modified := event.OnTrigger(done, err, lock)
 	encoded := event.Proto()
 	if modified {
 		s.listeners.UpdateEvents(EventSlice{event}, []*sdk.Event{encoded})
