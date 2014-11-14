@@ -37,12 +37,12 @@ public:
              Limit( kernel::Controller& controller,
                     Publisher_ABC& publisher,
                     const kernel::CoordinateConverter_ABC& converter,
-                    const T_CanBeRenamedFunctor& canBeRenamedFunctor );
+                    const kernel::Profile_ABC& profile );
              Limit( kernel::Controller& controller,
                     Publisher_ABC& publisher,
                     const kernel::CoordinateConverter_ABC& converter,
                     const sword::LimitCreation& message,
-                    const T_CanBeRenamedFunctor& canBeRenamedFunctor );
+                    const kernel::Profile_ABC& profile );
     virtual ~Limit();
     //@}
 

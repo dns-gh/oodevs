@@ -15,6 +15,7 @@
 #include "clients_kernel/ObjectType.h"
 #include "clients_kernel/ObjectExtensions.h"
 #include "clients_kernel/Positions.h"
+#include "clients_kernel/Profile_ABC.h"
 #include "clients_kernel/Styles.h"
 #include "clients_kernel/Tools.h"
 #include "protocol/Protocol.h"
@@ -30,10 +31,11 @@ Object::Object( const sword::ObjectCreation& message,
                 const CoordinateConverter_ABC& converter,
                 const tools::Resolver_ABC< kernel::ObjectType, std::string >& typeResolver,
                 actions::ActionsModel& actionsModel,
-                const T_CanBeRenamedFunctor& canBeRenamedFunctor )
-    : gui::EntityImplementation< Object_ABC >( controller, message.object().id(), QString( message.name().c_str() ), &actionsModel, canBeRenamedFunctor )
-    , converter_        ( converter )
-    , type_             ( typeResolver.Get( message.type().id() ) )
+                const kernel::Profile_ABC& profile )
+    : gui::EntityImplementation< Object_ABC >( controller, message.object().id(), QString( message.name().c_str() ), &actionsModel )
+    , converter_( converter )
+    , type_( typeResolver.Get( message.type().id() ) )
+    , profile_( profile )
 {
     if( name_.isEmpty() )
         name_ = QString( type_.GetName().c_str() );
@@ -110,4 +112,13 @@ std::string Object::GetSymbol() const
 {
     const ObjectPositions& pos = static_cast< const ObjectPositions& >( Get< Positions >() );
     return pos.GetSymbol();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Object::CanBeRenamed
+// Created: LDC 2014-11-14
+// -----------------------------------------------------------------------------
+bool Object::CanBeRenamed() const
+{
+    return profile_.CanDoMagic( *this );
 }

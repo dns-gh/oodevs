@@ -86,15 +86,6 @@ namespace
     }
 }
 
-namespace
-{
-    bool CanBeOrdered( const kernel::Entity_ABC& entity, const kernel::Profile_ABC& profile )
-    {
-        const kernel::Entity_ABC* superior = entity.Get< kernel::TacticalHierarchies >().GetSuperior();
-        return superior && profile.CanBeOrdered( *superior );
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: TacticalLineFactory::Create
 // Created: SBO 2006-11-17
@@ -102,8 +93,7 @@ namespace
 ::TacticalLine_ABC* TacticalLineFactory::Create( const sword::PhaseLineCreation& message )
 {
     CheckTacticalLineParentExists( model_, message.tactical_line().diffusion() );
-    ::TacticalLine_ABC* line = new Lima( controllers_.controller_, publisher_, converter_, message,
-                                         [=]( const kernel::TacticalLine_ABC& line ){ return CanBeOrdered( line, profile_ ); } );
+    ::TacticalLine_ABC* line = new Lima( controllers_.controller_, publisher_, converter_, message, profile_ );
     line->Attach< kernel::Positions >( *new TacticalLinePositions( controllers_.controller_, message.tactical_line().geometry(), converter_, *line ) );
     line->Attach< kernel::TacticalHierarchies >( *new TacticalLineHierarchies( controllers_.controller_, *line, message.tactical_line().diffusion(), model_.GetAutomatResolver(), model_.GetFormationResolver(), model_.GetAgentResolver() ) );
     line->Polish();
@@ -117,8 +107,7 @@ namespace
 ::TacticalLine_ABC* TacticalLineFactory::Create( const sword::LimitCreation& message )
 {
     CheckTacticalLineParentExists( model_, message.tactical_line().diffusion() );
-    ::TacticalLine_ABC* line = new Limit( controllers_.controller_, publisher_, converter_, message,
-                                          [=]( const kernel::TacticalLine_ABC& line ){ return CanBeOrdered( line, profile_ ); } );
+    ::TacticalLine_ABC* line = new Limit( controllers_.controller_, publisher_, converter_, message, profile_ );
     line->Attach< kernel::Positions >( *new TacticalLinePositions( controllers_.controller_, message.tactical_line().geometry(), converter_, *line ) );
     line->Attach< kernel::TacticalHierarchies >( *new TacticalLineHierarchies( controllers_.controller_, *line, message.tactical_line().diffusion(), model_.GetAutomatResolver(), model_.GetFormationResolver(), model_.GetAgentResolver() ) );
     line->Polish();
@@ -131,8 +120,7 @@ namespace
 // -----------------------------------------------------------------------------
 void TacticalLineFactory::CreateLimit( const T_PointVector& points, const kernel::Entity_ABC& superior )
 {
-    Limit line( controllers_.controller_, publisher_, converter_,
-                [=]( const kernel::TacticalLine_ABC& line ){ return CanBeOrdered( line, profile_ ); } );
+    Limit line( controllers_.controller_, publisher_, converter_, profile_ );
     line.Attach< kernel::Positions >( *new TacticalLinePositions( controllers_.controller_, points, converter_, line ) );
     line.Attach< kernel::TacticalHierarchies >( *new TacticalLineHierarchies( controllers_.controller_, line, superior, model_.GetAutomatResolver(), model_.GetFormationResolver(), model_.GetAgentResolver() ) );
     line.Polish();
@@ -145,8 +133,7 @@ void TacticalLineFactory::CreateLimit( const T_PointVector& points, const kernel
 // -----------------------------------------------------------------------------
 void TacticalLineFactory::CreateLima( const T_PointVector& points, const kernel::Entity_ABC& superior )
 {
-    Lima line( controllers_.controller_, publisher_, converter_,
-               [=]( const kernel::TacticalLine_ABC& line ){ return CanBeOrdered( line, profile_ ); } );
+    Lima line( controllers_.controller_, publisher_, converter_, profile_ );
     line.Attach< kernel::Positions >( *new TacticalLinePositions( controllers_.controller_, points, converter_, line ) );
     line.Attach< kernel::TacticalHierarchies >( *new TacticalLineHierarchies( controllers_.controller_, line, superior, model_.GetAutomatResolver(), model_.GetFormationResolver(), model_.GetAgentResolver() ) );
     line.Polish();

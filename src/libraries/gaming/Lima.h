@@ -36,12 +36,12 @@ public:
              Lima( kernel::Controller& controller,
                    Publisher_ABC& publisher,
                    const kernel::CoordinateConverter_ABC& converter,
-                   const T_CanBeRenamedFunctor& canBeRenamedFunctor );
+                   const kernel::Profile_ABC& profile );
              Lima( kernel::Controller& controller,
                    Publisher_ABC& publisher,
                    const kernel::CoordinateConverter_ABC& converter,
                    const sword::PhaseLineCreation& message,
-                   const T_CanBeRenamedFunctor& canBeRenamedFunctor );
+                   const kernel::Profile_ABC& profile );
     virtual ~Lima();
     //@}
 

@@ -13,6 +13,7 @@
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/LocationVisitor_ABC.h"
 #include "clients_kernel/Positions.h"
+#include "clients_kernel/Profile_ABC.h"
 #include "protocol/Protocol.h"
 #include <geometry/Types.h>
 
@@ -25,12 +26,13 @@ TacticalLine_ABC::TacticalLine_ABC( kernel::Controller& controller,
                                     unsigned long id,
                                     Publisher_ABC& publisher,
                                     const kernel::CoordinateConverter_ABC& converter,
-                                    const T_CanBeRenamedFunctor& canBeRenamedFunctor )
-    : gui::EntityImplementation< kernel::TacticalLine_ABC >( controller, id, baseName, 0, canBeRenamedFunctor )
+                                    const kernel::Profile_ABC& profile )
+    : gui::EntityImplementation< kernel::TacticalLine_ABC >( controller, id, baseName, 0 )
     , controller_( controller )
     , converter_ ( converter )
     , publisher_ ( publisher )
     , id_        ( id )
+    , profile_   ( profile )
 {
     AddExtension( *this );
 }
@@ -41,7 +43,7 @@ TacticalLine_ABC::TacticalLine_ABC( kernel::Controller& controller,
 // -----------------------------------------------------------------------------
 TacticalLine_ABC::~TacticalLine_ABC()
 {
-    // NOTHING
+    DestroyExtensions();
 }
 
 // -----------------------------------------------------------------------------
@@ -160,4 +162,14 @@ void TacticalLine_ABC::ChangeSuperior( const kernel::Entity_ABC& superior )
 void TacticalLine_ABC::PublishRename()
 {
     UpdateToSim( eStateModified );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TacticalLine_ABC::CanBeRenamed
+// Created: LDC 2014-11-14
+// -----------------------------------------------------------------------------
+bool TacticalLine_ABC::CanBeRenamed() const
+{
+    const kernel::Entity_ABC* superior = Get< kernel::TacticalHierarchies >().GetSuperior();
+    return superior && profile_.CanBeOrdered( *superior );
 }

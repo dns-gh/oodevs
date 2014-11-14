@@ -64,8 +64,7 @@ kernel::KnowledgeGroup_ABC* KnowledgeGroupFactory::CreateKnowledgeGroup( const s
         static_cast< Entity_ABC* >( &model_.GetTeamResolver().Get( message.party().id() ) );
     // LTO end
     KnowledgeGroup* result = new KnowledgeGroup( message.knowledge_group().id(), message.name(), message.has_crowd() && message.crowd(),
-                                                 controllers_.controller_, message.type(), model_.static_.types_, actionsModel_,
-                                                 [=]( const kernel::KnowledgeGroup_ABC& group ){ return profile_.CanDoMagic( group ); } );
+                                                 controllers_.controller_, message.type(), model_.static_.types_, actionsModel_, profile_ );
     result->Attach( *new AgentKnowledges( controllers_.controller_, *result, model_.agentsKnowledgeFactory_ ) );
     bool jam = message.has_jam() && message.jam();
     result->Attach( *new ObjectKnowledges( *result, controllers_.controller_, model_.objectKnowledgeFactory_ ) );

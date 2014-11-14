@@ -23,6 +23,7 @@ namespace kernel
     class Controller;
     class CoordinateConverter_ABC;
     class Population_ABC;
+    class Profile_ABC;
 }
 
 namespace sword
@@ -48,7 +49,7 @@ public:
                        kernel::Entity_ABC& entity,
                        const sword::Pathfind& msg,
                        bool edition,
-                       const T_CanBeRenamedFunctor& canBeRenamedFunctor );
+                       const kernel::Profile_ABC* profile );
     virtual ~Pathfind();
     //@}
 
@@ -84,6 +85,7 @@ public:
     void SetHover( const boost::optional< Itinerary::Hover >& hover );
     int ChangeSuperior( const kernel::Entity_ABC& target );
     void UpdateMessage( const sword::Pathfind& msg, const Entity_ABC& owner );
+    virtual bool CanBeRenamed() const;
     //@}
 
 private:
@@ -99,6 +101,7 @@ private:
     const kernel::Entity_ABC* entity_;
     Itinerary itinerary_;
     boost::optional< Itinerary::Hover > hover_;
+    const kernel::Profile_ABC* profile_;
     bool visible_;
     //@}
 

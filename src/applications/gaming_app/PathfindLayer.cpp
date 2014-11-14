@@ -443,7 +443,7 @@ void PathfindLayer::OpenEditingMode( kernel::Entity_ABC* entity,
 {
     if( !entity )
         return;
-    edited_.reset( new Pathfind( controllers_.controller_, actions_, converter_, *entity, pathfind, true, []( const kernel::Pathfind_ABC& ){ return true; } ) );
+    edited_.reset( new Pathfind( controllers_.controller_, actions_, converter_, *entity, pathfind, true, 0 ) );
     target_ = entity;
     controllers_.ChangeMode( eModes_Itinerary );
     ::Select( controllers_, *entity );

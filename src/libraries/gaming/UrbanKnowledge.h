@@ -62,6 +62,7 @@ public:
     virtual void Display( kernel::Displayer_ABC& displayer ) const;
     virtual void DisplayInList( kernel::Displayer_ABC& displayer ) const;
     virtual void DisplayInSummary( kernel::Displayer_ABC& displayer ) const;
+    virtual bool CanBeRenamed() const;
     //@}
 
 private:

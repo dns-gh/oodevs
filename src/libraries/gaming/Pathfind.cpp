@@ -15,6 +15,7 @@
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/Equipments_ABC.h"
 #include "clients_kernel/EquipmentType.h"
+#include "clients_kernel/Profile_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "protocol/Protocol.h"
 
@@ -75,12 +76,13 @@ Pathfind::Pathfind( Controller& controller,
                     kernel::Entity_ABC& entity,
                     const sword::Pathfind& msg,
                     bool edition,
-                    const T_CanBeRenamedFunctor& canBeRenamedFunctor )
+                    const kernel::Profile_ABC* profile )
     : EntityImplementation< Pathfind_ABC >( controller, msg.id(), msg.request().has_name() ?
-                        msg.request().name().c_str() : tools::translate( "Pathfind", "itinerary" ), &actionsModel, canBeRenamedFunctor )
+                        msg.request().name().c_str() : tools::translate( "Pathfind", "itinerary" ), &actionsModel )
     , pathfind_( msg )
     , entity_( &entity )
     , itinerary_( converter, msg, edition )
+    , profile_( profile )
     , visible_( true )
 {
     AddExtension( *this );
@@ -215,4 +217,9 @@ void Pathfind::PublishRename()
     auto pathfind = pathfind_;
     pathfind.mutable_request()->set_name( name_.toStdString() );
     actionsModel_->PublishUpdatePathfind( pathfind );
+}
+
+bool Pathfind::CanBeRenamed() const
+{
+    return profile_? profile_->CanBeOrdered( GetUnit() ) : true;
 }

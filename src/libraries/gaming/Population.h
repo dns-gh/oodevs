@@ -12,10 +12,11 @@
 
 #include "clients_gui/Drawable_ABC.h"
 #include "clients_gui/EntityImplementation.h"
-#include "clients_kernel/Population_ABC.h"
-#include "clients_kernel/Updatable_ABC.h"
-#include "clients_kernel/Positions.h"
 #include "clients_kernel/OptionalValue.h"
+#include "clients_kernel/Population_ABC.h"
+#include "clients_kernel/Positions.h"
+#include "clients_kernel/Profile_ABC.h"
+#include "clients_kernel/Updatable_ABC.h"
 
 namespace kernel
 {
@@ -60,7 +61,7 @@ public:
                          const kernel::CoordinateConverter_ABC& converter,
                          const kernel::PopulationType& type,
                          actions::ActionsModel& actionsModel,
-                         const T_CanBeRenamedFunctor& canBeRenamedFunctor );
+                         const kernel::Profile_ABC& profile );
     virtual ~Population();
     //@}
 
@@ -80,6 +81,7 @@ public:
     virtual geometry::Rectangle2f GetBoundingBox() const;
     virtual void Accept( kernel::LocationVisitor_ABC& visitor ) const;
     virtual bool CanAggregate() const;
+    virtual bool CanBeRenamed() const;
     //@}
 
 private:
@@ -121,6 +123,7 @@ private:
     kernel::OptionalValue< int > contaminated_;
     kernel::OptionalValue< int > dead_;
     kernel::OptionalValue< QString > attitude_;
+    const kernel::Profile_ABC& profile_;
     //@}
 
 };

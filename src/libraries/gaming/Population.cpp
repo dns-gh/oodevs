@@ -38,8 +38,8 @@ Population::Population( const sword::CrowdCreation& message,
                         const CoordinateConverter_ABC& converter,
                         const kernel::PopulationType& type,
                         actions::ActionsModel& actionsModel,
-                        const T_CanBeRenamedFunctor& canBeRenamedFunctor )
-    : EntityImplementation< Population_ABC >( controllers.controller_, message.crowd().id(), QString( message.name().c_str() ), &actionsModel, canBeRenamedFunctor )
+                        const kernel::Profile_ABC& profile )
+    : EntityImplementation< Population_ABC >( controllers.controller_, message.crowd().id(), QString( message.name().c_str() ), &actionsModel )
     , controllers_         ( controllers )
     , converter_           ( converter )
     , male_                ( static_cast< unsigned int >( 100 * message.repartition().male() + 0.5f ) )
@@ -47,6 +47,7 @@ Population::Population( const sword::CrowdCreation& message,
     , children_            ( static_cast< unsigned int >( 100 * message.repartition().children() + 0.5f ) )
     , nDomination_         ( 0, false )
     , armedIndividuals_    ( 0, false )
+    , profile_             ( profile )
 {
     if( name_.isEmpty() )
         name_ = QString( type.GetName().c_str() );
@@ -481,4 +482,13 @@ void Population::Update()
     dead_ = GetDeadHumans();
     attitude_ = GetAttitude();
     controllers_.controller_.Update( gui::DictionaryUpdated( *static_cast< Entity_ABC* >( this ), tools::translate( "Crowd", "State" ) ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Population::CanBeRenamed
+// Created: LDC 2014-11-14
+// -----------------------------------------------------------------------------
+bool Population::CanBeRenamed() const
+{
+    return profile_.CanDoMagic( *this );
 }

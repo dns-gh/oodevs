@@ -25,6 +25,7 @@ namespace sword
 namespace kernel
 {
     class CoordinateConverter_ABC;
+    class Profile_ABC;
 }
 
 class Publisher_ABC;
@@ -48,7 +49,7 @@ public:
                                unsigned long id,
                                Publisher_ABC& publisher,
                                const kernel::CoordinateConverter_ABC& converter,
-                               const T_CanBeRenamedFunctor& canBeRenamedFunctor );
+                               const kernel::Profile_ABC& profile );
     virtual ~TacticalLine_ABC();
     //@}
 
@@ -89,7 +90,8 @@ protected:
     virtual void DoUpdate( const sword::PhaseLineUpdate& message );
     virtual void DoUpdate( const sword::LimitUpdate&  message );
     virtual void ChangeSuperior( const kernel::Entity_ABC& superior );
-    virtual void PublishRename();
+    virtual void PublishRename();    
+    virtual bool CanBeRenamed() const;
     //@}
 
 private:
@@ -106,6 +108,7 @@ private:
     const kernel::CoordinateConverter_ABC& converter_;
     Publisher_ABC& publisher_;
     unsigned long  id_;
+    const kernel::Profile_ABC& profile_;
     //@}
 };
 

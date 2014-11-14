@@ -15,6 +15,7 @@
 #include "clients_gui/Viewport_ABC.h"
 #include "clients_kernel/AutomatType.h"
 #include "clients_kernel/Controller.h"
+#include "clients_kernel/Profile_ABC.h"
 #include "protocol/Protocol.h"
 
 using namespace kernel;
@@ -27,9 +28,10 @@ Automat::Automat( const sword::AutomatCreation& message,
                   Controller& controller,
                   const kernel::AutomatType& type,
                   actions::ActionsModel& actionsModel,
-                  const T_CanBeRenamedFunctor& canBeRenamedFunctor )
-    : EntityImplementation< Automat_ABC >( controller, message.automat().id(), QString( message.name().c_str() ), &actionsModel, canBeRenamedFunctor )
+                  const kernel::Profile_ABC& profile )
+    : EntityImplementation< Automat_ABC >( controller, message.automat().id(), QString( message.name().c_str() ), &actionsModel )
     , type_( type )
+    , profile_( profile )
 {
     if( name_.isEmpty() )
         name_ = QString( type.GetName().c_str() );
@@ -86,4 +88,13 @@ void Automat::DoUpdate( const sword::AutomatAttributes& message )
     if( message.has_name() )
         SetName( QString::fromStdString( message.name() ) );
     Touch();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Automat::CanBeRenamed
+// Created: LDC 2014-11-14
+// -----------------------------------------------------------------------------
+bool Automat::CanBeRenamed() const
+{
+    return profile_.CanDoMagic( *this );
 }

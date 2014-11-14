@@ -46,19 +46,12 @@ class EntityImplementation : public I
                            , public kernel::Serializable_ABC
 {
 public:
-    //! @name Types
-    //@{
-    typedef std::function< bool( const I& ) >       T_CanBeRenamedFunctor;
-    //@}
-
-public:
     //! @name Constructors/Destructor
     //@{
              EntityImplementation( kernel::Controller& controller,
                                    unsigned long id,
                                    const QString& name,
-                                   actions::ActionsModel* actionsModel = 0,
-                                   const T_CanBeRenamedFunctor& canBeRenamedFunctor = T_CanBeRenamedFunctor() );
+                                   actions::ActionsModel* actionsModel = 0 );
     virtual ~EntityImplementation();
     //@}
 
@@ -104,7 +97,6 @@ private:
     //@{
     kernel::Controller& controller_;
     PropertiesDictionary* dictionary_;
-    const T_CanBeRenamedFunctor canBeRenamedFunctor_;
     //@}
 
 protected:
@@ -125,11 +117,9 @@ template< typename I >
 EntityImplementation< I >::EntityImplementation( kernel::Controller& controller,
                                                  unsigned long id,
                                                  const QString& name,
-                                                 actions::ActionsModel* actionsModel,
-                                                 const T_CanBeRenamedFunctor& canBeRenamedFunctor /* = T_CanBeRenamedFunctor() */ )
+                                                 actions::ActionsModel* actionsModel )
     : controller_( controller )
     , dictionary_( new PropertiesDictionary( controller ) )
-    , canBeRenamedFunctor_( canBeRenamedFunctor )
     , actionsModel_( actionsModel )
     , id_( id )
     , name_( name )
@@ -284,7 +274,7 @@ void EntityImplementation< I >::ForceNewId( unsigned long id )
 template< typename I >
 bool EntityImplementation< I >::CanBeRenamed() const
 {
-    return canBeRenamedFunctor_ ? canBeRenamedFunctor_( *this ) : true;
+    return true;
 }
 
 }
