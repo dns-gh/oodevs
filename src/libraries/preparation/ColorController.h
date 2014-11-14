@@ -39,6 +39,8 @@ public:
     //@}
 
 private:
+    virtual bool ApplyColor( const kernel::Color_ABC& color );
+
     //! @name Helpers
     //@{
     void AddObjects( const kernel::Entity_ABC& entity, const QColor& newColor );

@@ -18,6 +18,7 @@
 namespace kernel
 {
     class Entity_ABC;
+    class Color_ABC;
     class Controllers;
     class TacticalHierarchies;
 }
@@ -57,33 +58,25 @@ public:
     virtual void NotifyDeleted( const kernel::Entity_ABC& entity );
     //@}
 
-private:
-    //! @name Copy/Assignment
-    //@{
-    ColorController( const ColorController& );            //!< Copy constructor
-    ColorController& operator=( const ColorController& ); //!< Assignment operator
-    //@}
-
 protected:
     //! @name Helpers
     //@{
-    virtual void ChangeColor( const kernel::Entity_ABC& entity );
     void AddSubordinate( const kernel::Entity_ABC& entity, const QColor& newColor, const boost::optional< QColor >& oldColor, bool applyToSubordinates, bool force );
     void AddObjects( const kernel::Entity_ABC& entity, const QColor& newColor );
     void AddColor( const kernel::Entity_ABC& entity, const QColor& color );
     void ClearColor( const kernel::Entity_ABC& entity );
     void RemoveSubordinate( const kernel::Entity_ABC& entity, const QColor& color, bool applyToSubordinates, bool force );
     void RemoveObjects( const kernel::Entity_ABC& entity );
-    virtual void UpdateHierarchies( const kernel::Entity_ABC& entity );
+    void UpdateHierarchies( const kernel::Entity_ABC& entity );
     void UpdateLogisticBaseStates( const kernel::TacticalHierarchies& tactical );
     void ResetSubordinate( const kernel::Entity_ABC& entity, const QColor& newColor );
     //@}
 
-protected:
-    //! @name Types
-    //@{
+private:
+    virtual bool ApplyColor( const kernel::Color_ABC& color ) = 0;
+
+private:
     typedef std::map< unsigned long, QColor > T_Colors;
-    //@}
 
 protected:
     //! @name Member data

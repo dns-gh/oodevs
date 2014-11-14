@@ -12,7 +12,6 @@
 #include "LogisticBaseStates.h"
 #include "Objects.h"
 #include "Object.h"
-
 #include "clients_gui/LogisticHierarchiesBase.h"
 #include "clients_kernel/Color_ABC.h"
 #include "clients_kernel/Entity_ABC.h"
@@ -21,7 +20,6 @@
 #include "clients_kernel/CommunicationHierarchies.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Controllers.h"
-
 #include <boost/optional.hpp>
 
 // -----------------------------------------------------------------------------
@@ -89,4 +87,9 @@ void ColorController::RemoveObjects( const kernel::Entity_ABC& entity )
         while( it.HasMoreElements() )
             ClearColor( it.NextElement() );
     }
+}
+
+bool ColorController::ApplyColor( const kernel::Color_ABC& color )
+{
+    return color.IsOverriden();
 }

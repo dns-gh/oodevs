@@ -64,27 +64,14 @@ float ColorController::Apply( const kernel::Entity_ABC& /*entity*/, float alpha 
     return alpha;
 }
 
-// -----------------------------------------------------------------------------
-// Name: ColorController::ChangeColor
-// Created: LGY 2011-06-27
-// -----------------------------------------------------------------------------
-void ColorController::ChangeColor( const kernel::Entity_ABC& entity )
-{
-    if( const auto color = entity.Retrieve< kernel::Color_ABC >() )
-        if( color->IsOverriden() )
-        {
-            colors_[ entity.GetId() ] = static_cast< QColor >( *color );
-            UpdateHierarchies( entity );
-        }
-}
-
-// -----------------------------------------------------------------------------
-// Name: ColorController::NotifyCreated
-// Created: LGY 2011-06-24
-// -----------------------------------------------------------------------------
 void ColorController::NotifyCreated( const kernel::Entity_ABC& entity )
 {
-    ChangeColor( entity );
+    if( const auto color = entity.Retrieve< kernel::Color_ABC >() )
+        if( ApplyColor( *color ) )
+        {
+            colors_[ entity.GetId() ] = *color;
+            UpdateHierarchies( entity );
+        }
 }
 
 // -----------------------------------------------------------------------------

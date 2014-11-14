@@ -26,17 +26,11 @@ namespace kernel
 class ColorController : public gui::ColorController
 {
 public:
-    //! @name Constructors/Destructor
-    //@{
     explicit ColorController( kernel::Controllers& controllers );
     virtual ~ColorController();
-    //@}
 
 private:
-    //! @name Helpers
-    //@{
-    virtual void ChangeColor( const kernel::Entity_ABC& entity );
-    //@}
+    virtual bool ApplyColor( const kernel::Color_ABC& color );
 };
 
 #endif // _ColorController_h
