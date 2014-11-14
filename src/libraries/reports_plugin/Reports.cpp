@@ -55,8 +55,7 @@ namespace
 }
 
 Reports::Reports( const tools::Path& filename )
-    : database_   ( new tools::Sql( filename ) )
-    , currentTick_( 0 )
+    : database_( new tools::Sql( filename ) )
 {
     MakeTable( *database_ );
     MakeIndex( *database_ );
@@ -122,7 +121,7 @@ namespace
     }
 }
 
-void Reports::AddReport( const sword::Report& report )
+void Reports::AddReport( const sword::Report& report, int tick )
 {
     try
     {
@@ -149,7 +148,7 @@ void Reports::AddReport( const sword::Report& report )
         st->Bind( static_cast< int >( report.type().id() ) );
         st->Bind( report.category() );
         st->Bind( report.time().data() );
-        st->Bind( currentTick_ );
+        st->Bind( tick );
         if( report.has_parameters() )
         {
             xml::xostringstream xos;
@@ -194,24 +193,10 @@ namespace
     }
 }
 
-namespace
-{
-    std::string CreateCondition( const boost::optional< unsigned int >& fromReport,
-                                 const boost::optional< unsigned int >& untilTick )
-    {
-        if( fromReport && untilTick )
-            return "WHERE tick <= ? and id >= ? ";
-        else if( fromReport )
-            return "WHERE id >= ? ";
-        else if( untilTick )
-            return "WHERE tick <= ? ";
-        return "";
-    }
-}
-
 void Reports::ListReports( sword::ListReportsAck& reports, unsigned int count,
                            const boost::optional< unsigned int >& fromReport,
-                           const boost::optional< unsigned int >& untilTick )
+                           int fromTick,
+                           int toTick )
 {
     try
     {
@@ -224,16 +209,18 @@ void Reports::ListReports( sword::ListReportsAck& reports, unsigned int count,
             ",      time "
             ",      tick "
             ",      parameters "
-            "FROM   reports ";
-        sql += CreateCondition( fromReport, untilTick ) +
-               "ORDER BY id ASC "
+            "FROM   reports "
+            "WHERE (tick BETWEEN ? AND ?) ";
+        if( fromReport )
+            sql += "AND id >= ? ";
+        sql += "ORDER BY id ASC "
                "LIMIT  ? ";
 
         tools::Sql_ABC::T_Transaction tr = database_->Begin( false );
         tools::Sql_ABC::T_Statement st = database_->Prepare( *tr, sql );
 
-        if( untilTick )
-            st->Bind( static_cast< int >( *untilTick ) );
+        st->Bind( fromTick );
+        st->Bind( toTick );
         if( fromReport )
             st->Bind( static_cast< int64_t >( *fromReport ) );
         st->Bind( static_cast< int64_t >( count + 1 ) );
@@ -258,9 +245,4 @@ void Reports::Save( const tools::Path& filename )
     {
         MT_LOG_ERROR_MSG( err.msg );
     }
-}
-
-void Reports::SetTick( int tick )
-{
-    currentTick_ = tick;
 }

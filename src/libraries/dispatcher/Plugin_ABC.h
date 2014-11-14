@@ -89,6 +89,7 @@ public:
     virtual void Register( dispatcher::Services& ) {}
     virtual void Update() {}
     virtual void Close() {}
+    virtual void SendState( ClientPublisher_ABC& ) {}
 
     // Returns true if the message was handled and a response emitted. It is
     // the handler responsibility to ensure a response is sent, even upon

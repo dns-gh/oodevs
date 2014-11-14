@@ -56,12 +56,9 @@ public:
     virtual bool HandleClientToReplay( const sword::ClientToReplay& message,
         dispatcher::RewritingPublisher_ABC& unicaster,
         dispatcher::ClientPublisher_ABC& broadcaster );
-
-    virtual void NotifyClientAuthenticated( dispatcher::ClientPublisher_ABC& client, const std::string& link,
-                                            dispatcher::Profile_ABC& profile, unsigned int clientId, bool uncounted );
-
     virtual void Register( dispatcher::Services& services );
     virtual void Update();
+    virtual void SendState( dispatcher::ClientPublisher_ABC& client );
     //@}
 
 private:

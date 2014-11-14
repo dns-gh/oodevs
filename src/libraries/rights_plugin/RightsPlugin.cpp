@@ -9,18 +9,21 @@
 
 #include "RightsPlugin.h"
 #include "dispatcher/CompositeRegistrable.h"
-#include "dispatcher/NullClientPublisher.h"
+#include "dispatcher/DefaultProfile.h"
 #include "dispatcher/LinkResolver_ABC.h"
+#include "dispatcher/Model.h"
+#include "dispatcher/NullClientPublisher.h"
 #include "dispatcher/Profile.h"
 #include "dispatcher/ProfileManager.h"
-#include "dispatcher/DefaultProfile.h"
 #include "dispatcher/Services.h"
 #include "dispatcher/Config.h"
 #include "MT_Tools/MT_Logger.h"
 #include "protocol/AuthenticationSenders.h"
+#include "protocol/ClientSenders.h"
 #include "protocol/Dispatcher.h"
 #include "protocol/Version.h"
 #include "protocol/RightsHelper.h"
+#include "protocol/Protocol.h"
 #include "tools/MessageDispatcher_ABC.h"
 #include <openssl/hmac.h>
 #include <iomanip>
@@ -73,7 +76,8 @@ private:
 RightsPlugin::RightsPlugin( Model& model, ClientPublisher_ABC& clients, const Config& config, tools::MessageDispatcher_ABC& clientCommands,
                             Plugin_ABC& container, const LinkResolver_ABC& resolver, dispatcher::CompositeRegistrable& registrables, int maxConnections,
                             bool replayer )
-    : clients_           ( clients )
+    : model_             ( model )
+    , clients_           ( clients )
     , config_            ( config )
     , profiles_          ( new ProfileManager( model, clients, config ) )
     , container_         ( container )
@@ -336,7 +340,16 @@ void RightsPlugin::OnReceiveMsgAuthenticationRequest( const std::string& link, c
         else
             ++currentConnections_;
         SendProfiles( sender );
-        container_.NotifyClientAuthenticated( sender.GetClient(), link, *profile, clientId, keyAuthenticated );
+
+        auto& client = sender.GetClient();
+        container_.NotifyClientAuthenticated( client, link, *profile, clientId, keyAuthenticated );
+
+        // Send initial state
+        client::ControlSendCurrentStateBegin().Send( client );
+        model_.Send( client );
+        container_.SendState( client );
+        client::ControlSendCurrentStateEnd().Send( client );
+
         MT_LOG_INFO_MSG( currentConnections_ << " clients authentified" );
     }
 }

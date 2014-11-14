@@ -16,12 +16,8 @@
 
 namespace dispatcher
 {
+    class Config;
     class Model_ABC;
-}
-
-namespace tools
-{
-    class SessionConfig;
 }
 
 namespace plugins
@@ -35,7 +31,7 @@ class ReportsPlugin : public dispatcher::Plugin_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ReportsPlugin( const tools::SessionConfig& config, bool replay );
+             ReportsPlugin( const dispatcher::Config& config, bool replay );
     virtual ~ReportsPlugin();
     //@}
 
@@ -46,6 +42,7 @@ public:
         dispatcher::RewritingPublisher_ABC& unicaster, dispatcher::ClientPublisher_ABC& );
     virtual bool HandleClientToReplay( const sword::ClientToReplay& msg,
         dispatcher::RewritingPublisher_ABC& unicaster, dispatcher::ClientPublisher_ABC& );
+    virtual void SendState( dispatcher::ClientPublisher_ABC& );
     //@}
 
 private:
@@ -56,7 +53,8 @@ private:
     //! @name Member data
     //@{
     std::unique_ptr< Reports > reports_;
-    const tools::SessionConfig& config_;
+    const dispatcher::Config& config_;
+    int currentTick_;
     //@}
 };
 }

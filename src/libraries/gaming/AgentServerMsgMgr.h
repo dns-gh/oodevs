@@ -270,7 +270,6 @@ private:
 
     // RC
     void OnReceiveMsgCR              ( const sword::SimToClient& msg );
-    void OnReceiveMsgInvalidateReport( const sword::SimToClient& msg );
     void OnReceiveTrace              ( const sword::SimToClient& msg );
     void OnReceiveMsgDecisionalState ( const sword::SimToClient& msg );
 

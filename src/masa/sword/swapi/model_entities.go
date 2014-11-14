@@ -598,6 +598,10 @@ type SupplyRequest struct {
 	Requested   int32
 }
 
+type Report struct {
+	Id uint32
+}
+
 type ModelData struct {
 	Actions              map[uint32]*Action
 	Automats             map[uint32]*Automat
@@ -618,6 +622,7 @@ type ModelData struct {
 	Pathfinds            map[uint32]*Pathfind
 	Populations          map[uint32]*Population
 	Profiles             map[string]*Profile
+	Reports              map[uint32]*Report
 	SupplyHandlings      map[uint32]*SupplyHandling
 	SupplyRequests       map[uint32]*SupplyRequest
 	TacticalLines        map[uint32]*TacticalLine
@@ -637,6 +642,8 @@ type ModelData struct {
 	Replay       *ReplayInfo
 	// True once the initial state has been received
 	Ready bool
+	// By default, report handler is disabled
+	RecordReports bool
 	// private model event listeners
 	listeners *ModelListeners
 }
@@ -663,6 +670,7 @@ func NewModelData(listeners *ModelListeners) *ModelData {
 		Pathfinds:            map[uint32]*Pathfind{},
 		Populations:          map[uint32]*Population{},
 		Profiles:             map[string]*Profile{},
+		Reports:              map[uint32]*Report{},
 		Scores:               map[string]float32{},
 		SupplyHandlings:      map[uint32]*SupplyHandling{},
 		SupplyRequests:       map[uint32]*SupplyRequest{},
@@ -670,6 +678,7 @@ func NewModelData(listeners *ModelListeners) *ModelData {
 		UnitKnowledges:       map[uint32]*UnitKnowledge{},
 		Units:                map[uint32]*Unit{},
 		listeners:            listeners,
+		RecordReports:        false,
 	}
 }
 
@@ -678,6 +687,7 @@ func (model *ModelData) Reset() {
 	// Following fields are not sent as part of simulation state
 	newModel.Profiles = model.Profiles
 	newModel.KnownScores = model.KnownScores
+	newModel.RecordReports = model.RecordReports
 	newModel.Scores = model.Scores
 	newModel.Tick = model.Tick
 	newModel.Time = model.Time
@@ -1145,6 +1155,12 @@ func (model *ModelData) removeSupplyRequest(id uint32) bool {
 	return size != len(model.SupplyRequests)
 }
 
+func (model *ModelData) addReport(report *Report) bool {
+	size := len(model.Reports)
+	model.Reports[report.Id] = report
+	return size != len(model.Reports)
+}
+
 var (
 	simToClientHandlers = []func(model *ModelData, m *sword.SimToClient_Content) error{
 		(*ModelData).handleActionCreation,
@@ -1218,6 +1234,7 @@ var (
 		(*ModelData).handlePathfindUpdate,
 		(*ModelData).handlePopulationCreation,
 		(*ModelData).handlePopulationUpdate,
+		(*ModelData).handleReportCreation,
 		(*ModelData).handleSupplyRequestCreation,
 		(*ModelData).handleSupplyRequestDestruction,
 		(*ModelData).handleSupplyRequestUpdate,

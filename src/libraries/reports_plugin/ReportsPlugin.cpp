@@ -9,8 +9,10 @@
 
 #include "ReportsPlugin.h"
 #include "Reports.h"
+#include "dispatcher/Config.h"
+#include "protocol/ClientPublisher_ABC.h"
+#include "protocol/ClientSenders.h"
 #include "protocol/Protocol.h"
-#include "tools/SessionConfig.h"
 #include <boost/make_shared.hpp>
 
 using namespace plugins::reports;
@@ -33,9 +35,10 @@ namespace
     }
 }
 
-ReportsPlugin::ReportsPlugin( const tools::SessionConfig& config, bool replay )
-    : reports_( InitializeReports( config, "reports.db", replay ) )
-    , config_ ( config )
+ReportsPlugin::ReportsPlugin( const dispatcher::Config& config, bool replay )
+    : reports_    ( InitializeReports( config, "reports.db", replay ) )
+    , config_     ( config )
+    , currentTick_( 0 )
 {
     // NOTHING
 }
@@ -47,10 +50,12 @@ ReportsPlugin::~ReportsPlugin()
 
 void ReportsPlugin::Receive( const sword::SimToClient& msg )
 {
-    if( msg.message().has_control_end_tick() )
-        reports_->SetTick ( msg.message().control_end_tick().current_tick() );
+    if( msg.message().has_control_information() )
+        currentTick_ = msg.message().control_information().current_tick();
+    else if( msg.message().has_control_end_tick() )
+        currentTick_ = msg.message().control_end_tick().current_tick();
     else if( msg.message().has_report() )
-        reports_->AddReport( msg.message().report() );
+        reports_->AddReport( msg.message().report(), currentTick_ );
     else if( msg.message().has_control_checkpoint_save_end() )
     {
         const auto checkpointName = tools::Path::FromUTF8( msg.message().control_checkpoint_save_end().name() );
@@ -83,7 +88,25 @@ bool ReportsPlugin::HandleClientTo( const M& msg, dispatcher::RewritingPublisher
     reports_->ListReports( *reply.mutable_message()->mutable_list_reports_ack(),
         message.max_count(),
         message.has_report() ? boost::optional< unsigned int >( message.report() ) : boost::none,
-        message.has_tick() ? boost::optional< unsigned int >( message.tick() ) : boost::none );
+        0,
+        message.has_tick() ? message.tick() : std::numeric_limits< int >::max() );
     unicaster.Send( reply );
     return true;
+}
+
+void ReportsPlugin::SendState( dispatcher::ClientPublisher_ABC& publisher )
+{
+    const unsigned frequency = config_.GetReportsClearFrequency();
+    sword::ListReportsAck list;
+    reports_->ListReports( list, std::numeric_limits< int >::max(),
+        boost::none,
+        std::max< int >( 0, currentTick_ - frequency ),
+        currentTick_ );
+
+    for( int i = 0; i < list.reports_size(); i++ )
+    {
+        client::Report message;
+        message() = list.reports( i );
+        message.Send( publisher );
+    }
 }

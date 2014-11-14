@@ -37,7 +37,6 @@
 #include "PopulationFire.h"
 #include "PopulationKnowledge.h"
 #include "ReplaySynchronisations.h"
-#include "Report.h"
 #include "Side.h"
 #include "SimulationModel.h"
 #include "UrbanKnowledge.h"
@@ -236,11 +235,7 @@ void Model::Update( const sword::SimToClient& wrapper )
     else if( message.has_control_information() )
         simulation_->Update( message.control_information() );
     else if( message.has_control_begin_tick() )
-    {
-        const sword::ControlBeginTick& beginTick = message.control_begin_tick();
-        simulation_->Update( beginTick );
-        ClearOldReports( beginTick.current_tick() );
-    }
+        simulation_->Update( message.control_begin_tick() );
     else if( message.has_control_end_tick() )
     {
         const sword::ControlEndTick& endTick = message.control_end_tick();
@@ -326,11 +321,6 @@ void Model::Update( const sword::SimToClient& wrapper )
         Destroy( populationFires_, message.stop_crowd_fire().fire().id(), message.stop_crowd_fire() );
     else if( message.has_explosion() )
     {} // $$$$ merge
-
-    else if( message.has_report() )
-        CreateUpdate< Report >( reports_, message.report().report().id(), message.report() );
-    else if( message.has_invalidate_report() )
-        Destroy( reports_, message.invalidate_report().report().id(), message.invalidate_report() );
     else if( message.has_trace() )
     {
         // $$$$ AGE 2007-04-18: Evenements, modèle client => rien, ou remanier
@@ -630,7 +620,6 @@ void Model::Destroy( tools::Resolver< T >& resolver, unsigned id, const M& messa
 // -----------------------------------------------------------------------------
 void Model::Send( ClientPublisher_ABC& publisher ) const
 {
-    client::ControlSendCurrentStateBegin().Send( publisher );
     simulation_->Send( publisher );
     folk_->SendCreation( publisher );
     {
@@ -641,7 +630,6 @@ void Model::Send( ClientPublisher_ABC& publisher ) const
         FullUpdateVisitor visitor( publisher );
         Accept( visitor );
     }
-    client::ControlSendCurrentStateEnd().Send( publisher );
 }
 
 // -----------------------------------------------------------------------------
@@ -682,7 +670,6 @@ void Model::Accept( kernel::ModelVisitor_ABC& visitor ) const
     populationFires_       .Apply( boost::bind( &PopulationFire::Accept, _1, boost::ref( visitor ) ) );
     fireEffects_           .Apply( boost::bind( &FireEffect::Accept, _1, boost::ref( visitor ) ) );
     detectionRangeEffects_ .Apply( boost::bind( &DetectionRangeEffect::Accept, _1, boost::ref( visitor ) ) );
-    reports_               .Apply( boost::bind( &Report::Accept, _1, boost::ref( visitor ) ) );
     urbanKnowledges_       .Apply( boost::bind( &dispatcher::UrbanKnowledge_ABC::Accept, _1, boost::ref( visitor ) ) );
     actions_               .Apply( boost::bind( &dispatcher::Action::Accept, _1, boost::ref( visitor ) ) );
     pathfinds_             .Apply( boost::bind( &dispatcher::Pathfind::Accept, _1, boost::ref( visitor ) ) );
@@ -743,17 +730,6 @@ void Model::DeleteCheckpoint( const std::string& name )
 {
     const tools::Path oldPath = config_.GetCheckpointDirectory( tools::Path::FromUTF8( name ) );
     oldPath.RemoveAll();
-}
-
-// -----------------------------------------------------------------------------
-// Name: Model::ClearOldReports
-// Created: LDC 2011-09-13
-// -----------------------------------------------------------------------------
-void Model::ClearOldReports( unsigned int tick )
-{
-    const unsigned hz = config_.GetReportsClearFrequency();
-    if( hz && !( tick % hz ) )
-        reports_.DeleteAll();
 }
 
 namespace

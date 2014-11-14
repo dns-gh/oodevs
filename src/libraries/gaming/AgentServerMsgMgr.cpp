@@ -1035,16 +1035,6 @@ void AgentServerMsgMgr::OnReceiveMsgCR( const sword::SimToClient& msg )
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnReceiveMsgInvalidateReport
-// Created: AGE 2007-10-22
-// -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgInvalidateReport( const sword::SimToClient& msg )
-{
-    const auto& message = msg.message().invalidate_report();
-    OnReceiveMessageWithTasker( GetModel().agents_, message, message.source() );
-}
-
-// -----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReceiveTrace
 // Created: AGE 2007-05-31
 // -----------------------------------------------------------------------------
@@ -1964,7 +1954,6 @@ void AgentServerMsgMgr::OnReceiveSimToClient( const std::string& /*from*/, const
         { &sword::SimToClient_Content::has_frag_order,                                  &AgentServerMsgMgr::OnReceiveFragOrder },
         { &sword::SimToClient_Content::has_frag_order_ack,                              &AgentServerMsgMgr::OnReceiveFragOrderAck },
         { &sword::SimToClient_Content::has_indirect_fire_perception,                    &AgentServerMsgMgr::OnReceiveIndirectFirePerception },
-        { &sword::SimToClient_Content::has_invalidate_report,                           &AgentServerMsgMgr::OnReceiveMsgInvalidateReport },
         { &sword::SimToClient_Content::has_knowledge_group_creation,                    &AgentServerMsgMgr::OnReceiveKnowledgeGroupCreation },
         { &sword::SimToClient_Content::has_knowledge_group_creation_ack,                &AgentServerMsgMgr::OnReceiveKnowledgeGroupCreationAck },
         { &sword::SimToClient_Content::has_knowledge_group_destruction,                 &AgentServerMsgMgr::OnReceiveKnowledgeGroupDestruction },

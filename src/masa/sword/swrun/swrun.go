@@ -83,6 +83,7 @@ type ClientOpts struct {
 	PathfindFilter  string
 	PathfindThreads int
 	TestCommands    bool
+	Reports         bool
 }
 
 // Prints input and output client messages to stderr.
@@ -134,6 +135,11 @@ func (opts *ClientOpts) EnableTestCommands() *ClientOpts {
 	return opts
 }
 
+func (opts *ClientOpts) RecordReports() *ClientOpts {
+	opts.Reports = true
+	return opts
+}
+
 // Starts a simulation with supplied options.
 func StartSimOnExercise(clientOpts *ClientOpts, cfg *swtest.Config) (*simu.SimProcess, error) {
 	opts, session := MakeOptsAndSession(cfg)
@@ -170,6 +176,9 @@ func ConnectClient(sim Simulator, opts *ClientOpts, cfg *swtest.Config) (*swapi.
 	client.Logger = opts.Logger
 	client.PostTimeout = cfg.Timeout
 	client.Model.WaitTimeout = cfg.Timeout
+	if opts.Reports {
+		client.Model.RecordReports()
+	}
 	if opts.WaitTimeout != 0 {
 		timeout := opts.WaitTimeout
 		if timeout < 0 {

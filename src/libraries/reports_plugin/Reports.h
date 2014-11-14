@@ -41,19 +41,18 @@ public:
 
     //! @name Operations
     //@{
-    void AddReport( const sword::Report& report );
+    void AddReport( const sword::Report& report, int tick );
     void ListReports( sword::ListReportsAck& reports, unsigned int count,
                       const boost::optional< unsigned int >& fromReport,
-                      const boost::optional< unsigned int >& untilTick );
+                      int fromTick,
+                      int toTick );
     void Save( const tools::Path& filename );
-    void SetTick( int tick );
     //@}
 
 private:
     //! @name Member data
     //@{
     std::unique_ptr< tools::Sql_ABC > database_;
-    int currentTick_;
     //@}
 };
 }

@@ -267,6 +267,10 @@ func (model *Model) UnregisterListener(listener int32) {
 	})
 }
 
+func (model *Model) RecordReports() {
+	model.data.RecordReports = true
+}
+
 // Post and wait for a condition to be validated. Return false on
 // timeout. The condition is validated only once.
 func (model *Model) waitCond(timeout time.Duration,

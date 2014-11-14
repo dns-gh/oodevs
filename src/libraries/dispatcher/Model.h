@@ -38,7 +38,6 @@ namespace dispatcher
     class MeteoModel;
     class Pathfind;
     class PopulationFire;
-    class Report;
     class SimulationModel;
     class UrbanKnowledge_ABC;
     class MemoryLogger_ABC;
@@ -102,7 +101,6 @@ public:
     virtual const tools::Resolver_ABC< AgentKnowledge_ABC >&  AgentKnowledges() const { return agentKnowledges_; }
     virtual const tools::Resolver_ABC< ObjectKnowledge_ABC >& ObjectKnowledges() const { return objectKnowledges_; }
     virtual const tools::Resolver_ABC< PopulationKnowledge >& PopulationKnowledges() const { return populationKnowledges_; }
-    virtual const tools::Resolver_ABC< Report >&              Reports() const { return reports_; }
 
     virtual void SetToTasker( sword::Tasker& tasker, unsigned int id ) const;
     const kernel::ExtensionTypes& GetExtensionTypes() const;
@@ -146,7 +144,6 @@ private:
     void AddExtensions( T& , void* ) {}
 
     void DeleteCheckpoint( const std::string& name );
-    void ClearOldReports( unsigned int tick );
     void ClearLogisticRequests( unsigned int unitId );
     //@}
 
@@ -182,7 +179,6 @@ private:
     tools::Resolver< PopulationFire >        populationFires_;
     tools::Resolver< FireEffect >            fireEffects_;
     tools::Resolver< DetectionRangeEffect >  detectionRangeEffects_;
-    tools::Resolver< Report >                reports_;
     tools::Resolver< Action >                actions_;
     tools::Resolver< Pathfind >              pathfinds_;
     tools::Resolver< VisionCone >            cones_;
