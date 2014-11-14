@@ -13,7 +13,6 @@
 #include "SetGlOptions.h"
 #include "GLView_ABC.h"
 #include "GLViewBase.h"
-#include "MapWidget_ABC.h"
 #include "MT_Tools/MT_Profiler.h"
 #include <graphics/MapWidget.h>
 
@@ -36,7 +35,6 @@ namespace gui
 // =============================================================================
 class GL2DWidget : private SetGlOptions
                  , public MapWidget
-                 , public MapWidget_ABC
                  , public GLViewBase
 {
 public:
@@ -59,14 +57,6 @@ public:
     //@}
 
 private:
-    //! @name MapWidget_ABC implementation
-    //@{
-    virtual void PaintLayers();
-    virtual unsigned int Width() const;
-    virtual unsigned int Height() const;
-    virtual geometry::Rectangle2f Viewport() const;
-    //@}
-
     //! @name Layers -> implementation
     //@{
     virtual void AddLayers( const T_LayersVector& layers );
@@ -81,8 +71,7 @@ private:
     virtual void LoadFrustum( const FrustumInfos& infos );
 
     virtual void CenterOn( const geometry::Point2f& point );
-    virtual geometry::Point2f GetCenter() const;
-
+    virtual geometry::Rectangle2f Viewport() const;
     virtual void Zoom( float width );
     virtual float Zoom() const;
     virtual void SetZoom( float zoom );
@@ -252,6 +241,7 @@ private:
 
     //! @name OpenGL
     //@{
+    virtual void PaintLayers();
     virtual void UpdateGL();
     virtual void paintGL();
     virtual void PickGL();
@@ -280,7 +270,6 @@ private:
     unsigned int halfCircle_;
     int minVisuScale_;
     int maxVisuScale_;
-    geometry::Rectangle2f viewport_;
     unsigned int frame_;
     std::shared_ptr< IconLayout > iconLayout_;
     T_RenderPasses passes_;

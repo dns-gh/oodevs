@@ -56,7 +56,6 @@ GL2DWidget::GL2DWidget( QWidget* parentWidget,
     , windowWidth_ ( 0 )
     , circle_      ( 0 )
     , halfCircle_  ( 0 )
-    , viewport_    ( 0, 0, width, height )
     , frame_       ( 0 )
     , iconLayout_  ( iconLayout )
     , passes_      ( passLess( "" ) )
@@ -121,30 +120,6 @@ void GL2DWidget::RemoveLayer( const T_Layer& layer )
 }
 
 // -----------------------------------------------------------------------------
-// MapWidget_ABC
-// -----------------------------------------------------------------------------
-void GL2DWidget::PaintLayers()
-{
-    if( hasMultiTexturing_ )  // $$$$ LGY 2012-03-05: disable PaintLayers : crash in remote desktop
-        MapWidget::PaintLayers();
-}
-
-unsigned int GL2DWidget::Width() const
-{
-    return width();
-}
-
-unsigned int GL2DWidget::Height() const
-{
-    return height();
-}
-
-Rectangle2f GL2DWidget::Viewport() const
-{
-    return GetViewport();
-}
-
-// -----------------------------------------------------------------------------
 // Frustum
 // -----------------------------------------------------------------------------
 FrustumInfos GL2DWidget::SaveFrustum() const
@@ -165,9 +140,9 @@ void GL2DWidget::CenterOn( const Point2f& point )
     Center( point );
 }
 
-Point2f GL2DWidget::GetCenter() const
+geometry::Rectangle2f GL2DWidget::Viewport() const
 {
-    return center_;
+    return viewport_;
 }
 
 void GL2DWidget::Zoom( float w )
@@ -1144,20 +1119,11 @@ void GL2DWidget::RenderPass( GlRenderPass_ABC& pass )
 {
     ++frame_;
     currentPass_ = pass.GetName();
-    const Rectangle2f viewport = GetViewport();
-    const int windowHeight = windowHeight_;
-    const int windowWidth = windowWidth_;
-    viewport_ = pass.Viewport();
-    SetViewport( viewport_ );
-    windowWidth_ = pass.Width();
-    windowHeight_ = pass.Height();
-
-    MapWidget::resizeGL( windowWidth_, windowHeight_ );
     pass.Render( *this );
+}
 
-    SetViewport( viewport );
-    viewport_ = viewport;
-    windowHeight_ = windowHeight;
-    windowWidth_ = windowWidth;
-    MapWidget::resizeGL( windowWidth_, windowHeight_ );
+void GL2DWidget::PaintLayers()
+{
+    if( hasMultiTexturing_ )  // $$$$ LGY 2012-03-05: disable PaintLayers : crash in remote desktop
+        MapWidget::PaintLayers();
 }

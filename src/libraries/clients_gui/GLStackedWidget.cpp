@@ -152,10 +152,10 @@ void GLStackedWidget::InitializePasses()
     if( !widget2d_ )
         return;
     widget2d_->SetPassOrder( "main,fog,composition,tooltip" );
-    auto tooltip = new LayersRenderPass( *widget2d_, "tooltip", false );
-    auto main = new TextureRenderPass( *widget2d_, "main", *proxy_ );
-    auto fog = new TextureRenderPass( *widget2d_, "fog", *proxy_, "FogOfWar" );
-    auto compo = new CompositionPass( *main, *fog, *proxy_, "FogOfWar" );
+    auto tooltip = new LayersRenderPass( "tooltip", false );
+    auto main = new TextureRenderPass( "main" );
+    auto fog = new TextureRenderPass( "fog", "FogOfWar" );
+    auto compo = new CompositionPass( *main, *fog, "FogOfWar" );
     widget2d_->AddPass( *tooltip );
     widget2d_->AddPass( *compo );
     widget2d_->AddPass( *fog );

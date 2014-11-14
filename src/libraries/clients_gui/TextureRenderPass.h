@@ -28,16 +28,14 @@ class TextureRenderPass : public LayersRenderPass
 public:
     //! @name Constructors/Destructor
     //@{
-             TextureRenderPass( MapWidget_ABC& widget,
-                                const std::string& name,
-                                const GLView_ABC& view,
+             TextureRenderPass( const std::string& name,
                                 const std::string& option = "" );
     virtual ~TextureRenderPass();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Render( MapWidget_ABC& widget );
+    virtual void Render( GLView_ABC& view );
     void BindTexture() const;
     //@}
 
@@ -50,7 +48,6 @@ private:
 private:
     //! @name Member data
     //@{
-    const GLView_ABC& view_;
     unsigned int texture_;
     std::string option_;
     bool enabled_;

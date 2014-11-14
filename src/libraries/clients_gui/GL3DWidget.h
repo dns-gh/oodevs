@@ -73,8 +73,7 @@ private:
     virtual void LoadFrustum( const FrustumInfos& infos );
 
     virtual void CenterOn( const geometry::Point2f& point );
-    virtual geometry::Point2f GetCenter() const;
-
+    geometry::Rectangle2f Viewport() const;
     virtual void Zoom( float width );
     virtual float Zoom() const;
     virtual void SetZoom( float zoom );
@@ -230,6 +229,7 @@ private:
 
     //! @name OpenGL
     //@{
+    virtual void PaintLayers();
     virtual void UpdateGL();
     virtual void initializeGL();
     virtual void paintGL();
@@ -249,6 +249,7 @@ private:
     unsigned int frame_;
     bool isInitialized_;
     ViewFrustum current_;
+    geometry::Rectangle2f viewport_;
     //picking
     QPoint clickedPoint_;
     int windowHeight_;

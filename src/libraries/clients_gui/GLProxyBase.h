@@ -53,8 +53,7 @@ public:
     virtual void LoadFrustum( const FrustumInfos& infos );
 
     virtual void CenterOn( const geometry::Point2f& point );
-    virtual geometry::Point2f GetCenter() const;
-
+    virtual geometry::Rectangle2f Viewport() const;
     virtual void Zoom( float width );
     virtual float Zoom() const;
     virtual void SetZoom( float zoom );
@@ -76,6 +75,7 @@ public:
 
     //! @name Drawing tools -> forward to all children
     //@{
+    virtual void PaintLayers();
     virtual void UpdateGL();
     virtual void SetCurrentCursor( const QCursor& cursor );
     //@}

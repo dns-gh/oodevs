@@ -90,9 +90,9 @@ void GLProxyBase::CenterOn( const geometry::Point2f& point )
     GetActiveView().CenterOn( point );
 }
 
-geometry::Point2f GLProxyBase::GetCenter() const
+geometry::Rectangle2f GLProxyBase::Viewport() const
 {
-    return GetActiveView().GetCenter();
+    return GetCurrentView().Viewport(); // current, accessed during 
 }
 
 void GLProxyBase::Zoom( float width )
@@ -141,6 +141,11 @@ geometry::Point2f GLProxyBase::MapToterrainCoordinates( int x, int y )
 // -----------------------------------------------------------------------------
 // Drawing tools -> forward to all children
 // -----------------------------------------------------------------------------
+void GLProxyBase::PaintLayers()
+{
+    throw MASA_EXCEPTION_NOT_IMPLEMENTED;
+}
+
 void GLProxyBase::UpdateGL()
 {
     for( auto it = views_.begin(); it != views_.end(); ++it )

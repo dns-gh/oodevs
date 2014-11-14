@@ -27,10 +27,8 @@ using namespace gui;
 // -----------------------------------------------------------------------------
 CompositionPass::CompositionPass( TextureRenderPass& first,
                                   TextureRenderPass& second,
-                                  const GLView_ABC& view,
                                   const std::string& option /* = ""*/ )
-    : view_( view )
-    , first_( first )
+    : first_( first )
     , second_( second )
     , noiseTexture_( 0 )
     , ignoreShader_( false )
@@ -62,9 +60,9 @@ std::string CompositionPass::GetName() const
 // Name: CompositionPass::Render
 // Created: SBO 2008-04-14
 // -----------------------------------------------------------------------------
-void CompositionPass::Render( MapWidget_ABC& )
+void CompositionPass::Render( GLView_ABC& view )
 {
-    if( !option_.empty() && !view_.GetCurrentOptions().Get( option_ ).To< bool >() ||
+    if( !option_.empty() && !view.GetCurrentOptions().Get( option_ ).To< bool >() ||
         !gl::HasMultiTexturing() )
         return;
 
@@ -72,13 +70,14 @@ void CompositionPass::Render( MapWidget_ABC& )
     if( !ignoreShader_ && !program_.get() )
         Initialize();
 
+    const auto viewport = view.Viewport();
     if( program_.get() )
     {
         program_->Use();
         program_->SetUniformValue( "mainTexture", 0 );
         program_->SetUniformValue( "fogTexture", 1 );
         program_->SetUniformValue( "noiseTexture", 2 );
-        program_->SetUniformValue( "parameters", 20.f / Width(), 20.f / Height(), time_ += 0.01f );
+        program_->SetUniformValue( "parameters", 20.f / viewport.Width(), 20.f / viewport.Height(), time_ += 0.01f );
     }
 
     gl::glActiveTexture( gl::GL_TEXTURE0 );
@@ -93,13 +92,13 @@ void CompositionPass::Render( MapWidget_ABC& )
 
     glBegin( GL_QUADS );
         glTexCoord2f( 0, 0 );
-        glVertex2f( Viewport().Left(), Viewport().Bottom() );
+        glVertex2f( viewport.Left(), viewport.Bottom() );
         glTexCoord2f( 1, 0 );
-        glVertex2f( Viewport().Right(), Viewport().Bottom() );
+        glVertex2f( viewport.Right(), viewport.Bottom() );
         glTexCoord2f( 1, 1 );
-        glVertex2f( Viewport().Right(), Viewport().Top() );
+        glVertex2f( viewport.Right(), viewport.Top() );
         glTexCoord2f( 0, 1 );
-        glVertex2f( Viewport().Left(), Viewport().Top() );
+        glVertex2f( viewport.Left(), viewport.Top() );
     glEnd();
 
     glBindTexture( gl::GL_TEXTURE_3D, 0 );
@@ -113,33 +112,6 @@ void CompositionPass::Render( MapWidget_ABC& )
 
     if( program_.get() )
         program_->Unuse();
-}
-
-// -----------------------------------------------------------------------------
-// Name: CompositionPass::Width
-// Created: SBO 2008-04-14
-// -----------------------------------------------------------------------------
-unsigned int CompositionPass::Width() const
-{
-    return first_.Width();
-}
-
-// -----------------------------------------------------------------------------
-// Name: CompositionPass::Height
-// Created: SBO 2008-04-14
-// -----------------------------------------------------------------------------
-unsigned int CompositionPass::Height() const
-{
-    return first_.Height();
-}
-
-// -----------------------------------------------------------------------------
-// Name: CompositionPass::Viewport
-// Created: SBO 2008-04-14
-// -----------------------------------------------------------------------------
-geometry::Rectangle2f CompositionPass::Viewport() const
-{
-    return first_.Viewport();
 }
 
 namespace

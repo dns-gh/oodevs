@@ -110,9 +110,9 @@ void GL3DWidget::CenterOn( const Point2f& point )
     Widget3D::CenterOn( point );
 }
 
-Point2f GL3DWidget::GetCenter() const
+geometry::Rectangle2f GL3DWidget::Viewport() const
 {
-    return Point2f( center_.X(), center_.Y() );
+    return viewport_;
 }
 
 void GL3DWidget::Zoom( float /*width*/ )
@@ -824,6 +824,12 @@ void GL3DWidget::leaveEvent( QEvent* event )
 // -----------------------------------------------------------------------------
 // OpenGL
 // -----------------------------------------------------------------------------
+void GL3DWidget::PaintLayers()
+{
+    for( auto it = layers_.begin(); it != layers_.end(); ++it )
+        ( *it )->Paint( current_ );
+}
+
 void GL3DWidget::UpdateGL()
 {
     if( isVisible() )
@@ -851,8 +857,7 @@ void GL3DWidget::Paint( const ViewFrustum& view )
     glLineWidth( 1.f );
     glColor3f( 1, 1, 1 );
     glBindTexture( GL_TEXTURE_2D, 0 );
-    for( auto it = layers_.begin(); it != layers_.end(); ++it )
-        ( *it )->Paint( view );
+    PaintLayers();
     DrawActiveFrame();
 }
 
@@ -861,6 +866,7 @@ void GL3DWidget::resizeGL( int w, int h )
     windowHeight_ = h;
     windowWidth_ = w;
     Widget3D::resizeGL( w, h );
+    viewport_ = geometry::Rectangle2f( 0, 0, static_cast< float >( w ), static_cast< float >( h ) );
 }
 
 void GL3DWidget::paintGL()
