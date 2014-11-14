@@ -17,15 +17,16 @@ namespace replay
 {
     struct Service {};
 
-    GENERATE_MESSAGE( sword::ClientToReplay, sword, ControlStop               , control_stop                   )
+    GENERATE_MESSAGE( sword::ClientToReplay, sword, ControlChangeTimeFactor   , control_change_time_factor     )
+    GENERATE_MESSAGE( sword::ClientToReplay, sword, ControlEnableVisionCones  , control_toggle_vision_cones    )
     GENERATE_MESSAGE( sword::ClientToReplay, sword, ControlPause              , control_pause                  )
     GENERATE_MESSAGE( sword::ClientToReplay, sword, ControlResume             , control_resume                 )
-    GENERATE_MESSAGE( sword::ClientToReplay, sword, ControlChangeTimeFactor   , control_change_time_factor     )
-    GENERATE_MESSAGE( sword::ClientToReplay, sword, ControlSkipToTick         , control_skip_to_tick           )
     GENERATE_MESSAGE( sword::ClientToReplay, sword, ControlSkipToDate         , control_skip_to_date           )
-    GENERATE_MESSAGE( sword::ClientToReplay, sword, TimeTableRequest          , time_table_request             )
+    GENERATE_MESSAGE( sword::ClientToReplay, sword, ControlSkipToTick         , control_skip_to_tick           )
+    GENERATE_MESSAGE( sword::ClientToReplay, sword, ControlStop               , control_stop                   )
+    GENERATE_MESSAGE( sword::ClientToReplay, sword, ListReports               , list_reports                   )
     GENERATE_MESSAGE( sword::ClientToReplay, sword, ForceRefreshDataRequest   , force_refresh_data_request     )
-    GENERATE_MESSAGE( sword::ClientToReplay, sword, ControlEnableVisionCones  , control_toggle_vision_cones    )
+    GENERATE_MESSAGE( sword::ClientToReplay, sword, TimeTableRequest          , time_table_request             )
 
     GENERATE_MESSAGE( sword::ReplayToClient, sword, ControlStopAck            , control_stop_ack               )
     GENERATE_MESSAGE( sword::ReplayToClient, sword, ControlPauseAck           , control_pause_ack              )

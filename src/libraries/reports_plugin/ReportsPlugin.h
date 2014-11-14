@@ -55,6 +55,8 @@ private:
     std::unique_ptr< Reports > reports_;
     const dispatcher::Config& config_;
     int currentTick_;
+    const unsigned int frequency_;
+    const bool replay_;
     //@}
 };
 }

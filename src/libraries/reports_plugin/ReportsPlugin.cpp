@@ -38,7 +38,9 @@ namespace
 ReportsPlugin::ReportsPlugin( const dispatcher::Config& config, bool replay )
     : reports_    ( InitializeReports( config, "reports.db", replay ) )
     , config_     ( config )
+    , frequency_  ( config_.GetReportsClearFrequency() )
     , currentTick_( 0 )
+    , replay_     ( replay )
 {
     // NOTHING
 }
@@ -50,6 +52,8 @@ ReportsPlugin::~ReportsPlugin()
 
 void ReportsPlugin::Receive( const sword::SimToClient& msg )
 {
+    if( replay_ )
+        return;
     if( msg.message().has_control_information() )
         currentTick_ = msg.message().control_information().current_tick();
     else if( msg.message().has_control_end_tick() )
@@ -96,11 +100,10 @@ bool ReportsPlugin::HandleClientTo( const M& msg, dispatcher::RewritingPublisher
 
 void ReportsPlugin::SendState( dispatcher::ClientPublisher_ABC& publisher )
 {
-    const unsigned frequency = config_.GetReportsClearFrequency();
     sword::ListReportsAck list;
     reports_->ListReports( list, std::numeric_limits< int >::max(),
         boost::none,
-        std::max< int >( 0, currentTick_ - frequency ),
+        std::max< int >( 0, currentTick_ - frequency_ ),
         currentTick_ );
 
     for( int i = 0; i < list.reports_size(); i++ )

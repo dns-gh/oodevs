@@ -46,6 +46,7 @@ public:
             ClientPublisher_ABC& );
     virtual bool HandleClientToReplay( const sword::ClientToReplay&,
             RewritingPublisher_ABC&, ClientPublisher_ABC& );
+    virtual void SendState( ClientPublisher_ABC& client );
     //@}
 
 private:
