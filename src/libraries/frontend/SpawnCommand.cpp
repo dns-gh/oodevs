@@ -45,7 +45,6 @@ struct SpawnCommand::Private : public boost::noncopyable
     tools::Path logname;
     bool truncate;
     std::unique_ptr< tools::Log > log;
-    std::shared_ptr< void > job;
 };
 
 // -----------------------------------------------------------------------------
@@ -123,46 +122,6 @@ void SpawnCommand::SetLogFile( const tools::Path& path, bool truncate )
     private_->truncate = truncate;
 }
 
-namespace
-{
-    QString GetLastErrorMessage()
-    {
-        LPVOID buffer;
-        FormatMessage(
-            FORMAT_MESSAGE_ALLOCATE_BUFFER |
-            FORMAT_MESSAGE_FROM_SYSTEM |
-            FORMAT_MESSAGE_IGNORE_INSERTS,
-            0,
-            GetLastError(),
-            MAKELANGID( LANG_NEUTRAL, SUBLANG_DEFAULT ),
-            (LPTSTR)&buffer,
-            0,
-            0 );
-        const QString result( static_cast< char* >( buffer ) );
-        LocalFree( buffer );
-        return result;
-    }
-
-    std::shared_ptr< void > MakeAutoKill( const QProcess& process )
-    {
-        const auto pid = process.pid();
-        if( !pid )
-            throw MASA_EXCEPTION( tools::translate( "SpawnCommand", "Missing pid from process: %1" ).arg( GetLastErrorMessage() ).toStdString() );
-        const auto job = CreateJobObject( NULL, NULL );
-        if( !job )
-            throw MASA_EXCEPTION( tools::translate( "SpawnCommand", "Unable to create job object: %1" ).arg( GetLastErrorMessage() ).toStdString() );
-        std::shared_ptr< void > result( job, CloseHandle );
-        JOBOBJECT_EXTENDED_LIMIT_INFORMATION info;
-        memset( &info, 0, sizeof info );
-        info.BasicLimitInformation.LimitFlags = JOB_OBJECT_LIMIT_KILL_ON_JOB_CLOSE;
-        if( !SetInformationJobObject( job, JobObjectExtendedLimitInformation, &info, sizeof info ) )
-            throw MASA_EXCEPTION( tools::translate( "SpawnCommand", "Unable to set information job object: %1" ).arg( GetLastErrorMessage() ).toStdString() );
-        if( !AssignProcessToJobObject( job, pid->hProcess ) )
-            throw MASA_EXCEPTION( tools::translate( "SpawnCommand", "Unable to assign process to job object: %1").arg( GetLastErrorMessage() ).toStdString() );
-        return result;
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: SpawnCommand::Start
 // Created: AGE 2007-10-05
@@ -182,12 +141,8 @@ void SpawnCommand::Start()
     if( !private_->working.IsEmpty() )
         private_->process->setWorkingDirectory( QString::fromStdWString( private_->working.ToUnicode() ) );
     private_->process->start( QString::fromStdWString( private_->exe.ToUnicode() ), private_->arguments );
-    const bool done = private_->process->waitForStarted();
-    if( done )
-    {
-        private_->job = MakeAutoKill( *private_->process );
+    if( private_->process->waitForStarted() )
         return;
-    }
     const int exit = private_->process->exitCode();
     private_->process.reset();
     throw MASA_EXCEPTION( tools::translate( "SpawnCommand", "Could not start process: %1, error: %2" )
