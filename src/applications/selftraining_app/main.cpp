@@ -41,18 +41,17 @@ QString GetLastErrorMessage()
 
 std::shared_ptr< void > MakeSubprocessTerminationJob()
 {
-    const auto job = CreateJobObject( NULL, NULL );
+    const auto job = CreateJobObject( 0, 0 );
     if( !job )
-        throw MASA_EXCEPTION( tools::translate( "SpawnCommand", "Unable to create job object: %1" ).arg( GetLastErrorMessage() ).toStdString() );
+        throw MASA_EXCEPTION( tools::translate( "Application", "Unable to create job object: %1" ).arg( GetLastErrorMessage() ).toStdString() );
     std::shared_ptr< void > result( job, CloseHandle );
     JOBOBJECT_EXTENDED_LIMIT_INFORMATION info;
     memset( &info, 0, sizeof info );
     info.BasicLimitInformation.LimitFlags = JOB_OBJECT_LIMIT_KILL_ON_JOB_CLOSE;
     if( !SetInformationJobObject( job, JobObjectExtendedLimitInformation, &info, sizeof info ) )
-        throw MASA_EXCEPTION( tools::translate( "SpawnCommand", "Unable to set information job object: %1" ).arg( GetLastErrorMessage() ).toStdString() );
-    const auto h = ::GetCurrentProcess();
-    if( !AssignProcessToJobObject( job, h ) )
-        throw MASA_EXCEPTION( tools::translate( "SpawnCommand", "Unable to assign process to job object: %1").arg( GetLastErrorMessage() ).toStdString() );
+        throw MASA_EXCEPTION( tools::translate( "Application", "Unable to set information job object: %1" ).arg( GetLastErrorMessage() ).toStdString() );
+    if( !AssignProcessToJobObject( job, GetCurrentProcess() ) )
+        throw MASA_EXCEPTION( tools::translate( "Application", "Unable to assign process to job object: %1").arg( GetLastErrorMessage() ).toStdString() );
     return result;
 }
 

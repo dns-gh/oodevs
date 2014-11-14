@@ -19,6 +19,18 @@
         <source>SWORD</source>
         <translation type="unfinished">السيف</translation>
     </message>
+    <message>
+        <source>Unable to create job object: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unable to set information job object: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unable to assign process to job object: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AuthoringPage</name>
