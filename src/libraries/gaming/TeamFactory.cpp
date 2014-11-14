@@ -81,8 +81,8 @@ kernel::Team_ABC* TeamFactory::CreateTeam( const sword::PartyCreation& message )
     Team* result = new Team( message, controllers_, actionsModel_, profile_ );
     gui::PropertiesDictionary& dico = result->Get< gui::PropertiesDictionary >();
     result->Attach( *new UrbanKnowledges( *result, controllers_.controller_, model_.urbanKnowledgeFactory_ ) );
-    result->Attach< kernel::Diplomacies_ABC > ( *new Diplomacies( controllers_.controller_, model_.teams_ ) );
-    result->Attach< kernel::CommunicationHierarchies >( *new TeamHierarchies        ( controllers_.controller_, *result ) );
+    result->Attach< kernel::Diplomacies_ABC >( *new Diplomacies( controllers_.controller_, model_.teams_ ) );
+    result->Attach< kernel::CommunicationHierarchies >( *new TeamHierarchies( controllers_.controller_, *result ) );
     result->Attach< kernel::TacticalHierarchies >( *new TeamTacticalHierarchies( controllers_.controller_, *result ) );
     result->Attach< kernel::Equipments_ABC >( *new Equipments( *result, controllers_.controller_, model_.static_.objectTypes_, dico, model_.agents_, model_.teams_, model_.teams_ ) );
     result->Attach( *new Troops( controllers_.controller_, model_.agents_, model_.teams_, model_.teams_ ) );
@@ -126,7 +126,6 @@ kernel::Team_ABC* TeamFactory::CreateNoSideTeam()
     result->Attach< kernel::Diplomacies_ABC >( *new NoSideDiplomacy() );
     result->Attach< kernel::TacticalHierarchies >( *new TeamTacticalHierarchies( controllers_.controller_, *result ) );
     result->Update( kernel::InstanciationComplete() );
-    // TODO other extensions needed?
     return result;
 }
 
@@ -139,7 +138,6 @@ kernel::Formation_ABC* TeamFactory::CreateFormation( const sword::FormationCreat
     kernel::Entity_ABC* superior = message.has_parent() ?
         static_cast< kernel::Entity_ABC*>( &model_.teams_.Resolver< kernel::Formation_ABC >::Get( message.parent().id() ) ) :
         static_cast< kernel::Entity_ABC*>( &model_.teams_.Resolver< kernel::Team_ABC >::Get( message.party().id() ) );
-
     Formation* result = new Formation( message, controllers_.controller_, actionsModel_, profile_ );
     result->Attach< Lives_ABC >( *new FormationLives( *result ) );
     gui::PropertiesDictionary& dico = result->Get< gui::PropertiesDictionary >();
