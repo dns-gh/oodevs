@@ -764,7 +764,8 @@
                 excludes="adaptation_app_*.qm,
                           frontend_*.qm
                           preparation_app_*.qm,
-                          selftraining_app_*.qm"/>
+                          selftraining_app_*.qm,
+                          timeline.pak"/>
         <fileset dir="${run.dir}" includes="resources/**"/>
     </union>
 
