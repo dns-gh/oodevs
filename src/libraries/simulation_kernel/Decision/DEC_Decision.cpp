@@ -663,7 +663,7 @@ void RegisterGeometryFunctions( sword::Brain& brain)
         std::function< std::vector< boost::shared_ptr< MT_Vector2D > >( int, const MT_Vector2D*, float, float, float, const MT_Vector2D* ) >( boost::bind( &DEC_GeometryFunctions::ComputePosDeploiementASADoubleRideau, _1, _2, _3, _4, _5, _6 ) ) );
 
     brain.RegisterFunction( "_DEC_Geometrie_CalculerBarycentreLocalisationDansFuseau", &DEC_GeometryFunctions::ComputeLocalisationBarycenterInFuseau );
-    brain.RegisterFunction( "_DEC_Geometry_SplitLocalisation", &DEC_GeometryFunctions::SplitLocalisationInParts );
+    brain.RegisterFunction( "DEC_Geometry_Pion_SplitLocalisation", &DEC_GeometryFunctions::SplitLocalisationInParts );
     brain.RegisterFunction( "_DEC_Geometrie_DecoupeFuseauEnTroncons", &DEC_GeometryFunctions::SplitLocalisationInSections );
     brain.RegisterFunction( "_DEC_Geometrie_CalculerPositionObstacle", &DEC_GeometryFunctions::ComputeObstaclePosition );
     brain.RegisterFunction( "_DEC_Geometrie_CalculerPointArrivee", &DEC_GeometryFunctions::ComputeDestPoint );

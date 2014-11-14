@@ -239,11 +239,7 @@ function DEC_Geometrie_CalculerBarycentreLocalisationDansFuseau( localization )
 end
 
 function DEC_Geometry_SplitLocalisation( localization, numParts, direction )
-    return _DEC_Geometry_SplitLocalisation( myself, localization, numParts, direction )
-end
-
-function DEC_Geometry_Pion_SplitLocalisation( pion, localization, numParts, direction )
-    return _DEC_Geometry_SplitLocalisation( pion, localization, numParts, direction )
+    return DEC_Geometry_Pion_SplitLocalisation( myself, localization, numParts, direction )
 end
 
 function DEC_Geometrie_DecoupeFuseauEnTroncons( sectionLength )

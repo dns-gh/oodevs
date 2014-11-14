@@ -35,7 +35,8 @@
 
 using namespace human;
 
-namespace {
+namespace
+{
 
 typedef std::vector< const MIL_Automate* > T_AutomateVector;
 
@@ -102,55 +103,37 @@ void PionMaintenanceChangeWorkRate( MIL_Agent_ABC& callerAgent, int workRate )
             role->ChangeWorkRate( *pWorkRate );
 }
 
-}
-
-
-void DEC_LogisticFunctions::MaintenanceEnableSystem( DEC_Decision_ABC* caller )
+void ApplyOnCommandPost( DEC_Decision_ABC* caller, std::function< void( MIL_Agent_ABC& ) > f )
 {
     switch( caller->GetKind() )
     {
         case DEC_Decision_ABC::ePion:
-            PionMaintenanceEnableSystem( caller->GetPion() );
+            f( caller->GetPion() );
             break;
         case DEC_Decision_ABC::eAutomate:
             if( MIL_AgentPion* pionPc = caller->GetAutomate().GetPionPC() )
-                PionMaintenanceEnableSystem( *pionPc );
+                f( *pionPc );
             break;
         default:
-            throw MASA_EXCEPTION( "DEC_LogisticFunctions::MaintenanceEnableSystem: cannot be called for this agent type" );
+            throw MASA_EXCEPTION( "ApplyOnCommandPost: cannot be called for this agent type" );
     }
+}
+
+}
+
+void DEC_LogisticFunctions::MaintenanceEnableSystem( DEC_Decision_ABC* caller )
+{
+    ApplyOnCommandPost( caller, []( MIL_Agent_ABC& pionPC ) { PionMaintenanceEnableSystem( pionPC ); } );
 }
 
 void DEC_LogisticFunctions::MaintenanceDisableSystem( DEC_Decision_ABC* caller )
 {
-    switch( caller->GetKind() )
-    {
-        case DEC_Decision_ABC::ePion:
-            PionMaintenanceDisableSystem( caller->GetPion() );
-            break;
-        case DEC_Decision_ABC::eAutomate:
-            if( MIL_AgentPion* pionPc = caller->GetAutomate().GetPionPC() )
-                PionMaintenanceDisableSystem( *pionPc );
-            break;
-        default:
-            throw MASA_EXCEPTION( "DEC_LogisticFunctions::MaintenanceDisableSystem: cannot be called for this agent type" );
-    }
+    ApplyOnCommandPost( caller, []( MIL_Agent_ABC& pionPC ) { PionMaintenanceDisableSystem( pionPC ); } );
 }
 
 void DEC_LogisticFunctions::MaintenanceChangePriorities( DEC_Decision_ABC* caller, const std::vector< const PHY_ComposanteTypePion* >& priorities )
 {
-    switch( caller->GetKind() )
-    {
-        case DEC_Decision_ABC::ePion:
-            PionMaintenanceChangePriorities( caller->GetPion(), priorities );
-            break;
-        case DEC_Decision_ABC::eAutomate:
-            if( MIL_AgentPion* pionPc = caller->GetAutomate().GetPionPC() )
-                PionMaintenanceChangePriorities( *pionPc, priorities );
-            break;
-        default:
-            throw MASA_EXCEPTION( "DEC_LogisticFunctions::MaintenanceChangePriorities: cannot be called for this agent type" );
-    }
+    ApplyOnCommandPost( caller, [&]( MIL_Agent_ABC& pionPC ) { PionMaintenanceChangePriorities( pionPC, priorities ); } );
 }
 
 // -----------------------------------------------------------------------------
@@ -168,18 +151,7 @@ std::vector< const PHY_ComposanteTypePion* > DEC_LogisticFunctions::GetAutomateM
 
 void DEC_LogisticFunctions::MaintenanceChangeTacticalPriorities( DEC_Decision_ABC* caller, const std::vector< const DEC_Decision_ABC* >& priorities )
 {
-    switch( caller->GetKind() )
-    {
-        case DEC_Decision_ABC::ePion:
-            PionMaintenanceChangeTacticalPriorities( caller->GetPion(), priorities );
-            break;
-        case DEC_Decision_ABC::eAutomate:
-            if( MIL_AgentPion* pionPc = caller->GetAutomate().GetPionPC() )
-                PionMaintenanceChangeTacticalPriorities( *pionPc, priorities );
-            break;
-        default:
-            throw MASA_EXCEPTION( "DEC_LogisticFunctions::MaintenanceChangeTacticalPriorities: cannot be called for this agent type" );
-    }
+    ApplyOnCommandPost( caller, [&]( MIL_Agent_ABC& pionPC ) { PionMaintenanceChangeTacticalPriorities( pionPC, priorities ); } );
 }
 
 // -----------------------------------------------------------------------------
@@ -201,18 +173,7 @@ std::vector< const DEC_Decision_ABC* > DEC_LogisticFunctions::GetAutomateMainten
 
 void DEC_LogisticFunctions::MaintenanceChangeWorkRate( DEC_Decision_ABC* caller, int workRate )
 {
-    switch( caller->GetKind() )
-    {
-        case DEC_Decision_ABC::ePion:
-            PionMaintenanceChangeWorkRate( caller->GetPion(), workRate );
-            break;
-        case DEC_Decision_ABC::eAutomate:
-            if( MIL_AgentPion* pionPc = caller->GetAutomate().GetPionPC() )
-                PionMaintenanceChangeWorkRate( *pionPc, workRate );
-            break;
-        default:
-            throw MASA_EXCEPTION( "DEC_LogisticFunctions::MaintenanceChangeWorkRate: cannot be called for this agent type" );
-    }
+    ApplyOnCommandPost( caller, [=]( MIL_Agent_ABC& pionPC ) { PionMaintenanceChangeWorkRate( pionPC, workRate ); } );
 }
 
 // -----------------------------------------------------------------------------
@@ -274,8 +235,8 @@ void DEC_LogisticFunctions::AllowWoundedHumansAutoEvacuation( DEC_Decision_ABC* 
     pPion->GetPion().GetRole< PHY_RoleInterface_Humans >().ChangeEvacuationMode( PHY_RoleInterface_Humans::eEvacuationMode_Auto );
 }
 
-
-namespace {
+namespace
+{
 
 // -----------------------------------------------------------------------------
 // Name: DEC_LogisticFunctions::PionMedicalEnableSystem
@@ -377,114 +338,37 @@ void PionMedicalChangeTacticalPriorities( MIL_Agent_ABC& callerAgent, const std:
 
 void DEC_LogisticFunctions::MedicalEnableSystem( DEC_Decision_ABC* caller )
 {
-    switch( caller->GetKind() )
-    {
-        case DEC_Decision_ABC::ePion:
-            PionMedicalEnableSystem( caller->GetPion() );
-            break;
-        case DEC_Decision_ABC::eAutomate:
-            if( MIL_AgentPion* pionPc = caller->GetAutomate().GetPionPC() )
-                PionMedicalEnableSystem( *pionPc );
-            break;
-        default:
-            throw MASA_EXCEPTION( "DEC_LogisticFunctions::MedicalEnableSystem: cannot be called for this agent type" );
-    }
+    ApplyOnCommandPost( caller, []( MIL_Agent_ABC& pionPC ) { PionMedicalEnableSystem( pionPC ); } );
 }
 
 void DEC_LogisticFunctions::MedicalDisableSystem( DEC_Decision_ABC* caller )
 {
-    switch( caller->GetKind() )
-    {
-        case DEC_Decision_ABC::ePion:
-            PionMedicalDisableSystem( caller->GetPion() );
-            break;
-        case DEC_Decision_ABC::eAutomate:
-            if( MIL_AgentPion* pionPc = caller->GetAutomate().GetPionPC() )
-                PionMedicalDisableSystem( *pionPc );
-            break;
-        default:
-            throw MASA_EXCEPTION( "DEC_LogisticFunctions::MedicalDisableSystem: cannot be called for this agent type" );
-    }
+    ApplyOnCommandPost( caller, []( MIL_Agent_ABC& pionPC ) { PionMedicalDisableSystem( pionPC ); } );
 }
 
 void DEC_LogisticFunctions::MedicalEnableSortingFunction( DEC_Decision_ABC* caller )
 {
-    switch( caller->GetKind() )
-    {
-        case DEC_Decision_ABC::ePion:
-            PionMedicalEnableSortingFunction( caller->GetPion() );
-            break;
-        case DEC_Decision_ABC::eAutomate:
-            if( MIL_AgentPion* pionPc = caller->GetAutomate().GetPionPC() )
-                PionMedicalEnableSortingFunction( *pionPc );
-            break;
-        default:
-            throw MASA_EXCEPTION( "DEC_LogisticFunctions::MedicalEnableSortingFunction: cannot be called for this agent type" );
-    }
+    ApplyOnCommandPost( caller, []( MIL_Agent_ABC& pionPC ) { PionMedicalEnableSortingFunction( pionPC ); } );
 }
 
 void DEC_LogisticFunctions::MedicalDisableSortingFunction( DEC_Decision_ABC* caller )
 {
-    switch( caller->GetKind() )
-    {
-        case DEC_Decision_ABC::ePion:
-            PionMedicalDisableSortingFunction( caller->GetPion() );
-            break;
-        case DEC_Decision_ABC::eAutomate:
-            if( MIL_AgentPion* pionPc = caller->GetAutomate().GetPionPC() )
-                PionMedicalDisableSortingFunction( *pionPc );
-            break;
-        default:
-            throw MASA_EXCEPTION( "DEC_LogisticFunctions::MedicalEnableSortingFunction: cannot be called for this agent type" );
-    }
+    ApplyOnCommandPost( caller, []( MIL_Agent_ABC& pionPC ) { PionMedicalDisableSortingFunction( pionPC ); } );
 }
 
 void DEC_LogisticFunctions::MedicalEnableHealingFunction( DEC_Decision_ABC* caller )
 {
-    switch( caller->GetKind() )
-    {
-        case DEC_Decision_ABC::ePion:
-            PionMedicalEnableHealingFunction( caller->GetPion() );
-            break;
-        case DEC_Decision_ABC::eAutomate:
-            if( MIL_AgentPion* pionPc = caller->GetAutomate().GetPionPC() )
-                PionMedicalEnableHealingFunction( *pionPc );
-            break;
-        default:
-            throw MASA_EXCEPTION( "DEC_LogisticFunctions::MedicalEnableHealingFunction: cannot be called for this agent type" );
-    }
+    ApplyOnCommandPost( caller, []( MIL_Agent_ABC& pionPC ) { PionMedicalEnableHealingFunction( pionPC ); } );
 }
 
 void DEC_LogisticFunctions::MedicalDisableHealingFunction( DEC_Decision_ABC* caller )
 {
-    switch( caller->GetKind() )
-    {
-        case DEC_Decision_ABC::ePion:
-            PionMedicalDisableHealingFunction( caller->GetPion() );
-            break;
-        case DEC_Decision_ABC::eAutomate:
-            if( MIL_AgentPion* pionPc = caller->GetAutomate().GetPionPC() )
-                PionMedicalDisableHealingFunction( *pionPc );
-            break;
-        default:
-            throw MASA_EXCEPTION( "DEC_LogisticFunctions::MedicalDisableHealingFunction: cannot be called for this agent type" );
-    }
+    ApplyOnCommandPost( caller, []( MIL_Agent_ABC& pionPC ) { PionMedicalDisableHealingFunction( pionPC ); } );
 }
 
 void DEC_LogisticFunctions::MedicalChangePriorities( DEC_Decision_ABC* caller, const std::vector< const PHY_HumanWound* >& priorities )
 {
-    switch( caller->GetKind() )
-    {
-        case DEC_Decision_ABC::ePion:
-            PionMedicalChangePriorities( caller->GetPion(), priorities );
-            break;
-        case DEC_Decision_ABC::eAutomate:
-            if( MIL_AgentPion* pionPc = caller->GetAutomate().GetPionPC() )
-                PionMedicalChangePriorities( *pionPc, priorities );
-            break;
-        default:
-            throw MASA_EXCEPTION( "DEC_LogisticFunctions::MedicalChangePriorities: cannot be called for this agent type" );
-    }
+    ApplyOnCommandPost( caller, [&]( MIL_Agent_ABC& pionPC ) { PionMedicalChangePriorities( pionPC, priorities ); } );
 }
 
 // -----------------------------------------------------------------------------
@@ -502,18 +386,7 @@ std::vector< const PHY_HumanWound* > DEC_LogisticFunctions::GetAutomateMedicalPr
 
 void DEC_LogisticFunctions::MedicalChangeTacticalPriorities( DEC_Decision_ABC* caller, const std::vector< const DEC_Decision_ABC* >& priorities )
 {
-    switch( caller->GetKind() )
-    {
-        case DEC_Decision_ABC::ePion:
-            PionMedicalChangeTacticalPriorities( caller->GetPion(), priorities );
-            break;
-        case DEC_Decision_ABC::eAutomate:
-            if( MIL_AgentPion* pionPc = caller->GetAutomate().GetPionPC() )
-                PionMedicalChangeTacticalPriorities( *pionPc, priorities );
-            break;
-        default:
-            throw MASA_EXCEPTION( "DEC_LogisticFunctions::MedicalChangeTacticalPriorities: cannot be called for this agent type" );
-    }
+    ApplyOnCommandPost( caller, [&]( MIL_Agent_ABC& pionPC ) { PionMedicalChangeTacticalPriorities( pionPC, priorities ); } );
 }
 
 // -----------------------------------------------------------------------------
@@ -582,8 +455,8 @@ void DEC_LogisticFunctions::DisconnectFromResourceNode( DEC_Decision_ABC* caller
         role->DisconnectFromResourceNode();
 }
 
-
-namespace {
+namespace
+{
 
 // -----------------------------------------------------------------------------
 // Name: DEC_LogisticFunctions::PionSupplyEnableSystem
@@ -615,18 +488,7 @@ void PionSupplyDisableSystem( MIL_Agent_ABC& callerAgent )
 // -----------------------------------------------------------------------------
 void DEC_LogisticFunctions::SupplyEnableSystem( DEC_Decision_ABC* caller )
 {
-    switch( caller->GetKind() )
-    {
-        case DEC_Decision_ABC::ePion:
-            PionSupplyEnableSystem( caller->GetPion() );
-            break;
-        case DEC_Decision_ABC::eAutomate:
-            if( MIL_AgentPion* pionPc = caller->GetAutomate().GetPionPC() )
-                PionSupplyEnableSystem( *pionPc );
-            break;
-        default:
-            throw MASA_EXCEPTION( "DEC_LogisticFunctions::SupplyEnableSystem: cannot be called for this agent type" );
-    }
+    ApplyOnCommandPost( caller, []( MIL_Agent_ABC& pionPC ) { PionSupplyEnableSystem( pionPC ); } );
 }
 
 // -----------------------------------------------------------------------------
@@ -635,18 +497,7 @@ void DEC_LogisticFunctions::SupplyEnableSystem( DEC_Decision_ABC* caller )
 // -----------------------------------------------------------------------------
 void DEC_LogisticFunctions::SupplyDisableSystem( DEC_Decision_ABC* caller )
 {
-    switch( caller->GetKind() )
-    {
-        case DEC_Decision_ABC::ePion:
-            PionSupplyDisableSystem( caller->GetPion() );
-            break;
-        case DEC_Decision_ABC::eAutomate:
-            if( MIL_AgentPion* pionPc = caller->GetAutomate().GetPionPC() )
-                PionSupplyDisableSystem( *pionPc );
-            break;
-        default:
-            throw MASA_EXCEPTION( "DEC_LogisticFunctions::SupplyDisableSystem: cannot be called for this agent type" );
-    }
+    ApplyOnCommandPost( caller, []( MIL_Agent_ABC& pionPC ) { PionSupplyDisableSystem( pionPC ); } );
 }
 
 // -----------------------------------------------------------------------------

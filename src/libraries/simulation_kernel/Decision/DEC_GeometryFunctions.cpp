@@ -2059,7 +2059,8 @@ float DEC_GeometryFunctions::ComputeOpenTerrainRatioInFuseau( const MIL_Fuseau* 
     return pFuseau ? pFuseau->ComputeOpenTerrainRatio() : 0.f;
 }
 
-namespace {
+namespace
+{
 
     bool CompareTerrainOpening( TER_Localisation* location1, TER_Localisation* location2 )
     {

@@ -47,7 +47,7 @@ boost::shared_ptr< MT_Vector2D > DEC_AutomateFunctions::GetBarycenter( const DEC
 // -----------------------------------------------------------------------------
 bool DEC_AutomateFunctions::IsParentAutomateEngaged( const DEC_Decision_ABC* callerAutomate )
 {
-	const MIL_Automate* automate = callerAutomate->GetAutomate().GetParentAutomate();
+    const MIL_Automate* automate = callerAutomate->GetAutomate().GetParentAutomate();
     return automate ? automate->IsEngaged() : false;
 }
 
@@ -151,7 +151,7 @@ std::vector< DEC_Decision_ABC* > DEC_AutomateFunctions::GetPionsWithoutPC( const
 std::vector< DEC_Decision_ABC* > DEC_AutomateFunctions::GetCommunicationPionsWithoutPC( const DEC_Decision_ABC* callerAutomate )
 {
     std::vector< DEC_Decision_ABC* > result;
-	const MIL_Automate& automate = callerAutomate->GetAutomate();
+    const MIL_Automate& automate = callerAutomate->GetAutomate();
     if( GetAutomatPC( automate, true ) )
         GetPionsDecisionsWithoutPC( automate, result, true );
     return result;
@@ -208,7 +208,7 @@ std::vector< DEC_Decision_ABC* > DEC_AutomateFunctions::GetCommunicationAutomatP
 std::vector< DEC_Decision_ABC* > DEC_AutomateFunctions::GetPionsWithPC( const DEC_Decision_ABC* callerAutomate )
 {
     std::vector< DEC_Decision_ABC* > result;
-	const MIL_Automate& automate = callerAutomate->GetAutomate(); 
+    const MIL_Automate& automate = callerAutomate->GetAutomate(); 
     GetPionsDecisionsWithoutPC( automate, result );
     MIL_AgentPion* pPionPC = GetAutomatPC( automate );
     if( pPionPC )
@@ -223,10 +223,10 @@ std::vector< DEC_Decision_ABC* > DEC_AutomateFunctions::GetPionsWithPC( const DE
 std::vector< DEC_Decision_ABC* > DEC_AutomateFunctions::GetCommunicationPionsWithPC( const DEC_Decision_ABC* callerAutomate )
 {
     std::vector< DEC_Decision_ABC* > result;
-	const MIL_Automate& automate = callerAutomate->GetAutomate();
+    const MIL_Automate& automate = callerAutomate->GetAutomate();
     if( GetAutomatPC( automate, true ) )
         GetPionsDecisionsWithoutPC( automate, result, true );
-    MIL_AgentPion*pPionPC = GetAutomatPC( automate );
+    MIL_AgentPion* pPionPC = GetAutomatPC( automate );
     if( pPionPC )
         result.push_back( &pPionPC->GetDecision() );
     return result;
@@ -565,7 +565,7 @@ void DEC_AutomateFunctions::SetMission( DEC_Decision_ABC* object, boost::shared_
 // -----------------------------------------------------------------------------
 void DEC_AutomateFunctions::NotifyRulesOfEngagementStateChanged( DEC_Decision_ABC* callerAutomate, int state )
 {
-    dynamic_cast< DEC_AutomateDecision* >( callerAutomate )->NotifyRulesOfEngagementStateChanged( static_cast< E_RulesOfEngagementState >( state ) );
+    dynamic_cast< DEC_AutomateDecision& >( *callerAutomate ).NotifyRulesOfEngagementStateChanged( static_cast< E_RulesOfEngagementState >( state ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -576,5 +576,5 @@ void DEC_AutomateFunctions::NotifyRulesOfEngagementPopulationStateChanged( DEC_D
 {
     const PHY_RoePopulation* pRoe = PHY_RoePopulation::Find( state );
     assert( pRoe );
-    dynamic_cast< DEC_AutomateDecision* >( callerAutomate )->NotifyRulesOfEngagementPopulationStateChanged( *pRoe );
+    dynamic_cast< DEC_AutomateDecision& >( *callerAutomate ).NotifyRulesOfEngagementPopulationStateChanged( *pRoe );
 }
