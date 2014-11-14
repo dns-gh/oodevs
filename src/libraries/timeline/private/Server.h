@@ -86,6 +86,7 @@ public:
     virtual void DeleteEvents( const std::vector< std::string >& uuids );
     virtual void LoadEvents( const std::string& events );
     virtual void SaveEvents() const;
+    virtual void CloseEvent( const timeline::CloseEvent& msg );
 
     /// controls::Server_ABC methods
     virtual void OnReadyServer();
@@ -105,6 +106,7 @@ public:
     virtual void OnKeyDown( int key );
     virtual void OnKeyPress( int key );
     virtual void OnKeyUp( int key );
+    virtual void OnClosedEvent( const Event& event, const Error& error );
 
     /// public methods
     virtual void Resize();

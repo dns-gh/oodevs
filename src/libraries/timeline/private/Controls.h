@@ -46,6 +46,7 @@ namespace controls
     T_Msg ReadEvent      ( const T_Logger& log, const std::string& uuid );
     T_Msg UpdateEvent    ( const T_Logger& log, const Event& event );
     T_Msg DeleteEvents   ( const T_Logger& log, const std::vector< std::string >& uuids );
+    T_Msg CloseEvent     ( const T_Logger& log, const CloseEvent& event );
     T_Msg LoadEvents     ( const T_Logger& log, const std::string& events );
     T_Msg SaveEvents     ( const T_Logger& log );
 
@@ -63,6 +64,7 @@ namespace controls
         virtual void OnReadEvent    ( const std::string& uuid ) = 0;
         virtual void OnUpdateEvent  ( const Event& event ) = 0;
         virtual void OnDeleteEvents ( const std::vector< std::string >& uuids ) = 0;
+        virtual void OnCloseEvent   ( const timeline::CloseEvent& msg ) = 0;
         virtual void OnLoadEvents   ( const std::string& events ) = 0;
         virtual void OnSaveEvents   () = 0;
     };
@@ -88,6 +90,7 @@ namespace controls
     T_Msg KeyDown               ( const T_Logger& log, int key );
     T_Msg KeyPress              ( const T_Logger& log, int key );
     T_Msg KeyUp                 ( const T_Logger& log, int key );
+    T_Msg ClosedEvent           ( const T_Logger& log, const Event& event, const Error& error );
 
     // ServerHandler_ABC lists events that every server must implement
     struct ServerHandler_ABC : public boost::noncopyable
@@ -112,6 +115,7 @@ namespace controls
         virtual void OnKeyDown              ( int key ) = 0;
         virtual void OnKeyPress             ( int key ) = 0;
         virtual void OnKeyUp                ( int key ) = 0;
+        virtual void OnClosedEvent          ( const Event& event, const Error& error ) = 0;
     };
 
     // Parse a client to server message and potentially call relevant ServerHandler_ABC method

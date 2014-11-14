@@ -129,6 +129,11 @@ void Client::OnDeleteEvents( const std::vector< std::string >& uuids )
     PostTask( TID_RENDERER, NewCefRunnableMethod( engine_.get(), &Engine::DeleteEvents, uuids ) );
 }
 
+void Client::OnCloseEvent( const timeline::CloseEvent& msg )
+{
+    PostTask( TID_RENDERER, NewCefRunnableMethod( engine_.get(), &Engine::CloseEvent, msg ) );
+}
+
 void Client::OnLoadEvents( const std::string& events )
 {
     PostTask( TID_RENDERER, NewCefRunnableMethod( engine_.get(), &Engine::LoadEvents, events ) );

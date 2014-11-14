@@ -21,6 +21,7 @@ enum ClientType
     CLIENT_EVENT_UPDATE         = 0x203;
     CLIENT_EVENT_DELETE         = 0x204;
     CLIENT_EVENT_SELECT         = 0x205;
+    CLIENT_EVENT_CLOSE          = 0x206;
     // serialization commands
     CLIENT_EVENTS_LOAD          = 0x300;
     CLIENT_EVENTS_SAVE          = 0x301;
@@ -43,6 +44,7 @@ enum ServerType
     SERVER_EVENT_CONTEXTMENU           = 0x208;
     SERVER_EVENT_CONTEXTMENUBACKGROUND = 0x209;
     SERVER_EVENT_TRIGGERED             = 0x20A;
+    SERVER_EVENT_CLOSED                = 0x20B;
     // keyboard event
     SERVER_KEYBOARD_KEYDOWN            = 0x300;
     SERVER_KEYBOARD_KEYPRESS           = 0x301;
@@ -81,6 +83,14 @@ message Error
     optional string text = 2;
 }
 
+message CloseEvent
+{
+    required string uuid       = 1;
+    optional bool   done       = 2;
+    optional Error  error      = 3;
+    optional bool   lock       = 4;
+}
+
 message KeyBoardEvent
 {
     optional int32 keydown  = 1;
@@ -96,11 +106,12 @@ message QueryParameter
 
 message ClientCommand
 {
-    optional ClientType     type   = 1;
-    repeated Event          events = 2;
-    optional string         url    = 3;
-    optional string         data   = 4;
-    repeated QueryParameter query  = 5;
+    optional ClientType     type         = 1;
+    repeated Event          events       = 2;
+    optional string         url          = 3;
+    optional string         data         = 4;
+    repeated QueryParameter query        = 5;
+    optional CloseEvent     close_event  = 6;
 }
 
 message ServerCommand

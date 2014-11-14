@@ -401,6 +401,7 @@ class EventsView extends Backbone.View
             gaming.save_events   = @save_events
             gaming.center_view   = @center_view
             gaming.update_query  = @update_query
+            gaming.close_event   = @close_event
             $("body").on          "contextmenu", @on_contextmenu_background
             @listenTo triggers,   "activate",    @on_activate
             @listenTo triggers,   "contextmenu", @on_contextmenu
@@ -529,6 +530,17 @@ class EventsView extends Backbone.View
                 delete url_query[k]
         triggers.trigger "reset_link"
         return
+
+    close_event: (close) =>
+        url = "#{@model.url}/#{close.uuid}/close"
+        body = JSON.stringify close, null, 4
+        post_ajax url, "", body,
+            (event) ->
+                gaming.closed_event event, code: 200,
+            (xhr) ->
+                gaming.closed_event "{}",
+                    code: xhr.status
+                    text: xhr.statusText
 
 # a backbone model for one session
 class Session extends Backbone.Model

@@ -162,6 +162,11 @@ void Server::DeleteEvents( const std::vector< std::string >& uuids )
     browser_->Post( controls::DeleteEvents( logger_, uuids ) );
 }
 
+void Server::CloseEvent( const timeline::CloseEvent& msg )
+{
+    browser_->Post( controls::CloseEvent( logger_, msg ) );
+}
+
 void Server::LoadEvents( const std::string& events )
 {
     browser_->Post( controls::LoadEvents( logger_, events ) );
@@ -255,4 +260,9 @@ void Server::OnKeyPress( int key )
 void Server::OnKeyUp( int key )
 {
     emit KeyUp( key );
+}
+
+void Server::OnClosedEvent( const Event& event, const Error& error )
+{
+    emit ClosedEvent( event, error );
 }

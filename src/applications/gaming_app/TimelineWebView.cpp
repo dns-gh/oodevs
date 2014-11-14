@@ -326,9 +326,8 @@ void TimelineWebView::OnTriggeredEvents( const timeline::Events& events )
             configurationPath.MakePreferred();
             glWidgetManager_.LoadDisplaySettings( configurationPath );
         }
-        event.done = true;
         if( server_ )
-            server_->UpdateEvent( event );
+            server_->CloseEvent( timeline::CloseEvent( event.uuid ) );
     }
 }
 

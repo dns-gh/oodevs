@@ -54,6 +54,7 @@ public:
     virtual void OnReadEvent( const std::string& uuid );
     virtual void OnUpdateEvent( const Event& event );
     virtual void OnDeleteEvents( const std::vector< std::string >& uuids );
+    virtual void OnCloseEvent( const CloseEvent& msg );
     virtual void OnLoadEvents( const std::string& events );
     virtual void OnSaveEvents();
 
