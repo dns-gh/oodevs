@@ -32,19 +32,13 @@ namespace kernel
 class Color : public gui::Color
 {
 public:
-    //! @name Constructors/Destructor
-    //@{
              Color();
     explicit Color( const kernel::Entity_ABC& parent );
     explicit Color( xml::xistream& xis );
     virtual ~Color();
-    //@}
 
-    //! @name Operations
-    //@{
     virtual void ChangeColor( xml::xistream& xis );
     virtual void SerializeAttributes( xml::xostream& xos ) const;
-    //@}
 };
 
 #endif // __Color_h_
