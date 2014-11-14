@@ -757,6 +757,7 @@ class Replay
     render: ->
         split_attributes = @layout.replay_split_attributes @w, @h
         split_attributes.visibility = @has_replay
+        @replay_split.attr split_attributes
         domain = (moment(x).valueOf() for x in @scale.domain())
         return unless @model.replays?
         data = @model.replays.filter (d) =>
@@ -794,7 +795,8 @@ class Replay
             .on("dragstart", (d) -> that.timeline.range_drag_begin this, d)
             .on("drag",      (d) -> that.range_drag_move  this, d)
             .on("dragend",   (d) -> that.timeline.range_drag_end   this, d)
-        replays.attr(@layout.replay_range_attributes())
+        replays.transition()
+            .attr(@layout.replay_range_attributes())
         replays.exit()
             .remove()
             .each((d) -> $(this).popover "destroy")
