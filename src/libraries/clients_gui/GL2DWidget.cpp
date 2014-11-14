@@ -53,14 +53,17 @@ GL2DWidget::GL2DWidget( QWidget* parentWidget,
     , MapWidget( context_, parentWidget, width, height, shareWidget )
     , GLViewBase( parentView )
     , windowHeight_( 0 )
-    , windowWidth_ ( 0 )
-    , circle_      ( 0 )
-    , halfCircle_  ( 0 )
-    , frame_       ( 0 )
-    , iconLayout_  ( iconLayout )
-    , passes_      ( passLess( "" ) )
-    , currentPass_ ()
-    , hasMultiTexturing_      ( false )
+    , windowWidth_( 0 )
+    , circle_( 0 )
+    , halfCircle_( 0 )
+    , iconLayout_( iconLayout )
+    , passes_( passLess( "" ) )
+    , currentPass_()
+    , frame_( 0 )
+    , adaptiveZoom_( 0.f )
+    , fixedZoom_( 0.f )
+    , pixels_( 0.f )
+    , symbolSize_( 0.f )
 {
     setAcceptDrops( true );
     if( context() != context_ || ! context_->isValid() )
@@ -153,17 +156,7 @@ void GL2DWidget::Zoom( float w )
 
 float GL2DWidget::GetAdaptiveZoomFactor( bool bVariableSize /*= true*/ ) const
 {
-    if( !bVariableSize )
-        return GetCurrentOptions().Get( "SymbolSize/CurrentFactor" ).To< float >() * Pixels() / 60;
-
-    float zoom = Zoom();
-    float pixels = Pixels();
-    if( zoom <= .00024f )
-        return 1;
-    else if( zoom <= .002f )
-        return pixels / 15;
-    else
-        return 0.12f;
+    return bVariableSize ? adaptiveZoom_ : fixedZoom_;
 }
 
 float GL2DWidget::Zoom() const
@@ -239,9 +232,7 @@ uint16_t GL2DWidget::StipplePattern( int factor /* = 1*/ ) const
 
 float GL2DWidget::Pixels( const Point2f& ) const
 {
-    if( windowWidth_ > 0 )
-        return viewport_.Width() / windowWidth_;
-    return 0.f;
+    return pixels_;
 }
 
 void GL2DWidget::SetCurrentCursor( const QCursor& cursor )
@@ -692,7 +683,7 @@ void GL2DWidget::DrawUnitSymbol( const std::string& symbol,
     {
         if( !moveSymbol.empty() )
         {
-            const auto scaledDepth = symbolDepth * GetCurrentOptions().Get( "SymbolSize/CurrentFactor" ).To< float >() / defaultSymbolSize;
+            const auto scaledDepth = symbolDepth * symbolSize_ / defaultSymbolSize;
             geometry::Vector2f directionVector( 0, 1 );
             directionVector.Rotate( -3.14f * direction / 180 );
             const geometry::Point2f arrowTail = where - directionVector * depth;
@@ -923,11 +914,10 @@ void GL2DWidget::DrawApp6SymbolScaledSize( const std::string& symbol,
                                            float width,
                                            float depth ) const
 {
-    const float symbolSize = GetCurrentOptions().Get( "SymbolSize/CurrentFactor" ).To< float >();
     const float svgDeltaX = -20; // Offset of 20 in our svg files...
     const float svgDeltaY = -80 + 120; // Offset of 80 in our svg files + half of 240 which is the default height...
     const Rectangle2f viewport( 0, 0, 256, 256 );
-    factor = fabs( factor ) * zoomFactor * symbolSize / defaultSymbolSize;
+    factor = fabs( factor ) * zoomFactor * symbolSize_ / defaultSymbolSize;
     DrawApp6( symbol, where, baseWidth * factor, viewport, 4, 4, direction, true, width, depth, svgDeltaX, svgDeltaY );
 }
 
@@ -941,16 +931,8 @@ void GL2DWidget::DrawTail( const T_PointVector& points, float width ) const
 
 void GL2DWidget::DrawTextLabel( const std::string& content, const Point2f& where, int /*baseSize = 12*/ )
 {
-    HDC screen = GetDC( NULL );
-    const int hSize = GetDeviceCaps( screen, HORZSIZE );
-    const int hRes = GetDeviceCaps( screen, HORZRES );
-    ReleaseDC( NULL, screen );
-    const float scale = Pixels() * 1000.f * hRes / hSize;
-
-    if( scale < GetCurrentOptions().Get( "VisualisationScales/urban_blocks/Min" ).To< int >() ||
-        scale >= GetCurrentOptions().Get( "VisualisationScales/urban_blocks/Max" ).To< int >() )
+    if( !drawUrbanLabel_ )
         return;
-
     QFontMetrics fm( currentFont_ );
     QRect rc = fm.boundingRect( content.c_str() );
 
@@ -1038,6 +1020,26 @@ void GL2DWidget::leaveEvent( QEvent* event )
 // -----------------------------------------------------------------------------
 // OpenGL
 // -----------------------------------------------------------------------------
+void GL2DWidget::ComputeData()
+{
+    ++frame_;
+    symbolSize_ = GetCurrentOptions().Get( "SymbolSize/CurrentFactor" ).To< float >();
+    pixels_ = windowWidth_ > 0 ? viewport_.Width() / windowWidth_ : 0.f;
+    fixedZoom_ = symbolSize_ * pixels_ / 60;
+    adaptiveZoom_ = rZoom_ <= .00024f ? 1 :          // min zoom (far from the map), fixed size 1
+                    rZoom_ <= .002f ? pixels_ / 15 : // middle range, progressive size
+                    0.12f;                           // max zoom (close to the map), fixed size 0.12
+    {
+        HDC screen = GetDC( NULL );
+        const int hSize = GetDeviceCaps( screen, HORZSIZE );
+        const int hRes = GetDeviceCaps( screen, HORZRES );
+        ReleaseDC( NULL, screen );
+        const float scale = pixels_ * 1000.f * hRes / hSize;
+        drawUrbanLabel_ = scale >= GetCurrentOptions().Get( "VisualisationScales/urban_blocks/Min" ).To< int >() &&
+                          scale < GetCurrentOptions().Get( "VisualisationScales/urban_blocks/Max" ).To< int >();
+    }
+}
+
 void GL2DWidget::UpdateGL()
 {
     if( isVisible() )
@@ -1094,6 +1096,7 @@ void GL2DWidget::paintGL()
         return;
     SetCurrentView( this );
     ApplyOptions();
+    ComputeData();
     for( auto it = passes_.begin(); it != passes_.end(); ++it )
         RenderPass( **it );
     if( fps_ )
@@ -1118,7 +1121,6 @@ void GL2DWidget::PickGL()
 
 void GL2DWidget::RenderPass( GlRenderPass_ABC& pass )
 {
-    ++frame_;
     currentPass_ = pass.GetName();
     pass.Render( *this );
 }

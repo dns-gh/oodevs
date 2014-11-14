@@ -241,6 +241,7 @@ private:
 
     //! @name OpenGL
     //@{
+    virtual void ComputeData();
     virtual void PaintLayers();
     virtual void UpdateGL();
     virtual void paintGL();
@@ -276,9 +277,14 @@ private:
     std::string currentPass_;
     QFont currentFont_;
     bool hasMultiTexturing_;
-    float SymbolSize_;
     std::unique_ptr< FrameCounter > fps_;
     QPoint clickedPoint_;
+
+    float adaptiveZoom_;
+    float fixedZoom_;
+    float pixels_;
+    float symbolSize_;
+    bool drawUrbanLabel_;
     //@}
 };
 

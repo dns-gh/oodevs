@@ -229,12 +229,14 @@ private:
 
     //! @name OpenGL
     //@{
+    virtual void ComputeData();
+    virtual void Paint( const ViewFrustum& view );
     virtual void PaintLayers();
     virtual void UpdateGL();
+
     virtual void initializeGL();
     virtual void paintGL();
     virtual void resizeGL( int w, int h );
-    virtual void Paint( const ViewFrustum& view );
     //@}
 
 private:
@@ -250,6 +252,7 @@ private:
     bool isInitialized_;
     ViewFrustum current_;
     geometry::Rectangle2f viewport_;
+    float symbolSize_;
     //picking
     QPoint clickedPoint_;
     int windowHeight_;

@@ -132,9 +132,7 @@ void GL3DWidget::SetZoom( float )
 
 float GL3DWidget::GetAdaptiveZoomFactor( bool bVariableSize /*= true*/ ) const
 {
-    if( !bVariableSize )
-        return GetCurrentOptions().Get( "SymbolSize/CurrentFactor" ).To< float >();
-    return 1.f;
+    return bVariableSize ? 1.f : symbolSize_;
 }
 
 // -----------------------------------------------------------------------------
@@ -824,6 +822,24 @@ void GL3DWidget::leaveEvent( QEvent* event )
 // -----------------------------------------------------------------------------
 // OpenGL
 // -----------------------------------------------------------------------------
+void GL3DWidget::ComputeData()
+{
+    ++frame_;
+    symbolSize_ = GetCurrentOptions().Get( "SymbolSize/CurrentFactor" ).To< float >();
+}
+
+void GL3DWidget::Paint( const ViewFrustum& view )
+{
+    current_ = view;
+    ApplyOptions();
+    ComputeData();
+    glLineWidth( 1.f );
+    glColor3f( 1, 1, 1 );
+    glBindTexture( GL_TEXTURE_2D, 0 );
+    PaintLayers();
+    DrawActiveFrame();
+}
+
 void GL3DWidget::PaintLayers()
 {
     for( auto it = layers_.begin(); it != layers_.end(); ++it )
@@ -848,17 +864,6 @@ void GL3DWidget::initializeGL()
         isInitialized_ = true;
         CenterView();
     }
-}
-
-void GL3DWidget::Paint( const ViewFrustum& view )
-{
-    current_ = view;
-    ++frame_;
-    glLineWidth( 1.f );
-    glColor3f( 1, 1, 1 );
-    glBindTexture( GL_TEXTURE_2D, 0 );
-    PaintLayers();
-    DrawActiveFrame();
 }
 
 void GL3DWidget::resizeGL( int w, int h )
