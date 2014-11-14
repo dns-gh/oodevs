@@ -233,22 +233,6 @@
         <source>Stopped</source>
         <translation>Arrêté</translation>
     </message>
-    <message>
-        <source>Missing pid from process: %1</source>
-        <translation>Impossible de lire le pid du processus: %1</translation>
-    </message>
-    <message>
-        <source>Unable to create job object: %1</source>
-        <translation>Impossible de créer un objet de travail: %1</translation>
-    </message>
-    <message>
-        <source>Unable to set information job object: %1</source>
-        <translation>Impossible d&apos;initialiser l&apos;objet de travail: %1</translation>
-    </message>
-    <message>
-        <source>Unable to assign process to job object: %1</source>
-        <translation>Impossible d&apos;assigner l&apos;objet de travail au processus: %1</translation>
-    </message>
 </context>
 <context>
     <name>StartExercise</name>

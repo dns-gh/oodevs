@@ -233,22 +233,6 @@
         <source>Stopped</source>
         <translation></translation>
     </message>
-    <message>
-        <source>Missing pid from process: %1</source>
-        <translation>Missing pid from process: %1</translation>
-    </message>
-    <message>
-        <source>Unable to create job object: %1</source>
-        <translation>Unable to create job object: %1</translation>
-    </message>
-    <message>
-        <source>Unable to set information job object: %1</source>
-        <translation>Unable to set information job object: %1</translation>
-    </message>
-    <message>
-        <source>Unable to assign process to job object: %1</source>
-        <translation>Unable to assign process to job object: %1</translation>
-    </message>
 </context>
 <context>
     <name>StartExercise</name>
