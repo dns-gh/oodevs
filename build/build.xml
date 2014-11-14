@@ -682,15 +682,13 @@
         <safe-move file="${out.dir}/binaries_${platform}.zip">
             <zip destfile="@{file}" duplicate="fail">
                 <mappedresources>
-                    <!-- timeline_client.exe is deployed in run.dir too, exclude it -->
                     <fileset dir="${out.dir}/release" includes="**/*.exe"
                         excludes="**/*_test.exe,
                                   **/client_sample_app.exe,
                                   **/svgl_app.exe,
                                   **/casava_odb_gen_app.exe,
                                   **/migratexml.exe,
-                                  **/timeline_app.exe,
-                                  **/timeline_client*.*"/>
+                                  **/timeline_app.exe"/>
                     <flattenmapper/>
                 </mappedresources>
                 <fileset dir="${bin.dir}" includes="csvclient.exe,
@@ -699,7 +697,6 @@
                 <fileset dir="${run.dir}">
                     <exclude name="Debug/**"/>
                     <exclude name="resources/integration tests/**"/>
-                    <exclude name="timeline_client_d.*"/>
                 </fileset>
             </zip>
             <check-depends file="@{file}"/>
@@ -717,7 +714,9 @@
     </target>
 
     <union id="gaming_app_binaries">
-        <fileset dir="${out.dir}/release" includes="gaming_app.exe"/>
+        <fileset dir="${out.dir}/release"
+                includes="gaming_app.exe,
+                          timeline_client.exe"/>
         <fileset dir="${run.dir}"
                 includes="*.qm,
                           *.pak,
@@ -755,7 +754,6 @@
                           QtXml4.dll,
                           spatialite.dll,
                           ssleay32.dll,
-                          timeline_client.exe,
                           Xalan-C_1_11.dll,
                           XalanMessages_1_11.dll,
                           xerces-c_3_1.dll,
@@ -766,7 +764,8 @@
                 excludes="adaptation_app_*.qm,
                           frontend_*.qm
                           preparation_app_*.qm,
-                          selftraining_app_*.qm"/>
+                          selftraining_app_*.qm,
+                          timeline.pak"/>
         <fileset dir="${run.dir}" includes="resources/**"/>
     </union>
 
