@@ -45,16 +45,7 @@ EventFactory::~EventFactory()
 // -----------------------------------------------------------------------------
 Event* EventFactory::Create( const timeline::Event& event ) const
 {
-    E_EventTypes type = eEventTypes_Task;
-    if( event.action.target == timeline_helpers::CreateEventTarget( EVENT_ORDER_PROTOCOL, EVENT_SIMULATION_SERVICE ) )
-        type = eEventTypes_Order;
-    else if( event.action.target == timeline_helpers::CreateEventTarget( EVENT_REPORT_PROTOCOL, EVENT_SIMULATION_SERVICE ) )
-        type = eEventTypes_Report;
-    else if( event.action.target == timeline_helpers::CreateEventTarget( EVENT_MULTIMEDIA_PROTOCOL, EVENT_MULTIMEDIA_SERVICE ) )
-        type = eEventTypes_Multimedia;
-    else if( event.action.target == timeline_helpers::CreateEventTarget( EVENT_MARKER_PROTOCOL, uuid_ ) )
-        type = eEventTypes_Marker;
-    return Create( type, &event );
+    return Create( timeline_helpers::GetEventType( event ), &event );
 }
 
 // -----------------------------------------------------------------------------
