@@ -9,6 +9,12 @@
 
 #include "clients_kernel_pch.h"
 #include "TimelineHelpers.h"
+#include <boost/lexical_cast.hpp>
+#pragma warning( push )
+#pragma warning( disable : 4724 )
+#include <boost/uuid/random_generator.hpp>
+#pragma warning( pop )
+#include <boost/uuid/uuid_io.hpp>
 
 #include <timeline/api.h>
 
@@ -26,6 +32,15 @@ namespace timeline_helpers
     std::string CreateEventTarget( const std::string& protocol, const std::string& service )
     {
         return protocol + "://" + service;
+    }
+
+    // -----------------------------------------------------------------------------
+    // Name: GenerateUuid
+    // Created: SLI 2014-11-13
+    // -----------------------------------------------------------------------------
+    std::string GenerateUuid()
+    {
+        return boost::lexical_cast< std::string >( boost::uuids::random_generator()() );
     }
 
     E_EventTypes GetEventType( const timeline::Event& event )
