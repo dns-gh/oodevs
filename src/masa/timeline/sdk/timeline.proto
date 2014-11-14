@@ -109,3 +109,11 @@ message Metadata
 {
     optional uint32 sword_entity = 1;
 }
+
+message CloseEvent
+{
+    optional bool   done       = 1;
+    optional int32  error_code = 2;
+    optional string error_text = 3;
+    optional bool   lock       = 4;
+}

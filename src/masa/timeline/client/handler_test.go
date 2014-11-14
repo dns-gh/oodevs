@@ -127,6 +127,10 @@ func (f *FakeHandler) DeleteEvent(session, event string) error {
 	return DummyError
 }
 
+func (f *FakeHandler) CloseEvent(session, event string, msg *sdk.CloseEvent) (*sdk.Event, error) {
+	return DummyEvent, DummyError
+}
+
 func (f *FakeHandler) RegisterObserver(session string, config services.EventFilterConfig) (server.SdkObserver, error) {
 	return nil, DummyError
 }

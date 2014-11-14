@@ -625,14 +625,15 @@ func (s *Session) Tick(tick time.Time) {
 	}
 }
 
-func (s *Session) CloseEvent(uuid string, err error, lock bool) {
+func (s *Session) CloseEvent(uuid string, err error, lock bool) (*sdk.Event, error) {
 	event := s.events.Find(uuid)
 	if event == nil {
-		return
+		return nil, ErrUnknownEvent
 	}
 	modified := event.OnTrigger(err, lock)
-	if !modified {
-		return
+	encoded := event.Proto()
+	if modified {
+		s.listeners.UpdateEvents(EventSlice{event}, []*sdk.Event{encoded})
 	}
-	s.listeners.UpdateEvents(EventSlice{event}, []*sdk.Event{event.Proto()})
+	return encoded, nil
 }

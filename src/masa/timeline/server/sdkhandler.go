@@ -38,6 +38,7 @@ type SdkController interface {
 	ReadEvents(uuid string, config services.EventFilterConfig) ([]*sdk.Event, error)
 	UpdateEvent(session, event string, msg *sdk.Event) (*sdk.Event, error)
 	DeleteEvent(session, event string) error
+	CloseEvent(session, event string, msg *sdk.CloseEvent) (*sdk.Event, error)
 	// observer
 	RegisterObserver(session string, config services.EventFilterConfig) (SdkObserver, error)
 	UnregisterObserver(session string, observer SdkObserver)

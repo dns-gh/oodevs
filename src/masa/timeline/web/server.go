@@ -129,6 +129,12 @@ func (s *Server) AttachRoutes() {
 		Doc("delete an event").
 		Param(ws.PathParameter("session", "session identifier")).
 		Param(ws.PathParameter("uuid", "event identifier")))
+	ws.
+		Route(ws.POST("/sessions/{session}/events/{uuid}/close").
+		To(wrap(s.closeEvent)).
+		Doc("close an event").
+		Param(ws.PathParameter("session", "session identifier")).
+		Param(ws.PathParameter("uuid", "event identifier")))
 	s.service = ws
 }
 
@@ -571,4 +577,15 @@ func (s *Server) deleteEvent(req *restful.Request) (interface{}, error) {
 	session := req.PathParameter("session")
 	uuid := req.PathParameter("uuid")
 	return uuid, s.controller.DeleteEvent(session, uuid)
+}
+
+func (s *Server) closeEvent(req *restful.Request) (interface{}, error) {
+	session := req.PathParameter("session")
+	uuid := req.PathParameter("uuid")
+	body := &sdk.CloseEvent{}
+	err := req.ReadEntity(body)
+	if err != nil {
+		return nil, err
+	}
+	return s.controller.CloseEvent(session, uuid, body)
 }
