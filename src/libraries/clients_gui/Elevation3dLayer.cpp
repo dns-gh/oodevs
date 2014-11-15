@@ -16,6 +16,7 @@
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/DetectionMap.h"
 #include "clients_kernel/ModelLoaded.h"
+#include "clients_kernel/OptionVariant.h"
 #include "tools/ExerciseConfig.h"
 
 #include <graphics/CompiledVisitor3d.h>
@@ -40,7 +41,6 @@ Elevation3dLayer::Elevation3dLayer( Controllers& controllers,
                                     const DetectionMap& elevation )
     : Layer3D( controllers, view, eLayerTypes_Elevation3d )
     , elevation_     ( elevation )
-    , zRatio_        ( 5.f )
     , reset_         ( false )
     , ignoreShader_  ( false )
     , ignoreTextures_( false )
@@ -66,25 +66,6 @@ void Elevation3dLayer::NotifyUpdated( const ModelLoaded& modelLoaded )
     graphicsDirectory_.Clear();
     graphicsDirectory_ = modelLoaded.config_.GetGraphicsDirectory();
     reset_ = true;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Elevation3dLayer::HandleKeyPress
-// Created: AGE 2006-03-29
-// -----------------------------------------------------------------------------
-bool Elevation3dLayer::HandleKeyPress( QKeyEvent* event )
-{
-    if( event  && event ->key() == Qt::Key_Plus )
-    {
-        zRatio_ *= 1.1f;
-        return true;
-    }
-    if( event  && event ->key() == Qt::Key_Minus )
-    {
-        zRatio_ *= 0.9f;
-        return true;
-    }
-    return false;
 }
 
 // -----------------------------------------------------------------------------
@@ -123,7 +104,7 @@ void Elevation3dLayer::Paint( const ViewFrustum& frustum )
             program_->SetUniformValue( "tex1", 1 );
         }
         glPushMatrix();
-            glScalef( 1.f, 1.f, zRatio_ );
+            glScalef( 1.f, 1.f, view_.GetCurrentOptions().Get( "3DElevationRatio" ).To< float >() );
             glColor3f( 1, 1, 1 );
             textures_->Accept( visitor_->Compiled( frustum ) );
         glPopMatrix();
@@ -212,6 +193,5 @@ void Elevation3dLayer::Reset()
     fragment_.reset();
     program_.reset();
     visitor_.reset();
-    zRatio_ = 5.f;
     ignoreTextures_ = ignoreShader_ = false;
 }

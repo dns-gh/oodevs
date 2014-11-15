@@ -746,17 +746,17 @@ void GL3DWidget::keyPressEvent( QKeyEvent* event )
     if( event )
     {
         const float speedFactor = ( event->modifiers() == Qt::ShiftModifier ) ? 10.f : 1.f;
-
+        auto& options = GetActiveOptions();
         if( event->key() == Qt::Key_Plus )
-            zRatio_ *= 1.1f;
+            options.Set( "3DElevationRatio", options.Get( "3DElevationRatio" ).To< float >() * 1.1f );
         else if( event->key() == Qt::Key_Minus )
-            zRatio_ *= 0.9f;
+            options.Set( "3DElevationRatio", options.Get( "3DElevationRatio" ).To< float >() * 0.9f );
         else if( event->key() == Qt::Key_Asterisk )
-            zRatio_ = 1.0f;
+            options.Set( "3DElevationRatio", 50.f );
         else if( event->key() == Qt::Key_Home )
         {
             CenterView();
-            zRatio_ = 5.0f;
+            options.Set( "3DElevationRatio", 50.f );
         }
         else if( event->key() == Qt::Key_Left )
             Rotate( Vector3f( 0, 0, 1 ), 0.02f * speedFactor );
@@ -825,7 +825,9 @@ void GL3DWidget::leaveEvent( QEvent* event )
 void GL3DWidget::ComputeData()
 {
     ++frame_;
-    symbolSize_ = GetCurrentOptions().Get( "SymbolSize/CurrentFactor" ).To< float >();
+    const auto& options = GetCurrentOptions();
+    symbolSize_ = options.Get( "SymbolSize/CurrentFactor" ).To< float >();
+    zRatio_ = options.Get( "3DElevationRatio" ).To< float >();
 }
 
 void GL3DWidget::Paint( const ViewFrustum& view )

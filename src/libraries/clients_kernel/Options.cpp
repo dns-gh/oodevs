@@ -285,6 +285,7 @@ void Options::InitializeView()
 
     // float
     Create( "GridSize", -1.f, false );
+    Create( "3DElevationRatio", 50.f, false );
 
     // int
     Create( "GridType",             static_cast< int >( eCoordinateSystem_Local ), false );
