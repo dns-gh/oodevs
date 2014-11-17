@@ -49,9 +49,8 @@ GL2DWidget::GL2DWidget( QWidget* parentWidget,
                         float height,
                         const std::shared_ptr< IconLayout >& iconLayout,
                         QGLWidget* shareWidget /* = 0 */ )
-    : SetGlOptions()
+    : GLViewBase( parentView )
     , MapWidget( context_, parentWidget, width, height, shareWidget )
-    , GLViewBase( parentView )
     , windowHeight_( 0 )
     , windowWidth_( 0 )
     , circle_( 0 )
@@ -66,7 +65,7 @@ GL2DWidget::GL2DWidget( QWidget* parentWidget,
     , symbolSize_( 0.f )
 {
     setAcceptDrops( true );
-    if( context() != context_ || ! context_->isValid() )
+    if( context() != context_ || !context_->isValid() )
         throw MASA_EXCEPTION( "Unable to create context" );
 }
 

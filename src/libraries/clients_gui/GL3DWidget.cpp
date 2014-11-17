@@ -43,9 +43,8 @@ GL3DWidget::GL3DWidget( QWidget* pParent,
                         DetectionMap& elevation,
                         EventStrategy_ABC& strategy,
                         QGLWidget* shareWidget /* = 0 */ )
-    : SetGlOptions()
+    : GLViewBase( parent )
     , Widget3D( context_, pParent, shareWidget )
-    , GLViewBase( parent )
     , width_( width )
     , height_( height )
     , elevation_( elevation )
@@ -54,7 +53,8 @@ GL3DWidget::GL3DWidget( QWidget* pParent,
     , frame_( 0 )
     , isInitialized_( false )
 {
-    // NOTHING
+    if( context() != context_ || !context_->isValid() )
+        throw MASA_EXCEPTION( "Unable to create context" );
 }
 
 // -----------------------------------------------------------------------------

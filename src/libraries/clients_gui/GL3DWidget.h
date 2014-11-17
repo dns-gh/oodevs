@@ -11,8 +11,6 @@
 #define __GL3DWidget_h_
 
 #include "GLViewBase.h"
-#include "GLView_ABC.h"
-#include "SetGlOptions.h"
 #include <graphics/Widget3D.h>
 #include <graphics/ViewFrustum.h>
 
@@ -41,9 +39,8 @@ namespace gui
 */
 // Created: AGE 2006-03-28
 // =============================================================================
-class GL3DWidget : private SetGlOptions
+class GL3DWidget : public GLViewBase
                  , public Widget3D
-                 , public GLViewBase
 {
 public:
     //! @name Constructors/Destructor

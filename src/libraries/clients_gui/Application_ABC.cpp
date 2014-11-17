@@ -34,6 +34,12 @@ Application_ABC::Application_ABC( ApplicationMonitor& monitor )
     QCoreApplication::setOrganizationName( "MASA Group" );
     QCoreApplication::setApplicationName( "SWORD" );
 
+    QGLFormat format;
+    format.setAlpha( true );
+    format.setStencil( true );
+    format.setOverlay( true );
+    QGLFormat::setDefaultFormat( format );
+
     connect( &app_, SIGNAL( Error( const QString& ) ), SLOT( DisplayError( const QString& ) ) );
     QLocale::setDefault( QLocale::system() );
     tools::SetCodec();

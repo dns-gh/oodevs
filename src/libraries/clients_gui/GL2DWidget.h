@@ -10,7 +10,6 @@
 #ifndef __GL2DWidget_h_
 #define __GL2DWidget_h_
 
-#include "SetGlOptions.h"
 #include "GLView_ABC.h"
 #include "GLViewBase.h"
 #include "MT_Tools/MT_Profiler.h"
@@ -33,9 +32,8 @@ namespace gui
 */
 // Created: AGE 2006-03-15
 // =============================================================================
-class GL2DWidget : private SetGlOptions
+class GL2DWidget : public GLViewBase
                  , public MapWidget
-                 , public GLViewBase
 {
 public:
     //! @name Constructors/Destructor
