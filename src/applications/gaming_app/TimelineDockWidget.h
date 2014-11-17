@@ -16,6 +16,11 @@
 #include <tools/SelectionObserver_ABC.h>
 #include <boost/shared_ptr.hpp>
 
+namespace actions
+{
+    class Action_ABC;
+}
+
 namespace gui
 {
     class Event;
@@ -50,9 +55,11 @@ class TimelineToolBar;
 class TimelineDockWidget : public gui::RichDockWidget
                          , public tools::ElementObserver_ABC< kernel::Filter_ABC >
                          , public tools::ElementObserver_ABC< gui::Event >
-                         , public tools::SelectionObserver< kernel::Entity_ABC >
                          , public tools::ElementObserver_ABC< Profile >
                          , public tools::ElementObserver_ABC< kernel::ModelUnLoaded >
+                         , public tools::SelectionObserver_ABC
+                         , public tools::SelectionObserver_Base< kernel::Entity_ABC >
+                         , public tools::SelectionObserver_Base< actions::Action_ABC >
 {
     Q_OBJECT
 
@@ -73,9 +80,12 @@ public:
     virtual void NotifyCreated( const kernel::Filter_ABC& filter );
     virtual void NotifyUpdated( const kernel::Filter_ABC& filter );
     virtual void NotifyUpdated( const gui::Event& event );
-    virtual void NotifySelected( const kernel::Entity_ABC* element );
     virtual void NotifyUpdated( const Profile& profile );
     virtual void NotifyUpdated( const kernel::ModelUnLoaded& );
+    virtual void BeforeSelection();
+    virtual void Select( const kernel::Entity_ABC& element );
+    virtual void Select( const actions::Action_ABC& action );
+    virtual void AfterSelection();
     //@}
 
 public slots:
