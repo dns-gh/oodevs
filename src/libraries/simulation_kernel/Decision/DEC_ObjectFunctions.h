@@ -30,8 +30,8 @@ public:
 
     //! @name Functions
     //@{
-    static int MagicCreateObject( const MIL_Entity_ABC& caller, const std::string& type, const TER_Localisation* pLocalisation );
-    static int MagicGetOrCreateObject( const MIL_Entity_ABC& caller, const std::string& type, const TER_Localisation* pLocalisation );
+    static int MagicCreateObject( const DEC_Decision_ABC* caller, const std::string& type, const TER_Localisation* pLocalisation );
+    static int MagicGetOrCreateObject( const DEC_Decision_ABC* caller, const std::string& type, const TER_Localisation* pLocalisation );
     static void MagicDestroyObject( boost::shared_ptr< DEC_Knowledge_Object > knowledgeId );
     static void MagicDestroyObjectId( int objectId );
     static bool ActivateObject( boost::shared_ptr< DEC_Knowledge_Object > knowledgeId );

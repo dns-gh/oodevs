@@ -29,6 +29,38 @@
 #include "Knowledge/QueryValidity.h"
 
 // -----------------------------------------------------------------------------
+// Name: DEC_KnowledgePopulationFunctions::GetDominationState
+// Created: NLD 2006-02-22
+// -----------------------------------------------------------------------------
+std::pair< float, int > DEC_KnowledgePopulationFunctions::GetDominationState( const DEC_Decision_ABC* caller, unsigned int knowledgeId )
+{
+    auto bbKg = caller->GetKnowledgeGroup()->GetKnowledge();
+    if( bbKg )
+    {
+        boost::shared_ptr< DEC_Knowledge_Population > pKnowledge = bbKg->GetKnowledgePopulationFromID( knowledgeId );
+        if( pKnowledge )
+            return std::pair< float, int >( float( pKnowledge->GetDominationState() ), knowledgeId );
+    }
+    return std::pair< float, int >( 0.f, knowledgeId );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgePopulationFunctions::GetBarycenter
+// Created: JSR 2013-07-25
+// -----------------------------------------------------------------------------
+boost::shared_ptr< MT_Vector2D > DEC_KnowledgePopulationFunctions::GetBarycenter( const DEC_Decision_ABC* caller, unsigned int knowledgeId )
+{
+    auto bbKg = caller->GetKnowledgeGroup()->GetKnowledge();
+    if( bbKg )
+    {
+        boost::shared_ptr< DEC_Knowledge_Population > pKnowledge = bbKg->GetKnowledgePopulationFromID( knowledgeId );
+        if( pKnowledge )
+            return pKnowledge->GetPopulationKnown().GetBarycenter();
+    }
+    return boost::shared_ptr< MT_Vector2D >();
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_KnowledgePopulationFunctions::Recon
 // Created: NLD 2004-10-29
 // -----------------------------------------------------------------------------
@@ -41,6 +73,22 @@ void DEC_KnowledgePopulationFunctions::Recon( const MIL_AgentPion& callerAgent, 
         if( pKnowledge )
             pKnowledge->Recon();
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgePopulationFunctions::IsInZone
+// Created: NLD 2005-12-02
+// -----------------------------------------------------------------------------
+bool DEC_KnowledgePopulationFunctions::IsInZone( const DEC_Decision_ABC* caller, unsigned int knowledgeId, TER_Localisation* pLoc )
+{
+    auto bbKg = caller->GetKnowledgeGroup()->GetKnowledge();
+    if( bbKg )
+    {
+        boost::shared_ptr< DEC_Knowledge_Population > pKnowledge = bbKg->GetKnowledgePopulationFromID( knowledgeId );
+        if( pKnowledge )
+            return  pKnowledge->IsInZone( *pLoc );
+    }
+    return false;
 }
 
 // -----------------------------------------------------------------------------
@@ -536,6 +584,29 @@ unsigned int DEC_KnowledgePopulationFunctions::ExtractDeadFromCrowd( const MIL_A
         }
     }
     return 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgePopulationFunctions::GetHumansFromAllTypes
+// Created: NMI 2013-08-01
+// -----------------------------------------------------------------------------
+std::vector< unsigned int > DEC_KnowledgePopulationFunctions::GetHumansFromAllTypes( const DEC_Decision_ABC* caller, int knowledgeId )
+{
+    std::vector< unsigned int > vecHumans;
+    auto bbKg = caller->GetKnowledgeGroup()->GetKnowledge();
+    if( bbKg )
+    {
+        boost::shared_ptr< DEC_Knowledge_Population > pKnowledge = bbKg->GetKnowledgePopulationFromID( knowledgeId );
+        if( pKnowledge )
+        {
+            MIL_Population& population = pKnowledge->GetPopulationKnown();
+            vecHumans.push_back( population.GetHealthyHumans() );
+            vecHumans.push_back( population.GetWoundedHumans() );
+            vecHumans.push_back( population.GetContaminatedHumans() );
+            vecHumans.push_back( population.GetDeadHumans() );
+        }
+    }
+    return vecHumans;
 }
 
 // -----------------------------------------------------------------------------

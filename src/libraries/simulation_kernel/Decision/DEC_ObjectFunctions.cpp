@@ -12,6 +12,7 @@
 #include "simulation_kernel_pch.h"
 #include "DEC_ObjectFunctions.h"
 #include "MIL_AgentServer.h"
+#include "Decision/DEC_Decision_ABC.h"
 #include "Decision/DEC_Gen_Object.h"
 #include "Entities/MIL_Army_ABC.h"
 #include "Entities/MIL_EntityManager.h"
@@ -245,25 +246,23 @@ boost::shared_ptr< DEC_Gen_Object > DEC_ObjectFunctions::CreateDynamicGenObject(
 }
 
 // -----------------------------------------------------------------------------
-// Name: template< typename T > static void DEC_ObjectFunctions::MagicCreateObject
+// Name: DEC_ObjectFunctions::MagicCreateObject
 // Created: NLD 2005-01-19
 // -----------------------------------------------------------------------------
-int DEC_ObjectFunctions::MagicCreateObject( const MIL_Entity_ABC& caller,
-        const std::string& type, const TER_Localisation* pLocalisation )
+int DEC_ObjectFunctions::MagicCreateObject( const DEC_Decision_ABC* caller, const std::string& type, const TER_Localisation* pLocalisation )
 {
     if( !pLocalisation )
         return 0;
-    return MagicCreateObjectInArmy( caller.GetArmy(), type, *pLocalisation );
+    return MagicCreateObjectInArmy( caller->GetEntity().GetArmy(), type, *pLocalisation );
 }
 
 // -----------------------------------------------------------------------------
-// Name: template< typename T > static int DEC_ObjectFunctions::MagicGetOrCreateObject
+// Name: DEC_ObjectFunctions::MagicGetOrCreateObject
 // Created: LDC 2013-02-11
 // -----------------------------------------------------------------------------
-int DEC_ObjectFunctions::MagicGetOrCreateObject( const MIL_Entity_ABC& caller,
-        const std::string& type, const TER_Localisation* pLocalisation )
+int DEC_ObjectFunctions::MagicGetOrCreateObject( const DEC_Decision_ABC* caller, const std::string& type, const TER_Localisation* pLocalisation )
 {
     if( !pLocalisation )
         return 0;
-    return MagicGetOrCreateObjectInArmy( caller.GetArmy(), type, *pLocalisation );
+    return MagicGetOrCreateObjectInArmy( caller->GetEntity().GetArmy(), type, *pLocalisation );
 }

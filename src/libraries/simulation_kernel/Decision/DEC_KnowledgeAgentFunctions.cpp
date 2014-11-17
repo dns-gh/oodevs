@@ -356,12 +356,12 @@ int DEC_KnowledgeAgentFunctions::GetCurrentPerceptionLevel( const MIL_AgentPion&
 // Name: DEC_KnowledgeAgentFunctions::IsPerceptionLevelMax
 // Created: JSR 2014-08-06
 // -----------------------------------------------------------------------------
-bool DEC_KnowledgeAgentFunctions::IsPerceptionLevelMax( const MIL_Entity_ABC& caller, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge )
+bool DEC_KnowledgeAgentFunctions::IsPerceptionLevelMax( const DEC_Decision_ABC* caller, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge )
 {
     if( pKnowledge && pKnowledge->IsValid() )
     {
         const PHY_PerceptionLevel* maxLevel = &PHY_PerceptionLevel::identified_;
-        if( caller.GetArmy().IsAnEnemy( pKnowledge->GetAgentKnown().GetArmy() ) == eTristate_True )
+        if( caller->GetEntity().GetArmy().IsAnEnemy( pKnowledge->GetAgentKnown().GetArmy() ) == eTristate_True )
             maxLevel = DEC_Knowledge_Agent::maxHostilePerceptionLevel_;
         return pKnowledge->GetCurrentPerceptionLevel() >= *maxLevel;
     }
@@ -553,7 +553,7 @@ void DEC_KnowledgeAgentFunctions::ForceRadioSilence( boost::shared_ptr< DEC_Know
 void DEC_KnowledgeAgentFunctions::ShareKnowledgesWith( DEC_Decision_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge, float minutes )
 {
     if( pKnowledge )
-        DEC_KnowledgeFunctions::ShareKnowledgesWith< MIL_AgentPion >( callerAgent.GetPion(), &( pKnowledge->GetAgentKnown().GetDecision() ), minutes );
+        DEC_KnowledgeFunctions::ShareKnowledgesWith( &callerAgent, &( pKnowledge->GetAgentKnown().GetDecision() ), minutes );
 }
 
 // -----------------------------------------------------------------------------

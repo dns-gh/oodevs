@@ -32,7 +32,7 @@
 // Name: DEC_AutomateFunctions::GetBarycenter
 // Created: LMT 2011-01-04
 // -----------------------------------------------------------------------------
-boost::shared_ptr< MT_Vector2D > DEC_AutomateFunctions::GetBarycenter( const DEC_Decision_ABC * automat )
+boost::shared_ptr< MT_Vector2D > DEC_AutomateFunctions::GetBarycenter( const DEC_Decision_ABC* automat )
 {
     if( !automat )
         throw MASA_EXCEPTION( "Invalid automat in GetBarycenter" );
@@ -45,38 +45,38 @@ boost::shared_ptr< MT_Vector2D > DEC_AutomateFunctions::GetBarycenter( const DEC
 // Name: DEC_AutomateFunctions::IsParentAutomateEngaged
 // Created: NLD 2007-04-24
 // -----------------------------------------------------------------------------
-bool DEC_AutomateFunctions::IsParentAutomateEngaged( const MIL_Automate& callerAutomate )
+bool DEC_AutomateFunctions::IsParentAutomateEngaged( const DEC_Decision_ABC* callerAutomate )
 {
-    return callerAutomate.GetParentAutomate() ? callerAutomate.GetParentAutomate()->IsEngaged() : false;
+    const MIL_Automate* automate = callerAutomate->GetAutomate().GetParentAutomate();
+    return automate ? automate->IsEngaged() : false;
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_AutomateFunctions::GetRoePopulation
 // Created: LGY 2012-06-22
 // -----------------------------------------------------------------------------
-int DEC_AutomateFunctions::GetRoePopulation( MIL_Automate& callerAutomate )
+int DEC_AutomateFunctions::GetRoePopulation( DEC_Decision_ABC* callerAutomate )
 {
-    return static_cast< int >( dynamic_cast< DEC_AutomateDecision& >( callerAutomate.GetDecision() ).GetRoePopulation().GetID() );
+    return static_cast< int >( dynamic_cast< DEC_AutomateDecision* >( callerAutomate )->GetRoePopulation().GetID() );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: DEC_AutomateFunctions::GetRulesOfEngagementState
 // Created: LGY 2012-06-26
 // -----------------------------------------------------------------------------
-int DEC_AutomateFunctions::GetRulesOfEngagementState( MIL_Automate& callerAutomate )
+int DEC_AutomateFunctions::GetRulesOfEngagementState( DEC_Decision_ABC* callerAutomate )
 {
-    return static_cast< int >( dynamic_cast< DEC_AutomateDecision& >( callerAutomate.GetDecision() ).GetRulesOfEngagementState() );
+    return static_cast< int >( dynamic_cast< DEC_AutomateDecision& >( callerAutomate->GetAutomate().GetDecision() ).GetRulesOfEngagementState() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_AutomateFunctions::GetAutomates
 // Created: NLD 2007-04-03
 // -----------------------------------------------------------------------------
-std::vector< DEC_Decision_ABC* > DEC_AutomateFunctions::GetAutomates( const MIL_Automate& callerAutomate )
+std::vector< DEC_Decision_ABC* > DEC_AutomateFunctions::GetAutomates( const DEC_Decision_ABC* callerAutomate )
 {
     std::vector< DEC_Decision_ABC* > result;
-    const MIL_Automate::T_AutomateVector& automates = callerAutomate.GetAutomates();
+    const MIL_Automate::T_AutomateVector& automates = callerAutomate->GetAutomate().GetAutomates();
     result.reserve( automates.size() );
     for( auto it = automates.begin(); it != automates.end(); ++it )
     {
@@ -137,10 +137,10 @@ namespace
 // Name: DEC_AutomateFunctions::GetPionsWithoutPC
 // Created: NLD 2004-10-18
 // -----------------------------------------------------------------------------
-std::vector< DEC_Decision_ABC* > DEC_AutomateFunctions::GetPionsWithoutPC( const MIL_Automate& callerAutomate )
+std::vector< DEC_Decision_ABC* > DEC_AutomateFunctions::GetPionsWithoutPC( const DEC_Decision_ABC* callerAutomate )
 {
     std::vector< DEC_Decision_ABC* > result;
-    GetPionsDecisionsWithoutPC( callerAutomate, result );
+    GetPionsDecisionsWithoutPC( callerAutomate->GetAutomate(), result );
     return result;
 }
 
@@ -148,11 +148,12 @@ std::vector< DEC_Decision_ABC* > DEC_AutomateFunctions::GetPionsWithoutPC( const
 // Name: DEC_AutomateFunctions::GetCommunicationPionsWithoutPC
 // Created: MMC 2012-07-03
 // -----------------------------------------------------------------------------
-std::vector< DEC_Decision_ABC* > DEC_AutomateFunctions::GetCommunicationPionsWithoutPC( const MIL_Automate& callerAutomate )
+std::vector< DEC_Decision_ABC* > DEC_AutomateFunctions::GetCommunicationPionsWithoutPC( const DEC_Decision_ABC* callerAutomate )
 {
     std::vector< DEC_Decision_ABC* > result;
-    if( GetAutomatPC( callerAutomate, true ) )
-        GetPionsDecisionsWithoutPC( callerAutomate, result, true );
+    const MIL_Automate& automate = callerAutomate->GetAutomate();
+    if( GetAutomatPC( automate, true ) )
+        GetPionsDecisionsWithoutPC( automate, result, true );
     return result;
 }
 
@@ -164,7 +165,7 @@ std::vector< DEC_Decision_ABC* > DEC_AutomateFunctions::GetPionsOfAutomateWithou
 {
     if( !automat )
         throw MASA_EXCEPTION( "Invalid automat in GetPionsOfAutomateWithoutPC" );
-    return GetPionsWithoutPC( automat->GetAutomate() );
+    return GetPionsWithoutPC( automat );
 }
 
 // -----------------------------------------------------------------------------
@@ -175,7 +176,7 @@ std::vector< DEC_Decision_ABC* > DEC_AutomateFunctions::GetCommunicationPionsOfA
 {
     if( !automat )
         throw MASA_EXCEPTION( "Invalid automat in GetCommunicationPionsOfAutomateWithoutPC" );
-    return GetCommunicationPionsWithoutPC( automat->GetAutomate() );
+    return GetCommunicationPionsWithoutPC( automat );
 }
 
 // -----------------------------------------------------------------------------
@@ -186,8 +187,7 @@ std::vector< DEC_Decision_ABC* > DEC_AutomateFunctions::GetAutomatPionsWithPC( D
 {
     if( !pAutomate )
         throw MASA_EXCEPTION( "Invalid automat in GetAutomatPionsWithPC" );
-    const MIL_Automate& callerAutomate = pAutomate->GetAutomate();
-    return GetPionsWithPC( callerAutomate );
+    return GetPionsWithPC( pAutomate );
 }
 
 // -----------------------------------------------------------------------------
@@ -198,19 +198,19 @@ std::vector< DEC_Decision_ABC* > DEC_AutomateFunctions::GetCommunicationAutomatP
 {
     if( !pAutomate )
         throw MASA_EXCEPTION( "Invalid automat in GetCommunicationAutomatPionsWithPC" );
-    const MIL_Automate& callerAutomate = pAutomate->GetAutomate();
-    return GetCommunicationPionsWithPC( callerAutomate );
+    return GetCommunicationPionsWithPC( pAutomate );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_AutomateFunctions::GetPionsWithPC
 // Created: NLD 2004-10-18
 // -----------------------------------------------------------------------------
-std::vector< DEC_Decision_ABC* > DEC_AutomateFunctions::GetPionsWithPC( const MIL_Automate& callerAutomate )
+std::vector< DEC_Decision_ABC* > DEC_AutomateFunctions::GetPionsWithPC( const DEC_Decision_ABC* callerAutomate )
 {
     std::vector< DEC_Decision_ABC* > result;
-    GetPionsDecisionsWithoutPC( callerAutomate, result );
-    MIL_AgentPion* pPionPC = GetAutomatPC( callerAutomate );
+    const MIL_Automate& automate = callerAutomate->GetAutomate(); 
+    GetPionsDecisionsWithoutPC( automate, result );
+    MIL_AgentPion* pPionPC = GetAutomatPC( automate );
     if( pPionPC )
         result.push_back( &pPionPC->GetDecision() );
     return result;
@@ -220,12 +220,13 @@ std::vector< DEC_Decision_ABC* > DEC_AutomateFunctions::GetPionsWithPC( const MI
 // Name: DEC_AutomateFunctions::GetCommunicationPionsWithPC
 // Created: MMC 2012-07-03
 // -----------------------------------------------------------------------------
-std::vector< DEC_Decision_ABC* > DEC_AutomateFunctions::GetCommunicationPionsWithPC( const MIL_Automate& callerAutomate )
+std::vector< DEC_Decision_ABC* > DEC_AutomateFunctions::GetCommunicationPionsWithPC( const DEC_Decision_ABC* callerAutomate )
 {
     std::vector< DEC_Decision_ABC* > result;
-    if( GetAutomatPC( callerAutomate, true ) )
-        GetPionsDecisionsWithoutPC( callerAutomate, result, true );
-    MIL_AgentPion*pPionPC = GetAutomatPC( callerAutomate );
+    const MIL_Automate& automate = callerAutomate->GetAutomate();
+    if( GetAutomatPC( automate, true ) )
+        GetPionsDecisionsWithoutPC( automate, result, true );
+    MIL_AgentPion* pPionPC = GetAutomatPC( automate );
     if( pPionPC )
         result.push_back( &pPionPC->GetDecision() );
     return result;
@@ -235,9 +236,9 @@ std::vector< DEC_Decision_ABC* > DEC_AutomateFunctions::GetCommunicationPionsWit
 // Name: DEC_AutomateFunctions::GetPionPC
 // Created: NLD 2004-10-18
 // -----------------------------------------------------------------------------
-DEC_Decision_ABC* DEC_AutomateFunctions::GetPionPC( const MIL_Automate& callerAutomate )
+DEC_Decision_ABC* DEC_AutomateFunctions::GetPionPC( const DEC_Decision_ABC* callerAutomate )
 {
-    MIL_AgentPion* pion = callerAutomate.GetPionPC();
+    MIL_AgentPion* pion = callerAutomate->GetAutomate().GetPionPC();
     return pion ? &pion->GetDecision() : 0;
 }
 
@@ -249,16 +250,16 @@ DEC_Decision_ABC* DEC_AutomateFunctions::GetPionPCOfAutomate( DEC_Decision_ABC* 
 {
     if( !pAutomate )
         throw MASA_EXCEPTION( "Invalid automat in GetPionPCOfAutomate" );
-    return DEC_AutomateFunctions::GetPionPC( pAutomate->GetAutomate() );
+    return DEC_AutomateFunctions::GetPionPC( pAutomate );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_AutomateFunctions::GetPionsMelee
 // Created: LMT 2010-09-29
 // -----------------------------------------------------------------------------
-std::vector< DEC_Decision_ABC* > DEC_AutomateFunctions::GetPionsMelee( const MIL_Automate& callerAutomate )
+std::vector< DEC_Decision_ABC* > DEC_AutomateFunctions::GetPionsMelee( const DEC_Decision_ABC* callerAutomate )
 {
-    const MIL_Automate::T_PionVector& pions = callerAutomate.GetPions();
+    const MIL_Automate::T_PionVector& pions = callerAutomate->GetAutomate().GetPions();
     std::vector< DEC_Decision_ABC* > result;
     for( auto it = pions.begin(); it != pions.end(); ++it )
     {
@@ -270,13 +271,14 @@ std::vector< DEC_Decision_ABC* > DEC_AutomateFunctions::GetPionsMelee( const MIL
     }
     return result;
 }
+
 // -----------------------------------------------------------------------------
-// Name: DEC_AutomateFunctions::GetPionsMelee
+// Name: DEC_AutomateFunctions::GetPionsGenie
 // Created: LMT 2012-01-18
 // -----------------------------------------------------------------------------
-std::vector< DEC_Decision_ABC* > DEC_AutomateFunctions::GetPionsGenie( const MIL_Automate& callerAutomate )
+std::vector< DEC_Decision_ABC* > DEC_AutomateFunctions::GetPionsGenie( const DEC_Decision_ABC* callerAutomate )
 {
-    const MIL_Automate::T_PionVector& pions = callerAutomate.GetPions();
+    const MIL_Automate::T_PionVector& pions = callerAutomate->GetAutomate().GetPions();
     std::vector< DEC_Decision_ABC* > result;
     for( auto it = pions.begin(); it != pions.end(); ++it )
     {
@@ -306,17 +308,6 @@ bool DEC_AutomateFunctions::PionChangeAutomate( DEC_Decision_ABC* pion, const DE
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_AutomateFunctions::IsEngaged
-// Created: JVT 2004-11-26
-// -----------------------------------------------------------------------------
-bool DEC_AutomateFunctions::IsEngaged( DEC_Decision_ABC* pAutomate )
-{
-    if( !pAutomate )
-        throw MASA_EXCEPTION( "Invalid automat in IsEngaged" );
-    return pAutomate->GetAutomate().IsEngaged();
-}
-
-// -----------------------------------------------------------------------------
 // Name: DEC_AutomateFunctions::IsPionInAutomate
 // Created: JVT 2004-11-26
 // -----------------------------------------------------------------------------
@@ -330,7 +321,7 @@ bool DEC_AutomateFunctions::IsPionInAutomate( const MIL_Automate& automate, cons
 // Name: DEC_AutomateFunctions::CanPionConstructObject
 // Created: JVT 2004-12-17
 // -----------------------------------------------------------------------------
-bool DEC_AutomateFunctions::CanPionConstructObject( const MIL_Automate& callerAutomate, const DEC_Decision_ABC* pion, const std::string& type )
+bool DEC_AutomateFunctions::CanPionConstructObject( const DEC_Decision_ABC* callerAutomate, const DEC_Decision_ABC* pion, const std::string& type )
 {
     return CanPionConstructObjectWithLocalisation( callerAutomate, pion, type, 0 );
 }
@@ -339,18 +330,18 @@ bool DEC_AutomateFunctions::CanPionConstructObject( const MIL_Automate& callerAu
 // Name: DEC_AutomateFunctions::IsLogistic
 // Created: GGE 2012-06-26
 // -----------------------------------------------------------------------------
-bool DEC_AutomateFunctions::IsLogistic( const MIL_Automate& callerAutomat )
+bool DEC_AutomateFunctions::IsLogistic( const DEC_Decision_ABC* callerAutomat )
 {
-    return callerAutomat.GetType().IsLogistic();
+    return callerAutomat->GetAutomate().GetType().IsLogistic();
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_AutomateFunctions::CanPionConstructObjectWithLocalisation
 // Created: JSR 2012-02-24
 // -----------------------------------------------------------------------------
-bool DEC_AutomateFunctions::CanPionConstructObjectWithLocalisation( const MIL_Automate& callerAutomate, const DEC_Decision_ABC* pion, const std::string& type, const TER_Localisation* localisation )
+bool DEC_AutomateFunctions::CanPionConstructObjectWithLocalisation( const DEC_Decision_ABC* callerAutomate, const DEC_Decision_ABC* pion, const std::string& type, const TER_Localisation* localisation )
 {
-    if( !pion || !IsPionInAutomate( callerAutomate, pion->GetPion() ) )
+    if( !pion || !IsPionInAutomate( callerAutomate->GetAutomate(), pion->GetPion() ) )
         throw MASA_EXCEPTION( "Invalid pion in CanPionConstructObject" );
     return pion->GetPion().GetRole< PHY_RoleAction_Objects >().CanConstructWithReinforcement( type, localisation, false );
 }
@@ -359,9 +350,9 @@ bool DEC_AutomateFunctions::CanPionConstructObjectWithLocalisation( const MIL_Au
 // Name: DEC_AutomateFunctions::CanPionBypassObject
 // Created: JVT 2004-12-17
 // -----------------------------------------------------------------------------
-bool DEC_AutomateFunctions::CanPionBypassObject( const MIL_Automate& callerAutomate, const DEC_Decision_ABC* pion, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
+bool DEC_AutomateFunctions::CanPionBypassObject( const DEC_Decision_ABC* callerAutomate, const DEC_Decision_ABC* pion, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
 {
-    if( !pion || !IsPionInAutomate( callerAutomate, pion->GetPion() ) )
+    if( !pion || !IsPionInAutomate( callerAutomate->GetAutomate(), pion->GetPion() ) )
         throw MASA_EXCEPTION( "Invalid pion in CanPionBypassObject" );
     if( pKnowledge && pKnowledge->IsValid() )
         return pion->GetPion().GetRole< PHY_RoleAction_Objects >().CanBypassWithReinforcement( pKnowledge->GetType(), pKnowledge->GetLocalisation() );
@@ -372,9 +363,9 @@ bool DEC_AutomateFunctions::CanPionBypassObject( const MIL_Automate& callerAutom
 // Name: DEC_AutomateFunctions::CanPionDestroyObject
 // Created: JVT 2004-12-17
 // -----------------------------------------------------------------------------
-bool DEC_AutomateFunctions::CanPionDestroyObject( const MIL_Automate& callerAutomate, const DEC_Decision_ABC* pion, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
+bool DEC_AutomateFunctions::CanPionDestroyObject( const DEC_Decision_ABC* callerAutomate, const DEC_Decision_ABC* pion, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
 {
-    if( !pion || !IsPionInAutomate( callerAutomate, pion->GetPion() ) )
+    if( !pion || !IsPionInAutomate( callerAutomate->GetAutomate(), pion->GetPion() ) )
         throw MASA_EXCEPTION( "Invalid pion in CanPionDestroyObject" );
     if( pKnowledge && pKnowledge->IsValid() )
         return pion->GetPion().GetRole< PHY_RoleAction_Objects >().CanDestroyWithReinforcement( pKnowledge->GetType(), pKnowledge->GetLocalisation() );
@@ -385,9 +376,9 @@ bool DEC_AutomateFunctions::CanPionDestroyObject( const MIL_Automate& callerAuto
 // Name: DEC_AutomateFunctions::CanPionDemineObject
 // Created: DDA 2012-03-16
 // -----------------------------------------------------------------------------
-bool DEC_AutomateFunctions::CanPionDemineObject( const MIL_Automate& callerAutomate, const DEC_Decision_ABC* pion, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
+bool DEC_AutomateFunctions::CanPionDemineObject( const DEC_Decision_ABC* callerAutomate, const DEC_Decision_ABC* pion, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
 {
-    if( !pion || !IsPionInAutomate( callerAutomate, pion->GetPion() ) )
+    if( !pion || !IsPionInAutomate( callerAutomate->GetAutomate(), pion->GetPion() ) )
         throw MASA_EXCEPTION( "Invalid pion in CanPionDestroyObject" );
     if( pKnowledge && pKnowledge->IsValid() )
         return pion->GetPion().GetRole< PHY_RoleAction_Objects >().CanDemineWithReinforcement( pKnowledge->GetType(), pKnowledge->GetLocalisation() );
@@ -455,11 +446,11 @@ bool DEC_AutomateFunctions::IsPionTransported( DEC_Decision_ABC* pCallerAutomate
 // Name: DEC_AutomateFunctions::IsPointInPionFuseau
 // Created: JVT 2005-01-03
 // -----------------------------------------------------------------------------
-bool DEC_AutomateFunctions::IsPointInPionFuseau( const MIL_Automate& callerAutomate, MT_Vector2D* pPoint, DEC_Decision_ABC* pPion )
+bool DEC_AutomateFunctions::IsPointInPionFuseau( const DEC_Decision_ABC* callerAutomate, MT_Vector2D* pPoint, DEC_Decision_ABC* pPion )
 {
-    if( !pPion || !IsPionInAutomate( callerAutomate, pPion->GetPion() ) )
+    if( !pPion || !IsPionInAutomate( callerAutomate->GetAutomate(), pPion->GetPion() ) )
         throw MASA_EXCEPTION( "Invalid parameter in IsPointInPionFuseau" );
-    return DEC_GeometryFunctions::IsPointInUnitFuseau( pPion->GetPion(), pPoint );
+    return DEC_GeometryFunctions::IsPointInFuseau( pPion, pPoint );
 }
 
 // -----------------------------------------------------------------------------
@@ -488,9 +479,10 @@ double DEC_AutomateFunctions::GetPerceptionForPion( const DEC_Decision_ABC* pPio
 // Name: DEC_AutomateFunctions::MakePionRelievePion
 // Created: NLD 2003-09-30
 // -----------------------------------------------------------------------------
-bool DEC_AutomateFunctions::MakePionRelievePion( const MIL_Automate& callerAutomate, DEC_Decision_ABC* relieving, DEC_Decision_ABC* relieved )
+bool DEC_AutomateFunctions::MakePionRelievePion( const DEC_Decision_ABC* callerAutomate, DEC_Decision_ABC* relieving, DEC_Decision_ABC* relieved )
 {
-    if( !relieving || !relieved || !IsPionInAutomate( callerAutomate, relieving->GetPion() ) || !IsPionInAutomate( callerAutomate, relieved->GetPion() ) )
+    const MIL_Automate& automate = callerAutomate->GetAutomate();
+    if( !relieving || !relieved || !IsPionInAutomate( automate, relieving->GetPion() ) || !IsPionInAutomate( automate, relieved->GetPion() ) )
         throw MASA_EXCEPTION( "Invalid parameter in MakePionRelievePion" );
     if( relieving->GetPion().GetOrderManager().RelievePion( relieved->GetPion() ) )
     {
@@ -504,9 +496,10 @@ bool DEC_AutomateFunctions::MakePionRelievePion( const MIL_Automate& callerAutom
 // Name: DEC_AutomateFunctions::CanPionRelievePion
 // Created: NLD 2004-12-09
 // -----------------------------------------------------------------------------
-bool DEC_AutomateFunctions::CanPionRelievePion( const MIL_Automate& callerAutomate, const DEC_Decision_ABC* relieving, const DEC_Decision_ABC* relieved )
+bool DEC_AutomateFunctions::CanPionRelievePion( const DEC_Decision_ABC* callerAutomate, const DEC_Decision_ABC* relieving, const DEC_Decision_ABC* relieved )
 {
-    if( !relieving || !relieved || !IsPionInAutomate( callerAutomate, relieving->GetPion() ) || !IsPionInAutomate( callerAutomate, relieved->GetPion() ) )
+    const MIL_Automate& automate = callerAutomate->GetAutomate();
+    if( !relieving || !relieved || !IsPionInAutomate( automate, relieving->GetPion() ) || !IsPionInAutomate( automate, relieved->GetPion() ) )
         throw MASA_EXCEPTION( "Invalid parameter in CanPionRelievePion" );
     return relieving->GetPion().GetOrderManager().CanRelievePion( relieved->GetPion() );
 }
@@ -519,7 +512,7 @@ boost::shared_ptr< MT_Vector2D > DEC_AutomateFunctions::ComputePointBeforeLimaFo
 {
     if( !pion )
         throw MASA_EXCEPTION( "Invalid pion in ComputePointBeforeLimaForPion" );
-    return DEC_GeometryFunctions::ComputePointBeforeUnitLima( pion->GetPion(), phaseLine, distanceBefore );
+    return DEC_GeometryFunctions::ComputePointBeforeLima( pion, phaseLine, distanceBefore );
 }
 
 // -----------------------------------------------------------------------------
@@ -530,7 +523,7 @@ boost::shared_ptr< MT_Vector2D > DEC_AutomateFunctions::ComputePionNearestLocali
 {
     if( !pion )
         throw MASA_EXCEPTION( "Invalid pion in ComputePionNearestLocalisationPointInFuseau" );
-    return DEC_GeometryFunctions::ComputeNearestLocalisationPointInUnitFuseau( pion->GetPion(), location );
+    return DEC_GeometryFunctions::ComputeNearestLocalisationPointInFuseau( pion, location );
 }
 
 // -----------------------------------------------------------------------------
@@ -570,18 +563,18 @@ void DEC_AutomateFunctions::SetMission( DEC_Decision_ABC* object, boost::shared_
 // Name: DEC_AutomateFunctions::NotifyRulesOfEngagementStateChanged
 // Created: LDC 2011-08-05
 // -----------------------------------------------------------------------------
-void DEC_AutomateFunctions::NotifyRulesOfEngagementStateChanged( MIL_Automate& callerAutomate, int state )
+void DEC_AutomateFunctions::NotifyRulesOfEngagementStateChanged( DEC_Decision_ABC* callerAutomate, int state )
 {
-    dynamic_cast< DEC_AutomateDecision& >( callerAutomate.GetDecision() ).NotifyRulesOfEngagementStateChanged( static_cast< E_RulesOfEngagementState >( state ) );
+    dynamic_cast< DEC_AutomateDecision& >( *callerAutomate ).NotifyRulesOfEngagementStateChanged( static_cast< E_RulesOfEngagementState >( state ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_AutomateFunctions::NotifyRulesOfEngagementPopulationStateChanged
 // Created: LDC 2011-08-05
 // -----------------------------------------------------------------------------
-void DEC_AutomateFunctions::NotifyRulesOfEngagementPopulationStateChanged( MIL_Automate& callerAutomate, int state )
+void DEC_AutomateFunctions::NotifyRulesOfEngagementPopulationStateChanged( DEC_Decision_ABC* callerAutomate, int state )
 {
     const PHY_RoePopulation* pRoe = PHY_RoePopulation::Find( state );
     assert( pRoe );
-    dynamic_cast< DEC_AutomateDecision& >( callerAutomate.GetDecision() ).NotifyRulesOfEngagementPopulationStateChanged( *pRoe );
+    dynamic_cast< DEC_AutomateDecision& >( *callerAutomate ).NotifyRulesOfEngagementPopulationStateChanged( *pRoe );
 }

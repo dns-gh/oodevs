@@ -27,21 +27,70 @@
 // -----------------------------------------------------------------------------
 void DEC_OrdersFunctions::FinishMission( DEC_Decision_ABC* caller )
 {
-    caller->GetEntity().GetOrderManager().CancelMission();
+    caller->GetOrderManager().CancelMission();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_OrdersFunctions::IsNewMissionStarted
+// Created: NLD 2005-09-19
+// -----------------------------------------------------------------------------
+bool DEC_OrdersFunctions::IsNewMissionStarted( DEC_Decision_ABC* caller )
+{
+    return caller->GetOrderManager().IsNewMissionStarted();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_OrdersFunctions::GetLima
+// Created: NLD 2004-05-21
+// -----------------------------------------------------------------------------
+unsigned int DEC_OrdersFunctions::GetLima( const DEC_Decision_ABC* caller, unsigned int limaId )
+{
+    const MIL_LimaFunction* pFunction = MIL_LimaFunction::Find( limaId );
+    if( !pFunction )
+        return 0;
+    MIL_LimaOrder* pLima = caller->GetOrderManager().FindLima( *pFunction );
+    if( !pLima )
+        return 0;
+    return pLima->GetID();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_OrdersFunctions::GetLimasFromType
+// Created: NMI 2013-04-30
+// -----------------------------------------------------------------------------
+std::vector< unsigned int > DEC_OrdersFunctions::GetLimasFromType( const DEC_Decision_ABC* caller, unsigned int limaId )
+{
+    std::vector< unsigned int > vecIDs;
+    const MIL_LimaFunction* pFunction = MIL_LimaFunction::Find( limaId );
+    if( !pFunction )
+        return vecIDs;
+    std::vector< MIL_LimaOrder* > vecLimas = caller->GetOrderManager().FindAllLimas( *pFunction );
+    for( auto it = vecLimas.begin(); it != vecLimas.end(); ++it )
+        vecIDs.push_back( (*it)->GetID() );
+    return vecIDs;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_OrdersFunctions::GetNextScheduledLima
+// Created: NLD 2007-04-30
+// -----------------------------------------------------------------------------
+MIL_LimaOrder* DEC_OrdersFunctions::GetNextScheduledLima( const DEC_Decision_ABC* caller )
+{
+    return caller->GetOrderManager().FindNextScheduledLima();
 }
 
 //-----------------------------------------------------------------------------
 // Name: DEC_OrdersFunctions::MRT_CreatePionMission
 // Created: NLD 2003-04-14
 //-----------------------------------------------------------------------------
-boost::shared_ptr< MIL_Mission_ABC > DEC_OrdersFunctions::MRT_CreatePionMission( MIL_Automate& callerAutomate, DEC_Decision_ABC* pPion, const std::string& mission )
+boost::shared_ptr< MIL_Mission_ABC > DEC_OrdersFunctions::MRT_CreatePionMission( DEC_Decision_ABC* callerAutomate, DEC_Decision_ABC* pPion, const std::string& mission )
 {
     if( !pPion )
         throw MASA_EXCEPTION( "invalid parameter." );
     const MIL_MissionType_ABC* pMissionType = MIL_PionMissionType::FindFromDiaID( mission );
     if( !pMissionType )
         throw MASA_EXCEPTION( "invalid parameter." );
-    boost::shared_ptr< MIL_Mission_ABC > pPionMission = callerAutomate.GetOrderManager().MRT_CreatePionMission( pPion->GetPion(), *pMissionType );
+    boost::shared_ptr< MIL_Mission_ABC > pPionMission = callerAutomate->GetAutomate().GetOrderManager().MRT_CreatePionMission( pPion->GetPion(), *pMissionType );
     return pPionMission;
 }
 
@@ -49,22 +98,23 @@ boost::shared_ptr< MIL_Mission_ABC > DEC_OrdersFunctions::MRT_CreatePionMission(
 // Name: DEC_OrdersFunctions::MRT_Validate
 // Created: NLD 2003-04-14
 //-----------------------------------------------------------------------------
-void DEC_OrdersFunctions::MRT_Validate( MIL_Automate& callerAutomate )
+void DEC_OrdersFunctions::MRT_Validate( DEC_Decision_ABC* callerAutomate )
 {
-    callerAutomate.GetOrderManager().MRT_Validate();
+    callerAutomate->GetAutomate().GetOrderManager().MRT_Validate();
 }
 
 //-----------------------------------------------------------------------------
 // Name: DEC_OrdersFunctions::MRT_AffectFuseaux
 // Created: NLD 2003-04-22
 //-----------------------------------------------------------------------------
-void DEC_OrdersFunctions::MRT_AffectFuseaux( MIL_Automate& callerAutomate, std::vector< DEC_Decision_ABC* > pions )
+void DEC_OrdersFunctions::MRT_AffectFuseaux( DEC_Decision_ABC* callerAutomate, std::vector< DEC_Decision_ABC* > pions )
 {
+    MIL_Automate& automate = callerAutomate->GetAutomate();
     //$$$ NAZE
-    assert( callerAutomate.IsEngaged() );
+    assert( automate.IsEngaged() );
     // Découpage
     MIL_Fuseau::T_FuseauPtrList subFuseaux;
-    if( !callerAutomate.GetOrderManager().GetFuseau().SplitIntoSubFuseaux( static_cast< unsigned int >( pions.size() ), subFuseaux ) )
+    if( !automate.GetOrderManager().GetFuseau().SplitIntoSubFuseaux( static_cast< unsigned int >( pions.size() ), subFuseaux ) )
         return;
     // Affectation des fuseaux
     for( std::vector< DEC_Decision_ABC* >::const_iterator itPion = pions.begin(); itPion != pions.end(); ++itPion )
@@ -80,7 +130,7 @@ void DEC_OrdersFunctions::MRT_AffectFuseaux( MIL_Automate& callerAutomate, std::
                 throw MASA_EXCEPTION( "invalid parameter." );
             if( fuseau->IsInside( pion.GetRole< PHY_RoleInterface_Location >().GetPosition() ) )
             {
-                callerAutomate.GetOrderManager().MRT_SetFuseauForPion( pion, *fuseau );
+                automate.GetOrderManager().MRT_SetFuseauForPion( pion, *fuseau );
                 break;
             }
         }
@@ -90,7 +140,7 @@ void DEC_OrdersFunctions::MRT_AffectFuseaux( MIL_Automate& callerAutomate, std::
             MIL_Fuseau* fuseau = subFuseaux.front();
             if( !fuseau )
                 throw MASA_EXCEPTION( "invalid parameter." );
-            callerAutomate.GetOrderManager().MRT_SetFuseauForPion( pion, *fuseau );
+            automate.GetOrderManager().MRT_SetFuseauForPion( pion, *fuseau );
             subFuseaux.erase( subFuseaux.begin() );
         }
         else
@@ -103,7 +153,7 @@ void DEC_OrdersFunctions::MRT_AffectFuseaux( MIL_Automate& callerAutomate, std::
 // Name: DEC_OrdersFunctions::CDT_CreatePionMission
 // Created: NLD 2003-04-16
 //-----------------------------------------------------------------------------
-boost::shared_ptr< MIL_Mission_ABC > DEC_OrdersFunctions::CDT_CreatePionMission( MIL_Automate& callerAutomate, DEC_Decision_ABC* pPion, const std::string& mission )
+boost::shared_ptr< MIL_Mission_ABC > DEC_OrdersFunctions::CDT_CreatePionMission( DEC_Decision_ABC* callerAutomate, DEC_Decision_ABC* pPion, const std::string& mission )
 {
     if( !pPion )
         throw MASA_EXCEPTION( "invalid parameter." );
@@ -114,7 +164,7 @@ boost::shared_ptr< MIL_Mission_ABC > DEC_OrdersFunctions::CDT_CreatePionMission(
         MT_LOG_ERROR( "Mission '" << mission << "' does not exist", 4, "DEC_OrdersFunctions::CDT_CreatePionMission" );
         throw MASA_EXCEPTION( mission + " does not exist" );
     }
-    boost::shared_ptr< MIL_Mission_ABC > pPionMission = callerAutomate.GetOrderManager().CDT_CreatePionMission( pPion->GetPion(), *pMissionType );
+    boost::shared_ptr< MIL_Mission_ABC > pPionMission = callerAutomate->GetAutomate().GetOrderManager().CDT_CreatePionMission( pPion->GetPion(), *pMissionType );
     return pPionMission;
 }
 
@@ -156,9 +206,9 @@ boost::shared_ptr< MIL_Mission_ABC > DEC_OrdersFunctions::CreatePionMissionVersP
 // Name: DEC_OrdersFunctions::CDT_GivePionMission
 // Created: NLD 2003-04-16
 //-----------------------------------------------------------------------------
-void DEC_OrdersFunctions::CDT_GivePionMission( MIL_Automate& callerAutomate, boost::shared_ptr< MIL_Mission_ABC > pMission )
+void DEC_OrdersFunctions::CDT_GivePionMission( DEC_Decision_ABC* callerAutomate, boost::shared_ptr< MIL_Mission_ABC > pMission )
 {
-    callerAutomate.GetOrderManager().CDT_GivePionMission( pMission );
+    callerAutomate->GetAutomate().GetOrderManager().CDT_GivePionMission( pMission );
 }
 
 //-----------------------------------------------------------------------------
@@ -176,7 +226,7 @@ void DEC_OrdersFunctions::CDT_GivePionMissionVersPion( MIL_Automate& callerAutom
 //-----------------------------------------------------------------------------
 void DEC_OrdersFunctions::CDT_GiveMission( MIL_AgentPion& callerPion, boost::shared_ptr< MIL_Mission_ABC > pMission )
 {
-    DEC_OrdersFunctions::CDT_GivePionMission( callerPion.GetAutomate(), pMission );
+    DEC_OrdersFunctions::CDT_GivePionMission( &callerPion.GetAutomate().GetDecision(), pMission );
 }
 
 //-----------------------------------------------------------------------------
@@ -192,14 +242,14 @@ void DEC_OrdersFunctions::CDT_GiveMissionVersPion( MIL_AgentPion& callerPion, bo
 // Name: DEC_OrdersFunctions::CreateAutomateMission
 // Created: NLD 2007-04-03
 // -----------------------------------------------------------------------------
-boost::shared_ptr< MIL_Mission_ABC > DEC_OrdersFunctions::CreateAutomateMission( MIL_Automate& callerAutomate, DEC_Decision_ABC* pAutomate, const std::string& mission   )
+boost::shared_ptr< MIL_Mission_ABC > DEC_OrdersFunctions::CreateAutomateMission( DEC_Decision_ABC* callerAutomate, DEC_Decision_ABC* pAutomate, const std::string& mission   )
 {
     if( !pAutomate )
         throw MASA_EXCEPTION( "invalid parameter." );
     const MIL_MissionType_ABC* pMissionType = MIL_AutomateMissionType::FindFromDiaID( mission );
     if( !pMissionType )
         throw MASA_EXCEPTION( "invalid parameter." );
-    boost::shared_ptr< MIL_Mission_ABC > pMission = callerAutomate.GetOrderManager().CreateAutomateMission( pAutomate->GetAutomate(), *pMissionType );
+    boost::shared_ptr< MIL_Mission_ABC > pMission = callerAutomate->GetAutomate().GetOrderManager().CreateAutomateMission( pAutomate->GetAutomate(), *pMissionType );
     return pMission;
 }
 
@@ -207,18 +257,19 @@ boost::shared_ptr< MIL_Mission_ABC > DEC_OrdersFunctions::CreateAutomateMission(
 // Name: DEC_OrdersFunctions::GiveAutomateMission
 // Created: NLD 2007-04-03
 // -----------------------------------------------------------------------------
-void DEC_OrdersFunctions::GiveAutomateMission( boost::shared_ptr< MIL_Mission_ABC > pMission, MIL_Automate& callerAutomate )
+void DEC_OrdersFunctions::GiveAutomateMission( DEC_Decision_ABC* callerAutomate, boost::shared_ptr< MIL_Mission_ABC > pMission )
 {
-    callerAutomate.GetOrderManager().GiveAutomateMission( pMission );
+    callerAutomate->GetAutomate().GetOrderManager().GiveAutomateMission( pMission );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_OrdersFunctions::GiveAutomateMissionToAutomat
 // Created: LMT 2011-01-17
 // -----------------------------------------------------------------------------
-void DEC_OrdersFunctions::GiveAutomateMissionToAutomat( boost::shared_ptr< MIL_Mission_ABC > pMission, MIL_Automate& callerAutomate )
+void DEC_OrdersFunctions::GiveAutomateMissionToAutomat( DEC_Decision_ABC* callerAutomate, boost::shared_ptr< MIL_Mission_ABC > pMission )
 {
-    callerAutomate.GetOrderManager().GiveMissionToNewAutomat( callerAutomate, pMission );
+    MIL_Automate& automate = callerAutomate->GetAutomate();
+    automate.GetOrderManager().GiveMissionToNewAutomat( automate, pMission );
 }
 
 // -----------------------------------------------------------------------------
@@ -236,10 +287,10 @@ void DEC_OrdersFunctions::GiveMissionToAutomat( boost::shared_ptr< MIL_Mission_A
 // Name: DEC_OrdersFunctions::SplitFuseau
 // Created: NLD 2007-04-05
 // -----------------------------------------------------------------------------
-std::list<MIL_Fuseau*> DEC_OrdersFunctions::SplitFuseau( MIL_Automate& callerAutomate, unsigned int nbrSubFuseaux )
+std::list<MIL_Fuseau*> DEC_OrdersFunctions::SplitFuseau( const DEC_Decision_ABC* callerAutomate, unsigned int nbrSubFuseaux )
 {
     MIL_Fuseau::T_FuseauPtrList subFuseaux;
-    callerAutomate.GetOrderManager().GetFuseau().SplitIntoSubFuseaux( nbrSubFuseaux, subFuseaux );
+    callerAutomate->GetOrderManager().GetFuseau().SplitIntoSubFuseaux( nbrSubFuseaux, subFuseaux );
     return subFuseaux;
 }
 
@@ -354,20 +405,20 @@ void DEC_OrdersFunctions::PionSetMissionLimaScheduleFlag( MIL_AgentPion& caller,
 // Name: DEC_OrdersFunctions::AutomateSetMissionLimaFlag
 // Created: NLD 2007-05-08
 // -----------------------------------------------------------------------------
-void DEC_OrdersFunctions::AutomateSetMissionLimaFlag( MIL_Automate& caller, unsigned int limaId, bool flag  )
+void DEC_OrdersFunctions::AutomateSetMissionLimaFlag( DEC_Decision_ABC* caller, unsigned int limaId, bool flag  )
 {
     FlagMissionLima functor( limaId, flag );
-    GetHigherEngagedAutomate( caller ).ApplyOnHierarchy( functor );
+    GetHigherEngagedAutomate( caller->GetAutomate() ).ApplyOnHierarchy( functor );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_OrdersFunctions::AutomateSetMissionLimaScheduleFlag
 // Created: NLD 2007-05-08
 // -----------------------------------------------------------------------------
-void DEC_OrdersFunctions::AutomateSetMissionLimaScheduleFlag( MIL_Automate& caller, unsigned int limaId, bool flag  )
+void DEC_OrdersFunctions::AutomateSetMissionLimaScheduleFlag( DEC_Decision_ABC* caller, unsigned int limaId, bool flag  )
 {
     FlagScheduleMissionLima functor( limaId, flag );
-    GetHigherEngagedAutomate( caller ).ApplyOnHierarchy( functor );
+    GetHigherEngagedAutomate( caller->GetAutomate() ).ApplyOnHierarchy( functor );
 }
 
 // -----------------------------------------------------------------------------
@@ -441,4 +492,18 @@ bool DEC_OrdersFunctions::IsAutomateMissionAvailable( DEC_Decision_ABC* agent, s
 const MIL_Fuseau& DEC_OrdersFunctions::GetFuseau( const DEC_Decision_ABC& caller )
 {
     return caller.GetOrderManager().GetFuseau();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_OrdersFunctions::GetMissionLimaFlag
+// Created: NLD 2003-12-23
+// -----------------------------------------------------------------------------
+bool DEC_OrdersFunctions::GetMissionLimaFlag( const DEC_Decision_ABC* caller, unsigned int limaID )
+{
+    MIL_LimaOrder* pLima = caller->GetOrderManager().FindLima( limaID );
+    if( !pLima )
+    {
+        return false;
+    }
+    return pLima->IsFlagged();
 }

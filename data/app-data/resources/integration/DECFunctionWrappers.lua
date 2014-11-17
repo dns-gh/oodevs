@@ -1,5 +1,7 @@
 
+--
 -- Actions
+--
 function DEC__StopAction( actionId )
     return _DEC__StopAction( myself, actionId )
 end
@@ -16,7 +18,9 @@ function DEC_EtatAction( actionId )
     return _DEC_EtatAction( myself, actionId )
 end
 
+--
 -- Debug
+--
 function DEC_DebugAffichePoint( point )
     _DEC_DebugAffichePoint( myself, point )
 end
@@ -46,7 +50,9 @@ function DEC_DecisionalState( key, value )
     _DEC_DecisionalState( myself, key, value )
 end
 
+--
 -- Representations
+--
 function DEC_GetOrdersCategory()
     return _DEC_GetOrdersCategory( myself )
 end
@@ -67,19 +73,477 @@ function DEC_RemoveFromPointsCategory( pathPoint )
     _DEC_RemoveFromPointsCategory( myself, pathPoint )
 end
 
+--
 -- Orders
+--
 function DEC_FinMission()
     _DEC_FinMission( myself )
 end
 
+function DEC_NouvelleMission()
+    return _DEC_NouvelleMission( myself )
+end
+
+function DEC_GetLima( limaId )
+    return _DEC_GetLima( myself, limaId )
+end
+
+function DEC_GetLimasFromType( limaId )
+    return _DEC_GetLimasFromType( myself, limaId )
+end
+
+function DEC_ProchaineLimaHoraireNonFlagee()
+    return _DEC_ProchaineLimaHoraireNonFlagee( myself )
+end
+
+function DEC_Fuseau()
+    return _DEC_Fuseau( myself )
+end
+
+function DEC_SetMissionLimaFlag( limaId, flag )
+    _DEC_SetMissionLimaFlag( myself, limaId, flag )
+end
+
+function DEC_GetMissionLimaFlag( limaId )
+    return _DEC_GetMissionLimaFlag( myself, limaId )
+end
+
+function DEC_SetMissionLimaFlagHoraire( limaId, flag )
+    _DEC_SetMissionLimaFlagHoraire( myself, limaId, flag )
+end
+
+function DEC_MRT_CreerMissionPion( pion, mission )
+    -- Automaton
+    return _DEC_MRT_CreerMissionPion( myself, pion, mission )
+end
+
+function DEC_MRT_Valide()
+    -- Automaton
+    _DEC_MRT_Valide( myself )
+end
+
+function DEC_MRT_AffecteFuseaux( pions )
+    -- Automaton
+    return _DEC_MRT_AffecteFuseaux( myself, pions )
+end
+
+function DEC_CDT_CreerMissionPion( pion, mission )
+    -- Automaton
+    return _DEC_CDT_CreerMissionPion( myself, pion, mission )
+end
+
+function DEC_CDT_DonnerMissionPion_Mission( mission )
+    -- Automaton
+    _DEC_CDT_DonnerMissionPion_Mission( myself, mission )
+end
+
+function DEC_CreerMissionAutomate( automate, mission )
+    -- Automaton
+    return _DEC_CreerMissionAutomate( myself, automate, mission )
+end
+
+function DEC_DonnerMissionAutomate_Mission( mission )
+    -- Automaton
+    _DEC_DonnerMissionAutomate_Mission( myself, mission )
+end
+
+function DEC_DonnerMissionAutomate( mission )
+    -- Automaton
+    _DEC_DonnerMissionAutomate( myself, mission )
+end
+
+function DEC_DecouperFuseau( nbrSubFuseaux )
+    return _DEC_DecouperFuseau( myself, nbrSubFuseaux )
+end
+
+--
 -- Knowledge objects
+--
 function DEC_ObjectKnowledgesInZone( localization, parameters )
     return _DEC_ObjectKnowledgesInZone( myself, localization, parameters )
 end
 
+--
+-- Knowledge
+--
+function DEC_Connaissances_PartageConnaissancesAvec( receiver, minutes )
+    _DEC_Connaissances_PartageConnaissancesAvec( myself, receiver, minutes )
+end
+
+function DEC_Connaissances_PartageConnaissancesDansZoneAvec( receiver, center, radius )
+    _DEC_Connaissances_PartageConnaissancesDansZoneAvec( myself, receiver, center, radius )
+end
+
+function DEC_Knowledges_ObjectsInCircle( center, radius, filters )
+    return _DEC_Knowledges_ObjectsInCircle( myself, center, radius, filters, false )
+end
+
+function DEC_Knowledges_AllObjectsInCircle( center, radius, filters )
+    return _DEC_Knowledges_ObjectsInCircle( myself, center, radius, filters, true )
+end
+
+function DEC_Connaissances_ObjetsDansFuseau( type )
+    return _DEC_Connaissances_ObjetsDansFuseau( myself, type )
+end
+
+function DEC_Connaissances_UnitesEnnemiesVivantesPercuesParPion( perceiver )
+    return _DEC_Connaissances_UnitesEnnemiesVivantesPercuesParPion( myself, perceiver )
+end
+
+function DEC_Connaissances_Populations()
+    return _DEC_Connaissances_Populations( myself )
+end
 
 --
--- Populations
+-- Object
+--
+function DEC_CreerObjetSansDelais( type, localization )
+    return _DEC_CreerObjetSansDelais( myself, type, localization )
+end
+
+function DEC_MagicGetOrCreateObject( type, localization )
+    return _DEC_MagicGetOrCreateObject( myself, type, localization )
+end
+
+--
+-- Population knowledge
+--
+function DEC_KnowledgePopulation_Domination( knowledgeId )
+    return _DEC_KnowledgePopulation_Domination( myself, knowledgeId )
+end
+
+function DEC_ConnaissancePopulation_EstDansZone( knowledgeId, localization )
+    return _DEC_ConnaissancePopulation_EstDansZone( myself, knowledgeId, localization )
+end
+
+function DEC_KnowledgePopulation_GetBarycenter( knowledgeId )
+    return _DEC_KnowledgePopulation_GetBarycenter( myself, knowledgeId )
+end
+
+function DEC_Crowd_GetHumansFromAllTypes( knowledgeId )
+    return _DEC_Crowd_GetHumansFromAllTypes( myself, knowledgeId )
+end
+
+--
+-- Agent knowledge
+--
+function DEC_KnowledgeAgent_IsPerceptionLevelMax( agentKnowledge )
+    return _DEC_KnowledgeAgent_IsPerceptionLevelMax( myself, agentKnowledge )
+end
+
+--
+-- Geometry
+--
+function DEC_Geometrie_CalculerBarycentreLocalisationDansFuseau( localization )
+    return _DEC_Geometrie_CalculerBarycentreLocalisationDansFuseau( myself, localization )
+end
+
+function DEC_Geometry_SplitLocalisation( localization, numParts, direction )
+    return DEC_Geometry_Pion_SplitLocalisation( myself, localization, numParts, direction )
+end
+
+function DEC_Geometrie_DecoupeFuseauEnTroncons( sectionLength )
+    return _DEC_Geometrie_DecoupeFuseauEnTroncons( myself, sectionLength )
+end
+
+function DEC_Geometrie_CalculerPositionObstacle( center, type, radius )
+    return _DEC_Geometrie_CalculerPositionObstacle( myself, center, type, radius )
+end
+
+function DEC_Geometrie_CalculerPointArrivee()
+    return _DEC_Geometrie_CalculerPointArrivee( myself )
+end
+
+function DEC_Geometrie_CalculerPointDepart()
+    return _DEC_Geometrie_CalculerPointDepart( myself )
+end
+
+function DEC_Geometrie_EstPointDansFuseau( point )
+    return _DEC_Geometrie_EstPointDansFuseau( myself, point )
+end
+
+function DEC_Geometrie_CalculerPositionParRapportALima( phaseLine, distanceBefore )
+    return _DEC_Geometrie_CalculerPositionParRapportALima( myself, phaseLine, distanceBefore )
+end
+
+function DEC_Geometrie_CalculerPositionParRapportALimaDansFuseau( limaId, distanceBeforeLima, fuseau )
+    return _DEC_Geometrie_CalculerPositionParRapportALimaDansFuseau( myself, limaId, distanceBeforeLima, fuseau )
+end
+
+function DEC_Geometrie_CalculerPositionsParRapportALima( limaId, distanceBeforeLima, numPoints )
+    return _DEC_Geometrie_CalculerPositionsParRapportALima( myself, limaId, distanceBeforeLima, numPoints )
+end
+
+function DEC_Geometrie_StartCalculLignesAvantEtArriere( pionDecisionList )
+    -- Automaton
+    return _DEC_Geometrie_StartCalculLignesAvantEtArriere( myself, pionDecisionList )
+end
+
+function DEC_Geometrie_StartCalculAutomateLignesAvantEtArriere( automatDecisionList )
+    -- Automaton
+    return _DEC_Geometrie_StartCalculAutomateLignesAvantEtArriere( myself, automatDecisionList )
+end
+
+function DEC_Geometrie_CalculerPointArriveePourPion( pion )
+    -- Automaton
+    return _DEC_Geometrie_CalculerPointArriveePourPion( myself, pion )
+end
+
+function DEC_Geometrie_PosDeploiementASAOmni( positionCount, center, radius )
+    return _DEC_Geometrie_PosDeploiementASAOmni( myself, positionCount, center, radius )
+end
+
+function DEC_Geometrie_CalculerPointProcheLocalisationDansFuseau( location )
+    -- Agent & Automaton
+    return _DEC_Geometrie_CalculerPointProcheLocalisationDansFuseau( myself, location )
+end
+
+function DEC_Geometrie_CalculerPointProcheLocalisationNonClippeeDansFuseau( location )
+    return _DEC_Geometrie_CalculerPointProcheLocalisationNonClippeeDansFuseau( myself, location )
+end
+
+function DEC_Geometrie_CalculerRetardSurObjectifs( fuseau, automates, objectives )
+    return _DEC_Geometrie_CalculerRetardSurObjectifs( myself, fuseau, automates, objectives )
+end
+
+function DEC_Geometrie_AdvanceAlongFuseau( pion )
+    return _DEC_Geometrie_AdvanceAlongFuseau( myself, pion )
+end
+
+function DEC_Geometrie_GetPointsLimas( limaType, divider )
+    return _DEC_Geometrie_GetPointsLimas( myself, limaType, divider )
+end
+
+--
+-- Logistics
+--
+function DEC_Maintenance_ActiverChaine()
+    -- Agent & Automaton
+    _DEC_Maintenance_ActiverChaine( myself )
+end
+
+function DEC_Maintenance_DesactiverChaine()
+    -- Agent & Automaton
+    _DEC_Maintenance_DesactiverChaine( myself )
+end
+
+function DEC_Maintenance_ChangerPriorites( priorities )
+    -- Agent & Automaton
+    _DEC_Maintenance_ChangerPriorites( myself, priorities )
+end
+
+function DEC_Maintenance_Priorites()
+    -- Automaton
+    return _DEC_Maintenance_Priorites( myself )
+end
+
+function DEC_Maintenance_ChangerPrioritesTactiques( priorities )
+    -- Agent & Automaton
+    _DEC_Maintenance_ChangerPrioritesTactiques( myself, priorities )
+end
+
+function DEC_Maintenance_PrioritesTactiques()
+    -- Automaton
+    return _DEC_Maintenance_PrioritesTactiques( myself )
+end
+
+function DEC_Maintenance_ChangerRegimeTravail( workRate )
+    -- Agent & Automaton
+    _DEC_Maintenance_ChangerRegimeTravail( myself, workRate )
+end
+
+function DEC_Maintenance_RegimeTravail()
+    -- Automaton
+    return _DEC_Maintenance_RegimeTravail( myself )
+end
+
+function DEC_Sante_ActiverChaine()
+    -- Agent & Automaton
+    _DEC_Sante_ActiverChaine( myself )
+end
+
+function DEC_Sante_DesactiverChaine()
+    -- Agent & Automaton
+    _DEC_Sante_DesactiverChaine( myself )
+end
+
+function DEC_Sante_ActiverFonctionTri()
+    -- Agent & Automaton
+    _DEC_Sante_ActiverFonctionTri( myself )
+end
+
+function DEC_Sante_DesactiverFonctionTri()
+    -- Agent & Automaton
+    _DEC_Sante_DesactiverFonctionTri( myself )
+end
+
+function DEC_Sante_ActiverFonctionSoin()
+    -- Agent & Automaton
+    _DEC_Sante_ActiverFonctionSoin( myself )
+end
+
+function DEC_Sante_DesactiverFonctionSoin()
+    -- Agent & Automaton
+    _DEC_Sante_DesactiverFonctionSoin( myself )
+end
+
+function DEC_Sante_ChangerPriorites( priorities )
+    -- Agent & Automaton
+    _DEC_Sante_ChangerPriorites( myself, priorities )
+end
+
+function DEC_Sante_Priorites()
+    -- Automaton
+    return _DEC_Sante_Priorites( myself )
+end
+
+function DEC_Sante_ChangerPrioritesTactiques( priorities )
+    -- Agent & Automaton
+    _DEC_Sante_ChangerPrioritesTactiques( myself, priorities )
+end
+
+function DEC_Sante_PrioritesTactiques()
+    -- Automaton
+    return _DEC_Sante_PrioritesTactiques( myself )
+end
+
+function DEC_Ravitaillement_ActiverChaine()
+    -- Agent & Automaton
+    _DEC_Ravitaillement_ActiverChaine( myself )
+end
+
+function DEC_Ravitaillement_DesactiverChaine()
+    -- Agent & Automaton
+    _DEC_Ravitaillement_DesactiverChaine( myself )
+end
+
+--
+-- Automaton
+--
+
+-- Accessors
+function DEC_Automate_PionsAvecPC()
+    return myself:DEC_Automate_PionsAvecPC()
+end
+
+function DEC_Automate_PionsSansPC()
+    return _DEC_Automate_PionsSansPC( myself )
+end
+
+function DEC_Automate_PionPC()
+    return _DEC_Automate_PionPC( myself )
+end
+
+function DEC_Automate_AutomatesSubordonnes()
+    return _DEC_Automate_AutomatesSubordonnes( myself )
+end
+
+function DEC_Automate_PionsMelee()
+    return _DEC_Automate_PionsMelee( myself )
+end
+
+function DEC_Automate_PionsGenie()
+    return _DEC_Automate_PionsGenie( myself )
+end
+
+function DEC_AutomateSuperieur_EstEmbraye()
+    return _DEC_AutomateSuperieur_EstEmbraye( myself )
+end
+
+function DEC_Automate_PionsAvecPCCommunication()
+    return _DEC_Automate_PionsAvecPCCommunication( myself )
+end
+
+function DEC_Automate_PionsSansPCCommunication()
+    return _DEC_Automate_PionsSansPCCommunication( myself )
+end
+
+-- State
+function DEC_Automate_EstEmbraye()
+    return myself:DEC_Automate_EstEmbraye()
+end
+
+function DEC_Automate_ROE()
+    return _DEC_Automate_ROE( myself )
+end
+
+function DEC_Automate_ChangeEtatROE( state )
+    _DEC_Automate_ChangeEtatROE( myself, state )
+end
+
+function DEC_Automate_ChangeEtatROEPopulation( state )
+    _DEC_Automate_ChangeEtatROEPopulation( myself, state )
+end
+
+function DEC_Automate_ROEPopulation()
+    return _DEC_Automate_ROEPopulation( myself )
+end
+
+function DEC_Automate_isLogistic()
+    return _DEC_Automate_isLogistic( myself )
+end
+
+-- Agent accessors
+function DEC_Automate_PionEstContamine( pion )
+    return _DEC_Automate_PionEstContamine( myself, pion )
+end
+
+function DEC_Automate_PionEstEmpoisonne( pion )
+    return _DEC_Automate_PionEstEmpoisonne( myself, pion )
+end
+
+function DEC_Automate_PionEstNeutralise( pion )
+    return _DEC_Automate_PionEstNeutralise( myself, pion )
+end
+
+function DEC_Automate_PionEstTransporte( pion )
+    return _DEC_Automate_PionEstTransporte( myself, pion )
+end
+
+function DEC_Automate_PionRelevePion( relieving, relieved )
+    return _DEC_Automate_PionRelevePion( myself, relieving, relieved )
+end
+
+function DEC_Automate_PionPeutReleverPion( relieving, relieved )
+    return _DEC_Automate_PionPeutReleverPion( myself, relieving, relieved )
+end
+
+function DEC_Automate_EstPointDansFuseauPion( point, pion )
+    return _DEC_Automate_EstPointDansFuseauPion( myself, point, pion )
+end
+
+function DEC_Automate_PionPeutConstruireObjet( pion, type )
+    return _DEC_Automate_PionPeutConstruireObjet( myself, pion, type )
+end
+
+function DEC_Automate_PionPeutConstruireObjetAvecLocalisation( pion, type, localization )
+    return _DEC_Automate_PionPeutConstruireObjetAvecLocalisation( myself, pion, type, localization )
+end
+
+function DEC_Automate_PionPeutConstruireContournementObjet( pion, knowledgeId )
+    return _DEC_Automate_PionPeutConstruireContournementObjet( myself, pion, knowledgeId )
+end
+
+function DEC_Automate_PionPeutDetruireObjet( pion, knowledgeId )
+    return _DEC_Automate_PionPeutDetruireObjet( myself, pion, knowledgeId )
+end
+
+function DEC_Automate_PionPeutDevaloriserObjet( pion, knowledge )
+    return _DEC_Automate_PionPeutDevaloriserObjet( myself, pion, knowledge )
+end
+
+-- Logistics
+function DEC_Automate_PcDeTC2()
+    return _DEC_Automate_PcDeTC2( myself )
+end
+
+function DEC_DemandeDeRavitaillement()
+    _DEC_DemandeDeRavitaillement( myself )
+end
+
+
+--
+-- Crowd
 --
 
 -- Self
@@ -237,7 +701,7 @@ end
 
 
 --
--- Agents
+-- Agent
 --
 
 -- Move
