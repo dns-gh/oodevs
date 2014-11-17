@@ -37,13 +37,13 @@ std::list< boost::shared_ptr< TER_PathPoint > > SplitEdgesOnElevationGrid(
 
     for( auto it = points.begin(); it != points.end(); ++it )
     {
-        if( output.empty() || std::next( it ) == points.end() )
+        if( it == points.begin() )
         {
             output.push_back( *it );
             continue;
         }
-        const auto p1 = *it;
-        const auto p2 = *std::next( it );
+        const auto p1 = *std::prev( it );
+        const auto p2 = *it;
         SlopeSpeedModifier slopeSpeedModifier;
         SplitOnMajorGridLines( static_cast< int32_t >( elevation.GetCellSize() ),
             p1->GetPos(), p2->GetPos(), [&]( MT_Vector2D from, MT_Vector2D to )
@@ -67,7 +67,7 @@ std::list< boost::shared_ptr< TER_PathPoint > > SplitEdgesOnElevationGrid(
                 output.push_back( point );
             }
         }
-        output.push_back( p1 );
+        output.push_back( p2 );
     }
     return output;
 }

@@ -418,7 +418,9 @@ func (s *TestSuite) TestPathfindDeletingUnitsDeletesRelatedPathfinds(c *C) {
 	})
 }
 
-func testPathEdgeSplit(c *C, phydb *phy.PhysicalData, exercise string, points int) {
+func testPathEdgeSplit(c *C, phydb *phy.PhysicalData, exercise string,
+	points int) []swapi.PathPoint {
+
 	opts := NewAdminOpts(exercise)
 	sim, client := connectAndWaitModel(c, opts)
 	defer stopSimAndClient(c, sim, client)
@@ -430,6 +432,12 @@ func testPathEdgeSplit(c *C, phydb *phy.PhysicalData, exercise string, points in
 	path, err := client.UnitPathfindRequest(unit.Id, from, to)
 	c.Assert(err, IsNil)
 	c.Assert(len(path), Equals, points)
+
+	// Check points are monotonically increasing from west to east
+	for i := 1; i < len(path); i++ {
+		c.Assert(path[i-1].Point.X, Lesser, path[i].Point.X)
+	}
+	return path
 }
 
 func (s *TestSuite) TestPathEdgesSplitOnElevationGrid(c *C) {
