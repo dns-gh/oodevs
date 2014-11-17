@@ -46,6 +46,7 @@ ColorEditor::ColorEditor( QWidget* parent, kernel::Controllers& controllers,
     , selected_     ( controllers )
 {
     setWindowTitle( tr( "Change color" ) );
+    setModal( true );
     QVBoxLayout *mainLayout = new QVBoxLayout();
     // default color
     defaultButton_ = new gui::RichRadioButton( "defaultColorRadioButton", tr( "Default color" ), this );
