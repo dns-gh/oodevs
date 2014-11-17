@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef SIMULATION_TERRAIN_EDGEMATCHER_H
-#define SIMULATION_TERRAIN_EDGEMATCHER_H
+#ifndef SIMULATION_TERRAIN_PREFEREDEDGESHEURISTIC_H
+#define SIMULATION_TERRAIN_PREFEREDEDGESHEURISTIC_H
 
 #include "TER_Pathfinder_ABC.h"
 #include <pathfind/TerrainPathPoint.h>
@@ -23,16 +23,16 @@ namespace sword
     class Pathfind;
 }
 
-class TER_EdgeMatcher : public TER_Pathfinder_ABC
-                      , private boost::noncopyable
+class TER_PreferedEdgesHeuristic : public TER_Pathfinder_ABC
+                                 , private boost::noncopyable
 {
 public:
     typedef std::vector< std::pair< TerrainPathPoint, int > > T_PathPoints;
     typedef std::vector< std::pair< int, int > > T_Waypoints;
 
 public:
-    TER_EdgeMatcher( const boost::shared_ptr< TER_Pathfinder_ABC >& pathfinder,
-                     const sword::Pathfind& pathfind );
+    TER_PreferedEdgesHeuristic( const boost::shared_ptr< TER_Pathfinder_ABC >& pathfinder,
+                                const sword::Pathfind& pathfind );
     
     virtual void SetChoiceRatio( float ratio );
     virtual void SetConfiguration( unsigned refine, unsigned int subdivisions );
@@ -49,5 +49,5 @@ private:
     const sword::Pathfind& pathfind_;
 };
 
-#endif // SIMULATION_TERRAIN_EDGEMATCHER_H
+#endif // SIMULATION_TERRAIN_PREFEREDEDGESHEURISTIC_H
 
