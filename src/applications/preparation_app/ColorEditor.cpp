@@ -55,7 +55,7 @@ ColorEditor::~ColorEditor()
 // -----------------------------------------------------------------------------
 void ColorEditor::Show()
 {
-    QColor current = colorStrategy_.FindColor( *selected_ );
+    const QColor current = colorStrategy_.FindColor( *selected_ );
     QColor color = QColorDialog::getColor( current, 0, tools::translate( "ColorEditor", "Select color" ) );
     if( color.isValid() && color != current )
     {
