@@ -66,7 +66,6 @@ protected:
     void AddColor( const kernel::Entity_ABC& entity, const QColor& color );
     void ClearColor( const kernel::Entity_ABC& entity );
     void RemoveSubordinate( const kernel::Entity_ABC& entity, const QColor& color, bool applyToSubordinates, bool force );
-    void RemoveObjects( const kernel::Entity_ABC& entity );
     void UpdateHierarchies( const kernel::Entity_ABC& entity );
     void UpdateLogisticBaseStates( const kernel::TacticalHierarchies& tactical );
     void ResetSubordinate( const kernel::Entity_ABC& entity, const QColor& newColor );
