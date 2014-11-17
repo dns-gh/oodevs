@@ -35,7 +35,6 @@ EntityTreeView_ABC::EntityTreeView_ABC( const QString& objectName, kernel::Contr
 {
     dataModel_.setColumnCount( 1 );
     setHeaderHidden( true );
-    setEditTriggers( SelectedClicked | EditKeyPressed );
     setAllColumnsShowFocus( true );
     setUniformRowHeights( true );
     header()->setStretchLastSection( false );
@@ -227,6 +226,11 @@ void EntityTreeView_ABC::NotifySelectionChanged( const std::vector< const kernel
                     }
                 }
     }
+    auto currentEntity = dataModel_.GetDataFromIndex< kernel::Entity_ABC >( currentIndex() );
+    if( currentEntity && profile_.CanDoMagic( *currentEntity ) )
+        setEditTriggers( SelectedClicked | EditKeyPressed );
+    else
+        setEditTriggers( NoEditTriggers );
     blockSelect_ = false;
 }
 
@@ -307,7 +311,7 @@ void EntityTreeView_ABC::contextMenuEvent( QContextMenuEvent* event )
 // -----------------------------------------------------------------------------
 void EntityTreeView_ABC::keyPressEvent( QKeyEvent* event )
 {
-    if( event && event->key() == Qt::Key_F2 )
+    if( event && event->key() == Qt::Key_F2 && editTriggers().testFlag( EditKeyPressed ) )
     {
         const auto indexes = selectionModel()->selectedIndexes();
         if( !indexes.empty() )
