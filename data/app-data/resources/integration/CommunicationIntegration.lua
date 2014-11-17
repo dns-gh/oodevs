@@ -576,10 +576,12 @@ integration.getAnyType = function( any )
     return any:GetType()
 end
 
+--- Deprecated
 --- Assign the given mission to the calling DirectIA agent with the sender as parameter (usually a follow mission )
 -- This method can only be called by a disengaged agent
 -- @param sender the DirectIA agent, the mission's parameter
 -- @param missionName the name of the task associated to the mission
+-- @see integration.communication.StartMissionPionVersPion
 integration.communication.FollowMe = function( missionName, sender )
     local mission = DEC_CreerMissionPionVersPion( missionName )
     local followParam = DEC_AssignMissionPionListParameter( sender )   -- entities to folow: the sender of the message
