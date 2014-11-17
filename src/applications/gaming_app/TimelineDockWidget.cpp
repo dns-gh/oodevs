@@ -368,7 +368,7 @@ void TimelineDockWidget::Select( const kernel::Entity_ABC& element )
 // -----------------------------------------------------------------------------
 void TimelineDockWidget::Select( const actions::Action_ABC& action )
 {
-    if( auto tasker = action.Retrieve< actions::ActionTasker >() )
+    if( const auto* tasker = action.Retrieve< actions::ActionTasker >() )
         selectedEntity_ = tasker->GetTasker();
 }
 
