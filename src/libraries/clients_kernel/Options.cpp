@@ -82,9 +82,10 @@ void Options::Apply( const std::function< void ( const std::string&, const Optio
 // -----------------------------------------------------------------------------
 void Options::Set( const std::string& name, const OptionVariant& value )
 {
-    if( options_.count( name ) == 0 )
+    auto it = options_.find( name );
+    if( it == options_.end() )
         throw MASA_EXCEPTION( "Option not initialized: " + name );
-    options_[ name ].first = value;
+    it->second.first = value;
 }
 
 // -----------------------------------------------------------------------------
@@ -93,7 +94,8 @@ void Options::Set( const std::string& name, const OptionVariant& value )
 // -----------------------------------------------------------------------------
 void Options::Create( const std::string& name, const OptionVariant& value, bool isInPreferencePanel )
 {
-    if( options_.count( name ) != 0 )
+    auto it = options_.find( name );
+    if( it != options_.end() )
         throw MASA_EXCEPTION( "Option already initialized: " + name );
     options_[ name ] = std::make_pair( value, isInPreferencePanel );
 }
@@ -104,9 +106,10 @@ void Options::Create( const std::string& name, const OptionVariant& value, bool 
 // -----------------------------------------------------------------------------
 const OptionVariant& Options::Get( const std::string& name ) const
 {
-    if( options_.count( name ) == 0 )
+    auto it = options_.find( name );
+    if( it == options_.end() )
         throw MASA_EXCEPTION( "Option not initialized: " + name );
-    return options_.at( name ).first;
+    return it->second.first;
 }
 
 // -----------------------------------------------------------------------------
