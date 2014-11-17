@@ -94,4 +94,3 @@ void ObjectsModel::DeleteObject( unsigned long id )
     delete Find( id );
     Remove( id );
 }
-

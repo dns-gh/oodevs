@@ -30,6 +30,7 @@ public:
     virtual ~ColorController();
 
 private:
+    virtual void Add( const kernel::Entity_ABC& entity, const QColor& newColor, bool applyToSubordinates = true, bool force = false );
     virtual bool ApplyColor( const kernel::Color_ABC& color );
 };
 
