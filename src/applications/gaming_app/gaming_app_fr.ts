@@ -2220,6 +2220,10 @@ Ces données ne peuvent pas être projetées.</translation>
         <source>Replay</source>
         <translation>Rejeu</translation>
     </message>
+    <message>
+        <source>Fire colors</source>
+        <translation>Couleurs des tirs</translation>
+    </message>
 </context>
 <context>
     <name>MaintenanceHaulersListView</name>
