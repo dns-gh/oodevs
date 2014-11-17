@@ -48,15 +48,6 @@ ColorController::~ColorController()
 void ColorController::Add( const kernel::Entity_ABC& entity, const QColor& newColor, bool applyToSubordinates, bool force )
 {
     gui::ColorController::Add( entity, newColor, applyToSubordinates, force );
-    AddObjects( entity, newColor );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ColorController::AddObjects
-// Created: LGY 2013-03-26
-// -----------------------------------------------------------------------------
-void ColorController::AddObjects( const kernel::Entity_ABC& entity, const QColor& newColor )
-{
     if( const Objects* pObjects = entity.Retrieve< Objects >() )
     {
         auto it = pObjects->CreateIterator();
@@ -72,15 +63,6 @@ void ColorController::AddObjects( const kernel::Entity_ABC& entity, const QColor
 void ColorController::Remove( const kernel::Entity_ABC& entity, bool applyToSubordinates, bool force )
 {
     gui::ColorController::Remove( entity, applyToSubordinates, force );
-    RemoveObjects( entity );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ColorController::RemoveObjects
-// Created: LGY 2013-03-26
-// -----------------------------------------------------------------------------
-void ColorController::RemoveObjects( const kernel::Entity_ABC& entity )
-{
     if( const Objects* pObjects = entity.Retrieve< Objects >() )
     {
         auto it = pObjects->CreateIterator();
