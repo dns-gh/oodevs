@@ -137,13 +137,13 @@ SafePointer< T >& SafePointer< T >::operator=( const SafePointer& other )
 }
 
 template< typename T >
-bool SafePointer< T >::operator==( const SafePointer< T >& other ) const
+bool SafePointer< T >::operator==( const SafePointer& other ) const
 {
     return controller_ == other.controller_ && element_ == other.element_;
 }
 
 template< typename T >
-bool SafePointer< T >::operator!=( const SafePointer< T >& other ) const
+bool SafePointer< T >::operator!=( const SafePointer& other ) const
 {
     return !( *this == other );
 }
