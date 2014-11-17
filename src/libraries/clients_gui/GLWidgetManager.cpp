@@ -259,10 +259,9 @@ GLDockWidget* GLWidgetManager::AddDockWidget( unsigned id /* = 0 */ )
     }
     const auto& activeView = mainProxy_.GetActiveView();
     auto proxy = std::make_shared< GL2D3DProxy >( mainProxy_,
-                                                  activeView.GetActiveOptions(),
+                                                  activeView,
                                                   tr( "View %1" ).arg( id ),
                                                   id );
-    proxy->AddLayers( activeView.GetLayers() );
     auto stackedWidget = CreateStackedWidget( proxy );
     stackedWidget->Load();
     proxy->LoadFrustum( activeView.SaveFrustum() );

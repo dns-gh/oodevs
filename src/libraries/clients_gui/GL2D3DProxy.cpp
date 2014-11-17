@@ -53,15 +53,15 @@ GL2D3DProxy::GL2D3DProxy( GLView_ABC& parent,
 // Created: ABR 2014-06-25
 // -----------------------------------------------------------------------------
 GL2D3DProxy::GL2D3DProxy( GLView_ABC& parent,
-                          const GLOptions& options,
+                          const GLView_ABC& other,
                           const QString& name,
                           const unsigned id )
     : name_( name )
     , id_( id )
     , parent_( parent )
-    , options_( new GLOptions( options ) )
+    , options_( new GLOptions( other.GetActiveOptions() ) )
 {
-    // NOTHING
+    AddLayers( other.GetLayers() );
 }
 
 // -----------------------------------------------------------------------------
