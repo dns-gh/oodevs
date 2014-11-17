@@ -142,7 +142,7 @@ void ColorController::Remove( const kernel::Entity_ABC& entity, bool applyToSubo
         if( const auto pSuperior = pHierarchies->GetSuperior() )
             if( const auto pColor = pSuperior->Retrieve< kernel::Color_ABC >() )
                 if( pColor->IsOverriden() )
-                    Add( entity, static_cast< QColor >( *pColor ) );
+                    Add( entity, *pColor );
     UpdateHierarchies( entity );
 }
 
