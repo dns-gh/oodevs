@@ -13,6 +13,8 @@
 #include "GamingConfig.h"
 #include "TimelineToolBar.h"
 #include "TimelineWebView.h"
+#include "actions/Action_ABC.h"
+#include "actions/ActionTasker.h"
 #include "clients_gui/Event.h"
 #include "clients_kernel/Filter_ABC.h"
 #include "clients_kernel/Controllers.h"
@@ -343,12 +345,39 @@ void TimelineDockWidget::NotifyUpdated( const gui::Event& event )
 }
 
 // -----------------------------------------------------------------------------
-// Name: TimelineDockWidget::NotifySelected
-// Created: JSR 2014-11-06
+// Name: TimelineDockWidget::BeforeSelection
+// Created: JSR 2014-11-17
 // -----------------------------------------------------------------------------
-void TimelineDockWidget::NotifySelected( const kernel::Entity_ABC* element )
+void TimelineDockWidget::BeforeSelection()
 {
-    selectedEntity_ = element;
+    selectedEntity_ = 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: TimelineDockWidget::Select
+// Created: JSR 2014-11-17
+// -----------------------------------------------------------------------------
+void TimelineDockWidget::Select( const kernel::Entity_ABC& element )
+{
+    selectedEntity_ = &element;
+}
+
+// -----------------------------------------------------------------------------
+// Name: TimelineDockWidget::Select
+// Created: JSR 2014-11-17
+// -----------------------------------------------------------------------------
+void TimelineDockWidget::Select( const actions::Action_ABC& action )
+{
+    if( const actions::ActionTasker* tasker = action.Retrieve< actions::ActionTasker >() )
+        selectedEntity_ = tasker->GetTasker();
+}
+
+// -----------------------------------------------------------------------------
+// Name: TimelineDockWidget::AfterSelection
+// Created: JSR 2014-11-17
+// -----------------------------------------------------------------------------
+void TimelineDockWidget::AfterSelection()
+{
     if( filterSelected_ )
         UpdateWebView();
 }
