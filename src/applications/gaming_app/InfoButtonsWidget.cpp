@@ -213,9 +213,11 @@ void InfoButtonsWidget::NotifySelected( const kernel::Entity_ABC* element )
                 (*it)->FillCurrentModel( *element_ );
                 needRequests = true;
             }
-        logistic_helpers::VisitEntityAndSubordinatesUpToBaseLog( *element, [&]( const kernel::Entity_ABC& entity ) {
-            entities_.insert( entity.GetId() );
-        } );
+        logistic_helpers::VisitEntityAndSubordinatesUpToBaseLog( *element,
+            [&]( const kernel::Entity_ABC& entity )
+            {
+                entities_.insert( entity.GetId() );
+            } );
 
         if( !entities_.empty() && needRequests )
             simulationController_.SendLogisticRequests( entities_ );
