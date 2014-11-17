@@ -34,7 +34,6 @@ public:
     TER_EdgeMatcher( const boost::shared_ptr< TER_Pathfinder_ABC >& pathfinder,
                      const sword::Pathfind& pathfind );
     
-    virtual void SetId( size_t id );
     virtual void SetChoiceRatio( float ratio );
     virtual void SetConfiguration( unsigned refine, unsigned int subdivisions );
     virtual PathResultPtr ComputePath( const geometry::Point2f& from,

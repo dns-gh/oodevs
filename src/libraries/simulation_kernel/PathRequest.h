@@ -13,7 +13,6 @@
 #include <boost/optional.hpp>
 
 class ActionManager;
-class TER_PathComputer_ABC;
 class TER_PathFuture;
 
 // =============================================================================
@@ -27,8 +26,7 @@ class PathRequest : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-     PathRequest( const boost::shared_ptr< TER_PathComputer_ABC >& computer,
-                  const boost::shared_ptr< TER_PathFuture >& future,
+     PathRequest( const boost::shared_ptr< TER_PathFuture >& future,
                   unsigned int ctx,
                   unsigned int clientId,
                   uint32_t id,
@@ -63,9 +61,6 @@ private:
 private:
     //! @name Member data
     //@{
-    // The computer instance must outlive the future or the request might
-    // get canceled in TER_Pathfinder.
-    boost::shared_ptr< TER_PathComputer_ABC > computer_;
     boost::shared_ptr< TER_PathFuture > future_;
     const unsigned int ctx_;
     const unsigned int clientId_;
