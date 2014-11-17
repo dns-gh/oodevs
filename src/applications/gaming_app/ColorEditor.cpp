@@ -166,17 +166,6 @@ void ColorEditor::Accept()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ColorEditor::Reset
-// Created: LGY 2011-06-24
-// -----------------------------------------------------------------------------
-void ColorEditor::Reset()
-{
-    subordinatesCheckBox_->setChecked( false );
-    defaultButton_->setChecked( true );
-    colorEditor_.Remove( *selected_ );
-}
-
-// -----------------------------------------------------------------------------
 // Name: ColorEditor::NotifyContextMenu
 // Created: LGY 2011-06-28
 // -----------------------------------------------------------------------------

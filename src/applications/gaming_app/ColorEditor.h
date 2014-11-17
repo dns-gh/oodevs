@@ -82,7 +82,6 @@ private slots:
     //! @name Slots
     //@{
     void Show();
-    void Reset();
     void Accept();
     //@}
 
