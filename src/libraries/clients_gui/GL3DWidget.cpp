@@ -864,7 +864,8 @@ void GL3DWidget::initializeGL()
         for( auto it = layers_.begin(); it != layers_.end(); ++it )
             ( *it )->Initialize( viewport );
         isInitialized_ = true;
-        CenterView();
+        if( center_.IsZero() )
+            CenterView();
     }
 }
 
