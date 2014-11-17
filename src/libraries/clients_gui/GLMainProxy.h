@@ -75,7 +75,6 @@ public:
 
     std::shared_ptr< ContourLinesComputer > GetContourLinesComputer( int height ) const;
     void SetColorStrategy( ColorStrategy_ABC& colorStrategy );
-
     void SetTooltipsLayer( const std::shared_ptr< TooltipsLayer_ABC >& layer );
     //@}
 

@@ -141,7 +141,7 @@ void GLWidgetManager::Purge()
 void GLWidgetManager::PurgeViews()
 {
     for( auto it = dockWidgets_.begin(); it != dockWidgets_.end(); ++it )
-        RemoveStackedWidget( ( *it )->GetStackedWidget() );
+        RemoveStackedWidget( it->second->GetStackedWidget() );
     dockWidgets_.clear();
 }
 
@@ -156,12 +156,12 @@ GLWidgetManager::T_GLStackedWidget GLWidgetManager::GetStackedWidget( const std:
         return mainWidget_;
     auto it = std::find_if( dockWidgets_.begin(),
                             dockWidgets_.end(),
-                            [&]( const T_GLDockWidget& dock ) {
-                                return dock && dock->GetStackedWidget() && functor( dock->GetStackedWidget() );
+                            [=]( const std::pair< unsigned, T_GLDockWidget >& dock ) {
+                                return dock.second->GetStackedWidget() && functor( dock.second->GetStackedWidget() );
                             } );
     if( it == dockWidgets_.end() )
         throw MASA_EXCEPTION( error.c_str() );
-    return ( *it )->GetStackedWidget();
+    return it->second->GetStackedWidget();
 }
 
 // -----------------------------------------------------------------------------
@@ -177,9 +177,7 @@ void GLWidgetManager::OptionChanged( const std::string& name,
         displayTimer_->start( value.To< int >() );
     else if( name == "3D" )
     {
-        auto activeWidget = GetStackedWidget( [&]( const T_GLStackedWidget& stackedWidget ) {
-            return stackedWidget->GetProxy().get() == &mainProxy_.GetActiveView();
-        }, "Unable to find the active view" );
+        auto activeWidget = GetActiveWidget();
         if( activeWidget && activeWidget->currentIndex() != GLStackedWidget::eWidget_Empty )
             activeWidget->ChangeTo( value.To< bool >() ? GLStackedWidget::eWidget_3D : GLStackedWidget::eWidget_2D );
     }
@@ -232,35 +230,6 @@ GLWidgetManager::T_GLStackedWidget GLWidgetManager::CreateStackedWidget( const s
     return view;
 }
 
-namespace
-{
-    unsigned EnsureIdIsAvailable( const std::vector< GLWidgetManager::T_GLDockWidget >& vector, unsigned id )
-    {
-        auto it = std::find_if( vector.begin(),
-                                vector.end(),
-                                [&id]( const GLWidgetManager::T_GLDockWidget& dockView ) {
-                                    return dockView && dockView->GetStackedWidget()->GetProxy()->GetID() == id;
-                                } );
-        if( it != vector.end() )
-            throw MASA_EXCEPTION( "Unable to create a new GLDockWidget, id already used." );
-        return id;
-    }
-    unsigned GetNextAvailableId( const std::vector< GLWidgetManager::T_GLDockWidget >& vector )
-    {
-        for( unsigned i = 1; i <= nbMaxGLDock; ++i )
-        {
-            auto it = std::find_if( vector.begin(),
-                                    vector.end(),
-                                    [&i]( const GLWidgetManager::T_GLDockWidget& dockView ) {
-                                        return dockView && dockView->GetStackedWidget()->GetProxy()->GetID() == i;
-                                    } );
-            if( it == vector.end() )
-                return i;
-        }
-        throw MASA_EXCEPTION( "Unable to create a new GLDockWidget, no id available." );
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: GLWidgetManager::AddView
 // Created: ABR 2014-06-11
@@ -269,17 +238,24 @@ GLDockWidget* GLWidgetManager::AddDockWidget( unsigned id /* = 0 */ )
 {
     if( controllers_.modes_.GetCurrentMode() <= eModes_Default )
         return 0;
-    if( id < 0 || id > nbMaxGLDock )
+    QString warning;
+    if( id == 0 ) // from menu clic / F9 shortcut
     {
-        QMessageBox::warning( &mainWindow_, tr( "Warning" ), tr( "Unable to create a new terrain view with an invalid id: %1." ).arg( id ) );
+        for( unsigned i = 1; id == 0 && i <= nbMaxGLDock; ++i )
+            if( dockWidgets_.count( i ) == 0 )
+                id = i;
+        if( id == 0 )
+            warning = tr( "Unable to create a new terrain view, no identifier available." );
+    }
+    else if( id > nbMaxGLDock ) // from configuration file
+        warning = tr( "Unable to create a new terrain view with an invalid identifier: %1." ).arg( id );
+    else if( dockWidgets_.count( id ) != 0 )
+        warning = tr( "Unable to create a new terrain view, identifier already in use: %1." ).arg( id );
+    if( !warning.isEmpty() )
+    {
+        QMessageBox::warning( &mainWindow_, tr( "Warning" ), warning );
         return 0;
     }
-    if( dockWidgets_.size() == nbMaxGLDock )
-    {
-        QMessageBox::warning( &mainWindow_, tr( "Warning" ), tr( "The maximum number of terrain views has been reached.") );
-        return 0;
-    }
-    id = id == 0 ? GetNextAvailableId( dockWidgets_ ) : EnsureIdIsAvailable( dockWidgets_, id );
     const auto& activeView = mainProxy_.GetActiveView();
     auto proxy = std::make_shared< GL2D3DProxy >( mainProxy_,
                                                   activeView.GetActiveOptions(),
@@ -289,10 +265,9 @@ GLDockWidget* GLWidgetManager::AddDockWidget( unsigned id /* = 0 */ )
     auto stackedWidget = CreateStackedWidget( proxy );
     stackedWidget->Load();
     proxy->LoadFrustum( activeView.SaveFrustum() );
-    dockWidgets_.emplace_back( new GLDockWidget( controllers_, mainWindow_, stackedWidget ) );
-    auto dockWidget = dockWidgets_.back().get();
+    dockWidgets_[ id ] = std::make_shared< GLDockWidget >( controllers_, mainWindow_, stackedWidget );
+    auto dockWidget = dockWidgets_[ id ].get();
     connect( dockWidget, SIGNAL( OnClose( const QWidget& ) ), SLOT( OnDockWidgetClosed( const QWidget& ) ) );
-    connect( dockWidget, SIGNAL( OnClose( const QWidget& ) ), SIGNAL( DockWidgetClosed() ) );
     return dockWidget;
 }
 
@@ -316,12 +291,12 @@ void GLWidgetManager::OnDockWidgetClosed( const QWidget& widget )
 {
     auto it = std::find_if( dockWidgets_.begin(),
                             dockWidgets_.end(),
-                            [&widget]( const T_GLDockWidget& dockView ) {
-                                return dockView && dockView.get() == &widget;
+                            [&widget]( const std::pair< unsigned, T_GLDockWidget >& dockView ) {
+                                return dockView.second.get() == &widget;
                             } );
-    if( it == dockWidgets_.end() || !*it )
+    if( it == dockWidgets_.end() )
         throw MASA_EXCEPTION( "Unable to delete a GLDockWidget not registered" );
-    RemoveStackedWidget( ( *it )->GetStackedWidget() );
+    RemoveStackedWidget( it->second->GetStackedWidget() );
     dockWidgets_.erase( it );
 }
 
@@ -343,6 +318,17 @@ GLWidgetManager::T_GLStackedWidget GLWidgetManager::GetHoveredWidget() const
     return GetStackedWidget( [&]( const T_GLStackedWidget& widget ){
         return widget->GetProxy().get() == &mainProxy_.GetHoveredView();
     }, "Unable to find the hovered view" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: GLWidgetManager::GetActiveWidget
+// Created: ABR 2014-06-16
+// -----------------------------------------------------------------------------
+GLWidgetManager::T_GLStackedWidget GLWidgetManager::GetActiveWidget() const
+{
+    return GetStackedWidget( [ &]( const T_GLStackedWidget& widget ) {
+        return widget->GetProxy().get() == &mainProxy_.GetActiveView();
+    }, "Unable to find the active view" );
 }
 
 namespace
@@ -425,8 +411,8 @@ void GLWidgetManager::OnSaveDisplaySettings()
     SaveGeometryAndState( mainWindow_, settings, "WindowGeometry", "WindowState" );
     SaveView( settings, mainWidget_ );
     for( auto it = dockWidgets_.begin(); it != dockWidgets_.end(); ++it )
-        if( auto stackedWidet = ( *it )->GetStackedWidget()  )
-            SaveView( settings,  stackedWidet );
+        if( auto stackedWidget = it->second->GetStackedWidget() )
+            SaveView( settings,  stackedWidget );
 }
 
 // -----------------------------------------------------------------------------
@@ -495,12 +481,13 @@ void GLWidgetManager::LoadDisplaySettings( const tools::Path& filename )
 // Created: ABR 2014-07-16
 // -----------------------------------------------------------------------------
 void GLWidgetManager::SaveView( kernel::Settings& settings,
-                                const T_GLStackedWidget& stackedWidget )
+                                const T_GLStackedWidget& stackedWidget,
+                                const QString& group /* = "" */ )
 {
     if( !stackedWidget )
         return;
     auto view = stackedWidget->GetProxy();
-    settings.beginGroup( viewName.arg( view->GetID() ) );
+    settings.beginGroup( group.isEmpty() ? viewName.arg( view->GetID() ) : group );
     settings.setValue( "ViewID", view->GetID() );
     settings.beginGroup( "Situation" );
     view->SaveFrustum().Save( settings );
@@ -514,13 +501,14 @@ void GLWidgetManager::SaveView( kernel::Settings& settings,
 // Created: ABR 2014-07-16
 // -----------------------------------------------------------------------------
 void GLWidgetManager::LoadView( kernel::Settings& settings,
-                                const T_GLStackedWidget& stackedWidget )
+                                const T_GLStackedWidget& stackedWidget,
+                                const QString& group /* = "" */ )
 {
     if( !stackedWidget )
         return;
     auto view = stackedWidget->GetProxy();
     auto& options = view->GetActiveOptions();
-    settings.beginGroup( viewName.arg( view->GetID() ) );
+    settings.beginGroup( group.isEmpty() ? viewName.arg( view->GetID() ) : group );
     options.Load( settings );
     stackedWidget->ChangeTo( options.Get( "3D" ).To< bool >() ? GLStackedWidget::eWidget_3D : GLStackedWidget::eWidget_2D );
     SetContourLinesComputer( options.Get( "ContourLines/Height" ).To< int >(), options );
@@ -549,4 +537,19 @@ void GLWidgetManager::ResetContourLinesObservers()
     mainProxy_.ApplyToOptions( []( GLOptions& options ) {
         options.GetContourLinesComputer()->SetContourLinesObserver( std::shared_ptr< ContourLinesObserver >() );
     } );
+}
+
+void GLWidgetManager::NotifyContextMenu( const geometry::Point2f&, kernel::ContextMenu& menu )
+{
+    if( mainWidget_ != GetActiveWidget() )
+        menu.InsertItem( "Interface", tr( "Use as main view" ), this, SLOT( OnChangeMainView() ) );
+}
+
+void GLWidgetManager::OnChangeMainView()
+{
+    auto activeWidget = GetActiveWidget();
+    kernel::Settings settings;
+    SaveView( settings, activeWidget, "TMP" );
+    LoadView( settings, mainWidget_, "TMP" );
+    settings.remove( "TMP" );
 }
