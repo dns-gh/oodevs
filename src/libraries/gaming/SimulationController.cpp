@@ -321,7 +321,9 @@ namespace
 // -----------------------------------------------------------------------------
 void SimulationController::SendLogisticRequests( const std::set< unsigned long >& entities ) const
 {
-    unsigned int currentTick = simulation_.GetCurrentTick();
+    if( entities.empty() )
+        return;
+    const unsigned int currentTick = simulation_.GetCurrentTick();
     if( hasReplay_ )
         ::SendLogisticRequests< sword::ClientToReplay >( entities, publisher_, currentTick );
     else if( hasSimulation_ )

@@ -204,26 +204,25 @@ void InfoButtonsWidget::NotifySelected( const kernel::Entity_ABC* element )
 {
     element_ = element;
     entities_.clear();
-    if( element_ )
+    if( !element_ )
     {
-        bool needRequests = false;
         for( auto it = logisticDialogs_.begin(); it != logisticDialogs_.end(); ++it )
-            if( (*it)->IsVisible() )
-            {
-                (*it)->FillCurrentModel( *element_ );
-                needRequests = true;
-            }
-        logistic_helpers::VisitEntityAndSubordinatesUpToBaseLog( *element,
-            [&]( const kernel::Entity_ABC& entity )
-            {
-                entities_.insert( entity.GetId() );
-            } );
-        if( !entities_.empty() && needRequests )
-            simulationController_.SendLogisticRequests( entities_ );
+            ( *it )->Purge();
+        return;
     }
-    else
-        for( auto it = logisticDialogs_.begin(); it != logisticDialogs_.end(); ++it )
-            (*it)->Purge();
+    if( std::find_if( logisticDialogs_.begin(), logisticDialogs_.end(),
+        [&]( LogisticDialog_ABC* dialog )
+        {
+            dialog->FillCurrentModel( *element_ );
+            return dialog->IsVisible();
+        } ) == logisticDialogs_.end() )
+        return;
+    logistic_helpers::VisitEntityAndSubordinatesUpToBaseLog( *element,
+        [&]( const kernel::Entity_ABC& entity )
+        {
+            entities_.insert( entity.GetId() );
+        } );
+    simulationController_.SendLogisticRequests( entities_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -232,12 +231,11 @@ void InfoButtonsWidget::NotifySelected( const kernel::Entity_ABC* element )
 // -----------------------------------------------------------------------------
 void InfoButtonsWidget::FillRequests( const sword::ListLogisticRequestsAck& /*message*/ )
 {
-    if( element_ )
-    {
-        for( auto it = logisticDialogs_.begin(); it != logisticDialogs_.end(); ++it )
-            if( (*it)->IsVisible() )
-                (*it)->FillHistoryModel();
-    }
+    if( !element_ )
+        return;
+    for( auto it = logisticDialogs_.begin(); it != logisticDialogs_.end(); ++it )
+        if( ( *it )->IsVisible() )
+            ( *it )->FillHistoryModel();
 }
 
 // -----------------------------------------------------------------------------
