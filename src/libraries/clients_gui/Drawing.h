@@ -48,7 +48,6 @@ public:
     //@{
     using kernel::Entity_ABC::Update;
 
-    virtual void ChangeColor( const QColor& color ) = 0;
     virtual void Edit( ParametersLayer& parameters ) = 0;
     virtual void Draw( const geometry::Rectangle2f& viewport, const GLView_ABC& tools, bool overlined ) const = 0;
     //@}
