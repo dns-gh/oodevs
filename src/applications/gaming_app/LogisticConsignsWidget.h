@@ -56,27 +56,18 @@ public:
     }
 
 public:
-    virtual void FillCurrentModel( const kernel::Entity_ABC& entity )
+    virtual void FillCurrentModel( const kernel::Entity_ABC& /*entity*/ )
     {
         if( !IsHistoryChecked() )
         {
             Purge();
-            std::set< const Request* > consigns;
-            logistic_helpers::VisitEntityAndSubordinatesUpToBaseLog( entity,
-                [&]( const kernel::Entity_ABC& entity )
-                {
-                    const auto pConsigns = entity.Retrieve< Extension >();
-                    if( !pConsigns )
-                        return;
-                    for( auto it = pConsigns->requested_.begin(); it != pConsigns->requested_.end(); ++it )
-                        if( IsActive( **it ) )
-                            consigns.insert( *it );
-                    for( auto it = pConsigns->handled_.begin(); it != pConsigns->handled_.end(); ++it )
-                        if( IsActive( **it ) )
-                            consigns.insert( *it );
-                } );
-            for( auto it = consigns.begin(); it != consigns.end(); ++it )
-                DisplayRequest( **it );
+            auto it = historyModel_.tools::Resolver< Request >::CreateIterator();
+            while( it.HasMoreElements() )
+            {
+                const auto& request = it.NextElement();
+                if( IsActive( request ) )
+                    DisplayRequest( request );
+            }
             requestsTable_->resizeColumnsToContents();
             SendHistoryRequests();
             SelectRequest();
@@ -109,10 +100,9 @@ protected:
         if( requestSelected_ == &request )
             requestSelected_ = 0;
     }
-    virtual bool IsActive( const Request& /*request*/ ) const
-    {
-        return true;
-    }
+
+private:
+    virtual bool IsActive( const Request& ) const = 0;
 
 private:
     E_LogisticChain type_;

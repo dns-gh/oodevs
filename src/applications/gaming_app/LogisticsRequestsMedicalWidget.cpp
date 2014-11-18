@@ -55,3 +55,8 @@ void LogisticsRequestsMedicalWidget::OnRequestSelected( const LogisticsConsign_A
     detailsTable_->Add( tools::translate( "Logistic", "Started:" ), c.GetCurrentStartedTime() );
     detailsTable_->Add( tools::translate( "Logistic", "Ending:" ), SupervisionFilter( c.GetCurrentEndTime() ) );
 }
+
+bool LogisticsRequestsMedicalWidget::IsActive( const LogMedicalConsign& consign ) const
+{
+    return consign.GetStatus() != sword::LogMedicalHandlingUpdate::finished;
+}

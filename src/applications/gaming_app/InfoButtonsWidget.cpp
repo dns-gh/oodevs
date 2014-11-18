@@ -211,9 +211,8 @@ void InfoButtonsWidget::NotifySelected( const kernel::Entity_ABC* element )
         return;
     }
     if( std::find_if( logisticDialogs_.begin(), logisticDialogs_.end(),
-        [&]( LogisticDialog_ABC* dialog )
+        []( const LogisticDialog_ABC* dialog )
         {
-            dialog->FillCurrentModel( *element_ );
             return dialog->IsVisible();
         } ) == logisticDialogs_.end() )
         return;
@@ -235,7 +234,10 @@ void InfoButtonsWidget::FillRequests( const sword::ListLogisticRequestsAck& /*me
         return;
     for( auto it = logisticDialogs_.begin(); it != logisticDialogs_.end(); ++it )
         if( ( *it )->IsVisible() )
+        {
             ( *it )->FillHistoryModel();
+            ( *it )->FillCurrentModel( *element_ );
+        }
 }
 
 // -----------------------------------------------------------------------------

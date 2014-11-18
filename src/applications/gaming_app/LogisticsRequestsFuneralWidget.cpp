@@ -44,6 +44,5 @@ void LogisticsRequestsFuneralWidget::OnRequestSelected( const LogisticsConsign_A
 
 bool LogisticsRequestsFuneralWidget::IsActive( const LogFuneralConsign& consign ) const
 {
-    // funeral consigns are never terminated even in 'finished' status
     return consign.GetStatus() != sword::LogFuneralHandlingUpdate::finished;
 }

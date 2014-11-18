@@ -52,3 +52,8 @@ void LogisticsRequestsMaintenanceWidget::OnRequestSelected( const LogisticsConsi
     detailsTable_->Add( tools::translate( "Logistic", "Started:" ), c.GetCurrentStartedTime() );
     detailsTable_->Add( tools::translate( "Logistic", "Ending:" ), SupervisionFilter( c.GetCurrentEndTime() ) );
 }
+
+bool LogisticsRequestsMaintenanceWidget::IsActive( const LogMaintenanceConsign& consign ) const
+{
+    return consign.GetStatus() != sword::LogMaintenanceHandlingUpdate::finished;
+}
