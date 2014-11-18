@@ -48,7 +48,7 @@ bool InfoFuneralDialog::ShouldDisplay( const kernel::Entity_ABC& element ) const
     return logistic_helpers::CheckEntityAndSubordinatesUpToBaseLog( element,
         []( const kernel::Entity_ABC& entity ) -> bool
         {
-            const LogFuneralConsigns* consigns = entity.Retrieve< LogFuneralConsigns >();
+            const auto consigns = entity.Retrieve< LogFuneralConsigns >();
             return consigns && consigns->IsRelevant() || entity.Retrieve< SupplyStates >();
         } );
 }

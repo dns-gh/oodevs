@@ -323,7 +323,7 @@ void SimulationController::SendLogisticRequests( const std::set< unsigned long >
 {
     if( entities.empty() )
         return;
-    const unsigned int currentTick = simulation_.GetCurrentTick();
+    const auto currentTick = simulation_.GetCurrentTick();
     if( hasReplay_ )
         ::SendLogisticRequests< sword::ClientToReplay >( entities, publisher_, currentTick );
     else if( hasSimulation_ )
