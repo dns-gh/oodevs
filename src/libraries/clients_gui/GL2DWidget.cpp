@@ -907,23 +907,22 @@ float GL2DWidget::ComputeZoomFactor( float& factor,
 }
 
 void GL2DWidget::DrawApp6( const std::string& symbol,
-                                        const geometry::Point2f& where,
-                                        float expectedWidth,
-                                        const geometry::Rectangle2f& viewport,
-                                        unsigned int printWidth,
-                                        unsigned int printHeight,
-                                        unsigned int direction,
-                                        bool checkAlpha /* = true */,
-                                        float xFactor /* = 1. */,
-                                        float yFactor /* = 1. */,
-                                        float svgDeltaX /* = -20 */,
-                                        float svgDeltaY /* = -80 */ ) const
+                           const geometry::Point2f& where,
+                           float expectedWidth,
+                           const geometry::Rectangle2f& viewport,
+                           unsigned int printWidth,
+                           unsigned int printHeight,
+                           unsigned int direction,
+                           bool checkAlpha /* = true */,
+                           float xFactor /* = 1. */,
+                           float yFactor /* = 1. */,
+                           float svgDeltaX /* = -20 */,
+                           float svgDeltaY /* = -80 */ ) const
 {
     const float svgWidth = 360;
     const float expectedHeight = expectedWidth * 0.660f;
     const Point2f center = Point2f( where.X() /*- expectedWidth * 0.5f*/, where.Y() /*+ expectedHeight*/ );
     const float scaleRatio = ( expectedWidth / svgWidth );
-
     gl::Initialize();
     glPushAttrib( GL_CURRENT_BIT | GL_LINE_BIT );
     glEnable( GL_LINE_SMOOTH );
