@@ -66,10 +66,10 @@ public:
 public:
     //! @name Operations
     //@{
-    virtual void AddRequest( const LogisticsConsign_ABC& consign );
-    virtual void RemoveRequest( const LogisticsConsign_ABC& consign );
-    virtual void SelectRequest( unsigned int id );
-    virtual const LogisticsConsign_ABC* GetRequest( const QModelIndex& index ) const;
+    void AddRequest( const LogisticsConsign_ABC& consign );
+    void RemoveRequest( const LogisticsConsign_ABC& consign );
+    void SelectRequest( unsigned int id );
+    const LogisticsConsign_ABC* GetRequest( const QModelIndex& index ) const;
     const LogisticsConsign_ABC* GetCurrentRequest() const;
     void FindRequestsIds( std::set< unsigned int >& requests );
     void SetData( int col, QString text, const LogisticsConsign_ABC& consign );
@@ -77,7 +77,7 @@ public:
     void SetRequesterNameExtractor( const T_RequesterNameExtractor& extractor );
     //@}
 
-protected:
+private:
     //! @name Helpers
     //@{
      int GetRequestRow( const LogisticsConsign_ABC& consign );

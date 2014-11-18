@@ -83,7 +83,7 @@ void LogisticsRequestsSupplyTable::AddRecipientResource( const kernel::Entity_AB
 }
 
 // -----------------------------------------------------------------------------
-// Name: LogisticsRequestsTable::SetData
+// Name: LogisticsRequestsSupplyTable::SetData
 // Created: MMC 2013-09-11
 // -----------------------------------------------------------------------------
 QStandardItem* LogisticsRequestsSupplyTable::SetData( int row, int col, QVariant text, bool checkable, bool checked )

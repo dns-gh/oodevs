@@ -95,7 +95,8 @@ public:
     {
     public:
         History( const LogisticsConsign_ABC& consign ) 
-            : consign_( &consign ) {}
+            : consign_( &consign )
+        {}
 
         void Clear()
         {

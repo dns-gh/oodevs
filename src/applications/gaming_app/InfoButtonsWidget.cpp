@@ -218,7 +218,6 @@ void InfoButtonsWidget::NotifySelected( const kernel::Entity_ABC* element )
             {
                 entities_.insert( entity.GetId() );
             } );
-
         if( !entities_.empty() && needRequests )
             simulationController_.SendLogisticRequests( entities_ );
     }
