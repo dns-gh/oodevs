@@ -144,12 +144,15 @@ void GL3DWidget::FillSelection( const geometry::Point2f& point,
 {
     if( !IsInSelectionViewport( point ) )
         return;
-    glDisable( GL_DEPTH_TEST );
     GetPickingSelector().FillSelection( selection, type, [&](){
         makeCurrent();
-        paintGL();
+        GLboolean depthTest;
+        glGetBooleanv( GL_DEPTH_TEST, &depthTest );
+        glDisable( GL_DEPTH_TEST );
+        paintGL( );
+        if( depthTest != GL_FALSE )
+            glEnable( GL_DEPTH_TEST );
     } );
-    glEnable( GL_DEPTH_TEST );
 }
 
 void GL3DWidget::Picking()
