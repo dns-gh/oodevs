@@ -524,14 +524,8 @@ func (f *FakeService) AttachObserver(observer services.Observer) {}
 func (f *FakeService) Start() error                              { return nil }
 func (f *FakeService) Stop() error                               { return nil }
 func (f *FakeService) Trigger(url.URL, *sdk.Event) error         { return nil }
-
-func (f *FakeService) CheckEvent(event *sdk.Event) error {
-	return nil
-}
-
-func (f *FakeService) CheckDeleteEvent(uuid string) error {
-	return nil
-}
+func (f *FakeService) CheckEvent(event *sdk.Event) error         { return nil }
+func (f *FakeService) CheckDeleteEvent(uuid string) error        { return nil }
 
 func (f *FakeService) UpdateEvents(events ...*sdk.Event) {
 	f.lock.Lock()
@@ -638,6 +632,10 @@ func (t *TestSuite) TestListeners(c *C) {
 	c.Assert(fakerUuids, IsNil)
 }
 
+func checkIsReplayEvent(c *C, event *sdk.Event) {
+	c.Assert(event.GetAction().GetTarget(), Equals, "replay://")
+}
+
 func (t *TestSuite) TestObservers(c *C) {
 	f := t.MakeFixture(c, true)
 	defer f.Close()
@@ -708,12 +706,13 @@ func (t *TestSuite) TestObservers(c *C) {
 	// Timeline server creates a special range event, with the
 	// replay start and end dates. This event is tagged as replay
 	// in the action's target (replay://).
+	expectedStart = expectedStart.Add(time.Second)
 	for slink := range detached {
 		f.server.WriteReplayToClient(slink, 1, 0,
 			&sword.ReplayToClient_Content{
 				ControlReplayInformation: &sword.ControlReplayInformation{
 					CurrentTick:     proto.Int32(1),
-					InitialDateTime: swapi.MakeDateTime(expectedStart.Add(time.Second)),
+					InitialDateTime: swapi.MakeDateTime(expectedStart),
 					EndDateTime:     swapi.MakeDateTime(expectedEnd),
 					DateTime:        swapi.MakeDateTime(expectedStart),
 					TickDuration:    proto.Int32(10),
@@ -727,11 +726,10 @@ func (t *TestSuite) TestObservers(c *C) {
 	c.Assert(msg, NotNil)
 	c.Assert(len(msg.GetEvents()), Equals, 1)
 	event := msg.GetEvents()[0]
-	c.Assert(event.GetAction(), Not(IsNil))
-	c.Assert(event.GetAction().GetTarget(), Equals, "replay://")
+	checkIsReplayEvent(c, event)
 	start, err = util.ParseTime(event.GetBegin())
 	c.Assert(err, IsNil)
-	c.Assert(start, Equals, expectedStart.Add(time.Second))
+	c.Assert(start, Equals, expectedStart)
 	end, err = util.ParseTime(event.GetEnd())
 	c.Assert(err, IsNil)
 	c.Assert(end, Equals, expectedEnd)
@@ -1261,7 +1259,7 @@ func (t *TestSuite) TestChangeReplayRangeDates(c *C) {
 	msg = waitBroadcastTag(messages, sdk.MessageTag_update_events)
 	c.Assert(msg, NotNil)
 	event := msg.GetEvents()[0]
-	c.Assert(event.GetAction().GetTarget(), Equals, "replay://")
+	checkIsReplayEvent(c, event)
 	c.Assert(event.GetName(), Equals, "Replay range")
 	c.Assert(event.GetInfo(), Equals, "")
 	id := event.GetUuid()
@@ -1276,9 +1274,7 @@ func (t *TestSuite) TestChangeReplayRangeDates(c *C) {
 	c.Assert(err, IsNil)
 	msg = waitBroadcastTag(messages, sdk.MessageTag_update_events)
 	c.Assert(msg, NotNil)
-	event = msg.GetEvents()[0]
-	c.Assert(event.GetName(), Equals, "New name")
-	c.Assert(event.GetInfo(), Equals, "New information")
+	swtest.DeepEquals(c, msg.GetEvents()[0], event)
 
 	// Modifying replay range event out of replay boundaries returns error
 	swapi.DeepCopy(event, validEvent)
@@ -1292,9 +1288,7 @@ func (t *TestSuite) TestChangeReplayRangeDates(c *C) {
 
 	// Modifying replay event with erroneous range returns error
 	swapi.DeepCopy(event, validEvent)
-	swap := event.Begin
-	event.Begin = event.End
-	event.End = swap
+	event.Begin, event.End = event.End, event.Begin
 	_, err = f.controller.UpdateEvent(f.session, id, event)
 	c.Assert(err, NotNil)
 	swapi.DeepCopy(event, validEvent)

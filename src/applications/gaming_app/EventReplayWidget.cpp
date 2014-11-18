@@ -18,6 +18,7 @@
 #include "clients_gui/RichLineEdit.h"
 #include "clients_gui/RichPathWidget.h"
 #include "clients_gui/RichTextEdit.h"
+#include "clients_gui/SignalAdapter.h"
 #include <boost/make_shared.hpp>
 
 // -----------------------------------------------------------------------------
@@ -52,9 +53,12 @@ EventReplayWidget::EventReplayWidget( gui::EventPresenter& presenter )
     layout->addLayout( gridLayout, 1 );
     mainLayout_->addWidget( scrollArea );
 
-    connect( label_, SIGNAL( textChanged( const QString& ) ), replayPresenter_.get(), SLOT( OnLabelChanged( const QString& ) ) );
-    connect( description_, SIGNAL( TextChanged( const QString& ) ), replayPresenter_.get(), SLOT( OnDescriptionChanged( const QString& ) ) );
-
+    gui::connect( label_, SIGNAL( textChanged( const QString& ) ), [&](){
+        replayPresenter_->OnLabelChanged( label_->text() );
+    } );
+    gui::connect( description_, SIGNAL( TextChanged( const QString& ) ), [&](){
+        replayPresenter_->OnDescriptionChanged( description_->text() );
+    } );
     connect( label_, SIGNAL( textChanged( const QString& ) ), &presenter_, SLOT( OnEventContentChanged() ) );
     connect( description_, SIGNAL( TextChanged( const QString& ) ), &presenter_, SLOT( OnEventContentChanged() ) );
 }

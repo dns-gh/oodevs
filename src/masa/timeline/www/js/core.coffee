@@ -156,26 +156,24 @@ class Events extends Backbone.Collection
     # compute ranges coordinates
     build_ranges: ->
         tree = new SegmentTree()
-        for it in @models
-            it.children = {}
-            continue unless is_range_event it
-            [min, max] = get_minmax_event it
-            tree.add min, max,
-                id: it.id, idx: tree.ranges.length
-        tree.sync()
-        @ranges = tree.ranges
-        @events = @models.filter (d) =>
-            [d.min, d.max] = get_minmax_event d
-            d.parent = @get d.get "parent"
-            d.parent?.children[d.id] = d
-            return is_simple_event d
         replay_tree = new SegmentTree()
+        @events = []
         for it in @models
-            continue unless is_replay_event it
+            it.children = {}        
             [min, max] = get_minmax_event it
-            replay_tree.add min, max,
-                id: it.id, idx: replay_tree.ranges.length
+            if is_range_event it
+                tree.add min, max,
+                    id: it.id, idx: tree.ranges.length
+            if is_replay_event it
+                replay_tree.add min, max,
+                    id: it.id, idx: replay_tree.ranges.length
+            if is_simple_event it
+                it.parent = @get it.get "parent"
+                it.parent?.children[it.id] = it
+                @events.push it
+        tree.sync()
         replay_tree.sync()
+        @ranges = tree.ranges        
         @replays = replay_tree.ranges
         @trigger "resync"
 

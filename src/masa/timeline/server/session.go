@@ -31,14 +31,21 @@ var (
 )
 
 type EventListener interface {
-	CheckEvent(event *sdk.Event) error
-	CheckDeleteEvent(uuid string) error
 	UpdateEncodedEvents(events EventSlice, encoded []*sdk.Event)
 	DeleteEvents(events ...string)
 }
 
+type EventChecker interface {
+	CheckEvent(event *sdk.Event) error
+	CheckDeleteEvent(uuid string) error
+}
+
 type DefaultEventListener struct {
 	services.EventListener
+}
+
+type DefaultEventChecker struct {
+	services.EventChecker
 }
 
 func (d DefaultEventListener) UpdateEncodedEvents(events EventSlice, encoded []*sdk.Event) {
@@ -46,6 +53,7 @@ func (d DefaultEventListener) UpdateEncodedEvents(events EventSlice, encoded []*
 }
 
 type EventListeners map[interface{}]EventListener
+type EventCheckers map[interface{}]EventChecker
 type EventFilterers map[services.EventFilterer]struct{}
 type Observers map[interface{}]*FilteredObserver
 type Services map[string]services.Service
@@ -65,6 +73,7 @@ type Session struct {
 	offset    time.Duration // initial time offset
 	services  Services
 	listeners EventListeners
+	checkers  EventCheckers
 	observers Observers
 	filterers EventFilterers
 	events    EventSlice
@@ -81,6 +90,7 @@ func NewSession(log util.Logger, observer services.Observer, uuid, name string, 
 		status:    sdk.Session_IDLE,
 		services:  Services{},
 		listeners: EventListeners{},
+		checkers:  EventCheckers{},
 		observers: Observers{},
 		filterers: EventFilterers{
 			&ServiceFilter{}:         struct{}{},
@@ -171,6 +181,10 @@ func (s *Session) AttachListener(listener services.EventListener) {
 	s.listeners[listener] = DefaultEventListener{listener}
 }
 
+func (s *Session) AttachChecker(checker services.EventChecker) {
+	s.checkers[checker] = DefaultEventChecker{checker}
+}
+
 func (s *Session) Detach(name string) error {
 	service, ok := s.services[name]
 	if !ok {
@@ -182,6 +196,9 @@ func (s *Session) Detach(name string) error {
 	}
 	if filterer, ok := service.(services.EventFilterer); ok {
 		delete(s.filterers, filterer)
+	}
+	if checker, ok := service.(services.EventChecker); ok {
+		delete(s.checkers, checker)
 	}
 	service.Stop()
 	return nil
@@ -267,9 +284,9 @@ func (s *Session) stopServices() error {
 	return nil
 }
 
-func (s EventListeners) CheckEvent(event *sdk.Event) error {
-	for _, listener := range s {
-		err := listener.CheckEvent(event)
+func (s EventCheckers) CheckEvent(event *sdk.Event) error {
+	for _, checker := range s {
+		err := checker.CheckEvent(event)
 		if err != nil {
 			return err
 		}
@@ -277,9 +294,9 @@ func (s EventListeners) CheckEvent(event *sdk.Event) error {
 	return nil
 }
 
-func (s EventListeners) CheckDeleteEvent(uuid string) error {
-	for _, listener := range s {
-		err := listener.CheckDeleteEvent(uuid)
+func (s EventCheckers) CheckDeleteEvent(uuid string) error {
+	for _, checker := range s {
+		err := checker.CheckDeleteEvent(uuid)
 		if err != nil {
 			return err
 		}
@@ -429,7 +446,7 @@ func makeUpdate(event *Event) (EventSlice, []*sdk.Event) {
 }
 
 func (s *Session) CreateEvent(uuid string, msg *sdk.Event) (*sdk.Event, error) {
-	err := s.listeners.CheckEvent(msg)
+	err := s.checkers.CheckEvent(msg)
 	if err != nil {
 		return nil, err
 	}
@@ -451,7 +468,7 @@ func (s *Session) UpdateEvent(uuid string, msg *sdk.Event) (*sdk.Event, error) {
 	if event == nil {
 		return s.CreateEvent(uuid, msg)
 	}
-	err := s.listeners.CheckEvent(msg)
+	err := s.checkers.CheckEvent(msg)
 	if err != nil {
 		return nil, err
 	}
@@ -478,7 +495,7 @@ func (s *Session) UpdateEvent(uuid string, msg *sdk.Event) (*sdk.Event, error) {
 
 func (s *Session) DeleteEvent(uuid string) error {
 	event := s.events.Find(uuid)
-	err := s.listeners.CheckDeleteEvent(uuid)
+	err := s.checkers.CheckDeleteEvent(uuid)
 	if err != nil {
 		return err
 	}
@@ -555,14 +572,6 @@ func (f *FilteredObserver) update(events EventSlice, encoded []*sdk.Event, reset
 
 func (f *FilteredObserver) UpdateEncodedEvents(events EventSlice, encoded []*sdk.Event) {
 	f.update(events, encoded, false)
-}
-
-func (f *FilteredObserver) CheckEvent(event *sdk.Event) error {
-	return nil
-}
-
-func (f *FilteredObserver) CheckDeleteEvent(uuid string) error {
-	return nil
 }
 
 func (f *FilteredObserver) UpdateTick(tick time.Time) {

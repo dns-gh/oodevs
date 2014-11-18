@@ -31,7 +31,6 @@
 #include "clients_kernel/Options.h"
 #include "clients_kernel/OptionsController.h"
 #include "clients_kernel/StaticModel.h"
-#include "clients_kernel/Options.h"
 
 using namespace kernel;
 using namespace gui;
@@ -92,7 +91,7 @@ PreferencesDialog::PreferencesDialog( QWidget* parent,
 
     stack_ = new QStackedWidget();
     list_ = new PreferencesList( "preferencesList", *stack_ );
-    gui::connect( list_->selectionModel(), SIGNAL( currentChanged( const QModelIndex&, const QModelIndex& ) ), [ &]() {
+    gui::connect( list_->selectionModel(), SIGNAL( currentChanged( const QModelIndex&, const QModelIndex& ) ), [&]() {
         UpdateComboVisibility();
     } );
 

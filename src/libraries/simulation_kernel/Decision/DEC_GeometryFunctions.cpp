@@ -1952,12 +1952,12 @@ std::vector< boost::shared_ptr< MT_Vector2D > > DEC_GeometryFunctions::SplitLoca
     if( !location )
         return result;
 
-    TER_Localisation::T_LocalisationPtrVector splittedLocations;
-    location->Split( nbr, splittedLocations );
-    BOOST_FOREACH( const boost::shared_ptr< TER_Localisation > splittedLocation, splittedLocations )
+    TER_Localisation::T_LocalisationPtrVector splitLocations;
+    location->Split( nbr, splitLocations );
+    BOOST_FOREACH( const boost::shared_ptr< TER_Localisation > splitLocation, splitLocations )
     {
         MT_Vector2D ptResult;
-        splittedLocation->ComputeNearestPoint( splittedLocation->ComputeBarycenter(), ptResult );
+        splitLocation->ComputeNearestPoint( splitLocation->ComputeBarycenter(), ptResult );
         result.push_back( boost::make_shared< MT_Vector2D >( ptResult ) );
     }
 
@@ -2454,15 +2454,15 @@ std::pair< std::vector< boost::shared_ptr< TER_Localisation > >, unsigned int > 
             result.push_back( loc );
             for( unsigned int n = 1; n < nNbrParts; n *= 4 )
             {
-                T_ResultVector splitted;
+                T_ResultVector split;
                 MT_Vector2D* splitDirection = 0;
                 for( T_ResultVector::const_iterator it = result.begin(); it != result.end(); ++it )
                 {
                     if( !(*it) )
                         throw MASA_EXCEPTION( "invalid parameter." );
-                    (*it)->Split( 4, splitted, splitDirection );
+                    (*it)->Split( 4, split, splitDirection );
                 }
-                std::swap( result, splitted );
+                std::swap( result, split );
             }
         }
         if( result.size() != nNbrParts )

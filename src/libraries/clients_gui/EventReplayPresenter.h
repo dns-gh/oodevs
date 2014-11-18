@@ -35,13 +35,11 @@ public:
     virtual ~EventReplayPresenter();
     //@}
 
-public:
     //! @name Operations
     //@{
     virtual void FillFrom( const Event& event );
     //@}
 
-public slots:
     //! @name Slots
     //@{
     void OnLabelChanged( const QString& label );

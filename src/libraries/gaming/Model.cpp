@@ -59,22 +59,9 @@
 #include "clients_gui/TimelinePublisher.h"
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/SymbolFactory.h"
+#include "clients_kernel/TimelineHelpers.h"
 #include "indicators/GaugeTypes.h"
 #include <boost/make_shared.hpp>
-#include <boost/lexical_cast.hpp>
-
-#ifdef _MSC_VER
-#pragma warning( push )
-#pragma warning( disable : 4724 )
-#endif
-
-#include <boost/uuid/uuid.hpp>
-#include <boost/uuid/uuid_io.hpp>
-#include <boost/uuid/uuid_generators.hpp>
-
-#ifdef _MSC_VER
-#pragma warning( pop )
-#endif
 
 #pragma warning( disable : 4355 )
 
@@ -89,7 +76,7 @@ Model::Model( kernel::Controllers& controllers, const StaticModel& staticModel, 
     , controllers_             ( controllers )
     , static_                  ( staticModel )
     , config_                  ( config )
-    , uuid_                    ( boost::lexical_cast< std::string >( boost::uuids::random_generator()() ) )
+    , uuid_                    ( timeline_helpers::GenerateUuid() )
     , objectKnowledgeConverter_( *new ObjectKnowledgeConverter( controllers ) )
     , actionParameterFactory_  ( *new actions::ActionParameterFactory( staticModel.coordinateConverter_, *this, staticModel, objectKnowledgeConverter_, controllers_.controller_ ) )
     , actionFactory_           ( *new actions::ActionFactory( controllers.controller_, actionParameterFactory_, *this, staticModel, simulation ) )

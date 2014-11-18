@@ -211,7 +211,7 @@ void TimelineWebView::EditEvent( const timeline::Event& event )
 
 namespace
 {
-    std::string ComputeHalfSplittedTime( const std::string& begin, const std::string& end )
+    std::string ComputeHalfSplitTime( const std::string& begin, const std::string& end )
     {
         const QDateTime beginTime = QDateTime::fromString( QString::fromStdString( begin ), EVENT_DATE_FORMAT );
         const QDateTime endTime = QDateTime::fromString( QString::fromStdString( end ), EVENT_DATE_FORMAT );
@@ -226,11 +226,11 @@ namespace
 // -----------------------------------------------------------------------------
 void TimelineWebView::SplitEvent( const timeline::Event& event )
 {
-    timeline::Event splitted = event;
-    const std::string splittedTime = ComputeHalfSplittedTime( event.begin, event.end );
-    splitted.begin = splittedTime;
-    splitted.uuid = timeline_helpers::GenerateUuid();
-    CreateEvent( splitted, true );
+    timeline::Event split = event;
+    const std::string splitTime = ComputeHalfSplitTime( event.begin, event.end );
+    split.begin = splitTime;
+    split.uuid = timeline_helpers::GenerateUuid();
+    CreateEvent( split, true );
 }
 
 // -----------------------------------------------------------------------------

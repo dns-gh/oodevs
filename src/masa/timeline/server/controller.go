@@ -193,6 +193,7 @@ func (c *Controller) AttachSwordService(uuid, name string, clock bool, address s
 		}
 		session.AttachListener(sword)
 		session.AttachFilterer(sword)
+		session.AttachChecker(sword)
 		return nil
 	})
 }
