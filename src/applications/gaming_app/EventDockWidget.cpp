@@ -24,6 +24,7 @@
 
 #include "clients_gui/Event.h"
 #include "clients_gui/EventFactory.h"
+#include "clients_gui/EventHelpers.h"
 #include "clients_gui/EventPresenter.h"
 #include "clients_gui/EventViewState.h"
 
@@ -300,11 +301,11 @@ void EventDockWidget::NotifyContextMenu( const gui::Event& event, kernel::Contex
                      this, SLOT( OnEditClicked() ) );
     if( event.GetType() == eEventTypes_Replay )
         menu.InsertItem( "Command", tr( "Split" ), this, SLOT( OnSplitClicked() ) );
-    if( !event.GetEvent().done )
-    {
-        const QString label = event.GetType() == eEventTypes_Replay ? tr( "Merge" ) : tr( "Delete" );
-        menu.InsertItem( "Command", label, this, SLOT( OnDeleteClicked() ) );
-    }
+    const auto boundaries = gui::event_helpers::GetReplayBoundariesActivation( event );
+    if( event.GetEvent().done || !boundaries.first && !boundaries.second )
+        return;
+    const QString label = event.GetType() == eEventTypes_Replay ? tr( "Merge" ) : tr( "Delete" );
+    menu.InsertItem( "Command", label, this, SLOT( OnDeleteClicked() ) );
 }
 
 // -----------------------------------------------------------------------------

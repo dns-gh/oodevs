@@ -450,19 +450,43 @@ func copyEvent(event *sdk.Event) *sdk.Event {
 	return copy
 }
 
-func (s *Sword) updateReplay(event *sdk.Event) error {
+func marshal(begin, end bool) []byte {
+	type ReplayPayload struct {
+		Begin, End bool
+	}
+	buffer, _ := json.Marshal(ReplayPayload{Begin: begin, End: end})
+	return buffer
+}
+
+func updatePayload(index, last int, event *sdk.Event) {
+	begin := false
+	end := false
+	if last != 0 {
+		if index == 0 {
+			end = true
+		} else if index >= last {
+			begin = true
+		} else {
+			begin = true
+			end = true
+		}
+	}
+	event.Action.Payload = marshal(begin, end)
+}
+
+func (s *Sword) updateReplay(event *sdk.Event) {
 	// check if the event has replay protocol
 	if !isSwordEvent(event, "replay", false) {
-		return nil
+		return
 	}
 	eventBegin, eventEnd, err := checkBoundaries(event, s.startTime, s.endTime)
 	if err != nil {
-		return err
+		return
 	}
 	// add first replay event
 	if len(s.replays) == 0 {
 		s.replays = append(s.replays, copyEvent(event))
-		return nil
+		return
 	}
 	// modifying replay event, filling all gaps
 	for index, replay := range s.replays {
@@ -475,12 +499,13 @@ func (s *Sword) updateReplay(event *sdk.Event) error {
 				s.observer.UpdateEvent(s.replays[index+1].GetUuid(), s.replays[index+1])
 			}
 			s.replays[index] = copyEvent(event)
-			return nil
+			return
 		}
 	}
 	// splitting and creating a new replay event, filling all gaps
 	replaysCopy := []*sdk.Event{}
-	for _, replay := range s.replays {
+	last := len(s.replays) // one element is added
+	for index, replay := range s.replays {
 		replayBegin, _ := util.ParseTime(replay.GetBegin())
 		replayEnd, _ := util.ParseTime(replay.GetEnd())
 		if replayEnd == eventEnd && replayBegin.Before(eventBegin) {
@@ -488,6 +513,8 @@ func (s *Sword) updateReplay(event *sdk.Event) error {
 			replay.End = event.Begin
 			event.Name = replay.Name
 			event.Info = replay.Info
+			updatePayload(index, last, replay)
+			updatePayload(index+1, last, event)
 			replaysCopy = append(replaysCopy, replay)
 			replaysCopy = append(replaysCopy, copyEvent(event))
 			s.observer.UpdateEvent(replay.GetUuid(), replay)
@@ -496,6 +523,8 @@ func (s *Sword) updateReplay(event *sdk.Event) error {
 			replay.Begin = event.End
 			event.Name = replay.Name
 			event.Info = replay.Info
+			updatePayload(index, last, event)
+			updatePayload(index+1, last, replay)
 			replaysCopy = append(replaysCopy, event)
 			replaysCopy = append(replaysCopy, replay)
 			s.observer.UpdateEvent(replay.GetUuid(), replay)
@@ -504,19 +533,22 @@ func (s *Sword) updateReplay(event *sdk.Event) error {
 		}
 	}
 	s.replays = replaysCopy
-	return nil
+	return
 }
 
 func (s *Sword) deleteReplay(uuid string) {
+	last := len(s.replays) - 2 // one element is deleted
 	for index, replay := range s.replays {
 		if replay.GetUuid() == uuid {
 			if index == 0 {
 				// Removing the first replay event fills the gap with the next one
 				s.replays[1].Begin = replay.Begin
+				updatePayload(0, last, s.replays[1])
 				s.observer.UpdateEvent(s.replays[1].GetUuid(), s.replays[1])
 			} else {
 				// Removing a replay event fills the gap with the previous one
 				s.replays[index-1].End = replay.End
+				updatePayload(index-1, last, s.replays[index-1])
 				s.observer.UpdateEvent(s.replays[index-1].GetUuid(), s.replays[index-1])
 			}
 			s.replays = append(s.replays[:index], s.replays[index+1:]...)
@@ -636,7 +668,8 @@ func (s *Sword) setReplayRangeDates(link *SwordLink, start, end time.Time) {
 			End:      proto.String(util.FormatTime(end)),
 			ReadOnly: proto.Bool(false),
 			Action: &sdk.Action{
-				Target: proto.String("replay://"),
+				Target:  proto.String("replay://"),
+				Payload: marshal(false, false),
 			},
 		}
 		s.observer.UpdateEvent(ReplayRangeUuid, event)

@@ -9,8 +9,10 @@
 
 #include "clients_gui_pch.h"
 #include "EventHelpers.h"
+#include "Event.h"
 #include <timeline/api.h>
 #include <boost/property_tree/ptree.hpp>
+#include <boost/assign.hpp>
 
 #ifdef _MSC_VER
 #   pragma warning( push )
@@ -58,4 +60,15 @@ void gui::event_helpers::WriteJsonPayload( const std::map< std::string, std::str
     std::ostringstream output;
     bpt::write_json( output, rpy );
     event.action.payload = output.str();
+}
+
+std::pair< bool, bool > gui::event_helpers::GetReplayBoundariesActivation( const gui::Event& event )
+{
+    std::map< std::string, std::string > jsonPayload = boost::assign::map_list_of
+        ( replayBeginKey, gui::event_helpers::BoolToString( true ) )
+        ( replayEndKey, gui::event_helpers::BoolToString( true ) );
+    if( event.GetType() == eEventTypes_Replay )
+        gui::event_helpers::ReadJsonPayload( event.GetEvent(), jsonPayload );
+    return std::make_pair( gui::event_helpers::StringToBool( jsonPayload[ replayBeginKey ] ),
+                           gui::event_helpers::StringToBool( jsonPayload[ replayEndKey ] ) );
 }

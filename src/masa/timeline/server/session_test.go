@@ -727,6 +727,7 @@ func (t *TestSuite) TestObservers(c *C) {
 	c.Assert(len(msg.GetEvents()), Equals, 1)
 	event := msg.GetEvents()[0]
 	checkIsReplayEvent(c, event)
+	c.Assert(string(event.Action.GetPayload()), Equals, `{"Begin":false,"End":false}`)
 	start, err = util.ParseTime(event.GetBegin())
 	c.Assert(err, IsNil)
 	c.Assert(start, Equals, expectedStart)
@@ -1324,6 +1325,7 @@ func (t *TestSuite) TestChangeReplayRangeDates(c *C) {
 	c.Assert(event.GetUuid(), Equals, splittedUuid)
 	c.Assert(event.GetName(), Equals, "New name")
 	c.Assert(event.GetInfo(), Equals, "New information")
+	c.Assert(string(event.Action.GetPayload()), Equals, `{"Begin":true,"End":false}`)
 	begin, _ := util.ParseTime(event.GetBegin())
 	end, _ := util.ParseTime(event.GetEnd())
 	c.Assert(begin, Equals, replayBegin.Add(30*time.Second))
@@ -1339,6 +1341,7 @@ func (t *TestSuite) TestChangeReplayRangeDates(c *C) {
 	c.Assert(event.GetUuid(), Equals, id)
 	c.Assert(begin, Equals, replayBegin)
 	c.Assert(end, Equals, replayBegin.Add(30*time.Second))
+	c.Assert(string(event.Action.GetPayload()), Equals, `{"Begin":false,"End":true}`)
 	swapi.DeepCopy(validEvent, event)
 
 	// Creating a new replay event cannot overlap more than one existing event
@@ -1388,6 +1391,7 @@ func (t *TestSuite) TestChangeReplayRangeDates(c *C) {
 	end, _ = util.ParseTime(event.GetEnd())
 	c.Assert(event.GetUuid(), Equals, id)
 	c.Assert(end, Equals, replayEnd)
+	c.Assert(string(event.Action.GetPayload()), Equals, `{"Begin":false,"End":false}`)
 
 	// Cannot remove the last event
 	err = f.controller.DeleteEvent(f.session, id)
