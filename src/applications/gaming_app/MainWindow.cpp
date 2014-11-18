@@ -491,12 +491,10 @@ void MainWindow::NotifyUpdated( const Simulation& simulation )
             if( login_.isEmpty() )
                 login_ = tools::translate( "LoginDialog", "Anonymous" );
         }
-        QString planifName = appName + QString( " - [%1@%2][%3]" )
-                            .arg( login_ )
-                            .arg( simulation.GetSimulationHost().c_str() )
-                            .arg( ExtractExerciceName( config_.GetExerciseFile() ));
-        if( planifName_ != planifName )
-            planifName_ = planifName;
+        planifName_ = appName + QString( " - [%1@%2][%3]" )
+                                .arg( login_ )
+                                .arg( simulation.GetSimulationHost().c_str() )
+                                .arg( ExtractExerciceName( config_.GetExerciseFile() ));
     }
     else
     {
