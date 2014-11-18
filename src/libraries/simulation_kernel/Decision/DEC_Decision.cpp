@@ -279,7 +279,6 @@ void RegisterAutomatonFunctions( sword::Brain& brain )
 
     // Logistics
     brain.RegisterFunction( "_DEC_Automate_PcDeTC2", &DEC_LogisticFunctions::AutomateGetPcTC2 );
-    brain.RegisterFunction( "_DEC_DemandeDeRavitaillement", &DEC_LogisticFunctions::AutomateRequestSupply );
 }
 
 // -----------------------------------------------------------------------------
@@ -828,7 +827,7 @@ void RegisterLogisticFunctions( sword::Brain& brain )
     brain.RegisterFunction( "_DEC_Sante_PrioritesTactiques", &DEC_LogisticFunctions::GetAutomateMedicalTacticalPriorities );
 
     // Supply
-    brain.RegisterFunction( "DEC_DemandeDeRavitaillement", &DEC_LogisticFunctions::PionRequestSupply );
+    brain.RegisterFunction( "_DEC_DemandeDeRavitaillement", &DEC_LogisticFunctions::RequestSupply );
     brain.RegisterFunction( "DEC_EnforceAviationResources", &DEC_LogisticFunctions::EnforceAviationResources );
     brain.RegisterFunction( "DEC_Stock_ConnectToResourceNode", &DEC_LogisticFunctions::ConnectToResourceNode );
     brain.RegisterFunction( "DEC_Stock_DisconnectFromResourceNode", &DEC_LogisticFunctions::DisconnectFromResourceNode );
