@@ -117,11 +117,10 @@ bool TacticalTreeView::CanChangeSuperior( const kernel::Entity_ABC& entity, cons
         return superiorType == kernel::Formation_ABC::typeName_ || superiorType == kernel::Automat_ABC::typeName_ ||
                 superiorType == kernel::Agent_ABC::typeName_ || superiorType == kernel::Team_ABC::typeName_;
     if( type == kernel::Drawing_ABC::typeName_ )
-        return superiorType == kernel::Formation_ABC::typeName_ || superiorType == kernel::Automat_ABC::typeName_ ||
-                superiorType == kernel::Team_ABC::typeName_;
+        return superiorType == kernel::Formation_ABC::typeName_ || superiorType == kernel::Automat_ABC::typeName_;
     if( type == kernel::TacticalLine_ABC::typeName_ )
         return superiorType == kernel::Formation_ABC::typeName_ || superiorType == kernel::Automat_ABC::typeName_ ||
-                superiorType == kernel::Team_ABC::typeName_;
+                superiorType == kernel::Agent_ABC::typeName_;
     return false;
 }
 
