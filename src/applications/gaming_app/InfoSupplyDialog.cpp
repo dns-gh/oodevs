@@ -135,12 +135,12 @@ void InfoSupplyDialog::Purge()
 }
 
 // -----------------------------------------------------------------------------
-// Name: InfoSupplyDialog::FillHistoryModel
+// Name: InfoSupplyDialog::FillModel
 // Created: LGY 2013-12-11
 // -----------------------------------------------------------------------------
-void InfoSupplyDialog::FillHistoryModel()
+void InfoSupplyDialog::FillModel()
 {
-    widget_->FillHistoryModel();
+    widget_->FillModel();
 }
 
 // -----------------------------------------------------------------------------

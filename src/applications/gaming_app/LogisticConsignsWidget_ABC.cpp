@@ -189,7 +189,7 @@ void LogisticConsignsWidget_ABC::OnRequestsTableSelected( const QModelIndex& cur
 void LogisticConsignsWidget_ABC::OnCompletedFilter()
 {
     if( selected_ )
-        FillHistoryModel();
+        FillModel();
 }
 
 // -----------------------------------------------------------------------------

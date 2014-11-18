@@ -111,12 +111,12 @@ void InfoMaintenanceDialog::Purge()
 }
 
 // -----------------------------------------------------------------------------
-// Name: InfoMaintenanceDialog::FillHistoryModel
+// Name: InfoMaintenanceDialog::FillModel
 // Created: LGY 2013-12-11
 // -----------------------------------------------------------------------------
-void InfoMaintenanceDialog::FillHistoryModel()
+void InfoMaintenanceDialog::FillModel()
 {
-    widget_->FillHistoryModel();
+    widget_->FillModel();
 }
 
 // -----------------------------------------------------------------------------

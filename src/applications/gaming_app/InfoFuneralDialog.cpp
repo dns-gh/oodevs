@@ -73,12 +73,12 @@ void InfoFuneralDialog::Purge()
 }
 
 // -----------------------------------------------------------------------------
-// Name: InfoFuneralDialog::FillHistoryModel
+// Name: InfoFuneralDialog::FillModel
 // Created: LGY 2013-12-11
 // -----------------------------------------------------------------------------
-void InfoFuneralDialog::FillHistoryModel()
+void InfoFuneralDialog::FillModel()
 {
-    widget_->FillHistoryModel();
+    widget_->FillModel();
 }
 
 // -----------------------------------------------------------------------------

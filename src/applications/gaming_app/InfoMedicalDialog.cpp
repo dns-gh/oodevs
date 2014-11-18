@@ -101,12 +101,12 @@ void InfoMedicalDialog::Purge()
 }
 
 // -----------------------------------------------------------------------------
-// Name: InfoMedicalDialog::FillHistoryModel
+// Name: InfoMedicalDialog::FillModel
 // Created: LGY 2013-12-11
 // -----------------------------------------------------------------------------
-void InfoMedicalDialog::FillHistoryModel()
+void InfoMedicalDialog::FillModel()
 {
-    widget_->FillHistoryModel();
+    widget_->FillModel();
 }
 
 // -----------------------------------------------------------------------------

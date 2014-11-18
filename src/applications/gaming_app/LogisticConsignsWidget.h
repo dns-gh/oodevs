@@ -56,7 +56,7 @@ public:
     }
 
 public:
-    virtual void FillHistoryModel()
+    virtual void FillModel()
     {
         Purge();
         const bool history = IsHistoryChecked();

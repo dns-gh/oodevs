@@ -55,7 +55,7 @@ public:
     //! @name Operations
     //@{
     virtual void Purge();
-    virtual void FillHistoryModel();
+    virtual void FillModel();
     virtual bool IsVisible() const;
     //@}
 
