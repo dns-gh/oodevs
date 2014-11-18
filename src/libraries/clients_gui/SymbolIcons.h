@@ -11,6 +11,7 @@
 #define __SymbolIcons_h_
 
 #include "SymbolIcon.h"
+#include <boost/noncopyable.hpp>
 
 namespace gui
 {
@@ -23,13 +24,11 @@ namespace gui
 */
 // Created: AGE 2006-11-22
 // =============================================================================
-class SymbolIcons : public QObject
+class SymbolIcons : boost::noncopyable
 {
-    Q_OBJECT
-
 public:
-             SymbolIcons();
-    virtual ~SymbolIcons();
+     SymbolIcons();
+    ~SymbolIcons();
 
     void Initialize( GL2DWidget* widget );
 
@@ -41,9 +40,6 @@ private:
 
     void Draw( std::string symbol, const geometry::Point2f& center, float factor ) const;
 
-private slots:
-    void Destroyed( QObject* );
-
 private:
     QPixmap defaultSymbol_;
     std::map< SymbolIcon, QPixmap > icons_;
@@ -51,6 +47,6 @@ private:
     GLView_ABC* widget_;
 };
 
-} //! namespace gui
+}
 
 #endif // __SymbolIcons_h_
