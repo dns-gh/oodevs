@@ -14,7 +14,13 @@
 
 #include <boost/shared_ptr.hpp>
 
+namespace sword
+{
+    class Brain;
+}
+
 class MIL_Mission_ABC;
+class DEC_Decision_ABC;
 class DEC_Gen_Object;
 class DEC_Knowledge_Object;
 class TER_Localisation;
@@ -28,13 +34,15 @@ class MT_Vector2D;
 class DEC_DIAFunctions
 {
 public:
+    static void Register( sword::Brain& brain );
+
     //! @name DIA Functions
     //@{
     // Debug
     static std::string PointToString( MT_Vector2D* p1 );
     static std::string DirectionToString( MT_Vector2D* p1 );
     static std::string PathToString( TER_Path_ABC* pPath );
-    static void BreakForDebug( unsigned int id, const std::string& message );
+    static void BreakForDebug( DEC_Decision_ABC* actor, const std::string& message );
 
     // DIA user types list manipulation
     static boost::shared_ptr< MT_Vector2D > ListPoint_GetAt( std::vector< MT_Vector2D* > list, int nId );

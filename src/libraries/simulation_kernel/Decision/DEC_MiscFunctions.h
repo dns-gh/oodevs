@@ -51,6 +51,8 @@ namespace directia
 class DEC_MiscFunctions
 {
 public:
+    static void Register( sword::Brain& brain, bool isMasalife );
+
     // Communication
     static void Report                   ( DEC_Decision_ABC& caller, int type, const std::string& reportId );
     static void ReportAgentKnowledge     ( DEC_Decision_ABC& caller, int type, const std::string& reportId, boost::shared_ptr< DEC_Knowledge_Agent > agentKnowledge );
@@ -80,14 +82,14 @@ public:
 
     // Reinforcement
     static std::vector<DEC_Decision_ABC*> GetAgentReinforcements( const DEC_Decision_ABC* pAgent );
-    static std::vector<DEC_Decision_ABC*> GetReinforcements  ( const MIL_AgentPion& callerAgent );
+    static std::vector<DEC_Decision_ABC*> GetReinforcements  ( const DEC_Decision_ABC* callerAgent );
     static int                            GetAgentReinforcementsNumber( const DEC_Decision_ABC* pAgent );
-    static bool Reinforce          ( MIL_AgentPion& callerAgent, const DEC_Decision_ABC* pTarget );
-    static void CancelReinforcement( MIL_AgentPion& callerAgent );
+    static bool Reinforce          ( DEC_Decision_ABC*, const DEC_Decision_ABC* pTarget );
+    static void CancelReinforcement( DEC_Decision_ABC* callerAgent );
 
     // Misc
-    static void SetCurrentSpeedModificator( MIL_AgentPion& callerAgent, double rFactor );
-    static void SetMaxSpeedModificator    ( MIL_AgentPion& callerAgent, double rFactor );
+    static void SetCurrentSpeedModificator( DEC_Decision_ABC* callerAgent, double rFactor );
+    static void SetMaxSpeedModificator    ( DEC_Decision_ABC* callerAgent, double rFactor );
     static double GetMaxSpeedModificator( const DEC_Decision_ABC* agent );
     static unsigned int GetTimeInSeconds();
 

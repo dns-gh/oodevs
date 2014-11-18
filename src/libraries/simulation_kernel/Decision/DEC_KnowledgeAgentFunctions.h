@@ -12,10 +12,13 @@
 #ifndef __DEC_KnowledgeAgentFunctions_h_
 #define __DEC_KnowledgeAgentFunctions_h_
 
+namespace sword
+{
+    class Brain;
+}
+
 class DEC_Decision_ABC;
 class DEC_Knowledge_Agent;
-class MIL_AgentPion;
-class MIL_Entity_ABC;
 class MIL_Mission_ABC;
 class MT_Vector2D;
 class MIL_UrbanObject_ABC;
@@ -26,22 +29,24 @@ class MIL_UrbanObject_ABC;
 class DEC_KnowledgeAgentFunctions
 {
 public:
+    static void Register( sword::Brain& brain );
+
     //! @name Functions
     //@{
     static int   GetNatureAtlas    ( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
-    static float GetDangerosity    ( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
-    static float GetPotentialAttrition( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge, boost::shared_ptr< MT_Vector2D > position );
-    static bool  IsPerceivedByAgent( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
-    static int   IsAnEnemy         ( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
-    static int   IsAFriend         ( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
+    static double GetDangerosity    ( const DEC_Decision_ABC* callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
+    static double GetPotentialAttrition( const DEC_Decision_ABC* callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge, boost::shared_ptr< MT_Vector2D > position );
+    static bool  IsPerceivedByAgent( const DEC_Decision_ABC* callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
+    static int   IsAnEnemy         ( const DEC_Decision_ABC* callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
+    static int   IsAFriend         ( const DEC_Decision_ABC* callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
     static bool  IsMoving          ( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
-    static bool  IsPerceivingAgent ( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
-    static bool  IsInDetectionCone ( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge, const MT_Vector2D* direction, double angle );
+    static bool  IsPerceivingAgent ( const DEC_Decision_ABC* callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
+    static bool  IsInDetectionCone ( const DEC_Decision_ABC* callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge, const MT_Vector2D* direction, double angle );
     static bool  IsInCrowd         ( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
     static bool  KillOfficers      ( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
 
     static int   GetMaxPerceptionLevelForKnowledgeGroup ( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
-    static int   GetCurrentPerceptionLevel              ( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
+    static int   GetCurrentPerceptionLevel              ( const DEC_Decision_ABC* callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
     static bool  IsPerceptionLevelMax                   ( const DEC_Decision_ABC* caller, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
     static float GetDangerosityOnPion                   ( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge, const DEC_Decision_ABC* pTarget );
     static float GetDangerosityOnKnowledge              ( boost::shared_ptr< DEC_Knowledge_Agent > pSource, boost::shared_ptr< DEC_Knowledge_Agent > pTarget );
@@ -66,12 +71,12 @@ public:
 
     static bool  IsIlluminated                          ( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
     static bool  IsDefinitivelyIlluminated              ( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
-    static bool  CanBeIlluminate                        ( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
-    static bool  CanIlluminate                          ( const MIL_AgentPion& callerAgent );
+    static bool  CanBeIlluminated                        ( const DEC_Decision_ABC* callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
+    static bool  CanIlluminate                          ( const DEC_Decision_ABC* callerAgent );
     static unsigned int GetAgentIdFromKnowledge         ( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
     static bool IsRefugee                               ( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
     static bool IsTerrorist                             ( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
-    static bool IsTransported                           ( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
+    static bool IsTransported                           ( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
     static std::string GetMilPionType                   ( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
     static boost::shared_ptr< MIL_Mission_ABC > GetMission( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
     static void NeutralizeAgent( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
@@ -79,8 +84,8 @@ public:
     static void  ShareKnowledgesWith ( DEC_Decision_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge, float minutes );
     static DEC_Decision_ABC* GetAgent( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
     static void SwitchAutomateLogistic( DEC_Decision_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
-    static bool IsInObject( const MIL_AgentPion& callerAgent, const std::string& objectType, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge, int isFriend );
-    static bool IsInObjectWithCapacity( const MIL_AgentPion& callerAgent, const std::string& capacity, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge, int isFriend );
+    static bool IsInObject( const DEC_Decision_ABC* callerAgent, const std::string& objectType, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge, int isFriend );
+    static bool IsInObjectWithCapacity( const DEC_Decision_ABC* callerAgent, const std::string& capacity, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge, int isFriend );
     //@}
 };
 

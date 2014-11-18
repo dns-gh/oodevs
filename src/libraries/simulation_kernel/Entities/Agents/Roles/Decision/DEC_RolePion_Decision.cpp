@@ -25,6 +25,7 @@
 #include "Decision/DEC_Model_ABC.h"
 #include "Decision/DEC_ActionFunctions.h"
 #include "Decision/DEC_AgentFunctions.h"
+#include "Decision/DEC_AutomateFunctions.h"
 #include "NetworkNotificationHandler_ABC.h"
 #include "protocol/ClientSenders.h"
 
@@ -934,7 +935,7 @@ bool DEC_RolePion_Decision::IsJammed() const
 // -----------------------------------------------------------------------------
 const MT_Vector2D* DEC_RolePion_Decision::GetPosition() const
 {
-    return DEC_AgentFunctions::GetPosition( GetPion() ).get();
+    return DEC_AgentFunctions::GetPosition( this ).get();
 }
 
 // -----------------------------------------------------------------------------
@@ -981,7 +982,7 @@ const PHY_RoePopulation& DEC_RolePion_Decision::GetRoePopulation() const
 // -----------------------------------------------------------------------------
 bool DEC_RolePion_Decision::IsPC() const
 {
-    return DEC_AgentFunctions::IsPC( GetPion() );
+    return DEC_AgentFunctions::IsPC( this );
 }
 
 // -----------------------------------------------------------------------------
@@ -990,7 +991,7 @@ bool DEC_RolePion_Decision::IsPC() const
 // -----------------------------------------------------------------------------
 bool DEC_RolePion_Decision::IsTransported() const
 {
-    return DEC_AgentFunctions::IsTransported( GetPion() );
+    return DEC_AgentFunctions::IsTransported( this );
 }
 
 // -----------------------------------------------------------------------------
@@ -999,7 +1000,7 @@ bool DEC_RolePion_Decision::IsTransported() const
 // -----------------------------------------------------------------------------
 bool DEC_RolePion_Decision::IsFlying() const
 {
-    return DEC_AgentFunctions::IsFlying( GetPion() );
+    return DEC_AgentFunctions::IsFlying( this );
 }
 
 // -----------------------------------------------------------------------------
@@ -1008,7 +1009,7 @@ bool DEC_RolePion_Decision::IsFlying() const
 // ----------------------------------------------------------------------
 double DEC_RolePion_Decision::GetOperationalState() const
 {
-    return DEC_AgentFunctions::GetOperationalState( GetPion() );
+    return DEC_AgentFunctions::GetOperationalState( this );
 }
 
 // -----------------------------------------------------------------------------
@@ -1017,7 +1018,7 @@ double DEC_RolePion_Decision::GetOperationalState() const
 // ----------------------------------------------------------------------
 double DEC_RolePion_Decision::GetMajorOperationalState() const
 {
-    return DEC_AgentFunctions::GetMajorOperationalState( GetPion() );
+    return DEC_AgentFunctions::GetMajorOperationalState( this );
 }
 
 // -----------------------------------------------------------------------------
@@ -1026,7 +1027,7 @@ double DEC_RolePion_Decision::GetMajorOperationalState() const
 // -----------------------------------------------------------------------------
 bool DEC_RolePion_Decision::IsAutomateEngaged() const
 {
-    return DEC_AgentFunctions::IsAutomateEngaged( GetPion() );
+    return DEC_AgentFunctions::IsAutomateEngaged( this );
 }
 
 // -----------------------------------------------------------------------------
@@ -1035,7 +1036,7 @@ bool DEC_RolePion_Decision::IsAutomateEngaged() const
 // -----------------------------------------------------------------------------
 bool DEC_RolePion_Decision::IsDead() const
 {
-    return DEC_AgentFunctions::IsDead( GetPion() );
+    return DEC_AgentFunctions::IsDead( this );
 }
 
 // =============================================================================
@@ -1153,7 +1154,7 @@ const std::string& DEC_RolePion_Decision::GetDIAType() const
 // -----------------------------------------------------------------------------
 std::vector< DEC_Decision_ABC* > DEC_RolePion_Decision::GetPionsWithPC()
 {
-    return DEC_AgentFunctions::GetPionsWithPC( GetPion() );
+    return DEC_AutomateFunctions::GetPionsWithPC( GetDecAutomate() );
 }
 
 // -----------------------------------------------------------------------------
@@ -1172,7 +1173,7 @@ void DEC_RolePion_Decision::Reload( bool force, bool doInitBrain )
 // -----------------------------------------------------------------------------
 std::vector< DEC_Decision_ABC* > DEC_RolePion_Decision::GetCommunicationPionsWithPC()
 {
-    return DEC_AgentFunctions::GetCommunicationPionsWithPC( GetPion() );
+    return DEC_AutomateFunctions::GetCommunicationPionsWithPC( GetDecAutomate() );
 }
 
 // -----------------------------------------------------------------------------

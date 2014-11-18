@@ -143,14 +143,6 @@ std::string DEC_AutomateDecision::GetGroupName()
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_AutomateDecision::RegisterUserFunctions
-// Created: LDC 2009-04-09
-// -----------------------------------------------------------------------------
-void DEC_AutomateDecision::RegisterUserFunctions( sword::Brain& )
-{
-}
-
-// -----------------------------------------------------------------------------
 // Name: DEC_AutomateDecision::StartMissionMrtBehavior
 // Created: NLD 2004-09-03
 // -----------------------------------------------------------------------------

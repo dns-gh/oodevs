@@ -10,6 +10,11 @@
 #ifndef __DEC_KnowledgeObjectFunctions_h_
 #define __DEC_KnowledgeObjectFunctions_h_
 
+namespace sword
+{
+    class Brain;
+}
+
 class DEC_Decision_ABC;
 class DEC_Knowledge_Object;
 class MIL_Agent_ABC;
@@ -26,6 +31,8 @@ class MIL_Population;
 class DEC_KnowledgeObjectFunctions
 {
 public:
+    static void Register( sword::Brain& brain );
+
     //! @name Functions
     //@{
     static float GetSiteFranchissementWidth( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
@@ -47,30 +54,30 @@ public:
 
     static int QueueUnitForDecontamination( DEC_Decision_ABC* agent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
     static int QueueKnowledgeForDecontamination(  boost::shared_ptr< DEC_Knowledge_Agent > pAgent, boost::shared_ptr< DEC_Knowledge_Object > pObject );
-    static bool CanBeAnimated( const MIL_Agent_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
+    static bool CanBeAnimated( const DEC_Decision_ABC* callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
     static float GetConstructionLevel( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge);
     static float GetBurningLevel( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge);
     static float GetValorizationLevel( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge);
     static float GetAnimationLevel( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge);
-    static bool CanBeOccupied( const MIL_Agent_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
-    static void DecontaminateZone( const MIL_Agent_ABC& callerAgent, const TER_Localisation* location );
-    static int DamageObject( MIL_Agent_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge, float factor, const PHY_DotationCategory* dotation );
+    static bool CanBeOccupied( const DEC_Decision_ABC* callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
+    static void DecontaminateZone( const DEC_Decision_ABC* callerAgent, const TER_Localisation* location );
+    static int DamageObject( DEC_Decision_ABC* callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge, float factor, const PHY_DotationCategory* dotation );
 
     static bool CanBeBypassed( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
 
     static void SetExitingPopulationDensity( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge, float density );
     static void ResetExitingPopulationDensity( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
 
-    static void Recon( const MIL_Agent_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
+    static void Recon( const DEC_Decision_ABC* callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
     static bool IsRecon( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
 
     static int EquipLogisticRoute( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
     static bool IsStockSupplied( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
 
-    static int IsAnEnemy( const MIL_Entity_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
-    static int IsAFriend( const MIL_Entity_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
-    static int GetCurrentPerceptionLevel( const MIL_Agent_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
-    static float EstimatedWorkTime( MIL_Agent_ABC& pion, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
+    static int IsAnEnemy( const DEC_Decision_ABC* callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
+    static int IsAFriend( const DEC_Decision_ABC* callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
+    static int GetCurrentPerceptionLevel( const DEC_Decision_ABC* callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
+    static double EstimatedWorkTime( DEC_Decision_ABC* pion, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
     static bool CanBeValorized( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
     static bool HasCapacity( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge, const std::string& capacity );
     static void BuildInstantaneously( const DEC_Decision_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );

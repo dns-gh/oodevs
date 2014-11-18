@@ -12,6 +12,10 @@
 #include "simulation_kernel_pch.h"
 #include "DEC_KnowledgeAgentFunctions.h"
 #include "DEC_KnowledgeFunctions.h"
+#include "Decision/Brain.h"
+#include "Decision/DEC_Decision_ABC.h"
+#include "Decision/DEC_Tools.h"
+#include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Communications/PHY_RoleInterface_Communications.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
 #include "Entities/Agents/Roles/Dotations/PHY_RoleInterface_Dotations.h"
@@ -22,6 +26,7 @@
 #include "Entities/Agents/Roles/Surrender/PHY_RoleInterface_Surrender.h"
 #include "Entities/Agents/Roles/Urban/PHY_RoleInterface_UrbanLocation.h"
 #include "Entities/Agents/Units/Categories/PHY_NatureAtlas.h"
+#include "Entities/Automates/MIL_Automate.h"
 #include "Entities/MIL_Army_ABC.h"
 #include "Entities/MIL_Entity_ABC.h"
 #include "Entities/Objects/CapacityRetriever.h"
@@ -29,11 +34,68 @@
 #include "Entities/Specialisations/LOG/LogisticHierarchy_ABC.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
+#include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
+#include "Knowledge/DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
+#include "Knowledge/MIL_KnowledgeGroup.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "Tools/MIL_Tools.h"
 #include "Knowledge/QueryValidity.h"
 #include "protocol/ClientSenders.h"
+
+void DEC_KnowledgeAgentFunctions::Register( sword::Brain& brain )
+{
+    brain.RegisterFunction( "DEC_UnitDecisionalState", &DEC_KnowledgeAgentFunctions::UnitDecisionalState );
+    brain.RegisterFunction( "DEC_Connaissance_EnAgent", &DEC_KnowledgeAgentFunctions::GetAgent );
+    brain.RegisterFunction( "DEC_ConnaissanceAgent_EtatOps", &DEC_KnowledgeAgentFunctions::GetOperationalState );
+    brain.RegisterFunction( "DEC_ConnaissanceAgent_EstDetruitTactique", &DEC_KnowledgeAgentFunctions::GetMajorOperationalState );
+    brain.RegisterFunction( "DEC_ConnaissanceAgent_Position", &DEC_KnowledgeAgentFunctions::GetPositionPtr );
+    brain.RegisterFunction( "DEC_ConnaissanceAgent_EstEnVol", &DEC_KnowledgeAgentFunctions::IsFlying );
+    brain.RegisterFunction( "DEC_ConnaissanceAgent_Altitude", &DEC_KnowledgeAgentFunctions::DEC_ConnaissanceAgent_Altitude );
+    brain.RegisterFunction( "DEC_ConnaissanceAgent_NatureAtlas", &DEC_KnowledgeAgentFunctions::GetNatureAtlas );
+    brain.RegisterFunction( "DEC_ConnaissanceAgent_NiveauPerceptionMax", &DEC_KnowledgeAgentFunctions::GetMaxPerceptionLevelForKnowledgeGroup );
+    brain.RegisterFunction( "DEC_ConnaissanceAgent_EstValide", &DEC_KnowledgeAgentFunctions::IsKnowledgeValid );
+    brain.RegisterFunction( "DEC_ConnaissanceAgent_EstEnMouvement", &DEC_KnowledgeAgentFunctions::IsMoving );
+    brain.RegisterFunction( "DEC_ConnaissanceAgent_SEstRendu", &DEC_KnowledgeAgentFunctions::IsSurrendered );
+    brain.RegisterFunction( "DEC_ConnaissanceAgent_EstPrisonnier", &DEC_KnowledgeAgentFunctions::IsPrisoner );
+    brain.RegisterFunction( "DEC_ConnaissanceAgent_EstRenduAMonCamp", &DEC_KnowledgeAgentFunctions::IsSurrenderToMyArmy );
+    brain.RegisterFunction( "DEC_ConnaissanceAgent_EstRefugie", &DEC_KnowledgeAgentFunctions::IsRefugee );
+    brain.RegisterFunction( "DEC_ConnaissanceAgent_EstMort", &DEC_KnowledgeAgentFunctions::IsDead );
+    brain.RegisterFunction( "DEC_ConnaissanceAgent_Verrouiller", &DEC_KnowledgeAgentFunctions::Lock );
+    brain.RegisterFunction( "DEC_ConnaissanceAgent_Deverrouiller", &DEC_KnowledgeAgentFunctions::Unlock );
+    brain.RegisterFunction( "DEC_ConnaissanceAgent_TuerOfficiers", &DEC_KnowledgeAgentFunctions::KillOfficers );
+    brain.RegisterFunction( "DEC_ConnaissanceAgent_GetMilPionType", &DEC_KnowledgeAgentFunctions::GetMilPionType );
+    brain.RegisterFunction( "DEC_ConnaissanceAgent_DangerositeSurPion", &DEC_KnowledgeAgentFunctions::GetDangerosityOnPion );
+    brain.RegisterFunction( "DEC_ConnaissanceAgent_DangerositeSurConnaissance", &DEC_KnowledgeAgentFunctions::GetDangerosityOnKnowledge );
+    brain.RegisterFunction( "DEC_ConnaissanceAgent_EnAgent", &DEC_KnowledgeAgentFunctions::GetAgent );
+    brain.RegisterFunction( "DEC_Connaissances_PartageConnaissancesAvecConnaissanceAgent", &DEC_KnowledgeAgentFunctions::ShareKnowledgesWith );
+    brain.RegisterFunction( "DEC_Agent_ForcerSilenceRadio", &DEC_KnowledgeAgentFunctions::ForceRadioSilence );
+    brain.RegisterFunction( "DEC_AgentKnowledge_DisableCrowdEffect", &DEC_KnowledgeAgentFunctions::DisableCrowdEffect );
+    brain.RegisterFunction( "DEC_ChangerSuperieurLogistiqueConnaissance", &DEC_KnowledgeAgentFunctions::SwitchAutomateLogistic );
+    brain.RegisterFunction( "DEC_ConnaissanceAgent_EstDansFoule", &DEC_KnowledgeAgentFunctions::IsInCrowd );
+    brain.RegisterFunction( "DEC_ConnaissanceAgent_EstDefinitivementIllumine", &DEC_KnowledgeAgentFunctions::IsDefinitivelyIlluminated );
+    brain.RegisterFunction( "DEC_ConnaissanceAgent_EstIllumine", &DEC_KnowledgeAgentFunctions::IsIlluminated );
+    brain.RegisterFunction( "DEC_ConnaissanceAgent_EstTerroriste", &DEC_KnowledgeAgentFunctions::IsTerrorist );
+    brain.RegisterFunction( "DEC_ConnaissanceAgent_Neutraliser", &DEC_KnowledgeAgentFunctions::NeutralizeAgent );
+    brain.RegisterFunction( "DEC_Connaissance_GetRawMission", &DEC_KnowledgeAgentFunctions::GetMission );
+    brain.RegisterFunction( "DEC_GetAgentIdFromKnowledge", &DEC_KnowledgeAgentFunctions::GetAgentIdFromKnowledge );
+    brain.RegisterFunction( "DEC_ObtenirRenseignementCritiqueSurPion", &DEC_KnowledgeAgentFunctions::GetCriticalIntelligence );
+    brain.RegisterFunction( "_DEC_ConnaissanceAgent_NiveauDePerceptionCourant", &DEC_KnowledgeAgentFunctions::GetCurrentPerceptionLevel );
+    brain.RegisterFunction( "_DEC_ConnaissanceAgent_EstPercuParUnite", &DEC_KnowledgeAgentFunctions::IsPerceivedByAgent );
+    brain.RegisterFunction( "_DEC_ConnaissanceAgent_EstUnEnnemi", &DEC_KnowledgeAgentFunctions::IsAnEnemy );
+    brain.RegisterFunction( "_DEC_ConnaissanceAgent_EstUnAllie",  &DEC_KnowledgeAgentFunctions::IsAFriend );
+    brain.RegisterFunction( "_DEC_ConnaissanceAgent_PercoitUnite", &DEC_KnowledgeAgentFunctions::IsPerceivingAgent );
+    brain.RegisterFunction( "_DEC_ConnaissanceAgent_EstAPorteDeCapteurDansCone", &DEC_KnowledgeAgentFunctions::IsInDetectionCone );
+    brain.RegisterFunction( "_DEC_ConnaissanceAgent_PeutEtreIllumine", &DEC_KnowledgeAgentFunctions::CanBeIlluminated );
+    brain.RegisterFunction( "_DEC_ConnaissanceAgent_PeutIlluminer", &DEC_KnowledgeAgentFunctions::CanIlluminate );
+    brain.RegisterFunction( "DEC_ConnaissanceAgent_EstTransporte", &DEC_KnowledgeAgentFunctions::IsTransported );
+    brain.RegisterFunction( "_DEC_KnowledgeAgent_IsInObject", &DEC_KnowledgeAgentFunctions::IsInObject );
+    brain.RegisterFunction( "_DEC_KnowledgeAgent_IsInObjectWithCapacity", &DEC_KnowledgeAgentFunctions::IsInObjectWithCapacity );
+    brain.RegisterFunction( "_DEC_KnowledgeAgent_IsPerceptionLevelMax", &DEC_KnowledgeAgentFunctions::IsPerceptionLevelMax );
+    brain.RegisterFunction( "_DEC_ConnaissanceAgent_AttritionPotentielle", &DEC_KnowledgeAgentFunctions::GetPotentialAttrition );
+    brain.RegisterFunction( "_DEC_ConnaissanceAgent_Dangerosite", &DEC_KnowledgeAgentFunctions::GetDangerosity );
+    brain.RegisterFunction( "DEC_NiveauDeProtectionMaterielComposantes", &DEC_KnowledgeAgentFunctions::GetMaterialComposantesProtectionLevel );
+}
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeAgentFunctions::GetNatureAtlas
@@ -50,40 +112,42 @@ int DEC_KnowledgeAgentFunctions::GetNatureAtlas( boost::shared_ptr< DEC_Knowledg
 // Name: DEC_KnowledgeAgentFunctions::GetDangerosity
 // Created: NLD 2004-04-02
 // -----------------------------------------------------------------------------
-float DEC_KnowledgeAgentFunctions::GetDangerosity( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge )
+double DEC_KnowledgeAgentFunctions::GetDangerosity( const DEC_Decision_ABC* callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge )
 {
     // For DIA, the dangerosity value is 1 <= dangerosity <= 2
     if( pKnowledge && pKnowledge->IsValid() )
     {
-        const PHY_MaterialCompositionType* material = callerAgent.GetRole< PHY_RoleInterface_UrbanLocation >().GetUrbanMaterial();
-        return static_cast< float >( pKnowledge->GetDangerosity( callerAgent, false, material ) + 1.f );
+        const MIL_AgentPion& agent = callerAgent->GetPion();
+        const PHY_MaterialCompositionType* material = agent.GetRole< PHY_RoleInterface_UrbanLocation >().GetUrbanMaterial();
+        return pKnowledge->GetDangerosity( agent, false, material ) + 1.0;
     }
-    return 0.f;
+    return 0.0;
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeAgentFunctions::GetPotentialAttrition
 // Created: MGD 2010-02-04
 // -----------------------------------------------------------------------------
-float DEC_KnowledgeAgentFunctions::GetPotentialAttrition( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge, boost::shared_ptr< MT_Vector2D > position )
+double DEC_KnowledgeAgentFunctions::GetPotentialAttrition( const DEC_Decision_ABC* callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge, boost::shared_ptr< MT_Vector2D > position )
 {
     if( pKnowledge && pKnowledge->IsValid() )
-        return static_cast< float >( callerAgent.GetDangerosity( pKnowledge, position, false, pKnowledge->GetUrbanMaterial() ) );
-    return 0.f;
+        return callerAgent->GetPion().GetDangerosity( pKnowledge, position, false, pKnowledge->GetUrbanMaterial() );
+    return 0.0;
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeAgentFunctions::IsInDetectionCone
 // Created: JVT 2005-08-23
 // -----------------------------------------------------------------------------
-bool DEC_KnowledgeAgentFunctions::IsInDetectionCone( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge, const MT_Vector2D* direction, double angle )
+bool DEC_KnowledgeAgentFunctions::IsInDetectionCone( const DEC_Decision_ABC* callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge, const MT_Vector2D* direction, double angle )
 {
     if( !pKnowledge || !pKnowledge->IsValid() )
         return false;
     if( !direction )
         throw MASA_EXCEPTION( "invalid parameter." );
-    const MT_Vector2D& vOrigin = callerAgent.GetRole< PHY_RoleInterface_Location >().GetPosition();
-    const double rDist = callerAgent.GetRole< PHY_RoleInterface_Perceiver >().GetMaxAgentPerceptionDistance();
+    const MIL_AgentPion& agent = callerAgent->GetPion();
+    const MT_Vector2D& vOrigin = agent.GetRole< PHY_RoleInterface_Location >().GetPosition();
+    const double rDist = agent.GetRole< PHY_RoleInterface_Perceiver >().GetMaxAgentPerceptionDistance();
     return MT_Sector( vOrigin, *direction, angle * MT_PI / 180. ).IsInCone( pKnowledge->GetPosition(), rDist );
 }
 
@@ -102,31 +166,31 @@ bool DEC_KnowledgeAgentFunctions::IsInCrowd( boost::shared_ptr< DEC_Knowledge_Ag
 // Name: DEC_KnowledgeAgentFunctions::IsPerceivedByAgent
 // Created: NLD 2004-04-06
 // -----------------------------------------------------------------------------
-bool DEC_KnowledgeAgentFunctions::IsPerceivedByAgent( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge )
+bool DEC_KnowledgeAgentFunctions::IsPerceivedByAgent( const DEC_Decision_ABC* callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge )
 {
-    return pKnowledge && pKnowledge->IsValid() && callerAgent.GetKnowledge().IsPerceived( pKnowledge->GetAgentKnown() );
+    return pKnowledge && pKnowledge->IsValid() && callerAgent->GetPion().GetKnowledge().IsPerceived( pKnowledge->GetAgentKnown() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeAgentFunctions::IsAnEnemy
 // Created: NLD 2004-04-06
 // -----------------------------------------------------------------------------
-int DEC_KnowledgeAgentFunctions::IsAnEnemy( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge )
+int DEC_KnowledgeAgentFunctions::IsAnEnemy( const DEC_Decision_ABC* callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge )
 {
     if( !pKnowledge || !pKnowledge->IsValid() )
         return static_cast< int >( eTristate_DontKnow );
-    return static_cast< int >( pKnowledge->IsAnEnemy( callerAgent.GetArmy() ) );
+    return static_cast< int >( pKnowledge->IsAnEnemy( callerAgent->GetEntity().GetArmy() ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeAgentFunctions::IsAFriend
 // Created: MGD 2010-01-26
 // -----------------------------------------------------------------------------
-int DEC_KnowledgeAgentFunctions::IsAFriend( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge )
+int DEC_KnowledgeAgentFunctions::IsAFriend( const DEC_Decision_ABC* callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge )
 {
     if( !pKnowledge || !pKnowledge->IsValid() )
         return static_cast< int >( eTristate_DontKnow );
-    return static_cast< int >( pKnowledge->IsAFriend( callerAgent.GetArmy() ) );
+    return static_cast< int >( pKnowledge->IsAFriend( callerAgent->GetEntity().GetArmy() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -142,10 +206,10 @@ bool DEC_KnowledgeAgentFunctions::IsMoving( boost::shared_ptr< DEC_Knowledge_Age
 // Name: DEC_KnowledgeAgentFunctions::IsPerceivingAgent
 // Created: NLD 2004-05-17
 // -----------------------------------------------------------------------------
-bool DEC_KnowledgeAgentFunctions::IsPerceivingAgent( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge )
+bool DEC_KnowledgeAgentFunctions::IsPerceivingAgent( const DEC_Decision_ABC* callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge )
 {
     //$$$ Fonction BOF : trop de triche ...
-    return pKnowledge && pKnowledge->IsValid() && pKnowledge->GetAgentKnown().IsPerceived( callerAgent );
+    return pKnowledge && pKnowledge->IsValid() && pKnowledge->GetAgentKnown().IsPerceived( callerAgent->GetPion() );
 }
 
 // -----------------------------------------------------------------------------
@@ -345,10 +409,10 @@ int DEC_KnowledgeAgentFunctions::GetMaxPerceptionLevelForKnowledgeGroup( boost::
 // Name: DEC_KnowledgeAgentFunctions::GetCurrentPerceptionLevel
 // Created: SLG 2010-01-27
 // -----------------------------------------------------------------------------
-int DEC_KnowledgeAgentFunctions::GetCurrentPerceptionLevel( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge )
+int DEC_KnowledgeAgentFunctions::GetCurrentPerceptionLevel( const DEC_Decision_ABC* callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge )
 {
     if( pKnowledge && pKnowledge->IsValid() )
-        return static_cast< int >( pKnowledge->GetCurrentPerceptionLevel( callerAgent ).GetID() );
+        return static_cast< int >( pKnowledge->GetCurrentPerceptionLevel( callerAgent->GetPion() ).GetID() );
     return 0;
 }
 
@@ -391,15 +455,16 @@ bool  DEC_KnowledgeAgentFunctions::IsDefinitivelyIlluminated( boost::shared_ptr<
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_KnowledgeAgentFunctions::CanBeIlluminate
+// Name: DEC_KnowledgeAgentFunctions::CanBeIlluminated
 // Created: MGD 2010-02-17
 // -----------------------------------------------------------------------------
-bool DEC_KnowledgeAgentFunctions::CanBeIlluminate( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge )
+bool DEC_KnowledgeAgentFunctions::CanBeIlluminated( const DEC_Decision_ABC* callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge )
 {
     if( !pKnowledge )
         throw MASA_EXCEPTION( "invalid parameter." );
-    const dotation::PHY_RoleInterface_Dotations& roleDotations = callerAgent.GetRole< dotation::PHY_RoleInterface_Dotations >();
-    const float range = static_cast< float >( pKnowledge->GetPosition().Distance( callerAgent.GetRole< PHY_RoleInterface_Location >().GetPosition() ) );
+    const MIL_AgentPion& agent = callerAgent->GetPion();
+    const dotation::PHY_RoleInterface_Dotations& roleDotations = agent.GetRole< dotation::PHY_RoleInterface_Dotations >();
+    const float range = static_cast< float >( pKnowledge->GetPosition().Distance( agent.GetRole< PHY_RoleInterface_Location >().GetPosition() ) );
     return roleDotations.GetIlluminationDotations( range, true ) || roleDotations.GetIlluminationDotations( range, false );
 }
 
@@ -407,9 +472,9 @@ bool DEC_KnowledgeAgentFunctions::CanBeIlluminate( const MIL_AgentPion& callerAg
 // Name: DEC_KnowledgeAgentFunctions::CanIlluminate
 // Created: MGD 2010-12-03
 // -----------------------------------------------------------------------------
-bool DEC_KnowledgeAgentFunctions::CanIlluminate( const MIL_AgentPion& callerAgent )
+bool DEC_KnowledgeAgentFunctions::CanIlluminate( const DEC_Decision_ABC* callerAgent )
 {
-    const dotation::PHY_RoleInterface_Dotations& roleDotations = callerAgent.GetRole< dotation::PHY_RoleInterface_Dotations >();
+    const dotation::PHY_RoleInterface_Dotations& roleDotations = callerAgent->GetPion().GetRole< dotation::PHY_RoleInterface_Dotations >();
     return roleDotations.GetIlluminationDotations( 0, true ) || roleDotations.GetIlluminationDotations( 0, false );
 }
 
@@ -490,7 +555,7 @@ bool DEC_KnowledgeAgentFunctions::IsRefugee( boost::shared_ptr< DEC_Knowledge_Ag
 // Name: DEC_KnowledgeAgentFunctions::IsTransported
 // Created: DDA 2012-01-10
 // -----------------------------------------------------------------------------
-bool DEC_KnowledgeAgentFunctions::IsTransported( const MIL_AgentPion& /*callerAgent*/, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge )
+bool DEC_KnowledgeAgentFunctions::IsTransported( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge )
 {
     if( !pKnowledge )
         throw MASA_EXCEPTION( "invalid parameter." );
@@ -619,18 +684,18 @@ namespace
 // Name: DEC_KnowledgeAgentFunctions::IsInObject
 // Created: JSR 2012-01-26
 // -----------------------------------------------------------------------------
-bool DEC_KnowledgeAgentFunctions::IsInObject( const MIL_AgentPion& callerAgent, const std::string& objectType, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge, int isFriend )
+bool DEC_KnowledgeAgentFunctions::IsInObject( const DEC_Decision_ABC* callerAgent, const std::string& objectType, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge, int isFriend )
 {
     auto func = [&]( const MIL_ObjectType_ABC& type ) { return type.GetName() == objectType; };
-    return IsAgentKnowledgeInObject( callerAgent, pKnowledge, isFriend, func );
+    return IsAgentKnowledgeInObject( callerAgent->GetPion(), pKnowledge, isFriend, func );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeAgentFunctions::IsInObjectWithCapacity
 // Created: LDC 2014-08-05
 // -----------------------------------------------------------------------------
-bool DEC_KnowledgeAgentFunctions::IsInObjectWithCapacity( const MIL_AgentPion& callerAgent, const std::string& capacity, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge, int isFriend )
+bool DEC_KnowledgeAgentFunctions::IsInObjectWithCapacity( const DEC_Decision_ABC* callerAgent, const std::string& capacity, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge, int isFriend )
 {
     auto func = [&]( const MIL_ObjectType_ABC& type ) { return CapacityRetriever::RetrieveCapacity( type, capacity ) != 0; };
-    return IsAgentKnowledgeInObject( callerAgent, pKnowledge, isFriend, func );
+    return IsAgentKnowledgeInObject( callerAgent->GetPion(), pKnowledge, isFriend, func );
 }

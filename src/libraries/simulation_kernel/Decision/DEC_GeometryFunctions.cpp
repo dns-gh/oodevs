@@ -16,9 +16,10 @@
 #include "MIL_Random.h"
 #include "DEC_Decision_ABC.h"
 #include "DEC_Objective.h"
-#include "Brain.h"
+#include "Decision/Brain.h"
 #include "Decision/DEC_Gen_Object.h"
 #include "Decision/DEC_Gen_Object.h"
+#include "Decision/DEC_Tools.h"
 #include "Entities/MIL_Army_ABC.h"
 #include "Entities/MIL_EntityManager.h"
 #include "Entities/Agents/MIL_AgentPion.h"
@@ -63,7 +64,154 @@
 #include <boost/smart_ptr/make_shared.hpp>
 #include <boost/foreach.hpp>
 
-#define PRECISION 0.0000001
+namespace 
+{
+    const double precision = 0.0000001;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Decision::RegisterGeometryFunctions
+// Created: SLI 2010-07-09
+// -----------------------------------------------------------------------------
+void DEC_GeometryFunctions::Register( sword::Brain& brain)
+{
+    brain.RegisterFunction( "DEC_Geometrie_DecouperListePoints", &DEC_GeometryFunctions::SplitListPoints );
+    brain.RegisterFunction( "DEC_Geometrie_CalculerPositionCouverture", &DEC_GeometryFunctions::ComputeCoverPosition );
+    brain.RegisterFunction( "DEC_Geometrie_CalculerBarycentreAgents", &DEC_GeometryFunctions::ComputeAgentsBarycenter );
+    brain.RegisterFunction( "DEC_Geometrie_CalculerBarycentreListePoints", &DEC_GeometryFunctions::ComputeListPointsBarycenter );
+    brain.RegisterFunction( "DEC_Geometrie_PositionTranslate", &DEC_GeometryFunctions::TranslatePosition );
+    brain.RegisterFunction( "DEC_Geometrie_PositionTranslateDir", &DEC_GeometryFunctions::TranslatePositionInDirection );
+    brain.RegisterFunction( "DEC_Geometrie_PositionTranslateVector", &DEC_GeometryFunctions::TranslatePositionInVector );
+    brain.RegisterFunction( "DEC_Geometrie_PositionsEgales", &DEC_GeometryFunctions::ComparePositions );
+    brain.RegisterFunction( "DEC_Geometrie_Distance", &DEC_GeometryFunctions::Distance );
+    brain.RegisterFunction( "DEC_Geometrie_Distance3D", &DEC_GeometryFunctions::Distance3D );
+    brain.RegisterFunction( "DEC_Geometrie_ConvertirPointEnLocalisation", &DEC_GeometryFunctions::ConvertPointToLocalisation );
+    brain.RegisterFunction( "DEC_Geometrie_EstPointDansLocalisation", &DEC_GeometryFunctions::IsPointInsideLocalisation );
+    brain.RegisterFunction( "DEC_Geometrie_CreerLocalisation", &DEC_GeometryFunctions::CreateLocalisation );
+    brain.RegisterFunction( "DEC_Geometrie_CreerListePoints", &DEC_GeometryFunctions::CreateListPoint );
+    brain.RegisterFunction( "DEC_Geometrie_CreerPoint", &DEC_GeometryFunctions::CreatePoint );
+    brain.RegisterFunction( "DEC_Geometrie_CreerPointLatLong", &DEC_GeometryFunctions::CreatePointFromLatLong );
+    brain.RegisterFunction( "DEC_Geometrie_CreerPointXY", &DEC_GeometryFunctions::CreatePointFromXY );
+    brain.RegisterFunction( "DEC_Geometrie_CopiePoint", &DEC_GeometryFunctions::CopyPoint );
+    brain.RegisterFunction( "DEC_Geometrie_CreerDirection", &DEC_GeometryFunctions::CreateDirection );
+    brain.RegisterFunction( "DEC_Geometrie_CreerVecteur", &DEC_GeometryFunctions::CreateVector );
+    brain.RegisterFunction( "DEC_Geometrie_CreerDirectionPerpendiculaire", &DEC_GeometryFunctions::CreateOrthoDirection );
+    brain.RegisterFunction( "DEC_Geometrie_InverseDirection", &DEC_GeometryFunctions::ReverseDirection );
+    brain.RegisterFunction( "DEC_Geometrie_CopieEtInverseDirection", &DEC_GeometryFunctions::CopyAndReverseDirection );
+    brain.RegisterFunction( "DEC_Geometrie_CopieEtRotateDirection", &DEC_GeometryFunctions::CopyAndRotateDirection );
+    brain.RegisterFunction( "DEC_Geometrie_CalculerDistanceLigneMoyenne", &DEC_GeometryFunctions::ComputeDistanceFromMiddleLine );
+    brain.RegisterFunction( "DEC_Geometrie_CalculerBarycentreLocalisation", &DEC_GeometryFunctions::ComputeLocalisationBarycenter );
+    brain.RegisterFunction( "DEC_Geometrie_ListePointsLocalisation", &DEC_GeometryFunctions::ListLocalisationPoints );
+    brain.RegisterFunction( "DEC_Geometrie_OffsetItinerary", &DEC_GeometryFunctions::ListLocalisationPoints );
+    brain.RegisterFunction( "DEC_Geometrie_DirectionMoyenne", &DEC_GeometryFunctions::ComputeMeanDirection );
+    brain.RegisterFunction( "DEC_Geometrie_PositionAleatoireDansFuseauSurCercle", &DEC_GeometryFunctions::ComputeRandomPointOnCircleInFuseau );
+    brain.RegisterFunction( "DEC_Geometrie_PositionAleatoireDansFuseauDansCercle", &DEC_GeometryFunctions::ComputeRandomPointInCircleInFuseau );
+    brain.RegisterFunction( "DEC_Geometrie_PositionAleatoireSurCercle", &DEC_GeometryFunctions::ComputeRandomPointOnCircle );
+    brain.RegisterFunction( "DEC_Geometrie_PositionAleatoireDansCercle", &DEC_GeometryFunctions::ComputeRandomPointInCircle );
+    brain.RegisterFunction( "DEC_Geometrie_PositionAleatoireDansZone", &DEC_GeometryFunctions::ComputeRandomPointInZone );
+    brain.RegisterFunction( "DEC_Geometrie_CreerLocalisationCercle", &DEC_GeometryFunctions::CreateCircleLocalisation );
+    brain.RegisterFunction( "DEC_Geometrie_CreerLocalisationLigne", &DEC_GeometryFunctions::CreateLineLocalisation );
+    brain.RegisterFunction( "DEC_Geometrie_CreerLocalisationPolyligne", &DEC_GeometryFunctions::CreatePolylineLocalisation );
+    brain.RegisterFunction( "DEC_Geometrie_CreerLocalisationPolygone", &DEC_GeometryFunctions::CreatePolygonLocalisation );
+    brain.RegisterFunction( "DEC_Geometrie_AgrandirLocalisation", &DEC_GeometryFunctions::CreateScaledLocalisation );
+    brain.RegisterFunction( "DEC_Geometrie_PionEstCoordonne", &DEC_GeometryFunctions::ListUncoordinatedPawns );
+    brain.RegisterFunction( "DEC_Geometrie_PourcentageTerrainCompartimente", &DEC_GeometryFunctions::ComputeClosedTerrainRatioInFuseau );
+    brain.RegisterFunction( "DEC_Geometrie_PourcentageTerrainOuvert", &DEC_GeometryFunctions::ComputeOpenTerrainRatioInFuseau );
+    brain.RegisterFunction( "DEC_Geometrie_TrierZonesSelonOuvertureTerrain", &DEC_GeometryFunctions::SortZonesAccordingToTerrainOpening );
+    brain.RegisterFunction( "DEC_Geometrie_PourcentageZoneTerrainCompartimente", &DEC_GeometryFunctions::ComputeClosedTerrainRatioInZone );
+    brain.RegisterFunction( "DEC_Geometrie_PourcentageZoneTerrainOuvert", &DEC_GeometryFunctions::ComputeOpenTerrainRatioInZone );
+    brain.RegisterFunction( "DEC_Geometrie_TrierFuseauxSelonOuvertureTerrain", &DEC_GeometryFunctions::SortFuseauxAccordingToTerrainOpening );
+    brain.RegisterFunction( "DEC_Geometrie_ConvertirFuseauEnLocalisation", &DEC_GeometryFunctions::ConvertFuseauToLocalisation );
+    brain.RegisterFunction( "DEC_Geometrie_ProchainObjectifDansFuseau", &DEC_GeometryFunctions::GetNextObjectiveInFuseau );
+    brain.RegisterFunction( "DEC_Geometrie_DistanceBetweenPoints", &DEC_GeometryFunctions::ComputeDistance );
+    brain.RegisterFunction( "DEC_Geometrie_AreaSize", &DEC_GeometryFunctions::ComputeAreaSize );
+    brain.RegisterFunction( "DEC_Geometrie_IntersectionSize", &DEC_GeometryFunctions::ComputeIntersectionArea );
+    brain.RegisterFunction( "DEC_Geometrie_AreaDiameter", &DEC_GeometryFunctions::ComputeAreaDiameter );
+    brain.RegisterFunction< std::vector< boost::shared_ptr< MT_Vector2D > >, const TER_Localisation*, unsigned int >( "DEC_Geometrie_DecouperLocalisation", &DEC_GeometryFunctions::SplitLocalisation );
+    brain.RegisterFunction( "DEC_Geometrie_ClipperLocalisation", &DEC_GeometryFunctions::ClipLocalisation );
+    brain.RegisterFunction( "DEC_IsPointInCity", &DEC_GeometryFunctions::IsPointInCity );
+    brain.RegisterFunction( "DEC_IsPointInObject", &DEC_GeometryFunctions::IsPointInObject );
+    brain.RegisterFunction( "DEC_Geometrie_ComputeNearestBorder", &DEC_GeometryFunctions::ComputeNearestBorder );
+    brain.RegisterFunction( "DEC_Geometrie_CalculerTrafficablePointPourPoint", &DEC_GeometryFunctions::ComputeTrafficableLocalisation );
+    brain.RegisterFunction( "DEC_IsPointInUrbanBlockTrafficableForPlatoon", &DEC_GeometryFunctions::IsPointInUrbanBlockTrafficable );
+    brain.RegisterFunction( "DEC_IsPointInDestroyedUrbanBlock", &DEC_GeometryFunctions::IsPointInDestroyedUrbanBlock );
+    brain.RegisterFunction( "DEC_Geometrie_PositionsParRapportALocalisation", &DEC_GeometryFunctions::ComputeLocalisationPointsForPionsInFuseau );
+    brain.RegisterFunction( "DEC_Geometrie_CalculerPointArriveePourFuseau", &DEC_GeometryFunctions::ComputeDestPointForFuseau );
+    brain.RegisterFunction( "DEC_Geometrie_CalculerLocalisationsBU", &DEC_GeometryFunctions::ComputeUrbanBlockLocalisations );
+    brain.RegisterFunction( "DEC_Geometrie_EstPointDansFuseau_AvecParamFuseau", &DEC_GeometryFunctions::IsPointInFuseau_ParamFuseau );
+    brain.RegisterFunction( "DEC_Geometrie_LocalisationsEgales", &DEC_GeometryFunctions::CompareLocalisations );
+    brain.RegisterFunction( "DEC_Geometrie_CalculerPointSurFuseau", &DEC_GeometryFunctions::GetPointAlongFuseau );
+    brain.RegisterFunction( "DEC_Geometrie_StartCalculLignesAvantEtArrierePourPion", &DEC_GeometryFunctions::StartComputingFrontAndBackLinesForPlatoon );
+    brain.RegisterFunction( "DEC_Geometrie_CalculerDistanceLigneAvant", &DEC_GeometryFunctions::ComputeDistanceFromFrontLine );
+    brain.RegisterFunction( "DEC_Geometrie_StopCalculLignesAvantEtArriere", &DEC_GeometryFunctions::StopComputingFrontAndBackLines );
+    brain.RegisterFunction( "DEC_Geometrie_PositionAdvanceAlongDangerDirection", &DEC_GeometryFunctions::ComputePositionAdvanceAlongDangerDirection );
+    brain.RegisterFunction( "DEC_Geometrie_ConvexHull", &DEC_GeometryFunctions::ComputeConvexHull );
+
+    brain.RegisterFunction( "DEC_GetOpenSearchSpeed", &DEC_GeometryFunctions::GetOpenSearchSpeed );
+    brain.RegisterFunction( "DEC_GetOpenRecoSpeed", &DEC_GeometryFunctions::GetOpenRecoSpeed );
+    brain.RegisterFunction( "DEC_GetUrbanSearchSpeed", &DEC_GeometryFunctions::GetUrbanSearchSpeed );
+    brain.RegisterFunction( "DEC_GetUrbanRecoSpeed", &DEC_GeometryFunctions::GetUrbanRecoSpeed );
+    brain.RegisterFunction( "DEC_Geometrie_UrbanRatio", &DEC_GeometryFunctions::GetUrbanRatio );
+    brain.RegisterFunction( "DEC_Geometrie_SurfaceParametersUrbanRatio", &DEC_GeometryFunctions::GetSurfaceParametersUrbanRatio );
+    brain.RegisterFunction( "DEC_Geometrie_PointParametersUrbanRatio", &DEC_GeometryFunctions::GetPointParametersUrbanRatio );
+    brain.RegisterFunction( "DEC_Geometrie_UrbanParametersNumber", &DEC_GeometryFunctions::GetUrbanParametersNumber );
+    
+    brain.RegisterFunction( "DEC_Geometrie_CalculerAutomateDistanceLigneAvant", &DEC_GeometryFunctions::ComputeDistanceAutomatFromFrontLine );
+    brain.RegisterFunction( "DEC_Geometrie_CalculerDistanceLigneArriere", &DEC_GeometryFunctions::ComputeDistanceFromBackLine );
+    brain.RegisterFunction( "DEC_Geometrie_CalculerRetard", &DEC_GeometryFunctions::ComputeAutomatDelayFromSchedule );
+    brain.RegisterFunction( "DEC_Geometrie_PionDerriere", &DEC_GeometryFunctions::ComputeBackestAgent );
+    brain.RegisterFunction( "DEC_Geometrie_PionDevant", &DEC_GeometryFunctions::GetFrontestPion );
+    
+    brain.RegisterFunction( "DEC_Geometrie_PosDeploiementMistralNasse", &DEC_GeometryFunctions::ComputePosDeploiementASANasse );
+    brain.RegisterFunction( "DEC_Geometrie_PosDeploiementDoubleRideau", &DEC_GeometryFunctions::ComputePosDeploiementASADoubleRideau );
+
+    brain.RegisterFunction( "_DEC_Geometrie_CalculerBarycentreLocalisationDansFuseau", &DEC_GeometryFunctions::ComputeLocalisationBarycenterInFuseau );
+    brain.RegisterFunction( "DEC_Geometry_Pion_SplitLocalisation", &DEC_GeometryFunctions::SplitLocalisationInParts );
+    brain.RegisterFunction( "_DEC_Geometrie_DecoupeFuseauEnTroncons", &DEC_GeometryFunctions::SplitLocalisationInSections );
+    brain.RegisterFunction( "_DEC_Geometrie_CalculerPositionObstacle", &DEC_GeometryFunctions::ComputeObstaclePosition );
+    brain.RegisterFunction( "_DEC_Geometrie_CalculerPointArrivee", &DEC_GeometryFunctions::ComputeDestPoint );
+    brain.RegisterFunction( "_DEC_Geometrie_CalculerPointDepart", &DEC_GeometryFunctions::ComputeStartPoint );
+    brain.RegisterFunction( "_DEC_Geometrie_EstPointDansFuseau",  &DEC_GeometryFunctions::IsPointInFuseau );
+    brain.RegisterFunction( "_DEC_Geometrie_CalculerPositionParRapportALima", &DEC_GeometryFunctions::ComputePointBeforeLima );
+    brain.RegisterFunction( "_DEC_Geometrie_CalculerPositionParRapportALimaDansFuseau", &DEC_GeometryFunctions::ComputePointBeforeLimaInFuseau );
+    brain.RegisterFunction( "_DEC_Geometrie_CalculerPositionsParRapportALima",  &DEC_GeometryFunctions::ComputePointsBeforeLima );
+    brain.RegisterFunction( "_DEC_Geometrie_StartCalculLignesAvantEtArriere", &DEC_GeometryFunctions::StartComputingFrontAndBackLines );
+    brain.RegisterFunction( "_DEC_Geometrie_StartCalculAutomateLignesAvantEtArriere", &DEC_GeometryFunctions::StartComputingAutomatFrontAndBackLines );
+    brain.RegisterFunction( "DEC_Geometrie_CalculerAutomateDistanceLigneArriere", &DEC_GeometryFunctions::ComputeDistanceAutomatFromBackLine );
+    brain.RegisterFunction( "_DEC_Geometrie_CalculerPointArriveePourPion", &DEC_GeometryFunctions::ComputeDestPointForPion );
+    brain.RegisterFunction( "_DEC_Geometrie_CalculerPointProcheLocalisationDansFuseau", &DEC_GeometryFunctions::ComputeNearestLocalisationPointInFuseau );
+    brain.RegisterFunction( "_DEC_Geometrie_CalculerPointProcheLocalisationNonClippeeDansFuseau", &DEC_GeometryFunctions::ComputeNearestUnclippedLocalisationPointInFuseau );
+    brain.RegisterFunction( "_DEC_Geometrie_CalculerRetardSurObjectifs", &DEC_GeometryFunctions::ComputeDelayFromScheduleAndObjectives );
+    brain.RegisterFunction( "_DEC_Geometrie_AdvanceAlongFuseau", &DEC_GeometryFunctions::ComputeAdvanceAlongFuseau );
+    brain.RegisterFunction( "_DEC_Geometrie_GetPointsLimas", &DEC_GeometryFunctions::GetPointsOnLimasInFuseau );
+
+    // ASA
+    brain.RegisterFunction( "_DEC_Geometrie_PosDeploiementASAOmni", &DEC_GeometryFunctions::ComputePosDeploiementASAOmni );
+
+    brain.RegisterFunction( "DEC_Geometrie_PositionInterception", &DEC_GeometryFunctions::GetInterceptionPosition );
+    brain.RegisterFunction( "_DEC_Geometrie_CalculerPositionAppui", &DEC_GeometryFunctions::ComputeSupportPosition );
+    brain.RegisterFunction( "_DEC_Geometrie_CalculerPositionEmbuscade", &DEC_GeometryFunctions::ComputeAmbushPosition );
+    brain.RegisterFunction( "_DEC_Geometrie_CalculerPositionSurete", &DEC_GeometryFunctions::ComputeSafetyPosition );
+    brain.RegisterFunction( "_DEC_Geometrie_CalculerPositionSureteAvecPopulation", &DEC_GeometryFunctions::ComputeSafetyPositionWithPopulation );
+    brain.RegisterFunction( "_DEC_Geometrie_CalculerPositionSureteAvecObjectif", &DEC_GeometryFunctions::ComputeSafetyPositionWithObjective );
+    brain.RegisterFunction( "_DEC_Geometrie_CalculerEntreeFuseauLaPlusProche", &DEC_GeometryFunctions::ComputeNearestFuseauEntryPoint );
+    brain.RegisterFunction( "_DEC_Geometry_SplitLocalisationSurface", &DEC_GeometryFunctions::SplitUnitLocalisationInSurfaces );
+    brain.RegisterFunction( "_DEC_Geometry_RecursiveSplitLocalisationSurface", &DEC_GeometryFunctions::RecursiveSplitUnitLocalisationInSurfaces );
+    brain.RegisterFunction( "DEC_Geometrie_CalculerBarycentreListeConnaissancesAgents", &DEC_GeometryFunctions::ComputeKnowledgeAgentBarycenter );
+    brain.RegisterFunction( "_DEC_Geometrie_CalculerTrafficableBarycentreLocalisation", &DEC_GeometryFunctions::ComputeTrafficableLocalisationBarycenter );
+    brain.RegisterFunction( "_DEC_Geometrie_GetLeavingAreaPosition", &DEC_GeometryFunctions::GetLeavingAreaPosition );
+
+    brain.RegisterFunction( "DEC_IsPointInUrbanBlock", &DEC_GeometryFunctions::IsPointInUrbanBlock );
+
+    brain.RegisterFunction( "DEC_BMArea_Barycenter", &DEC_GeometryFunctions::ComputeBarycenter );
+
+    brain.RegisterFunction( "DEC_Fuseau_Width", &DEC_GeometryFunctions::GetWidth );
+    brain.RegisterFunction( "DEC_Fuseau_IsNull", &DEC_GeometryFunctions::IsNull );
+    brain.RegisterFunction( "DEC_Fuseau_ComputeMiddlePointsInAOR", &DEC_GeometryFunctions::ComputeMiddlePointsInAOR );
+
+    brain.RegisterFunction( "DEC_Geometrie_PositionAdvanceAlongAOR", &DEC_GeometryFunctions::ComputePositionAdvanceAlongFuseau );
+    brain.RegisterFunction( "DEC_Geometrie_CalculerEntreeFuseau", &DEC_GeometryFunctions::ComputeEntryPointForFuseau );
+}
 
 namespace
 {
@@ -481,11 +629,11 @@ std::vector< boost::shared_ptr< MT_Vector2D > > DEC_GeometryFunctions::ComputeLo
         TER_DistanceLess cmp( vBarycenter );
         T_PointSet collisionSet( cmp );
         collisionSet.clear();
-        segmentLeftSide.Intersect2D( clippedPointVector, collisionSet, PRECISION );
+        segmentLeftSide.Intersect2D( clippedPointVector, collisionSet, precision );
         if( !collisionSet.empty() )
             vLeftPoint = *(--collisionSet.end());
         collisionSet.clear();
-        segmentRightSide.Intersect2D( clippedPointVector, collisionSet, PRECISION );
+        segmentRightSide.Intersect2D( clippedPointVector, collisionSet, precision );
         if( !collisionSet.empty() )
             vRightPoint = *(--collisionSet.end());
     }
@@ -641,13 +789,13 @@ bool DEC_GeometryFunctions::ComparePositions( MT_Vector2D* p1, MT_Vector2D* p2 )
 // Name: DEC_GeometryFunctions::ComputeSupportPosition
 // Created: NLD 2003-10-15
 // -----------------------------------------------------------------------------
-boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeSupportPosition( const MIL_AgentPion& callerAgent, DEC_Decision_ABC* pAgentToSupport, double rDist )
+boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeSupportPosition( const DEC_Decision_ABC* callerAgent, DEC_Decision_ABC* pAgentToSupport, double rDist )
 {
     if( pAgentToSupport == 0 )
         throw MASA_EXCEPTION( "Invalid agent" );
 
     const MT_Vector2D& vUnitToSupportPos = pAgentToSupport->GetPion().GetRole< PHY_RoleInterface_Location >().GetPosition ();
-    const MIL_Fuseau& fuseau             = callerAgent.GetOrderManager().GetFuseau();
+    const MIL_Fuseau& fuseau             = callerAgent->GetOrderManager().GetFuseau();
 
     MT_Vector2D  vDirLooked;
     pAgentToSupport->GetPion().GetRole< PHY_RoleInterface_Perceiver >().GetMainPerceptionDirection( vDirLooked );
@@ -693,14 +841,14 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeSupportPosition( 
 // Name: DEC_GeometryFunctions::ComputeAmbushPosition
 // Created: NLD 2003-11-05
 // -----------------------------------------------------------------------------
-boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeAmbushPosition( const MIL_AgentPion& callerAgent, MT_Vector2D* pAmbushPosition, MT_Vector2D* pRetreatPosition, double rDist )
+boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeAmbushPosition( const DEC_Decision_ABC* callerAgent, MT_Vector2D* pAmbushPosition, MT_Vector2D* pRetreatPosition, double rDist )
 {
     if( !pAmbushPosition || !pRetreatPosition )
         throw MASA_EXCEPTION( "Invalid position" );;
 
     boost::shared_ptr< MT_Vector2D > pResult = boost::make_shared< MT_Vector2D >();
 
-    MT_Vector2D vDirAmbushPos = callerAgent.GetOrderManager().GetDirDanger();
+    MT_Vector2D vDirAmbushPos = callerAgent->GetOrderManager().GetDirDanger();
     vDirAmbushPos.Rotate90ClockWise();
     vDirAmbushPos.Normalize();
 
@@ -718,7 +866,7 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeAmbushPosition( c
 // Name: DEC_GeometryFunctions::ComputeSafetyPosition
 // Created: NLD 2004-04-28 (Copied from shit's JDY code)
 // -----------------------------------------------------------------------------
-boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeSafetyPosition( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledgeEnemy, double rMinDistance )
+boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeSafetyPosition( const DEC_Decision_ABC* callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledgeEnemy, double rMinDistance )
 {
     boost::shared_ptr< MT_Vector2D > pResult;
     if( pKnowledgeEnemy && pKnowledgeEnemy->IsValid() )
@@ -726,9 +874,9 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeSafetyPosition( c
         // Position de l'ennemi
         const MT_Vector2D& vEnemyPos  = pKnowledgeEnemy->GetPosition();
 
-        MT_Vector2D vDirEniToAmi = ( callerAgent.GetRole< PHY_RoleInterface_Location >().GetPosition() - vEnemyPos).Normalize();
+        MT_Vector2D vDirEniToAmi = ( callerAgent->GetPion().GetRole< PHY_RoleInterface_Location >().GetPosition() - vEnemyPos).Normalize();
         if( vDirEniToAmi.IsZero() )
-            vDirEniToAmi = -callerAgent.GetOrderManager().GetDirDanger();
+            vDirEniToAmi = -callerAgent->GetOrderManager().GetDirDanger();
 
         MT_Vector2D vSafetyPos = vEnemyPos + vDirEniToAmi * rMinDistance;
 
@@ -744,14 +892,14 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeSafetyPosition( c
 // Created: SBO 2005-12-16
 // Modified: RPD 2009-08-04
 // -----------------------------------------------------------------------------
-boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeSafetyPositionWithPopulation( const MIL_AgentPion& callerAgent, unsigned int nPopulationKnowledgeID, double rMinDistance )
+boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeSafetyPositionWithPopulation( const DEC_Decision_ABC* callerAgent, unsigned int nPopulationKnowledgeID, double rMinDistance )
 {
-    auto bbKg = callerAgent.GetKnowledgeGroup()->GetKnowledge();
+    auto bbKg = callerAgent->GetKnowledgeGroup()->GetKnowledge();
     if( bbKg )
     {
         boost::shared_ptr< DEC_Knowledge_Population > pKnowledge = bbKg->GetKnowledgePopulationFromID( nPopulationKnowledgeID );
         if( pKnowledge )
-            return pKnowledge->GetSafetyPosition( callerAgent, rMinDistance );
+            return pKnowledge->GetSafetyPosition( callerAgent->GetPion(), rMinDistance );
     }
     return boost::shared_ptr< MT_Vector2D >();
 }
@@ -760,7 +908,7 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeSafetyPositionWit
 // Name: DEC_GeometryFunctions::ComputeSafetyPositionWithObjective
 // Created: NLD 2004-04-28
 // -----------------------------------------------------------------------------
-boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeSafetyPositionWithObjective( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledgeEnnemy, double rMinMeterDistance, MT_Vector2D* pObjective )
+boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeSafetyPositionWithObjective( const DEC_Decision_ABC* callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledgeEnnemy, double rMinMeterDistance, MT_Vector2D* pObjective )
 {
     boost::shared_ptr< MT_Vector2D > pResult;
     if( pKnowledgeEnnemy.get() && pKnowledgeEnnemy->IsValid() )
@@ -768,11 +916,12 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeSafetyPositionWit
         if( !pObjective )
             throw MASA_EXCEPTION( "Invalid position" );
 
-        double     rMinDistance = MIL_Tools::ConvertMeterToSim( rMinMeterDistance );
+        double rMinDistance = MIL_Tools::ConvertMeterToSim( rMinMeterDistance );
 
-        const MT_Vector2D& vEnnemiPos  = pKnowledgeEnnemy->GetPosition();
+        const MT_Vector2D& vEnnemiPos = pKnowledgeEnnemy->GetPosition();
 
-        MT_Vector2D vDirEniToAmi       = ( callerAgent.GetRole< PHY_RoleInterface_Location >().GetPosition() - vEnnemiPos).Normalize();
+        MIL_AgentPion& agent = callerAgent->GetPion();
+        MT_Vector2D vDirEniToAmi = ( agent.GetRole< PHY_RoleInterface_Location >().GetPosition() - vEnnemiPos).Normalize();
         MT_Vector2D vDirEniToObjective = ( *pObjective - vEnnemiPos ).Normalize();
 
         MT_Vector2D vSafetyPos;
@@ -787,7 +936,7 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeSafetyPositionWit
         TER_World::GetWorld().ClipPointInsideWorld( vSafetyPos );
 
         pResult.reset( new MT_Vector2D( vSafetyPos ) );
-        if( !callerAgent.GetRole< PHY_RolePion_TerrainAnalysis >().CanMoveOn( *pResult ) )
+        if( !agent.GetRole< PHY_RolePion_TerrainAnalysis >().CanMoveOn( *pResult ) )
             pResult.reset();
     }
     return pResult;
@@ -797,10 +946,10 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeSafetyPositionWit
 // Name: DEC_GeometryFunctions::ComputeNearestFuseauEntryPoint
 // Created: NLD 2003-04-24
 //-----------------------------------------------------------------------------
-boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeNearestFuseauEntryPoint( const MIL_AgentPion& callerAgent )
+boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeNearestFuseauEntryPoint( const DEC_Decision_ABC* callerAgent )
 {
     boost::shared_ptr< MT_Vector2D > pResult = boost::make_shared< MT_Vector2D >();
-    callerAgent.GetOrderManager().GetFuseau().ComputeEntryPoint( callerAgent.GetRole< PHY_RoleInterface_Location >().GetPosition(), *pResult );
+    callerAgent->GetOrderManager().GetFuseau().ComputeEntryPoint( callerAgent->GetPion().GetRole< PHY_RoleInterface_Location >().GetPosition(), *pResult );
     return pResult;
 }
 
@@ -1176,7 +1325,7 @@ std::vector< boost::shared_ptr< MT_Vector2D > > DEC_GeometryFunctions::ComputeUr
 // @return a position which the agent can reach inside an area, or the barycenter if no trafficable position can be found.
 // Created: LMT 2010-10-13
 // -----------------------------------------------------------------------------
-boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeTrafficableLocalisationBarycenter( MIL_AgentPion& pion, TER_Localisation* pLocalisation )
+boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeTrafficableLocalisationBarycenter( const DEC_Decision_ABC* pion, TER_Localisation* pLocalisation )
 {
     if( !pLocalisation )
         throw MASA_EXCEPTION( "Compute barycenter of null position" );
@@ -1186,7 +1335,7 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeTrafficableLocali
         const MIL_UrbanObject_ABC* object = MIL_AgentServer::GetWorkspace().GetUrbanCache().FindBlock( *pBarycenter );
         if( object )
         {
-            const double myWeight = pion.GetRole< PHY_RoleInterface_Composantes >().GetMaxWeight();
+            const double myWeight = pion->GetPion().GetRole< PHY_RoleInterface_Composantes >().GetMaxWeight();
             if( const UrbanPhysicalCapacity* pPhysical = object->Retrieve< UrbanPhysicalCapacity >() )
             {
                 if( pPhysical->GetTrafficability() <= myWeight )
@@ -1268,18 +1417,9 @@ bool DEC_GeometryFunctions::IsPointInUrbanBlock( const MT_Vector2D& point, const
 // Name: DEC_GeometryFunctions::IsPointInUrbanBlockTrafficable
 // Created: LMT 2010-10-18
 // -----------------------------------------------------------------------------
-bool DEC_GeometryFunctions::IsPointInUrbanBlockTrafficable( MIL_AgentPion& pion, const MT_Vector2D& point )
+bool DEC_GeometryFunctions::IsPointInUrbanBlockTrafficable( DEC_Decision_ABC* pion, const MT_Vector2D& point )
 {
-    return DEC_GeometryFunctions::IsUrbanBlockTrafficable( point, pion.GetRole< PHY_RoleInterface_Composantes >().GetMaxWeight( true ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_GeometryFunctions::IsPointInUrbanBlockTrafficableForPlatoon
-// Created: LMT 2012-03-15
-// -----------------------------------------------------------------------------
-bool DEC_GeometryFunctions::IsPointInUrbanBlockTrafficableForPlatoon( DEC_Decision_ABC* pion, const MT_Vector2D& point )
-{
-    return DEC_GeometryFunctions::IsPointInUrbanBlockTrafficable( pion->GetPion(), point );
+    return DEC_GeometryFunctions::IsUrbanBlockTrafficable( point, pion->GetPion().GetRole< PHY_RoleInterface_Composantes >().GetMaxWeight( true ) );
 }
 
 bool DEC_GeometryFunctions::IsPointInDestroyedUrbanBlock( const MT_Vector2D& point )
@@ -1413,7 +1553,7 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeMeanDirection( co
 // Created: JVT 2005-01-17
 // Modified: RPD 2009-08-05
 // -----------------------------------------------------------------------------
-boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeKnowledgeAgentBarycenter( const MIL_AgentPion& /*caller*/, const std::vector< boost::shared_ptr< DEC_Knowledge_Agent > >& vKnowledges )
+boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeKnowledgeAgentBarycenter( const std::vector< boost::shared_ptr< DEC_Knowledge_Agent > >& vKnowledges )
 {
     boost::shared_ptr< MT_Vector2D > pResult = boost::make_shared< MT_Vector2D >( 0., 0. );
 
@@ -1753,7 +1893,7 @@ bool DEC_GeometryFunctions::GetInterceptionPoint( const MT_Vector2D& vToIntercep
 // Name: DEC_GeometryFunctions::GetInterceptionPosition
 // Created: JVT 2005-02-17
 // -----------------------------------------------------------------------------
-boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::GetInterceptionPosition( const MIL_AgentPion& /*caller*/, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge, MT_Vector2D* pInterceptingPosition, double rSpeed )
+boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::GetInterceptionPosition( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge, MT_Vector2D* pInterceptingPosition, double rSpeed )
 {
     if( !pInterceptingPosition )
         throw MASA_EXCEPTION( "invalid parameter." );
@@ -2412,7 +2552,7 @@ std::pair< std::vector< boost::shared_ptr< TER_Localisation > >, unsigned int > 
 // Name: DEC_GeometryFunctions::SplitUnitLocalisationInSurfaces
 // Created: JVT 2004-11-03
 // -----------------------------------------------------------------------------
-std::pair< std::vector< boost::shared_ptr< TER_Localisation > >, unsigned int > DEC_GeometryFunctions::SplitUnitLocalisationInSurfaces( const MIL_AgentPion& caller, TER_Localisation* pLocalisation, const double rAverageArea, MT_Vector2D* direction )
+std::pair< std::vector< boost::shared_ptr< TER_Localisation > >, unsigned int > DEC_GeometryFunctions::SplitUnitLocalisationInSurfaces( const DEC_Decision_ABC* caller, TER_Localisation* pLocalisation, const double rAverageArea, MT_Vector2D* direction )
 {
     if( !pLocalisation )
         throw MASA_EXCEPTION( "invalid parameter." );
@@ -2421,7 +2561,7 @@ std::pair< std::vector< boost::shared_ptr< TER_Localisation > >, unsigned int > 
 
     TER_Localisation clippedLocalisation;
     unsigned int errCode = eError_LocalisationPasDansFuseau;
-    if ( ClipLocalisationInFuseau( *pLocalisation, caller.GetOrderManager().GetFuseau(), clippedLocalisation ) )
+    if ( ClipLocalisationInFuseau( *pLocalisation, caller->GetOrderManager().GetFuseau(), clippedLocalisation ) )
     {
         const unsigned int nNbrParts = std::max( (unsigned int)1, (unsigned int)( clippedLocalisation.GetArea() / rAverageArea ) );
         errCode = ::SplitLocalisation( clippedLocalisation, nNbrParts, direction, result );
@@ -2433,7 +2573,7 @@ std::pair< std::vector< boost::shared_ptr< TER_Localisation > >, unsigned int > 
 // Name: DEC_GeometryFunctions::RecursiveSplitLocalisationInSurfaces
 // Created: BCI 2011-01-31
 // -----------------------------------------------------------------------------
-std::pair< std::vector< boost::shared_ptr< TER_Localisation > >, unsigned int > DEC_GeometryFunctions::RecursiveSplitUnitLocalisationInSurfaces( const MIL_AgentPion& caller, TER_Localisation* pLocalisation, const double rAverageArea )
+std::pair< std::vector< boost::shared_ptr< TER_Localisation > >, unsigned int > DEC_GeometryFunctions::RecursiveSplitUnitLocalisationInSurfaces( const DEC_Decision_ABC* caller, TER_Localisation* pLocalisation, const double rAverageArea )
 {
     if( !pLocalisation )
         throw MASA_EXCEPTION( "Null location when splitting location in surfaces" );
@@ -2443,7 +2583,7 @@ std::pair< std::vector< boost::shared_ptr< TER_Localisation > >, unsigned int > 
 
     TER_Localisation clippedLocalisation;
     unsigned int errCode = eError_LocalisationPasDansFuseau;
-    if ( ClipLocalisationInFuseau( *pLocalisation, caller.GetOrderManager().GetFuseau(), clippedLocalisation ) )
+    if ( ClipLocalisationInFuseau( *pLocalisation, caller->GetOrderManager().GetFuseau(), clippedLocalisation ) )
     {
         const unsigned int nNbrParts = std::max( (unsigned int)1, (unsigned int)( clippedLocalisation.GetArea() / rAverageArea ) );
         if( nNbrParts < 4 )
@@ -2539,7 +2679,7 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeStartPoint( const
 // Name: DEC_GeometryFunctions::GetLeavingAreaPosition
 // Created: MGG 2011-01-20
 // -----------------------------------------------------------------------------
-boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::GetLeavingAreaPosition( const MIL_AgentPion& caller, TER_Localisation* pLocalisation )
+boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::GetLeavingAreaPosition( const DEC_Decision_ABC* caller, TER_Localisation* pLocalisation )
 {
     if( !pLocalisation )
         throw MASA_EXCEPTION( "Invalid location" );
@@ -2549,7 +2689,7 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::GetLeavingAreaPosition( 
 
     boost::shared_ptr< MT_Vector2D > pResult;
     MT_Vector2D vResult;
-    scale.ComputeNearestOutsidePoint( GetPosition( caller ), vResult );
+    scale.ComputeNearestOutsidePoint( GetPosition( caller->GetPion() ), vResult );
     pResult = boost::make_shared< MT_Vector2D >( vResult );
 
     return pResult;

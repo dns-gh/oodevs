@@ -10,6 +10,11 @@
 #ifndef __DEC_AutomateFunctions_h_
 #define __DEC_AutomateFunctions_h_
 
+namespace sword
+{
+    class Brain;
+}
+
 class DEC_Decision_ABC;
 class DEC_Knowledge_Object;
 class MIL_Automate;
@@ -24,6 +29,8 @@ class MT_Vector2D;
 class DEC_AutomateFunctions
 {
 public:
+    static void Register( sword::Brain& brain );
+
     //! @name Functions
     //@{
     // Accessors

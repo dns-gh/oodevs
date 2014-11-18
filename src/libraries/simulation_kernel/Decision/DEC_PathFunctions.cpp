@@ -11,6 +11,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_PathFunctions.h"
+#include "Decision/Brain.h"
 #include "Decision/DEC_PathType.h"
 #include "Decision/DEC_Agent_Path.h"
 #include "Decision/DEC_Decision_ABC.h"
@@ -39,11 +40,35 @@
 #include <geometry/Types.h>
 #include <boost/smart_ptr/make_shared.hpp>
 
+void DEC_PathFunctions::Register( sword::Brain& brain )
+{
+    brain.RegisterFunction( "_DEC_CreerItineraire", &DEC_PathFunctions::CreatePathToPoint );
+    brain.RegisterFunction( "_DEC_CreerItineraireBM", &DEC_PathFunctions::CreatePathToPointBM );
+    brain.RegisterFunction( "_DEC_CreerItineraireListe", &DEC_PathFunctions::CreatePathToPointList );
+    brain.RegisterFunction( "DEC_Itineraire_Etat", &DEC_PathFunctions::GetPathState );
+    brain.RegisterFunction( "_DEC_Itineraire_EstEnMouvementSur", &DEC_PathFunctions::IsMovingOnPath );
+    brain.RegisterFunction( "_DEC_GetNextObjectOnPath", &DEC_PathFunctions::GetNextObjectOnPath );
+    brain.RegisterFunction( "_DEC_GetNextObjectOnPathWithBypassed", &DEC_PathFunctions::GetNextObjectOnPathWithBypassed );
+    brain.RegisterFunction( "DEC_Itineraire_DernierPoint", &DEC_PathFunctions::GetLastPointOfPath );
+
+    // Rep_Points
+    brain.RegisterFunction( "DEC_GetRepPoint", &DEC_PathFunctions::GetRepPoint );
+    brain.RegisterFunction( "DEC_IsAvantPoint", &DEC_PathFunctions::IsAvantPoint );
+    brain.RegisterFunction( "DEC_IsPoint", &DEC_PathFunctions::IsPoint );
+    brain.RegisterFunction( "DEC_GetTypePoint", &DEC_PathFunctions::GetTypePoint );
+    brain.RegisterFunction( "DEC_GetDestPoint", &DEC_PathFunctions::GetDestPoint );
+    brain.RegisterFunction( "DEC_GetTypeLimaPoint", &DEC_PathFunctions::GetTypeLimaPoint );
+    brain.RegisterFunction( "DEC_GetLimaPoint", &DEC_PathFunctions::GetLimaPoint );
+    brain.RegisterFunction( "DEC_GetNextRemovableObjectOnPath", &DEC_PathFunctions::GetNextRemovableObjectOnPath );
+    brain.RegisterFunction( "DEC_GetClosestPath", &DEC_PathFunctions::GetClosestPath );
+
+}
+
 // -----------------------------------------------------------------------------
 // Name: DEC_PathFunctions::CreatePathToPointBM
 // Created: MGD 2009-10-31
 // -----------------------------------------------------------------------------
-boost::shared_ptr< TER_Path_ABC > DEC_PathFunctions::CreatePathToPointBM( MIL_AgentPion& callerAgent, boost::shared_ptr< MT_Vector2D > end, int pathType )
+boost::shared_ptr< TER_Path_ABC > DEC_PathFunctions::CreatePathToPointBM( DEC_Decision_ABC* callerAgent, boost::shared_ptr< MT_Vector2D > end, int pathType )
 {
     return CreatePathToPoint( callerAgent, end.get(), pathType );
 }
@@ -110,31 +135,33 @@ namespace
 // Name: DEC_PathFunctions::CreatePathToPoint
 // Created: NLD 2004-09-23
 // -----------------------------------------------------------------------------
-boost::shared_ptr< TER_Path_ABC > DEC_PathFunctions::CreatePathToPoint( MIL_AgentPion& callerAgent, MT_Vector2D* pEnd, int pathType )
+boost::shared_ptr< TER_Path_ABC > DEC_PathFunctions::CreatePathToPoint( DEC_Decision_ABC* callerAgent, MT_Vector2D* pEnd, int pathType )
 {
     assert( pEnd );
+    MIL_AgentPion& agent = callerAgent->GetPion();
     std::vector< MT_Vector2D > points;
-    points.push_back( callerAgent.GetRole< PHY_RoleInterface_Location >().GetPosition() );
+     points.push_back( agent.GetRole< PHY_RoleInterface_Location >().GetPosition() );
     points.push_back( *pEnd );
     const DEC_PathType* pPathType = DEC_PathType::Find( pathType );
     assert( pPathType );
-    return StartCompute( callerAgent, points, *pPathType );
+    return StartCompute( agent, points, *pPathType );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_PathFunctions::CreatePathToPointList
 // Created: NLD 2004-09-23
 // -----------------------------------------------------------------------------
-boost::shared_ptr< TER_Path_ABC > DEC_PathFunctions::CreatePathToPointList( MIL_AgentPion& callerAgent, std::vector< boost::shared_ptr< MT_Vector2D > > listPt, int pathType )
+boost::shared_ptr< TER_Path_ABC > DEC_PathFunctions::CreatePathToPointList( DEC_Decision_ABC* callerAgent, std::vector< boost::shared_ptr< MT_Vector2D > > listPt, int pathType )
 {
     assert( !listPt.empty() );
     const DEC_PathType* pPathType = DEC_PathType::Find( pathType );
     assert( pPathType );
+    MIL_AgentPion& agent = callerAgent->GetPion();
     std::vector< MT_Vector2D > points;
-    points.push_back( callerAgent.GetRole< PHY_RoleInterface_Location >().GetPosition() );
+    points.push_back( agent.GetRole< PHY_RoleInterface_Location >().GetPosition() );
     for( auto it = listPt.begin(); it != listPt.end(); ++it )
         points.push_back( **it );
-    return StartCompute( callerAgent, points, *pPathType );
+    return StartCompute( agent, points, *pPathType );
 }
 
 // -----------------------------------------------------------------------------
@@ -142,7 +169,7 @@ boost::shared_ptr< TER_Path_ABC > DEC_PathFunctions::CreatePathToPointList( MIL_
 // Created: NLD 2004-09-23
 // Created: RPD 2009-08-04
 // -----------------------------------------------------------------------------
-int DEC_PathFunctions::GetPathState( MIL_AgentPion& /*callerAgent*/, TER_Path_ABC* pPath )
+int DEC_PathFunctions::GetPathState( TER_Path_ABC* pPath )
 {
     if( !pPath )
         throw MASA_EXCEPTION( "invalid parameter." );
@@ -203,18 +230,18 @@ namespace
 // Name: DEC_PathFunctions::GetNextObjectOnPath
 // Created: NLD 2004-05-04
 // -----------------------------------------------------------------------------
-std::pair< bool, std::pair< boost::shared_ptr< DEC_Knowledge_Object >, float > > DEC_PathFunctions::GetNextObjectOnPath( const MIL_Agent_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > /*oId*/, float /*oDistance*/, const std::vector< std::string >& params )
+std::pair< bool, std::pair< boost::shared_ptr< DEC_Knowledge_Object >, float > > DEC_PathFunctions::GetNextObjectOnPath( const DEC_Decision_ABC* callerAgent, boost::shared_ptr< DEC_Knowledge_Object > /*oId*/, float /*oDistance*/, const std::vector< std::string >& params )
 {
-    return ::GetNextObjectOnPath( callerAgent, params );
+    return ::GetNextObjectOnPath( callerAgent->GetPion(), params );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_PathFunctions::GetNextObjectOnPathWithBypassed
 // Created: MMC 2013-06-06
 // -----------------------------------------------------------------------------
-std::pair< bool, std::pair< boost::shared_ptr< DEC_Knowledge_Object >, float > > DEC_PathFunctions::GetNextObjectOnPathWithBypassed( const MIL_Agent_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > /*oId*/, float /*oDistance*/, const std::vector< std::string >& params )
+std::pair< bool, std::pair< boost::shared_ptr< DEC_Knowledge_Object >, float > > DEC_PathFunctions::GetNextObjectOnPathWithBypassed( const DEC_Decision_ABC* callerAgent, boost::shared_ptr< DEC_Knowledge_Object > /*oId*/, float /*oDistance*/, const std::vector< std::string >& params )
 {
-    return ::GetNextObjectOnPath( callerAgent, params, false );
+    return ::GetNextObjectOnPath( callerAgent->GetPion(), params, false );
 }
 
 class CanRemoveFromPathComputer : public OnComponentComputer_ABC
@@ -268,7 +295,7 @@ std::pair< bool, std::pair< boost::shared_ptr< DEC_Knowledge_Object >, float > >
 // Created: JVT 2004-11-30
 // Created: RPD 2009-08-04
 // -----------------------------------------------------------------------------
-boost::shared_ptr< MT_Vector2D > DEC_PathFunctions::GetLastPointOfPath( const MIL_AgentPion& /*callerAgent*/, const TER_Path_ABC* pPath )
+boost::shared_ptr< MT_Vector2D > DEC_PathFunctions::GetLastPointOfPath( const TER_Path_ABC* pPath )
 {
     assert( pPath );
     const DEC_PathResult* path = dynamic_cast< const DEC_PathResult* > ( pPath );
@@ -282,9 +309,9 @@ boost::shared_ptr< MT_Vector2D > DEC_PathFunctions::GetLastPointOfPath( const MI
 // Created: JVT 2004-11-30
 // Created: RPD 2009-08-04
 // -----------------------------------------------------------------------------
-bool DEC_PathFunctions::IsMovingOnPath( const MIL_AgentPion& callerAgent, const TER_Path_ABC* pPath )
+bool DEC_PathFunctions::IsMovingOnPath( const DEC_Decision_ABC* callerAgent, const TER_Path_ABC* pPath )
 {
-    return pPath && callerAgent.GetRole< moving::PHY_RoleAction_Moving >().IsMovingOn( *pPath );
+    return pPath && callerAgent->GetPion().GetRole< moving::PHY_RoleAction_Moving >().IsMovingOn( *pPath );
 }
 
 // -----------------------------------------------------------------------------

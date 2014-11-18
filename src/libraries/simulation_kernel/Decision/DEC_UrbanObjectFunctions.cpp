@@ -10,6 +10,9 @@
 #include "simulation_kernel_pch.h"
 #include "DEC_UrbanObjectFunctions.h"
 #include "MIL_AgentServer.h"
+#include "Decision/Brain.h"
+#include "Decision/DEC_Decision_ABC.h"
+#include "Decision/DEC_Tools.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/MIL_Army_ABC.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
@@ -33,15 +36,33 @@
 #include "Urban/UrbanPhysicalCapacity.h"
 #include <boost/make_shared.hpp>
 
+void DEC_UrbanObjectFunctions::Register( sword::Brain& brain )
+{
+    brain.RegisterFunction( "DEC_ConnaissanceUrbanBlock_Barycentre", &DEC_UrbanObjectFunctions::GetCurrentBarycenter );
+    brain.RegisterFunction( "DEC_ConnaissanceUrbanBlock_BarycentreDansBU", &DEC_UrbanObjectFunctions::GetBarycenter );
+    brain.RegisterFunction( "DEC_ConnaissanceUrbanBlock_Lisiere", &DEC_UrbanObjectFunctions::GetBoundingBox );
+    brain.RegisterFunction( "DEC_PolygoneBlocUrbain", &DEC_UrbanObjectFunctions::GetPolygonFromUrbanBlock );
+    brain.RegisterFunction( "DEC_BlocUrbain_Type", &DEC_UrbanObjectFunctions::GetType );
+    brain.RegisterFunction( "DEC_EtatBlocUrbain", &DEC_UrbanObjectFunctions::GetStateUrbanBlock );
+    brain.RegisterFunction( "DEC_SetUrbanBlockState", &DEC_UrbanObjectFunctions::SetUrbanBlockState );
+    brain.RegisterFunction( "DEC_UrbanBlocksInZone", &DEC_UrbanObjectFunctions::GetUrbanBlockInZone );
+    brain.RegisterFunction( "DEC_EtatBlocUrbain",  &DEC_UrbanObjectFunctions::GetStateUrbanBlock );
+    brain.RegisterFunction( "_DEC_ConnaissanceUrbanBlock_NiveauDeReconnaissanceCourant", &DEC_UrbanObjectFunctions::GetCurrentRecceProgress );
+    brain.RegisterFunction( "_DEC_ConnaissanceBlocUrbain_Traficabilite", &DEC_UrbanObjectFunctions::GetPathfindCost );
+    brain.RegisterFunction( "_DEC_DetruireBlocUrbain", &DEC_UrbanObjectFunctions::DestroyUrbanBlock );
+    brain.RegisterFunction( "_DEC_ConnaissanceBlocUrbain_RapForLocal", &DEC_UrbanObjectFunctions::GetRapForLocal );
+    brain.RegisterFunction( "_DEC_Connaissances_UnitesEnnemiesVivantesDansBlocUrbain", &DEC_UrbanObjectFunctions::GetLivingEnemiesInBU );
+}
+
 // -----------------------------------------------------------------------------
 // Name: DEC_UrbanObjectFunctions::GetCurrentPerceptionLevel
 // Created: SLG 2010-02-01
 // -----------------------------------------------------------------------------
-float DEC_UrbanObjectFunctions::GetCurrentRecceProgress( const MIL_AgentPion& pion, MIL_UrbanObject_ABC* pUrbanObject )
+float DEC_UrbanObjectFunctions::GetCurrentRecceProgress( const DEC_Decision_ABC* pion, MIL_UrbanObject_ABC* pUrbanObject )
 {
     if( pUrbanObject )
     {
-        boost::shared_ptr< DEC_Knowledge_Urban > pKnowledge = pion.GetArmy().GetKnowledge().GetKnowledgeUrbanContainer().GetKnowledgeUrban( *pUrbanObject );
+        boost::shared_ptr< DEC_Knowledge_Urban > pKnowledge = pion->GetEntity().GetArmy().GetKnowledge().GetKnowledgeUrbanContainer().GetKnowledgeUrban( *pUrbanObject );
         if( pKnowledge )
             return pKnowledge->GetCurrentRecceProgress();
     }
@@ -52,10 +73,10 @@ float DEC_UrbanObjectFunctions::GetCurrentRecceProgress( const MIL_AgentPion& pi
 // Name: DEC_UrbanObjectFunctions::GetLivingEnemiesInBU
 // Created: GGE 2010-08-16
 // -----------------------------------------------------------------------------
-T_ConstKnowledgeAgentVector DEC_UrbanObjectFunctions::GetLivingEnemiesInBU( const MIL_AgentPion& callerAgent, MIL_UrbanObject_ABC* pUrbanObject )
+T_ConstKnowledgeAgentVector DEC_UrbanObjectFunctions::GetLivingEnemiesInBU( const DEC_Decision_ABC* callerAgent, MIL_UrbanObject_ABC* pUrbanObject )
 {
     T_ConstKnowledgeAgentVector knowledges;
-    auto bbKg = callerAgent.GetKnowledgeGroup()->GetKnowledge();
+    auto bbKg = callerAgent->GetKnowledgeGroup()->GetKnowledge();
     if( bbKg )
     {
         const T_KnowledgeAgentVector& enemies = bbKg->GetEnemies();
@@ -132,13 +153,13 @@ std::vector< boost::shared_ptr< MT_Vector2D > > DEC_UrbanObjectFunctions::GetBou
 // Name: DEC_UrbanObjectFunctions::GetPathfindCost
 // Created: MGD 2010-03-18
 // -----------------------------------------------------------------------------
-double DEC_UrbanObjectFunctions::GetPathfindCost( const MIL_AgentPion& callerAgent, MIL_UrbanObject_ABC* pUrbanObject )
+double DEC_UrbanObjectFunctions::GetPathfindCost( const DEC_Decision_ABC* callerAgent, MIL_UrbanObject_ABC* pUrbanObject )
 {
     if( pUrbanObject )
     {
         if( const UrbanPhysicalCapacity* pPhysical = pUrbanObject->Retrieve< UrbanPhysicalCapacity >() )
         {
-            if( callerAgent.GetRole< PHY_RoleInterface_Composantes >().GetMaxWeight() > pPhysical->GetTrafficability() )
+            if( callerAgent->GetPion().GetRole< PHY_RoleInterface_Composantes >().GetMaxWeight() > pPhysical->GetTrafficability() )
                 return -1.;
             return pPhysical->GetOccupation();
         }
@@ -150,9 +171,9 @@ double DEC_UrbanObjectFunctions::GetPathfindCost( const MIL_AgentPion& callerAge
 // Name: DEC_UrbanObjectFunctions::GetRapForLocal
 // Created: MGD 2010-05-05
 // -----------------------------------------------------------------------------
-float DEC_UrbanObjectFunctions::GetRapForLocal( const MIL_AgentPion& callerAgent, MIL_UrbanObject_ABC* pUrbanObject )
+double DEC_UrbanObjectFunctions::GetRapForLocal( const DEC_Decision_ABC* callerAgent, MIL_UrbanObject_ABC* pUrbanObject )
 {
-    auto bbKg = callerAgent.GetKnowledgeGroup()->GetKnowledge();
+    auto bbKg = callerAgent->GetKnowledgeGroup()->GetKnowledge();
     if( !bbKg )
         return 1.;
 
@@ -160,6 +181,7 @@ float DEC_UrbanObjectFunctions::GetRapForLocal( const MIL_AgentPion& callerAgent
     double rTotalFightScoreEnemy  = 0;
     double rTotalFightScoreFriend = 0;
 
+    const MIL_AgentPion& agent = callerAgent->GetPion();
     const T_KnowledgeAgentVector& enemies = bbKg->GetEnemies();
     const std::size_t enemiesSize = enemies.size();
     if( enemiesSize )
@@ -170,7 +192,7 @@ float DEC_UrbanObjectFunctions::GetRapForLocal( const MIL_AgentPion& callerAgent
 
         for( auto it = enemies.begin(); it != enemies.end(); ++it )
             if( *it)
-                rTotalFightScoreEnemy += static_cast< float >( ( *it )->GetDangerosity( callerAgent, false, material ) );
+                rTotalFightScoreEnemy += static_cast< float >( ( *it )->GetDangerosity( agent, false, material ) );
 
         const T_KnowledgeAgentVector& allies = bbKg->GetFriends();
         for( auto it = allies.begin(); it != allies.end(); ++it )
@@ -190,11 +212,11 @@ float DEC_UrbanObjectFunctions::GetRapForLocal( const MIL_AgentPion& callerAgent
         rRapForValue = rTotalFightScoreFriend / rTotalFightScoreEnemy;
 
     // Add bonus if the pion is posted in this urbanbloc
-    const MIL_UrbanObject_ABC* urbanBlock = callerAgent.GetRole< PHY_RoleInterface_UrbanLocation >().GetCurrentUrbanBlock();
-    if( pUrbanObject && urbanBlock && pUrbanObject == urbanBlock && callerAgent.GetRole< PHY_RoleInterface_Deployment >().IsDeployed() )  // $$$$ _RC_ LGY 2011-02-24: == sur les ID
+    const MIL_UrbanObject_ABC* urbanBlock = agent.GetRole< PHY_RoleInterface_UrbanLocation >().GetCurrentUrbanBlock();
+    if( pUrbanObject && urbanBlock && pUrbanObject == urbanBlock && agent.GetRole< PHY_RoleInterface_Deployment >().IsDeployed() )  // $$$$ _RC_ LGY 2011-02-24: == sur les ID
         rRapForValue *= 1.2;
     rRapForValue = std::max( 0.2, std::min( 5., rRapForValue ) );
-    return static_cast< float >( rRapForValue );
+    return rRapForValue;
 }
 
 // -----------------------------------------------------------------------------
@@ -236,22 +258,23 @@ boost::shared_ptr< TER_Localisation > DEC_UrbanObjectFunctions::GetPolygonFromUr
 // Name: DEC_UrbanObjectFunctions::DestroyUrbanBlock
 // Created: EVH 2011-04-04
 // -----------------------------------------------------------------------------
-void DEC_UrbanObjectFunctions::DestroyUrbanBlock(  MIL_AgentPion& callerAgent, MIL_UrbanObject_ABC* pUrbanObject, const PHY_DotationCategory* category )
+void DEC_UrbanObjectFunctions::DestroyUrbanBlock( DEC_Decision_ABC* callerAgent, MIL_UrbanObject_ABC* pUrbanObject, const PHY_DotationCategory* category )
 {
     if( !pUrbanObject )
         throw MASA_EXCEPTION( "invalid parameter." );
     StructuralCapacity* capacity = const_cast< StructuralCapacity* >( pUrbanObject->Retrieve< StructuralCapacity >() );
     if( capacity )
     {
+        MIL_AgentPion& agent = callerAgent->GetPion();
         if( category->CanBeUsedForIndirectFire() )
         {
-            const PHY_RoleInterface_Location& location = callerAgent.Get< PHY_RoleInterface_Location >();
+            const PHY_RoleInterface_Location& location = agent.Get< PHY_RoleInterface_Location >();
             TER_Localisation localisation( location.GetPosition(), category->GetRadius() );
-            capacity->ApplyIndirectFire( *pUrbanObject, localisation, *category, &callerAgent.GetArmy() );
+            capacity->ApplyIndirectFire( *pUrbanObject, localisation, *category, &agent.GetArmy() );
         }
         else
-            capacity->ApplyIndirectFire( *pUrbanObject, pUrbanObject->GetLocalisation(), *category, &callerAgent.GetArmy() );
-        callerAgent.Get< dotation::PHY_RoleInterface_Dotations >().AddFireReservation( *category, 1 );
+            capacity->ApplyIndirectFire( *pUrbanObject, pUrbanObject->GetLocalisation(), *category, &agent.GetArmy() );
+        agent.Get< dotation::PHY_RoleInterface_Dotations >().AddFireReservation( *category, 1 );
     }
 }
 

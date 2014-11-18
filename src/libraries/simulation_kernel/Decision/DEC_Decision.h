@@ -183,7 +183,6 @@ protected:
 
     virtual std::string GetGroupName() = 0;
     virtual void EndCleanStateAfterCrash  () = 0;
-    virtual void RegisterUserFunctions( sword::Brain& brain ) = 0;
     void RegisterReportFunctions( sword::Brain& brain );
 
     template< typename Function >
@@ -321,12 +320,6 @@ void DEC_Decision< T >::InitBrain( const tools::Path& brainFile, const std::stri
 
     if( newBrain )
         DEC_DecisionImpl::RegisterCommonUserFunctions( *pArchetypeBrain, isMasalife_ );
-
-    RegisterUserFunctions( *pBrain_ );
-
-    //Enregistrement à la main de BreakForDebug
-    pBrain_->RegisterFunction( "BreakForDebug",
-        std::function< void( const std::string& ) >( boost::bind( &DEC_DIAFunctions::BreakForDebug, pEntity_->GetID() ,_1 ) ) );
 
     RegisterSpecific( *pBrain_, isMasalife_, groupName );
 

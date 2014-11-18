@@ -13,13 +13,49 @@
 #include "DEC_DIAFunctions.h"
 #include "Meteo/PHY_Ephemeride.h"
 #include "Meteo/PHY_MeteoDataManager.h"
+#include "Decision/Brain.h"
+#include "Decision/DEC_Decision_ABC.h"
 #include "Decision/DEC_Tools.h"
+#include "Entities/MIL_Entity_ABC.h"
 #include "Entities/Orders/MIL_Mission_ABC.h"
 #include "Entities/Orders/MIL_MissionParameterFactory.h"
 #include "simulation_terrain/TER_Localisation.h"
 #include "MIL_AgentServer.h"
 #include "MIL_Random.h"
 #include <sstream>
+
+void DEC_DIAFunctions::Register( sword::Brain& brain )
+{
+    brain.RegisterFunction( "DEC_RandomValue", &DEC_DIAFunctions::GetRandomValue );
+
+    brain.RegisterFunction( "_BreakForDebug", &DEC_DIAFunctions::BreakForDebug );
+
+    // Time
+    brain.RegisterFunction( "DEC_TempsSim", &DEC_DIAFunctions::GetSimTime );
+    brain.RegisterFunction( "DEC_TempsReel", &DEC_DIAFunctions::GetRealTime );
+    brain.RegisterFunction( "DEC_Nuit", &DEC_DIAFunctions::IsNight );
+
+    // Copy
+    brain.RegisterFunction( "DEC_Copie_Point", &DEC_DIAFunctions::CopyPoint );
+    brain.RegisterFunction( "DEC_Copie_Point_Mission", &DEC_DIAFunctions::CopyPointMission );
+    brain.RegisterFunction( "DEC_Copie_ListePoints_Mission", &DEC_DIAFunctions::CopyPathMission );
+    brain.RegisterFunction( "DEC_Copie_PointDansListePoints_Mission", &DEC_DIAFunctions::CopyPointToListPointMission );
+    brain.RegisterFunction( "DEC_Copie_Localisation", &DEC_DIAFunctions::CopyLocalisation );
+    brain.RegisterFunction( "DEC_Copie_Localisation_Mission", &DEC_DIAFunctions::CopyLocalisationMission );
+    brain.RegisterFunction( "DEC_Copie_ListeLocalisations_Mission", &DEC_DIAFunctions::CopyLocalisationListMission );
+    brain.RegisterFunction( "DEC_Copie_LocalisationDansListeLocalisations_Mission", &DEC_DIAFunctions::CopyLocalisationToLocationListMission );
+    brain.RegisterFunction( "DEC_UserTypeList_PushBack_Mission", &DEC_DIAFunctions::CopyKnowledgeObjectToKnowledgeObjectListMission );
+    brain.RegisterFunction( "DEC_GenObjectList_PushBack_Mission", &DEC_DIAFunctions::CopyGenObjectToGenObjectListMission );
+
+    // List
+    brain.RegisterFunction( "DEC_ListePoints_GetAt", &DEC_DIAFunctions::ListPoint_GetAt );
+    brain.RegisterFunction( "DEC_ListePoints_Size", &DEC_DIAFunctions::ListPoint_Size );
+
+    // String conversions
+    brain.RegisterFunction( "DEC_PointToString", &DEC_DIAFunctions::PointToString );
+    brain.RegisterFunction( "DEC_DirectionToString",  &DEC_DIAFunctions::DirectionToString  );
+    brain.RegisterFunction( "DEC_ItineraireToString", &DEC_DIAFunctions::PathToString  );
+}
 
 //-----------------------------------------------------------------------------
 // Name: DEC_DIAFunctions::PointToString
@@ -242,8 +278,9 @@ boost::shared_ptr< MT_Vector2D > DEC_DIAFunctions::ListPoint_GetAt( std::vector<
 // Name: DEC_DIAFunctions::BreakForDebug
 // Created: LDC 2009-07-22
 // -----------------------------------------------------------------------------
-void DEC_DIAFunctions::BreakForDebug( unsigned int id, const std::string& message )
+void DEC_DIAFunctions::BreakForDebug( DEC_Decision_ABC* actor, const std::string& message )
 {
     static int count = 0;
+    const unsigned int id = actor->GetEntity().GetID();
     std::cerr << "[" << ++count << "]: " << id << ": " << message << std::endl;
 }

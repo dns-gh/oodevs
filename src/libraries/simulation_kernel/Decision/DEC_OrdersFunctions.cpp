@@ -11,15 +11,64 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_OrdersFunctions.h"
+#include "Decision/Brain.h"
 #include "Decision/DEC_Decision.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
+#include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Orders/MIL_PionMissionType.h"
 #include "Entities/Orders/MIL_AutomateMissionType.h"
 #include "Entities/Orders/MIL_AutomateOrderManager.h"
 #include "Entities/Orders/MIL_FragOrderType.h"
+#include "Entities/Orders/MIL_LimaOrder.h"
+#include "Entities/Orders/MIL_LimaFunction.h"
 #include "Entities/Orders/MIL_OrderTypeParameter.h"
 #include "Entities/Orders/MIL_ParameterType_ABC.h"
+
+void DEC_OrdersFunctions::Register( sword::Brain& brain )
+{
+    brain.RegisterFunction( "_DEC_FinMission", &DEC_OrdersFunctions::FinishMission );
+    brain.RegisterFunction( "_DEC_NouvelleMission", &DEC_OrdersFunctions::IsNewMissionStarted );
+    brain.RegisterFunction( "_DEC_GetLima", &DEC_OrdersFunctions::GetLima );
+    brain.RegisterFunction( "_DEC_GetLimasFromType", &DEC_OrdersFunctions::GetLimasFromType );
+    brain.RegisterFunction( "_DEC_ProchaineLimaHoraireNonFlagee", &DEC_OrdersFunctions::GetNextScheduledLima );
+    brain.RegisterFunction( "_DEC_Fuseau", &DEC_OrdersFunctions::GetFuseau );
+    brain.RegisterFunction( "_DEC_SetMissionLimaFlag", &DEC_OrdersFunctions::AutomateSetMissionLimaFlag );
+    brain.RegisterFunction( "_DEC_GetMissionLimaFlag", &DEC_OrdersFunctions::GetMissionLimaFlag );
+    brain.RegisterFunction( "_DEC_SetMissionLimaFlagHoraire", &DEC_OrdersFunctions::AutomateSetMissionLimaScheduleFlag );
+
+    // MRT / conduite
+    brain.RegisterFunction( "_DEC_MRT_CreerMissionPion", &DEC_OrdersFunctions::MRT_CreatePionMission );
+    brain.RegisterFunction( "_DEC_MRT_Valide", &DEC_OrdersFunctions::MRT_Validate );
+    brain.RegisterFunction( "_DEC_MRT_AffecteFuseaux", &DEC_OrdersFunctions::MRT_AffectFuseaux );
+    brain.RegisterFunction( "_DEC_CDT_CreerMissionPion", &DEC_OrdersFunctions::CDT_CreatePionMission );
+    brain.RegisterFunction( "_DEC_CDT_DonnerMissionPion_Mission", &DEC_OrdersFunctions::CDT_GivePionMission );
+    brain.RegisterFunction( "_DEC_CreerMissionAutomate", &DEC_OrdersFunctions::CreateAutomateMission );
+    brain.RegisterFunction( "_DEC_DonnerMissionAutomate_Mission", &DEC_OrdersFunctions::GiveAutomateMission );
+    brain.RegisterFunction( "_DEC_DonnerMissionAutomate", &DEC_OrdersFunctions::GiveAutomateMissionToAutomat );
+    brain.RegisterFunction( "_DEC_DecouperFuseau", &DEC_OrdersFunctions::SplitFuseau );
+
+    // Agent
+    brain.RegisterFunction( "_DEC_CreerMissionPion", &DEC_OrdersFunctions::CreatePionMissionBM );
+    brain.RegisterFunction( "_DEC_CreerMissionPionVersPion", &DEC_OrdersFunctions::CreatePionMissionVersPionBM );
+    brain.RegisterFunction( "_DEC_DonnerMissionPion", &DEC_OrdersFunctions::CDT_GiveMission );
+    brain.RegisterFunction( "_DEC_DonnerMissionPionVersPion", &DEC_OrdersFunctions::CDT_GiveMissionVersPion );
+
+    brain.RegisterFunction( "DEC_IsMissionPionAvailable", &DEC_OrdersFunctions::IsPionMissionAvailable );
+    brain.RegisterFunction( "DEC_IsAutomateMissionPionAvailable", &DEC_OrdersFunctions::IsAutomateMissionAvailable );
+    brain.RegisterFunction( "DEC_DonnerMissionADAAutomate", &DEC_OrdersFunctions::GiveMissionToAutomat );
+
+    brain.RegisterFunction( "DEC_GetFuseau", &DEC_OrdersFunctions::GetFuseau );
+
+    brain.RegisterFunction( "DEC_IsFragOrderAvailable", &DEC_OrdersFunctions::IsFragOrderAvailable );
+    brain.RegisterFunction( "DEC_IsMissionAvailable", &DEC_OrdersFunctions::IsPionMissionAvailable );
+    brain.RegisterFunction( "DEC_Mission_IsPath", &DEC_OrdersFunctions::DEC_Mission_IsPath );
+    brain.RegisterFunction( "DEC_IsAutomateMissionAvailable", &DEC_OrdersFunctions::IsAutomateMissionAvailable );
+
+    brain.RegisterFunction( "DEC_AssignerFuseauAMissionPion_Mission", &DEC_OrdersFunctions::AssignFuseauToPionMission );
+    brain.RegisterFunction( "DEC_AssignerFuseauAMissionAutomate_Mission", &DEC_OrdersFunctions::AssignFuseauToAutomateMission );
+    brain.RegisterFunction( "DEC_AssignerDirectionAMissionAutomate_Mission", &DEC_OrdersFunctions::AssignDirectionToAutomateMission );
+}
 
 // -----------------------------------------------------------------------------
 // Name: DEC_OrdersFunctions::FinishMission
@@ -224,18 +273,18 @@ void DEC_OrdersFunctions::CDT_GivePionMissionVersPion( MIL_Automate& callerAutom
 // Name: DEC_OrdersFunctions::CDT_GiveMission
 // Created: LDC 2010-12-06
 //-----------------------------------------------------------------------------
-void DEC_OrdersFunctions::CDT_GiveMission( MIL_AgentPion& callerPion, boost::shared_ptr< MIL_Mission_ABC > pMission )
+void DEC_OrdersFunctions::CDT_GiveMission( DEC_Decision_ABC* callerPion, boost::shared_ptr< MIL_Mission_ABC > pMission )
 {
-    DEC_OrdersFunctions::CDT_GivePionMission( &callerPion.GetAutomate().GetDecision(), pMission );
+    DEC_OrdersFunctions::CDT_GivePionMission( &callerPion->GetPion().GetAutomate().GetDecision(), pMission );
 }
 
 //-----------------------------------------------------------------------------
 // Name: DEC_OrdersFunctions::CDT_GiveMission
 // Created: GGE 2010-12-06
 //-----------------------------------------------------------------------------
-void DEC_OrdersFunctions::CDT_GiveMissionVersPion( MIL_AgentPion& callerPion, boost::shared_ptr< MIL_Mission_ABC > pMission )
+void DEC_OrdersFunctions::CDT_GiveMissionVersPion( DEC_Decision_ABC* callerPion, boost::shared_ptr< MIL_Mission_ABC > pMission )
 {
-    DEC_OrdersFunctions::CDT_GivePionMissionVersPion( callerPion.GetAutomate(), pMission );
+    DEC_OrdersFunctions::CDT_GivePionMissionVersPion( callerPion->GetPion().GetAutomate(), pMission );
 }
 
 // -----------------------------------------------------------------------------

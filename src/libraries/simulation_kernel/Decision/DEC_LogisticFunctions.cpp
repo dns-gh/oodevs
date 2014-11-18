@@ -13,6 +13,7 @@
 #include "DEC_LogisticFunctions.h"
 #include "DEC_Decision_ABC.h"
 #include "DEC_ResourceNetwork.h"
+#include "Decision/Brain.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationType.h"
 #include "Entities/Agents/Units/Dotations/PHY_AmmoDotationClass.h"
 #include "Entities/Agents/Units/Logistic/PHY_MaintenanceWorkRate.h"
@@ -33,7 +34,64 @@
 #include <boost/foreach.hpp>
 #include <boost/make_shared.hpp>
 
+
 using namespace human;
+
+void DEC_LogisticFunctions::Register( sword::Brain& brain )
+{
+    // Maintenance
+    brain.RegisterFunction( "_DEC_Maintenance_ActiverChaine", &DEC_LogisticFunctions::MaintenanceEnableSystem );
+    brain.RegisterFunction( "_DEC_Maintenance_DesactiverChaine", &DEC_LogisticFunctions::MaintenanceDisableSystem );
+    brain.RegisterFunction( "_DEC_Maintenance_ChangerPriorites", &DEC_LogisticFunctions::MaintenanceChangePriorities );
+    brain.RegisterFunction( "_DEC_Maintenance_Priorites", &DEC_LogisticFunctions::GetAutomateMaintenancePriorities );
+    brain.RegisterFunction( "_DEC_Maintenance_ChangerPrioritesTactiques", &DEC_LogisticFunctions::MaintenanceChangeTacticalPriorities );
+    brain.RegisterFunction( "_DEC_Maintenance_PrioritesTactiques", &DEC_LogisticFunctions::GetAutomateMaintenanceTacticalPriorities );
+    brain.RegisterFunction( "_DEC_Maintenance_ChangerRegimeTravail", &DEC_LogisticFunctions::MaintenanceChangeWorkRate );
+    brain.RegisterFunction( "_DEC_Maintenance_RegimeTravail", &DEC_LogisticFunctions::GetAutomateMaintenanceWorkRate );
+
+    // Medical
+    brain.RegisterFunction( "DEC_NecessiteEvacuationBlesses", &DEC_LogisticFunctions::HasWoundedHumansToEvacuate );
+    brain.RegisterFunction( "DEC_EvacuerBlessesVersTC2", &DEC_LogisticFunctions::EvacuateWoundedHumansToTC2 );
+    brain.RegisterFunction( "DEC_InterdireEvacuationAutomatiqueBlesses", &DEC_LogisticFunctions::ForbidWoundedHumansAutoEvacuation );
+    brain.RegisterFunction( "DEC_AutoriserEvacuationAutomatiqueBlesses", &DEC_LogisticFunctions::AllowWoundedHumansAutoEvacuation );
+    brain.RegisterFunction( "_DEC_Sante_ActiverChaine", &DEC_LogisticFunctions::MedicalEnableSystem );
+    brain.RegisterFunction( "_DEC_Sante_DesactiverChaine", &DEC_LogisticFunctions::MedicalDisableSystem );
+    brain.RegisterFunction( "_DEC_Sante_ActiverFonctionTri", &DEC_LogisticFunctions::MedicalEnableSortingFunction );
+    brain.RegisterFunction( "_DEC_Sante_DesactiverFonctionTri", &DEC_LogisticFunctions::MedicalDisableSortingFunction );
+    brain.RegisterFunction( "_DEC_Sante_ActiverFonctionSoin", &DEC_LogisticFunctions::MedicalEnableHealingFunction );
+    brain.RegisterFunction( "_DEC_Sante_DesactiverFonctionSoin", &DEC_LogisticFunctions::MedicalDisableHealingFunction );
+    brain.RegisterFunction( "_DEC_Sante_ChangerPriorites", &DEC_LogisticFunctions::MedicalChangePriorities );
+    brain.RegisterFunction( "_DEC_Sante_Priorites", &DEC_LogisticFunctions::GetAutomateMedicalPriorities );
+    brain.RegisterFunction( "_DEC_Sante_ChangerPrioritesTactiques", &DEC_LogisticFunctions::MedicalChangeTacticalPriorities );
+    brain.RegisterFunction( "_DEC_Sante_PrioritesTactiques", &DEC_LogisticFunctions::GetAutomateMedicalTacticalPriorities );
+
+    // Supply
+    brain.RegisterFunction( "_DEC_DemandeDeRavitaillement", &DEC_LogisticFunctions::RequestSupply );
+    brain.RegisterFunction( "DEC_EnforceAviationResources", &DEC_LogisticFunctions::EnforceAviationResources );
+    brain.RegisterFunction( "DEC_Stock_ConnectToResourceNode", &DEC_LogisticFunctions::ConnectToResourceNode );
+    brain.RegisterFunction( "DEC_Stock_DisconnectFromResourceNode", &DEC_LogisticFunctions::DisconnectFromResourceNode );
+    brain.RegisterFunction( "_DEC_Ravitaillement_ActiverChaine", &DEC_LogisticFunctions::SupplyEnableSystem );
+    brain.RegisterFunction( "_DEC_Ravitaillement_DesactiverChaine", &DEC_LogisticFunctions::SupplyDisableSystem );
+
+    brain.RegisterFunction( "_DEC_RecupererComposantes", &DEC_LogisticFunctions::UndoLendSpecificComposantes );
+    brain.RegisterFunction( "_DEC_RecupererVSRAM", &DEC_LogisticFunctions::UndoLendCollectionComposantes );
+    brain.RegisterFunction( "_DEC_RecupererRemorqueurs", &DEC_LogisticFunctions::UndoLendHaulerComposantes );
+    brain.RegisterFunction( "_DEC_Pion_PcDeTC2", &DEC_LogisticFunctions::PionGetPcTC2 );
+    brain.RegisterFunction( "_DEC_ChangeValeurDotations", &DEC_LogisticFunctions::ChangeDotationsValueUsingTC2 );
+
+    brain.RegisterFunction( "_DEC_Ravitaillement_Convoi_DeplacementVersRavitailleurEffectue", &DEC_LogisticFunctions::ConvoyNotifyMovedToSupplier );
+    brain.RegisterFunction( "_DEC_Ravitaillement_Convoi_DeplacementVersTransporteurEffectue", &DEC_LogisticFunctions::ConvoyNotifyMovedToTransportersProvider );
+    brain.RegisterFunction( "_DEC_Ravitaillement_Convoi_DeplacementVersDestinataireEffectue", &DEC_LogisticFunctions::ConvoyNotifyMovedToSupplyRecipient );
+    brain.RegisterFunction( "_DEC_Ravitaillement_Convoi_FinMission", &DEC_LogisticFunctions::ConvoyEndMission );
+    brain.RegisterFunction( "_DEC_Ravitaillement_Convoi_ActionCourante", &DEC_LogisticFunctions::ConvoyGetCurrentAction );
+    brain.RegisterFunction( "_DEC_Ravitaillement_Convoi_DestinataireCourant", &DEC_LogisticFunctions::ConvoyGetCurrentSupplyRecipient );
+    brain.RegisterFunction( "_DEC_Ravitaillement_Convoi_Ravitailleur", &DEC_LogisticFunctions::ConvoyGetSupplier );
+    brain.RegisterFunction( "_DEC_Ravitaillement_Convoi_Transporteur", &DEC_LogisticFunctions::ConvoyGetTransportersProvider );
+    brain.RegisterFunction( "_DEC_Ravitaillement_Convoi_ItineraireVersProchaineDestination", &DEC_LogisticFunctions::ConvoyGetPathToNextDestination );
+    brain.RegisterFunction( "_DEC_Ravitaillement_Convoi_EstFluxPousse", &DEC_LogisticFunctions::ConvoyIsPushedFlow );
+
+    brain.RegisterFunction( "_DEC_Automate_PcDeTC2", &DEC_LogisticFunctions::AutomateGetPcTC2 );
+}
 
 namespace
 {
@@ -410,12 +468,12 @@ std::vector< const DEC_Decision_ABC* > DEC_LogisticFunctions::GetAutomateMedical
 // Name: DEC_LogisticFunctions::ChangeDotationsValueUsingTC2
 // Created: NLD 2005-03-17
 // -----------------------------------------------------------------------------
-void DEC_LogisticFunctions::ChangeDotationsValueUsingTC2( MIL_Agent_ABC& callerAgent, int dotationType, const double rCapacityFactor, int ammoDotationClassId )
+void DEC_LogisticFunctions::ChangeDotationsValueUsingTC2( DEC_Decision_ABC* callerAgent, int dotationType, const double rCapacityFactor, int ammoDotationClassId )
 {
     const PHY_DotationType* pDotationType = PHY_DotationType::FindDotationType( dotationType );
     assert( pDotationType );
     const PHY_AmmoDotationClass* pAmmoDotationClass = PHY_AmmoDotationClass::Find( ammoDotationClassId );
-    callerAgent.GetRole< dotation::PHY_RoleInterface_Dotations >().ChangeDotationsValueUsingTC2( *pDotationType, pAmmoDotationClass, rCapacityFactor );
+    callerAgent->GetPion().GetRole< dotation::PHY_RoleInterface_Dotations >().ChangeDotationsValueUsingTC2( *pDotationType, pAmmoDotationClass, rCapacityFactor );
 }
 
 // -----------------------------------------------------------------------------
@@ -523,9 +581,9 @@ void DEC_LogisticFunctions::RequestSupply( DEC_Decision_ABC* caller )
 // Name: DEC_LogisticFunctions::ConvoyNotifyMovedToSupplier
 // Created: NLD 2005-12-16
 // -----------------------------------------------------------------------------
-void DEC_LogisticFunctions::ConvoyNotifyMovedToSupplier( MIL_Agent_ABC& callerAgent )
+void DEC_LogisticFunctions::ConvoyNotifyMovedToSupplier( DEC_Decision_ABC* callerAgent )
 {
-    PHY_RoleInterface_Supply* role = callerAgent.RetrieveRole< PHY_RoleInterface_Supply >();
+    PHY_RoleInterface_Supply* role = callerAgent->GetPion().RetrieveRole< PHY_RoleInterface_Supply >();
     if( role )
         role->ConvoyNotifyMovedToSupplier();
 }
@@ -534,9 +592,9 @@ void DEC_LogisticFunctions::ConvoyNotifyMovedToSupplier( MIL_Agent_ABC& callerAg
 // Name: DEC_LogisticFunctions::ConvoyNotifyMovedToTransportersProvider
 // Created: NLD 2005-12-16
 // -----------------------------------------------------------------------------
-void DEC_LogisticFunctions::ConvoyNotifyMovedToTransportersProvider( MIL_Agent_ABC& callerAgent )
+void DEC_LogisticFunctions::ConvoyNotifyMovedToTransportersProvider( DEC_Decision_ABC* callerAgent )
 {
-    PHY_RoleInterface_Supply* role = callerAgent.RetrieveRole< PHY_RoleInterface_Supply >();
+    PHY_RoleInterface_Supply* role = callerAgent->GetPion().RetrieveRole< PHY_RoleInterface_Supply >();
     if( role )
         role->ConvoyNotifyMovedToTransportersProvider();
 }
@@ -545,9 +603,9 @@ void DEC_LogisticFunctions::ConvoyNotifyMovedToTransportersProvider( MIL_Agent_A
 // Name: DEC_LogisticFunctions::ConvoyNotifyMovedToSupplyRecipient
 // Created: NLD 2005-12-16
 // -----------------------------------------------------------------------------
-void DEC_LogisticFunctions::ConvoyNotifyMovedToSupplyRecipient( MIL_Agent_ABC& callerAgent )
+void DEC_LogisticFunctions::ConvoyNotifyMovedToSupplyRecipient( DEC_Decision_ABC* callerAgent )
 {
-    PHY_RoleInterface_Supply* role = callerAgent.RetrieveRole< PHY_RoleInterface_Supply >();
+    PHY_RoleInterface_Supply* role = callerAgent->GetPion().RetrieveRole< PHY_RoleInterface_Supply >();
     if( role )
         role->ConvoyNotifyMovedToSupplyRecipient();
 }
@@ -556,9 +614,9 @@ void DEC_LogisticFunctions::ConvoyNotifyMovedToSupplyRecipient( MIL_Agent_ABC& c
 // Name: DEC_LogisticFunctions::ConvoyEndMission
 // Created: NLD 2005-12-16
 // -----------------------------------------------------------------------------
-void DEC_LogisticFunctions::ConvoyEndMission( MIL_Agent_ABC& callerAgent )
+void DEC_LogisticFunctions::ConvoyEndMission( DEC_Decision_ABC* callerAgent )
 {
-    PHY_RoleInterface_Supply* role = callerAgent.RetrieveRole< PHY_RoleInterface_Supply >();
+    PHY_RoleInterface_Supply* role = callerAgent->GetPion().RetrieveRole< PHY_RoleInterface_Supply >();
     if( role )
         role->ConvoyEndMission();
 }
@@ -567,9 +625,9 @@ void DEC_LogisticFunctions::ConvoyEndMission( MIL_Agent_ABC& callerAgent )
 // Name: DEC_LogisticFunctions::ConvoyGetCurrentAction
 // Created: NLD 2005-12-16
 // -----------------------------------------------------------------------------
-int DEC_LogisticFunctions::ConvoyGetCurrentAction( const MIL_Agent_ABC& callerAgent )
+int DEC_LogisticFunctions::ConvoyGetCurrentAction( const DEC_Decision_ABC* callerAgent )
 {
-    const PHY_RoleInterface_Supply* role = callerAgent.RetrieveRole< PHY_RoleInterface_Supply >();
+    const PHY_RoleInterface_Supply* role = callerAgent->GetPion().RetrieveRole< PHY_RoleInterface_Supply >();
     return role ? role->ConvoyGetCurrentAction() : 0;
 }
 
@@ -577,9 +635,9 @@ int DEC_LogisticFunctions::ConvoyGetCurrentAction( const MIL_Agent_ABC& callerAg
 // Name: DEC_LogisticFunctions::ConvoyGetCurrentSupplyRecipient
 // Created: NLD 2005-12-16
 // -----------------------------------------------------------------------------
-DEC_Decision_ABC* DEC_LogisticFunctions::ConvoyGetCurrentSupplyRecipient( const MIL_Agent_ABC& callerAgent )
+DEC_Decision_ABC* DEC_LogisticFunctions::ConvoyGetCurrentSupplyRecipient( const DEC_Decision_ABC* callerAgent )
 {
-    if( auto role = callerAgent.RetrieveRole< PHY_RoleInterface_Supply >() )
+    if( auto role = callerAgent->GetPion().RetrieveRole< PHY_RoleInterface_Supply >() )
         if( auto recipient = role->ConvoyGetCurrentSupplyRecipient() )
             if( auto pionPc = recipient->GetPC() )
                 return ( const_cast< DEC_Decision_ABC* >( &pionPc->GetDecision() ) );
@@ -590,9 +648,9 @@ DEC_Decision_ABC* DEC_LogisticFunctions::ConvoyGetCurrentSupplyRecipient( const 
 // Name: DEC_LogisticFunctions::ConvoyGetTransportersProvider
 // Created: NLD 2005-12-16
 // -----------------------------------------------------------------------------
-DEC_Decision_ABC* DEC_LogisticFunctions::ConvoyGetTransportersProvider( const MIL_Agent_ABC& callerAgent )
+DEC_Decision_ABC* DEC_LogisticFunctions::ConvoyGetTransportersProvider( const DEC_Decision_ABC* callerAgent )
 {
-    if( auto pc = callerAgent.GetAutomate().GetPionPC() )
+    if( auto pc = callerAgent->GetPion().GetAutomate().GetPionPC() )
         return const_cast< DEC_Decision_ABC* >( &pc->GetDecision() );
     return nullptr;
 }
@@ -601,9 +659,9 @@ DEC_Decision_ABC* DEC_LogisticFunctions::ConvoyGetTransportersProvider( const MI
 // Name: DEC_LogisticFunctions::ConvoyGetSupplier
 // Created: NLD 2005-12-16
 // -----------------------------------------------------------------------------
-DEC_Decision_ABC* DEC_LogisticFunctions::ConvoyGetSupplier( const MIL_Agent_ABC& callerAgent )
+DEC_Decision_ABC* DEC_LogisticFunctions::ConvoyGetSupplier( const DEC_Decision_ABC* callerAgent )
 {
-    if( auto role = callerAgent.RetrieveRole< PHY_RoleInterface_Supply >() )
+    if( auto role = callerAgent->GetPion().RetrieveRole< PHY_RoleInterface_Supply >() )
         if( const MIL_Agent_ABC* provider = role->ConvoyGetSupplier() )
             return const_cast< DEC_Decision_ABC* >( &provider->GetDecision() );
     return nullptr;
@@ -613,9 +671,9 @@ DEC_Decision_ABC* DEC_LogisticFunctions::ConvoyGetSupplier( const MIL_Agent_ABC&
 // Name: DEC_LogisticFunctions::ConvoyGetPathToNextDestination
 // Created: NLD 2005-12-16
 // -----------------------------------------------------------------------------
-std::vector< boost::shared_ptr< MT_Vector2D > > DEC_LogisticFunctions::ConvoyGetPathToNextDestination( const MIL_Agent_ABC& callerAgent )
+std::vector< boost::shared_ptr< MT_Vector2D > > DEC_LogisticFunctions::ConvoyGetPathToNextDestination( const DEC_Decision_ABC* callerAgent )
 {
-    const PHY_RoleInterface_Supply* role = callerAgent.RetrieveRole< PHY_RoleInterface_Supply >();
+    const PHY_RoleInterface_Supply* role = callerAgent->GetPion().RetrieveRole< PHY_RoleInterface_Supply >();
     if( role )
         return role->ConvoyGetPathToNextDestination();
     return std::vector< boost::shared_ptr< MT_Vector2D > >();
@@ -625,9 +683,9 @@ std::vector< boost::shared_ptr< MT_Vector2D > > DEC_LogisticFunctions::ConvoyGet
 // Name: DEC_LogisticFunctions::ConvoyIsPushedFlow
 // Created: LDC 2013-02-04
 // -----------------------------------------------------------------------------
-bool DEC_LogisticFunctions::ConvoyIsPushedFlow( const MIL_Agent_ABC& callerAgent )
+bool DEC_LogisticFunctions::ConvoyIsPushedFlow( const DEC_Decision_ABC* callerAgent )
 {
-    const PHY_RoleInterface_Supply* role = callerAgent.RetrieveRole< PHY_RoleInterface_Supply >();
+    const PHY_RoleInterface_Supply* role = callerAgent->GetPion().RetrieveRole< PHY_RoleInterface_Supply >();
     if( role )
         return role->ConvoyIsPushedFlow();
     return false;
@@ -658,18 +716,18 @@ namespace
 // Name: DEC_LogisticFunctions::UndoLendCollectionComposantes
 // Created: JVT 2005-01-17
 // -----------------------------------------------------------------------------
-void DEC_LogisticFunctions::UndoLendCollectionComposantes( MIL_Agent_ABC& callerAgent, const DEC_Decision_ABC* pTarget, const unsigned int nNbrToGetBack )
+void DEC_LogisticFunctions::UndoLendCollectionComposantes( DEC_Decision_ABC* callerAgent, const DEC_Decision_ABC* pTarget, unsigned int nNbrToGetBack )
 {
-    UndoLendComposantes( callerAgent, pTarget, nNbrToGetBack, boost::bind( &PHY_ComposantePion::CanCollectCasualties, _1 ) );
+    UndoLendComposantes( callerAgent->GetPion(), pTarget, nNbrToGetBack, boost::bind( &PHY_ComposantePion::CanCollectCasualties, _1 ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_LogisticFunctions::UndoLendHaulerComposantes
 // Created: NLD 2006-04-04
 // -----------------------------------------------------------------------------
-void DEC_LogisticFunctions::UndoLendHaulerComposantes( MIL_Agent_ABC& callerAgent, const DEC_Decision_ABC* pTarget, const unsigned int nNbrToGetBack )
+void DEC_LogisticFunctions::UndoLendHaulerComposantes( DEC_Decision_ABC* callerAgent, const DEC_Decision_ABC* pTarget, unsigned int nNbrToGetBack )
 {
-    UndoLendComposantes( callerAgent, pTarget, nNbrToGetBack, boost::bind( &PHY_ComposantePion::CanHaul, _1 ) );
+    UndoLendComposantes( callerAgent->GetPion(), pTarget, nNbrToGetBack, boost::bind( &PHY_ComposantePion::CanHaul, _1 ) );
 }
 
 namespace
@@ -684,18 +742,18 @@ namespace
 // Name: DEC_LogisticFunctions::UndoLendSpecificComposantes
 // Created: JSR 2012-08-06
 // -----------------------------------------------------------------------------
-void DEC_LogisticFunctions::UndoLendSpecificComposantes( MIL_Agent_ABC& callerAgent, const DEC_Decision_ABC* pTarget, PHY_ComposanteTypePion* type, const unsigned int nNbrToGetBack )
+void DEC_LogisticFunctions::UndoLendSpecificComposantes( DEC_Decision_ABC* callerAgent, const DEC_Decision_ABC* pTarget, PHY_ComposanteTypePion* type, unsigned int nNbrToGetBack )
 {
-    UndoLendComposantes( callerAgent, pTarget, nNbrToGetBack, boost::bind( &CheckComposante, _1, type ) );
+    UndoLendComposantes( callerAgent->GetPion(), pTarget, nNbrToGetBack, boost::bind( &CheckComposante, _1, type ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_LogisticFunctions::PionGetTC2
 // Created: JVT 2005-01-17
 // -----------------------------------------------------------------------------
-DEC_Decision_ABC* DEC_LogisticFunctions::PionGetPcTC2( const MIL_Agent_ABC& agent )
+DEC_Decision_ABC* DEC_LogisticFunctions::PionGetPcTC2( const DEC_Decision_ABC* agent )
 {
-    if( MIL_AutomateLOG* pTC2 = agent.GetLogisticHierarchy().GetPrimarySuperior() )
+    if( MIL_AutomateLOG* pTC2 = agent->GetPion().GetLogisticHierarchy().GetPrimarySuperior() )
     {
         const MIL_AgentPion* pc = pTC2->GetPC();
         if( pc )

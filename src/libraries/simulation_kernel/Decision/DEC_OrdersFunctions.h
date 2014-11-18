@@ -12,10 +12,10 @@
 #ifndef __DEC_OrdersFunctions_h_
 #define __DEC_OrdersFunctions_h_
 
-#include "Entities/Orders/MIL_LimaOrder.h"
-#include "Entities/Orders/MIL_LimaFunction.h"
-#include "Entities/Agents/MIL_AgentPion.h"
-#include "Decision/DEC_Tools.h"
+namespace sword
+{
+    class Brain;
+}
 
 class DEC_Decision_ABC;
 class MIL_AgentPion;
@@ -32,6 +32,8 @@ class MIL_LimaOrder;
 class DEC_OrdersFunctions
 {
 public:
+    static void Register( sword::Brain& brain );
+
     // Mission
     static void FinishMission( DEC_Decision_ABC* caller );
     static bool IsNewMissionStarted( DEC_Decision_ABC* caller );
@@ -56,8 +58,8 @@ public:
     static boost::shared_ptr< MIL_Mission_ABC > CreatePionMissionVersPionBM    ( DEC_Decision_ABC* pPion, const std::string& mission );
     static void             CDT_GivePionMission    ( DEC_Decision_ABC* callerAutomate, boost::shared_ptr< MIL_Mission_ABC > pMission );
     static void             CDT_GivePionMissionVersPion    ( MIL_Automate& callerAutomate, boost::shared_ptr< MIL_Mission_ABC > pMission );
-    static void             CDT_GiveMission    ( MIL_AgentPion& callerPion, boost::shared_ptr< MIL_Mission_ABC > pMission );
-    static void             CDT_GiveMissionVersPion    ( MIL_AgentPion& callerPion, boost::shared_ptr< MIL_Mission_ABC > pMission );
+    static void             CDT_GiveMission    ( DEC_Decision_ABC* callerPion, boost::shared_ptr< MIL_Mission_ABC > pMission );
+    static void             CDT_GiveMissionVersPion    ( DEC_Decision_ABC* callerPion, boost::shared_ptr< MIL_Mission_ABC > pMission );
     static boost::shared_ptr< MIL_Mission_ABC > CreateAutomateMission  ( DEC_Decision_ABC* callerAutomate, DEC_Decision_ABC* pAutomate, const std::string& mission  );
     static void AssignFuseauToPionMission       ( MIL_Fuseau* pFuseau, boost::shared_ptr< MIL_Mission_ABC > pMission );
     static void AssignFuseauToAutomateMission   ( MIL_Fuseau* pFuseau, boost::shared_ptr< MIL_Mission_ABC > pMission );

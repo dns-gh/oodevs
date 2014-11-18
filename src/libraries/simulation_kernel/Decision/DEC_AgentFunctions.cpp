@@ -15,6 +15,7 @@
 #include "DEC_GeometryFunctions.h"
 #include "DotationComputer_ABC.h"
 #include "OnComponentComputer_ABC.h"
+#include "Decision/Brain.h"
 #include "Decision/DEC_Gen_Object.h"
 #include "Entities/Agents/Actions/Flying/PHY_RoleAction_InterfaceFlying.h"
 #include "Entities/Agents/Actions/Loading/PHY_RoleAction_Loading.h"
@@ -75,6 +76,227 @@
 #include "simulation_terrain/TER_AgentManager.h"
 #include "simulation_terrain/TER_World.h"
 
+void DEC_AgentFunctions::Register( sword::Brain& brain )
+{
+    // Actions
+    brain.RegisterFunction( "_DEC_Agent_ADotationPourConstruireObjet", &DEC_AgentFunctions::HasDotationForBuilding );
+    brain.RegisterFunction( "_DEC_Agent_ADotationPourConstruireObjetSansRenforts", &DEC_AgentFunctions::HasDotationForBuildingWithoutReinforcement );
+
+    // Embarquement / debarquement
+    brain.RegisterFunction( "_DEC_Agent_EstEmbarquable", &DEC_AgentFunctions::HasLoadable );
+    brain.RegisterFunction( "_DEC_Agent_EstEmbarque", &DEC_AgentFunctions::IsLoaded );
+    brain.RegisterFunction( "_DEC_Agent_EstDebarque", &DEC_AgentFunctions::IsUnloaded );
+    brain.RegisterFunction( "_DEC_Agent_DureeEmbarquement", &DEC_AgentFunctions::GetLoadingTime );
+    brain.RegisterFunction( "_DEC_Agent_DureeDebarquement", &DEC_AgentFunctions::GetUnloadingTime );
+    brain.RegisterFunction( "_DEC_Agent_TransporteursPret", &DEC_AgentFunctions::AreHumanTransportersReady );
+    brain.RegisterFunction( "_DEC_LaisserTransporteursSansDelai", &DEC_AgentFunctions::DisableHumanTransportersNow );
+    brain.RegisterFunction( "_DEC_RecupererTransporteursSansDelai", &DEC_AgentFunctions::RecoverHumanTransportersNow );
+
+    // Perception
+    brain.RegisterFunction( "_DEC_Identification_DistanceMaxCompMajeure", &DEC_AgentFunctions::GetIdentificationDistance );
+    brain.RegisterFunction( "_DEC_Reconnoissance_MajorComponentMinDistance", &DEC_AgentFunctions::GetReconnoissanceDistance );
+    brain.RegisterFunction( "_DEC_Detection_Distance", &DEC_AgentFunctions::GetDetectionDistance );
+    brain.RegisterFunction( "_DEC_Connaissances_IdentifierToutesUnitesDansZone", &DEC_AgentFunctions::IdentifyAllAgentsInZone );
+
+    // Installation
+    brain.RegisterFunction( "_DEC_Agent_EstInstalle", &DEC_AgentFunctions::IsInstalled );
+    brain.RegisterFunction( "_DEC_Agent_EstDesinstalle", &DEC_AgentFunctions::IsUninstalled );
+    brain.RegisterFunction( "_DEC_Agent_SInstaller",&DEC_AgentFunctions::Install );
+
+    // Deployment
+    brain.RegisterFunction( "_DEC_Agent_IsDeployed", &DEC_AgentFunctions::IsDeployed );
+    brain.RegisterFunction( "_DEC_Agent_IsUndeployed", &DEC_AgentFunctions::IsUndeployed );
+    brain.RegisterFunction( "_DEC_Agent_Deploy", &DEC_AgentFunctions::Deploy );
+    brain.RegisterFunction( "_DEC_Agent_Undeploye", &DEC_AgentFunctions::Undeploy );
+
+    // Pion accessors
+    brain.RegisterFunction( "_DEC_Agent_EstPC", &DEC_AgentFunctions::IsPC );
+    brain.RegisterFunction( "_DEC_Agent_EstTransporte",  &DEC_AgentFunctions::IsTransported );
+    brain.RegisterFunction( "_DEC_Agent_EstEnVol", &DEC_AgentFunctions::IsFlying );
+    brain.RegisterFunction( "_DEC_Agent_HauteurDeVol", &DEC_AgentFunctions::SetFlyingHeight );
+    brain.RegisterFunction( "_DEC_Agent_EnVille", &DEC_AgentFunctions::IsInCity );
+    brain.RegisterFunction( "_DEC_Agent_EtatOps", &DEC_AgentFunctions::GetOperationalState );
+    brain.RegisterFunction( "_DEC_Agent_EtatOpsMajeur", &DEC_AgentFunctions::GetMajorOperationalState );
+    brain.RegisterFunction( "_DEC_Agent_PeutConstruireObjet", &DEC_AgentFunctions::CanConstructObject );
+    brain.RegisterFunction( "_DEC_Agent_PeutConstruireObjetAvecLocalisation", &DEC_AgentFunctions::CanConstructObjectWithLocalisation );
+    brain.RegisterFunction( "_DEC_Agent_PeutConstruireObjetSansRenforts", &DEC_AgentFunctions::CanConstructWithoutReinforcement );
+    brain.RegisterFunction( "_DEC_Agent_PeutConstruireObjetSansRenfortsAvecLocalisation", &DEC_AgentFunctions::CanConstructWithoutReinforcementWithLocalisation );
+    brain.RegisterFunction( "_DEC_Agent_PeutConstruireObjetEmbarque", &DEC_AgentFunctions::CanConstructObjectWithLoaded );
+    brain.RegisterFunction( "_DEC_Agent_PeutConstruireObjetEmbarqueAvecLocalisation", &DEC_AgentFunctions::CanConstructObjectWithLoadedAndLocalisation );
+    brain.RegisterFunction( "_DEC_Agent_PeutConstruireContournementObjet", &DEC_AgentFunctions::CanBypassObject );
+    brain.RegisterFunction( "_DEC_Agent_PeutDetruireObjet", &DEC_AgentFunctions::CanDestroyObject );
+    brain.RegisterFunction( "_DEC_Agent_PeutValoriserObjet", &DEC_AgentFunctions::CanMineObject );
+    brain.RegisterFunction( "_DEC_Agent_PeutDevaloriserObjet", &DEC_AgentFunctions::CanDemineObject );
+    brain.RegisterFunction( "_DEC_Agent_ActiverModeDiscret", &DEC_AgentFunctions::EnableDiscreteMode );
+    brain.RegisterFunction( "_DEC_Agent_DesactiverModeDiscret",  &DEC_AgentFunctions::DisableDiscreteMode );
+    brain.RegisterFunction( "_DEC_Agent_EstNeutralise",  &DEC_AgentFunctions::IsNeutralized );
+    brain.RegisterFunction( "_DEC_Agent_EstCibleTirIndirect", &DEC_AgentFunctions::UpdateUnderIndirectFire );
+    brain.RegisterFunction( "_DEC_Agent_AutomateEstEmbraye", &DEC_AgentFunctions::IsAutomateEngaged );
+    brain.RegisterFunction( "_DEC_Agent_Position", &DEC_AgentFunctions::GetPosition );
+    brain.RegisterFunction( "_DEC_Agent_Direction", &DEC_AgentFunctions::GetDirection );
+    brain.RegisterFunction( "_DEC_Agent_EstMort", &DEC_AgentFunctions::IsDead );
+    brain.RegisterFunction( "_DEC_Agent_RoePopulation", &DEC_AgentFunctions::GetRoePopulation );
+    brain.RegisterFunction( "_DEC_HasDotation", &DEC_AgentFunctions::HasDotation );
+    brain.RegisterFunction( "_DEC_CanUseDotation", &DEC_AgentFunctions::CanUseDotation );
+    brain.RegisterFunction( "_DEC_GetDotation", &DEC_AgentFunctions::GetDotation );
+
+    brain.RegisterFunction( "_DEC_CreateBreakdown", &DEC_AgentFunctions::CreateBreakdown );
+
+    brain.RegisterFunction( "_DEC_Agent_IlluminateRange", &DEC_AgentFunctions::GetIlluminatingRange );
+    brain.RegisterFunction( "_DEC_Agent_CanExtinguish", &DEC_AgentFunctions::AgentCanExtinguish );
+    brain.RegisterFunction( "DEC_Agent_GetFuelDotationNumber", &DEC_AgentFunctions::GetFuelDotationNumber );
+    brain.RegisterFunction( "DEC_Agent_GetFuelDotationCapacity", &DEC_AgentFunctions::GetFuelDotationCapacity );
+    brain.RegisterFunction( "DEC_Agent_ResupplyFuel", &DEC_AgentFunctions::ResupplyFuel );
+    brain.RegisterFunction( "_DEC_Agent_AutonomieEnDeplacement", &DEC_AgentFunctions::TimeLeftForMoving );
+    brain.RegisterFunction( "_DEC_Agent_TempsPourParcourirDistanceEnLigneDroite", &DEC_AgentFunctions::TimeToMoveDistance );
+    brain.RegisterFunction( "_DEC_Agent_AutomateForcerReddition",  &DEC_AgentFunctions::SurrenderAutomat );
+    brain.RegisterFunction( "_DEC_Agent_ChangerAmbianceEnSurete", &DEC_AgentFunctions::SetToAmbianceSafety );
+
+    // NBC
+    brain.RegisterFunction( "_DEC_Agent_EstAgentNBC", &DEC_AgentFunctions::IsAgentNBC );
+    brain.RegisterFunction( "_DEC_Agent_EstEmpoisonne", &DEC_AgentFunctions::IsIntoxicated );
+    brain.RegisterFunction( "_DEC_Agent_MettreTenueProtectionNBC", &DEC_AgentFunctions::WearNbcProtectionSuit );
+    brain.RegisterFunction( "_DEC_Agent_EnleverTenueProtectionNBC", &DEC_AgentFunctions::RemoveNbcProtectionSuit );
+    brain.RegisterFunction( "_DEC_Agent_NiveauProtectionNBC", &DEC_AgentFunctions::GetNbcSuitLevel );
+    brain.RegisterFunction( "_DEC_Agent_ImmuniserNbc", &DEC_AgentFunctions::ImmunizeAgent ); // deprecated
+    brain.RegisterFunction( "_DEC_Agent_StopImmuniserNbc", &DEC_AgentFunctions::StopImmunizeAgent ); // deprecated
+    brain.RegisterFunction( "_DEC_Agent_SeDecontaminer", &DEC_AgentFunctions::SelfDecontaminate );
+
+    // Blackout
+    brain.RegisterFunction( "_DEC_Agent_PasserEnSilenceRadio", &DEC_AgentFunctions::ActivateBlackout );
+    brain.RegisterFunction( "_DEC_Agent_PasserEnSilenceRadioPartiel", &DEC_AgentFunctions::ActivatePartialBlackout );
+    brain.RegisterFunction( "_DEC_Agent_ArreterSilenceRadio", &DEC_AgentFunctions::DeactivateBlackout );
+
+    // Knowledge sharing
+    brain.RegisterFunction( "_DEC_EnableSharedPerception", &DEC_AgentFunctions::EnableSharedPerception );
+    brain.RegisterFunction( "_DEC_DisabledSharedPerception", &DEC_AgentFunctions::DisableSharedPerception );
+    brain.RegisterFunction( "_DEC_EnableSharingKnowledges", &DEC_AgentFunctions::EnableSharingKnowledges );
+    brain.RegisterFunction( "_DEC_DisabledSharingKnowledges", &DEC_AgentFunctions::DisableSharingKnowledges );
+    
+    brain.RegisterFunction( "_DEC_ReleverPion", &DEC_AgentFunctions::RelievePion );
+    brain.RegisterFunction( "_DEC_PeutReleverPion", &DEC_AgentFunctions::CanRelievePion );
+    brain.RegisterFunction( "_DEC_Suicide", &DEC_AgentFunctions::Suicide );
+
+    // Etat décisionnel
+    brain.RegisterFunction( "_DEC_Agent_ChangeEtatRapportDeForce", &DEC_AgentFunctions::NotifyForceRatioStateChanged );
+    brain.RegisterFunction( "_DEC_Agent_ChangeEtatROE", &DEC_AgentFunctions::NotifyRulesOfEngagementStateChanged );
+    brain.RegisterFunction( "_DEC_Agent_GetEtatROE", &DEC_AgentFunctions::GetRulesOfEngagementState );
+    brain.RegisterFunction( "_DEC_Agent_ChangeEtatROEPopulation", &DEC_AgentFunctions::NotifyRulesOfEngagementPopulationStateChanged );
+    brain.RegisterFunction( "_DEC_Agent_ChangeEtatCombatDeRencontre", &DEC_AgentFunctions::NotifyCloseCombatStateChanged );
+    brain.RegisterFunction( "_DEC_Agent_ChangeEtatOperationnel", &DEC_AgentFunctions::NotifyOperationalStateChanged );
+    brain.RegisterFunction( "_DEC_Agent_ChangeDisponibiliteAuTirIndirect", &DEC_AgentFunctions::NotifyIndirectFireAvailabilityChanged );
+
+    // Facteurs humains
+    brain.RegisterFunction( "_DEC_FacteurHumain_Fatigue", &DEC_AgentFunctions::GetHumanFactorTiredness );
+    brain.RegisterFunction( "_DEC_FacteurHumain_Moral", &DEC_AgentFunctions::GetHumanFactorMorale );
+
+    // Hierarchie
+    brain.RegisterFunction( "_DEC_Pion_PionsSansPC", &DEC_AgentFunctions::GetPionsWithoutPC );
+    brain.RegisterFunction( "_DEC_Pion_PionsSansPCCommunication", &DEC_AgentFunctions::GetCommunicationPionsWithoutPC );
+    brain.RegisterFunction( "_DEC_Pion_PionPC", &DEC_AgentFunctions::GetPionPC );
+
+    brain.RegisterFunction( "_DEC_Agent_PositionInterception", &DEC_AgentFunctions::GetInterceptionPoint );
+
+    brain.RegisterFunction( "_DEC_Agent_EstDansLeFuseau", &DEC_AgentFunctions::AgentHasFuseau );
+
+    brain.RegisterFunction( "DEC_Agent_AgentEstEnVille", &DEC_AgentFunctions::IsInCity );
+    brain.RegisterFunction( "DEC_Pion_PionPCDeAutomate", &DEC_AgentFunctions::GetPionPCOfAutomate );
+    brain.RegisterFunction( "DEC_Pion_PionsDeAutomateSansPC", &DEC_AgentFunctions::GetPionsWithoutPCOfAutomate );
+    brain.RegisterFunction( "DEC_PionTempsTheoriquePourParcourirDistanceEnLigneDroite", &DEC_AgentFunctions::TheoricTimeToMoveDistance );
+    brain.RegisterFunction( "DEC_AutonomieEnDeplacement", &DEC_AgentFunctions::TimeLeftForMoving );
+    brain.RegisterFunction( "DEC_GetDirectionDanger", &DEC_AgentFunctions::GetDirectionDanger );
+    brain.RegisterFunction( "DEC_Pion_GetMilPionType", &DEC_AgentFunctions::GetMilPionType );
+    brain.RegisterFunction( "DEC_Pion_GetMilPionName", &DEC_AgentFunctions::GetMilPionName );
+    brain.RegisterFunction( "DEC_Agent_EstImmobilise", &DEC_AgentFunctions::IsImmobilized );
+    brain.RegisterFunction( "DEC_Agent_EstAutonome", &DEC_AgentFunctions::IsAutonomous );
+    brain.RegisterFunction( "DEC_Agent_ForcerImmunisationNbc", &DEC_AgentFunctions::TemporaryImmunizeAgent );
+    brain.RegisterFunction( "DEC_Agent_ARadar", &DEC_AgentFunctions::AgentHasRadar );
+    brain.RegisterFunction( "DEC_Agent_RapportDeForceLocal", &DEC_AgentFunctions::GetRapForLocalAgent );
+    brain.RegisterFunction( "DEC_HasMission", &DEC_AgentFunctions::HasMission );
+
+    brain.RegisterFunction( "DEC_Agent_GetTempsDeploiement", &DEC_AgentFunctions::GetInstallationTime );     // $$$$ ABR 2011-12-15: Old method, should be removed soon
+    brain.RegisterFunction( "DEC_Agent_GetTempsDedeploiement", &DEC_AgentFunctions::GetUninstallationTime ); // $$$$ ABR 2011-12-15: Old method, should be removed soon
+
+    brain.RegisterFunction( "DEC_GenObject_CreateInstantaneously", &DEC_AgentFunctions::CreateInstantaneously );
+    brain.RegisterFunction( "DEC_Agent_CanPerformHealthEvacuation", &DEC_AgentFunctions::CanPerformHealthEvacuation );
+    brain.RegisterFunction( "DEC_Agent_EstBrouille", &DEC_AgentFunctions::IsJammed );
+    brain.RegisterFunction( "DEC_Agent_EstEnSilenceRadioEmission", &DEC_AgentFunctions::IsInEmissionBlackout );
+    brain.RegisterFunction( "DEC_Agent_EstEnSilenceRadioReception", &DEC_AgentFunctions::IsInReceptionBlackout );
+    brain.RegisterFunction( "DEC_Agent_IsInSmoke", &DEC_AgentFunctions::IsInSmoke );
+    brain.RegisterFunction( "DEC_Agent_GetCurrentSpeed", &DEC_AgentFunctions::GetCurrentSpeed );
+    brain.RegisterFunction( "DEC_Agent_DisableCrowdEffect", &DEC_AgentFunctions::DisableCrowdEffect );
+    brain.RegisterFunction( "DEC_Agent_PionCanFly", &DEC_AgentFunctions::AgentCanFly );
+    brain.RegisterFunction( "DEC_Agent_GetStandardFlyingHeight", &DEC_AgentFunctions::GetStandardFlyingHeight );
+    brain.RegisterFunction( "DEC_Agent_GetTacticalFlyingHeight", &DEC_AgentFunctions::GetTacticalFlyingHeight );
+    brain.RegisterFunction( "DEC_Agent_MaxSpeed", &DEC_AgentFunctions::GetMaxSpeed );
+    brain.RegisterFunction( "DEC_GetUnitById", &DEC_AgentFunctions::GetUnitById );
+    brain.RegisterFunction( "DEC_GetEquipmentFromID", &DEC_AgentFunctions::GetEquipmentFromID );
+    brain.RegisterFunction( "DEC_Agent_IsUnderground", &DEC_AgentFunctions::IsUnderground );
+    brain.RegisterFunction( "DEC_Agent_EstCompletementEmbarquable", &DEC_AgentFunctions::IsLoadable );
+    brain.RegisterFunction( "DEC_Agent_EstValide", &DEC_AgentFunctions::IsValid );
+    
+    brain.RegisterFunction( "DEC_Agent_PeutIllumine", &DEC_AgentFunctions::CanIlluminate );
+    brain.RegisterFunction( "DEC_CanMount", &DEC_AgentFunctions::CanMount );
+    brain.RegisterFunction( "DEC_GetDirectionEnnemi", &DEC_AgentFunctions::GetDirectionDanger );
+    brain.RegisterFunction( "DEC_GetRawMission", &DEC_AgentFunctions::GetMission );
+    brain.RegisterFunction( "DEC_HasDotationForFiring", &DEC_AgentFunctions::HasDotationForFiring );    
+
+    brain.RegisterFunction( "DEC_EnableSharedPerceptionWithKnowledge", &DEC_AgentFunctions::EnableSharedPerceptionWithKnowledge );
+    brain.RegisterFunction( "DEC_DisabledSharedPerceptionWithKnowledge", &DEC_AgentFunctions::DisableSharedPerceptionWithKnowledge );
+    brain.RegisterFunction( "DEC_Knowledge_EnableSharedPerceptionWithKnowledge", &DEC_AgentFunctions::KnowledgeEnableSharedPerceptionWithKnowledge );
+    brain.RegisterFunction( "DEC_Knowledge_DisabledSharedPerceptionWithKnowledge", &DEC_AgentFunctions::KnowledgeDisabledSharedPerceptionWithKnowledge );
+    brain.RegisterFunction( "DEC_EnableSharingKnowledgesWithKnowledge", &DEC_AgentFunctions::EnableSharingKnowledgesWithKnowledge );
+    brain.RegisterFunction( "DEC_DisabledSharingKnowledgesWithKnowledge", &DEC_AgentFunctions::DisableSharingKnowledgesWithKnowledge );
+    brain.RegisterFunction( "DEC_Knowledge_CommunicateWithKnowledgeGroup", &DEC_AgentFunctions::KnowledgeCommunicate );
+
+    brain.RegisterFunction( "_DEC_Agent_NiveauInstallation", &DEC_AgentFunctions::GetPosture );
+    brain.RegisterFunction( "_DEC_Agent_EstDansFoule", &DEC_AgentFunctions::IsInCrowd );
+
+    brain.RegisterFunction( "DEC_Agent_CanaliserPopulation", &DEC_AgentFunctions::ChannelPopulations );
+
+    // Inhabitants
+    brain.RegisterFunction( "DEC_Agent_Alert", &DEC_AgentFunctions::AlertInhabitants );
+    brain.RegisterFunction( "DEC_Agent_UndoAlert", &DEC_AgentFunctions::UndoAlertInhabitants );
+    brain.RegisterFunction( "DEC_Agent_IsAlerted", &DEC_AgentFunctions::IsInhabitantsAlerted );
+    brain.RegisterFunction( "DEC_Agent_Confine", &DEC_AgentFunctions::ConfineInhabitants );
+    brain.RegisterFunction( "DEC_Agent_UndoConfine", &DEC_AgentFunctions::UndoConfineInhabitants );
+    brain.RegisterFunction( "DEC_Agent_IsConfined", &DEC_AgentFunctions::IsInhabitantsConfined );
+    brain.RegisterFunction( "DEC_Agent_UrbanBlockIsPopulated", &DEC_AgentFunctions::UrbanBlockIsPopulated );
+    brain.RegisterFunction( "DEC_Agent_Evacuate", &DEC_AgentFunctions::EvacuateInhabitants );
+    brain.RegisterFunction( "DEC_Agent_UndoEvacuate", &DEC_AgentFunctions::UndoEvacuateInhabitants );
+    brain.RegisterFunction( "DEC_Agent_IsEvacuated", &DEC_AgentFunctions::IsInhabitantsEvacuated );
+
+    brain.RegisterFunction( "DEC_Agent_PositionPtr", &DEC_AgentFunctions::GetAgentPositionPtr );
+    brain.RegisterFunction( "DEC_Agent_Height", &DEC_AgentFunctions::GetHeight );
+
+    // Objects
+    brain.RegisterFunction( "DEC_Agent_AgentPeutConstruireObjetEmbarque", &DEC_AgentFunctions::AgentCanConstructObjectWithLoaded );
+    brain.RegisterFunction( "DEC_Agent_AgentPeutConstruireObjetEmbarqueAvecLocalisation", &DEC_AgentFunctions::AgentCanConstructObjectWithLoadedAndLocalisation );
+    brain.RegisterFunction( "DEC_Agent_AgentADotationPourConstruireObjet", &DEC_AgentFunctions::AgentHasDotationForBuilding );
+    brain.RegisterFunction( "DEC_Agent_AgentADotationPourConstruireObjetSansRenfort", &DEC_AgentFunctions::AgentHasDotationForBuildingWithOutLoaded );
+    brain.RegisterFunction( "DEC_Agent_AgentPeutDetruireObjet", &DEC_AgentFunctions::AgentCanDestroyObject );
+    brain.RegisterFunction( "DEC_Agent_AgentPeutConstruireContournementObjet", &DEC_AgentFunctions::AgentCanBypassObject );
+    brain.RegisterFunction( "DEC_Agent_AgentPeutDetruireTypeObjet", &DEC_AgentFunctions::AgentCanDestroyObjectType );
+    brain.RegisterFunction( "DEC_Agent_AgentPeutDetruireTypeObjetAvecLocalisation", &DEC_AgentFunctions::AgentCanDestroyObjectTypeWithLocalisation );
+
+    brain.RegisterFunction( "DEC_Agent_PeutActiverObjet", &DEC_AgentFunctions::CanActivateObject );
+
+    brain.RegisterFunction( "DEC_Agent_GetAgentDotation", &DEC_AgentFunctions::GetAgentDotationNumber );
+    brain.RegisterFunction( "DEC_GetAgentDotationManquantePourConstruireObjet", &DEC_AgentFunctions::GetAgentMissingDotationForBuildingObject );
+    brain.RegisterFunction( "DEC_GetAgentDotationManquantePourConstruireObjetExistant", &DEC_AgentFunctions::GetAgentMissingDotationForBuildingExistingObject );
+    brain.RegisterFunction( "DEC_GetAgentDotationManquantePourValoriserObjet", &DEC_AgentFunctions::GetAgentMissingDotationForMining );
+    brain.RegisterFunction( "DEC_GetAgentsPouvantConstruire", &DEC_AgentFunctions::RetrieveUnitsAbleToBuild );
+    brain.RegisterFunction( "DEC_GetAgentsPouvantConstruireAvecLocalisation", &DEC_AgentFunctions::RetrieveUnitsAbleToBuildWithLocalisation );
+    brain.RegisterFunction( "DEC_GetAgentsPouvantValoriser", &DEC_AgentFunctions::RetrieveUnitsAbleToMine );
+    brain.RegisterFunction( "DEC_GetAgentsPouvantValoriserAvecLocalisation", &DEC_AgentFunctions::RetrieveUnitsAbleToMineWithLocalisation );
+    brain.RegisterFunction( "DEC_GetAgentsPouvantContourner", &DEC_AgentFunctions::RetrieveUnitsAbleToByPass );
+    brain.RegisterFunction( "DEC_GetAgentsPouvantContournerAvecLocalisation", &DEC_AgentFunctions::RetrieveUnitsAbleToByPassWithLocalisation );
+    brain.RegisterFunction( "DEC_GetAgentsPouvantDetruire", &DEC_AgentFunctions::RetrieveUnitsAbleToDestroy );
+    brain.RegisterFunction( "DEC_GetAgentsPouvantDetruireAvecLocalisation", &DEC_AgentFunctions::RetrieveUnitsAbleToDestroyWithLocalisation );
+    brain.RegisterFunction( "DEC_GetAgentsPouvantDevaloriserAvecLocalisation", &DEC_AgentFunctions::RetrieveUnitsAbleToDemineWithLocalisation );
+    brain.RegisterFunction( "DEC_GetAgentsPouvantDevaloriserEmbarqueAvecLocalisation", &DEC_AgentFunctions::RetrieveUnitsAbleToDemineWithOutLoadedWithLocalisation );
+}
+
 DEC_Decision_ABC* DEC_AgentFunctions::GetUnitById( uint32_t id )
 {
     auto unit = MIL_AgentServer::GetWorkspace().GetEntityManager().FindAgentPion( id );
@@ -87,18 +309,18 @@ DEC_Decision_ABC* DEC_AgentFunctions::GetUnitById( uint32_t id )
 // Name: DEC_AgentFunctions::IsNeutralized
 // Created: JVT 03-10-01
 //-----------------------------------------------------------------------------
-bool DEC_AgentFunctions::IsNeutralized( const MIL_Agent_ABC& callerAgent )
+bool DEC_AgentFunctions::IsNeutralized( const DEC_Decision_ABC* callerAgent )
 {
-    return callerAgent.IsNeutralized();
+    return callerAgent->GetPion().IsNeutralized();
 }
 
 //-----------------------------------------------------------------------------
 // Name: DEC_AgentFunctions::IsUnderIndirectFire
 // Created: LMT 2012-06-13
 //-----------------------------------------------------------------------------
-bool DEC_AgentFunctions::UpdateUnderIndirectFire( MIL_Agent_ABC& callerAgent )
+bool DEC_AgentFunctions::UpdateUnderIndirectFire( DEC_Decision_ABC* callerAgent )
 {
-    return callerAgent.UpdateUnderIndirectFire();
+    return callerAgent->GetPion().UpdateUnderIndirectFire();
 }
 
 //-----------------------------------------------------------------------------
@@ -114,82 +336,73 @@ bool DEC_AgentFunctions::IsAutonomous( DEC_Decision_ABC* pAgent )
 // Name: DEC_AgentFunctions::WearNbcProtectionSuit
 // Created: NLD 2004-05-03
 // -----------------------------------------------------------------------------
-void DEC_AgentFunctions::WearNbcProtectionSuit( MIL_Agent_ABC& callerAgent )
+void DEC_AgentFunctions::WearNbcProtectionSuit( DEC_Decision_ABC* callerAgent )
 {
-    if( GetNbcSuitLevel( callerAgent) != 0 )
-        callerAgent.GetRole< nbc::PHY_RoleInterface_NBC >().WearNbcProtectionSuit();
+    if( GetNbcSuitLevel( callerAgent ) != 0 )
+        callerAgent->GetPion().GetRole< nbc::PHY_RoleInterface_NBC >().WearNbcProtectionSuit();
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_AgentFunctions::RemoveNbcProtectionSuit
 // Created: NLD 2004-05-03
 // -----------------------------------------------------------------------------
-void DEC_AgentFunctions::RemoveNbcProtectionSuit( MIL_Agent_ABC& callerAgent )
+void DEC_AgentFunctions::RemoveNbcProtectionSuit( DEC_Decision_ABC* callerAgent )
 {
-    callerAgent.GetRole< nbc::PHY_RoleInterface_NBC >().RemoveNbcProtectionSuit();
+    callerAgent->GetPion().GetRole< nbc::PHY_RoleInterface_NBC >().RemoveNbcProtectionSuit();
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_AgentFunctions::SelfDecontaminate
 // Created: NLD 2005-03-25
 // -----------------------------------------------------------------------------
-void DEC_AgentFunctions::SelfDecontaminate( MIL_Agent_ABC& callerAgent )
+void DEC_AgentFunctions::SelfDecontaminate( DEC_Decision_ABC* callerAgent )
 {
-    callerAgent.GetRole< nbc::PHY_RoleInterface_NBC >().Decontaminate();
+    callerAgent->GetPion().GetRole< nbc::PHY_RoleInterface_NBC >().Decontaminate();
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_AgentFunctions::ActivateBlackout
 // Created: NLD 2004-11-09
 // -----------------------------------------------------------------------------
-void DEC_AgentFunctions::ActivateBlackout( MIL_Agent_ABC& callerAgent )
+void DEC_AgentFunctions::ActivateBlackout( DEC_Decision_ABC* callerAgent )
 {
-    callerAgent.CallRole( &PHY_RoleInterface_Communications::ActivateBlackout );
+    callerAgent->GetPion().CallRole( &PHY_RoleInterface_Communications::ActivateBlackout );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_AgentFunctions::ActivatePartialBlackout
 // Created: HBD 2010-06-16
 // -----------------------------------------------------------------------------
-void DEC_AgentFunctions::ActivatePartialBlackout( MIL_Agent_ABC& callerAgent, bool report )
+void DEC_AgentFunctions::ActivatePartialBlackout( DEC_Decision_ABC* callerAgent, bool report )
 {
-    callerAgent.CallRole( &PHY_RoleInterface_Communications::ActivatePartialBlackout, report );
+    callerAgent->GetPion().CallRole( &PHY_RoleInterface_Communications::ActivatePartialBlackout, report );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_AgentFunctions::DeactivateBlackout
 // Created: NLD 2004-11-09
 // -----------------------------------------------------------------------------
-void DEC_AgentFunctions::DeactivateBlackout( MIL_Agent_ABC& callerAgent )
+void DEC_AgentFunctions::DeactivateBlackout( DEC_Decision_ABC* callerAgent )
 {
-    callerAgent.CallRole( &PHY_RoleInterface_Communications::DeactivateBlackout );
+    callerAgent->GetPion().CallRole( &PHY_RoleInterface_Communications::DeactivateBlackout );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_AgentFunctions::IsAgentNBC
 // Created: DDA 2012-04-12
 // -----------------------------------------------------------------------------
-bool DEC_AgentFunctions::IsAgentNBC( const MIL_Agent_ABC& callerAgent )
+bool DEC_AgentFunctions::IsAgentNBC( const DEC_Decision_ABC* callerAgent )
 {
-    return callerAgent.GetType().IsNBC();
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_AgentFunctions::IsContaminated
-// Created: NLD 2004-05-05
-// -----------------------------------------------------------------------------
-bool DEC_AgentFunctions::IsContaminated( const MIL_Agent_ABC& callerAgent )
-{
-    return callerAgent.GetRole< nbc::PHY_RoleInterface_NBC >().IsContaminated();
+    return callerAgent->GetPion().GetType().IsNBC();
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_AgentFunctions::IsIntoxicated
 // Created: LGY 2012-01-13
 // -----------------------------------------------------------------------------
-bool DEC_AgentFunctions::IsIntoxicated( const MIL_Agent_ABC& callerAgent )
+bool DEC_AgentFunctions::IsIntoxicated( const DEC_Decision_ABC* callerAgent )
 {
-    return callerAgent.GetRole< nbc::PHY_RoleInterface_NBC >().IsIntoxicated();
+    return callerAgent->GetPion().GetRole< nbc::PHY_RoleInterface_NBC >().IsIntoxicated();
 }
 
 // -----------------------------------------------------------------------------
@@ -205,45 +418,45 @@ void DEC_AgentFunctions::TemporaryImmunizeAgent( DEC_Decision_ABC* pAgent, bool 
 // Name: DEC_AgentFunctions::IsTransported
 // Created: NLD 2005-01-19
 // -----------------------------------------------------------------------------
-bool DEC_AgentFunctions::IsTransported( const MIL_Agent_ABC& callerAgent )
+bool DEC_AgentFunctions::IsTransported( const DEC_Decision_ABC* callerAgent )
 {
-    return callerAgent.GetRole< transport::PHY_RoleInterface_Transported >().IsTransported();
+    return callerAgent->GetPion().GetRole< transport::PHY_RoleInterface_Transported >().IsTransported();
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_AgentFunctions::SetFlyingHeight
 // Created: JVT 2004-11-02
 // -----------------------------------------------------------------------------
-void DEC_AgentFunctions::SetFlyingHeight( MIL_Agent_ABC& callerAgent, double height )
+void DEC_AgentFunctions::SetFlyingHeight( DEC_Decision_ABC* callerAgent, double height )
 {
-    callerAgent.GetRole< PHY_RoleAction_InterfaceFlying >().SetFlyingHeight( height );
+    callerAgent->GetPion().GetRole< PHY_RoleAction_InterfaceFlying >().SetFlyingHeight( height );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_AgentFunctions::IsFlying
 // Created: JVT 2005-02-11
 // -----------------------------------------------------------------------------
-bool DEC_AgentFunctions::IsFlying( const MIL_Agent_ABC& callerAgent )
+bool DEC_AgentFunctions::IsFlying( const DEC_Decision_ABC* callerAgent )
 {
-    return callerAgent.GetRole< PHY_RoleAction_InterfaceFlying >().IsFlying();
+    return callerAgent->GetPion().GetRole< PHY_RoleAction_InterfaceFlying >().IsFlying();
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_AgentFunctions::IsDead
 // Created: NLD 2006-02-01
 // -----------------------------------------------------------------------------
-bool DEC_AgentFunctions::IsDead( const MIL_Agent_ABC& callerAgent )
+bool DEC_AgentFunctions::IsDead( const DEC_Decision_ABC* callerAgent )
 {
-    return callerAgent.IsDead();
+    return callerAgent->GetPion().IsDead();
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_AgentFunctions::IsPC
 // Created: NLD 2005-03-10
 // -----------------------------------------------------------------------------
-bool DEC_AgentFunctions::IsPC( const MIL_Agent_ABC& callerAgent )
+bool DEC_AgentFunctions::IsPC( const DEC_Decision_ABC* callerAgent )
 {
-    return callerAgent.IsPC();
+    return callerAgent->GetPion().IsPC();
 }
 
 // -----------------------------------------------------------------------------
@@ -263,36 +476,36 @@ bool DEC_AgentFunctions::CanPerformHealthEvacuation( const DEC_Decision_ABC* age
 // Name: DEC_AgentFunctions::IsAutomateEngaged
 // Created: NLD 2004-10-15
 // -----------------------------------------------------------------------------
-bool DEC_AgentFunctions::IsAutomateEngaged( const MIL_Agent_ABC& callerAgent )
+bool DEC_AgentFunctions::IsAutomateEngaged( const DEC_Decision_ABC* callerAgent )
 {
-    return callerAgent.GetAutomate().IsEngaged();
+    return callerAgent->GetPion().GetAutomate().IsEngaged();
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_AgentFunctions::GetOperationalState
 // Created: NLD 2004-04-16
 // -----------------------------------------------------------------------------
-double DEC_AgentFunctions::GetOperationalState( const MIL_Agent_ABC& callerAgent )
+double DEC_AgentFunctions::GetOperationalState( const DEC_Decision_ABC* callerAgent )
 {
-    return callerAgent.GetRole< PHY_RoleInterface_Composantes >().GetOperationalState();
+    return callerAgent->GetPion().GetRole< PHY_RoleInterface_Composantes >().GetOperationalState();
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_AgentFunctions::GetMajorOperationalState
 // Created: NLD 2005-11-25
 // -----------------------------------------------------------------------------
-double DEC_AgentFunctions::GetMajorOperationalState( const MIL_Agent_ABC& callerAgent )
+double DEC_AgentFunctions::GetMajorOperationalState( const DEC_Decision_ABC* callerAgent )
 {
-    return callerAgent.GetRole< PHY_RoleInterface_Composantes >().GetMajorOperationalState();
+    return callerAgent->GetPion().GetRole< PHY_RoleInterface_Composantes >().GetMajorOperationalState();
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_AgentFunctions::GetPosition
 // Created: NLD 2004-10-21
 // -----------------------------------------------------------------------------
-boost::shared_ptr< MT_Vector2D > DEC_AgentFunctions::GetPosition( const MIL_Agent_ABC& callerAgent )
+boost::shared_ptr< MT_Vector2D > DEC_AgentFunctions::GetPosition( const DEC_Decision_ABC* callerAgent )
 {
-    return callerAgent.GetRole< PHY_RoleInterface_Location >().GetSharedPosition();
+    return callerAgent->GetPion().GetRole< PHY_RoleInterface_Location >().GetSharedPosition();
 }
 
 // -----------------------------------------------------------------------------
@@ -310,9 +523,9 @@ double DEC_AgentFunctions::GetHeight( DEC_Decision_ABC* brain )
 // Name: DEC_AgentFunctions::GetNbcSuitLevel
 // Created: LGY 2012-11-27
 // -----------------------------------------------------------------------------
-int DEC_AgentFunctions::GetNbcSuitLevel( const MIL_Agent_ABC& callerAgent )
+int DEC_AgentFunctions::GetNbcSuitLevel( const DEC_Decision_ABC* callerAgent )
 {
-    return static_cast< int >( callerAgent.GetType().GetUnitType().GetNbcSuit().GetType() );
+    return static_cast< int >( callerAgent->GetPion().GetType().GetUnitType().GetNbcSuit().GetType() );
 }
 
 // -----------------------------------------------------------------------------
@@ -330,18 +543,18 @@ boost::shared_ptr< MT_Vector2D > DEC_AgentFunctions::GetAgentPositionPtr( DEC_De
 // Name: DEC_AgentFunctions::GetDirection
 // Created: NLD 2004-10-21
 // -----------------------------------------------------------------------------
-const MT_Vector2D* DEC_AgentFunctions::GetDirection( const MIL_Agent_ABC& callerAgent )
+const MT_Vector2D* DEC_AgentFunctions::GetDirection( const DEC_Decision_ABC* callerAgent )
 {
-    return &callerAgent.GetRole< PHY_RoleInterface_Location >().GetDirection();
+    return &callerAgent->GetPion().GetRole< PHY_RoleInterface_Location >().GetDirection();
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_AgentFunctions::GetIdentificationDistance
 // Created: DDA 2010-03-24
 // -----------------------------------------------------------------------------
-float DEC_AgentFunctions::GetIdentificationDistance( MIL_Agent_ABC& callerAgent )
+float DEC_AgentFunctions::GetIdentificationDistance( const DEC_Decision_ABC* callerAgent )
 {
-    const PHY_Composante_ABC* majorComposante = callerAgent.GetRole< PHY_RoleInterface_Composantes >().GetMajorComposante();
+    const PHY_Composante_ABC* majorComposante = callerAgent->GetPion().GetRole< PHY_RoleInterface_Composantes >().GetMajorComposante();
     if( !majorComposante )
         throw MASA_EXCEPTION( "Unit has no major component" );
     return majorComposante->GetIdentificationMaxRange();
@@ -351,9 +564,9 @@ float DEC_AgentFunctions::GetIdentificationDistance( MIL_Agent_ABC& callerAgent 
 // Name: DEC_AgentFunctions::GetReconnoissanceDistance
 // Created: GGE & PSN 2010-04-20
 // -----------------------------------------------------------------------------
-float DEC_AgentFunctions::GetReconnoissanceDistance( MIL_Agent_ABC& callerAgent )
+float DEC_AgentFunctions::GetReconnoissanceDistance( const DEC_Decision_ABC* callerAgent )
 {
-    const PHY_Composante_ABC* majorComposante = callerAgent.GetRole< PHY_RoleInterface_Composantes >().GetMajorComposante();
+    const PHY_Composante_ABC* majorComposante = callerAgent->GetPion().GetRole< PHY_RoleInterface_Composantes >().GetMajorComposante();
     if( !majorComposante )
         throw MASA_EXCEPTION( "Unit has no major component" );
     return majorComposante->GetReconnoissanceMaxRange();
@@ -363,16 +576,16 @@ float DEC_AgentFunctions::GetReconnoissanceDistance( MIL_Agent_ABC& callerAgent 
 // Name: DEC_AgentFunctions::GetDetectionDistance
 // Created: DDA 2010-06-09
 // -----------------------------------------------------------------------------
-float DEC_AgentFunctions::GetDetectionDistance( MIL_Agent_ABC& callerAgent )
+double DEC_AgentFunctions::GetDetectionDistance( const DEC_Decision_ABC* callerAgent )
 {
-    return (float)callerAgent.GetRole< PHY_RoleInterface_Perceiver >().GetMaxAgentPerceptionDistance();
+    return callerAgent->GetPion().GetRole< PHY_RoleInterface_Perceiver >().GetMaxAgentPerceptionDistance();
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_AgentFunctions::CanConstructObject
 // Created: NLD 2004-05-07
 // -----------------------------------------------------------------------------
-bool DEC_AgentFunctions::CanConstructObject( const MIL_Agent_ABC& callerAgent, const std::string& type )
+bool DEC_AgentFunctions::CanConstructObject( const DEC_Decision_ABC* callerAgent, const std::string& type )
 {
     return CanConstructObjectWithLocalisation( callerAgent, type, 0 );
 }
@@ -381,16 +594,16 @@ bool DEC_AgentFunctions::CanConstructObject( const MIL_Agent_ABC& callerAgent, c
 // Name: DEC_AgentFunctions::CanConstructObjectWithLocalisation
 // Created: JSR 2012-02-24
 // -----------------------------------------------------------------------------
-bool DEC_AgentFunctions::CanConstructObjectWithLocalisation( const MIL_Agent_ABC& callerAgent, const std::string& type, const TER_Localisation* location )
+bool DEC_AgentFunctions::CanConstructObjectWithLocalisation( const DEC_Decision_ABC* callerAgent, const std::string& type, const TER_Localisation* location )
 {
-    return callerAgent.GetRole< PHY_RoleAction_Objects >().CanConstructWithReinforcement( type, location, false );
+    return callerAgent->GetPion().GetRole< PHY_RoleAction_Objects >().CanConstructWithReinforcement( type, location, false );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_AgentFunctions::CanConstructWithoutReinforcement
 // Created: LGY 2011-10-04
 // -----------------------------------------------------------------------------
-bool DEC_AgentFunctions::CanConstructWithoutReinforcement( const MIL_Agent_ABC& callerAgent, const std::string& type )
+bool DEC_AgentFunctions::CanConstructWithoutReinforcement( const DEC_Decision_ABC* callerAgent, const std::string& type )
 {
     return CanConstructWithoutReinforcementWithLocalisation( callerAgent, type, 0 );
 }
@@ -399,16 +612,16 @@ bool DEC_AgentFunctions::CanConstructWithoutReinforcement( const MIL_Agent_ABC& 
 // Name: DEC_AgentFunctions::CanConstructWithoutReinforcementWithLocalisation
 // Created: JSR 2012-02-24
 // -----------------------------------------------------------------------------
-bool DEC_AgentFunctions::CanConstructWithoutReinforcementWithLocalisation( const MIL_Agent_ABC& callerAgent, const std::string& type, const TER_Localisation* location )
+bool DEC_AgentFunctions::CanConstructWithoutReinforcementWithLocalisation( const DEC_Decision_ABC* callerAgent, const std::string& type, const TER_Localisation* location )
 {
-    return callerAgent.GetRole< PHY_RoleAction_Objects >().CanConstructWithoutReinforcement( type, location, false );
+    return callerAgent->GetPion().GetRole< PHY_RoleAction_Objects >().CanConstructWithoutReinforcement( type, location, false );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_AgentFunctions::CanConstructObjectWithLoaded
 // Created: MGD 2010-11-02
 // -----------------------------------------------------------------------------
-bool DEC_AgentFunctions::CanConstructObjectWithLoaded( const MIL_Agent_ABC& callerAgent, const std::string& type )
+bool DEC_AgentFunctions::CanConstructObjectWithLoaded( const DEC_Decision_ABC* callerAgent, const std::string& type )
 {
     return CanConstructObjectWithLoadedAndLocalisation( callerAgent, type, 0 );
 }
@@ -417,63 +630,65 @@ bool DEC_AgentFunctions::CanConstructObjectWithLoaded( const MIL_Agent_ABC& call
 // Name: DEC_AgentFunctions::CanConstructObjectWithLoadedAndLocalisation
 // Created: JSR 2012-02-24
 // -----------------------------------------------------------------------------
-bool DEC_AgentFunctions::CanConstructObjectWithLoadedAndLocalisation( const MIL_Agent_ABC& callerAgent, const std::string& type, const TER_Localisation* location )
+bool DEC_AgentFunctions::CanConstructObjectWithLoadedAndLocalisation( const DEC_Decision_ABC* callerAgent, const std::string& type, const TER_Localisation* location )
 {
-    return callerAgent.GetRole< PHY_RoleAction_Objects >().CanConstructWithReinforcement( type, location, true );
+    return callerAgent->GetPion().GetRole< PHY_RoleAction_Objects >().CanConstructWithReinforcement( type, location, true );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_AgentFunctions::HasDotationForBuilding
 // Created: LMT 2010-07-07
 // -----------------------------------------------------------------------------
-bool DEC_AgentFunctions::HasDotationForBuilding( MIL_Agent_ABC& callerAgent, const std::string& type )
+bool DEC_AgentFunctions::HasDotationForBuilding( DEC_Decision_ABC* callerAgent, const std::string& type )
 {
-    return callerAgent.GetRole< PHY_RoleAction_Objects >().EnoughDotationForBuilding( type, callerAgent, true );
+    MIL_Agent_ABC& agent = callerAgent->GetPion();
+    return agent.GetRole< PHY_RoleAction_Objects >().EnoughDotationForBuilding( type, agent, true );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_AgentFunctions::HasDotationForBuildingWithoutReinforcement
 // Created: LMT 2012-01-24
 // -----------------------------------------------------------------------------
-bool DEC_AgentFunctions::HasDotationForBuildingWithoutReinforcement( MIL_Agent_ABC& callerAgent, const std::string& type )
+bool DEC_AgentFunctions::HasDotationForBuildingWithoutReinforcement( DEC_Decision_ABC* callerAgent, const std::string& type )
 {
-    return callerAgent.GetRole< PHY_RoleAction_Objects >().EnoughDotationForBuilding( type, callerAgent, false );
+    MIL_Agent_ABC& agent = callerAgent->GetPion();
+    return agent.GetRole< PHY_RoleAction_Objects >().EnoughDotationForBuilding( type, agent, false );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_AgentFunctions::CanBypassObject
 // Created: NLD 2004-05-07
 // -----------------------------------------------------------------------------
-bool DEC_AgentFunctions::CanBypassObject( const MIL_Agent_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > objectKnowledge )
+bool DEC_AgentFunctions::CanBypassObject( const DEC_Decision_ABC* callerAgent, boost::shared_ptr< DEC_Knowledge_Object > objectKnowledge )
 {
-    return objectKnowledge && objectKnowledge->IsValid() && objectKnowledge->RetrieveAttribute< BypassAttribute >() != 0 && callerAgent.GetRole< PHY_RoleAction_Objects >().CanBypassWithReinforcement( objectKnowledge->GetType(), objectKnowledge->GetLocalisation() );
+    return objectKnowledge && objectKnowledge->IsValid() && objectKnowledge->RetrieveAttribute< BypassAttribute >() != 0 && callerAgent->GetPion().GetRole< PHY_RoleAction_Objects >().CanBypassWithReinforcement( objectKnowledge->GetType(), objectKnowledge->GetLocalisation() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_AgentFunctions::CanDestroyObject
 // Created: NLD 2004-05-07
 // -----------------------------------------------------------------------------
-bool DEC_AgentFunctions::CanDestroyObject( const MIL_Agent_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > objectKnowledge )
+bool DEC_AgentFunctions::CanDestroyObject( const DEC_Decision_ABC* callerAgent, boost::shared_ptr< DEC_Knowledge_Object > objectKnowledge )
 {
-    return objectKnowledge && objectKnowledge->IsValid() && callerAgent.GetRole< PHY_RoleAction_Objects >().CanDestroyWithReinforcement( objectKnowledge->GetType(), objectKnowledge->GetLocalisation() );
+    return objectKnowledge && objectKnowledge->IsValid() && callerAgent->GetPion().GetRole< PHY_RoleAction_Objects >().CanDestroyWithReinforcement( objectKnowledge->GetType(), objectKnowledge->GetLocalisation() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_AgentFunctions::CanDemineObject
 // Created: DDA 2012-03-16
 // -----------------------------------------------------------------------------
-bool DEC_AgentFunctions::CanDemineObject( const MIL_Agent_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > objectKnowledge )
+bool DEC_AgentFunctions::CanDemineObject( const DEC_Decision_ABC* callerAgent, boost::shared_ptr< DEC_Knowledge_Object > objectKnowledge )
 {
-    return objectKnowledge && objectKnowledge->IsValid() && callerAgent.GetRole< PHY_RoleAction_Objects >().CanDemineWithReinforcement( objectKnowledge->GetType(), objectKnowledge->GetLocalisation() );
+    return objectKnowledge && objectKnowledge->IsValid() && callerAgent->GetPion().GetRole< PHY_RoleAction_Objects >().CanDemineWithReinforcement( objectKnowledge->GetType(), objectKnowledge->GetLocalisation() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_AgentFunctions::CanMineObject
 // Created: NLD 2005-09-08
 // -----------------------------------------------------------------------------
-bool DEC_AgentFunctions::CanMineObject( const MIL_Agent_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > objectKnowledge )
+bool DEC_AgentFunctions::CanMineObject( const DEC_Decision_ABC* callerAgent, boost::shared_ptr< DEC_Knowledge_Object > objectKnowledge )
 {
-    return objectKnowledge && objectKnowledge->IsValid() && objectKnowledge->IsConstructed() && callerAgent.GetRole< PHY_RoleAction_Objects >().CanMineWithReinforcement( objectKnowledge->GetType(), objectKnowledge->GetLocalisation() );
+    return objectKnowledge && objectKnowledge->IsValid() && objectKnowledge->IsConstructed() && callerAgent->GetPion().GetRole< PHY_RoleAction_Objects >().CanMineWithReinforcement( objectKnowledge->GetType(), objectKnowledge->GetLocalisation() );
 }
 
 // -----------------------------------------------------------------------------
@@ -489,27 +704,18 @@ bool DEC_AgentFunctions::CanActivateObject( boost::shared_ptr< DEC_Knowledge_Obj
 // Name: DEC_AgentFunctions::EnableDiscreteMode
 // Created: JVT 04-05-17
 //-----------------------------------------------------------------------------
-void DEC_AgentFunctions::EnableDiscreteMode( MIL_Agent_ABC& callerAgent )
+void DEC_AgentFunctions::EnableDiscreteMode( DEC_Decision_ABC* callerAgent )
 {
-    callerAgent.GetRole< PHY_RoleInterface_Posture >().EnableDiscreteMode();
+    callerAgent->GetPion().GetRole< PHY_RoleInterface_Posture >().EnableDiscreteMode();
 }
 
 //-----------------------------------------------------------------------------
 // Name: DEC_AgentFunctions::DisableDiscreteMode
 // Created: JVT 04-05-17
 //-----------------------------------------------------------------------------
-void DEC_AgentFunctions::DisableDiscreteMode( MIL_Agent_ABC& callerAgent )
+void DEC_AgentFunctions::DisableDiscreteMode( DEC_Decision_ABC* callerAgent )
 {
-    callerAgent.GetRole< PHY_RoleInterface_Posture >().DisableDiscreteMode();
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_AgentFunctions::AgentCanFly
-// Created: JSR 2012-04-19
-// -----------------------------------------------------------------------------
-bool DEC_AgentFunctions::AgentCanFly( const MIL_Agent_ABC& callerAgent )
-{
-    return callerAgent.GetType().GetUnitType().CanFly();
+    callerAgent->GetPion().GetRole< PHY_RoleInterface_Posture >().DisableDiscreteMode();
 }
 
 // -----------------------------------------------------------------------------
@@ -538,18 +744,18 @@ unsigned int DEC_AgentFunctions::GetTacticalFlyingHeight( const DEC_Decision_ABC
 // Name: DEC_AgentFunctions::IsLoaded
 // Created: NLD 2004-10-18
 // -----------------------------------------------------------------------------
-bool DEC_AgentFunctions::IsLoaded( const MIL_Agent_ABC& callerAgent )
+bool DEC_AgentFunctions::IsLoaded( const DEC_Decision_ABC* callerAgent )
 {
-    return callerAgent.GetRole< transport::PHY_RoleAction_Loading >().IsLoaded();
+    return callerAgent->GetPion().GetRole< transport::PHY_RoleAction_Loading >().IsLoaded();
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_AgentFunctions::IsUnloaded
 // Created: LDC 2010-11-02
 // -----------------------------------------------------------------------------
-bool DEC_AgentFunctions::IsUnloaded( const MIL_Agent_ABC& callerAgent )
+bool DEC_AgentFunctions::IsUnloaded( const DEC_Decision_ABC* callerAgent )
 {
-    return callerAgent.GetRole< transport::PHY_RoleAction_Loading >().IsUnloaded();
+    return callerAgent->GetPion().GetRole< transport::PHY_RoleAction_Loading >().IsUnloaded();
 }
 
 namespace
@@ -591,14 +797,15 @@ namespace
         //@}
     };
 }
+
 // -----------------------------------------------------------------------------
 // Name: DEC_AgentFunctions::HasLoadable
 // Created: MGD 2010-08-30
 // -----------------------------------------------------------------------------
-bool DEC_AgentFunctions::HasLoadable( const MIL_Agent_ABC& callerAgent )
+bool DEC_AgentFunctions::HasLoadable( const DEC_Decision_ABC* callerAgent )
 {
     HasLoadableComputer computer;
-    const_cast< MIL_Agent_ABC& >( callerAgent ).Execute< OnComponentComputer_ABC >( computer );
+    callerAgent->GetPion().Execute< OnComponentComputer_ABC >( computer );
     return computer.HasLoadable();
 }
 
@@ -657,45 +864,46 @@ bool DEC_AgentFunctions::IsLoadable( DEC_Decision_ABC& callerAgent )
 // Name: DEC_AgentFunctions::GetLoadingTime
 // Created: NLD 2004-10-18
 // -----------------------------------------------------------------------------
-double DEC_AgentFunctions::GetLoadingTime( const MIL_Agent_ABC& callerAgent )
+double DEC_AgentFunctions::GetLoadingTime( const DEC_Decision_ABC* callerAgent )
 {
-    return MIL_Tools::ConvertSimToMinutes( callerAgent.GetRole< transport::PHY_RoleAction_Loading >().GetLoadingTime() );
+    return MIL_Tools::ConvertSimToMinutes( callerAgent->GetPion().GetRole< transport::PHY_RoleAction_Loading >().GetLoadingTime() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_AgentFunctions::GetUnloadingTime
 // Created: NLD 2004-10-18
 // -----------------------------------------------------------------------------
-double DEC_AgentFunctions::GetUnloadingTime( const MIL_Agent_ABC& callerAgent )
+double DEC_AgentFunctions::GetUnloadingTime( const DEC_Decision_ABC* callerAgent )
 {
-    return MIL_Tools::ConvertSimToMinutes( callerAgent.GetRole< transport::PHY_RoleAction_Loading >().GetUnloadingTime() );
+    return MIL_Tools::ConvertSimToMinutes( callerAgent->GetPion().GetRole< transport::PHY_RoleAction_Loading >().GetUnloadingTime() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_AgentFunctions::DisableHumanTransportersNow
 // Created: JVT 2005-05-04
 // -----------------------------------------------------------------------------
-void DEC_AgentFunctions::DisableHumanTransportersNow( MIL_Agent_ABC& callerAgent )
+void DEC_AgentFunctions::DisableHumanTransportersNow( DEC_Decision_ABC* callerAgent )
 {
-    callerAgent.GetRole< transport::PHY_RoleInterface_Transported >().DisableHumanTransporters( callerAgent.GetRole< PHY_RoleInterface_Location >().GetPosition() );
+    MIL_Agent_ABC& agent = callerAgent->GetPion();
+    agent.GetRole< transport::PHY_RoleInterface_Transported >().DisableHumanTransporters( agent.GetRole< PHY_RoleInterface_Location >().GetPosition() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_AgentFunctions::RecoverHumanTransportersNow
 // Created: JVT 2005-05-04
 // -----------------------------------------------------------------------------
-void DEC_AgentFunctions::RecoverHumanTransportersNow( MIL_Agent_ABC& callerAgent )
+void DEC_AgentFunctions::RecoverHumanTransportersNow( DEC_Decision_ABC* callerAgent )
 {
-    callerAgent.GetRole< transport::PHY_RoleInterface_Transported >().RecoverHumanTransporters();
+    callerAgent->GetPion().GetRole< transport::PHY_RoleInterface_Transported >().RecoverHumanTransporters();
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_AgentFunctions::AreHumanTransportersReady
 // Created: JVT 2005-01-31
 // -----------------------------------------------------------------------------
-bool DEC_AgentFunctions::AreHumanTransportersReady( const MIL_Agent_ABC& callerAgent )
+bool DEC_AgentFunctions::AreHumanTransportersReady( const DEC_Decision_ABC* callerAgent )
 {
-    return callerAgent.GetRole< transport::PHY_RoleInterface_Transported >().HasHumanTransportersReady();
+    return callerAgent->GetPion().GetRole< transport::PHY_RoleInterface_Transported >().HasHumanTransportersReady();
 }
 
 // -----------------------------------------------------------------------------
@@ -717,10 +925,10 @@ bool DEC_AgentFunctions::IsUnderground( DEC_Decision_ABC& callerAgent )
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_AgentFunctions::PionCanFly
+// Name: DEC_AgentFunctions::AgentCanFly
 // Created: MIA 2013-06-03
 // -----------------------------------------------------------------------------
-bool DEC_AgentFunctions::PionCanFly( const DEC_Decision_ABC* callerAgent )
+bool DEC_AgentFunctions::AgentCanFly( const DEC_Decision_ABC* callerAgent )
 {
     return callerAgent && callerAgent->GetPion().GetType().GetUnitType().CanFly();
 }
@@ -729,93 +937,93 @@ bool DEC_AgentFunctions::PionCanFly( const DEC_Decision_ABC* callerAgent )
 // Name: DEC_AgentFunctions::NotifyForceRatioStateChanged
 // Created: NLD 2004-10-15
 // -----------------------------------------------------------------------------
-void DEC_AgentFunctions::NotifyForceRatioStateChanged( MIL_Agent_ABC& callerAgent, int state )
+void DEC_AgentFunctions::NotifyForceRatioStateChanged( DEC_Decision_ABC* callerAgent, int state )
 {
-    dynamic_cast< DEC_RolePion_Decision& >( callerAgent.GetDecision() ).NotifyForceRatioStateChanged( static_cast< E_ForceRatioState >( state ) );
+    dynamic_cast< DEC_RolePion_Decision& >( *callerAgent ).NotifyForceRatioStateChanged( static_cast< E_ForceRatioState >( state ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_AgentFunctions::NotifyIndirectFireAvailabilityChanged
 // Created: NLD 2005-10-19
 // -----------------------------------------------------------------------------
-void DEC_AgentFunctions::NotifyIndirectFireAvailabilityChanged( MIL_Agent_ABC& callerAgent, int state )
+void DEC_AgentFunctions::NotifyIndirectFireAvailabilityChanged( DEC_Decision_ABC* callerAgent, int state )
 {
-    dynamic_cast< DEC_RolePion_Decision& >( callerAgent.GetDecision() ).NotifyIndirectFireAvailabilityChanged( static_cast< E_FireAvailability >( state ) );
+    dynamic_cast< DEC_RolePion_Decision& >( *callerAgent ).NotifyIndirectFireAvailabilityChanged( static_cast< E_FireAvailability >( state ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_AgentFunctions::NotifyRulesOfEngagementStateChanged
 // Created: NLD 2004-10-15
 // -----------------------------------------------------------------------------
-void DEC_AgentFunctions::NotifyRulesOfEngagementStateChanged( MIL_Agent_ABC& callerAgent, int state )
+void DEC_AgentFunctions::NotifyRulesOfEngagementStateChanged( DEC_Decision_ABC* callerAgent, int state )
 {
-    dynamic_cast< DEC_RolePion_Decision& >( callerAgent.GetDecision() ).NotifyRulesOfEngagementStateChanged( static_cast< E_RulesOfEngagementState >( state ) );
+    dynamic_cast< DEC_RolePion_Decision& >( *callerAgent ).NotifyRulesOfEngagementStateChanged( static_cast< E_RulesOfEngagementState >( state ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_AgentFunctions::GetRulesOfEngagementState
 // Created: DDA 2010-02-03
 // -----------------------------------------------------------------------------
-int DEC_AgentFunctions::GetRulesOfEngagementState( const MIL_Agent_ABC& callerAgent )
+int DEC_AgentFunctions::GetRulesOfEngagementState( const DEC_Decision_ABC* callerAgent )
 {
-   return static_cast< int >( callerAgent.GetRole< DEC_RolePion_Decision >().GetRulesOfEngagementState() );
+   return static_cast< int >( callerAgent->GetPion().GetRole< DEC_RolePion_Decision >().GetRulesOfEngagementState() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_AgentFunctions::NotifyRulesOfEngagementPopulationStateChanged
 // Created: SBO 2005-11-22
 // -----------------------------------------------------------------------------
-void DEC_AgentFunctions::NotifyRulesOfEngagementPopulationStateChanged( MIL_Agent_ABC& callerAgent, int population )
+void DEC_AgentFunctions::NotifyRulesOfEngagementPopulationStateChanged( DEC_Decision_ABC* callerAgent, int population )
 {
     const PHY_RoePopulation* pRoe = PHY_RoePopulation::Find( population );
     if( !pRoe )
         throw MASA_EXCEPTION( "Invalid RoE" );
-    callerAgent.GetRole< DEC_RolePion_Decision >().NotifyRoePopulationChanged( *pRoe );
+    callerAgent->GetPion().GetRole< DEC_RolePion_Decision >().NotifyRoePopulationChanged( *pRoe );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_AgentFunctions::NotifyOperationalStateChanged
 // Created: NLD 2005-07-26
 // -----------------------------------------------------------------------------
-void DEC_AgentFunctions::NotifyOperationalStateChanged( MIL_Agent_ABC& callerAgent, int state )
+void DEC_AgentFunctions::NotifyOperationalStateChanged( DEC_Decision_ABC* callerAgent, int state )
 {
-    dynamic_cast< DEC_RolePion_Decision& >( callerAgent.GetDecision() ).NotifyOperationalStateChanged( static_cast< E_OperationalState >( state ) );
+    dynamic_cast< DEC_RolePion_Decision& >( *callerAgent ).NotifyOperationalStateChanged( static_cast< E_OperationalState >( state ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: static void DEC_AgentFunctions::NotifyCloseCombatStateChanged
 // Created: NLD 2004-10-15
 // -----------------------------------------------------------------------------
-void DEC_AgentFunctions::NotifyCloseCombatStateChanged( MIL_Agent_ABC& callerAgent, int state )
+void DEC_AgentFunctions::NotifyCloseCombatStateChanged( DEC_Decision_ABC* callerAgent, int state )
 {
-    dynamic_cast< DEC_RolePion_Decision& >( callerAgent.GetDecision() ).NotifyCloseCombatStateChanged( static_cast< E_CloseCombatState >( state ) );
+    dynamic_cast< DEC_RolePion_Decision& >( *callerAgent ).NotifyCloseCombatStateChanged( static_cast< E_CloseCombatState >( state ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_AgentFunctions::GetHumanFactorTiredness
 // Created: JVT 2004-11-30
 // -----------------------------------------------------------------------------
-unsigned int DEC_AgentFunctions::GetHumanFactorTiredness( const MIL_Agent_ABC& callerAgent )
+unsigned int DEC_AgentFunctions::GetHumanFactorTiredness( const DEC_Decision_ABC* callerAgent )
 {
-    return callerAgent.GetRole< PHY_RoleInterface_HumanFactors >().GetTiredness().GetID();
+    return callerAgent->GetPion().GetRole< PHY_RoleInterface_HumanFactors >().GetTiredness().GetID();
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_AgentFunctions::GetHumanFactorMorale
 // Created: JVT 2004-11-30
 // -----------------------------------------------------------------------------
-unsigned int DEC_AgentFunctions::GetHumanFactorMorale( const MIL_Agent_ABC& callerAgent )
+unsigned int DEC_AgentFunctions::GetHumanFactorMorale( const DEC_Decision_ABC* callerAgent )
 {
-    return callerAgent.GetRole< PHY_RoleInterface_HumanFactors >().GetMorale().GetID();
+    return callerAgent->GetPion().GetRole< PHY_RoleInterface_HumanFactors >().GetMorale().GetID();
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_AgentFunctions::RelievePion
 // Created: NLD 2003-09-30
 // -----------------------------------------------------------------------------
-bool DEC_AgentFunctions::RelievePion( MIL_Agent_ABC& callerAgent, const DEC_Decision_ABC* agentToRelieve )
+bool DEC_AgentFunctions::RelievePion( DEC_Decision_ABC* callerAgent, const DEC_Decision_ABC* agentToRelieve )
 {
-    if( !agentToRelieve || !callerAgent.GetOrderManager().RelievePion( agentToRelieve->GetPion() ) )
+    if( !agentToRelieve || !callerAgent->GetPion().GetOrderManager().RelievePion( agentToRelieve->GetPion() ) )
         return false;
     agentToRelieve->GetPion().GetOrderManager().CancelMission();
     return true;
@@ -825,72 +1033,55 @@ bool DEC_AgentFunctions::RelievePion( MIL_Agent_ABC& callerAgent, const DEC_Deci
 // Name: DEC_AgentFunctions::CanRelievePion
 // Created: NLD 2004-12-09
 // -----------------------------------------------------------------------------
-bool DEC_AgentFunctions::CanRelievePion( MIL_Agent_ABC& callerAgent, const DEC_Decision_ABC* pAgentToRelieve )
+bool DEC_AgentFunctions::CanRelievePion( DEC_Decision_ABC* callerAgent, const DEC_Decision_ABC* pAgentToRelieve )
 {
     if( !pAgentToRelieve )
         throw MASA_EXCEPTION( "Invalid pion in DEC_AgentFunctions::CanRelievePion" );
-    return callerAgent.GetOrderManager().CanRelievePion( pAgentToRelieve->GetPion() );
+    return callerAgent->GetPion().GetOrderManager().CanRelievePion( pAgentToRelieve->GetPion() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_AgentFunctions::SurrenderAutomat
 // Created: MMC 2013-03-19
 // -----------------------------------------------------------------------------
-bool DEC_AgentFunctions::SurrenderAutomat( MIL_Agent_ABC& callerAgent, DEC_Decision_ABC* automat )
+bool DEC_AgentFunctions::SurrenderAutomat( DEC_Decision_ABC* callerAgent, DEC_Decision_ABC* automat )
 {
     if( !automat )
         throw MASA_EXCEPTION( "Invalid automat in DEC_AgentFunctions::SurrenderAutomat" );
-    if( automat->GetAutomate().GetArmy() == callerAgent.GetArmy() )
+    MIL_AgentPion& agent = callerAgent->GetPion();
+    if( automat->GetAutomate().GetArmy() == agent.GetArmy() )
         return false;
     if( automat->GetAutomate().IsSurrendered() )
         return false;
-    automat->GetAutomate().SurrenderWithUnits( callerAgent.GetArmy() );
+    automat->GetAutomate().SurrenderWithUnits( agent.GetArmy() );
     return true;
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_AgentFunctions::GetPionsWithPC
-// Created: JVT 2004-12-20
-// -----------------------------------------------------------------------------
-std::vector< DEC_Decision_ABC* > DEC_AgentFunctions::GetPionsWithPC( const MIL_Agent_ABC& callerAgent )
-{
-    return DEC_AutomateFunctions::GetPionsWithPC( &callerAgent.GetAutomate().GetDecision() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_AgentFunctions::GetPionsWithoutPC
 // Created: JVT 2004-12-20
 // -----------------------------------------------------------------------------
-std::vector< DEC_Decision_ABC* > DEC_AgentFunctions::GetPionsWithoutPC( const MIL_Agent_ABC& callerAgent )
+std::vector< DEC_Decision_ABC* > DEC_AgentFunctions::GetPionsWithoutPC( const DEC_Decision_ABC* callerAgent )
 {
-    return DEC_AutomateFunctions::GetPionsWithoutPC( &callerAgent.GetAutomate().GetDecision() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_AgentFunctions::GetCommunicationPionsWithPC
-// Created: MMC 2012-07-03
-// -----------------------------------------------------------------------------
-std::vector< DEC_Decision_ABC* > DEC_AgentFunctions::GetCommunicationPionsWithPC( const MIL_Agent_ABC& callerAgent )
-{
-    return DEC_AutomateFunctions::GetCommunicationPionsWithPC( &callerAgent.GetAutomate().GetDecision() );
+    return DEC_AutomateFunctions::GetPionsWithoutPC( &callerAgent->GetPion().GetAutomate().GetDecision() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_AgentFunctions::GetCommunicationPionsWithoutPC
 // Created: MMC 2012-07-03
 // -----------------------------------------------------------------------------
-std::vector< DEC_Decision_ABC* > DEC_AgentFunctions::GetCommunicationPionsWithoutPC( const MIL_Agent_ABC& callerAgent )
+std::vector< DEC_Decision_ABC* > DEC_AgentFunctions::GetCommunicationPionsWithoutPC( const DEC_Decision_ABC* callerAgent )
 {
-    return DEC_AutomateFunctions::GetCommunicationPionsWithoutPC( &callerAgent.GetAutomate().GetDecision() );
+    return DEC_AutomateFunctions::GetCommunicationPionsWithoutPC( &callerAgent->GetPion().GetAutomate().GetDecision() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_AgentFunctions::GetPionPC
 // Created: JVT 2004-12-20
 // -----------------------------------------------------------------------------
-DEC_Decision_ABC* DEC_AgentFunctions::GetPionPC( const MIL_Agent_ABC& callerAgent )
+DEC_Decision_ABC* DEC_AgentFunctions::GetPionPC( const DEC_Decision_ABC* callerAgent )
 {
-    return DEC_AutomateFunctions::GetPionPC( &callerAgent.GetAutomate().GetDecision() );
+    return DEC_AutomateFunctions::GetPionPC( &callerAgent->GetPion().GetAutomate().GetDecision() );
 }
 
 // -----------------------------------------------------------------------------
@@ -913,22 +1104,6 @@ std::vector< DEC_Decision_ABC* > DEC_AgentFunctions::GetPionsWithoutPCOfAutomate
     if( !automat )
         throw MASA_EXCEPTION( "Invalid automat in DEC_AgentFunctions::GetPionsWithoutPCOfAutomate" );
     return DEC_AutomateFunctions::GetPionsWithoutPC( &automat->GetAutomate().GetDecision() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_AgentFunctions::ChangeAutomate
-// Created: JVT 2005-01-03
-// -----------------------------------------------------------------------------
-bool DEC_AgentFunctions::ChangeAutomate( MIL_Agent_ABC& callerAgent, DEC_Decision_ABC* automat )
-{
-    if( !automat )
-        throw MASA_EXCEPTION( "Invalid automat in DEC_AgentFunctions::" );
-    if( automat->GetAutomate().GetArmy() == callerAgent.GetArmy() )
-    {
-        callerAgent.ChangeSuperior( automat->GetAutomate() );
-        return true;
-    }
-    return false;
 }
 
 // -----------------------------------------------------------------------------
@@ -995,9 +1170,9 @@ float DEC_AgentFunctions::TimeLeftForMoving( const DEC_Decision_ABC* callerAgent
 // Name: DEC_AgentFunctions::TimeToMoveDistance
 // Created: JVT 2005-02-07
 // -----------------------------------------------------------------------------
-float DEC_AgentFunctions::TimeToMoveDistance( const MIL_Agent_ABC& callerAgent, float distance )
+float DEC_AgentFunctions::TimeToMoveDistance( const DEC_Decision_ABC* callerAgent, float distance )
 {
-   const double rMaxSpeed = callerAgent.GetRole< moving::PHY_RoleAction_InterfaceMoving >().GetMaxSpeed();
+   const double rMaxSpeed = callerAgent->GetPion().GetRole< moving::PHY_RoleAction_InterfaceMoving >().GetMaxSpeed();
    if( rMaxSpeed == 0 )
        return std::numeric_limits< float >::max();
     return static_cast< float >( MIL_Tools::ConvertSimToMinutes( MIL_Tools::ConvertMeterToSim( distance ) / rMaxSpeed ) );
@@ -1024,15 +1199,16 @@ float DEC_AgentFunctions::TheoricTimeToMoveDistance( const DEC_Decision_ABC* pAg
 // Name: DEC_AgentFunctions::GetInterceptionPoint
 // Created: JVT 2005-02-16
 // -----------------------------------------------------------------------------
-boost::shared_ptr< MT_Vector2D > DEC_AgentFunctions::GetInterceptionPoint( const MIL_Agent_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge )
+boost::shared_ptr< MT_Vector2D > DEC_AgentFunctions::GetInterceptionPoint( const DEC_Decision_ABC* callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge )
 {
     boost::shared_ptr< MT_Vector2D > result;
     if( pKnowledge && pKnowledge->IsValid())
     {
         result.reset( new MT_Vector2D() );
+        const MIL_AgentPion& agent = callerAgent->GetPion();
         bool valid = DEC_GeometryFunctions::GetInterceptionPoint( pKnowledge->GetPosition(), pKnowledge->GetDirection() * pKnowledge->GetSpeed(),
-                callerAgent.GetRole< PHY_RoleInterface_Location >().GetPosition(),
-                callerAgent.GetRole< moving::PHY_RoleAction_InterfaceMoving >().GetMaxSpeed(), *result );
+                agent.GetRole< PHY_RoleInterface_Location >().GetPosition(),
+                agent.GetRole< moving::PHY_RoleAction_InterfaceMoving >().GetMaxSpeed(), *result );
         if( !valid )
             result.reset();
     }
@@ -1043,9 +1219,9 @@ boost::shared_ptr< MT_Vector2D > DEC_AgentFunctions::GetInterceptionPoint( const
 // Name: DEC_AgentFunctions::GetRoePopulation
 // Created: SBO 2005-11-23
 // -----------------------------------------------------------------------------
-int DEC_AgentFunctions::GetRoePopulation( const MIL_Agent_ABC& callerAgent )
+int DEC_AgentFunctions::GetRoePopulation( const DEC_Decision_ABC* callerAgent )
 {
-    return static_cast< int >( callerAgent.GetRole< DEC_RolePion_Decision >().GetRoePopulation().GetID() );
+    return static_cast< int >( callerAgent->GetPion().GetRole< DEC_RolePion_Decision >().GetRoePopulation().GetID() );
 }
 
 // -----------------------------------------------------------------------------
@@ -1171,27 +1347,27 @@ bool DEC_AgentFunctions::IsInhabitantsEvacuated( const TER_Localisation* locatio
 // Name: DEC_AgentFunctions::IsInstalled
 // Created: NLD 2006-08-10
 // -----------------------------------------------------------------------------
-bool DEC_AgentFunctions::IsInstalled( const MIL_Agent_ABC& callerAgent )
+bool DEC_AgentFunctions::IsInstalled( const DEC_Decision_ABC* callerAgent )
 {
-    return callerAgent.GetRole< PHY_RoleInterface_Deployment >().IsDeployed();
+    return callerAgent->GetPion().GetRole< PHY_RoleInterface_Deployment >().IsDeployed();
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_AgentFunctions::IsUninstalled
 // Created: NLD 2006-08-10
 // -----------------------------------------------------------------------------
-bool DEC_AgentFunctions::IsUninstalled( const MIL_Agent_ABC& callerAgent )
+bool DEC_AgentFunctions::IsUninstalled( const DEC_Decision_ABC* callerAgent )
 {
-    return callerAgent.GetRole< PHY_RoleInterface_Deployment >().IsUndeployed();
+    return callerAgent->GetPion().GetRole< PHY_RoleInterface_Deployment >().IsUndeployed();
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_AgentFunctions::Install
 // Created: NLD 2006-08-10
 // -----------------------------------------------------------------------------
-void DEC_AgentFunctions::Install( MIL_Agent_ABC& callerAgent )
+void DEC_AgentFunctions::Install( DEC_Decision_ABC* callerAgent )
 {
-    callerAgent.GetRole< PHY_RoleInterface_Deployment >().StartDeploy();
+    callerAgent->GetPion().GetRole< PHY_RoleInterface_Deployment >().StartDeploy();
 }
 
 // -----------------------------------------------------------------------------
@@ -1216,36 +1392,36 @@ double DEC_AgentFunctions::GetUninstallationTime( DEC_Decision_ABC& callerAgent 
 // Name: DEC_AgentFunctions::IsDeployed
 // Created: ABR 2011-12-15
 // -----------------------------------------------------------------------------
-bool DEC_AgentFunctions::IsDeployed( const MIL_Agent_ABC& callerAgent )
+bool DEC_AgentFunctions::IsDeployed( const DEC_Decision_ABC* callerAgent )
 {
-    return callerAgent.GetRole< PHY_RoleInterface_Deployment >().IsDeployed();
+    return callerAgent->GetPion().GetRole< PHY_RoleInterface_Deployment >().IsDeployed();
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_AgentFunctions::IsUndeployed
 // Created: ABR 2011-12-15
 // -----------------------------------------------------------------------------
-bool DEC_AgentFunctions::IsUndeployed( const MIL_Agent_ABC& callerAgent )
+bool DEC_AgentFunctions::IsUndeployed( const DEC_Decision_ABC* callerAgent )
 {
-    return callerAgent.GetRole< PHY_RoleInterface_Deployment >().IsUndeployed();
+    return callerAgent->GetPion().GetRole< PHY_RoleInterface_Deployment >().IsUndeployed();
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_AgentFunctions::Deploy
 // Created: ABR 2011-12-15
 // -----------------------------------------------------------------------------
-void DEC_AgentFunctions::Deploy( MIL_Agent_ABC& callerAgent )
+void DEC_AgentFunctions::Deploy( DEC_Decision_ABC* callerAgent )
 {
-    callerAgent.GetRole< PHY_RoleInterface_Deployment >().Deploy();
+    callerAgent->GetPion().GetRole< PHY_RoleInterface_Deployment >().Deploy();
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_AgentFunctions::Undeploy
 // Created: ABR 2011-12-15
 // -----------------------------------------------------------------------------
-void DEC_AgentFunctions::Undeploy( MIL_Agent_ABC& callerAgent )
+void DEC_AgentFunctions::Undeploy( DEC_Decision_ABC* callerAgent )
 {
-    callerAgent.GetRole< PHY_RoleInterface_Deployment >().Undeploy();
+    callerAgent->GetPion().GetRole< PHY_RoleInterface_Deployment >().Undeploy();
 }
 
 // -----------------------------------------------------------------------------
@@ -1283,10 +1459,10 @@ bool DEC_AgentFunctions::HasMission( DEC_Decision_ABC* pAgent )
 // Name: DEC_AgentFunctions::GetDotation
 // Created: BAX 2014-03-04
 // -----------------------------------------------------------------------------
-const PHY_DotationCategory* DEC_AgentFunctions::GetDotation( const MIL_Agent_ABC& caller, unsigned id )
+const PHY_DotationCategory* DEC_AgentFunctions::GetDotation( const DEC_Decision_ABC* caller, unsigned id )
 {
     const PHY_DotationCategory* reply = nullptr;
-    caller.GetRole< dotation::PHY_RoleInterface_Dotations >().Apply( [&]( PHY_Dotation& dotation )
+    caller->GetPion().GetRole< dotation::PHY_RoleInterface_Dotations >().Apply( [&]( PHY_Dotation& dotation )
     {
         if( reply )
             return;
@@ -1301,9 +1477,9 @@ const PHY_DotationCategory* DEC_AgentFunctions::GetDotation( const MIL_Agent_ABC
 // Name: DEC_AgentFunctions::HasDotation
 // Created: LDC 2010-03-26
 // -----------------------------------------------------------------------------
-bool DEC_AgentFunctions::HasDotation( const MIL_Agent_ABC& callerAgent, const PHY_DotationCategory* category )
+bool DEC_AgentFunctions::HasDotation( const DEC_Decision_ABC* callerAgent, const PHY_DotationCategory* category )
 {
-    return category ? callerAgent.GetRole< dotation::PHY_RoleInterface_Dotations >().GetDotationNumber( *category ) > 0 : false;
+    return category ? callerAgent->GetPion().GetRole< dotation::PHY_RoleInterface_Dotations >().GetDotationNumber( *category ) > 0 : false;
 }
 
 // -----------------------------------------------------------------------------
@@ -1353,11 +1529,11 @@ namespace
 // Name: DEC_AgentFunctions::CanUseDotation
 // Created: HBD 2010-10-01
 // -----------------------------------------------------------------------------
-bool DEC_AgentFunctions::CanUseDotation( MIL_Agent_ABC& callerAgent, const PHY_DotationCategory* category )
+bool DEC_AgentFunctions::CanUseDotation( DEC_Decision_ABC* callerAgent, const PHY_DotationCategory* category )
 {
     bool result = true;
     CanUseDotationComputer dotationComputer( category, result );
-    callerAgent.Execute< dotation::DotationComputer_ABC >( dotationComputer );
+    callerAgent->GetPion().Execute< dotation::DotationComputer_ABC >( dotationComputer );
     return result;
 }
 
@@ -1365,7 +1541,7 @@ bool DEC_AgentFunctions::CanUseDotation( MIL_Agent_ABC& callerAgent, const PHY_D
 // Name: DEC_AgentFunctions::GetFuelDotationNumber
 // Created: JSR 2012-07-31
 // -----------------------------------------------------------------------------
-double DEC_AgentFunctions::GetFuelDotationNumber(  MIL_AgentPion& /*callerAgent*/, const DEC_Decision_ABC* pPion  )
+double DEC_AgentFunctions::GetFuelDotationNumber( const DEC_Decision_ABC* pPion  )
 {
     if( !pPion )
         throw MASA_EXCEPTION( "Invalid pion in GetFuelDotationNumber" );
@@ -1376,7 +1552,7 @@ double DEC_AgentFunctions::GetFuelDotationNumber(  MIL_AgentPion& /*callerAgent*
 // Name: DEC_AgentFunctions::GetFuelDotationCapacity
 // Created: JSR 2014-07-21
 // -----------------------------------------------------------------------------
-double DEC_AgentFunctions::GetFuelDotationCapacity( MIL_AgentPion& /*callerAgent*/, const DEC_Decision_ABC* pPion )
+double DEC_AgentFunctions::GetFuelDotationCapacity( const DEC_Decision_ABC* pPion )
 {
     if( !pPion )
         throw MASA_EXCEPTION( "Invalid pion in GetFuelDotationCapacity" );
@@ -1398,9 +1574,9 @@ void DEC_AgentFunctions::ResupplyFuel( DEC_Decision_ABC* pAgent, float percentag
 // Name: DEC_AgentFunctions::Suicide
 // Created: LDC 2010-03-29
 // -----------------------------------------------------------------------------
-void DEC_AgentFunctions::Suicide( MIL_Agent_ABC& callerAgent )
+void DEC_AgentFunctions::Suicide( DEC_Decision_ABC* callerAgent )
 {
-    MIL_Effect_Suicide* pEffect = new MIL_Effect_Suicide( callerAgent );
+    MIL_Effect_Suicide* pEffect = new MIL_Effect_Suicide( callerAgent->GetPion() );
     MIL_EffectManager::GetEffectManager().Register( *pEffect );
 }
 
@@ -1423,9 +1599,9 @@ bool DEC_AgentFunctions::CanIlluminate( DEC_Decision_ABC* pAgent )
 // Name: DEC_AgentFunctions::GetilluminatingRange
 // Created: GGE 2010-06-23
 // -----------------------------------------------------------------------------
-float DEC_AgentFunctions::GetIlluminatingRange( const MIL_Agent_ABC& callerAgent )
+float DEC_AgentFunctions::GetIlluminatingRange( const DEC_Decision_ABC* callerAgent )
 {
-    const dotation::PHY_RoleInterface_Dotations& roleDotations = callerAgent.GetRole< dotation::PHY_RoleInterface_Dotations >();
+    const dotation::PHY_RoleInterface_Dotations& roleDotations = callerAgent->GetPion().GetRole< dotation::PHY_RoleInterface_Dotations >();
     return roleDotations.GetIlluminatingRange( );
 }
 
@@ -1479,9 +1655,9 @@ bool DEC_AgentFunctions::IsInReceptionBlackout( DEC_Decision_ABC* pAgent )
 // Name: DEC_AgentFunctions::SetToAmbianceSafety
 // Created: MMC 2013-04-19
 // -----------------------------------------------------------------------------
-void DEC_AgentFunctions::SetToAmbianceSafety( MIL_Agent_ABC& callerAgent, bool safety )
+void DEC_AgentFunctions::SetToAmbianceSafety( DEC_Decision_ABC* callerAgent, bool safety )
 {
-    callerAgent.GetRole< PHY_RolePion_Posture >().SetAmbianceSafety( safety );
+    callerAgent->GetPion().GetRole< PHY_RolePion_Posture >().SetAmbianceSafety( safety );
 }
 
 // -----------------------------------------------------------------------------
@@ -1502,17 +1678,18 @@ bool DEC_AgentFunctions::IsInSmoke( DEC_Decision_ABC* pAgent )
 // Name: DEC_AgentFunctions::IdentifyAllAgentsInZone
 // Created: JSR 2011-05-05
 // -----------------------------------------------------------------------------
-void DEC_AgentFunctions::IdentifyAllAgentsInZone( MIL_Agent_ABC& callerAgent, const TER_Localisation* location )
+void DEC_AgentFunctions::IdentifyAllAgentsInZone( DEC_Decision_ABC* callerAgent, const TER_Localisation* location )
 {
     if( !location )
         MT_LOG_ERROR_MSG( "Identifying agent in nil zone" );
+    MIL_AgentPion& agent = callerAgent->GetPion();
     TER_Agent_ABC::T_AgentPtrVector agentsDetected;
     TER_World::GetWorld().GetAgentManager().GetListWithinLocalisation( *location, agentsDetected );
-    PHY_RoleInterface_Perceiver& perceiver = callerAgent.GetRole< PHY_RoleInterface_Perceiver >();
+    PHY_RoleInterface_Perceiver& perceiver = agent.GetRole< PHY_RoleInterface_Perceiver >();
     for( auto itAgent = agentsDetected.begin(); itAgent != agentsDetected.end(); ++itAgent )
     {
         MIL_Agent_ABC& agentDetected = static_cast< PHY_RoleInterface_Location& >( **itAgent ).GetAgent();
-        perceiver.NotifyPerception( agentDetected, GetMaxHostilePerceptionLevel( callerAgent, agentDetected, PHY_PerceptionLevel::identified_ ) );
+        perceiver.NotifyPerception( agentDetected, GetMaxHostilePerceptionLevel( agent, agentDetected, PHY_PerceptionLevel::identified_ ) );
     }
 }
 
@@ -1703,9 +1880,9 @@ std::vector< DEC_Decision_ABC* > DEC_AgentFunctions::RetrieveUnitsAbleToDestroyW
 // Name: DEC_AgentFunctions::AgentCanExtinguish
 // Created: JSR 2012-04-19
 // -----------------------------------------------------------------------------
-bool DEC_AgentFunctions::AgentCanExtinguish( const MIL_Agent_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
+bool DEC_AgentFunctions::AgentCanExtinguish( const DEC_Decision_ABC* callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
 {
-    return callerAgent.GetRole< PHY_RoleAction_Objects >().CanExtinguish( pKnowledge );
+    return callerAgent->GetPion().GetRole< PHY_RoleAction_Objects >().CanExtinguish( pKnowledge );
 }
 
 // -----------------------------------------------------------------------------
@@ -1890,9 +2067,9 @@ bool DEC_AgentFunctions::AgentHasRadar( const DEC_Decision_ABC* agent, int typeR
 // Name: DEC_AgentFunctions::AgentHasFuseau
 // Created: GGE 2010-03-25
 // -----------------------------------------------------------------------------
-bool DEC_AgentFunctions::AgentHasFuseau(const MIL_Agent_ABC& callerAgent )
+bool DEC_AgentFunctions::AgentHasFuseau( const DEC_Decision_ABC* callerAgent )
 {
-    return !callerAgent.GetOrderManager().GetFuseau().IsNull();
+    return !callerAgent->GetOrderManager().GetFuseau().IsNull();
 }
 
 // -----------------------------------------------------------------------------
@@ -1913,18 +2090,18 @@ void DEC_AgentFunctions::CreateInstantaneously( const DEC_Decision_ABC* callerAg
 // Name: DEC_AgentFunctions::ImmunizeAgent
 // Created: LGY 2013-01-14
 // -----------------------------------------------------------------------------
-void DEC_AgentFunctions::ImmunizeAgent( MIL_Agent_ABC& callerAgent )
+void DEC_AgentFunctions::ImmunizeAgent( DEC_Decision_ABC* callerAgent )
 {
-    callerAgent.GetRole< nbc::PHY_RoleInterface_NBC >().TemporaryImmunizeAgent( true );
+    callerAgent->GetPion().GetRole< nbc::PHY_RoleInterface_NBC >().TemporaryImmunizeAgent( true );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_AgentFunctions::StopImmunizeAgent
 // Created: LGY 2013-01-14
 // -----------------------------------------------------------------------------
-void DEC_AgentFunctions::StopImmunizeAgent( MIL_Agent_ABC& callerAgent )
+void DEC_AgentFunctions::StopImmunizeAgent( DEC_Decision_ABC* callerAgent )
 {
-    callerAgent.GetRole< nbc::PHY_RoleInterface_NBC >().TemporaryImmunizeAgent( false );
+    callerAgent->GetPion().GetRole< nbc::PHY_RoleInterface_NBC >().TemporaryImmunizeAgent( false );
 }
 
 // -----------------------------------------------------------------------------
@@ -1941,11 +2118,11 @@ double DEC_AgentFunctions::GetMaxSpeed( const DEC_Decision_ABC& agent )
 // Name: DEC_AgentFunctions::CreateBreakdown
 // Created: LGY 2014-02-26
 // -----------------------------------------------------------------------------
-bool DEC_AgentFunctions::CreateBreakdown( MIL_Agent_ABC& callerAgent, const PHY_ComposanteTypePion* composanteType, unsigned int breakdown )
+bool DEC_AgentFunctions::CreateBreakdown( DEC_Decision_ABC* callerAgent, const PHY_ComposanteTypePion* composanteType, unsigned int breakdown )
 {
     const PHY_BreakdownType* breakdownType = PHY_BreakdownType::Find( breakdown );
     if( breakdownType && composanteType )
-        return callerAgent.GetRole< PHY_RolePion_Composantes >().
+        return callerAgent->GetPion().GetRole< PHY_RolePion_Composantes >().
             CreateBreakdowns( *composanteType, 1, breakdownType );
     return false;
 }
@@ -1972,44 +2149,44 @@ bool DEC_AgentFunctions::IsValid( DEC_Decision_ABC& callerAgent )
 // Name: DEC_AgentFunctions::EnableSharedPerception
 // Created: LGY 2013-05-07
 // -----------------------------------------------------------------------------
-void DEC_AgentFunctions::EnableSharedPerception( const MIL_AgentPion& callerAgent, DEC_Decision_ABC* pAgent )
+void DEC_AgentFunctions::EnableSharedPerception( const DEC_Decision_ABC* callerAgent, DEC_Decision_ABC* pAgent )
 {
     if( !pAgent )
         throw std::runtime_error( "Invalid pion in EnableSharedPerception" );
-    pAgent->GetPion().GetKnowledgeGroup()->RegisterSharingPerceptions( callerAgent );
+    pAgent->GetPion().GetKnowledgeGroup()->RegisterSharingPerceptions( callerAgent->GetPion() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_AgentFunctions::DisabledSharedPerception
 // Created: LGY 2013-05-07
 // -----------------------------------------------------------------------------
-void DEC_AgentFunctions::DisabledSharedPerception( const MIL_AgentPion& callerAgent, DEC_Decision_ABC* pAgent )
+void DEC_AgentFunctions::DisableSharedPerception( const DEC_Decision_ABC* callerAgent, DEC_Decision_ABC* pAgent )
 {
     if( !pAgent )
         throw std::runtime_error( "Invalid pion in DisabledSharedPerception" );
-    pAgent->GetPion().GetKnowledgeGroup()->UnregisterSharingPerceptions( callerAgent );
+    pAgent->GetPion().GetKnowledgeGroup()->UnregisterSharingPerceptions( callerAgent->GetPion() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_AgentFunctions::EnableSharingKnowledges
 // Created: LGY 2013-05-07
 // -----------------------------------------------------------------------------
-void DEC_AgentFunctions::EnableSharingKnowledges( const MIL_AgentPion& callerAgent, DEC_Decision_ABC* pAgent )
+void DEC_AgentFunctions::EnableSharingKnowledges( const DEC_Decision_ABC* callerAgent, DEC_Decision_ABC* pAgent )
 {
     if( !pAgent )
         throw std::runtime_error( "Invalid pion in EnableSharedPerception" );
-    callerAgent.GetKnowledgeGroup()->RegisterSharingKnowledges( pAgent->GetPion() );
+    callerAgent->GetKnowledgeGroup()->RegisterSharingKnowledges( pAgent->GetPion() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_AgentFunctions::DisabledSharingKnowledges
 // Created: LGY 2013-05-07
 // -----------------------------------------------------------------------------
-void DEC_AgentFunctions::DisabledSharingKnowledges( const MIL_AgentPion& callerAgent, DEC_Decision_ABC* pAgent )
+void DEC_AgentFunctions::DisableSharingKnowledges( const DEC_Decision_ABC* callerAgent, DEC_Decision_ABC* pAgent )
 {
     if( !pAgent )
         throw std::runtime_error( "Invalid pion in DisabledSharedPerception" );
-    callerAgent.GetKnowledgeGroup()->UnregisterSharingKnowledges( pAgent->GetPion() );
+    callerAgent->GetKnowledgeGroup()->UnregisterSharingKnowledges( pAgent->GetPion() );
 }
 
 // -----------------------------------------------------------------------------
@@ -2026,7 +2203,7 @@ void DEC_AgentFunctions::EnableSharedPerceptionWithKnowledge( DEC_Decision_ABC& 
 // Name: DEC_AgentFunctions::DisabledSharedPerceptionWithKnowledge
 // Created: GGE 2013-06-03
 // -----------------------------------------------------------------------------
-void DEC_AgentFunctions::DisabledSharedPerceptionWithKnowledge( DEC_Decision_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge )
+void DEC_AgentFunctions::DisableSharedPerceptionWithKnowledge( DEC_Decision_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge )
 {
     if( pKnowledge && pKnowledge->IsValid())
         pKnowledge->GetAgentKnown().GetKnowledgeGroup()->UnregisterSharingPerceptions( callerAgent.GetPion() );
@@ -2046,7 +2223,7 @@ void DEC_AgentFunctions::EnableSharingKnowledgesWithKnowledge( DEC_Decision_ABC&
 // Name: DEC_AgentFunctions::DisabledSharingKnowledgesWithKnowledge
 // Created: LGY 2013-09-09
 // -----------------------------------------------------------------------------
-void DEC_AgentFunctions::DisabledSharingKnowledgesWithKnowledge( DEC_Decision_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge )
+void DEC_AgentFunctions::DisableSharingKnowledgesWithKnowledge( DEC_Decision_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge )
 {
     if( pKnowledge && pKnowledge->IsValid())
         pKnowledge->GetAgentKnown().GetKnowledgeGroup()->UnregisterSharingKnowledges( callerAgent.GetPion() );
