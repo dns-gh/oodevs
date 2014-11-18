@@ -47,6 +47,7 @@ public:
 
     virtual const std::string& GetTypeName() const;
     virtual QColor GetColor() const = 0;
+    virtual void ChangeColor( const QColor& color ) = 0;
     virtual void Serialize( xml::xostream& xos ) const = 0;
     virtual const kernel::Entity_ABC* GetDiffusionEntity() const = 0;
     virtual void NotifyDestruction() const = 0;

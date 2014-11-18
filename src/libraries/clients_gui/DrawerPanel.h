@@ -20,6 +20,7 @@ namespace kernel
 {
     class Automat_ABC;
     class Controllers;
+    class Drawing_ABC;
     class Entity_ABC;
     class Formation_ABC;
     class ModelLoaded;
@@ -35,7 +36,6 @@ namespace gui
 {
     class ColorButton;
     class DrawerModel;
-    class Drawing;
     class DrawingCategory;
     class DrawingCategoryItem;
     class DrawingTemplate;
@@ -122,7 +122,7 @@ private:
     QLabel* parentLabel_;
     QToolBox* toolBox_;
     const DrawingTemplate* selectedStyle_;
-    kernel::SafePointer< Drawing > selectedDrawing_;
+    kernel::SafePointer< kernel::Drawing_ABC > selectedDrawing_;
     T_CategoryItems categories_;
     kernel::SafePointer< kernel::Entity_ABC > selectedEntity_;
     E_Dash_style dashStyle_;

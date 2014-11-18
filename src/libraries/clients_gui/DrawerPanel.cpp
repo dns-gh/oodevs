@@ -12,7 +12,6 @@
 #include "moc_DrawerPanel.cpp"
 #include "ColorButton.h"
 #include "DrawerModel.h"
-#include "Drawing.h"
 #include "DrawingCategory.h"
 #include "DrawingCategoryItem.h"
 #include "DrawingTemplate.h"
@@ -255,7 +254,7 @@ void DrawerPanel::AfterSelection()
 // -----------------------------------------------------------------------------
 void DrawerPanel::Select( const kernel::Drawing_ABC& element )
 {
-    selectedDrawing_ = static_cast< const Drawing* >( &element );
+    selectedDrawing_ = &element;
 }
 
 // -----------------------------------------------------------------------------
