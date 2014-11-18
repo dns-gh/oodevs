@@ -132,7 +132,7 @@ boost::shared_ptr< Report > ReportFactory::CreateReport( const kernel::Entity_AB
         type = Report::eEvent;
     else if( message.category() == sword::Report::warning )
         type = Report::eWarning;
-    return boost::make_shared< Report >( entity, type, report->RenderMessage( &entity, message ), GetTime( message.time() ) );
+    return boost::make_shared< Report >( entity, message.report().id(), type, report->RenderMessage( &entity, message ), GetTime( message.time() ) );
 }
 
 // -----------------------------------------------------------------------------

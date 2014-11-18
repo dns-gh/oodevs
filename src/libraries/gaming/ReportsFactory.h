@@ -23,7 +23,7 @@ public:
     //@}
 
 private:
-    //! @name helper
+    //! @name Helpers
     //@{
     void ClearReports();
     void SendRequest( unsigned int report = 0);

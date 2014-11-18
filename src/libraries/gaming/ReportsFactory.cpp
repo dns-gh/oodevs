@@ -43,8 +43,6 @@ ReportsFactory::~ReportsFactory()
 
 namespace
 {
-    const unsigned int MAX_COUNT = 50u;
-
     template< typename T >
     void ClearReport( T& entity )
     {
@@ -73,11 +71,16 @@ void ReportsFactory::ClearReports()
         []( kernel::Population_ABC& entity ) { ClearReport( entity ); } );
 }
 
+namespace
+{
+    const unsigned int maxCount = 50u;
+}
+
 void ReportsFactory::SendRequest( unsigned int report )
 {
     sword::ClientToReplay message;
     sword::ListReports& list = *message.mutable_message()->mutable_list_reports();
-    list.set_max_count( MAX_COUNT );
+    list.set_max_count( maxCount );
     list.set_tick( tick_ );
     if( report != 0 )
         list.set_report( report );
@@ -86,7 +89,7 @@ void ReportsFactory::SendRequest( unsigned int report )
 
 void ReportsFactory::FillReports( const sword::ListReportsAck& ack )
 {
-    for( int i = 0; i < ack.reports_size(); i++ )
+    for( int i = 0; i < ack.reports_size(); ++i )
         CreateReport( agents_, ack.reports( i ) );
     if( ack.has_next_report() )
         SendRequest( ack.next_report() );

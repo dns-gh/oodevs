@@ -20,8 +20,10 @@ Q_DECLARE_METATYPE( const Report* )
 // Name: Report constructor
 // Created: AGE 2006-03-09
 // -----------------------------------------------------------------------------
-Report::Report( const kernel::Entity_ABC& entity, Report::E_Type type, const QString& message, const QDateTime& time )
+Report::Report( const kernel::Entity_ABC& entity, unsigned int id,
+                Report::E_Type type, const QString& message, const QDateTime& time )
     : entity_ ( entity )
+    , id_     ( id )
     , type_   ( type )
     , message_( message )
     , time_   ( time )
@@ -120,4 +122,9 @@ const QColor& Report::GetColor() const
                                QColor(  64, 128, 200 ), // eMessage = 1003,
                                QColor( 255, 128, 64 )}; // eWarning = 1004
     return colors[ type_ - eRC ];
+}
+
+unsigned int Report::GetId() const
+{
+    return id_;
 }
