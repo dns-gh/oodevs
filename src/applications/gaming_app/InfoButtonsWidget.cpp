@@ -234,10 +234,7 @@ void InfoButtonsWidget::FillRequests( const sword::ListLogisticRequestsAck& /*me
         return;
     for( auto it = logisticDialogs_.begin(); it != logisticDialogs_.end(); ++it )
         if( ( *it )->IsVisible() )
-        {
             ( *it )->FillHistoryModel();
-            ( *it )->FillCurrentModel( *element_ );
-        }
 }
 
 // -----------------------------------------------------------------------------

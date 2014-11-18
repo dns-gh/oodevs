@@ -135,15 +135,6 @@ void InfoSupplyDialog::Purge()
 }
 
 // -----------------------------------------------------------------------------
-// Name: InfoSupplyDialog::FillCurrentModel
-// Created: LGY 2013-12-11
-// -----------------------------------------------------------------------------
-void InfoSupplyDialog::FillCurrentModel( const kernel::Entity_ABC& entity )
-{
-    widget_->FillCurrentModel( entity );
-}
-
-// -----------------------------------------------------------------------------
 // Name: InfoSupplyDialog::FillHistoryModel
 // Created: LGY 2013-12-11
 // -----------------------------------------------------------------------------

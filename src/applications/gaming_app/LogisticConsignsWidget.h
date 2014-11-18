@@ -56,36 +56,20 @@ public:
     }
 
 public:
-    virtual void FillCurrentModel( const kernel::Entity_ABC& /*entity*/ )
-    {
-        if( !IsHistoryChecked() )
-        {
-            Purge();
-            auto it = historyModel_.tools::Resolver< Request >::CreateIterator();
-            while( it.HasMoreElements() )
-            {
-                const auto& request = it.NextElement();
-                if( IsActive( request ) )
-                    DisplayRequest( request );
-            }
-            requestsTable_->resizeColumnsToContents();
-            SendHistoryRequests();
-            SelectRequest();
-        }
-    }
-
     virtual void FillHistoryModel()
     {
-        if( IsHistoryChecked() )
+        Purge();
+        const bool history = IsHistoryChecked();
+        auto it = historyModel_.tools::Resolver< Request >::CreateIterator();
+        while( it.HasMoreElements() )
         {
-            Purge();
-            auto it = historyModel_.tools::Resolver< Request >::CreateIterator();
-            while( it.HasMoreElements() )
-                DisplayRequest( it.NextElement() );
-            requestsTable_->resizeColumnsToContents();
-            SendHistoryRequests();
-            SelectRequest();
+            const auto& request = it.NextElement();
+            if( history || IsActive( request ) )
+                DisplayRequest( request );
         }
+        requestsTable_->resizeColumnsToContents();
+        SendHistoryRequests();
+        SelectRequest();
     }
 
 protected:

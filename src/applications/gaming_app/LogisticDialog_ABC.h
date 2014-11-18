@@ -35,7 +35,6 @@ public:
     //! @name Operations
     //@{
     virtual void Purge() = 0;
-    virtual void FillCurrentModel( const kernel::Entity_ABC& entity ) = 0;
     virtual void FillHistoryModel() = 0;
     virtual bool IsVisible() const = 0;
     //@}

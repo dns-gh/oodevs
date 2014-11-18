@@ -73,15 +73,6 @@ void InfoFuneralDialog::Purge()
 }
 
 // -----------------------------------------------------------------------------
-// Name: InfoFuneralDialog::FillCurrentModel
-// Created: LGY 2013-12-11
-// -----------------------------------------------------------------------------
-void InfoFuneralDialog::FillCurrentModel( const kernel::Entity_ABC& entity )
-{
-    widget_->FillCurrentModel( entity );
-}
-
-// -----------------------------------------------------------------------------
 // Name: InfoFuneralDialog::FillHistoryModel
 // Created: LGY 2013-12-11
 // -----------------------------------------------------------------------------
