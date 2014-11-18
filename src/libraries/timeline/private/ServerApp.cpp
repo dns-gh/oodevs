@@ -31,7 +31,6 @@ ServerApp::ServerApp( int debug_port,
     settings.multi_threaded_message_loop = true;
     settings.single_process = false;
     settings.remote_debugging_port = debug_port;
-    settings.remote_debugging_port = 60000;
     settings.log_severity = LOGSEVERITY_DISABLE;
     CefString( &settings.browser_subprocess_path ).FromString( "timeline_client" SUFFIX ".exe" );
     if( !cef_log.IsEmpty() )
