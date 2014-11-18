@@ -33,7 +33,7 @@ PopulationKnowledge::PopulationKnowledge( const KnowledgeGroup_ABC& group,
                                           const CoordinateConverter_ABC& converter,
                                           const tools::Resolver_ABC< Population_ABC >& resolver,
                                           const sword::CrowdKnowledgeCreation& message )
-    : EntityImplementation< PopulationKnowledge_ABC >( controller, message.knowledge().id(), "", []( const PopulationKnowledge_ABC& ){ return false; } )
+    : EntityImplementation< PopulationKnowledge_ABC >( controller, message.knowledge().id(), "", 0 )
     , group_     ( group )
     , controller_( controller )
     , converter_ ( converter )
@@ -251,4 +251,14 @@ void PopulationKnowledge::Draw( const geometry::Point2f& where, const gui::Viewp
 void PopulationKnowledge::Pick( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GLView_ABC& tools ) const
 {
     Draw( where, viewport, tools );
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: PopulationKnowledge::CanBeRenamed
+// Created: LDC 2014-11-14
+// -----------------------------------------------------------------------------
+bool PopulationKnowledge::CanBeRenamed() const
+{
+    return false;
 }

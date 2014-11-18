@@ -154,7 +154,7 @@ OrbatDockWidget::OrbatDockWidget( kernel::Controllers& controllers,
                                                              filter,
                                                              *observer_,
                                                              editable ) );
-    // Populations
+    // Drawings
     Configure( views_, mainTab, toolbar, tools::translate( "OrbatDockWidget", "Drawings" ), *renameInterface_,
                new gui::RichView< gui::DrawingsTreeView >( gui::RichView_ABC::eOptions_SearchLineEdit,
                                                              "DrawingsTreeView",
@@ -163,6 +163,7 @@ OrbatDockWidget::OrbatDockWidget( kernel::Controllers& controllers,
                                                              filter,
                                                              drawingsBuilder,
                                                              paramLayer ) );
+    drawingsBuilder.SetChangeSuperiorDialog( changeSuperiorDialog_ );
 }
 
 // -----------------------------------------------------------------------------

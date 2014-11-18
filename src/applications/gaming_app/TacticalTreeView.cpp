@@ -289,6 +289,33 @@ void TacticalTreeView::Drop( const kernel::Formation_ABC& item, const kernel::En
 }
 
 // -----------------------------------------------------------------------------
+// Name: TacticalTreeView::Drop
+// Created: LDC 2014-11-07
+// -----------------------------------------------------------------------------
+void TacticalTreeView::Drop( kernel::TacticalLine_ABC& item, const kernel::Entity_ABC& target)
+{
+    actionsModel_.PublishChangeTacticalLineSuperior( item, target );
+}
+    
+// -----------------------------------------------------------------------------
+// Name: TacticalTreeView::Drop
+// Created: LDC 2014-11-07
+// -----------------------------------------------------------------------------
+void TacticalTreeView::Drop( kernel::Drawing_ABC& item, const kernel::Entity_ABC& target)
+{
+    actionsModel_.PublishChangeDrawingSuperior( item, target );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TacticalTreeView::Drop
+// Created: LDC 2014-11-07
+// -----------------------------------------------------------------------------
+void TacticalTreeView::Drop( kernel::Pathfind_ABC& item, const kernel::Entity_ABC& target)
+{
+    actionsModel_.PublishChangePathfindSuperior( item, target );
+}
+
+// -----------------------------------------------------------------------------
 // Name: TacticalTreeView::OnActivate
 // Created: JSR 2013-01-21
 // -----------------------------------------------------------------------------

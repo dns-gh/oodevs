@@ -19,8 +19,9 @@
 
 namespace kernel
 {
-    class Controller;
     class AutomatType;
+    class Controller;
+    class Profile_ABC;
 }
 
 namespace sword
@@ -46,7 +47,8 @@ public:
              Automat( const sword::AutomatCreation& message,
                       kernel::Controller& controller,
                       const kernel::AutomatType& type,
-                      const T_CanBeRenamedFunctor& canBeRenamedFunctor );
+                      actions::ActionsModel& actionsModel,
+                      const kernel::Profile_ABC& profile );
     virtual ~Automat();
     //@}
 
@@ -56,6 +58,7 @@ public:
     virtual void DoUpdate( const sword::AutomatAttributes& message );
     virtual void Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GLView_ABC& tools ) const;
     virtual void Pick( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GLView_ABC& tools ) const;
+    virtual bool CanBeRenamed() const;
     //@}
 
 private:
@@ -63,6 +66,7 @@ private:
     //@{
     const kernel::AutomatType& type_;
     DrawableUnitContainer drawable_;
+    const kernel::Profile_ABC& profile_;
     //@}
 };
 

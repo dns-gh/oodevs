@@ -10,6 +10,7 @@
 #include "preparation_pch.h"
 #include "TeamHierarchies.h"
 #include "clients_kernel/Entity_ABC.h"
+#include "clients_kernel/Formation_ABC.h"
 #include <xeumeuleu/xml.hpp>
 
 // -----------------------------------------------------------------------------
@@ -40,9 +41,13 @@ void TeamHierarchies::SerializeAttributes( xml::xostream& xos ) const
     xos << xml::start( "tactical" );
     for( auto it = elements_.begin(); it != elements_.end(); ++it )
     {
-        xos << xml::start( "formation" );
-        it->second->GetInterfaces().Apply( & Serializable_ABC::SerializeAttributes, xos );
-        xos << xml::end;
+        auto formation = dynamic_cast< kernel::Formation_ABC* >( it->second );
+        if( formation )
+        {
+            xos << xml::start( "formation" );
+            formation->GetInterfaces().Apply( & Serializable_ABC::SerializeAttributes, xos );
+            xos << xml::end;
+        }
     }
     xos << xml::end;
 }

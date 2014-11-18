@@ -103,7 +103,7 @@ AgentKnowledge::AgentKnowledge( const KnowledgeGroup_ABC& group,
                                 const tools::Resolver_ABC< Agent_ABC >& resolver,
                                 const tools::Resolver_ABC< Team_ABC >& teamResolver,
                                 const kernel::Profile_ABC& profile )
-    : EntityImplementation< AgentKnowledge_ABC >( controller, message.knowledge().id(), "", []( const AgentKnowledge_ABC& ){ return false; } )
+    : EntityImplementation< AgentKnowledge_ABC >( controller, message.knowledge().id(), "", 0 )
     , converter_   ( converter )
     , resolver_    ( resolver )
     , teamResolver_( teamResolver )
@@ -383,4 +383,13 @@ std::string AgentKnowledge::GetLevel() const
 bool AgentKnowledge::IsCommandPost() const
 {
     return bIsPC_.IsSet() && bIsPC_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentKnowledge::CanBeRenamed
+// Created: LDC 2014-11-14
+// -----------------------------------------------------------------------------
+bool AgentKnowledge::CanBeRenamed() const
+{
+    return false;
 }

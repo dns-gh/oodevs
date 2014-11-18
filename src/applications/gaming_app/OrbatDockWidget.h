@@ -71,7 +71,7 @@ public:
 private:
     //! @name Member data
     //@{
-    std::unique_ptr< gui::ChangeSuperiorDialog > changeSuperiorDialog_;
+    std::shared_ptr< gui::ChangeSuperiorDialog > changeSuperiorDialog_;
     std::unique_ptr< gui::ModelObserver_ABC > observer_;
     std::unique_ptr< gui::RenameInterface > renameInterface_;
     std::vector< gui::RichView_ABC* > views_;

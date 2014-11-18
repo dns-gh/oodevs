@@ -23,6 +23,7 @@ namespace kernel
     class DotationType;
     class Displayer_ABC;
     class InhabitantType;
+    class Profile_ABC;
     class UrbanObject_ABC;
 }
 
@@ -56,7 +57,8 @@ public:
                          const UrbanModel& model,
                          const kernel::InhabitantType& type,
                          const tools::Resolver_ABC< kernel::DotationType >& dotationResolver,
-                         const T_CanBeRenamedFunctor& canBeRenamedFunctor );
+                         actions::ActionsModel& actionsModel,
+                         const kernel::Profile_ABC& profile );
     virtual ~Inhabitant();
     //@}
 
@@ -65,6 +67,7 @@ public:
     virtual void DisplayInTooltip( kernel::Displayer_ABC& displayer ) const;
     virtual void DisplayInSummary( kernel::Displayer_ABC& displayer ) const;
     virtual void Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GLView_ABC& tools ) const;
+    virtual bool CanBeRenamed() const;
     //@}
 
 private:
@@ -102,6 +105,7 @@ private:
     unsigned int nominalCapacity_;
     unsigned int infrastructures_;
     QMap< QString, unsigned int > accomodationCapacties_;
+    const kernel::Profile_ABC& profile_;
     //@}
 };
 

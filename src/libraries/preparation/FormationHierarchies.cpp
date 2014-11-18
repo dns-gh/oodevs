@@ -109,8 +109,10 @@ void FormationHierarchies::SerializeAttributes( xml::xostream& xos ) const
             xos << xml::start( "phantom" );
         else if( dynamic_cast< const kernel::Automat_ABC* >( child ) )
             xos << xml::start( "automat" );
-        else
+        else if( dynamic_cast< const kernel::Formation_ABC* >( child ) )
             xos << xml::start( "formation" );
+        else
+            continue;
         it->second->GetInterfaces().Apply( &Serializable_ABC::SerializeAttributes, xos );
         it->second->GetInterfaces().Apply( &kernel::Ghost_ABC::SerializeGhostAttributes, xos );
         xos << xml::end;

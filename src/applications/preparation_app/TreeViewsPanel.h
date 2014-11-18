@@ -77,7 +77,7 @@ private:
     gui::RichWidget< QTabWidget >* pSecondAgentsTabWidget_;
     std::vector< gui::HierarchyTreeView_ABC* > firstUnitViews_;
     std::vector< gui::HierarchyTreeView_ABC* > secondUnitViews_;
-    std::unique_ptr< gui::ChangeSuperiorDialog > changeSuperiorDialog_;
+    std::shared_ptr< gui::ChangeSuperiorDialog > changeSuperiorDialog_;
     std::unique_ptr< gui::RenameInterface > renameInterface_;
     //@}
 };

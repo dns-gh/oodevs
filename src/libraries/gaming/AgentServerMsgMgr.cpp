@@ -2422,7 +2422,7 @@ void AgentServerMsgMgr::OnReceivePathfindCreation( const sword::SimToClient& msg
 void AgentServerMsgMgr::OnReceivePathfindUpdate( const sword::SimToClient& msg )
 {
     const auto& message = msg.message().pathfind_update();
-    GetModel().pathfinds_.Get( message.id() ).Update( message );
+    GetModel().pathfinds_.Update( message );
 }
 
 void AgentServerMsgMgr::OnReceivePathfindDestruction( const sword::SimToClient& msg )

@@ -1236,6 +1236,10 @@ This data can&apos;t be projected.</source>
         <source>Delete &apos;%1&apos;?</source>
         <translation type="unfinished">حذف &apos;%1&apos;؟</translation>
     </message>
+    <message>
+        <source>Change superior</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ModelConsistencyDialog</name>

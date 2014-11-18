@@ -23,16 +23,12 @@ namespace kernel
     class Controller;
     class CoordinateConverter_ABC;
     class Population_ABC;
+    class Profile_ABC;
 }
 
 namespace sword
 {
     class PathResult;
-}
-
-namespace actions
-{
-    class ActionsModel;
 }
 
 // =============================================================================
@@ -43,7 +39,6 @@ namespace actions
 class Pathfind : public gui::EntityImplementation< kernel::Pathfind_ABC >
                , public kernel::Extension_ABC
                , public gui::Drawable_ABC
-               , public kernel::Updatable_ABC< sword::Pathfind >
 {
 public:
     //! @name Constructors/Destructor
@@ -54,7 +49,7 @@ public:
                        kernel::Entity_ABC& entity,
                        const sword::Pathfind& msg,
                        bool edition,
-                       const T_CanBeRenamedFunctor& canBeRenamedFunctor );
+                       const kernel::Profile_ABC* profile );
     virtual ~Pathfind();
     //@}
 
@@ -88,24 +83,25 @@ public:
     boost::optional< Itinerary::Hover > PickWaypoint( const gui::GLView_ABC& tools, const geometry::Point2f& where ) const;
     boost::optional< Itinerary::Hover > PickSegment( const gui::GLView_ABC& tools, const geometry::Point2f& where ) const;
     void SetHover( const boost::optional< Itinerary::Hover >& hover );
+    int ChangeSuperior( const kernel::Entity_ABC& target );
+    void UpdateMessage( const sword::Pathfind& msg, const Entity_ABC& owner );
+    virtual bool CanBeRenamed() const;
     //@}
 
 private:
-    //! @name helpers
-    //@}
-    virtual void DoUpdate( const sword::Pathfind& msg );
+    //! @name Methods
     //@{
+    virtual void PublishRename();
+    //@}
 
 private:
     //! @name Member data
     //@{
-    kernel::Controller& controller_;
-    actions::ActionsModel& actionsModel_;
-    const kernel::CoordinateConverter_ABC& converter_;
     sword::Pathfind pathfind_;
-    kernel::Entity_ABC& entity_;
+    const kernel::Entity_ABC* entity_;
     Itinerary itinerary_;
     boost::optional< Itinerary::Hover > hover_;
+    const kernel::Profile_ABC* profile_;
     bool visible_;
     //@}
 

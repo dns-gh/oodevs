@@ -16,6 +16,7 @@
 #include "clients_kernel/Diplomacies_ABC.h"
 #include "clients_kernel/App6Symbol.h"
 #include "clients_kernel/Karma.h"
+#include "clients_kernel/Profile_ABC.h"
 #include "clients_kernel/Tools.h"
 #include "protocol/SimulationSenders.h"
 
@@ -27,10 +28,12 @@ using namespace kernel;
 // -----------------------------------------------------------------------------
 Formation::Formation( const sword::FormationCreation& message,
                       Controller& controller,
-                      const T_CanBeRenamedFunctor& canBeRenamedFunctor )
-    : EntityImplementation< Formation_ABC >( controller, message.formation().id(), QString( message.name().c_str() ), canBeRenamedFunctor )
+                      actions::ActionsModel& actionsModel,
+                      const kernel::Profile_ABC& profile  )
+    : EntityImplementation< Formation_ABC >( controller, message.formation().id(), QString( message.name().c_str() ), &actionsModel )
     , controller_   ( controller )
     , level_        ( static_cast< E_NatureLevel >( message.level() ) )
+    , profile_      ( profile )
 {
     if( name_.isEmpty() )
         name_ = QString( "%1 %L2" ).arg( ENT_Tr::ConvertFromNatureLevel( level_ ).c_str() ).arg( message.formation().id() );
@@ -87,4 +90,13 @@ void Formation::DoUpdate( const sword::FormationUpdate& message )
     if( message.has_name() )
         SetName( QString::fromStdString( message.name() ) );
     Touch();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Formation::CanBeRenamed
+// Created: LDC 2014-11-14
+// -----------------------------------------------------------------------------
+bool Formation::CanBeRenamed() const
+{
+    return profile_.CanDoMagic( *this );
 }

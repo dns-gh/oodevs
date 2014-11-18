@@ -11,6 +11,7 @@
 #include "ModelBuilder.h"
 #include "moc_ModelBuilder.cpp"
 #include "icons.h"
+#include "clients_gui/ChangeSuperiorDialog.h"
 #include "clients_gui/Drawing.h"
 #include "clients_gui/UrbanObject.h"
 #include "clients_kernel/CommunicationHierarchies.h"
@@ -79,7 +80,7 @@ ModelBuilder::ModelBuilder( kernel::Controllers& controllers, Model& model )
     , selectedGhost_( controllers )
     , selectedObject_( controllers )
     , selectedUrbanObject_( controllers )
-    , toDelete_( controllers )
+    , currentEntity_( controllers )
     , confirmation_( new ConfirmationBox( tr( "Confirmation" ), boost::bind( &ModelBuilder::OnConfirmDeletion, this, _1 ) ) )
 {
     controllers_.Register( *this );
@@ -199,8 +200,9 @@ void ModelBuilder::NotifyContextMenu( const kernel::Entity_ABC& entity, kernel::
         return;
     if( &entity != &model_.teams_->GetNoSideTeam() )
     {
-        toDelete_ = &entity;
+        currentEntity_ = &entity;
         menu.InsertItem( "Command", tr( "Delete" ), this, SLOT( OnDelete() ), false, 5 );
+        menu.InsertItem( "Command", tr( "Change superior" ), this, SLOT( OnChangeSuperior() ), false, 6 );
     }
 }
 
@@ -225,8 +227,18 @@ namespace
 // -----------------------------------------------------------------------------
 void ModelBuilder::OnDelete()
 {
-    if( toDelete_ )
-        DeleteEntity( *toDelete_ );
+    if( currentEntity_ )
+        DeleteEntity( *currentEntity_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ModelBuilder::OnChangeSuperior
+// Created: LDC 2014-11-13
+// -----------------------------------------------------------------------------
+void ModelBuilder::OnChangeSuperior()
+{
+    if( currentEntity_ )
+        ChangeSuperior( *currentEntity_ );
 }
 
 namespace
@@ -266,8 +278,8 @@ void ModelBuilder::DeleteEntity( const kernel::Entity_ABC& entity )
 {
     if( &entity == &model_.teams_->GetNoSideTeam() )
         return;
-    toDelete_ = &entity;
-    if( IsLastKnowledgeGroup( *toDelete_, model_ ) )
+    currentEntity_ = &entity;
+    if( IsLastKnowledgeGroup( *currentEntity_, model_ ) )
     {
         QMessageBox::warning( 0, tr( "Warning" ), tr( "Unable to delete the knowledge group. At least one knowledge group must exists for each side." ) );
         return;
@@ -281,13 +293,33 @@ void ModelBuilder::DeleteEntity( const kernel::Entity_ABC& entity )
 }
 
 // -----------------------------------------------------------------------------
+// Name: ModelBuilder::ChangeSuperior
+// Created: LDC 2014-11-06
+// -----------------------------------------------------------------------------
+void ModelBuilder::ChangeSuperior( const kernel::Entity_ABC& entity )
+{
+    changeSuperiorDialog_->Show( const_cast< kernel::Entity_ABC& >( entity ),
+                                 tr( "Change superior" ),
+                                 gui::ChangeSuperiorDialog::eTacticalSuperior );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ModelBuilder::SetChangeSuperiorDialog
+// Created: LDC 2014-11-13
+// -----------------------------------------------------------------------------
+void ModelBuilder::SetChangeSuperiorDialog( const std::shared_ptr< gui::ChangeSuperiorDialog >& changeSuperiorDialog )
+{
+    changeSuperiorDialog_ = changeSuperiorDialog;
+}
+
+// -----------------------------------------------------------------------------
 // Name: ModelBuilder::OnConfirmDeletion
 // Created: SBO 2010-03-22
 // -----------------------------------------------------------------------------
 void ModelBuilder::OnConfirmDeletion( int result )
 {
-    if( result == QMessageBox::Yes && toDelete_ )
-        Delete( *toDelete_ );
+    if( result == QMessageBox::Yes && currentEntity_ )
+        Delete( *currentEntity_ );
 }
 
 namespace

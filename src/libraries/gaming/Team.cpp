@@ -10,6 +10,7 @@
 #include "gaming_pch.h"
 #include "Team.h"
 #include "clients_kernel/Controllers.h"
+#include "clients_kernel/Profile_ABC.h"
 #include "clients_kernel/Tools.h"
 #include "protocol/SimulationSenders.h"
 
@@ -39,9 +40,28 @@ namespace
 // -----------------------------------------------------------------------------
 Team::Team( const sword::PartyCreation& message,
             kernel::Controllers& controllers,
-            const T_CanBeRenamedFunctor& canBeRenamedFunctor )
-    : gui::Team( controllers, message.party().id(), QString( message.name().c_str() ), canBeRenamedFunctor )
+            actions::ActionsModel& actionsModel,
+            const kernel::Profile_ABC& profile )
+    : gui::Team( controllers, message.party().id(), QString( message.name().c_str() ), &actionsModel )
     , karma_( MakeKarma( message.type() ) )
+    , profile_( profile )
+{
+    AddExtension( *this );
+    controllers_.Register( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Team constructor
+// Created: LDC 2014-11-14
+// -----------------------------------------------------------------------------
+Team::Team( kernel::Controllers& controllers,
+            unsigned long id,
+            const QString& name,
+            actions::ActionsModel& actionsModel,
+            const kernel::Profile_ABC& profile )
+    : gui::Team( controllers, id, name, &actionsModel )
+    , karma_( kernel::Karma::unknown_ )
+    , profile_( profile )
 {
     AddExtension( *this );
     controllers_.Register( *this );
@@ -75,4 +95,13 @@ void Team::DoUpdate( const sword::PartyUpdate& message )
     if( message.has_name() )
         SetName( QString::fromStdString( message.name() ) );
     Touch();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Team::CanBeRenamed
+// Created: LDC 2014-11-14
+// -----------------------------------------------------------------------------
+bool Team::CanBeRenamed() const
+{
+    return profile_.CanDoMagic( *this );
 }

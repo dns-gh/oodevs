@@ -13,20 +13,22 @@
 #include "ChangeAutomatTypeDialog.h"
 
 #include "clients_gui/AutomatDecisions.h"
-#include "clients_gui/ModelObserver_ABC.h"
 #include "clients_gui/ChangeSuperiorDialog.h"
+#include "clients_gui/EntityType.h"
+#include "clients_gui/ModelObserver_ABC.h"
 #include "clients_gui/Tools.h"
 
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
+#include "clients_kernel/CommunicationHierarchies.h"
 #include "clients_kernel/ContextMenu.h"
-#include "clients_gui/EntityType.h"
+#include "clients_kernel/Drawing_ABC.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/Ghost_ABC.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
 #include "clients_kernel/Team_ABC.h"
-#include "clients_kernel/CommunicationHierarchies.h"
+#include "clients_kernel/TacticalLine_ABC.h"
 #include "clients_kernel/Positions.h"
 
 #include "preparation/AgentsModel.h"
@@ -208,6 +210,24 @@ void TacticalTreeView::Drop( const kernel::AutomatType& item, kernel::Entity_ABC
         list.push_back( result );
         result->MultipleSelect( controllers_.actions_, list );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: TacticalTreeView::Drop
+// Created: LDC 2014-11-13
+// -----------------------------------------------------------------------------
+void TacticalTreeView::Drop( kernel::TacticalLine_ABC& item, const kernel::Entity_ABC& target )
+{
+    item.ChangeSuperior( target );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TacticalTreeView::Drop
+// Created: LDC 2014-11-13
+// -----------------------------------------------------------------------------
+void TacticalTreeView::Drop( kernel::Drawing_ABC& item, const kernel::Entity_ABC& target )
+{
+    item.ChangeSuperior( target );
 }
 
 // -----------------------------------------------------------------------------

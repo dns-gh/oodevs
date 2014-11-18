@@ -66,9 +66,7 @@ ObjectFactory::~ObjectFactory()
 // -----------------------------------------------------------------------------
 kernel::Object_ABC* ObjectFactory::Create( const sword::ObjectCreation& message )
 {
-    Object* result = new Object( message, controllers_.controller_, static_.coordinateConverter_, static_.objectTypes_,
-                                 [=]( const kernel::Object_ABC& object ) { return profile_.CanDoMagic( object ); } );
-    result->SetRenameObserver( [=]( const QString& name ){ actionsModel_.PublishRename( *result, name ); } );
+    Object* result = new Object( message, controllers_.controller_, static_.coordinateConverter_, static_.objectTypes_, actionsModel_, profile_ );
     result->Attach( *new Explosions( controllers_.controller_, model_.fireResultsFactory_ ) );
     result->Attach< kernel::Positions >( *new ObjectPositions( result->GetType(), static_.coordinateConverter_ ) );
     result->Attach< kernel::TacticalHierarchies >( *new kernel::ObjectHierarchies( *result, &model_.teams_.GetTeam( message.party().id() ) ) );

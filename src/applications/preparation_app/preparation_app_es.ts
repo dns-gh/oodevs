@@ -1237,6 +1237,10 @@ Este dato no puede ser proyectado.</translation>
         <source>Unable to delete the knowledge group. At least one knowledge group must exists for each side.</source>
         <translation>No es posible borrar el grupo de conocimiento. Debe existir al menos un grupo por cada bando.</translation>
     </message>
+    <message>
+        <source>Change superior</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ModelConsistencyDialog</name>

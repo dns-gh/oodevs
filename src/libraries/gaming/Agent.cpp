@@ -12,15 +12,16 @@
 #include "Attributes.h"
 #include "Diplomacies.h"
 #include "equipments.h"
+#include "clients_gui/DictionaryUpdated.h"
 #include "clients_gui/GLOptions.h"
 #include "clients_gui/GLView_ABC.h"
+#include "clients_gui/PropertiesDictionary.h"
 #include "clients_gui/Viewport_ABC.h"
 #include "clients_kernel/AgentType.h"
-#include "clients_gui/PropertiesDictionary.h"
+#include "clients_kernel/App6Symbol.h"
 #include "clients_kernel/CommunicationHierarchies.h"
 #include "clients_kernel/Displayer_ABC.h"
-#include "clients_gui/DictionaryUpdated.h"
-#include "clients_kernel/App6Symbol.h"
+#include "clients_kernel/Profile_ABC.h"
 #include "clients_kernel/Styles.h"
 #include "clients_kernel/Tools.h"
 
@@ -33,8 +34,9 @@ using namespace kernel;
 Agent::Agent( const sword::UnitCreation& message,
               Controller& controller,
               const tools::Resolver_ABC< AgentType >& resolver,
-              const T_CanBeRenamedFunctor& canBeRenamedFunctor )
-    : EntityImplementation< Agent_ABC >( controller, message.unit().id(), QString( message.name().c_str() ), canBeRenamedFunctor )
+              actions::ActionsModel& actionsModel,
+              const kernel::Profile_ABC& profile )
+    : EntityImplementation< Agent_ABC >( controller, message.unit().id(), QString( message.name().c_str() ), &actionsModel )
     , type_       ( resolver.Get( message.type().id() ) )
     , controller_( controller )
     , initialized_( false )
@@ -42,6 +44,7 @@ Agent::Agent( const sword::UnitCreation& message,
     , speed_( 0 )
     , direction_( 0 )
     , sensorsDirection_( 0 )
+    , profile_( profile )
 {
     if( name_.isEmpty() )
         name_ = QString( "%1 %L2" ).arg( type_.GetLocalizedName().c_str() ).arg( message.unit().id() );
@@ -215,4 +218,13 @@ void Agent::DoUpdate( const sword::UnitAttributes& message )
     if( message.has_name() )
         SetName( QString::fromStdString( message.name() ) );
     Touch();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Agent::CanBeRenamed
+// Created: LDC 2014-11-14
+// -----------------------------------------------------------------------------
+bool Agent::CanBeRenamed() const
+{
+    return profile_.CanDoMagic( *this );
 }

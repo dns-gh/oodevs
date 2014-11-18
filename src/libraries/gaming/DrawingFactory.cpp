@@ -10,12 +10,14 @@
 #include "gaming_pch.h"
 #include "DrawingFactory.h"
 #include "Drawing.h"
+#include "DrawingHierarchies.h"
 #include "DrawingTools.h"
 #include "clients_kernel/Automat_ABC.h"
+#include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/EntityResolver_ABC.h"
 #include "clients_kernel/Formation_ABC.h"
-#include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/Location_ABC.h"
+#include "clients_kernel/TacticalHierarchies.h"
 #include "clients_gui/DrawingHelper.h"
 #include "clients_gui/DrawingPositions.h"
 #include "clients_gui/DrawingTemplate.h"
@@ -63,8 +65,9 @@ kernel::Drawing_ABC* DrawingFactory::CreateShape( const sword::ShapeCreation& me
     for( int i = 0; i < points.elem_size(); ++i )
         location->AddPoint( converter_.ConvertToXY( points.elem(i) ) );
 
-    Drawing* drawing = new Drawing( controllers_, message, diffusionEntity, types_, *location, publisher_, converter_ );
+    Drawing* drawing = new Drawing( controllers_, message, diffusionEntity, types_, *location, publisher_, converter_, resolver_ );
     drawing->Attach< kernel::Positions >( *location );
+    drawing->Attach< kernel::TacticalHierarchies >( *new DrawingHierarchies( *drawing ) );
     drawing->Polish();
     return drawing;
 }

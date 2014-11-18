@@ -11,6 +11,7 @@
 #define __Drawing_ABC_h_
 
 #include "Entity_ABC.h"
+class QColor;
 
 namespace kernel
 {
@@ -50,6 +51,7 @@ public:
     virtual const kernel::Entity_ABC* GetDiffusionEntity() const = 0;
     virtual void NotifyDestruction() const = 0;
     virtual const kernel::Location_ABC& GetLocation() const = 0;
+    virtual void ChangeSuperior( const kernel::Entity_ABC& target ) = 0;
     //@}
 };
 

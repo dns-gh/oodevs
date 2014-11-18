@@ -25,8 +25,8 @@ using namespace sword;
 Limit::Limit( kernel::Controller& controller,
               Publisher_ABC& publisher,
               const kernel::CoordinateConverter_ABC& converter,
-              const T_CanBeRenamedFunctor& canBeRenamedFunctor )
-    : TacticalLine_ABC( controller, tools::translate( "Limit", "Limit" ), 0, publisher, converter, canBeRenamedFunctor )
+              const kernel::Profile_ABC& profile )
+    : TacticalLine_ABC( controller, tools::translate( "Limit", "Limit" ), 0, publisher, converter, profile )
     , controller_( controller )
 {
     // NOTHING
@@ -40,8 +40,8 @@ Limit::Limit( kernel::Controller& controller,
               Publisher_ABC& publisher,
               const kernel::CoordinateConverter_ABC& converter,
               const sword::LimitCreation& message,
-              const T_CanBeRenamedFunctor& canBeRenamedFunctor )
-    : TacticalLine_ABC( controller, QString( message.tactical_line().name().c_str() ), message.id().id(), publisher, converter, canBeRenamedFunctor )
+              const kernel::Profile_ABC& profile )
+    : TacticalLine_ABC( controller, QString( message.tactical_line().name().c_str() ), message.id().id(), publisher, converter, profile )
     , controller_( controller )
 {
     // NOTHING

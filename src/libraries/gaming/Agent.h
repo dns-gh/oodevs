@@ -27,9 +27,10 @@ namespace sword
 
 namespace kernel
 {
-    class Controller;
     class AgentType;
+    class Controller;
     class Equipments_ABC;
+    class Profile_ABC;
 }
 
 // =============================================================================
@@ -52,7 +53,8 @@ public:
             Agent( const sword::UnitCreation& message,
                    kernel::Controller& controller,
                    const tools::Resolver_ABC< kernel::AgentType >& resolver,
-                   const T_CanBeRenamedFunctor& canBeRenamedFunctor );
+                   actions::ActionsModel& actionsModel,
+                   const kernel::Profile_ABC& profile );
     virtual ~Agent();
     //@}
 
@@ -69,6 +71,7 @@ public:
     unsigned int GetMoveDirection() const;
     float GetSymbolWidth() const;
     float GetSymbolDepth() const;
+    virtual bool CanBeRenamed() const;
     //@}
 
 private:
@@ -93,6 +96,7 @@ private:
     float speed_;
     unsigned int direction_;
     unsigned int sensorsDirection_;
+    const kernel::Profile_ABC& profile_;
     //@}
 };
 

@@ -46,7 +46,7 @@ DrawerLayer::~DrawerLayer()
 }
 
 // -----------------------------------------------------------------------------
-// Name: DrawerLayer::NotifyContextMenu
+// Name: DrawerLayer::ContextMenu
 // Created: LGY 2014-05-12
 // -----------------------------------------------------------------------------
 void DrawerLayer::ContextMenu( const kernel::GraphicalEntity_ABC& selectable, const geometry::Point2f& point, const QPoint& where )

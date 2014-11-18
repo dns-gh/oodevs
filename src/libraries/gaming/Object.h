@@ -27,10 +27,11 @@ namespace sword
 namespace kernel
 {
     class Controller;
-    class ObjectType;
-    class DotationType;
-    class Displayer_ABC;
     class CoordinateConverter_ABC;
+    class Displayer_ABC;
+    class DotationType;
+    class Profile_ABC;
+    class ObjectType;
 }
 
 // =============================================================================
@@ -47,7 +48,8 @@ public:
                      kernel::Controller& controller,
                      const kernel::CoordinateConverter_ABC& converter,
                      const tools::Resolver_ABC< kernel::ObjectType, std::string >& typeResolver,
-                     const T_CanBeRenamedFunctor& canBeRenamedFunctor );
+                     actions::ActionsModel& actionsModel,
+                     const kernel::Profile_ABC& profile );
     virtual ~Object();
     //@}
 
@@ -62,6 +64,7 @@ public:
     //@{
     const kernel::ObjectType& GetType() const;
     virtual std::string GetSymbol() const;
+    virtual bool CanBeRenamed() const;
     //@}
 
 private:
@@ -81,6 +84,7 @@ private:
     //@{
     const kernel::CoordinateConverter_ABC& converter_;
     const kernel::ObjectType& type_;
+    const kernel::Profile_ABC& profile_;
     //@}
 };
 

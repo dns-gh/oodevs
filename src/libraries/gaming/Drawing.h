@@ -19,6 +19,7 @@
 namespace kernel
 {
     class CoordinateConverter_ABC;
+    class EntityResolver_ABC;
 }
 
 namespace gui
@@ -47,7 +48,7 @@ public:
     //@{
              Drawing( kernel::Controllers& controllers, const sword::ShapeCreation& asn, const kernel::Entity_ABC* entity,
                       const gui::DrawingTypes& types, kernel::LocationProxy& proxy, Publisher_ABC& publisher,
-                      const kernel::CoordinateConverter_ABC& converter );
+                      const kernel::CoordinateConverter_ABC& converter, const kernel::EntityResolver_ABC& resolver );
     virtual ~Drawing();
     //@}
 
@@ -55,12 +56,14 @@ public:
     //@{
     virtual void DoUpdate( const sword::ShapeUpdate& message );
     virtual void NotifyDestruction() const;
+    virtual void ChangeSuperior( const kernel::Entity_ABC& target );
     //@}
 
 private:
     //! @name Helpers
     //@{
     virtual void Update();
+    virtual void PublishRename();
     //@}
 
     //! @name Helpers
@@ -76,6 +79,7 @@ private:
     Publisher_ABC& publisher_;
     const kernel::CoordinateConverter_ABC& converter_;
     kernel::Controller& controller_;
+    const kernel::EntityResolver_ABC& resolver_;
     //@}
 };
 

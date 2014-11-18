@@ -54,6 +54,7 @@ public:
     //! @name Operations
     //@{
     void WriteTo( sword::Diffusion& message ) const;
+    void ChangeSuperior( const kernel::Entity_ABC& superior );
     //@}
 
 private:

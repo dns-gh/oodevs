@@ -26,7 +26,10 @@ namespace kernel
     class AutomatType;
     class Automat_ABC;
     class Controllers;
+    class Drawing_ABC;
+    class Pathfind_ABC;
     class PopulationType;
+    class TacticalLine_ABC;
     class Time_ABC;
 }
 
@@ -102,6 +105,9 @@ public:
     int PublishKnowledgeGroupUpdateParty( const kernel::KnowledgeGroup_ABC& entity, const kernel::Team_ABC& superior );
     int PublishKnowledgeGroupUpdatePartyParent( const kernel::KnowledgeGroup_ABC& entity, const kernel::KnowledgeGroup_ABC& superior );
     int PublishRename( const kernel::Entity_ABC& entity, const QString& newName );
+    void PublishChangeTacticalLineSuperior( kernel::TacticalLine_ABC& item, const kernel::Entity_ABC& target );
+    void PublishChangeDrawingSuperior( kernel::Drawing_ABC& item, const kernel::Entity_ABC& target );
+    int PublishChangePathfindSuperior( kernel::Pathfind_ABC& item, const kernel::Entity_ABC& target );
     //@}
 
 private:

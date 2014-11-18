@@ -10,6 +10,7 @@
 #include "gaming_app_pch.h"
 #include "DrawingsBuilder.h"
 #include "moc_DrawingsBuilder.cpp"
+#include "clients_gui/ChangeSuperiorDialog.h"
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Drawing_ABC.h"
@@ -50,7 +51,7 @@ namespace
 
 DrawingsBuilder::DrawingsBuilder( kernel::Controllers& controllers, const kernel::Profile_ABC& profile )
     : controllers_( controllers )
-    , toDelete_( controllers )
+    , currentEntity_( controllers )
     , profile_ ( profile )
     , confirmation_( new ConfirmationBox( tr( "Confirmation" ), boost::bind( &DrawingsBuilder::OnConfirmDeletion, this, _1 ) ) )
 {
@@ -98,14 +99,21 @@ namespace
 
 void DrawingsBuilder::DeleteEntity( const kernel::Entity_ABC& entity )
 {
-    toDelete_ = 0;
+    currentEntity_ = 0;
     if( entity.GetTypeName() == kernel::Drawing_ABC::typeName_ ||
         entity.GetTypeName() == kernel::Pathfind_ABC::typeName_ ||
         ( entity.GetTypeName() == kernel::TacticalLine_ABC::typeName_ && CanBeOrdered( entity, profile_ ) ) )
     {
-        toDelete_ = &entity;
+        currentEntity_ = &entity;
         OnDelete();
     }
+}
+
+void DrawingsBuilder::ChangeSuperior( const kernel::Entity_ABC& entity )
+{
+    changeSuperiorDialog_->Show( const_cast< kernel::Entity_ABC& >( entity ),
+                                 tr( "Change superior" ),
+                                 gui::ChangeSuperiorDialog::eTacticalSuperior );
 }
 
 void DrawingsBuilder::CreateCityOrDistrict( kernel::Entity_ABC* /*parent*/ )
@@ -118,44 +126,57 @@ void DrawingsBuilder::DeleteBlocks( const std::vector< const kernel::UrbanObject
     // NOTHING
 }
 
+void DrawingsBuilder::SetChangeSuperiorDialog( const std::shared_ptr< gui::ChangeSuperiorDialog >& changeSuperiorDialog )
+{
+    changeSuperiorDialog_ = changeSuperiorDialog;
+}
+
 void DrawingsBuilder::NotifyContextMenu( const kernel::Entity_ABC& entity, kernel::ContextMenu& menu )
 {
-    toDelete_ = 0;
-    if( entity.GetTypeName() == kernel::Drawing_ABC::typeName_ ||
-        ( entity.GetTypeName() == kernel::TacticalLine_ABC::typeName_ && CanBeOrdered( entity, profile_ ) ) )
+    currentEntity_ = 0;
+    auto type = entity.GetTypeName();
+    if( type == kernel::Drawing_ABC::typeName_ ||
+        ( type == kernel::TacticalLine_ABC::typeName_ && CanBeOrdered( entity, profile_ ) ) )
     {
-        toDelete_= &entity;
+        currentEntity_= &entity;
         menu.InsertItem( "Command", tr( "Delete" ), this, SLOT( OnDelete() ), false, 5 );
+        menu.InsertItem( "Command", tr( "Change superior"), this, SLOT( OnChangeSuperior() ), false, 6 );
     }
 }
 
 void DrawingsBuilder::OnDelete()
 {
-    if( toDelete_ )
+    if( currentEntity_ )
     {
-        confirmation_->setText( tr( "Delete '%1'?" ).arg( toDelete_->GetName() ) );
+        confirmation_->setText( tr( "Delete '%1'?" ).arg( currentEntity_->GetName() ) );
         confirmation_->adjustSize();
         confirmation_->show();
     }
 }
 
+// -----------------------------------------------------------------------------
+// Name: DrawingsBuilder::OnChangeSuperior
+// Created: LDC 2014-11-06
+// -----------------------------------------------------------------------------
+void DrawingsBuilder::OnChangeSuperior()
+{
+    if( currentEntity_ )
+        ChangeSuperior( *currentEntity_ );
+}
+
 void DrawingsBuilder::OnConfirmDeletion( int result )
 {
-    if( result == QMessageBox::Yes && toDelete_ )
+    if( result == QMessageBox::Yes && currentEntity_ )
     {
-        if( toDelete_->GetTypeName() == kernel::Drawing_ABC::typeName_ )
-            if( kernel::Drawing_ABC* drawing = static_cast< kernel::Drawing_ABC* >( toDelete_.ConstCast() ) )
-                drawing->NotifyDestruction();
-
-        if( toDelete_->GetTypeName() == kernel::TacticalLine_ABC::typeName_ )
-            if( kernel::TacticalLine_ABC* line = static_cast< kernel::TacticalLine_ABC* >( toDelete_.ConstCast() ) )
-                line->NotifyDestruction();
-
-         if( toDelete_->GetTypeName() == kernel::Pathfind_ABC::typeName_ )
-             if( kernel::Pathfind_ABC* pathfind = static_cast< kernel::Pathfind_ABC* >( toDelete_.ConstCast() ) )
-                 pathfind->NotifyDestruction();
-
-        toDelete_ = 0;
+        kernel::Entity_ABC* entity = currentEntity_.ConstCast();
+        if( kernel::Drawing_ABC* drawing = dynamic_cast< kernel::Drawing_ABC* >( entity ) )
+            drawing->NotifyDestruction();
+        else if( kernel::TacticalLine_ABC* line = dynamic_cast< kernel::TacticalLine_ABC* >( entity ) )
+            line->NotifyDestruction();
+        else if( kernel::Pathfind_ABC* pathfind = dynamic_cast< kernel::Pathfind_ABC* >( entity ) )
+            pathfind->NotifyDestruction();
+        
+        currentEntity_ = 0;
         controllers_.actions_.DeselectAll();
     }
 }

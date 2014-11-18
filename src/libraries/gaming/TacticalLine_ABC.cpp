@@ -13,6 +13,7 @@
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/LocationVisitor_ABC.h"
 #include "clients_kernel/Positions.h"
+#include "clients_kernel/Profile_ABC.h"
 #include "protocol/Protocol.h"
 #include <geometry/Types.h>
 
@@ -25,15 +26,15 @@ TacticalLine_ABC::TacticalLine_ABC( kernel::Controller& controller,
                                     unsigned long id,
                                     Publisher_ABC& publisher,
                                     const kernel::CoordinateConverter_ABC& converter,
-                                    const T_CanBeRenamedFunctor& canBeRenamedFunctor )
-    : gui::EntityImplementation< kernel::TacticalLine_ABC >( controller, id, baseName, canBeRenamedFunctor )
+                                    const kernel::Profile_ABC& profile )
+    : gui::EntityImplementation< kernel::TacticalLine_ABC >( controller, id, baseName, 0 )
     , controller_( controller )
     , converter_ ( converter )
     , publisher_ ( publisher )
     , id_        ( id )
+    , profile_   ( profile )
 {
     AddExtension( *this );
-    SetRenameObserver( [&]( const QString& ){ UpdateToSim( eStateModified ); } );
 }
 
 // -----------------------------------------------------------------------------
@@ -42,7 +43,7 @@ TacticalLine_ABC::TacticalLine_ABC( kernel::Controller& controller,
 // -----------------------------------------------------------------------------
 TacticalLine_ABC::~TacticalLine_ABC()
 {
-    // NOTHING
+    DestroyExtensions();
 }
 
 // -----------------------------------------------------------------------------
@@ -142,4 +143,33 @@ void TacticalLine_ABC::DoUpdate( const sword::LimitUpdate& message )
 {
     SetName( QString::fromStdString( message.tactical_line().name() ) );
     Touch();
+}
+
+// -----------------------------------------------------------------------------
+// Name: TacticalLine_ABC::ChangeSuperior
+// Created: LDC 2014-11-12
+// -----------------------------------------------------------------------------
+void TacticalLine_ABC::ChangeSuperior( const kernel::Entity_ABC& superior )
+{
+    const_cast< TacticalLineHierarchies& >( static_cast< const TacticalLineHierarchies& >( Get< kernel::TacticalHierarchies >() ) ).ChangeSuperior( superior );
+    UpdateToSim( eStateModified );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TacticalLine_ABC::PublishRename
+// Created: LDC 2014-11-14
+// -----------------------------------------------------------------------------
+void TacticalLine_ABC::PublishRename()
+{
+    UpdateToSim( eStateModified );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TacticalLine_ABC::CanBeRenamed
+// Created: LDC 2014-11-14
+// -----------------------------------------------------------------------------
+bool TacticalLine_ABC::CanBeRenamed() const
+{
+    const kernel::Entity_ABC* superior = Get< kernel::TacticalHierarchies >().GetSuperior();
+    return superior && profile_.CanBeOrdered( *superior );
 }

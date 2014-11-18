@@ -17,6 +17,7 @@ namespace kernel
 {
     class Controllers;
     class OptionVariant;
+    class Profile_ABC;
 }
 
 namespace sword
@@ -41,7 +42,13 @@ public:
     //@{
              Team( const sword::PartyCreation& message,
                    kernel::Controllers& controllers,
-                   const T_CanBeRenamedFunctor& canBeRenamedFunctor );
+                   actions::ActionsModel& actionsModel,
+                   const kernel::Profile_ABC& profile );
+             Team( kernel::Controllers& controllers,
+                   unsigned long id,
+                   const QString& name,
+                   actions::ActionsModel& actionsModel,
+                   const kernel::Profile_ABC& profile );
     virtual ~Team();
     //@}
 
@@ -49,12 +56,14 @@ public:
     //@{
     virtual const kernel::Karma& GetKarma() const;
     void DoUpdate( const sword::PartyUpdate& message );
+    virtual bool CanBeRenamed() const;
     //@}
 
 private:
     //! @name Attributes
     //@{
     kernel::Karma karma_;
+    const kernel::Profile_ABC& profile_;
     //@}
 
 };

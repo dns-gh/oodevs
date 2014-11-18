@@ -44,6 +44,7 @@ public:
     virtual void Select( kernel::ActionController& actions ) const;
     virtual void ContextMenu( kernel::ActionController& actions, const QPoint& point, QObject* emitter ) const;
     virtual void Activate( kernel::ActionController& controller ) const;
+    virtual void ChangeSuperior( const kernel::Entity_ABC& superior ) = 0;
     //@}
 
 private:

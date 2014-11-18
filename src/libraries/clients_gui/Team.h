@@ -38,7 +38,7 @@ public:
              Team( kernel::Controllers& controller,
                    unsigned long id,
                    const QString& name,
-                   const T_CanBeRenamedFunctor& canBeRenamedFunctor = T_CanBeRenamedFunctor() );
+                   actions::ActionsModel* actionsModel = 0 );
     virtual ~Team();
     //@}
 

@@ -23,7 +23,7 @@ UrbanKnowledge::UrbanKnowledge( const Team_ABC& owner,
                                 const sword::UrbanKnowledgeCreation& message,
                                 Controller& controller,
                                 const tools::Resolver< kernel::UrbanObject_ABC >& terrainObjectResolver )
-    : EntityImplementation< UrbanKnowledge_ABC >( controller, message.knowledge().id(), "", []( const kernel::Entity_ABC& ){ return false; } )
+    : EntityImplementation< UrbanKnowledge_ABC >( controller, message.knowledge().id(), "", 0 )
     , terrainObjectResolver_( terrainObjectResolver )
     , owner_                ( owner )
     , pRealUrban_           ( terrainObjectResolver_.Find( message.object().id() ) )
@@ -145,4 +145,13 @@ const Team_ABC* UrbanKnowledge::GetTeam() const
 const Team_ABC& UrbanKnowledge::GetOwner() const
 {
     return owner_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanKnowledge::CanBeRenamed
+// Created: LDC 2014-11-14
+// -----------------------------------------------------------------------------
+bool UrbanKnowledge::CanBeRenamed() const
+{
+    return false;
 }

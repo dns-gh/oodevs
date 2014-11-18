@@ -21,6 +21,11 @@ namespace kernel
     class Profile_ABC;
 }
 
+namespace gui
+{
+    class ChangeSuperiorDialog;
+}
+
 // =============================================================================
 /** @class  DrawingsBuilder
     @brief  DrawingsBuilder
@@ -50,8 +55,10 @@ public:
     virtual void CreateFormation( int level );
     virtual kernel::Automat_ABC* ReplaceAutomat( kernel::Entity_ABC& original, const kernel::AutomatType& type );
     virtual void DeleteEntity( const kernel::Entity_ABC& entity );
+    virtual void ChangeSuperior( const kernel::Entity_ABC& entity );
     virtual void CreateCityOrDistrict( kernel::Entity_ABC* parent );
     virtual void DeleteBlocks( const std::vector< const kernel::UrbanObject_ABC* >& urbanObjects );
+    void SetChangeSuperiorDialog( const std::shared_ptr< gui::ChangeSuperiorDialog >& changeSuperiorDialog );
 
     virtual void NotifyContextMenu( const kernel::Entity_ABC& entity, kernel::ContextMenu& menu );
     //@}
@@ -61,15 +68,17 @@ public slots:
     //@{
     void OnDelete();
     void OnConfirmDeletion( int result );
+    void OnChangeSuperior();
     //@}
 
 private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    kernel::SafePointer< kernel::Entity_ABC > toDelete_;
+    kernel::SafePointer< kernel::Entity_ABC > currentEntity_;
     const kernel::Profile_ABC& profile_;
     std::unique_ptr< QMessageBox > confirmation_;
+    std::shared_ptr< gui::ChangeSuperiorDialog > changeSuperiorDialog_;
     //@}
 };
 

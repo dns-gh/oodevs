@@ -17,6 +17,7 @@
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/LocationProxy.h"
+#include "clients_kernel/EntityResolver_ABC.h"
 #include "protocol/Protocol.h"
 
 namespace
@@ -39,7 +40,8 @@ Drawing::Drawing( kernel::Controllers& controllers,
                   const gui::DrawingTypes& types,
                   kernel::LocationProxy& proxy,
                   Publisher_ABC& publisher,
-                  const kernel::CoordinateConverter_ABC& converter )
+                  const kernel::CoordinateConverter_ABC& converter,
+                  const kernel::EntityResolver_ABC& resolver )
     : gui::DrawerShape( controllers, message.id().id(), message.shape().name().c_str(),
                         types.Get( message.shape().category().c_str() ).GetTemplate( message.shape().pattern() ),
                         QColor( message.shape().color().red(), message.shape().color().green(), message.shape().color().blue() ),
@@ -47,10 +49,10 @@ Drawing::Drawing( kernel::Controllers& controllers,
     , publisher_ ( publisher )
     , converter_ ( converter )
     , controller_( controllers.controller_ )
+    , resolver_  ( resolver )
 {
     SetLocation( message.shape().points() );
     SetText( message.shape() );
-    SetRenameObserver( [&]( const QString& ) { SendUpdateRequest(); } );
 }
 
 // -----------------------------------------------------------------------------
@@ -110,6 +112,15 @@ void Drawing::Update()
 }
 
 // -----------------------------------------------------------------------------
+// Name: Drawing::PublishRename
+// Created: LDC 2014-11-14
+// -----------------------------------------------------------------------------
+void Drawing::PublishRename()
+{
+    SendUpdateRequest();
+}
+
+// -----------------------------------------------------------------------------
 // Name: Drawing::SendUpdateRequest
 // Created: LGY 2014-05-16
 // -----------------------------------------------------------------------------
@@ -143,6 +154,28 @@ void Drawing::DoUpdate( const sword::ShapeUpdate& message )
     if( shape.has_name() )
         SetName( QString::fromStdString( shape.name() ) );
     SetText( shape );
+    if( message.shape().has_diffusion() )
+    {
+        if( message.shape().diffusion().has_automat() )
+            entity_ = resolver_.FindAutomat( message.shape().diffusion().automat().id() );
+        else if( message.shape().diffusion().has_formation() )
+            entity_ = resolver_.FindFormation( message.shape().diffusion().formation().id() );
+    }
     controller_.Update( gui::DictionaryUpdated( *this, tools::translate( "EntityImplementation", "Info" ) ) );
     gui::DrawerShape::Update();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Drawing::ChangeSuperior
+// Created: LDC 2014-11-12
+// -----------------------------------------------------------------------------
+void Drawing::ChangeSuperior( const kernel::Entity_ABC& target )
+{
+    plugins::messenger::ShapeUpdateRequest message;
+    message().mutable_shape()->set_id( GetId() );
+    if( target.GetTypeName() == kernel::Automat_ABC::typeName_ )
+        message().mutable_diffusion()->mutable_automat()->set_id( target.GetId() );
+    else if( target.GetTypeName() == kernel::Formation_ABC::typeName_ )
+        message().mutable_diffusion()->mutable_formation()->set_id( target.GetId() );
+    message.Send( publisher_ );
 }

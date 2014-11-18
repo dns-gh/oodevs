@@ -24,6 +24,7 @@ namespace sword
 
 namespace kernel
 {
+    class Profile_ABC;
     class StaticModel;
 }
 
@@ -43,7 +44,8 @@ public:
     //@{
              Formation( const sword::FormationCreation& message,
                         kernel::Controller& controller,
-                        const T_CanBeRenamedFunctor& canBeRenamedFunctor );
+                        actions::ActionsModel& actionsModel,
+                        const kernel::Profile_ABC& profile );
     virtual ~Formation();
     //@}
 
@@ -56,6 +58,7 @@ public:
     //@{
     virtual void Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GLView_ABC& tools ) const;
     virtual void Pick( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GLView_ABC& tools ) const;
+    virtual bool CanBeRenamed() const;
     //@}
 
 private:
@@ -71,6 +74,7 @@ private:
     kernel::Controller&   controller_;
     E_NatureLevel         level_;
     DrawableUnitContainer drawable_;
+    const kernel::Profile_ABC& profile_;
     //@}
 };
 

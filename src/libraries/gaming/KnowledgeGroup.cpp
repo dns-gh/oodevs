@@ -9,8 +9,9 @@
 
 #include "gaming_pch.h"
 #include "KnowledgeGroup.h"
-#include "clients_kernel/KnowledgeGroupType.h"
 #include "clients_gui/PropertiesDictionary.h"
+#include "clients_kernel/KnowledgeGroupType.h"
+#include "clients_kernel/Profile_ABC.h"
 #include "clients_kernel/Tools.h"
 #include "protocol/SimulationSenders.h"
 
@@ -34,10 +35,12 @@ KnowledgeGroup::KnowledgeGroup( unsigned long nId,
                                 kernel::Controller& controller,
                                 const std::string& type,
                                 const tools::Resolver_ABC< kernel::KnowledgeGroupType, std::string >& types,
-                                const T_CanBeRenamedFunctor& canBeRenamedFunctor )
-    : gui::EntityImplementation< kernel::KnowledgeGroup_ABC >( controller, nId, ComputeName( name, nId ), canBeRenamedFunctor )
+                                actions::ActionsModel& actionsModel,
+                                const kernel::Profile_ABC& profile )
+    : gui::EntityImplementation< kernel::KnowledgeGroup_ABC >( controller, nId, ComputeName( name, nId ), &actionsModel )
     , type_( type )
     , types_( types )
+    , profile_( profile )
     , activated_( true )
     , crowd_( crowd )
 {
@@ -111,4 +114,13 @@ void KnowledgeGroup::CreateDictionary()
     gui::PropertiesDictionary& dictionary = Get< gui::PropertiesDictionary >();
     dictionary.Register( *this, tools::translate( "KnowledgeGroup", "Type/Name" ), type_ );
     dictionary.Register( *this, tools::translate( "KnowledgeGroup", "Type/Delay" ), delay_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: KnowledgeGroup::CanBeRenamed
+// Created: LDC 2014-11-14
+// -----------------------------------------------------------------------------
+bool KnowledgeGroup::CanBeRenamed() const
+{
+    return profile_.CanDoMagic( *this );
 }

@@ -18,6 +18,7 @@
 namespace kernel
 {
     class KnowledgeGroupType;
+    class Profile_ABC;
 }
 
 namespace sword
@@ -44,7 +45,8 @@ public:
                              kernel::Controller& controller,
                              const std::string& sType,
                              const tools::Resolver_ABC< kernel::KnowledgeGroupType, std::string >& types,
-                             const T_CanBeRenamedFunctor& canBeRenamedFunctor );
+                             actions::ActionsModel& actionsModel,
+                             const kernel::Profile_ABC& profile );
     virtual ~KnowledgeGroup();
     //@}
 
@@ -58,6 +60,7 @@ public:
     virtual bool IsActivated() const;
     virtual bool IsCrowd() const;
     const std::string& GetType() const;
+    virtual bool CanBeRenamed() const;
     //@}
 
 private:
@@ -73,6 +76,7 @@ private:
     std::string delay_;
     std::string type_;
     const tools::Resolver_ABC< kernel::KnowledgeGroupType, std::string >& types_;
+    const kernel::Profile_ABC& profile_;
     bool activated_;
     bool crowd_;
     //@}

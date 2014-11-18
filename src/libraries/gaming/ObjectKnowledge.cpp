@@ -32,7 +32,7 @@ ObjectKnowledge::ObjectKnowledge( const Entity_ABC& owner, const sword::ObjectKn
                                   const tools::Resolver_ABC< Object_ABC >& objectResolver,
                                   const tools::Resolver_ABC< kernel::Team_ABC >& teamResolver,
                                   const kernel::ObjectType& type )
-    : gui::EntityImplementation< ObjectKnowledge_ABC >( controller, message.knowledge().id(), "", []( const ObjectKnowledge_ABC& ){ return false; } )
+    : gui::EntityImplementation< ObjectKnowledge_ABC >( controller, message.knowledge().id(), "", 0 )
     , owner_         ( owner )
     , objectResolver_( objectResolver )
     , type_          ( &type )
@@ -205,4 +205,13 @@ const Entity_ABC& ObjectKnowledge::GetOwner() const
 std::string ObjectKnowledge::GetSymbol() const
 {
     return symbol_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectKnowledge::CanBeRenamed
+// Created: LDC 2014-11-14
+// -----------------------------------------------------------------------------
+bool ObjectKnowledge::CanBeRenamed() const
+{
+    return false;
 }

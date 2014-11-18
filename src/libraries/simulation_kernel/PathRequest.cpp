@@ -171,6 +171,7 @@ bool PathRequest::Update( const sword::Pathfind& pathfind )
     if( !pathfind.request().has_name() )
         return false;
 
+    request_.mutable_unit()->set_id( pathfind.request().unit().id() );
     request_.set_name( pathfind.request().name() );
     sword::SimToClient message;
     FillPathfindMessage( *message.mutable_message()->mutable_pathfind_update() );

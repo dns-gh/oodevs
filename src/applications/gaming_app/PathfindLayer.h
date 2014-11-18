@@ -124,6 +124,7 @@ private slots:
     void SendRequest();
     void OnOpenEditingMode();
     bool OnDeletePathfind();
+    void OnChangeSuperior();
     void OnEditPathfind();
 
 private:

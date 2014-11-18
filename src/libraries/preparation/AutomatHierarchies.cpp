@@ -11,6 +11,7 @@
 #include "AutomatHierarchies.h"
 #include "TacticalHierarchies.h"
 #include "clients_kernel/Agent_ABC.h"
+#include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/Ghost_ABC.h"
 #include "clients_kernel/Tools.h"
@@ -58,8 +59,10 @@ void AutomatHierarchies::SerializeAttributes( xml::xostream& xos ) const
             xos << xml::start( "unit" );
         else if( dynamic_cast< const kernel::Ghost_ABC* >( child ) )
             xos << xml::start( "phantom" );
-        else
+        else if( dynamic_cast< const kernel::Automat_ABC* >( child ) )
             xos << xml::start( "automat" );
+        else
+            continue;
         it->second->GetInterfaces().Apply( & Serializable_ABC::SerializeAttributes, xos );
         xos << xml::end;
     }

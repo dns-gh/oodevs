@@ -12,6 +12,7 @@
 #include "UrbanModel.h"
 #include "clients_gui/GLView_ABC.h"
 #include "clients_gui/Infrastructure_ABC.h"
+#include "clients_gui/PropertiesDictionary.h"
 #include "clients_gui/UrbanObject.h"
 #include "clients_kernel/AccommodationTypes.h"
 #include "clients_kernel/AccommodationType.h"
@@ -19,7 +20,7 @@
 #include "clients_kernel/DotationType.h"
 #include "clients_kernel/InhabitantType.h"
 #include "clients_kernel/ObjectExtensions.h"
-#include "clients_gui/PropertiesDictionary.h"
+#include "clients_kernel/Profile_ABC.h"
 #include "clients_kernel/UrbanPositions_ABC.h"
 #include "clients_kernel/Styles.h"
 #include "clients_kernel/Tools.h"
@@ -44,16 +45,18 @@ Inhabitant::Inhabitant( const sword::PopulationCreation& message,
                         const UrbanModel& model,
                         const kernel::InhabitantType& type,
                         const tools::Resolver_ABC< DotationType >& dotationResolver,
-                        const T_CanBeRenamedFunctor& canBeRenamedFunctor )
-    : EntityImplementation< Inhabitant_ABC >( controller, message.id().id(), QString( message.name().c_str() ), canBeRenamedFunctor )
+                        actions::ActionsModel& actionsModel,
+                        const kernel::Profile_ABC& profile )
+    : EntityImplementation< Inhabitant_ABC >( controller, message.id().id(), QString( message.name().c_str() ), &actionsModel )
     , controller_      ( controller )
     , male_            ( ToInt( type.GetMalePercentage() ) )
     , female_          ( ToInt( type.GetFemalePercentage() ) )
     , children_        ( ToInt( type.GetChildrenPercentage() ) )
     , dotationResolver_( dotationResolver )
-    , livingUrbanObjects_       ( 0 )
-    , nominalCapacity_          ( 0 )
-    , infrastructures_          ( 0 )
+    , livingUrbanObjects_( 0 )
+    , nominalCapacity_ ( 0 )
+    , infrastructures_ ( 0 )
+    , profile_         ( profile )
 {
     if( name_.isEmpty() )
         name_ = QString( "%1 %L2" ).arg( type.GetName().c_str() ).arg( message.id().id() );
@@ -234,4 +237,13 @@ void Inhabitant::UpdateUrbanObjectsDictionnary()
     dictionary.Register( *static_cast< const Entity_ABC* >( this ), tools::translate( "Inhabitant", "Living Area/Non medical infrastructures" ), static_cast< const unsigned int& >( infrastructures_ ) );
     for( QMap< QString, unsigned int >::const_iterator it = accomodationCapacties_.constBegin(); it != accomodationCapacties_.constEnd(); ++it )
         dictionary.Register( *static_cast< const Entity_ABC* >( this ), tools::translate( "Inhabitant", "Living Area/Capacities/%1" ).arg( it.key() ), it.value() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Inhabitant::CanBeRenamed
+// Created: LDC 2014-11-14
+// -----------------------------------------------------------------------------
+bool Inhabitant::CanBeRenamed() const
+{
+    return profile_.CanDoMagic( *this );
 }

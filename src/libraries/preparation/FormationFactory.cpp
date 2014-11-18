@@ -61,10 +61,11 @@ kernel::Formation_ABC* FormationFactory::Create( kernel::Entity_ABC& parent, E_N
         formation->Rename( name );
     const kernel::Karma& karma = parent.Get< kernel::TacticalHierarchies >().GetTop().Get< kernel::Diplomacies_ABC >().GetKarma();
     formation->Attach< kernel::SymbolHierarchy_ABC >( *new Symbol( symbolsFactory_.GetSymbolBase( karma ), symbolsFactory_ ) );
-    formation->Attach< kernel::TacticalHierarchies >( *new FormationHierarchies( controllers_.controller_, *formation, &parent, symbolsFactory_ ) );
+    kernel::TacticalHierarchies* hierarchies = new FormationHierarchies( controllers_.controller_, *formation, &parent, symbolsFactory_ );
+    formation->Attach( *hierarchies );
+    formation->Attach( *new TacticalLines( *hierarchies ) );
     formation->Attach< kernel::Positions >( *new gui::AggregatedPositions( *formation ) );
     formation->Attach< gui::LogisticHierarchiesBase>( *new LogisticBaseStates( controllers_.controller_, *formation, staticModel_.objectTypes_, dico ) );
-    formation->Attach( *new TacticalLines() );
     formation->Attach< kernel::Color_ABC >( *new Color( parent ) );
     formation->Attach( *new kernel::DictionaryExtensions( controllers_, "orbat-attributes", staticModel_.extensions_ ) );
     formation->Attach( *new gui::LogisticBase( controllers_, *formation, dico, true, false, false ) );
@@ -82,10 +83,11 @@ kernel::Formation_ABC* FormationFactory::Create( xml::xistream& xis, kernel::Ent
     gui::PropertiesDictionary& dico = formation->Get< gui::PropertiesDictionary >();
     const kernel::Karma& karma = parent.Get< kernel::TacticalHierarchies >().GetTop().Get< kernel::Diplomacies_ABC >().GetKarma();
     formation->Attach< kernel::SymbolHierarchy_ABC >( *new Symbol( xis, symbolsFactory_.GetSymbolBase( karma ), symbolsFactory_ ) );
-    formation->Attach< kernel::TacticalHierarchies >( *new FormationHierarchies( controllers_.controller_, *formation, &parent, symbolsFactory_ ) );
+    kernel::TacticalHierarchies* hierarchies = new FormationHierarchies( controllers_.controller_, *formation, &parent, symbolsFactory_ );
+    formation->Attach( *hierarchies );
+    formation->Attach( *new TacticalLines( *hierarchies ) );
     formation->Attach< kernel::Positions >( *new gui::AggregatedPositions( *formation ) );
     formation->Attach< gui::LogisticHierarchiesBase >( *new LogisticBaseStates( controllers_.controller_, *formation, staticModel_.objectTypes_, dico ) );
-    formation->Attach( *new TacticalLines() );
     formation->Attach< kernel::Color_ABC >( *new Color( xis ) );
     formation->Attach( *new kernel::DictionaryExtensions( controllers_, "orbat-attributes", xis, staticModel_.extensions_ ) );
     formation->Attach( *new gui::LogisticBase( controllers_, *formation, dico, true, xis, false ) );
