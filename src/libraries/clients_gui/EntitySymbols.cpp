@@ -115,7 +115,5 @@ void EntitySymbols::GenerateSymbols( const tools::Resolver< kernel::Team_ABC >& 
 {
     tools::Iterator< const kernel::Team_ABC& > it = teamResolver.CreateIterator();
     while( it.HasMoreElements() )
-    {
         RecGenerateSymbols( it.NextElement() );
-    }
 }

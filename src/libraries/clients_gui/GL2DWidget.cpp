@@ -265,7 +265,6 @@ void GL2DWidget::DrawCross( const Point2f& at,
             size *= GetAdaptiveZoomFactor();
     }
     glPushAttrib( GL_LINE_BIT );
-    glEnable( GL_LINE_SMOOTH );
     glBegin( GL_LINES );
         glVertex2f( at.X() - size, at.Y() - size );
         glVertex2f( at.X() + size, at.Y() + size );
@@ -280,7 +279,6 @@ void GL2DWidget::DrawLine( const Point2f& from,
                            float width ) const
 {
     glPushAttrib( GL_LINE_BIT );
-    glEnable( GL_LINE_SMOOTH );
     if( width >= 0.f )
         glLineWidth( width );
     glBegin( GL_LINES );
@@ -316,7 +314,6 @@ void GL2DWidget::DrawLines( const T_PointVector& points ) const
     if( !points.empty() )
     {
         glPushAttrib( GL_LINE_BIT );
-        glEnable( GL_LINE_SMOOTH );
         glVertexPointer( 2, GL_FLOAT, 0, (const void*)(&points.front()) );
         glDrawArrays( GL_LINE_STRIP, 0, static_cast< GLsizei >( points.size() ) );
         glPopAttrib();
@@ -328,7 +325,6 @@ void GL2DWidget::DrawRectangle( const T_PointVector& points ) const
     if( points.size() > 1 )
     {
         glPushAttrib( GL_LINE_BIT );
-        glEnable( GL_LINE_SMOOTH );
         glBegin( GL_LINE_LOOP );
             glVertex2f( points.front().X(), points.front().Y() );
             glVertex2f( points.front().X(), points.back().Y() );
@@ -355,7 +351,6 @@ void GL2DWidget::DrawPolygon( const T_PointVector& points ) const
     if( !GetPickingSelector().IsPickingMode() )
         color[3] *= 0.5;
     glColor4fv( color );
-    glEnable( GL_POLYGON_SMOOTH );
     glDrawArrays( GL_TRIANGLE_FAN, 0, static_cast< GLsizei >( points.size() ) );
     glPopAttrib();
 }
@@ -428,7 +423,6 @@ void GL2DWidget::DrawArrow( const Point2f& from,
     const Point2f right = end + ( - u - v ) * tipFactor;
 
     glPushAttrib( GL_LINE_BIT );
-    glEnable( GL_LINE_SMOOTH );
     glBegin( GL_LINES );
         glVertex2f( end.X(), end.Y() );
         glVertex2f( left.X(), left.Y() );
@@ -461,7 +455,6 @@ void GL2DWidget::DrawArc( const Point2f& center,
 
     const float deltaAngle = ( maxAngle - minAngle ) / 24.f + 1e-6f;
     glPushAttrib( GL_LINE_BIT );
-    glEnable( GL_LINE_SMOOTH );
     glLineWidth( width );
     glPushMatrix();
         glTranslatef( center.X(), center.Y(), 0.f );
@@ -518,7 +511,6 @@ namespace
     {
         radius = Radius( radius, unit, pixels );
         glPushAttrib( GL_LINE_BIT );
-        glEnable( GL_LINE_SMOOTH );
         glPushMatrix();
             glTranslatef( center.X(), center.Y(), 0.f );
             glScalef( radius, radius, 1.f );
@@ -539,7 +531,6 @@ void GL2DWidget::DrawCircle( const Point2f& center,
 {
     radius = Radius( radius, unit, Pixels() );
     glPushAttrib( GL_LINE_BIT );
-    glEnable( GL_LINE_SMOOTH );
     glPushMatrix();
         glTranslatef( center.X(), center.Y(), 0.f );
         glScalef    ( radius, radius, 1.f );
@@ -584,7 +575,6 @@ void GL2DWidget::DrawLife( const Point2f& where,
     const float xdelta = h * halfWidth * 2;
     const float alpha = GetCurrentAlpha();
     glPushAttrib( GL_CURRENT_BIT | GL_LINE_BIT );
-    glEnable( GL_LINE_SMOOTH );
         glLineWidth( 1. );
         glColor4f( 0.8f, 0.8f, 0.8f, alpha );  // light gray
         glBegin( GL_QUADS );
@@ -891,13 +881,11 @@ void GL2DWidget::DrawApp6( const std::string& symbol,
 {
     const float svgWidth = 360;
     const float expectedHeight = expectedWidth * 0.660f;
-    const Point2f center = Point2f( where.X() /*- expectedWidth * 0.5f*/, where.Y() /*+ expectedHeight*/ );
     const float scaleRatio = ( expectedWidth / svgWidth );
     gl::Initialize();
     glPushAttrib( GL_CURRENT_BIT | GL_LINE_BIT );
-    glEnable( GL_LINE_SMOOTH );
         glPushMatrix();
-            glTranslatef( center.X(), center.Y(), 0.0f );
+            glTranslatef( where.X(), where.Y(), 0.0f );
             glRotatef( - (GLfloat)direction, 0, 0, 1 );
             glScalef( xFactor, yFactor, 1 );
             glTranslatef( - expectedWidth * 0.5f, expectedHeight, 0.0f );
@@ -1082,8 +1070,8 @@ void GL2DWidget::initializeGL()
     circle_ = GenerateCircle();
     halfCircle_ = GenerateHalfCircle();
     glEnableClientState( GL_VERTEX_ARRAY );
+    glEnable( GL_POLYGON_SMOOTH );
     gl::Initialize();
-    glEnable( GL_LINE_SMOOTH );
     glEnable( GL_BLEND );
     hasMultiTexturing_ = gl::HasMultiTexturing();
 }
@@ -1117,9 +1105,13 @@ void GL2DWidget::PickGL()
     makeCurrent();
     SetCurrentView( this );
     ApplyOptions();
+    glDisable( GL_POLYGON_SMOOTH );
+    glDisable( GL_LINE_SMOOTH );
     for( auto it = passes_.begin(); it != passes_.end(); ++it )
         if( ( *it )->GetName() == "main" )
             RenderPass( **it );
+    glEnable( GL_LINE_SMOOTH );
+    glEnable( GL_POLYGON_SMOOTH );
     SetCurrentView( 0 );
 }
 
