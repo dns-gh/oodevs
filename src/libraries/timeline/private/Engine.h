@@ -23,6 +23,7 @@ namespace timeline
 {
     struct Event;
     struct Error;
+    struct CloseEvent;
     typedef std::vector< Event > Events;
 }
 
@@ -49,6 +50,7 @@ public:
     void ReadEvent  ( const std::string& uuid );
     void UpdateEvent( const Event& event );
     void DeleteEvents( const std::vector< std::string >& uuids );
+    void CloseEvent( const CloseEvent& event );
     void LoadEvents( const std::string& events );
     void SaveEvents();
 
@@ -80,6 +82,7 @@ private:
     CefRefPtr< CefV8Value > OnKeyDown              ( const CefV8ValueList& args );
     CefRefPtr< CefV8Value > OnKeyPress             ( const CefV8ValueList& args );
     CefRefPtr< CefV8Value > OnKeyUp                ( const CefV8ValueList& args );
+    CefRefPtr< CefV8Value > OnClosedEvent          ( const CefV8ValueList& args );
 
 protected:
     IMPLEMENT_REFCOUNTING( Engine );

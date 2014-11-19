@@ -164,7 +164,7 @@ func (c *Controller) applySession(uuid string, operand func(*Session) error) (
 	if err != nil {
 		return nil, err
 	}
-	return value.(*sdk.Session), err
+	return value.(*sdk.Session), nil
 }
 
 func (c *Controller) AttachTimerService(uuid, name string, base string) (*sdk.Session, error) {
@@ -229,7 +229,7 @@ func (c *Controller) CreateEvent(uuid string, msg *sdk.Event) (*sdk.Event, error
 	if err != nil {
 		return nil, err
 	}
-	return value.(*sdk.Event), err
+	return value.(*sdk.Event), nil
 }
 
 func (c *Controller) ReadServices(uuid string) ([]*sdk.Service, error) {
@@ -239,7 +239,7 @@ func (c *Controller) ReadServices(uuid string) ([]*sdk.Service, error) {
 	if err != nil {
 		return nil, err
 	}
-	return value.([]*sdk.Service), err
+	return value.([]*sdk.Service), nil
 }
 
 func (c *Controller) ReadEvents(uuid string, config services.EventFilterConfig) ([]*sdk.Event, error) {
@@ -249,7 +249,7 @@ func (c *Controller) ReadEvents(uuid string, config services.EventFilterConfig) 
 	if err != nil {
 		return nil, err
 	}
-	return value.([]*sdk.Event), err
+	return value.([]*sdk.Event), nil
 }
 
 func (c *Controller) UpdateEvent(uuid, event string, msg *sdk.Event) (*sdk.Event, error) {
@@ -259,7 +259,7 @@ func (c *Controller) UpdateEvent(uuid, event string, msg *sdk.Event) (*sdk.Event
 	if err != nil {
 		return nil, err
 	}
-	return value.(*sdk.Event), err
+	return value.(*sdk.Event), nil
 }
 
 func (c *Controller) DeleteEvent(uuid, event string) error {
@@ -269,6 +269,22 @@ func (c *Controller) DeleteEvent(uuid, event string) error {
 	return err
 }
 
+func (c *Controller) CloseEvent(uuid, event string, msg *sdk.CloseEvent) (*sdk.Event, error) {
+	value, err := c.apply(uuid, func(session *Session) (interface{}, error) {
+		var err error
+		code, text := msg.GetErrorCode(), msg.GetErrorText()
+		if code != 0 || len(text) > 0 {
+			err = util.NewError(code, text)
+		}
+		return session.CloseEvent(event, msg.GetDone(), err, msg.GetLock())
+	})
+	if err != nil {
+		return nil, err
+	}
+	return value.(*sdk.Event), nil
+
+}
+
 func (c *Controller) RegisterObserver(uuid string, config services.EventFilterConfig) (SdkObserver, error) {
 	value, err := c.apply(uuid, func(session *Session) (interface{}, error) {
 		return session.RegisterObserver(config), nil
@@ -276,7 +292,7 @@ func (c *Controller) RegisterObserver(uuid string, config services.EventFilterCo
 	if err != nil {
 		return nil, err
 	}
-	return value.(SdkObserver), err
+	return value.(SdkObserver), nil
 }
 
 func (c *Controller) UnregisterObserver(uuid string, observer SdkObserver) {
@@ -310,7 +326,7 @@ func (c *ControllerObserver) Tick(tick time.Time) {
 
 func (c *ControllerObserver) CloseEvent(uuid string, err error, lock bool) {
 	c.controller.post(c.session, func(session *Session) {
-		session.CloseEvent(uuid, err, lock)
+		session.CloseEvent(uuid, err == nil, err, lock)
 	})
 }
 

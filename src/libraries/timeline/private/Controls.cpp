@@ -210,6 +210,23 @@ namespace
     {
         return Error( src.code(), src.text() );
     }
+
+    void SetCloseEvent( sdk::CloseEvent& dst, const timeline::CloseEvent& src )
+    {
+        dst.set_uuid( src.uuid );
+        dst.set_done( src.done );
+        SetError( *dst.mutable_error(), src.error );
+        dst.set_lock( src.lock );
+    }
+
+    timeline::CloseEvent GetCloseEvent( const sdk::CloseEvent& src )
+    {
+        timeline::CloseEvent msg( src.uuid() );
+        msg.done = src.done();
+        msg.error = GetError( src.error() );
+        msg.lock = src.lock();
+        return msg;
+    }
 }
 
 T_Msg controls::CreateEvents( const T_Logger& log, const std::vector< Event >& events )
@@ -259,6 +276,14 @@ T_Msg controls::DeleteEvents( const T_Logger& log, const std::vector< std::strin
     return Pack( log, cmd );
 }
 
+T_Msg controls::CloseEvent( const T_Logger& log, const timeline::CloseEvent& msg )
+{
+    ClientCommand cmd;
+    cmd.set_type( sdk::CLIENT_EVENT_CLOSE );
+    SetCloseEvent( *cmd.mutable_close_event(), msg );
+    return Pack( log, cmd );
+}
+
 T_Msg controls::LoadEvents( const T_Logger& log, const std::string& events )
 {
     ClientCommand cmd;
@@ -288,6 +313,7 @@ void controls::ParseClient( ClientHandler_ABC& handler,
         case sdk::CLIENT_EVENT_READ_ONE:        return handler.OnReadEvent( GetEvent( cmd.events() ).uuid );
         case sdk::CLIENT_EVENT_UPDATE:          return handler.OnUpdateEvent( GetEvent( cmd.events() ) );
         case sdk::CLIENT_EVENT_DELETE:          return handler.OnDeleteEvents( GetEventUuids( cmd.events() ) );
+        case sdk::CLIENT_EVENT_CLOSE:           return handler.OnCloseEvent( GetCloseEvent( cmd.close_event() ) );
         case sdk::CLIENT_EVENTS_LOAD:           return handler.OnLoadEvents( cmd.data() );
         case sdk::CLIENT_EVENTS_SAVE:           return handler.OnSaveEvents();
     }
@@ -433,6 +459,15 @@ T_Msg controls::KeyUp( const T_Logger& log, int key )
     return Pack( log, cmd );
 }
 
+T_Msg controls::ClosedEvent( const T_Logger& log, const timeline::Event& event, const timeline::Error& error )
+{
+    ServerCommand cmd;
+    cmd.set_type( sdk::SERVER_EVENT_CLOSED );
+    SetEvent( *cmd.add_events(), event );
+    SetError( *cmd.mutable_error(), error );
+    return Pack( log, cmd );
+}
+
 void controls::ParseServer( ServerHandler_ABC& handler,
                             const T_Msg& msg,
                             const T_Logger& log )
@@ -458,5 +493,6 @@ void controls::ParseServer( ServerHandler_ABC& handler,
         case sdk::SERVER_KEYBOARD_KEYDOWN:            return handler.OnKeyDown( cmd.keyboardevent().keydown() );
         case sdk::SERVER_KEYBOARD_KEYPRESS:           return handler.OnKeyPress( cmd.keyboardevent().keypress() );
         case sdk::SERVER_KEYBOARD_KEYUP:              return handler.OnKeyUp( cmd.keyboardevent().keyup() );
+        case sdk::SERVER_EVENT_CLOSED:                return handler.OnClosedEvent( GetEvent( cmd.events() ), GetError( cmd.error() ) );
     }
 }

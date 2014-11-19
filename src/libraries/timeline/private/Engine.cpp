@@ -168,6 +168,7 @@ void Engine::Register( CefRefPtr< CefBrowser > browser, CefRefPtr< CefV8Context 
     SetValue( gaming, "keydown",                1, boost::bind( &Engine::OnKeyDown,               this, _1 ) );
     SetValue( gaming, "keypress",               1, boost::bind( &Engine::OnKeyPress,              this, _1 ) );
     SetValue( gaming, "keyup",                  1, boost::bind( &Engine::OnKeyUp,                 this, _1 ) );
+    SetValue( gaming, "closed_event",           2, boost::bind( &Engine::OnClosedEvent,           this, _1 ) );
 }
 
 void Engine::Unregister()
@@ -288,6 +289,21 @@ namespace
         dst.text = GetString( src, "text" );
         return dst;
     }
+
+    void SetError( CefRefPtr< CefV8Value >& data, const timeline::Error& error )
+    {
+        SetValue( data, "code", error.code );
+        SetValue( data, "text", error.text );
+    }
+
+    void SetCloseEvent( CefRefPtr< CefV8Value >& data, const timeline::CloseEvent& event )
+    {
+        SetValue( data, "uuid", event.uuid );
+        auto error = SetValue( data, "error" );
+        SetValue( data, "done", event.done );
+        SetError( error, event.error );
+        SetValue( data, "lock", event.lock );
+    }
 }
 
 void Engine::CenterClient()
@@ -344,6 +360,20 @@ void Engine::SelectEvent( const std::string& uuid )
         args.push_back( CefV8Value::CreateString( uuid ) );
         if( auto select = GetValue( ctx_, "gaming.select_event" ) )
             gate.Execute( select, args );
+    }
+}
+
+void Engine::CloseEvent( const timeline::CloseEvent& msg )
+{
+    Gate gate;
+    if( gate.Acquire( ctx_ ) )
+    {
+        auto data = CefV8Value::CreateObject( 0 );
+        SetCloseEvent( data, msg );
+        auto close_event = GetValue( ctx_, "gaming.close_event" );
+        CefV8ValueList args;
+        args.push_back( data );
+        gate.Execute( close_event, args );
     }
 }
 
@@ -582,4 +612,10 @@ CefRefPtr< CefV8Value > Engine::OnUpdatedEvent( const CefV8ValueList& args )
 void Engine::SendUpdatedEvent( const timeline::Event& event, const timeline::Error& error )
 {
     Post( browser_, controls::UpdatedEvent( log_, event, error ) );
+}
+
+CefRefPtr< CefV8Value > Engine::OnClosedEvent( const CefV8ValueList& args )
+{
+    Post( browser_, controls::ClosedEvent( log_, GetEvent( args[0] ), GetError( args[1] ) ) );
+    return 0;
 }

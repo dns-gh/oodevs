@@ -299,14 +299,14 @@ void TimelineWebView::OnTriggeredEvents( const timeline::Events& events )
 {
     for( auto it = events.begin(); it != events.end(); ++it )
     {
-        gui::Event* gamingEvent = model_.events_.Find( it->uuid );
-        if( !gamingEvent || gamingEvent->GetType() != eEventTypes_Marker )
+        const auto& event = *it;
+        if( timeline_helpers::GetEventType( event ) != eEventTypes_Marker )
             continue;
         std::map< std::string, std::string > jsonPayload = boost::assign::map_list_of
             ( gui::event_helpers::resetDrawingsKey, gui::event_helpers::BoolToString( false ) )
             ( gui::event_helpers::drawingsPathKey, "" )
             ( gui::event_helpers::configurationPathKey, "" );
-        gui::event_helpers::ReadJsonPayload( gamingEvent->GetEvent(), jsonPayload );
+        gui::event_helpers::ReadJsonPayload( event, jsonPayload );
         if( gui::event_helpers::StringToBool( jsonPayload[ gui::event_helpers::resetDrawingsKey ] ) )
             model_.drawings_.Purge();
         tools::Path drawingsPath = tools::Path::FromUTF8( jsonPayload[ gui::event_helpers::drawingsPathKey ] );
@@ -326,6 +326,8 @@ void TimelineWebView::OnTriggeredEvents( const timeline::Events& events )
             configurationPath.MakePreferred();
             glWidgetManager_.LoadDisplaySettings( configurationPath );
         }
+        if( server_ )
+            server_->CloseEvent( timeline::CloseEvent( event.uuid ) );
     }
 }
 

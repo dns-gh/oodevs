@@ -113,6 +113,21 @@ struct Error
     std::string text;
 };
 
+struct CloseEvent
+{
+    CloseEvent( const std::string& uuid )
+        : uuid( uuid )
+        , done( true )
+        , lock( false )
+    {
+        // NOTHING
+    }
+    std::string uuid;
+    bool        done;
+    Error       error;
+    bool        lock;
+};
+
 class Server_ABC : public QObject
                  , public boost::noncopyable
 {
@@ -136,6 +151,7 @@ public slots:
     virtual void DeleteEvents( const std::vector< std::string >& uuids ) = 0;
     virtual void LoadEvents( const std::string& events ) = 0;
     virtual void SaveEvents() const = 0;
+    virtual void CloseEvent( const timeline::CloseEvent& msg ) = 0;
 
     // Public signals
 signals:
@@ -150,6 +166,7 @@ signals:
     void SelectedEvent( boost::shared_ptr< timeline::Event > event );
     void ActivatedEvent( const timeline::Event& event );
     void TriggeredEvents( const timeline::Events& events );
+    void ClosedEvent( const timeline::Event& event, const timeline::Error& error );
     void ContextMenuEvent( boost::shared_ptr< timeline::Event > event, const std::string& time );
     void KeyDown( int key );
     void KeyPress( int key );

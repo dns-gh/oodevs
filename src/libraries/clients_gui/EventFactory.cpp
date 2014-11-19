@@ -45,16 +45,7 @@ EventFactory::~EventFactory()
 // -----------------------------------------------------------------------------
 Event* EventFactory::Create( const timeline::Event& event ) const
 {
-    E_EventTypes type = eEventTypes_Task;
-    if( event.action.target == timeline_helpers::CreateEventTarget( EVENT_ORDER_PROTOCOL, EVENT_SIMULATION_SERVICE ) )
-        type = eEventTypes_Order;
-    else if( event.action.target == timeline_helpers::CreateEventTarget( EVENT_REPORT_PROTOCOL, EVENT_SIMULATION_SERVICE ) )
-        type = eEventTypes_Report;
-    else if( event.action.target == timeline_helpers::CreateEventTarget( EVENT_MULTIMEDIA_PROTOCOL, EVENT_MULTIMEDIA_SERVICE ) )
-        type = eEventTypes_Multimedia;
-    else if( event.action.target == timeline_helpers::CreateEventTarget( EVENT_MARKER_PROTOCOL, uuid_ ) )
-        type = eEventTypes_Marker;
-    return Create( type, &event );
+    return Create( timeline_helpers::GetEventType( event ), &event );
 }
 
 // -----------------------------------------------------------------------------
@@ -68,7 +59,7 @@ Event* EventFactory::Create( E_EventTypes type, const timeline::Event* event /* 
     switch( type )
     {
     case eEventTypes_Order:
-        result = new EventAction( type, ( event ) ? *event : dummyEvent, actionsModel_, controllers_ );
+        result = new EventAction( type, event ? *event : dummyEvent, actionsModel_, controllers_ );
         if( !event )
         {
             result->GetEvent().action.target = timeline_helpers::CreateEventTarget( EVENT_ORDER_PROTOCOL, EVENT_SIMULATION_SERVICE );
@@ -76,12 +67,12 @@ Event* EventFactory::Create( E_EventTypes type, const timeline::Event* event /* 
         }
         break;
     case eEventTypes_Task:
-        result = new Event(  type, ( event ) ? *event : dummyEvent );
+        result = new Event( type, event ? *event : dummyEvent );
         if( !event )
             result->GetEvent().name = tools::translate( "EventFactory", "New task" );
         break;
     case eEventTypes_Marker:
-        result = new Event( type, ( event ) ? *event : dummyEvent );
+        result = new Event( type, event ? *event : dummyEvent );
         if( !event )
         {
             result->GetEvent().action.target = timeline_helpers::CreateEventTarget( EVENT_MARKER_PROTOCOL, uuid_ );
