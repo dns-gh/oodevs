@@ -1090,6 +1090,10 @@ Ces paramètres sont définis pour l&apos;application &apos;%2&apos;, pour la ba
         <source>Change contour lines color</source>
         <translation>Changer la couleur des lignes de niveau</translation>
     </message>
+    <message>
+        <source>Show grid</source>
+        <translation>Afficher la grille</translation>
+    </message>
 </context>
 <context>
     <name>gui::GradientPreferencesEditor</name>
@@ -1112,6 +1116,57 @@ Ces paramètres sont définis pour l&apos;application &apos;%2&apos;, pour la ba
     <message>
         <source>Gradient map</source>
         <translation>Dégradé</translation>
+    </message>
+</context>
+<context>
+    <name>gui::GridPanel</name>
+    <message>
+        <source>100m</source>
+        <translation>100m</translation>
+    </message>
+    <message>
+        <source>250m</source>
+        <translation>250m</translation>
+    </message>
+    <message>
+        <source>500m</source>
+        <translation>500m</translation>
+    </message>
+    <message>
+        <source>1km</source>
+        <translation>1km</translation>
+    </message>
+    <message>
+        <source>2.5km</source>
+        <translation>2.5km</translation>
+    </message>
+    <message>
+        <source>5km</source>
+        <translation>5km</translation>
+    </message>
+    <message>
+        <source>10km</source>
+        <translation>10km</translation>
+    </message>
+    <message>
+        <source>100km</source>
+        <translation>100km</translation>
+    </message>
+    <message>
+        <source>Color</source>
+        <translation>Couleur</translation>
+    </message>
+    <message>
+        <source>Type</source>
+        <translation>Type</translation>
+    </message>
+    <message>
+        <source>Size</source>
+        <translation>Taille</translation>
+    </message>
+    <message>
+        <source>Show grid</source>
+        <translation>Afficher la grille</translation>
     </message>
 </context>
 <context>
@@ -1789,6 +1844,10 @@ Voulez-vous le supprimer?</translation>
     <message>
         <source>Symbol Sizes</source>
         <translation>Taille des symboles</translation>
+    </message>
+    <message>
+        <source>Grid</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

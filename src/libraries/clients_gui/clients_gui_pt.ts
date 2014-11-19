@@ -1086,6 +1086,10 @@ These settings are defined for the application &apos;%2&apos;, on the base &apos
         <source>Change contour lines color</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Show grid</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>gui::GradientPreferencesEditor</name>
@@ -1107,6 +1111,57 @@ These settings are defined for the application &apos;%2&apos;, on the base &apos
     </message>
     <message>
         <source>Gradient map</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>gui::GridPanel</name>
+    <message>
+        <source>100m</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>250m</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>500m</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>1km</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>2.5km</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>5km</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>10km</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>100km</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Color</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show grid</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1782,6 +1837,10 @@ Do you want to remove it?</source>
     </message>
     <message>
         <source>Symbol Sizes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Grid</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

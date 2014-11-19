@@ -46,16 +46,20 @@ GridLayer::~GridLayer()
 // -----------------------------------------------------------------------------
 void GridLayer::Paint( const geometry::Rectangle2f& v )
 {
-    const geometry::Rectangle2f viewport = v.Intersect( extent_ );
-    if( !ShouldDrawPass() || viewport.IsEmpty() )
-        return;
     const GLOptions& options = view_.GetCurrentOptions();
-    gridSize_ = options.Get( "GridSize" ).To< float >() * 1000;
-    gridType_ = static_cast< E_CoordinateSystem >( options.Get( "GridType" ).To< int >() );
-    if( gridSize_ <= 0 )
+    if( !ShouldDrawPass() || !options.Get( "Grid/Enabled" ).To< bool >() )
         return;
+    const geometry::Rectangle2f viewport = v.Intersect( extent_ );
+    if( viewport.IsEmpty() )
+        return;
+    gridSize_ = options.Get( "Grid/Size" ).To< float >() * 1000;
+    gridType_ = static_cast< E_CoordinateSystem >( options.Get( "Grid/Type" ).To< int >() );
+    const QColor color = options.Get( "Grid/Color" ).To< QString >();
     glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT );
-        glColor4f( 1.0f, 1.0f, 1.0f, GetAlpha() );
+        glColor4f( static_cast< float >( color.redF() ),
+                   static_cast< float >( color.greenF() ),
+                   static_cast< float >( color.blueF() ),
+                   GetAlpha() );
         glLineWidth( 1.0 );
         if( gridType_ != eCoordinateSystem_Mgrs )
         {

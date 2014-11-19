@@ -2471,38 +2471,6 @@ Ces données ne peuvent pas être projetées.</translation>
         <translation>Off</translation>
     </message>
     <message>
-        <source>100m</source>
-        <translation>100m</translation>
-    </message>
-    <message>
-        <source>250m</source>
-        <translation>250m</translation>
-    </message>
-    <message>
-        <source>500m</source>
-        <translation>500m</translation>
-    </message>
-    <message>
-        <source>1km</source>
-        <translation>1km</translation>
-    </message>
-    <message>
-        <source>2.5km</source>
-        <translation>2.5km</translation>
-    </message>
-    <message>
-        <source>5km</source>
-        <translation>5km</translation>
-    </message>
-    <message>
-        <source>10km</source>
-        <translation>10km</translation>
-    </message>
-    <message>
-        <source>Grid</source>
-        <translation>Grille</translation>
-    </message>
-    <message>
         <source>Terrain...</source>
         <translation>Terrain...</translation>
     </message>
@@ -2601,22 +2569,6 @@ Ces données ne peuvent pas être projetées.</translation>
     <message>
         <source>Destroyed units</source>
         <translation>Unités détruites</translation>
-    </message>
-    <message>
-        <source>100km</source>
-        <translation>100km</translation>
-    </message>
-    <message>
-        <source>Grid type</source>
-        <translation>Type de grille</translation>
-    </message>
-    <message>
-        <source>Local</source>
-        <translation>Locale</translation>
-    </message>
-    <message>
-        <source>MGRS</source>
-        <translation>UTM</translation>
     </message>
     <message>
         <source>Fire indicator colors</source>

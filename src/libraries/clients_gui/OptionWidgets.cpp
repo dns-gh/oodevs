@@ -9,8 +9,6 @@
 
 #include "clients_gui_pch.h"
 #include "OptionWidgets.h"
-#include "SignalAdapter.h"
-#include "clients_kernel/OptionVariant.h"
 
 using namespace gui;
 

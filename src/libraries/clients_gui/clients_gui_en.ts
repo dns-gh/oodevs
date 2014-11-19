@@ -1094,6 +1094,10 @@ These settings are defined for the application &apos;%2&apos;, on the base &apos
         <source>Change contour lines color</source>
         <translation type="unfinished">Change contour lines color</translation>
     </message>
+    <message>
+        <source>Show grid</source>
+        <translation>Show grid</translation>
+    </message>
 </context>
 <context>
     <name>gui::GradientPreferencesEditor</name>
@@ -1116,6 +1120,57 @@ These settings are defined for the application &apos;%2&apos;, on the base &apos
     <message>
         <source>Gradient map</source>
         <translation type="unfinished">Gradient map</translation>
+    </message>
+</context>
+<context>
+    <name>gui::GridPanel</name>
+    <message>
+        <source>100m</source>
+        <translation>100m</translation>
+    </message>
+    <message>
+        <source>250m</source>
+        <translation>250m</translation>
+    </message>
+    <message>
+        <source>500m</source>
+        <translation>500m</translation>
+    </message>
+    <message>
+        <source>1km</source>
+        <translation>1km</translation>
+    </message>
+    <message>
+        <source>2.5km</source>
+        <translation>2.5km</translation>
+    </message>
+    <message>
+        <source>5km</source>
+        <translation>5km</translation>
+    </message>
+    <message>
+        <source>10km</source>
+        <translation>10km</translation>
+    </message>
+    <message>
+        <source>100km</source>
+        <translation>100km</translation>
+    </message>
+    <message>
+        <source>Color</source>
+        <translation>Color</translation>
+    </message>
+    <message>
+        <source>Type</source>
+        <translation>Type</translation>
+    </message>
+    <message>
+        <source>Size</source>
+        <translation>Size</translation>
+    </message>
+    <message>
+        <source>Show grid</source>
+        <translation>Show grid</translation>
     </message>
 </context>
 <context>
@@ -1792,6 +1847,10 @@ Do you want to remove it?</translation>
     <message>
         <source>Symbol Sizes</source>
         <translation>Symbol Sizes</translation>
+    </message>
+    <message>
+        <source>Grid</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

@@ -2496,38 +2496,6 @@ This data can&apos;t be projected.</source>
         <translation>Tactical lines</translation>
     </message>
     <message>
-        <source>Grid</source>
-        <translation>Grid</translation>
-    </message>
-    <message>
-        <source>100m</source>
-        <translation>100m</translation>
-    </message>
-    <message>
-        <source>250m</source>
-        <translation>250m</translation>
-    </message>
-    <message>
-        <source>500m</source>
-        <translation>500m</translation>
-    </message>
-    <message>
-        <source>1km</source>
-        <translation>1km</translation>
-    </message>
-    <message>
-        <source>2.5km</source>
-        <translation>2.5km</translation>
-    </message>
-    <message>
-        <source>5km</source>
-        <translation>5km</translation>
-    </message>
-    <message>
-        <source>10km</source>
-        <translation>10km</translation>
-    </message>
-    <message>
         <source>Population</source>
         <translation>Population</translation>
     </message>
@@ -2598,22 +2566,6 @@ This data can&apos;t be projected.</source>
     <message>
         <source>Destroyed units</source>
         <translation>Destroyed units</translation>
-    </message>
-    <message>
-        <source>100km</source>
-        <translation>100km</translation>
-    </message>
-    <message>
-        <source>Grid type</source>
-        <translation>Grid type</translation>
-    </message>
-    <message>
-        <source>Local</source>
-        <translation>Local</translation>
-    </message>
-    <message>
-        <source>MGRS</source>
-        <translation>MGRS</translation>
     </message>
     <message>
         <source>Fire indicator colors</source>
