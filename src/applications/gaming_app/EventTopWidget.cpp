@@ -136,14 +136,14 @@ void EventTopWidget::Build( const gui::EventViewState& state )
     const std::string& beginDate = ( state.event_ ) ? state.event_->GetEvent().begin : "";
     const std::string& endDate = ( state.event_ ) ? state.event_->GetEvent().end : "";
     const auto boundaries = ( state.event_ ) ? gui::event_helpers::GetReplayBoundariesActivation( *state.event_ ) : std::make_pair( true, true );
-
+    const bool isReplay = type == eEventTypes_Replay;
     title_->setText( QString::fromStdString( ENT_Tr::ConvertFromEventTypes( type ) ) );
 
     saveAction_->setEnabled( state.save_ );
-    saveAsAction_->setEnabled( state.saveAs_ );
+    saveAsAction_->setEnabled( state.saveAs_ && !isReplay );
 
-    const bool canHaveEndTime = type == eEventTypes_Task || type == eEventTypes_Multimedia || type == eEventTypes_Replay;
-    hasEndDateTimeCheckbox_->setVisible( canHaveEndTime && type != eEventTypes_Replay );
+    const bool canHaveEndTime = type == eEventTypes_Task || type == eEventTypes_Multimedia || isReplay;
+    hasEndDateTimeCheckbox_->setVisible( canHaveEndTime && !isReplay );
     endDateTimeLabel_->setVisible( canHaveEndTime );
     endDateTimeEdit_->setVisible( canHaveEndTime );
     startDateLabel_->setText( canHaveEndTime ? tr( "Start" ) : "" );
