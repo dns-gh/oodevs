@@ -9,8 +9,8 @@
 
 #include "clients_gui_pch.h"
 #include "SymbolIcons.h"
-#include "moc_SymbolIcons.cpp"
 #include "GL2DWidget.h"
+#include "SignalAdapter.h"
 
 using namespace gui;
 
@@ -52,15 +52,14 @@ void SymbolIcons::Initialize( GL2DWidget* widget )
     glOrtho( 0, viewSize, 0, viewSize, -300, 300 );
     glEnableClientState( GL_VERTEX_ARRAY );
     widget_ = widget;
-    connect( widget, SIGNAL( destroyed( QObject* ) ), this, SLOT( Destroyed( QObject* ) ) );
+    gui::connect( widget, SIGNAL( destroyed( QObject* ) ),
+        [&]()
+        {
+            delete context_;
+            widget_ = 0;
+            context_ = 0;
+        } );
     icons_.clear();
-}
-
-void SymbolIcons::Destroyed( QObject* /*object*/ )
-{
-    delete context_;
-    widget_ = 0;
-    context_ = 0;
 }
 
 void SymbolIcons::Draw( std::string symbol, const geometry::Point2f& center, float factor ) const

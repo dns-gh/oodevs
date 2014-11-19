@@ -10,7 +10,6 @@
 #ifndef GLOptions_h
 #define GLOptions_h
 
-//#include "FireOption.h"
 #include "clients_kernel/FourStateOption.h"
 #include "clients_kernel/SafePointer.h"
 #include "clients_gui/FireOption.h"

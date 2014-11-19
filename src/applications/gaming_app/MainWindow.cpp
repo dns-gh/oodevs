@@ -487,15 +487,14 @@ void MainWindow::NotifyUpdated( const Simulation& simulation )
         if( !connected_ && simulation.IsInitialized() )
         {
             connected_ = true; // we update the caption until Model is totally loaded
+            icons_->GenerateSymbols( model_.teams_ );
             if( login_.isEmpty() )
                 login_ = tools::translate( "LoginDialog", "Anonymous" );
         }
-        QString planifName = appName + QString( " - [%1@%2][%3]" )
-                            .arg( login_ )
-                            .arg( simulation.GetSimulationHost().c_str() )
-                            .arg( ExtractExerciceName( config_.GetExerciseFile() ));
-        if( planifName_ != planifName )
-            planifName_ = planifName;
+        planifName_ = appName + QString( " - [%1@%2][%3]" )
+                                .arg( login_ )
+                                .arg( simulation.GetSimulationHost().c_str() )
+                                .arg( ExtractExerciceName( config_.GetExerciseFile() ));
     }
     else
     {
@@ -506,9 +505,6 @@ void MainWindow::NotifyUpdated( const Simulation& simulation )
         Close();
     }
     setCaption( GetCurrentMode() == eModes_Planning ? planifName_ + modePlanif : planifName_ );
-    static bool firstPass = true;
-    if( simulation.IsInitialized() && firstPass )
-        icons_->GenerateSymbols( model_.teams_ );
 }
 
 // -----------------------------------------------------------------------------
