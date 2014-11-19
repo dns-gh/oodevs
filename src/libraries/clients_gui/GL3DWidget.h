@@ -47,8 +47,6 @@ public:
     //@{
              GL3DWidget( QWidget* pParent,
                          GLView_ABC& parent,
-                         float width,
-                         float height,
                          kernel::DetectionMap& elevation,
                          EventStrategy_ABC& strategy,
                          QGLWidget* shareWidget = 0 );
@@ -70,7 +68,9 @@ private:
     virtual void LoadFrustum( const FrustumInfos& infos );
 
     virtual void CenterOn( const geometry::Point2f& point );
-    virtual geometry::Rectangle2f GetViewport() const;
+    virtual const geometry::Rectangle2f& GetViewport() const;
+    virtual int GetWidth() const;
+    virtual int GetHeight() const;
     virtual void Zoom( float width );
     virtual float Zoom() const;
     virtual void SetZoom( float zoom );
@@ -239,8 +239,6 @@ private:
 private:
     //! @name Member data
     //@{
-    float width_;
-    float height_;
     kernel::DetectionMap& elevation_;
     EventStrategy_ABC& strategy_;
     T_LayersVector layers_;
@@ -248,15 +246,13 @@ private:
     unsigned int frame_;
     bool isInitialized_;
     ViewFrustum current_;
-    geometry::Rectangle2f viewport_;
     float symbolSize_;
     //picking
     QPoint clickedPoint_;
-    int windowHeight_;
-    int windowWidth_;
+    geometry::Rectangle2f viewport_;
     //@}
 };
 
-}
+} //! namespace gui
 
 #endif // __GL3DWidget_h_

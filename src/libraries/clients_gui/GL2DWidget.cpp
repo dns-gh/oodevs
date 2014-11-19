@@ -51,8 +51,6 @@ GL2DWidget::GL2DWidget( QWidget* parentWidget,
                         QGLWidget* shareWidget /* = 0 */ )
     : GLViewBase( parentView )
     , MapWidget( context_, parentWidget, width, height, shareWidget )
-    , windowHeight_( 0 )
-    , windowWidth_( 0 )
     , circle_( 0 )
     , halfCircle_( 0 )
     , iconLayout_( iconLayout )
@@ -142,9 +140,19 @@ void GL2DWidget::CenterOn( const Point2f& point )
     Center( point );
 }
 
-geometry::Rectangle2f GL2DWidget::GetViewport() const
+const geometry::Rectangle2f& GL2DWidget::GetViewport() const
 {
     return viewport_;
+}
+
+int GL2DWidget::GetWidth() const
+{
+    return width();
+}
+
+int GL2DWidget::GetHeight() const
+{
+    return height();
 }
 
 void GL2DWidget::Zoom( float w )
@@ -186,7 +194,7 @@ void GL2DWidget::FillSelection( const Point2f& point,
 
 void GL2DWidget::Picking()
 {
-    GetPickingSelector().Picking( clickedPoint_, windowHeight_ );
+    GetPickingSelector().Picking( clickedPoint_, GetHeight() );
 }
 
 void GL2DWidget::WheelEvent( QWheelEvent* event )
@@ -625,8 +633,8 @@ void GL2DWidget::DrawApp6Symbol( const std::string& symbol,
                                  float thickness /* = 1.f*/,
                                  unsigned int direction /*= 0*/ ) const
 {
-    const auto width = static_cast< unsigned int >( windowWidth_ * thickness );
-    const auto height = static_cast< unsigned int >( windowHeight_ * thickness );
+    const auto width = static_cast< unsigned int >( GetWidth() * thickness );
+    const auto height = static_cast< unsigned int >( GetHeight() * thickness );
     thickness *= ComputeZoomFactor( factor );
     DrawApp6( symbol, where, baseWidth * factor, viewport_, width, height, direction );
 }
@@ -636,10 +644,10 @@ void GL2DWidget::DrawInfrastructureSymbol( const std::string& symbol,
                                            float factor,
                                            float thickness ) const
 {
-    const auto width = static_cast< unsigned int >( windowWidth_ * thickness );
-    const auto height = static_cast< unsigned int >( windowHeight_ * thickness );
+    const auto width = static_cast< unsigned int >( GetWidth() * thickness );
+    const auto height = static_cast< unsigned int >( GetHeight() * thickness );
     thickness *= ComputeZoomFactor( factor );
-    DrawApp6( symbol, where, baseWidth * factor, viewport_,width, height, 0, false );
+    DrawApp6( symbol, where, baseWidth * factor, viewport_, width, height, 0, false );
 }
 
 void GL2DWidget::DrawApp6SymbolFixedSize( const std::string& symbol,
@@ -810,8 +818,8 @@ void GL2DWidget::DrawSvg( const std::string& svg,
         glScalef( ratio, ratio, ratio );
     DrawSvgInViewport( svg,
                        fixedSize ? Rectangle2f( Point2f( 0.f, 0.f ), Point2f( 5000, 5000 ) ) : viewport_,
-                       windowWidth_,
-                       windowHeight_ );
+                       static_cast< unsigned >( GetWidth() ),
+                       static_cast< unsigned >( GetHeight() ) );
     glPopMatrix();
 }
 
@@ -1023,7 +1031,7 @@ void GL2DWidget::ComputeData()
 {
     ++frame_;
     symbolSize_ = GetCurrentOptions().Get( "SymbolSize/CurrentFactor" ).To< float >();
-    pixels_ = windowWidth_ > 0 ? viewport_.Width() / windowWidth_ : 0.f;
+    pixels_ = GetWidth() > 0 ? viewport_.Width() / GetWidth() : 0.f;
     fixedZoom_ = symbolSize_ * pixels_ / 60;
     adaptiveZoom_ = rZoom_ <= .00024f ? 1 :          // min zoom (far from the map), fixed size 1
                     rZoom_ <= .002f ? pixels_ / 15 : // middle range, progressive size
@@ -1084,8 +1092,6 @@ void GL2DWidget::initializeGL()
 void GL2DWidget::resizeGL( int w, int h )
 {
     makeCurrent();
-    windowHeight_ = h;
-    windowWidth_ = w;
     MapWidget::resizeGL( w, h );
 }
 

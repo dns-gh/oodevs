@@ -51,13 +51,11 @@ void TextureRenderPass::Render( GLView_ABC& view )
     LayersRenderPass::Render( view );
     glBindTexture( GL_TEXTURE_2D, texture_ );
     int maxGlTextureSize = 0;
-    const auto viewport = view.GetViewport();
-    int width = static_cast< int >( viewport.Width() );
-    int height = static_cast< int >( viewport.Height() );
+    int width = view.GetWidth();
     glGetIntegerv( GL_MAX_TEXTURE_SIZE, &maxGlTextureSize );
     if( maxGlTextureSize !=  0 && width > maxGlTextureSize )
         width = static_cast< unsigned short >( maxGlTextureSize );
-    glCopyTexImage2D( GL_TEXTURE_2D, 0, GL_RGBA, 0, 0, width, height, 0 );
+    glCopyTexImage2D( GL_TEXTURE_2D, 0, GL_RGBA, 0, 0, width, view.GetHeight(), 0 );
 }
 
 // -----------------------------------------------------------------------------

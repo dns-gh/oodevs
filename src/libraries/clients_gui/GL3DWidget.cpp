@@ -38,15 +38,11 @@ using namespace gui;
 // -----------------------------------------------------------------------------
 GL3DWidget::GL3DWidget( QWidget* pParent,
                         GLView_ABC& parent,
-                        float width,
-                        float height,
                         DetectionMap& elevation,
                         EventStrategy_ABC& strategy,
                         QGLWidget* shareWidget /* = 0 */ )
     : GLViewBase( parent )
     , Widget3D( context_, pParent, shareWidget )
-    , width_( width )
-    , height_( height )
     , elevation_( elevation )
     , strategy_( strategy )
     , zRatio_( 5 )
@@ -111,9 +107,19 @@ void GL3DWidget::CenterOn( const Point2f& point )
     Widget3D::CenterOn( point );
 }
 
-geometry::Rectangle2f GL3DWidget::GetViewport() const
+const geometry::Rectangle2f& GL3DWidget::GetViewport() const
 {
     return viewport_;
+}
+
+int GL3DWidget::GetWidth() const
+{
+    return width();
+}
+
+int GL3DWidget::GetHeight() const
+{
+    return height();
 }
 
 void GL3DWidget::Zoom( float /*width*/ )
@@ -150,7 +156,7 @@ void GL3DWidget::FillSelection( const geometry::Point2f& point,
         GLboolean depthTest;
         glGetBooleanv( GL_DEPTH_TEST, &depthTest );
         glDisable( GL_DEPTH_TEST );
-        paintGL( );
+        paintGL();
         if( depthTest != GL_FALSE )
             glEnable( GL_DEPTH_TEST );
     } );
@@ -158,7 +164,7 @@ void GL3DWidget::FillSelection( const geometry::Point2f& point,
 
 void GL3DWidget::Picking()
 {
-    GetPickingSelector().Picking( clickedPoint_, windowHeight_ );
+    GetPickingSelector().Picking( clickedPoint_, GetHeight() );
 }
 
 void GL3DWidget::WheelEvent( QWheelEvent* event )
@@ -859,11 +865,10 @@ void GL3DWidget::initializeGL()
 {
     if( !isInitialized_ )
     {
-        const Rectangle2f viewport( 0, 0, width_, height_ );
         Widget3D::initializeGL();
         glEnableClientState( GL_VERTEX_ARRAY );
         for( auto it = layers_.begin(); it != layers_.end(); ++it )
-            ( *it )->Initialize( viewport );
+            ( *it )->Initialize( viewport_ );
         isInitialized_ = true;
         if( center_.IsZero() )
             CenterView();
@@ -873,8 +878,6 @@ void GL3DWidget::initializeGL()
 void GL3DWidget::resizeGL( int w, int h )
 {
     makeCurrent();
-    windowHeight_ = h;
-    windowWidth_ = w;
     Widget3D::resizeGL( w, h );
     viewport_ = geometry::Rectangle2f( 0, 0, static_cast< float >( w ), static_cast< float >( h ) );
 }

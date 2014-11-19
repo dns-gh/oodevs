@@ -90,9 +90,19 @@ void GLProxyBase::CenterOn( const geometry::Point2f& point )
     GetActiveView().CenterOn( point );
 }
 
-geometry::Rectangle2f GLProxyBase::GetViewport() const
+const geometry::Rectangle2f& GLProxyBase::GetViewport() const
 {
     return GetCurrentView().GetViewport();
+}
+
+int GLProxyBase::GetWidth() const
+{
+    return GetCurrentView().GetWidth();
+}
+
+int GLProxyBase::GetHeight() const
+{
+    return GetCurrentView().GetHeight();
 }
 
 void GLProxyBase::Zoom( float width )

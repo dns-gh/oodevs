@@ -69,7 +69,9 @@ private:
     virtual void LoadFrustum( const FrustumInfos& infos );
 
     virtual void CenterOn( const geometry::Point2f& point );
-    virtual geometry::Rectangle2f GetViewport() const;
+    virtual const geometry::Rectangle2f& GetViewport() const;
+    virtual int GetWidth() const;
+    virtual int GetHeight() const;
     virtual void Zoom( float width );
     virtual float Zoom() const;
     virtual void SetZoom( float zoom );
@@ -263,13 +265,11 @@ private:
 private:
     //! @name Member data
     //@{
-    int windowHeight_;
-    int windowWidth_;
-    unsigned int circle_;
-    unsigned int halfCircle_;
+    unsigned circle_;
+    unsigned halfCircle_;
     int minVisuScale_;
     int maxVisuScale_;
-    unsigned int frame_;
+    unsigned frame_;
     std::shared_ptr< IconLayout > iconLayout_;
     T_RenderPasses passes_;
     std::string currentPass_;

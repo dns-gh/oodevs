@@ -77,7 +77,7 @@ void CompositionPass::Render( GLView_ABC& view )
         program_->SetUniformValue( "mainTexture", 0 );
         program_->SetUniformValue( "fogTexture", 1 );
         program_->SetUniformValue( "noiseTexture", 2 );
-        program_->SetUniformValue( "parameters", 20.f / viewport.Width(), 20.f / viewport.Height(), time_ += 0.01f );
+        program_->SetUniformValue( "parameters", 20.f / view.GetWidth(), 20.f / view.GetHeight(), time_ += 0.01f );
     }
 
     gl::glActiveTexture( gl::GL_TEXTURE0 );

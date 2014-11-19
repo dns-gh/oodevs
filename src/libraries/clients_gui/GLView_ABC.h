@@ -242,7 +242,9 @@ public:
     virtual void LoadFrustum( const FrustumInfos& infos ) = 0;
 
     virtual void CenterOn( const geometry::Point2f& point ) = 0;
-    virtual geometry::Rectangle2f GetViewport() const = 0;
+    virtual const geometry::Rectangle2f& GetViewport() const = 0;
+    virtual int GetWidth() const = 0;
+    virtual int GetHeight() const = 0;
     virtual void Zoom( float width ) = 0;
     virtual float Zoom() const = 0;
     virtual void SetZoom( float zoom ) = 0;

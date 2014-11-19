@@ -81,8 +81,6 @@ void GLStackedWidget::Load()
                                                 shareWidget_ );
     widget3d_ = std::make_shared< GL3DWidget >( this,
                                                 *proxy_,
-                                                config_.GetTerrainWidth(),
-                                                config_.GetTerrainHeight(),
                                                 map_,
                                                 strategy_,
                                                 shareWidget_ ? shareWidget_ : widget2d_.get() );
