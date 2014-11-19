@@ -31,6 +31,7 @@
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Time_ABC.h"
 #include "clients_kernel/TimelineHandler_ABC.h"
+#include "clients_kernel/TimelineHelpers.h"
 #include "clients_kernel/Tools.h"
 
 #include "gaming/Model.h"
@@ -127,7 +128,7 @@ EventDockWidget::EventDockWidget( QWidget* parent,
     SetContentVisible( false );
 
     // Connections
-    controllers_.actions_.Unregister( *this );
+    controllers_.actions_.Unregister( *this ); // We don't want to listen to controllers_.actions_ events, but we are already registered with gui::RichDockWidget
     controllers_.eventActions_.Register( *this );
 }
 
@@ -266,9 +267,10 @@ void EventDockWidget::OnDeleteClicked()
 // -----------------------------------------------------------------------------
 void EventDockWidget::OnSplitClicked()
 {
-    if( selected_ )
-        timelineHandler_->SplitEvent( selected_->GetEvent() );
+    if( selected_ && time_ )
+        timelineHandler_->SplitEvent( selected_->GetEvent(), time_->toString( EVENT_DATE_FORMAT ).toStdString() );
     selected_ = 0;
+    time_ = boost::none;
 }
 
 // -----------------------------------------------------------------------------
@@ -299,13 +301,27 @@ void EventDockWidget::NotifyContextMenu( const gui::Event& event, kernel::Contex
     selected_ = &event;
     menu.InsertItem( "Command", event.GetEvent().done ? tr( "Display") : tr( "Edit" ),
                      this, SLOT( OnEditClicked() ) );
-    if( event.GetType() == eEventTypes_Replay )
-        menu.InsertItem( "Command", tr( "Split" ), this, SLOT( OnSplitClicked() ) );
-    const auto boundaries = gui::event_helpers::GetReplayBoundariesActivation( event );
-    if( event.GetEvent().done || !boundaries.first && !boundaries.second )
+    if( event.GetEvent().done )
         return;
-    const QString label = event.GetType() == eEventTypes_Replay ? tr( "Merge" ) : tr( "Delete" );
-    menu.InsertItem( "Command", label, this, SLOT( OnDeleteClicked() ) );
+    menu.InsertItem( "Command", tr( "Delete" ), this, SLOT( OnDeleteClicked() ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: EventDockWidget::NotifyContextMenu
+// Created: SLI 2014-11-19
+// -----------------------------------------------------------------------------
+void EventDockWidget::NotifyContextMenu( const gui::ReplayEvent& replayEvent, kernel::ContextMenu& menu )
+{
+    if( replayEvent.event_.GetType() != eEventTypes_Replay )
+        return;
+    const gui::Event& event = replayEvent.event_;
+    selected_ = &event;
+    time_ = replayEvent.time_;
+    menu.InsertItem( "Command", tr( "Edit" ), this, SLOT( OnEditClicked() ) );
+    menu.InsertItem( "Command", tr( "Split" ), this, SLOT( OnSplitClicked() ) );
+    const auto boundaries = gui::event_helpers::GetReplayBoundariesActivation( event );
+    if( boundaries.first || boundaries.second )
+        menu.InsertItem( "Command", tr( "Merge" ), this, SLOT( OnDeleteClicked() ) );
 }
 
 // -----------------------------------------------------------------------------

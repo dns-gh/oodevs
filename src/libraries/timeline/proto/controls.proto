@@ -45,6 +45,7 @@ enum ServerType
     SERVER_EVENT_CONTEXTMENUBACKGROUND = 0x209;
     SERVER_EVENT_TRIGGERED             = 0x20A;
     SERVER_EVENT_CLOSED                = 0x20B;
+    SERVER_EVENT_CONTEXTMENUREPLAY     = 0x20C;
     // keyboard event
     SERVER_KEYBOARD_KEYDOWN            = 0x300;
     SERVER_KEYBOARD_KEYPRESS           = 0x301;

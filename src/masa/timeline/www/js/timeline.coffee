@@ -783,9 +783,9 @@ class Replay
             )
             .on("contextmenu", (d) ->
                 dom_stop_event d3.event
-                event = that.model.get d.id
-                return if is_readonly_event event
-                triggers.trigger "contextmenu", event
+                model = that.model.get d.id
+                return if is_readonly_event model
+                triggers.trigger "replay_contextmenu", model, d3.event
             )
             .attr
                 class:  "replay_range"

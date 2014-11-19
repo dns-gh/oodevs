@@ -169,6 +169,7 @@ signals:
     void ClosedEvent( const timeline::Event& event, const timeline::Error& error );
     void ContextMenuEvent( boost::shared_ptr< timeline::Event > event );
     void ContextMenuBackground( const std::string& time );
+    void ContextMenuReplay( boost::shared_ptr< timeline::Event > event, const std::string& time );
     void KeyDown( int key );
     void KeyPress( int key );
     void KeyUp( int key );

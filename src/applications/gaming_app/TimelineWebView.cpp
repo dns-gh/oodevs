@@ -135,6 +135,7 @@ void TimelineWebView::Connect()
     connect( server_.get(), SIGNAL( ActivatedEvent( const timeline::Event& ) ), this, SLOT( OnActivatedEvent( const timeline::Event& ) ) );
     connect( server_.get(), SIGNAL( ContextMenuEvent( boost::shared_ptr< timeline::Event > ) ), this, SLOT( OnContextMenuEvent( boost::shared_ptr< timeline::Event > ) ) );
     connect( server_.get(), SIGNAL( ContextMenuBackground( const std::string& ) ), this, SLOT( OnContextMenuBackground( const std::string& ) ) );
+    connect( server_.get(), SIGNAL( ContextMenuReplay( boost::shared_ptr< timeline::Event >, const std::string& ) ), this, SLOT( OnContextMenuReplay( boost::shared_ptr< timeline::Event >, const std::string& ) ) );
     connect( server_.get(), SIGNAL( KeyUp( int ) ), this, SLOT( OnKeyUp( int ) ) );
     connect( server_.get(), SIGNAL( TriggeredEvents( const timeline::Events& ) ), this, SLOT( OnTriggeredEvents( const timeline::Events& ) ) );
 
@@ -210,26 +211,14 @@ void TimelineWebView::EditEvent( const timeline::Event& event )
         server_->UpdateEvent( event );
 }
 
-namespace
-{
-    std::string ComputeHalfSplitTime( const std::string& begin, const std::string& end )
-    {
-        const QDateTime beginTime = QDateTime::fromString( QString::fromStdString( begin ), EVENT_DATE_FORMAT );
-        const QDateTime endTime = QDateTime::fromString( QString::fromStdString( end ), EVENT_DATE_FORMAT );
-        const int duration = beginTime.secsTo( endTime );
-        return beginTime.addSecs( duration / 2 ).toString( EVENT_DATE_FORMAT ).toStdString();
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: TimelineWebView::SplitEvent
 // Created: SLI 2014-11-13
 // -----------------------------------------------------------------------------
-void TimelineWebView::SplitEvent( const timeline::Event& event )
+void TimelineWebView::SplitEvent( const timeline::Event& event, const std::string& time )
 {
     timeline::Event split = event;
-    const std::string splitTime = ComputeHalfSplitTime( event.begin, event.end );
-    split.begin = splitTime;
+    split.begin = time;
     split.uuid = timeline_helpers::GenerateUuid();
     CreateEvent( split, true );
 }
@@ -376,6 +365,17 @@ void TimelineWebView::OnContextMenuBackground( const std::string& time )
 {
     selectedDateTime_ = QDateTime::fromString( QString::fromStdString( time ), Qt::ISODate );
     controllers_.actions_.ContextMenu( this, selectedDateTime_, QCursor::pos() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TimelineWebView::OnContextMenuReplay
+// Created: SLI 2014-11-19
+// -----------------------------------------------------------------------------
+void TimelineWebView::OnContextMenuReplay( boost::shared_ptr< timeline::Event > event, const std::string& time )
+{
+    selectedDateTime_ = QDateTime::fromString( QString::fromStdString( time ), Qt::ISODate );
+    const gui::ReplayEvent replay( GetOrCreateEvent( *event ), selectedDateTime_ );
+    controllers_.eventActions_.ContextMenu( this, replay, QCursor::pos() );
 }
 
 namespace
@@ -657,11 +657,9 @@ void TimelineWebView::OnGetEvents( const timeline::Events& events, const timelin
 // -----------------------------------------------------------------------------
 void TimelineWebView::OnLoadedEvents( const timeline::Error& error )
 {
-    if( error.code != timeline::EC_OK )
-    {
-        MT_LOG_ERROR_MSG( tr( "An error occurred during 'LoadEvents' request: %1" ).arg( QString::fromStdString( error.text ) ).toStdString() );
+    if( error.code == timeline::EC_OK )
         return;
-    }
+    MT_LOG_ERROR_MSG( tr( "An error occurred during 'LoadEvents' request: %1" ).arg( QString::fromStdString( error.text ) ).toStdString() );
 }
 
 // -----------------------------------------------------------------------------

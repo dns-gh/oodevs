@@ -87,6 +87,7 @@ namespace controls
     T_Msg TriggeredEvents       ( const T_Logger& log, const Events& events );
     T_Msg ContextMenuEvent      ( const T_Logger& log, const Event& event );
     T_Msg ContextMenuBackground ( const T_Logger& log, const std::string& time );
+    T_Msg ContextMenuReplay     ( const T_Logger& log, const Event& event, const std::string& time );
     T_Msg KeyDown               ( const T_Logger& log, int key );
     T_Msg KeyPress              ( const T_Logger& log, int key );
     T_Msg KeyUp                 ( const T_Logger& log, int key );
@@ -112,6 +113,7 @@ namespace controls
         virtual void OnTriggeredEvents      ( const Events& events ) = 0;
         virtual void OnContextMenuEvent     ( const Event& event ) = 0;
         virtual void OnContextMenuBackground( const std::string& time ) = 0;
+        virtual void OnContextMenuReplay    ( const Event& event, const std::string& time ) = 0;
         virtual void OnKeyDown              ( int key ) = 0;
         virtual void OnKeyPress             ( int key ) = 0;
         virtual void OnKeyUp                ( int key ) = 0;

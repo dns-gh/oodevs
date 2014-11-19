@@ -103,6 +103,7 @@ public:
     virtual void OnTriggeredEvents( const Events& events );
     virtual void OnContextMenuEvent( const Event& event );
     virtual void OnContextMenuBackground( const std::string& time );
+    virtual void OnContextMenuReplay( const Event& event, const std::string& time );
     virtual void OnKeyDown( int key );
     virtual void OnKeyPress( int key );
     virtual void OnKeyUp( int key );

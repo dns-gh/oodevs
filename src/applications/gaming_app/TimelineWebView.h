@@ -34,6 +34,7 @@ namespace timeline
 {
     struct Error;
     struct Event;
+    struct ReplayEvent;
     typedef std::vector< Event > Events;
     class Server_ABC;
 }
@@ -109,7 +110,7 @@ private:
     virtual void CreateEvent( const timeline::Event& event, bool select = false );
     virtual void SelectEvent( const std::string& uuid );
     virtual void EditEvent( const timeline::Event& event );
-    virtual void SplitEvent( const timeline::Event& event );
+    virtual void SplitEvent( const timeline::Event& event, const std::string& time );
     virtual void DeleteEvent( const std::string& uuid );
     virtual const std::string& GetCurrentParent() const;
     //@}
@@ -138,6 +139,7 @@ private slots:
     void OnTriggeredEvents( const timeline::Events& events );
     void OnContextMenuEvent( boost::shared_ptr< timeline::Event > event );
     void OnContextMenuBackground( const std::string& time );
+    void OnContextMenuReplay( boost::shared_ptr< timeline::Event > event, const std::string& time );
     void OnKeyUp( int key );
 
     void OnCreateClicked( int );

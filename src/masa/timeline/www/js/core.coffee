@@ -426,6 +426,7 @@ class EventsView extends Backbone.View
             $("body").on          "contextmenu", @on_contextmenu_background
             @listenTo triggers,   "activate",    @on_activate
             @listenTo triggers,   "contextmenu", @on_contextmenu
+            @listenTo triggers,   "replay_contextmenu", @on_contextmenu_replay
             @listenTo triggers,   "select",      @on_select
             @listenToOnce @model, "resync",      -> gaming.ready()
             @listenTo     @model, "change",      @on_update
@@ -443,14 +444,20 @@ class EventsView extends Backbone.View
     on_activate: (model) =>
         gaming.activated_event model.attributes
 
+    get_timestamp: (event) =>
+        dom_stop_event event
+        offset = @timeline.layout.select event.pageX, event.pageY
+        return @timeline.scale.invert offset
+
     on_contextmenu: (model) =>
         gaming.contextmenu_event model.attributes
 
+    on_contextmenu_replay: (model,event) =>
+        timestamp = format @get_timestamp event
+        gaming.contextmenu_replay model.attributes, timestamp
+
     on_contextmenu_background: (event) =>
-        dom_stop_event event
-        offset = @timeline.layout.select event.pageX, event.pageY
-        timestamp = @timeline.scale.invert offset
-        gaming.contextmenu_background format timestamp
+        gaming.contextmenu_background format @get_timestamp event
 
     on_create: (event) =>
         gaming.created_events [event.attributes], code: 200

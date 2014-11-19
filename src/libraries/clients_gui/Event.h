@@ -32,7 +32,6 @@ namespace timeline
 
 namespace gui
 {
-
 // =============================================================================
 /** @class  Event
     @brief  Event
@@ -78,6 +77,13 @@ protected:
     E_EventTypes type_;
     boost::scoped_ptr< timeline::Event > event_;
     //@}
+};
+
+struct ReplayEvent : public boost::noncopyable
+{
+    ReplayEvent( gui::Event& event, const QDateTime& time );
+    const gui::Event& event_;
+    QDateTime time_;
 };
 
 } //! namespace gui

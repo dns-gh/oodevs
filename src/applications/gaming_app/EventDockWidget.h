@@ -39,6 +39,7 @@ namespace gui
     class EventFactory;
     class EventPresenter;
     struct EventViewState;
+    struct ReplayEvent;
     class GLView_ABC;
     class Viewport_ABC;
 }
@@ -73,6 +74,7 @@ class Model;
 class EventDockWidget : public gui::RichDockWidget
                       , public gui::EventDefaultView_ABC
                       , public kernel::ContextMenuObserver_ABC< gui::Event >
+                      , public kernel::ContextMenuObserver_ABC< gui::ReplayEvent >
                       , public tools::ElementObserver_ABC< gui::Event >
                       , public tools::SelectionObserver< gui::Event >
                       , public kernel::ActivationObserver_ABC< gui::Event >
@@ -119,6 +121,7 @@ private:
     virtual void NotifyActivated( const gui::Event& event );
     virtual void NotifySelected( const gui::Event* event );
     virtual void NotifyContextMenu( const gui::Event& event, kernel::ContextMenu& menu );
+    virtual void NotifyContextMenu( const gui::ReplayEvent& replayEvent, kernel::ContextMenu& menu );
     virtual void NotifyDeleted( const gui::Event& event );
     virtual void NotifyUpdated( const gui::Event& event );
     //@}
@@ -148,6 +151,7 @@ private:
     //@{
     boost::scoped_ptr< gui::EventPresenter > presenter_;
     kernel::SafePointer< gui::Event > selected_;
+    boost::optional< QDateTime > time_;
     QStackedWidget* stack_;
     std::vector< gui::EventDefaultView_ABC* > views_;
     boost::shared_ptr< kernel::TimelineHandler_ABC > timelineHandler_;

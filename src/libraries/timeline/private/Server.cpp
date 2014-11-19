@@ -247,6 +247,11 @@ void Server::OnContextMenuBackground( const std::string& time )
     emit ContextMenuBackground( time );
 }
 
+void Server::OnContextMenuReplay( const Event& event, const std::string& time )
+{
+    emit ContextMenuReplay( boost::make_shared< Event >( event ), time );
+}
+
 void Server::OnKeyDown( int key )
 {
     emit KeyDown( key );
