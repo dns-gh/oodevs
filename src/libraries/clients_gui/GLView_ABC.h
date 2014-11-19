@@ -234,7 +234,7 @@ public:
     //@}
 
     //! @name Frustum
-    //!       GLXProxy  -> forward to active view
+    //!       GLXProxy  -> forward setter to active view, getter to current view
     //!       GLXWidget -> implementation
     //@{
 
@@ -242,7 +242,7 @@ public:
     virtual void LoadFrustum( const FrustumInfos& infos ) = 0;
 
     virtual void CenterOn( const geometry::Point2f& point ) = 0;
-    virtual geometry::Rectangle2f Viewport() const = 0;
+    virtual geometry::Rectangle2f GetViewport() const = 0;
     virtual void Zoom( float width ) = 0;
     virtual float Zoom() const = 0;
     virtual void SetZoom( float zoom ) = 0;

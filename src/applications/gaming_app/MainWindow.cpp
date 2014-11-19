@@ -149,8 +149,11 @@ namespace
     class EmptyPanel : public gui::PreferencePanel_ABC
     {
     public:
-        EmptyPanel( QWidget* parent ) : gui::PreferencePanel_ABC( parent, "Empty panel" ) {}
-        virtual ~EmptyPanel() {}
+        explicit EmptyPanel( QWidget* parent )
+            : gui::PreferencePanel_ABC( parent, "Empty panel" )
+        {}
+        virtual ~EmptyPanel()
+        {}
     };
 }
 

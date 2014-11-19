@@ -69,7 +69,7 @@ private:
     virtual void LoadFrustum( const FrustumInfos& infos );
 
     virtual void CenterOn( const geometry::Point2f& point );
-    virtual geometry::Rectangle2f Viewport() const;
+    virtual geometry::Rectangle2f GetViewport() const;
     virtual void Zoom( float width );
     virtual float Zoom() const;
     virtual void SetZoom( float zoom );
@@ -277,7 +277,6 @@ private:
     bool hasMultiTexturing_;
     std::unique_ptr< FrameCounter > fps_;
     QPoint clickedPoint_;
-
     float adaptiveZoom_;
     float fixedZoom_;
     float pixels_;
@@ -286,6 +285,6 @@ private:
     //@}
 };
 
-}
+} //! namespace gui
 
 #endif // __GL2DWidget_h_

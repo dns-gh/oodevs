@@ -47,13 +47,13 @@ public:
     virtual void RemoveLayer( const T_Layer& layer );
     //@}
 
-    //! @name Frustum -> forward to active view
+    //! @name Frustum -> forward setter to active view, getter to current view
     //@{
     virtual FrustumInfos SaveFrustum() const;
     virtual void LoadFrustum( const FrustumInfos& infos );
 
     virtual void CenterOn( const geometry::Point2f& point );
-    virtual geometry::Rectangle2f Viewport() const;
+    virtual geometry::Rectangle2f GetViewport() const;
     virtual void Zoom( float width );
     virtual float Zoom() const;
     virtual void SetZoom( float zoom );
@@ -73,7 +73,7 @@ public:
     virtual geometry::Point2f MapToterrainCoordinates( int x, int y );
     //@}
 
-    //! @name Drawing tools -> forward to all children
+    //! @name Drawing tools -> forward to all children or throw if unused
     //@{
     virtual void PaintLayers();
     virtual void UpdateGL();

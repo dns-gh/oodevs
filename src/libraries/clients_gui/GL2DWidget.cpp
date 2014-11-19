@@ -57,12 +57,12 @@ GL2DWidget::GL2DWidget( QWidget* parentWidget,
     , halfCircle_( 0 )
     , iconLayout_( iconLayout )
     , passes_( passLess( "" ) )
-    , currentPass_()
     , frame_( 0 )
     , adaptiveZoom_( 0.f )
     , fixedZoom_( 0.f )
     , pixels_( 0.f )
     , symbolSize_( 0.f )
+    , drawUrbanLabel_( false )
 {
     setAcceptDrops( true );
     if( context() != context_ || !context_->isValid() )
@@ -142,7 +142,7 @@ void GL2DWidget::CenterOn( const Point2f& point )
     Center( point );
 }
 
-geometry::Rectangle2f GL2DWidget::Viewport() const
+geometry::Rectangle2f GL2DWidget::GetViewport() const
 {
     return viewport_;
 }

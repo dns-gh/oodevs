@@ -52,6 +52,7 @@ GL3DWidget::GL3DWidget( QWidget* pParent,
     , zRatio_( 5 )
     , frame_( 0 )
     , isInitialized_( false )
+    , symbolSize_( 0.f )
 {
     if( context() != context_ || !context_->isValid() )
         throw MASA_EXCEPTION( "Unable to create context" );
@@ -110,7 +111,7 @@ void GL3DWidget::CenterOn( const Point2f& point )
     Widget3D::CenterOn( point );
 }
 
-geometry::Rectangle2f GL3DWidget::Viewport() const
+geometry::Rectangle2f GL3DWidget::GetViewport() const
 {
     return viewport_;
 }
@@ -757,10 +758,7 @@ void GL3DWidget::keyPressEvent( QKeyEvent* event )
         else if( event->key() == Qt::Key_Asterisk )
             options.Set( "3DElevationRatio", 50.f );
         else if( event->key() == Qt::Key_Home )
-        {
             CenterView();
-            options.Set( "3DElevationRatio", 50.f );
-        }
         else if( event->key() == Qt::Key_Left )
             Rotate( Vector3f( 0, 0, 1 ), 0.02f * speedFactor );
         else if( event->key() == Qt::Key_Right )

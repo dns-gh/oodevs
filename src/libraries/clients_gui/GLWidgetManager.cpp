@@ -238,7 +238,7 @@ GLDockWidget* GLWidgetManager::AddDockWidget( unsigned id /* = 0 */ )
 {
     if( controllers_.modes_.GetCurrentMode() <= eModes_Default )
         return 0;
-    bool wasFromMenu = id == 0;
+    const bool wasFromMenu = id == 0;
     QString warning;
     if( wasFromMenu ) // from menu clic / F9 shortcut
     {

@@ -73,11 +73,11 @@ void GLProxyBase::RemoveLayer( const T_Layer& layer )
 }
 
 // -----------------------------------------------------------------------------
-// Frustum -> forwarded to active view
+// Frustum -> forward setter to active view, getter to current view
 // -----------------------------------------------------------------------------
 FrustumInfos GLProxyBase::SaveFrustum() const
 {
-    return GetActiveView().SaveFrustum();
+    return GetCurrentView().SaveFrustum();
 }
 
 void GLProxyBase::LoadFrustum( const FrustumInfos& infos )
@@ -90,9 +90,9 @@ void GLProxyBase::CenterOn( const geometry::Point2f& point )
     GetActiveView().CenterOn( point );
 }
 
-geometry::Rectangle2f GLProxyBase::Viewport() const
+geometry::Rectangle2f GLProxyBase::GetViewport() const
 {
-    return GetCurrentView().Viewport(); // current, accessed during 
+    return GetCurrentView().GetViewport();
 }
 
 void GLProxyBase::Zoom( float width )
@@ -102,7 +102,7 @@ void GLProxyBase::Zoom( float width )
 
 float GLProxyBase::Zoom() const
 {
-    return GetActiveView().Zoom();
+    return GetCurrentView().Zoom();
 }
 
 void GLProxyBase::SetZoom( float zoom )
@@ -139,7 +139,7 @@ geometry::Point2f GLProxyBase::MapToterrainCoordinates( int x, int y )
 }
 
 // -----------------------------------------------------------------------------
-// Drawing tools -> forward to all children
+// Drawing tools -> forward to all children or throw if unused
 // -----------------------------------------------------------------------------
 void GLProxyBase::PaintLayers()
 {

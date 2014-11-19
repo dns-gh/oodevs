@@ -70,7 +70,7 @@ void CompositionPass::Render( GLView_ABC& view )
     if( !ignoreShader_ && !program_.get() )
         Initialize();
 
-    const auto viewport = view.Viewport();
+    const auto viewport = view.GetViewport();
     if( program_.get() )
     {
         program_->Use();

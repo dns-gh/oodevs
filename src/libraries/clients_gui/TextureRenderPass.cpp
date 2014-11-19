@@ -51,7 +51,7 @@ void TextureRenderPass::Render( GLView_ABC& view )
     LayersRenderPass::Render( view );
     glBindTexture( GL_TEXTURE_2D, texture_ );
     int maxGlTextureSize = 0;
-    const auto viewport = view.Viewport();
+    const auto viewport = view.GetViewport();
     int width = static_cast< int >( viewport.Width() );
     int height = static_cast< int >( viewport.Height() );
     glGetIntegerv( GL_MAX_TEXTURE_SIZE, &maxGlTextureSize );

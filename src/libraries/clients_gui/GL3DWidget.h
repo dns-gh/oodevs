@@ -70,7 +70,7 @@ private:
     virtual void LoadFrustum( const FrustumInfos& infos );
 
     virtual void CenterOn( const geometry::Point2f& point );
-    geometry::Rectangle2f Viewport() const;
+    virtual geometry::Rectangle2f GetViewport() const;
     virtual void Zoom( float width );
     virtual float Zoom() const;
     virtual void SetZoom( float zoom );

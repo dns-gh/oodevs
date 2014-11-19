@@ -112,7 +112,7 @@ void GLStackedWidget::Load()
 // -----------------------------------------------------------------------------
 void GLStackedWidget::ChangeTo( E_Widget type )
 {
-    auto currentType = static_cast< E_Widget >( currentIndex() );
+    const auto currentType = static_cast< E_Widget >( currentIndex() );
     if( type == currentType )
         return;
 
