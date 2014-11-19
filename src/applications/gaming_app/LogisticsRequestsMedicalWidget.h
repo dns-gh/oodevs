@@ -31,6 +31,7 @@ public:
     virtual ~LogisticsRequestsMedicalWidget();
 
 private:
+    virtual bool IsActive( const LogMedicalConsign& consign ) const;
     virtual void OnRequestSelected( const LogisticsConsign_ABC& consign );
     QString GetInjury( const LogMedicalConsign& consign );
 };

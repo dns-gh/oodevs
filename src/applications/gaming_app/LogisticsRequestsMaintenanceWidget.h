@@ -32,6 +32,7 @@ public:
     virtual ~LogisticsRequestsMaintenanceWidget();
 
 private:
+    virtual bool IsActive( const LogMaintenanceConsign& consign ) const;
     virtual void OnRequestSelected( const LogisticsConsign_ABC& consign );
     QString GetBreakdown( const LogMaintenanceConsign& consign );
 };

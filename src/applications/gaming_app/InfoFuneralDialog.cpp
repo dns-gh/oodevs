@@ -39,27 +39,18 @@ InfoFuneralDialog::~InfoFuneralDialog()
     // NOTHING
 }
 
-namespace
-{
-    struct FuneralRelevant
-    {
-        FuneralRelevant() {}
-        bool operator()( const kernel::Entity_ABC& element )
-        {
-            const LogFuneralConsigns* consigns = element.Retrieve< LogFuneralConsigns >();
-            return ( consigns && consigns->IsRelevant() || element.Retrieve< SupplyStates >() );
-        }
-    };
-}
-
 // -----------------------------------------------------------------------------
 // Name: InfoFuneralDialog::ShouldDisplay
 // Created: SBO 2007-03-30
 // -----------------------------------------------------------------------------
 bool InfoFuneralDialog::ShouldDisplay( const kernel::Entity_ABC& element ) const
 {
-    FuneralRelevant funeralRelevant;
-    return logistic_helpers::CheckEntityAndSubordinatesUpToBaseLog( element, funeralRelevant );
+    return logistic_helpers::CheckEntityAndSubordinatesUpToBaseLog( element,
+        []( const kernel::Entity_ABC& entity ) -> bool
+        {
+            const auto consigns = entity.Retrieve< LogFuneralConsigns >();
+            return consigns && consigns->IsRelevant() || entity.Retrieve< SupplyStates >();
+        } );
 }
 
 // -----------------------------------------------------------------------------
@@ -82,21 +73,12 @@ void InfoFuneralDialog::Purge()
 }
 
 // -----------------------------------------------------------------------------
-// Name: InfoFuneralDialog::FillCurrentModel
+// Name: InfoFuneralDialog::FillModel
 // Created: LGY 2013-12-11
 // -----------------------------------------------------------------------------
-void InfoFuneralDialog::FillCurrentModel( const kernel::Entity_ABC& entity )
+void InfoFuneralDialog::FillModel()
 {
-    widget_->FillCurrentModel( entity );
-}
-
-// -----------------------------------------------------------------------------
-// Name: InfoFuneralDialog::FillHistoryModel
-// Created: LGY 2013-12-11
-// -----------------------------------------------------------------------------
-void InfoFuneralDialog::FillHistoryModel()
-{
-    widget_->FillHistoryModel();
+    widget_->FillModel();
 }
 
 // -----------------------------------------------------------------------------

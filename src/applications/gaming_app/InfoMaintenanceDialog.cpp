@@ -111,21 +111,12 @@ void InfoMaintenanceDialog::Purge()
 }
 
 // -----------------------------------------------------------------------------
-// Name: InfoMaintenanceDialog::FillCurrentModel
+// Name: InfoMaintenanceDialog::FillModel
 // Created: LGY 2013-12-11
 // -----------------------------------------------------------------------------
-void InfoMaintenanceDialog::FillCurrentModel( const kernel::Entity_ABC& entity )
+void InfoMaintenanceDialog::FillModel()
 {
-    widget_->FillCurrentModel( entity );
-}
-
-// -----------------------------------------------------------------------------
-// Name: InfoMaintenanceDialog::FillHistoryModel
-// Created: LGY 2013-12-11
-// -----------------------------------------------------------------------------
-void InfoMaintenanceDialog::FillHistoryModel()
-{
-    widget_->FillHistoryModel();
+    widget_->FillModel();
 }
 
 // -----------------------------------------------------------------------------

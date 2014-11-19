@@ -101,21 +101,12 @@ void InfoMedicalDialog::Purge()
 }
 
 // -----------------------------------------------------------------------------
-// Name: InfoMedicalDialog::FillCurrentModel
+// Name: InfoMedicalDialog::FillModel
 // Created: LGY 2013-12-11
 // -----------------------------------------------------------------------------
-void InfoMedicalDialog::FillCurrentModel( const kernel::Entity_ABC& entity )
+void InfoMedicalDialog::FillModel()
 {
-    widget_->FillCurrentModel( entity );
-}
-
-// -----------------------------------------------------------------------------
-// Name: InfoMedicalDialog::FillHistoryModel
-// Created: LGY 2013-12-11
-// -----------------------------------------------------------------------------
-void InfoMedicalDialog::FillHistoryModel()
-{
-    widget_->FillHistoryModel();
+    widget_->FillModel();
 }
 
 // -----------------------------------------------------------------------------

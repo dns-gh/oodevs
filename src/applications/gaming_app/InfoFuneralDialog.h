@@ -52,8 +52,7 @@ public:
     //! @name Operations
     //@{
     virtual void Purge();
-    virtual void FillCurrentModel( const kernel::Entity_ABC& entity );
-    virtual void FillHistoryModel();
+    virtual void FillModel();
     virtual bool IsVisible() const;
     //@}
 

@@ -166,3 +166,8 @@ void LogisticsRequestsSupplyWidget::NotifyUpdated( const kernel::Entity_ABC& ent
     UpdateEntityDetails( entity, logConsign.GetConvoy(), tools::translate( "Logistic", "Conveyor:") );
     UpdateEntityDetails( entity, logConsign.GetHandler(), tools::translate( "Logistic", "Supplier:") );
 }
+
+bool LogisticsRequestsSupplyWidget::IsActive( const LogSupplyConsign& consign ) const
+{
+    return consign.GetStatus() != sword::LogSupplyHandlingUpdate::convoy_finished;
+}

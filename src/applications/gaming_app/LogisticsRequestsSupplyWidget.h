@@ -43,6 +43,7 @@ private:
     virtual void DisplayHistory( const LogSupplyConsign::History& history );
     void FillSupplyTable( const LogSupplyConsign& consign );
     virtual void NotifyUpdated( const kernel::Entity_ABC& entity );
+    virtual bool IsActive( const LogSupplyConsign& consign ) const;
 
 protected:
     LogisticsRequestsSupplyTable* supplyTable_;

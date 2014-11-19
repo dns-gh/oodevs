@@ -56,45 +56,20 @@ public:
     }
 
 public:
-    virtual void FillCurrentModel( const kernel::Entity_ABC& entity )
+    virtual void FillModel()
     {
-        if( !IsHistoryChecked() )
+        Purge();
+        const bool history = IsHistoryChecked();
+        auto it = historyModel_.tools::Resolver< Request >::CreateIterator();
+        while( it.HasMoreElements() )
         {
-            Purge();
-            std::set< const Request* > consigns;
-            logistic_helpers::VisitEntityAndSubordinatesUpToBaseLog( entity,
-                [&]( const kernel::Entity_ABC& entity )
-                {
-                    const auto pConsigns = entity.Retrieve< Extension >();
-                    if( !pConsigns )
-                        return;
-                    for( auto it = pConsigns->requested_.begin(); it != pConsigns->requested_.end(); ++it )
-                        if( IsActive( **it ) )
-                            consigns.insert( *it );
-                    for( auto it = pConsigns->handled_.begin(); it != pConsigns->handled_.end(); ++it )
-                        if( IsActive( **it ) )
-                            consigns.insert( *it );
-                } );
-            for( auto it = consigns.begin(); it != consigns.end(); ++it )
-                DisplayRequest( **it );
-            requestsTable_->resizeColumnsToContents();
-            SendHistoryRequests();
-            SelectRequest();
+            const auto& request = it.NextElement();
+            if( history || IsActive( request ) )
+                DisplayRequest( request );
         }
-    }
-
-    virtual void FillHistoryModel()
-    {
-        if( IsHistoryChecked() )
-        {
-            Purge();
-            auto it = historyModel_.tools::Resolver< Request >::CreateIterator();
-            while( it.HasMoreElements() )
-                DisplayRequest( it.NextElement() );
-            requestsTable_->resizeColumnsToContents();
-            SendHistoryRequests();
-            SelectRequest();
-        }
+        requestsTable_->resizeColumnsToContents();
+        SendHistoryRequests();
+        SelectRequest();
     }
 
 protected:
@@ -109,10 +84,9 @@ protected:
         if( requestSelected_ == &request )
             requestSelected_ = 0;
     }
-    virtual bool IsActive( const Request& /*request*/ ) const
-    {
-        return true;
-    }
+
+private:
+    virtual bool IsActive( const Request& ) const = 0;
 
 private:
     E_LogisticChain type_;
