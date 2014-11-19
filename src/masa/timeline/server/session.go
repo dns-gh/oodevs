@@ -35,17 +35,8 @@ type EventListener interface {
 	DeleteEvents(events ...string)
 }
 
-type EventChecker interface {
-	CheckEvent(event *sdk.Event) error
-	CheckDeleteEvent(uuid string) error
-}
-
 type DefaultEventListener struct {
 	services.EventListener
-}
-
-type DefaultEventChecker struct {
-	services.EventChecker
 }
 
 func (d DefaultEventListener) UpdateEncodedEvents(events EventSlice, encoded []*sdk.Event) {
@@ -53,7 +44,7 @@ func (d DefaultEventListener) UpdateEncodedEvents(events EventSlice, encoded []*
 }
 
 type EventListeners map[interface{}]EventListener
-type EventCheckers map[interface{}]EventChecker
+type EventCheckers map[interface{}]services.EventChecker
 type EventFilterers map[services.EventFilterer]struct{}
 type Observers map[interface{}]*FilteredObserver
 type Services map[string]services.Service
@@ -182,7 +173,7 @@ func (s *Session) AttachListener(listener services.EventListener) {
 }
 
 func (s *Session) AttachChecker(checker services.EventChecker) {
-	s.checkers[checker] = DefaultEventChecker{checker}
+	s.checkers[checker] = checker
 }
 
 func (s *Session) Detach(name string) error {

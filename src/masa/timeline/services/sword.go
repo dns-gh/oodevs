@@ -444,33 +444,14 @@ func checkBoundaries(event *sdk.Event, replayBegin, replayEnd time.Time) (begin,
 	return
 }
 
-func copyEvent(event *sdk.Event) *sdk.Event {
-	copy := &sdk.Event{}
-	swapi.DeepCopy(copy, event)
-	return copy
-}
-
 func marshal(begin, end bool) []byte {
-	type ReplayPayload struct {
-		Begin, End bool
-	}
-	buffer, _ := json.Marshal(ReplayPayload{Begin: begin, End: end})
+	buffer, _ := json.Marshal(&sdk.ReplayPayload{Begin: proto.Bool(begin), End: proto.Bool(end)})
 	return buffer
 }
 
-func updatePayload(index, last int, event *sdk.Event) {
-	begin := false
-	end := false
-	if last != 0 {
-		if index == 0 {
-			end = true
-		} else if index >= last {
-			begin = true
-		} else {
-			begin = true
-			end = true
-		}
-	}
+func updatePayload(index, size int, event *sdk.Event) {
+	begin := size > 1 && index != 0
+	end := size > 1 && index+1 < size
 	event.Action.Payload = marshal(begin, end)
 }
 
@@ -485,7 +466,7 @@ func (s *Sword) updateReplay(event *sdk.Event) {
 	}
 	// add first replay event
 	if len(s.replays) == 0 {
-		s.replays = append(s.replays, copyEvent(event))
+		s.replays = append(s.replays, CloneEvent(event))
 		return
 	}
 	// modifying replay event, filling all gaps
@@ -498,13 +479,13 @@ func (s *Sword) updateReplay(event *sdk.Event) {
 				s.replays[index+1].Begin = event.End
 				s.observer.UpdateEvent(s.replays[index+1].GetUuid(), s.replays[index+1])
 			}
-			s.replays[index] = copyEvent(event)
+			s.replays[index] = CloneEvent(event)
 			return
 		}
 	}
 	// splitting and creating a new replay event, filling all gaps
 	replaysCopy := []*sdk.Event{}
-	last := len(s.replays) // one element is added
+	size := len(s.replays) + 1 // one element is added
 	for index, replay := range s.replays {
 		replayBegin, _ := util.ParseTime(replay.GetBegin())
 		replayEnd, _ := util.ParseTime(replay.GetEnd())
@@ -513,18 +494,18 @@ func (s *Sword) updateReplay(event *sdk.Event) {
 			replay.End = event.Begin
 			event.Name = replay.Name
 			event.Info = replay.Info
-			updatePayload(index, last, replay)
-			updatePayload(index+1, last, event)
+			updatePayload(index, size, replay)
+			updatePayload(index+1, size, event)
 			replaysCopy = append(replaysCopy, replay)
-			replaysCopy = append(replaysCopy, copyEvent(event))
+			replaysCopy = append(replaysCopy, CloneEvent(event))
 			s.observer.UpdateEvent(replay.GetUuid(), replay)
 		} else if replayBegin == eventBegin && replayEnd.After(eventEnd) {
 			// the old event takes the second part of the split, the new event the first
 			replay.Begin = event.End
 			event.Name = replay.Name
 			event.Info = replay.Info
-			updatePayload(index, last, event)
-			updatePayload(index+1, last, replay)
+			updatePayload(index, size, event)
+			updatePayload(index+1, size, replay)
 			replaysCopy = append(replaysCopy, event)
 			replaysCopy = append(replaysCopy, replay)
 			s.observer.UpdateEvent(replay.GetUuid(), replay)
@@ -537,18 +518,18 @@ func (s *Sword) updateReplay(event *sdk.Event) {
 }
 
 func (s *Sword) deleteReplay(uuid string) {
-	last := len(s.replays) - 2 // one element is deleted
+	size := len(s.replays) - 1 // one element is deleted
 	for index, replay := range s.replays {
 		if replay.GetUuid() == uuid {
 			if index == 0 {
 				// Removing the first replay event fills the gap with the next one
 				s.replays[1].Begin = replay.Begin
-				updatePayload(0, last, s.replays[1])
+				updatePayload(0, size, s.replays[1])
 				s.observer.UpdateEvent(s.replays[1].GetUuid(), s.replays[1])
 			} else {
 				// Removing a replay event fills the gap with the previous one
 				s.replays[index-1].End = replay.End
-				updatePayload(index-1, last, s.replays[index-1])
+				updatePayload(index-1, size, s.replays[index-1])
 				s.observer.UpdateEvent(s.replays[index-1].GetUuid(), s.replays[index-1])
 			}
 			s.replays = append(s.replays[:index], s.replays[index+1:]...)
@@ -668,7 +649,7 @@ func (s *Sword) setReplayRangeDates(link *SwordLink, start, end time.Time) {
 			End:      proto.String(util.FormatTime(end)),
 			ReadOnly: proto.Bool(false),
 			Action: &sdk.Action{
-				Target:  proto.String("replay://"),
+				Target:  proto.String("replay://" + s.name),
 				Payload: marshal(false, false),
 			},
 		}
@@ -713,4 +694,10 @@ func (s *Sword) WaitForStatus(status SwordStatus) {
 	s.waitFor(func() bool {
 		return s.status == status
 	})
+}
+
+func CloneEvent(event *sdk.Event) *sdk.Event {
+	clone := &sdk.Event{}
+	swapi.DeepCopy(clone, event)
+	return clone
 }

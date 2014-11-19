@@ -633,7 +633,7 @@ func (t *TestSuite) TestListeners(c *C) {
 }
 
 func checkIsReplayEvent(c *C, event *sdk.Event) {
-	c.Assert(event.GetAction().GetTarget(), Equals, "replay://")
+	c.Assert(event.GetAction().GetTarget(), Equals, "replay://some_name")
 }
 
 func (t *TestSuite) TestObservers(c *C) {
@@ -727,7 +727,7 @@ func (t *TestSuite) TestObservers(c *C) {
 	c.Assert(len(msg.GetEvents()), Equals, 1)
 	event := msg.GetEvents()[0]
 	checkIsReplayEvent(c, event)
-	c.Assert(string(event.Action.GetPayload()), Equals, `{"Begin":false,"End":false}`)
+	c.Assert(string(event.Action.GetPayload()), Equals, `{"begin":false,"end":false}`)
 	start, err = util.ParseTime(event.GetBegin())
 	c.Assert(err, IsNil)
 	c.Assert(start, Equals, expectedStart)
@@ -1264,55 +1264,55 @@ func (t *TestSuite) TestChangeReplayRangeDates(c *C) {
 	c.Assert(event.GetName(), Equals, "Replay range")
 	c.Assert(event.GetInfo(), Equals, "")
 	id := event.GetUuid()
-	validEvent := &sdk.Event{}
-	swapi.DeepCopy(validEvent, event)
+	validEvent := services.CloneEvent(event)
 
 	// Modifying replay range event's informations is valid
-	swapi.DeepCopy(event, validEvent)
+	event = services.CloneEvent(validEvent)
 	event.Name = proto.String("New name")
 	event.Info = proto.String("New information")
 	_, err = f.controller.UpdateEvent(f.session, id, event)
 	c.Assert(err, IsNil)
 	msg = waitBroadcastTag(messages, sdk.MessageTag_update_events)
 	c.Assert(msg, NotNil)
-	swtest.DeepEquals(c, msg.GetEvents()[0], event)
+	c.Assert(*msg.GetEvents()[0].Name, Equals, *event.Name)
+	c.Assert(*msg.GetEvents()[0].Info, Equals, *event.Info)
 
 	// Modifying replay range event out of replay boundaries returns error
-	swapi.DeepCopy(event, validEvent)
+	event = services.CloneEvent(validEvent)
 	event.Begin = proto.String(util.FormatTime(replayBegin.Add(-time.Hour)))
 	_, err = f.controller.UpdateEvent(f.session, id, event)
 	c.Assert(err, NotNil)
-	swapi.DeepCopy(event, validEvent)
+	event = services.CloneEvent(validEvent)
 	event.End = proto.String(util.FormatTime(replayEnd.Add(time.Hour)))
 	_, err = f.controller.UpdateEvent(f.session, id, event)
 	c.Assert(err, NotNil)
 
 	// Modifying replay event with erroneous range returns error
-	swapi.DeepCopy(event, validEvent)
+	event = services.CloneEvent(validEvent)
 	event.Begin, event.End = event.End, event.Begin
 	_, err = f.controller.UpdateEvent(f.session, id, event)
 	c.Assert(err, NotNil)
-	swapi.DeepCopy(event, validEvent)
+	event = services.CloneEvent(validEvent)
 	event.Begin = event.End
 	_, err = f.controller.UpdateEvent(f.session, id, event)
 	c.Assert(err, NotNil)
 
 	// Modifying first or last replay event and creating a gap between
 	// replay boundaries and events will return an error
-	swapi.DeepCopy(event, validEvent)
+	event = services.CloneEvent(validEvent)
 	event.Begin = proto.String(util.FormatTime(replayBegin.Add(time.Second)))
 	_, err = f.controller.UpdateEvent(f.session, id, event)
 	c.Assert(err, NotNil)
-	swapi.DeepCopy(event, validEvent)
+	event = services.CloneEvent(validEvent)
 	event.End = proto.String(util.FormatTime(replayEnd.Add(-time.Second)))
 	_, err = f.controller.UpdateEvent(f.session, id, event)
 	c.Assert(err, NotNil)
 
 	// Valid replay event creation, split in half the current replay event
-	// The new replay event inherits its informations from the splitted event
-	swapi.DeepCopy(event, validEvent)
-	splittedUuid := uuid.New()
-	event.Uuid = proto.String(splittedUuid)
+	// The new replay event inherits its informations from the split event
+	event = services.CloneEvent(validEvent)
+	splitUuid := uuid.New()
+	event.Uuid = proto.String(splitUuid)
 	event.Begin = proto.String(util.FormatTime(replayBegin.Add(30 * time.Second)))
 	event.Name = proto.String("")
 	event.Info = proto.String("")
@@ -1322,16 +1322,15 @@ func (t *TestSuite) TestChangeReplayRangeDates(c *C) {
 	msg = waitBroadcastTag(messages, sdk.MessageTag_update_events)
 	c.Assert(msg, NotNil)
 	event = msg.GetEvents()[0]
-	c.Assert(event.GetUuid(), Equals, splittedUuid)
+	c.Assert(event.GetUuid(), Equals, splitUuid)
 	c.Assert(event.GetName(), Equals, "New name")
 	c.Assert(event.GetInfo(), Equals, "New information")
-	c.Assert(string(event.Action.GetPayload()), Equals, `{"Begin":true,"End":false}`)
+	c.Assert(string(event.Action.GetPayload()), Equals, `{"begin":true,"end":false}`)
 	begin, _ := util.ParseTime(event.GetBegin())
 	end, _ := util.ParseTime(event.GetEnd())
 	c.Assert(begin, Equals, replayBegin.Add(30*time.Second))
 	c.Assert(end, Equals, replayEnd)
-	splittedEvent := &sdk.Event{}
-	swapi.DeepCopy(splittedEvent, event)
+	splitEvent := services.CloneEvent(event)
 	// Checks old event update
 	msg = waitBroadcastTag(messages, sdk.MessageTag_update_events)
 	c.Assert(msg, NotNil)
@@ -1341,19 +1340,19 @@ func (t *TestSuite) TestChangeReplayRangeDates(c *C) {
 	c.Assert(event.GetUuid(), Equals, id)
 	c.Assert(begin, Equals, replayBegin)
 	c.Assert(end, Equals, replayBegin.Add(30*time.Second))
-	c.Assert(string(event.Action.GetPayload()), Equals, `{"Begin":false,"End":true}`)
-	swapi.DeepCopy(validEvent, event)
+	c.Assert(string(event.Action.GetPayload()), Equals, `{"begin":false,"end":true}`)
+	validEvent = services.CloneEvent(event)
 
 	// Creating a new replay event cannot overlap more than one existing event
 	// and must share one of the existing event boundaries, otherwise it returns an error
-	swapi.DeepCopy(event, validEvent)
+	event = services.CloneEvent(validEvent)
 	event.Uuid = proto.String(uuid.New())
 	event.Begin = proto.String(util.FormatTime(replayBegin))
 	event.End = proto.String(util.FormatTime(replayEnd))
 	_, err = f.controller.UpdateEvent(f.session, id, event)
 	c.Assert(err, NotNil)
 
-	swapi.DeepCopy(event, splittedEvent)
+	event = services.CloneEvent(splitEvent)
 	event.Uuid = proto.String(uuid.New())
 	event.Begin = proto.String(util.FormatTime(replayBegin.Add(31 * time.Second)))
 	event.End = proto.String(util.FormatTime(replayEnd.Add(-1 * time.Second)))
@@ -1361,27 +1360,27 @@ func (t *TestSuite) TestChangeReplayRangeDates(c *C) {
 	c.Assert(err, NotNil)
 
 	// Modifying a replay event boundary modifies the previous or the next event too
-	swapi.DeepCopy(event, splittedEvent)
+	event = services.CloneEvent(splitEvent)
 	event.Begin = proto.String(util.FormatTime(replayBegin.Add(31 * time.Second)))
 	_, err = f.controller.UpdateEvent(f.session, id, event)
 	c.Assert(err, IsNil)
 	msg = waitBroadcastTag(messages, sdk.MessageTag_update_events)
 	c.Assert(msg, NotNil)
 	event = msg.GetEvents()[0]
-	c.Assert(event.GetUuid(), Equals, splittedUuid)
+	c.Assert(event.GetUuid(), Equals, splitUuid)
 	begin, _ = util.ParseTime(event.GetBegin())
 	c.Assert(begin, Equals, replayBegin.Add(31*time.Second))
-	swapi.DeepCopy(splittedEvent, event)
+	splitEvent = services.CloneEvent(event)
 	msg = waitBroadcastTag(messages, sdk.MessageTag_update_events)
 	c.Assert(msg, NotNil)
 	event = msg.GetEvents()[0]
 	end, _ = util.ParseTime(event.GetEnd())
 	c.Assert(event.GetUuid(), Equals, id)
 	c.Assert(end, Equals, replayBegin.Add(31*time.Second))
-	swapi.DeepCopy(validEvent, event)
+	validEvent = services.CloneEvent(event)
 
 	// Removing a replay event fills the gap with the previous event
-	err = f.controller.DeleteEvent(f.session, splittedUuid)
+	err = f.controller.DeleteEvent(f.session, splitUuid)
 	c.Assert(err, IsNil)
 	msg = waitBroadcastTag(messages, sdk.MessageTag_delete_events)
 	c.Assert(msg, NotNil)
@@ -1391,7 +1390,7 @@ func (t *TestSuite) TestChangeReplayRangeDates(c *C) {
 	end, _ = util.ParseTime(event.GetEnd())
 	c.Assert(event.GetUuid(), Equals, id)
 	c.Assert(end, Equals, replayEnd)
-	c.Assert(string(event.Action.GetPayload()), Equals, `{"Begin":false,"End":false}`)
+	c.Assert(string(event.Action.GetPayload()), Equals, `{"begin":false,"end":false}`)
 
 	// Cannot remove the last event
 	err = f.controller.DeleteEvent(f.session, id)

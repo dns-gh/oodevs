@@ -30,8 +30,8 @@ namespace gui
         static const std::string resetDrawingsKey( "reset_drawings" );
         static const std::string drawingsPathKey( "drawings_path" );
         static const std::string configurationPathKey( "configuration_path" );
-        static const std::string replayBeginKey( "Begin" );
-        static const std::string replayEndKey( "End" );
+        static const std::string replayBeginKey( "begin" );
+        static const std::string replayEndKey( "end" );
     } //! namespace event_helpers
 
 } //! namespace gui

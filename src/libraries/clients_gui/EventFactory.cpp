@@ -83,7 +83,7 @@ Event* EventFactory::Create( E_EventTypes type, const timeline::Event* event /* 
         result = new Event( type, ( event ) ? *event : dummyEvent );
         if( !event )
         {
-            result->GetEvent().action.target = timeline_helpers::CreateEventTarget( EVENT_REPLAY_PROTOCOL, "" );
+            result->GetEvent().action.target = timeline_helpers::CreateEventTarget( EVENT_REPLAY_PROTOCOL, EVENT_SIMULATION_SERVICE );
             result->GetEvent().name = tools::translate( "EventFactory", "Replay range" );
         }
         break;

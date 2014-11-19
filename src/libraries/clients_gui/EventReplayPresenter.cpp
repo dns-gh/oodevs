@@ -99,5 +99,5 @@ void EventReplayPresenter::CommitTo( timeline::Event& event ) const
     event.name = state_->label_.toStdString();
     event.info = state_->description_.toStdString();
     event.action.apply = false;
-    event.action.target = timeline_helpers::CreateEventTarget( EVENT_REPLAY_PROTOCOL, "" );
+    event.action.target = timeline_helpers::CreateEventTarget( EVENT_REPLAY_PROTOCOL, EVENT_SIMULATION_SERVICE );
 }
