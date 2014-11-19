@@ -88,11 +88,13 @@ namespace
 // -----------------------------------------------------------------------------
 void DirectFire::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GLView_ABC& view ) const
 {
-    auto color = GetDirectFireColor( view, origin_ );
-    if( isTarget_ )
-        DrawArrow( ComputePosition( origin_ ), where, viewport, view );
-    else
-        DrawArrow( where, ComputePosition( target_ ), viewport, view );
+    if( auto color = GetDirectFireColor( view, origin_ ) )
+    {
+        if( isTarget_ )
+            DrawArrow( ComputePosition( origin_ ), where, viewport, view );
+        else
+            DrawArrow( where, ComputePosition( target_ ), viewport, view );
+    }
 }
 
 // -----------------------------------------------------------------------------
