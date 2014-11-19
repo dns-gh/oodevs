@@ -26,7 +26,6 @@ using namespace svg;
 GLSymbols::GLSymbols( SvglRenderer& renderer )
     : renderer_( renderer )
     , archive_ ( new tools::zip::InputArchive( tools::GeneralConfig::BuildResourceChildFile( "symbols.pak" ) ) )
-    , alpha_( 1 )
 {
     // NOTHING
 }
@@ -44,25 +43,23 @@ GLSymbols::~GLSymbols()
 // Name: GLSymbols::PrintApp6
 // Created: SBO 2006-12-15
 // -----------------------------------------------------------------------------
-void GLSymbols::PrintApp6( const std::string& symbol, const std::string& style, const geometry::Rectangle2f& viewport,
-                           unsigned vWidth /* = 640*/, unsigned vHeight /* = 480*/, bool pickingMode /* = false*/, bool checkAlpha /*= true*/ )
+void GLSymbols::PrintApp6( const std::string& symbolName, const std::string& style, const geometry::Rectangle2f& viewport,
+                           unsigned vWidth /* = 640*/, unsigned vHeight /* = 480*/, bool pickingMode /* = false*/ )
 {
-    const T_SymbolKey key( symbol, style );
-    auto it = alphaSymbols_.find( key );
-    const bool create = ( !symbol.empty() && symbols_.find( key ) == symbols_.end() ) ||
-                        ( !pickingMode && it != alphaSymbols_.end() && it->second != alpha_ && checkAlpha );
-    T_LodSymbol& node = symbols_[ key ];
-    if( create )
+    if( symbolName.empty() )
+        return;
+    const T_SymbolKey key( symbolName, style );
+    auto& node = symbols_[ key ];
+    if( !node.first || !node.second )
     {
         try
         {
-            node.first.reset( Compile( symbol, 10, true ) );
-            node.second.reset( Compile( symbol, 100, false ) );
-            alphaSymbols_[ key ] = alpha_;
+            node.first.reset( Compile( symbolName, 10, true ) );
+            node.second.reset( Compile( symbolName, 100, false ) );
         }
         catch( ... )
         {
-            MT_LOG_ERROR_MSG( "Could not open svg symbol '" << symbol << ".svg', and cannot find the closest symbol." );
+            MT_LOG_ERROR_MSG( "Could not open svg symbol '" << symbolName << ".svg', and cannot find the closest symbol." );
         }
     }
     const auto& renderNode = viewport.Width() > 30000 ? node.second : node.first;  // $$$$ AGE 2006-09-11: hardcoded lod
@@ -139,13 +136,4 @@ void GLSymbols::Load( const tools::ExerciseConfig& config )
 const std::vector< std::string >& GLSymbols::GetNotFoundSymbol() const
 {
     return notFoundSymbols_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: GLSymbols::SetCurrentColor
-// Created: LGY 2013-06-03
-// -----------------------------------------------------------------------------
-void GLSymbols::SetCurrentColor( float /*r*/, float /*g*/, float /*b*/, float a )
-{
-    alpha_ = a;
 }

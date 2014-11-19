@@ -637,7 +637,11 @@ void GL2DWidget::DrawInfrastructureSymbol( const std::string& symbol,
     const auto width = static_cast< unsigned int >( GetWidth() * thickness );
     const auto height = static_cast< unsigned int >( GetHeight() * thickness );
     thickness *= ComputeZoomFactor( factor );
-    DrawApp6( symbol, where, baseWidth * factor, viewport_, width, height, 0, false );
+    GLfloat color[ 4 ];
+    glGetFloatv( GL_CURRENT_COLOR, color );
+    parent_.SetCurrentColor( color[ 0 ], color[ 1 ], color[ 2 ], 1.f );
+    DrawApp6( symbol, where, baseWidth * factor, viewport_, width, height, 0 );
+    parent_.SetCurrentColor( color[ 0 ], color[ 1 ], color[ 2 ], color[ 3 ] );
 }
 
 void GL2DWidget::DrawApp6SymbolFixedSize( const std::string& symbol,
@@ -645,7 +649,7 @@ void GL2DWidget::DrawApp6SymbolFixedSize( const std::string& symbol,
                                           float factor ) const
 {
     const Rectangle2f viewport( 0, 0, 600, 600 );
-    DrawApp6( symbol, where, baseWidth * factor, viewport, 900, 900, 0, 1, 1 );
+    DrawApp6( symbol, where, baseWidth * factor, viewport, 900, 900, 0 );
 }
 
 void GL2DWidget::DrawApp6SymbolFixedSize( const std::string& symbol,
@@ -873,7 +877,6 @@ void GL2DWidget::DrawApp6( const std::string& symbol,
                            unsigned int printWidth,
                            unsigned int printHeight,
                            unsigned int direction,
-                           bool checkAlpha /* = true */,
                            float xFactor /* = 1. */,
                            float yFactor /* = 1. */,
                            float svgDeltaX /* = -20 */,
@@ -891,7 +894,7 @@ void GL2DWidget::DrawApp6( const std::string& symbol,
             glTranslatef( - expectedWidth * 0.5f, expectedHeight, 0.0f );
             glScalef( scaleRatio, -scaleRatio, 1 );
             glTranslatef( svgDeltaX, svgDeltaY, 0.0f );
-            PrintApp6( symbol, SvglRenderer::DefaultStyle(), viewport, printWidth, printHeight, checkAlpha );
+            PrintApp6( symbol, SvglRenderer::DefaultStyle(), viewport, printWidth, printHeight );
         glPopMatrix();
     glPopAttrib();
 }
@@ -912,7 +915,7 @@ void GL2DWidget::DrawApp6SymbolScaledSize( const std::string& symbol,
     const float svgDeltaY = -80 + 120; // Offset of 80 in our svg files + half of 240 which is the default height...
     const Rectangle2f viewport( 0, 0, 256, 256 );
     factor = fabs( factor ) * zoomFactor * symbolSize_ / defaultSymbolSize;
-    DrawApp6( symbol, where, baseWidth * factor, viewport, 4, 4, direction, true, width, depth, svgDeltaX, svgDeltaY );
+    DrawApp6( symbol, where, baseWidth * factor, viewport, 4, 4, direction, width, depth, svgDeltaX, svgDeltaY );
 }
 
 void GL2DWidget::DrawTail( const T_PointVector& points, float width ) const
