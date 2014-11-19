@@ -241,6 +241,11 @@ void Statement::Bind( int64_t value )
         ThrowSqlException( "Unable to bind 64-bit integer", err );
 }
 
+void Statement::Bind( uint32_t value )
+{
+    Bind( static_cast< int64_t >( value ) );
+}
+
 // -----------------------------------------------------------------------------
 // Name: Statement::Bind
 // Created: BAX 2012-06-28
@@ -355,6 +360,11 @@ int64_t Statement::ReadInt64()
 {
     CheckType( stmt_.get(), SQLITE_INTEGER, read_ );
     return sqlite3_column_int64( stmt_.get(), read_++ );
+}
+
+uint32_t Statement::ReadUint32()
+{
+    return static_cast< uint32_t >( ReadInt64() );
 }
 
 // -----------------------------------------------------------------------------
