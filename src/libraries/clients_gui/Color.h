@@ -24,32 +24,16 @@ namespace gui
 class Color : public kernel::Color_ABC
 {
 public:
-    //! @name Constructors/Destructor
-    //@{
              Color();
     virtual ~Color();
-    //@}
 
-    //! @name Operations
-    //@{
     virtual bool IsOverriden() const;
     virtual const T_Color& GetColor() const;
     virtual void ChangeColor( const T_Color& color );
     virtual void Clear();
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    Color( const Color& );            //!< Copy constructor
-    Color& operator=( const Color& ); //!< Assignment operator
-    //@}
 
 protected:
-    //! @name Member data
-    //@{
     boost::optional< T_Color > color_;
-    //@}
 };
 }
 

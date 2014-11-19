@@ -10,6 +10,7 @@
 #include "gaming_pch.h"
 #include "TeamFactory.h"
 #include "AgentsModel.h"
+#include "Color.h"
 #include "ConvexHulls.h"
 #include "DictionaryExtensions.h"
 #include "Diplomacies.h"
@@ -22,6 +23,7 @@
 #include "LogisticConsigns.h"
 #include "LogisticLinks.h"
 #include "Model.h"
+#include "Objects.h"
 #include "StaticModel.h"
 #include "StaticModel.h"
 #include "Team.h"
@@ -30,7 +32,6 @@
 #include "TeamsModel.h"
 #include "Troops.h"
 #include "TroopsCompatibilityVersion.h"
-#include "Color.h"
 #include "Symbol.h"
 #include "UrbanKnowledges.h"
 #include "actions/ActionsModel.h"
@@ -79,10 +80,11 @@ TeamFactory::~TeamFactory()
 kernel::Team_ABC* TeamFactory::CreateTeam( const sword::PartyCreation& message )
 {
     Team* result = new Team( message, controllers_, actionsModel_, profile_ );
+    result->Attach( *new Objects() );
     gui::PropertiesDictionary& dico = result->Get< gui::PropertiesDictionary >();
     result->Attach( *new UrbanKnowledges( *result, controllers_.controller_, model_.urbanKnowledgeFactory_ ) );
-    result->Attach< kernel::Diplomacies_ABC > ( *new Diplomacies( controllers_.controller_, model_.teams_ ) );
-    result->Attach< kernel::CommunicationHierarchies >( *new TeamHierarchies        ( controllers_.controller_, *result ) );
+    result->Attach< kernel::Diplomacies_ABC >( *new Diplomacies( controllers_.controller_, model_.teams_ ) );
+    result->Attach< kernel::CommunicationHierarchies >( *new TeamHierarchies( controllers_.controller_, *result ) );
     result->Attach< kernel::TacticalHierarchies >( *new TeamTacticalHierarchies( controllers_.controller_, *result ) );
     result->Attach< kernel::Equipments_ABC >( *new Equipments( *result, controllers_.controller_, model_.static_.objectTypes_, dico, model_.agents_, model_.teams_, model_.teams_ ) );
     result->Attach( *new Troops( controllers_.controller_, model_.agents_, model_.teams_, model_.teams_ ) );
@@ -123,10 +125,10 @@ namespace
 kernel::Team_ABC* TeamFactory::CreateNoSideTeam()
 {
     auto* result = new gui::EntityImplementation< kernel::Team_ABC >( controllers_.controller_, 0, tools::translate( "TeamFactory", "No side" ), &actionsModel_ );
+    result->Attach( *new Objects() );
     result->Attach< kernel::Diplomacies_ABC >( *new NoSideDiplomacy() );
     result->Attach< kernel::TacticalHierarchies >( *new TeamTacticalHierarchies( controllers_.controller_, *result ) );
     result->Update( kernel::InstanciationComplete() );
-    // TODO other extensions needed?
     return result;
 }
 
@@ -139,7 +141,6 @@ kernel::Formation_ABC* TeamFactory::CreateFormation( const sword::FormationCreat
     kernel::Entity_ABC* superior = message.has_parent() ?
         static_cast< kernel::Entity_ABC*>( &model_.teams_.Resolver< kernel::Formation_ABC >::Get( message.parent().id() ) ) :
         static_cast< kernel::Entity_ABC*>( &model_.teams_.Resolver< kernel::Team_ABC >::Get( message.party().id() ) );
-
     Formation* result = new Formation( message, controllers_.controller_, actionsModel_, profile_ );
     result->Attach< Lives_ABC >( *new FormationLives( *result ) );
     gui::PropertiesDictionary& dico = result->Get< gui::PropertiesDictionary >();

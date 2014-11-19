@@ -130,7 +130,7 @@ void AgentHierarchies< I >::DoUpdate( const sword::UnitCreation& message )
         level_ = "levels/" + ENT_Tr::ConvertFromNatureLevel( static_cast< E_NatureLevel >( message.level() ) );
     if( message.has_app6symbol() )
         symbol_ = "symbols/" + message.app6symbol();
-    SetSuperior( & superior );
+    SetSuperior( &superior );
 }
 
 // -----------------------------------------------------------------------------

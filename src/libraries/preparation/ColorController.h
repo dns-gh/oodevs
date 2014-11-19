@@ -26,24 +26,14 @@ namespace kernel
 class ColorController : public gui::ColorController
 {
 public:
-    //! @name Constructors/Destructor
-    //@{
     explicit ColorController( kernel::Controllers& controllers );
     virtual ~ColorController();
-    //@}
 
-    //! @name Operations
-    //@{
     virtual void Add( const kernel::Entity_ABC& entity, const QColor& newColor, bool applyToSubordinates = true, bool force = false );
     virtual void Remove( const kernel::Entity_ABC& entity, bool applyToSubordinates = true, bool force = false );
-    //@}
 
 private:
-    //! @name Helpers
-    //@{
-    void AddObjects( const kernel::Entity_ABC& entity, const QColor& newColor );
-    void RemoveObjects( const kernel::Entity_ABC& entity );
-    //@}
+    virtual bool ApplyColor( const kernel::Color_ABC& color );
 };
 
 #endif // _ColorController_h

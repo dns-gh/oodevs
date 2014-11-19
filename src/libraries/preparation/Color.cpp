@@ -10,10 +10,29 @@
 #include "preparation_pch.h"
 #include "Color.h"
 #include "clients_kernel/Entity_ABC.h"
-#include <xeumeuleu/xml.hpp>
-#pragma warning( push, 0 )
 #include <boost/algorithm/string.hpp>
-#pragma warning( pop )
+
+Color::Color()
+{
+    // NOTHING
+}
+
+Color::Color( const kernel::Entity_ABC& parent )
+{
+    if( const kernel::Color_ABC* color = parent.Retrieve< kernel::Color_ABC >() )
+        if( color->IsOverriden() )
+            color_ = color->GetColor();
+}
+
+Color::Color( xml::xistream& xis )
+{
+    ChangeColor( xis );
+}
+
+Color::~Color()
+{
+    // NOTHING
+}
 
 namespace
 {
@@ -36,39 +55,6 @@ namespace
     }
 }
 
-// -----------------------------------------------------------------------------
-// Name: Color constructor
-// Created: LGY 2011-06-24
-// -----------------------------------------------------------------------------
-Color::Color()
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: Color constructor
-// Created: LGY 2011-06-24
-// -----------------------------------------------------------------------------
-Color::Color( const kernel::Entity_ABC& parent )
-{
-    if( const kernel::Color_ABC* pColor = parent.Retrieve< kernel::Color_ABC >() )
-        if( pColor->IsOverriden() )
-            color_ = pColor->GetColor();
-}
-
-// -----------------------------------------------------------------------------
-// Name: Color constructor
-// Created: LGY 2011-06-24
-// -----------------------------------------------------------------------------
-Color::Color( xml::xistream& xis )
-{
-    ChangeColor( xis );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Color::ChangeColor
-// Created: LGY 2013-03-26
-// -----------------------------------------------------------------------------
 void Color::ChangeColor( xml::xistream& xis )
 {
     const std::string color = xis.attribute< std::string >( "color", "" );
@@ -76,24 +62,9 @@ void Color::ChangeColor( xml::xistream& xis )
         color_ = HexToRgb( color );
 }
 
-// -----------------------------------------------------------------------------
-// Name: Color destructor
-// Created: LGY 2011-06-24
-// -----------------------------------------------------------------------------
-Color::~Color()
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: Color::SerializeAttributes
-// Created: LGY 2011-06-24
-// -----------------------------------------------------------------------------
 void Color::SerializeAttributes( xml::xostream& xos ) const
 {
     if( color_ )
-    {
-        T_Color color = *color_;
-        xos << xml::attribute( "color", RgbToHex( color.get< 0 >(), color.get< 1 >(), color.get< 2 >() ) );
-    }
+        xos << xml::attribute( "color",
+            RgbToHex( color_->get< 0 >(), color_->get< 1 >(), color_->get< 2 >() ) );
 }

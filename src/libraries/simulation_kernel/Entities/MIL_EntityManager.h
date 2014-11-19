@@ -31,7 +31,6 @@ namespace sword
     enum ObstacleType_DemolitionTargetType;
     class AutomatOrder;
     class BurningCellRequest;
-    class ControlEnableVisionCones;
     class CrowdOrder;
     class FragOrder;
     class KnowledgeMagicAction;

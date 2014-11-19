@@ -46,6 +46,7 @@ ColorEditor::ColorEditor( QWidget* parent, kernel::Controllers& controllers,
     , selected_     ( controllers )
 {
     setWindowTitle( tr( "Change color" ) );
+    setModal( true );
     QVBoxLayout *mainLayout = new QVBoxLayout();
     // default color
     defaultButton_ = new gui::RichRadioButton( "defaultColorRadioButton", tr( "Default color" ), this );
@@ -60,7 +61,7 @@ ColorEditor::ColorEditor( QWidget* parent, kernel::Controllers& controllers,
     customLayout->addWidget( customButton_ );
     colorButton_ = new gui::ColorButton( "customEntityColorButton", this );
     customLayout->addWidget( colorButton_ );
-    gui::connect( customButton_, SIGNAL( toggled(bool) ), [=]{ colorButton_->setEnabled( customButton_->isChecked() ); } );
+    gui::connect( colorButton_, SIGNAL( clicked() ), [&]{ customButton_->setChecked( true ); } );
     mainLayout->addLayout( customLayout );
     // apply to subordinates
     subordinatesCheckBox_ = new gui::RichCheckBox( "applyToSubordinatesCheckBox", tr( "Apply to subordinates" ), this );
@@ -99,7 +100,7 @@ namespace
 
     QColor FindBaseColor( const kernel::Entity_ABC& entity, gui::ColorStrategy_ABC& strategy )
     {
-        if( const kernel::Color_ABC* color = entity.Retrieve< kernel::Color_ABC >() )
+        if( auto color = entity.Retrieve< kernel::Color_ABC >() )
             return ToColor( static_cast< const Color& >( *color ).GetBaseColor() );
         return strategy.FindBaseColor( entity );
     }
@@ -107,13 +108,13 @@ namespace
     void ApplyDefaultColor( const kernel::Entity_ABC& entity, gui::ColorStrategy_ABC& strategy,
                             gui::ColorEditor_ABC& colorEditor, bool applyToSubordinates )
     {
-        QColor baseColor = FindBaseColor( entity, strategy );
-        if( kernel::Color_ABC* color = const_cast< kernel::Color_ABC* >( entity.Retrieve< kernel::Color_ABC >() ) )
+        const QColor baseColor = FindBaseColor( entity, strategy );
+        if( auto color = const_cast< kernel::Color_ABC* >( entity.Retrieve< kernel::Color_ABC >() ) )
             color->ChangeColor( baseColor );
         colorEditor.Add( entity, baseColor, false, true );
         if( !applyToSubordinates )
             return;
-        if( const kernel::TacticalHierarchies* pTacticalHierarchies =  entity.Retrieve< kernel::TacticalHierarchies >() )
+        if( auto pTacticalHierarchies =  entity.Retrieve< kernel::TacticalHierarchies >() )
             for( auto it = pTacticalHierarchies->CreateSubordinateIterator(); it.HasMoreElements(); )
                 ApplyDefaultColor( it.NextElement(), strategy, colorEditor, applyToSubordinates );
     }
@@ -163,17 +164,6 @@ void ColorEditor::Accept()
     if( newColor )
         colorEditor_.Add( *selected_, *newColor, applyToSubordinates, true );
     accept();
-}
-
-// -----------------------------------------------------------------------------
-// Name: ColorEditor::Reset
-// Created: LGY 2011-06-24
-// -----------------------------------------------------------------------------
-void ColorEditor::Reset()
-{
-    subordinatesCheckBox_->setChecked( false );
-    defaultButton_->setChecked( true );
-    colorEditor_.Remove( *selected_ );
 }
 
 // -----------------------------------------------------------------------------

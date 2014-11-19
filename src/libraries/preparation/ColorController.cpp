@@ -12,7 +12,6 @@
 #include "LogisticBaseStates.h"
 #include "Objects.h"
 #include "Object.h"
-
 #include "clients_gui/LogisticHierarchiesBase.h"
 #include "clients_kernel/Color_ABC.h"
 #include "clients_kernel/Entity_ABC.h"
@@ -21,7 +20,6 @@
 #include "clients_kernel/CommunicationHierarchies.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Controllers.h"
-
 #include <boost/optional.hpp>
 
 // -----------------------------------------------------------------------------
@@ -50,15 +48,6 @@ ColorController::~ColorController()
 void ColorController::Add( const kernel::Entity_ABC& entity, const QColor& newColor, bool applyToSubordinates, bool force )
 {
     gui::ColorController::Add( entity, newColor, applyToSubordinates, force );
-    AddObjects( entity, newColor );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ColorController::AddObjects
-// Created: LGY 2013-03-26
-// -----------------------------------------------------------------------------
-void ColorController::AddObjects( const kernel::Entity_ABC& entity, const QColor& newColor )
-{
     if( const Objects* pObjects = entity.Retrieve< Objects >() )
     {
         auto it = pObjects->CreateIterator();
@@ -74,19 +63,15 @@ void ColorController::AddObjects( const kernel::Entity_ABC& entity, const QColor
 void ColorController::Remove( const kernel::Entity_ABC& entity, bool applyToSubordinates, bool force )
 {
     gui::ColorController::Remove( entity, applyToSubordinates, force );
-    RemoveObjects( entity );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ColorController::RemoveObjects
-// Created: LGY 2013-03-26
-// -----------------------------------------------------------------------------
-void ColorController::RemoveObjects( const kernel::Entity_ABC& entity )
-{
     if( const Objects* pObjects = entity.Retrieve< Objects >() )
     {
         auto it = pObjects->CreateIterator();
         while( it.HasMoreElements() )
             ClearColor( it.NextElement() );
     }
+}
+
+bool ColorController::ApplyColor( const kernel::Color_ABC& color )
+{
+    return color.IsOverriden();
 }
