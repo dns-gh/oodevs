@@ -39,7 +39,6 @@ class Filter_ABC;
 class Model;
 class Profile;
 class ProfileFilter;
-class Simulation;
 
 // =============================================================================
 /** @class  OrbatToolbar
@@ -57,7 +56,6 @@ class OrbatToolbar : public QFrame
                    , public kernel::ContextMenuObserver_ABC< kernel::Team_ABC >
                    , public kernel::ContextMenuObserver_ABC< kernel::AgentKnowledge_ABC >
                    , public kernel::ContextMenuObserver_ABC< kernel::ObjectKnowledge_ABC >
-                   , public tools::ElementObserver_ABC< Simulation >
                    , public tools::ElementObserver_ABC< Profile >
                    , public tools::ElementObserver_ABC< kernel::Filter_ABC >
 {
@@ -101,7 +99,6 @@ private:
     virtual void NotifyContextMenu( const kernel::AgentKnowledge_ABC& entity, kernel::ContextMenu& menu );
     virtual void NotifyContextMenu( const kernel::ObjectKnowledge_ABC& entity, kernel::ContextMenu& menu );
 
-    virtual void NotifyUpdated( const Simulation& simu );
     virtual void NotifyUpdated( const kernel::Filter_ABC& filter );
     virtual void NotifyUpdated( const Profile& profile );
 

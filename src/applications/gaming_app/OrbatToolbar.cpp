@@ -223,16 +223,6 @@ void OrbatToolbar::NotifyContextMenu( const kernel::ObjectKnowledge_ABC& entity,
 
 // -----------------------------------------------------------------------------
 // Name: OrbatToolbar::NotifyUpdated
-// Created: AGE 2007-05-09
-// -----------------------------------------------------------------------------
-void OrbatToolbar::NotifyUpdated( const Simulation& simu )
-{
-    if( ! simu.IsConnected() )
-        OnClearFilter();
-}
-
-// -----------------------------------------------------------------------------
-// Name: OrbatToolbar::NotifyUpdated
 // Created: LGY 2011-11-25
 // -----------------------------------------------------------------------------
 void OrbatToolbar::NotifyUpdated( const Profile& profile )
