@@ -652,8 +652,8 @@ class SessionView extends Backbone.View
         @timeline.set_layout !convert_to_boolean url_query.horizontal
         @on_unlock()
 
-    observe: ->
-        return if @locked? || @link? || !@id.length
+    observe: =>
+        return if @locked? || @link?
         @first_update = true
         url = get_ws_url "/socket/#{@id}"
         url += "?" + $.param url_query unless _.isEmpty url_query
