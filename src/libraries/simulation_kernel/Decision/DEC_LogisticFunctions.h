@@ -75,8 +75,7 @@ public:
     static std::vector< boost::shared_ptr< MT_Vector2D > > ConvoyGetPathToNextDestination( const MIL_Agent_ABC& callerAgent );
     static bool ConvoyIsPushedFlow( const MIL_Agent_ABC& callerAgent );
 
-    static void AutomateRequestSupply( DEC_Decision_ABC* callerAutomate );
-    static void PionRequestSupply( MIL_Agent_ABC& callerAgent );
+    static void RequestSupply( DEC_Decision_ABC* caller );
 
     static void ChangeDotationsValueUsingTC2( MIL_Agent_ABC& callerAgent, int dotationType, const double rCapacityFactor, int ammoDotationClassId );
     static void EnforceAviationResources( DEC_Decision_ABC* callerAgent, int aviationRange );

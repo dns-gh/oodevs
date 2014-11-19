@@ -504,18 +504,19 @@ void DEC_LogisticFunctions::SupplyDisableSystem( DEC_Decision_ABC* caller )
 // Name: DEC_LogisticFunctions::AutomateRequestSupply
 // Created: NLD 2005-03-03
 // -----------------------------------------------------------------------------
-void DEC_LogisticFunctions::AutomateRequestSupply( DEC_Decision_ABC* callerAutomate )
+void DEC_LogisticFunctions::RequestSupply( DEC_Decision_ABC* caller )
 {
-    callerAutomate->GetAutomate().RequestDotationSupply();
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_LogisticFunctions::PionRequestSupply
-// Created: NLD 2005-03-03
-// -----------------------------------------------------------------------------
-void DEC_LogisticFunctions::PionRequestSupply( MIL_Agent_ABC& callerAgent )
-{
-    AutomateRequestSupply( &callerAgent.GetAutomate().GetDecision() );
+    switch( caller->GetKind() )
+    {
+        case DEC_Decision_ABC::ePion:
+            caller->GetPion().GetAutomate().RequestDotationSupply();
+            break;
+        case DEC_Decision_ABC::eAutomate:
+            caller->GetAutomate().RequestDotationSupply();
+            break;
+        default:
+            throw MASA_EXCEPTION( "DEC_LogisticFunctions::RequestSupply: cannot be called for this agent type" );
+    }
 }
 
 // -----------------------------------------------------------------------------
