@@ -10,20 +10,19 @@
 #include "clients_gui_pch.h"
 #include "GridLayer.h"
 #include "GLView_ABC.h"
+#include "GLOptions.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/OptionVariant.h"
-#include "clients_kernel/OptionsController.h"
 #include <boost/lexical_cast.hpp>
 
-using namespace kernel;
 using namespace gui;
 
 // -----------------------------------------------------------------------------
 // Name: GridLayer constructor
 // Created: AGE 2006-08-22
 // -----------------------------------------------------------------------------
-GridLayer::GridLayer( Controllers& controllers, GLView_ABC& tools, const CoordinateConverter_ABC& converter )
+GridLayer::GridLayer( kernel::Controllers& controllers, GLView_ABC& tools, const kernel::CoordinateConverter_ABC& converter )
     : Layer2D( controllers, tools, eLayerTypes_Grid )
     , converter_( converter )
     , gridType_( eCoordinateSystem_Local )
@@ -47,12 +46,13 @@ GridLayer::~GridLayer()
 // -----------------------------------------------------------------------------
 void GridLayer::Paint( const geometry::Rectangle2f& v )
 {
-    if( !ShouldDrawPass() )
-        return;
-    if( gridSize_ <= 0 )
-        return;
     const geometry::Rectangle2f viewport = v.Intersect( extent_ );
-    if( viewport.IsEmpty() )
+    if( !ShouldDrawPass() || viewport.IsEmpty() )
+        return;
+    const GLOptions& options = view_.GetCurrentOptions();
+    gridSize_ = options.Get( "GridSize" ).To< float >() * 1000;
+    gridType_ = static_cast< E_CoordinateSystem >( options.Get( "GridType" ).To< int >() );
+    if( gridSize_ <= 0 )
         return;
     glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT );
         glColor4f( 1.0f, 1.0f, 1.0f, GetAlpha() );
@@ -93,18 +93,6 @@ int GridLayer::GetSize() const
 float GridLayer::Snap( float value ) const
 {
     return std::floor( value / gridSize_ ) * gridSize_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: GridLayer::OptionChanged
-// Created: AGE 2006-08-22
-// -----------------------------------------------------------------------------
-void GridLayer::OptionChanged( const std::string& name, const OptionVariant& value )
-{
-    if( name == "GridSize" )
-        gridSize_ = value.To< float >() * 1000;
-    else if( name == "GridType" )
-        gridType_ = static_cast< E_CoordinateSystem >( value.To< int >() );
 }
 
 void GridLayer::DrawSquares( const geometry::Rectangle2f& viewport ) const

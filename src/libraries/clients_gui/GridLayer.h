@@ -11,7 +11,6 @@
 #define __GridLayer_h_
 
 #include "Layer.h"
-#include "clients_kernel/OptionsObserver_ABC.h"
 #include "tools/ElementObserver_ABC.h"
 #include <boost/optional.hpp>
 
@@ -32,7 +31,6 @@ namespace gui
 // Created: AGE 2006-08-22
 // =============================================================================
 class GridLayer : public Layer2D
-                , public kernel::OptionsObserver_ABC
                 , public tools::ElementObserver_ABC< kernel::ModelLoaded >
                 , public tools::ElementObserver_ABC< kernel::ModelUnLoaded >
 {
@@ -79,7 +77,6 @@ private:
     virtual void Paint( Viewport_ABC& viewport );
     virtual void NotifyUpdated( const kernel::ModelLoaded& );
     virtual void NotifyUpdated( const kernel::ModelUnLoaded& );
-    virtual void OptionChanged( const std::string& name, const kernel::OptionVariant& value );
     //@}
 
     //! @name Helpers
