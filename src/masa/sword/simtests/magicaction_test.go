@@ -725,3 +725,31 @@ func (s *TestSuite) TestReplayListReports(c *C) {
 	c.Assert(len(replayReports), Greater, len(reports))
 	swtest.DeepEquals(c, replayReports[len(replayReports)-len(reports):], reports)
 }
+
+func (s *TestSuite) TestListReportsInitialization(c *C) {
+	opts := NewAdminOpts(ExCrossroadLog).EnableTestCommands().RecordReports()
+	sim, clientA := connectAndWaitModel(c, opts)
+	defer stopSimAndClient(c, sim, clientA)
+
+	// Create reports
+	CreateReports(c, clientA)
+
+	_, err := clientA.Pause()
+	c.Assert(err, IsNil)
+
+	// List reports
+	reportsA := clientA.Model.GetData().Reports
+	c.Assert(len(reportsA), Greater, 0)
+
+	opts.Paused = true
+	clientB := connectClient(c, sim, opts)
+	err = clientB.Login(opts.User, opts.Password)
+	c.Assert(err, IsNil)
+	ok := clientB.Model.WaitReady(10 * time.Second)
+	c.Assert(ok, Equals, true)
+	defer clientB.Close()
+
+	// Check report initialization
+	reportsB := clientB.Model.GetData().Reports
+	swtest.DeepEquals(c, reportsA, reportsB)
+}

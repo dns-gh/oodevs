@@ -50,7 +50,8 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             Report( const kernel::Entity_ABC& entity, E_Type type, const QString& message, const QDateTime& time );
+             Report( const kernel::Entity_ABC& entity, unsigned int id,
+                     E_Type type, const QString& message, const QDateTime& time );
     virtual ~Report();
     //@}
 
@@ -66,8 +67,9 @@ public:
     const kernel::Entity_ABC& GetOwner() const;
     E_Type GetType () const;
     const QString& GetMessage() const;
-    const QDateTime& GetDateTime() const; 
+    const QDateTime& GetDateTime() const;
     const QColor& GetColor() const;
+    unsigned int GetId() const;
     //@}
 
 
@@ -75,6 +77,7 @@ private:
     //! @name Member data
     //@{
     const kernel::Entity_ABC& entity_;
+    unsigned int              id_;
     E_Type                    type_;
     QString                   message_;
     QDateTime                 time_;

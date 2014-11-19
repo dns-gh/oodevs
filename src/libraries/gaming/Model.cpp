@@ -33,6 +33,7 @@
 #include "ObjectsModel.h"
 #include "PathfindModel.h"
 #include "ResourceNetworkModel.h"
+#include "ReportsFactory.h"
 #include "ScoreDefinitions.h"
 #include "ScoreModel.h"
 #include "Simulation.h"
@@ -134,6 +135,7 @@ Model::Model( kernel::Controllers& controllers, const StaticModel& staticModel, 
     , events_                  ( *new gui::EventsModel( eventFactory_, controllers.controller_ ) )
     , timelinePublisher_       ( *new gui::TimelinePublisher() )
     , pathfinds_               ( *new PathfindModel( controllers.controller_, actions_, agents_, agents_, agents_, teams_, staticModel.coordinateConverter_, profile ) )
+    , reportsFactory_          ( *new ReportsFactory( publisher, agents_ ) )
 {
     symbolsFactory_.Load( config );
     controllers_.Register( *this );
@@ -276,6 +278,7 @@ Model::~Model()
     delete &objectKnowledgeFactory_;
     delete &agentsKnowledgeFactory_;
     delete &pathfinds_;
+    delete &reportsFactory_;
 }
 
 // -----------------------------------------------------------------------------

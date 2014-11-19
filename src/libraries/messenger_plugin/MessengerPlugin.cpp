@@ -77,7 +77,6 @@ void MessengerPlugin::Receive( const sword::SimToClient& wrapper )
 void MessengerPlugin::NotifyClientAuthenticated( dispatcher::ClientPublisher_ABC& client, const std::string& /*link*/,
                                                  dispatcher::Profile_ABC& profile, unsigned int /*clientId*/, bool /*uncounted*/ )
 {
-    model_->SendStateToNewClient( client );
     chat_->NotifyClientAuthenticated( client, profile );
 }
 
@@ -136,4 +135,9 @@ void MessengerPlugin::OnReceiveClientToMessenger( const std::string& client, con
         model_->clientObjects_.HandleRequest( publisher, wrapper.message().client_object_update_request() );
     if( wrapper.message().has_client_object_destruction_request() )
         model_->clientObjects_.HandleRequest( publisher, wrapper.message().client_object_destruction_request() );
+}
+
+void MessengerPlugin::SendState( dispatcher::ClientPublisher_ABC& client )
+{
+    model_->SendStateToNewClient( client );
 }

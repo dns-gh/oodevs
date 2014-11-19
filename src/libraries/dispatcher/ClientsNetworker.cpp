@@ -13,8 +13,6 @@
 #include "Config.h"
 #include "Plugin_ABC.h"
 #include "Services.h"
-#include "Model_ABC.h"
-#include "protocol/Protocol.h"
 #include "MT_Tools/MT_Logger.h"
 #include "tools/NET_AsnException.h"
 
@@ -24,11 +22,10 @@ using namespace dispatcher;
 // Name: ClientsNetworker constructor
 // Created: NLD 2006-09-20
 // -----------------------------------------------------------------------------
-ClientsNetworker::ClientsNetworker( const Config& config, Plugin_ABC& plugin, const Services& services, const Model_ABC& model )
+ClientsNetworker::ClientsNetworker( const Config& config, Plugin_ABC& plugin, const Services& services )
     : ServerNetworker( config.GetNetworkClientsParameters(), config.GetNetworkTimeout() )
     , plugin_  ( plugin )
     , services_( services )
-    , model_   ( model )
 {
     MT_LOG_INFO_MSG( "Starting dispatcher server on address " << config.GetNetworkClientsParameters() );
 }
@@ -116,7 +113,6 @@ void ClientsNetworker::NotifyClientAuthenticated( dispatcher::ClientPublisher_AB
     clientsId_.insert( T_ClientsId::value_type( link, clientId ) );
     if( uncounted )
         uncountedClients_.insert( link );
-    model_.Send( *pClient );
 }
 
 // -----------------------------------------------------------------------------

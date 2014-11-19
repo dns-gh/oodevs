@@ -74,6 +74,7 @@ public:
     virtual void NotifyClientLeft( dispatcher::ClientPublisher_ABC& client, const std::string& link, bool uncounted );
 
     virtual void Register( dispatcher::Services& services );
+    virtual void SendState( dispatcher::ClientPublisher_ABC& client );
     //@}
 
 private:

@@ -1664,3 +1664,17 @@ func (model *ModelData) handleSupplyRequestDestruction(m *sword.SimToClient_Cont
 	}
 	return nil
 }
+
+func (model *ModelData) handleReportCreation(m *sword.SimToClient_Content) error {
+	mm := m.GetReport()
+	if mm == nil || !model.RecordReports {
+		return ErrSkipHandler
+	}
+	report := &Report{
+		Id: mm.GetReport().GetId(),
+	}
+	if !model.addReport(report) {
+		return fmt.Errorf("cannot insert report %d", mm.GetReport().GetId())
+	}
+	return nil
+}

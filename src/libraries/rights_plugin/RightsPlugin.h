@@ -114,6 +114,7 @@ private:
 private:
     //! @name Member data
     //@{
+    const dispatcher::Model& model_;
     dispatcher::ClientPublisher_ABC&            clients_;
     const dispatcher::Config&                   config_;
     dispatcher::Plugin_ABC&                     container_;

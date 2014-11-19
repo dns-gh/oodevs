@@ -25,9 +25,10 @@ namespace
 {
     enum E_Roles
     {
-        ReportRole = Qt::UserRole,
+        ReportRole =     Qt::UserRole,
         TypeFilterRole = Qt::UserRole + 1,
-        OrderRole = Qt::UserRole +2
+        OrderRole =      Qt::UserRole + 2,
+        IdRole =         Qt::UserRole + 3
     };
 }
 
@@ -58,12 +59,17 @@ namespace
                 QModelIndex rightIndex = model->index( model->itemFromIndex( right )->row(), 1 );
 
                 //getting report pointer and time value
-                const QDateTime& timeLeft  = model->data( leftIndex, ReportRole ).value< const Report* >()->GetDateTime();
-                const QDateTime& timeRight = model->data( rightIndex, ReportRole ).value< const Report* >()->GetDateTime();
+                const auto* lhs = model->data( leftIndex, ReportRole ).value< const Report* >();
+                const auto* rhs = model->data( rightIndex, ReportRole ).value< const Report* >();
+                const QDateTime& timeLeft  = lhs->GetDateTime();
+                const QDateTime& timeRight = rhs->GetDateTime();
                 if( timeLeft == timeRight )
+                {
+                    if( lhs->GetType() != Report::eTrace && rhs->GetType() != Report::eTrace )
+                        return model->data( leftIndex, IdRole ).toUInt() > model->data( rightIndex, IdRole ).toUInt();
                     return model->data( leftIndex, OrderRole ).toUInt() < model->data( rightIndex, OrderRole ).toUInt();
-                else
-                    return timeLeft < timeRight;
+                }
+                return timeLeft < timeRight;
             }
             return false;
         }
@@ -211,6 +217,7 @@ QList< QStandardItem* > ReportListView::GetItems( const Report& report ) const
     reportItem->setData( QString::number( report.GetType() ), TypeFilterRole );
     reportItem->setData( QVariant::fromValue( &report ), ReportRole );
     reportItem->setData( sortOrder_, OrderRole );
+    reportItem->setData( report.GetId(), IdRole );
 
     if( report.IsNew() )
     {

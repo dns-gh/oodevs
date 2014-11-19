@@ -14,7 +14,6 @@
 #include "Formation.h"
 #include "KnowledgeGroup.h"
 #include "Model.h"
-#include "Report.h"
 #include "Side.h"
 #include "LogisticEntity.h"
 #include "clients_kernel/ModelVisitor_ABC.h"

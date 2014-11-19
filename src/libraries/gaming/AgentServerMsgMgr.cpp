@@ -1035,16 +1035,6 @@ void AgentServerMsgMgr::OnReceiveMsgCR( const sword::SimToClient& msg )
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnReceiveMsgInvalidateReport
-// Created: AGE 2007-10-22
-// -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgInvalidateReport( const sword::SimToClient& msg )
-{
-    const auto& message = msg.message().invalidate_report();
-    OnReceiveMessageWithTasker( GetModel().agents_, message, message.source() );
-}
-
-// -----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReceiveTrace
 // Created: AGE 2007-05-31
 // -----------------------------------------------------------------------------
@@ -1964,7 +1954,6 @@ void AgentServerMsgMgr::OnReceiveSimToClient( const std::string& /*from*/, const
         { &sword::SimToClient_Content::has_frag_order,                                  &AgentServerMsgMgr::OnReceiveFragOrder },
         { &sword::SimToClient_Content::has_frag_order_ack,                              &AgentServerMsgMgr::OnReceiveFragOrderAck },
         { &sword::SimToClient_Content::has_indirect_fire_perception,                    &AgentServerMsgMgr::OnReceiveIndirectFirePerception },
-        { &sword::SimToClient_Content::has_invalidate_report,                           &AgentServerMsgMgr::OnReceiveMsgInvalidateReport },
         { &sword::SimToClient_Content::has_knowledge_group_creation,                    &AgentServerMsgMgr::OnReceiveKnowledgeGroupCreation },
         { &sword::SimToClient_Content::has_knowledge_group_creation_ack,                &AgentServerMsgMgr::OnReceiveKnowledgeGroupCreationAck },
         { &sword::SimToClient_Content::has_knowledge_group_destruction,                 &AgentServerMsgMgr::OnReceiveKnowledgeGroupDestruction },
@@ -2113,6 +2102,7 @@ void AgentServerMsgMgr::OnReceiveMsgReplayToClient( const std::string& /*from*/,
         { &sword::ReplayToClient_Content::has_control_skip_to_tick_ack,         &AgentServerMsgMgr::OnReceiveControlSkipToTickAck },
         { &sword::ReplayToClient_Content::has_control_stop_ack,                 nullptr },
         { &sword::ReplayToClient_Content::has_list_logistic_requests_ack,       &AgentServerMsgMgr::OnReceiveListLogisticRequestsAck },
+        { &sword::ReplayToClient_Content::has_list_reports_ack,                 nullptr },
         { &sword::ReplayToClient_Content::has_logistic_history_ack,             &AgentServerMsgMgr::OnReceiveLogisticHistoryAck },
         { &sword::ReplayToClient_Content::has_new_data_chunk_notification,      &AgentServerMsgMgr::OnReceiveNewDataChunkNotification },
         { &sword::ReplayToClient_Content::has_timeskip,                         &AgentServerMsgMgr::OnReceiveTimeskip },

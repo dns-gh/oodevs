@@ -68,6 +68,12 @@ void PluginContainer::NotifySimulationLeft()
         (*it)->NotifySimulationLeft();
 }
 
+void PluginContainer::SendState( ClientPublisher_ABC& client )
+{
+    for( auto it = plugins_.begin(); it != plugins_.end(); ++it )
+        (*it)->SendState( client );
+}
+
 void PluginContainer::Update()
 {
     for( auto it = plugins_.begin(); it != plugins_.end(); ++it )

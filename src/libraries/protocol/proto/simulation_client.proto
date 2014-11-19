@@ -1777,9 +1777,7 @@ message ListEnabledVisionConesAck {
     optional uint32 count = 4;
 }
 
-/** @struct InvalidateReport
-    @brief Notifies a report has become invalid
-*/
+//! DEPRECATED in 5.3
 message InvalidateReport {
     //! The report identifier
     required Id       report = 1;
@@ -3292,7 +3290,7 @@ message SimToClient {
         optional StopFireEffect stop_fire_effect = 54;
         //! @copybrief Report
         optional Report report = 55;
-        //! @copybrief InvalidateReport
+        //! DEPRECATED in 5.3
         optional InvalidateReport invalidate_report = 56;
         //! @copybrief Trace
         optional Trace trace = 57;
