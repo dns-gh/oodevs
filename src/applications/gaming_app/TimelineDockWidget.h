@@ -98,14 +98,14 @@ public slots:
     void OnRenameTab();
     void OnLoadRequested();
     void OnShowOnlyFilterChanged( const std::string& uuid, const std::string& name );
-    void OnSelectedFilterChanged( bool selected );
+    void OnSelectedFilterChanged();
     //@}
 
 private:
     //! @name Helpers
     //@{
-    void UpdateWebView() const;
-    std::string GetEntityFilter() const;
+    void UpdateWebView( TimelineToolBar& toolbar ) const;
+    std::string GetEntityFilter( const TimelineToolBar& toolbar ) const;
     //@}
 
 private:
@@ -113,12 +113,10 @@ private:
     //@{
     const tools::ExerciseConfig& config_;
     const std::string gamingUuid_;
-    bool filterSelected_;
     QTabWidget* tabWidget_;
     QMenu* contextMenu_;
     TimelineToolBar* mainView_;
     boost::shared_ptr< TimelineWebView > webView_;
-    kernel::SafePointer< kernel::Entity_ABC > filteredEntity_;
     kernel::SafePointer< kernel::Entity_ABC > selectedEntity_;
     // map of < event's uuid, tab's widget >, so we can retrieve the right tab even if the event's name has changed.
     std::map< std::string, QWidget* > showOnlyViews_;

@@ -40,6 +40,7 @@ TimelineToolBar::TimelineToolBar( kernel::Controllers& controllers,
     , displayTasks_( true )
     , displaySelected_( false )
     , contextMenuEvent_( controllers )
+    , filteredEntity_( controllers )
     , main_( true )
 {
     Initialize();
@@ -62,6 +63,7 @@ TimelineToolBar::TimelineToolBar( const TimelineToolBar& other )
     , displayTasks_( other.displayTasks_ )
     , displaySelected_( other.displaySelected_ )
     , contextMenuEvent_( other.contextMenuEvent_ )
+    , filteredEntity_( other.filteredEntity_ )
     , showOnlyFilter_( other.showOnlyFilter_ )
     , hideHierarchiesFilter_( other.hideHierarchiesFilter_ )
     , main_( false )
@@ -230,7 +232,7 @@ void TimelineToolBar::OnTaskFilterToggled( bool toggled )
 void TimelineToolBar::OnSelectedFilterToggled( bool toggled )
 {
     displaySelected_ = toggled;
-    emit SelectedFilterChanged( displaySelected_ );
+    emit SelectedFilterChanged();
 }
 
 // -----------------------------------------------------------------------------
@@ -258,6 +260,33 @@ const std::string& TimelineToolBar::GetEntityFilter() const
 bool TimelineToolBar::GetEngagedFilter() const
 {
     return displayEngaged_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: TimelineToolBar::GetSelectedFilter
+// Created: JSR 2014-11-20
+// -----------------------------------------------------------------------------
+bool TimelineToolBar::GetSelectedFilter() const
+{
+    return displaySelected_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: TimelineToolBar::SetFilteredEntity
+// Created: JSR 2014-11-20
+// -----------------------------------------------------------------------------
+void TimelineToolBar::SetFilteredEntity( const kernel::Entity_ABC* entity )
+{
+    filteredEntity_ = entity;
+}
+
+// -----------------------------------------------------------------------------
+// Name: TimelineToolBar::GetFilteredEntity
+// Created: JSR 2014-11-20
+// -----------------------------------------------------------------------------
+const kernel::Entity_ABC* TimelineToolBar::GetFilteredEntity() const
+{
+    return filteredEntity_;
 }
 
 namespace
