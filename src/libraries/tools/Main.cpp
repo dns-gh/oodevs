@@ -120,10 +120,8 @@ int tools::Main(
     int(*main)( const tools::WinArguments& ) )
 {
     if( silentCrash )
-    {
         tools::InitCrashHandler( &CrashHandler );
-        tools::InitPureCallHandler();
-    }
+    tools::InitPureCallHandler();
     const tools::Path debugDir = tools::Path::FromUTF8( winArgs.GetOption( "--debug-dir", "./Debug" ) );
     MT_CrashHandler::SetRootDirectory( debugDir );
     const auto level = GetLogLevel( winArgs.GetOption( "--log-level", "warning" ) );
