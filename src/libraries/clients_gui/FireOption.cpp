@@ -150,7 +150,7 @@ namespace
         return kernel::Karma::unknown_;
     }
 
-    QColor SelectColor( const T_FireOptions& options, const QString& name, kernel::Karma karma )
+    boost::optional< QColor > SelectColor( const T_FireOptions& options, const QString& name, kernel::Karma karma )
     {
         std::vector< QColor > data( 3 );
         for( auto it = options.begin(); it != options.end(); ++it )
@@ -171,7 +171,7 @@ namespace
         for( auto it = data.begin(); it != data.end(); ++it )
             if( it->isValid() )
                 return *it;
-        return Qt::red;
+        return boost::none;
     }
 
     boost::optional< QColor > GetFireColor( const GLOptions& options,
@@ -198,8 +198,9 @@ namespace
         const auto& gl = view.GetCurrentOptions();
         if( const auto color = GetFireColor( gl, view.GetColorStrategy(), entity ) )
             return std::make_shared< FireColor >( *color, view );
-        const auto color = SelectColor( gl.GetFireOptions( group ), name, GetKarma( entity ) );
-        return std::make_shared< FireColor >( color, view );
+        if( const auto color = SelectColor( gl.GetFireOptions( group ), name, GetKarma( entity ) ) )
+            return std::make_shared< FireColor >( *color, view );
+        return std::shared_ptr< FireColor >();
     }
 
     QString GetAgentType( const kernel::Entity_ABC& entity )
