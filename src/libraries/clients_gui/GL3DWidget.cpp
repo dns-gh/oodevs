@@ -762,7 +762,7 @@ void GL3DWidget::keyPressEvent( QKeyEvent* event )
         else if( event->key() == Qt::Key_Minus )
             options.Set( "3DElevationRatio", options.Get( "3DElevationRatio" ).To< float >() * 0.9f );
         else if( event->key() == Qt::Key_Asterisk )
-            options.Set( "3DElevationRatio", 50.f );
+            options.Set( "3DElevationRatio", 10.f );
         else if( event->key() == Qt::Key_Home )
             CenterView();
         else if( event->key() == Qt::Key_Left )
