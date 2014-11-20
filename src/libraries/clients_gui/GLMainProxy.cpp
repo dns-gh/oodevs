@@ -92,7 +92,7 @@ void GLMainProxy::Purge()
 
 void GLMainProxy::AddActiveChangeObserver( QObject* parent, const T_GLObserver& observer )
 {
-    gui::connect( parent, SIGNAL( destroyed( QObject* ) ), [=](){
+    gui::connect( parent, SIGNAL( destroyed( QObject* ) ), [=] {
         activeChangeObservers_.erase( parent );
     } );
     activeChangeObservers_[ parent ] = observer;
@@ -102,7 +102,7 @@ void GLMainProxy::AddActiveChangeObserver( QObject* parent, const T_GLObserver& 
 
 void GLMainProxy::AddCreationObserver( QObject* parent, const T_GLObserver& observer )
 {
-    gui::connect( parent, SIGNAL( destroyed( QObject* ) ), [ = ]() {
+    gui::connect( parent, SIGNAL( destroyed( QObject* ) ), [=] {
         creationObservers_.erase( parent );
     } );
     creationObservers_[ parent ] = observer;
@@ -113,7 +113,7 @@ void GLMainProxy::AddCreationObserver( QObject* parent, const T_GLObserver& obse
 
 void GLMainProxy::AddDeletionObserver( QObject* parent, const T_GLObserver& observer )
 {
-    gui::connect( parent, SIGNAL( destroyed( QObject* ) ), [=](){
+    gui::connect( parent, SIGNAL( destroyed( QObject* ) ), [=] {
         deletionObservers_.erase( parent );
     } );
     deletionObservers_[ parent ] = observer;

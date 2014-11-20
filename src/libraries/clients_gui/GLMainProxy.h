@@ -63,7 +63,7 @@ public:
     void Load( const DrawingTypes& drawingTypes );
     void Purge();
 
-    void AddActiveChangeObserver( QObject* parent, const T_GLObserver& activeChangeObserver );
+    void AddActiveChangeObserver( QObject* parent, const T_GLObserver& observer );
     void AddCreationObserver( QObject* parent, const T_GLObserver& observer );
     void AddDeletionObserver( QObject* parent, const T_GLObserver& observer );
 
