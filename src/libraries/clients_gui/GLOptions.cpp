@@ -62,6 +62,7 @@ GLOptions::GLOptions( kernel::Controllers& controllers,
     , superiorSelected_( false )
     , controlled_( false )
     , filterEntity_( controllers )
+    , filterProfile_( controllers )
     , lockedEntity_( controllers )
     , contourLinesObserver_( new ContourLinesObserver() )
     , contourLinesComputer_( std::make_shared< ContourLinesComputer >( controllers.controller_, staticModel.detection_ ) )
@@ -92,6 +93,7 @@ GLOptions::GLOptions( const GLOptions& other )
     , urbanSetup_( new UrbanDisplayOptions( controllers_, accommodationTypes_ ) )
     , watershedTexture_( new WatershedTexture( map_ ) )
     , filterEntity_( controllers_ )
+    , filterProfile_( controllers_ )
     , lockedEntity_( controllers_ )
     , mapnikThread_( other.mapnikThread_ )
 {
@@ -122,6 +124,7 @@ GLOptions& GLOptions::operator=( const GLOptions& other )
     superiorSelected_ = other.superiorSelected_;
     controlled_ = other.controlled_;
     filterEntity_ = other.filterEntity_;
+    filterProfile_ = other.filterProfile_;
     lockedEntity_ = other.lockedEntity_;
     aggregatedEntities_ = other.aggregatedEntities_;
     contourLinesComputer_ = other.contourLinesComputer_;
@@ -393,6 +396,16 @@ const kernel::Entity_ABC* GLOptions::GetFilterEntity() const
 void GLOptions::SetFilterEntity( const kernel::Entity_ABC* filterEntity )
 {
     filterEntity_ = filterEntity;
+}
+
+const kernel::Profile_ABC* GLOptions::GetFilterProfile() const
+{
+    return filterProfile_;
+}
+
+void GLOptions::SetFilterProfile( const kernel::Profile_ABC* filterProfile )
+{
+    filterProfile_ = filterProfile;
 }
 
 // -----------------------------------------------------------------------------

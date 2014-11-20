@@ -114,6 +114,8 @@ public:
 
     const kernel::Entity_ABC* GetFilterEntity() const;
     void SetFilterEntity( const kernel::Entity_ABC* filterEntity );
+    const kernel::Profile_ABC* GetFilterProfile() const;
+    void SetFilterProfile( const kernel::Profile_ABC* filterProfile );
 
     const kernel::Entity_ABC* GetLockedEntity() const;
     void SetLockedEntity( const kernel::Entity_ABC* lockedEntity );
@@ -177,6 +179,7 @@ private:
 
     // Exercise options
     kernel::SafePointer< kernel::Entity_ABC > filterEntity_;
+    kernel::SafePointer< kernel::Profile_ABC > filterProfile_;
     kernel::SafePointer< kernel::Entity_ABC > lockedEntity_;
     std::vector< const kernel::Entity_ABC* > aggregatedEntities_;
     //@}

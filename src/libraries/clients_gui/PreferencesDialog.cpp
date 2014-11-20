@@ -214,6 +214,7 @@ void PreferencesDialog::reject()
         auto& options = view->GetActiveOptions();
         RestoreOptions( *previousOptions.GetOptions(), *options.GetOptions() );
         previousOptions.SetFilterEntity( options.GetFilterEntity() );
+        previousOptions.SetFilterProfile( options.GetFilterProfile() );
         previousOptions.SetLockedEntity( options.GetLockedEntity() );
         previousOptions.Disaggregate();
         const auto& entities = options.GetAggregatedEntities();

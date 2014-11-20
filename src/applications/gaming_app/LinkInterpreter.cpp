@@ -43,7 +43,7 @@ bool LinkInterpreter::InterpreteEntity( const kernel::Entity_ABC& entity, const 
 {
     if( action == "filter" )
     {
-        filter_.SetFilter( &entity );
+        filter_.SetFilter( entity );
         return true;
     }
     return LinkInterpreter_ABC::InterpreteEntity( entity, action );

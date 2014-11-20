@@ -310,7 +310,12 @@ void GLMainProxy::SetActiveView( GLView_ABC& view )
     // can access an option with the new value
     controllers_.options_.SetViewOptions( options.GetOptions() );
     controllers_.options_.UpdateViewOptions();
-    profileFilter_.SetFilter( options.GetFilterEntity(), true );
+    if( const auto* entity = options.GetFilterEntity() )
+        profileFilter_.SetFilter( *entity, true );
+    else if( const auto* profile = options.GetFilterProfile() )
+        profileFilter_.SetFilter( *profile, true );
+    else
+        profileFilter_.RemoveFilter( true );
     ApplyObservers( activeChangeObservers_, activeView_ );
     // reset contour lines observer
     ApplyToOptions( []( GLOptions& options ) {
@@ -359,7 +364,13 @@ void GLMainProxy::ApplyOptions()
         if( const auto* position = entity->Retrieve< kernel::Positions >() )
             currentView.CenterOn( position->GetPosition( false ) );
     // orbat filter
-    profileFilter_.SetFilter( options.GetFilterEntity(), false );
+    if( const auto* entity = options.GetFilterEntity() )
+        profileFilter_.SetFilter( *entity, false );
+    else if( const auto* profile = options.GetFilterProfile() )
+        profileFilter_.SetFilter( *profile, false );
+    else
+        profileFilter_.RemoveFilter( false );
+
     // layers alpha
     auto& layers = currentView.GetLayers();
     std::for_each( layers.begin(), layers.end(), [&options]( const T_Layer& layer ) -> bool {

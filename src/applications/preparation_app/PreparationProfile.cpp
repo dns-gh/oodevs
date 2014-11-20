@@ -98,17 +98,27 @@ QString PreparationProfile::GetFilter() const
     return "";
 }
 
-void PreparationProfile::SetFilter( const kernel::Entity_ABC*, bool )
+void PreparationProfile::SetFilter( const kernel::Entity_ABC&, bool )
 {
     // NOTHING
 }
 
-void PreparationProfile::SetFilter( const kernel::Profile_ABC& )
+void PreparationProfile::SetFilter( const kernel::Profile_ABC&, bool )
+{
+    // NOTHING
+}
+
+void PreparationProfile::RemoveFilter( bool )
 {
     // NOTHING
 }
 
 const kernel::Entity_ABC* PreparationProfile::GetFilteredEntity() const
+{
+    return 0;
+}
+
+const kernel::Profile_ABC* PreparationProfile::GetFilteredProfile() const
 {
     return 0;
 }

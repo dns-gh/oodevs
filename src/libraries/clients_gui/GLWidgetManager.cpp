@@ -211,6 +211,7 @@ void GLWidgetManager::SetContourLinesComputer( int height, GLOptions& options )
 void GLWidgetManager::NotifyUpdated( const kernel::Filter_ABC& filter )
 {
     mainProxy_.GetActiveOptions().SetFilterEntity( filter.GetFilteredEntity() );
+    mainProxy_.GetActiveOptions().SetFilterProfile( filter.GetFilteredProfile() );
 }
 
 // -----------------------------------------------------------------------------

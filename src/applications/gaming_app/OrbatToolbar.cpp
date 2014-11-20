@@ -107,7 +107,7 @@ void OrbatToolbar::OnSetFilter()
 // -----------------------------------------------------------------------------
 void OrbatToolbar::Filter( const kernel::Entity_ABC& entity )
 {
-    filter_.SetFilter( &entity );
+    filter_.SetFilter( entity );
     entity.Select( controllers_.actions_ );
 }
 
@@ -117,7 +117,7 @@ void OrbatToolbar::Filter( const kernel::Entity_ABC& entity )
 // -----------------------------------------------------------------------------
 void OrbatToolbar::OnClearFilter()
 {
-    filter_.SetFilter( nullptr );
+    filter_.RemoveFilter();
 }
 
 // -----------------------------------------------------------------------------

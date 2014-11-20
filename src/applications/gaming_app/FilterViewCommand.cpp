@@ -41,5 +41,5 @@ FilterViewCommand::~FilterViewCommand()
 void FilterViewCommand::Receive( const Command& command )
 {
     if( command.Name() == "clearfilter" )
-        filter_.SetFilter( nullptr );
+        filter_.RemoveFilter();
 }
