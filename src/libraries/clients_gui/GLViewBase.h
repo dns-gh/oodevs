@@ -116,6 +116,7 @@ protected:
     //! @name Member data
     //@{
     GLView_ABC& parent_;
+    QGLContext* context_;
     //@}
 };
 

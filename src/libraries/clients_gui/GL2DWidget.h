@@ -10,10 +10,8 @@
 #ifndef __GL2DWidget_h_
 #define __GL2DWidget_h_
 
-#include "SetGlOptions.h"
 #include "GLView_ABC.h"
 #include "GLViewBase.h"
-#include "MapWidget_ABC.h"
 #include "MT_Tools/MT_Profiler.h"
 #include <graphics/MapWidget.h>
 
@@ -34,10 +32,8 @@ namespace gui
 */
 // Created: AGE 2006-03-15
 // =============================================================================
-class GL2DWidget : private SetGlOptions
+class GL2DWidget : public GLViewBase
                  , public MapWidget
-                 , public MapWidget_ABC
-                 , public GLViewBase
 {
 public:
     //! @name Constructors/Destructor
@@ -59,14 +55,6 @@ public:
     //@}
 
 private:
-    //! @name MapWidget_ABC implementation
-    //@{
-    virtual void PaintLayers();
-    virtual unsigned int Width() const;
-    virtual unsigned int Height() const;
-    virtual geometry::Rectangle2f Viewport() const;
-    //@}
-
     //! @name Layers -> implementation
     //@{
     virtual void AddLayers( const T_LayersVector& layers );
@@ -81,8 +69,9 @@ private:
     virtual void LoadFrustum( const FrustumInfos& infos );
 
     virtual void CenterOn( const geometry::Point2f& point );
-    virtual geometry::Point2f GetCenter() const;
-
+    virtual const geometry::Rectangle2f& GetViewport() const;
+    virtual int GetWidth() const;
+    virtual int GetHeight() const;
     virtual void Zoom( float width );
     virtual float Zoom() const;
     virtual void SetZoom( float zoom );
@@ -252,6 +241,8 @@ private:
 
     //! @name OpenGL
     //@{
+    virtual void ComputeData();
+    virtual void PaintLayers();
     virtual void UpdateGL();
     virtual void paintGL();
     virtual void PickGL();
@@ -274,25 +265,26 @@ private:
 private:
     //! @name Member data
     //@{
-    int windowHeight_;
-    int windowWidth_;
-    unsigned int circle_;
-    unsigned int halfCircle_;
+    unsigned circle_;
+    unsigned halfCircle_;
     int minVisuScale_;
     int maxVisuScale_;
-    geometry::Rectangle2f viewport_;
-    unsigned int frame_;
+    unsigned frame_;
     std::shared_ptr< IconLayout > iconLayout_;
     T_RenderPasses passes_;
     std::string currentPass_;
     QFont currentFont_;
     bool hasMultiTexturing_;
-    float SymbolSize_;
     std::unique_ptr< FrameCounter > fps_;
     QPoint clickedPoint_;
+    float adaptiveZoom_;
+    float fixedZoom_;
+    float pixels_;
+    float symbolSize_;
+    bool drawUrbanLabel_;
     //@}
 };
 
-}
+} //! namespace gui
 
 #endif // __GL2DWidget_h_

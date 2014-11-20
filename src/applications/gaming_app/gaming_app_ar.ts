@@ -2221,6 +2221,10 @@ This data can&apos;t be projected.</source>
         <source>Replay</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Fire colors</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MaintenanceHaulersListView</name>

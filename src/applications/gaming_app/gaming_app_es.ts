@@ -2223,6 +2223,10 @@ Los datos no pueden ser proyectados.</translation>
         <source>Replay</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Fire colors</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MaintenanceHaulersListView</name>

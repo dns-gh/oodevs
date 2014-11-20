@@ -73,16 +73,6 @@ void TerrainLayer::NotifyUpdated( const ModelLoaded& modelLoaded )
 }
 
 // -----------------------------------------------------------------------------
-// Name: TerrainLayer::SetAlpha
-// Created: AGE 2007-02-23
-// -----------------------------------------------------------------------------
-void TerrainLayer::SetAlpha( float alpha )
-{
-    view_.GetActiveOptions().GetTerrainSettings()->SetAlpha( alpha );
-    Layer2D::SetAlpha( alpha );
-}
-
-// -----------------------------------------------------------------------------
 // Name: TerrainLayer::Paint
 // Created: AGE 2006-03-15
 // -----------------------------------------------------------------------------
@@ -96,6 +86,7 @@ void TerrainLayer::Paint( const geometry::Rectangle2f& viewport )
         LoadGraphics();
     if( !layer_ && !noVBOlayer_ )
         return;
+    settings_->SetAlpha( GetAlpha() );
     smallNames_ = options.Get( "SmallText" ).To< TristateOption >();
     bigNames_ = options.Get( "BigText" ).To< TristateOption >();
     pickingEnabled_ = !options.Get( "3D" ).To< bool >();

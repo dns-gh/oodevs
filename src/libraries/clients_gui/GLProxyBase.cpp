@@ -73,11 +73,11 @@ void GLProxyBase::RemoveLayer( const T_Layer& layer )
 }
 
 // -----------------------------------------------------------------------------
-// Frustum -> forwarded to active view
+// Frustum -> forward setter to active view, getter to current view
 // -----------------------------------------------------------------------------
 FrustumInfos GLProxyBase::SaveFrustum() const
 {
-    return GetActiveView().SaveFrustum();
+    return GetCurrentView().SaveFrustum();
 }
 
 void GLProxyBase::LoadFrustum( const FrustumInfos& infos )
@@ -90,9 +90,19 @@ void GLProxyBase::CenterOn( const geometry::Point2f& point )
     GetActiveView().CenterOn( point );
 }
 
-geometry::Point2f GLProxyBase::GetCenter() const
+const geometry::Rectangle2f& GLProxyBase::GetViewport() const
 {
-    return GetActiveView().GetCenter();
+    return GetCurrentView().GetViewport();
+}
+
+int GLProxyBase::GetWidth() const
+{
+    return GetCurrentView().GetWidth();
+}
+
+int GLProxyBase::GetHeight() const
+{
+    return GetCurrentView().GetHeight();
 }
 
 void GLProxyBase::Zoom( float width )
@@ -102,7 +112,7 @@ void GLProxyBase::Zoom( float width )
 
 float GLProxyBase::Zoom() const
 {
-    return GetActiveView().Zoom();
+    return GetCurrentView().Zoom();
 }
 
 void GLProxyBase::SetZoom( float zoom )
@@ -139,8 +149,13 @@ geometry::Point2f GLProxyBase::MapToterrainCoordinates( int x, int y )
 }
 
 // -----------------------------------------------------------------------------
-// Drawing tools -> forward to all children
+// Drawing tools -> forward to all children or throw if unused
 // -----------------------------------------------------------------------------
+void GLProxyBase::PaintLayers()
+{
+    throw MASA_EXCEPTION_NOT_IMPLEMENTED;
+}
+
 void GLProxyBase::UpdateGL()
 {
     for( auto it = views_.begin(); it != views_.end(); ++it )

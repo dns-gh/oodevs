@@ -38,23 +38,20 @@ using namespace gui;
 // -----------------------------------------------------------------------------
 GL3DWidget::GL3DWidget( QWidget* pParent,
                         GLView_ABC& parent,
-                        float width,
-                        float height,
                         DetectionMap& elevation,
                         EventStrategy_ABC& strategy,
                         QGLWidget* shareWidget /* = 0 */ )
-    : SetGlOptions()
+    : GLViewBase( parent )
     , Widget3D( context_, pParent, shareWidget )
-    , GLViewBase( parent )
-    , width_( width )
-    , height_( height )
     , elevation_( elevation )
     , strategy_( strategy )
     , zRatio_( 5 )
     , frame_( 0 )
     , isInitialized_( false )
+    , symbolSize_( 0.f )
 {
-    // NOTHING
+    if( context() != context_ || !context_->isValid() )
+        throw MASA_EXCEPTION( "Unable to create context" );
 }
 
 // -----------------------------------------------------------------------------
@@ -110,9 +107,19 @@ void GL3DWidget::CenterOn( const Point2f& point )
     Widget3D::CenterOn( point );
 }
 
-Point2f GL3DWidget::GetCenter() const
+const geometry::Rectangle2f& GL3DWidget::GetViewport() const
 {
-    return Point2f( center_.X(), center_.Y() );
+    return viewport_;
+}
+
+int GL3DWidget::GetWidth() const
+{
+    return width();
+}
+
+int GL3DWidget::GetHeight() const
+{
+    return height();
 }
 
 void GL3DWidget::Zoom( float /*width*/ )
@@ -132,9 +139,7 @@ void GL3DWidget::SetZoom( float )
 
 float GL3DWidget::GetAdaptiveZoomFactor( bool bVariableSize /*= true*/ ) const
 {
-    if( !bVariableSize )
-        return GetCurrentOptions().Get( "SymbolSize/CurrentFactor" ).To< float >();
-    return 1.f;
+    return bVariableSize ? 1.f : symbolSize_;
 }
 
 // -----------------------------------------------------------------------------
@@ -146,17 +151,20 @@ void GL3DWidget::FillSelection( const geometry::Point2f& point,
 {
     if( !IsInSelectionViewport( point ) )
         return;
-    glDisable( GL_DEPTH_TEST );
     GetPickingSelector().FillSelection( selection, type, [&](){
         makeCurrent();
+        GLboolean depthTest;
+        glGetBooleanv( GL_DEPTH_TEST, &depthTest );
+        glDisable( GL_DEPTH_TEST );
         paintGL();
+        if( depthTest != GL_FALSE )
+            glEnable( GL_DEPTH_TEST );
     } );
-    glEnable( GL_DEPTH_TEST );
 }
 
 void GL3DWidget::Picking()
 {
-    GetPickingSelector().Picking( clickedPoint_, windowHeight_ );
+    GetPickingSelector().Picking( clickedPoint_, GetHeight() );
 }
 
 void GL3DWidget::WheelEvent( QWheelEvent* event )
@@ -748,18 +756,15 @@ void GL3DWidget::keyPressEvent( QKeyEvent* event )
     if( event )
     {
         const float speedFactor = ( event->modifiers() == Qt::ShiftModifier ) ? 10.f : 1.f;
-
+        auto& options = GetActiveOptions();
         if( event->key() == Qt::Key_Plus )
-            zRatio_ *= 1.1f;
+            options.Set( "3DElevationRatio", options.Get( "3DElevationRatio" ).To< float >() * 1.1f );
         else if( event->key() == Qt::Key_Minus )
-            zRatio_ *= 0.9f;
+            options.Set( "3DElevationRatio", options.Get( "3DElevationRatio" ).To< float >() * 0.9f );
         else if( event->key() == Qt::Key_Asterisk )
-            zRatio_ = 1.0f;
+            options.Set( "3DElevationRatio", 10.f );
         else if( event->key() == Qt::Key_Home )
-        {
             CenterView();
-            zRatio_ = 5.0f;
-        }
         else if( event->key() == Qt::Key_Left )
             Rotate( Vector3f( 0, 0, 1 ), 0.02f * speedFactor );
         else if( event->key() == Qt::Key_Right )
@@ -824,6 +829,32 @@ void GL3DWidget::leaveEvent( QEvent* event )
 // -----------------------------------------------------------------------------
 // OpenGL
 // -----------------------------------------------------------------------------
+void GL3DWidget::ComputeData()
+{
+    ++frame_;
+    const auto& options = GetCurrentOptions();
+    symbolSize_ = options.Get( "SymbolSize/CurrentFactor" ).To< float >();
+    zRatio_ = options.Get( "3DElevationRatio" ).To< float >();
+}
+
+void GL3DWidget::Paint( const ViewFrustum& view )
+{
+    current_ = view;
+    ApplyOptions();
+    ComputeData();
+    glLineWidth( 1.f );
+    glColor3f( 1, 1, 1 );
+    glBindTexture( GL_TEXTURE_2D, 0 );
+    PaintLayers();
+    DrawActiveFrame();
+}
+
+void GL3DWidget::PaintLayers()
+{
+    for( auto it = layers_.begin(); it != layers_.end(); ++it )
+        ( *it )->Paint( current_ );
+}
+
 void GL3DWidget::UpdateGL()
 {
     if( isVisible() )
@@ -834,33 +865,21 @@ void GL3DWidget::initializeGL()
 {
     if( !isInitialized_ )
     {
-        const Rectangle2f viewport( 0, 0, width_, height_ );
         Widget3D::initializeGL();
         glEnableClientState( GL_VERTEX_ARRAY );
         for( auto it = layers_.begin(); it != layers_.end(); ++it )
-            ( *it )->Initialize( viewport );
+            ( *it )->Initialize( viewport_ );
         isInitialized_ = true;
-        CenterView();
+        if( center_.IsZero() )
+            CenterView();
     }
-}
-
-void GL3DWidget::Paint( const ViewFrustum& view )
-{
-    current_ = view;
-    ++frame_;
-    glLineWidth( 1.f );
-    glColor3f( 1, 1, 1 );
-    glBindTexture( GL_TEXTURE_2D, 0 );
-    for( auto it = layers_.begin(); it != layers_.end(); ++it )
-        ( *it )->Paint( view );
-    DrawActiveFrame();
 }
 
 void GL3DWidget::resizeGL( int w, int h )
 {
-    windowHeight_ = h;
-    windowWidth_ = w;
+    makeCurrent();
     Widget3D::resizeGL( w, h );
+    viewport_ = geometry::Rectangle2f( 0, 0, static_cast< float >( w ), static_cast< float >( h ) );
 }
 
 void GL3DWidget::paintGL()

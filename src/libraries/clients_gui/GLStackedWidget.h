@@ -82,8 +82,6 @@ signals:
     //@{
     void MouseMove( const geometry::Point2f& );
     void MouseMove( const geometry::Point3f& );
-    void EnterEvent( const QWidget& );
-    void LeaveEvent();
     //@}
 
 private:

@@ -11,8 +11,6 @@
 #define __GL3DWidget_h_
 
 #include "GLViewBase.h"
-#include "GLView_ABC.h"
-#include "SetGlOptions.h"
 #include <graphics/Widget3D.h>
 #include <graphics/ViewFrustum.h>
 
@@ -41,17 +39,14 @@ namespace gui
 */
 // Created: AGE 2006-03-28
 // =============================================================================
-class GL3DWidget : private SetGlOptions
+class GL3DWidget : public GLViewBase
                  , public Widget3D
-                 , public GLViewBase
 {
 public:
     //! @name Constructors/Destructor
     //@{
              GL3DWidget( QWidget* pParent,
                          GLView_ABC& parent,
-                         float width,
-                         float height,
                          kernel::DetectionMap& elevation,
                          EventStrategy_ABC& strategy,
                          QGLWidget* shareWidget = 0 );
@@ -73,8 +68,9 @@ private:
     virtual void LoadFrustum( const FrustumInfos& infos );
 
     virtual void CenterOn( const geometry::Point2f& point );
-    virtual geometry::Point2f GetCenter() const;
-
+    virtual const geometry::Rectangle2f& GetViewport() const;
+    virtual int GetWidth() const;
+    virtual int GetHeight() const;
     virtual void Zoom( float width );
     virtual float Zoom() const;
     virtual void SetZoom( float zoom );
@@ -230,18 +226,19 @@ private:
 
     //! @name OpenGL
     //@{
+    virtual void ComputeData();
+    virtual void Paint( const ViewFrustum& view );
+    virtual void PaintLayers();
     virtual void UpdateGL();
+
     virtual void initializeGL();
     virtual void paintGL();
     virtual void resizeGL( int w, int h );
-    virtual void Paint( const ViewFrustum& view );
     //@}
 
 private:
     //! @name Member data
     //@{
-    float width_;
-    float height_;
     kernel::DetectionMap& elevation_;
     EventStrategy_ABC& strategy_;
     T_LayersVector layers_;
@@ -249,13 +246,13 @@ private:
     unsigned int frame_;
     bool isInitialized_;
     ViewFrustum current_;
+    float symbolSize_;
     //picking
     QPoint clickedPoint_;
-    int windowHeight_;
-    int windowWidth_;
+    geometry::Rectangle2f viewport_;
     //@}
 };
 
-}
+} //! namespace gui
 
 #endif // __GL3DWidget_h_

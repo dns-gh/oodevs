@@ -66,7 +66,6 @@ private:
     //@{
     void CreateShaders();
     void CreateTextures();
-    virtual bool HandleKeyPress( QKeyEvent* event );
     //@}
 
 private:
@@ -80,7 +79,6 @@ private:
     std::unique_ptr< gl::FragmentShader > fragment_;
     std::unique_ptr< gl::ShaderProgram >  program_;
     std::unique_ptr< CompiledVisitor3d >  visitor_;
-    float zRatio_;
     bool reset_;
     bool ignoreShader_;
     bool ignoreTextures_;

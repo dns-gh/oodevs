@@ -14,7 +14,7 @@
 
 namespace gui
 {
-    class MapWidget_ABC;
+    class GLView_ABC;
 
 // =============================================================================
 /** @class  GlRenderPass_ABC
@@ -34,10 +34,7 @@ public:
     //! @name Operations
     //@{
     virtual std::string GetName() const = 0;
-    virtual void Render( MapWidget_ABC& widget ) = 0;
-    virtual unsigned int Width() const = 0;
-    virtual unsigned int Height() const = 0;
-    virtual geometry::Rectangle2f Viewport() const = 0;
+    virtual void Render( GLView_ABC& view ) = 0;
     //@}
 };
 

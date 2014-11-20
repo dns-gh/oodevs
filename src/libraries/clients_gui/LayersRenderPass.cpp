@@ -9,7 +9,7 @@
 
 #include "clients_gui_pch.h"
 #include "LayersRenderPass.h"
-#include "MapWidget_ABC.h"
+#include "GLView_ABC.h"
 
 using namespace gui;
 
@@ -17,9 +17,8 @@ using namespace gui;
 // Name: LayersRenderPass constructor
 // Created: SBO 2008-04-14
 // -----------------------------------------------------------------------------
-LayersRenderPass::LayersRenderPass( MapWidget_ABC& widget, const std::string& name, bool clear )
-    : widget_( widget )
-    , name_  ( name )
+LayersRenderPass::LayersRenderPass( const std::string& name, bool clear )
+    : name_  ( name )
     , clear_ ( clear )
 {
     // NOTHING
@@ -47,7 +46,7 @@ std::string LayersRenderPass::GetName() const
 // Name: LayersRenderPass::Render
 // Created: SBO 2008-04-14
 // -----------------------------------------------------------------------------
-void LayersRenderPass::Render( MapWidget_ABC& widget )
+void LayersRenderPass::Render( GLView_ABC& view )
 {
     if( clear_ )
         glClear( GL_COLOR_BUFFER_BIT );
@@ -56,32 +55,5 @@ void LayersRenderPass::Render( MapWidget_ABC& widget )
     glMatrixMode( GL_MODELVIEW );
     glLoadIdentity();
     glColor3f( 1, 1, 1 );
-    widget.PaintLayers();
-}
-
-// -----------------------------------------------------------------------------
-// Name: LayersRenderPass::Width
-// Created: SBO 2008-04-14
-// -----------------------------------------------------------------------------
-unsigned int LayersRenderPass::Width() const
-{
-    return widget_.Width();
-}
-
-// -----------------------------------------------------------------------------
-// Name: LayersRenderPass::Height
-// Created: SBO 2008-04-14
-// -----------------------------------------------------------------------------
-unsigned int LayersRenderPass::Height() const
-{
-    return widget_.Height();
-}
-
-// -----------------------------------------------------------------------------
-// Name: LayersRenderPass::Viewport
-// Created: SBO 2008-04-14
-// -----------------------------------------------------------------------------
-geometry::Rectangle2f LayersRenderPass::Viewport() const
-{
-    return widget_.Viewport();
+    view.PaintLayers();
 }

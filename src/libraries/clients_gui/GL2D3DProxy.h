@@ -67,9 +67,9 @@ public:
                  const std::shared_ptr< Lighting_ABC >& lighting,
                  const QString& name,
                  const unsigned id );
-    // create a GL2D3DProxy with a clone of the given GLOptions
+    // create a GL2D3DProxy with a clone of the given GLView
     GL2D3DProxy( GLView_ABC& parent,
-                 const GLOptions& options,
+                 const GLView_ABC& view,
                  const QString& name,
                  const unsigned id );
     virtual ~GL2D3DProxy();

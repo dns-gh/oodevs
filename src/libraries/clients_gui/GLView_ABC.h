@@ -234,15 +234,17 @@ public:
     //@}
 
     //! @name Frustum
-    //!       GLXProxy  -> forward to active view
+    //!       GLXProxy  -> forward setter to active view, getter to current view
     //!       GLXWidget -> implementation
     //@{
+
     virtual FrustumInfos SaveFrustum() const = 0;
     virtual void LoadFrustum( const FrustumInfos& infos ) = 0;
 
     virtual void CenterOn( const geometry::Point2f& point ) = 0;
-    virtual geometry::Point2f GetCenter() const = 0;
-
+    virtual const geometry::Rectangle2f& GetViewport() const = 0;
+    virtual int GetWidth() const = 0;
+    virtual int GetHeight() const = 0;
     virtual void Zoom( float width ) = 0;
     virtual float Zoom() const = 0;
     virtual void SetZoom( float zoom ) = 0;
@@ -288,6 +290,7 @@ public:
     //!       GLXWidget -> implementation
     //!       GLXProxy  -> forward to all children
     //@{
+    virtual void PaintLayers() = 0;
     virtual void UpdateGL() = 0;
     virtual void SetCurrentCursor( const QCursor& cursor ) = 0;
     //@}

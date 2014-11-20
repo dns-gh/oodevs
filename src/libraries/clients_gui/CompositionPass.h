@@ -36,7 +36,6 @@ public:
     //@{
              CompositionPass( TextureRenderPass& first,
                               TextureRenderPass& second,
-                              const GLView_ABC& view,
                               const std::string& option = "" );
     virtual ~CompositionPass();
     //@}
@@ -44,10 +43,7 @@ public:
     //! @name Operations
     //@{
     virtual std::string GetName() const;
-    virtual void Render( MapWidget_ABC& widget );
-    virtual unsigned int Width() const;
-    virtual unsigned int Height() const;
-    virtual geometry::Rectangle2f Viewport() const;
+    virtual void Render( GLView_ABC& widget );
     //@}
 
 private:
@@ -59,7 +55,6 @@ private:
 private:
     //! @name Member data
     //@{
-    const GLView_ABC& view_;
     TextureRenderPass& first_;
     TextureRenderPass& second_;
     std::unique_ptr< gl::FragmentShader > fragment_;

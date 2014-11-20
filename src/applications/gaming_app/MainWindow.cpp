@@ -146,6 +146,15 @@ namespace
         mainWindow.addToolBar( toolBar );
         toolBar->SetModes( hiddenModes, visibleModes, visibleByDefault );
     }
+    class EmptyPanel : public gui::PreferencePanel_ABC
+    {
+    public:
+        explicit EmptyPanel( QWidget* parent )
+            : gui::PreferencePanel_ABC( parent, "Empty panel" )
+        {}
+        virtual ~EmptyPanel()
+        {}
+    };
 }
 
 // -----------------------------------------------------------------------------
@@ -239,6 +248,7 @@ MainWindow::MainWindow( Controllers& controllers,
     lockMapViewController_.reset( new LockMapViewController( controllers, *glProxy_ ) );
     preferenceDialog_.reset( new gui::PreferencesDialog( this, controllers, staticModel, *glProxy_ ) );
     preferenceDialog_->AddPage( tr( "2D/Population" ),        true,  *new gui::InhabitantPanel( preferenceDialog_.get(), controllers.options_ ) );
+    preferenceDialog_->AddPage( tr( "Fire colors" ),          true,  *new EmptyPanel( preferenceDialog_.get() ) );
     preferenceDialog_->AddPage( tr( "Fire colors/Direct" ),   true,  *new gui::FireColorPanel( preferenceDialog_.get(), controllers_, staticModel, gui::FIRE_GROUP_DIRECT ) );
     preferenceDialog_->AddPage( tr( "Fire colors/Indirect" ), true,  *new gui::FireColorPanel( preferenceDialog_.get(), controllers_, staticModel, gui::FIRE_GROUP_INDIRECT ) );
     preferenceDialog_->AddPage( tr( "Orbat" ),                false, *new gui::OrbatPanel( preferenceDialog_.get(), controllers.options_ ) );

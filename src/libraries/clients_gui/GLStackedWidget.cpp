@@ -81,8 +81,6 @@ void GLStackedWidget::Load()
                                                 shareWidget_ );
     widget3d_ = std::make_shared< GL3DWidget >( this,
                                                 *proxy_,
-                                                config_.GetTerrainWidth(),
-                                                config_.GetTerrainHeight(),
                                                 map_,
                                                 strategy_,
                                                 shareWidget_ ? shareWidget_ : widget2d_.get() );
@@ -104,7 +102,6 @@ void GLStackedWidget::Load()
 
     InitializePasses();
     ChangeTo( proxy_->GetCurrentOptions().Get( "3D" ).To< bool >() ? eWidget_3D : eWidget_2D );
-    //widget2d_->makeCurrent();
 }
 
 // -----------------------------------------------------------------------------
@@ -113,7 +110,7 @@ void GLStackedWidget::Load()
 // -----------------------------------------------------------------------------
 void GLStackedWidget::ChangeTo( E_Widget type )
 {
-    auto currentType = static_cast< E_Widget >( currentIndex() );
+    const auto currentType = static_cast< E_Widget >( currentIndex() );
     if( type == currentType )
         return;
 
@@ -152,10 +149,10 @@ void GLStackedWidget::InitializePasses()
     if( !widget2d_ )
         return;
     widget2d_->SetPassOrder( "main,fog,composition,tooltip" );
-    auto tooltip = new LayersRenderPass( *widget2d_, "tooltip", false );
-    auto main = new TextureRenderPass( *widget2d_, "main", *proxy_ );
-    auto fog = new TextureRenderPass( *widget2d_, "fog", *proxy_, "FogOfWar" );
-    auto compo = new CompositionPass( *main, *fog, *proxy_, "FogOfWar" );
+    auto tooltip = new LayersRenderPass( "tooltip", false );
+    auto main = new TextureRenderPass( "main" );
+    auto fog = new TextureRenderPass( "fog", "FogOfWar" );
+    auto compo = new CompositionPass( *main, *fog, "FogOfWar" );
     widget2d_->AddPass( *tooltip );
     widget2d_->AddPass( *compo );
     widget2d_->AddPass( *fog );
@@ -198,9 +195,10 @@ std::shared_ptr< GLView_ABC > GLStackedWidget::GetProxy() const
 // -----------------------------------------------------------------------------
 std::shared_ptr< QGLWidget > GLStackedWidget::GetCurrentWidget() const
 {
-    if( widget2d_ )
+    auto currentType = static_cast< E_Widget >( currentIndex() );
+    if( currentType == eWidget_2D )
         return widget2d_;
-    if( widget3d_ )
-        return widget2d_;
+    if( currentType == eWidget_3D )
+        return widget3d_;
     return std::shared_ptr< QGLWidget >();
 }

@@ -20,6 +20,7 @@ using namespace gui;
 // -----------------------------------------------------------------------------
 GLViewBase::GLViewBase( GLView_ABC& parent )
     : parent_( parent )
+    , context_( new QGLContext( QGLFormat::defaultFormat() ) )
 {
     // NOTHING
 }

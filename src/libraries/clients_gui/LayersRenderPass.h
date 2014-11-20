@@ -26,23 +26,19 @@ class LayersRenderPass : public GlRenderPass_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             LayersRenderPass( MapWidget_ABC& widget, const std::string& name, bool clear );
+             LayersRenderPass( const std::string& name, bool clear );
     virtual ~LayersRenderPass();
     //@}
 
     //! @name Operations
     //@{
     virtual std::string GetName() const;
-    virtual void Render( MapWidget_ABC& widget );
-    virtual unsigned int Width() const;
-    virtual unsigned int Height() const;
-    virtual geometry::Rectangle2f Viewport() const;
+    virtual void Render( GLView_ABC& view );
     //@}
 
 private:
     //! @name Member data
     //@{
-    MapWidget_ABC& widget_;
     std::string name_;
     bool clear_;
     //@}

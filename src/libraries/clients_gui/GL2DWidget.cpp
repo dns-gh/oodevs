@@ -49,22 +49,21 @@ GL2DWidget::GL2DWidget( QWidget* parentWidget,
                         float height,
                         const std::shared_ptr< IconLayout >& iconLayout,
                         QGLWidget* shareWidget /* = 0 */ )
-    : SetGlOptions()
+    : GLViewBase( parentView )
     , MapWidget( context_, parentWidget, width, height, shareWidget )
-    , GLViewBase( parentView )
-    , windowHeight_( 0 )
-    , windowWidth_ ( 0 )
-    , circle_      ( 0 )
-    , halfCircle_  ( 0 )
-    , viewport_    ( 0, 0, width, height )
-    , frame_       ( 0 )
-    , iconLayout_  ( iconLayout )
-    , passes_      ( passLess( "" ) )
-    , currentPass_ ()
-    , hasMultiTexturing_      ( false )
+    , circle_( 0 )
+    , halfCircle_( 0 )
+    , iconLayout_( iconLayout )
+    , passes_( passLess( "" ) )
+    , frame_( 0 )
+    , adaptiveZoom_( 0.f )
+    , fixedZoom_( 0.f )
+    , pixels_( 0.f )
+    , symbolSize_( 0.f )
+    , drawUrbanLabel_( false )
 {
     setAcceptDrops( true );
-    if( context() != context_ || ! context_->isValid() )
+    if( context() != context_ || !context_->isValid() )
         throw MASA_EXCEPTION( "Unable to create context" );
 }
 
@@ -121,30 +120,6 @@ void GL2DWidget::RemoveLayer( const T_Layer& layer )
 }
 
 // -----------------------------------------------------------------------------
-// MapWidget_ABC
-// -----------------------------------------------------------------------------
-void GL2DWidget::PaintLayers()
-{
-    if( hasMultiTexturing_ )  // $$$$ LGY 2012-03-05: disable PaintLayers : crash in remote desktop
-        MapWidget::PaintLayers();
-}
-
-unsigned int GL2DWidget::Width() const
-{
-    return width();
-}
-
-unsigned int GL2DWidget::Height() const
-{
-    return height();
-}
-
-Rectangle2f GL2DWidget::Viewport() const
-{
-    return GetViewport();
-}
-
-// -----------------------------------------------------------------------------
 // Frustum
 // -----------------------------------------------------------------------------
 FrustumInfos GL2DWidget::SaveFrustum() const
@@ -165,9 +140,19 @@ void GL2DWidget::CenterOn( const Point2f& point )
     Center( point );
 }
 
-Point2f GL2DWidget::GetCenter() const
+const geometry::Rectangle2f& GL2DWidget::GetViewport() const
 {
-    return center_;
+    return viewport_;
+}
+
+int GL2DWidget::GetWidth() const
+{
+    return width();
+}
+
+int GL2DWidget::GetHeight() const
+{
+    return height();
 }
 
 void GL2DWidget::Zoom( float w )
@@ -178,17 +163,7 @@ void GL2DWidget::Zoom( float w )
 
 float GL2DWidget::GetAdaptiveZoomFactor( bool bVariableSize /*= true*/ ) const
 {
-    if( !bVariableSize )
-        return GetCurrentOptions().Get( "SymbolSize/CurrentFactor" ).To< float >() * Pixels() / 60;
-
-    float zoom = Zoom();
-    float pixels = Pixels();
-    if( zoom <= .00024f )
-        return 1;
-    else if( zoom <= .002f )
-        return pixels / 15;
-    else
-        return 0.12f;
+    return bVariableSize ? adaptiveZoom_ : fixedZoom_;
 }
 
 float GL2DWidget::Zoom() const
@@ -219,7 +194,7 @@ void GL2DWidget::FillSelection( const Point2f& point,
 
 void GL2DWidget::Picking()
 {
-    GetPickingSelector().Picking( clickedPoint_, windowHeight_ );
+    GetPickingSelector().Picking( clickedPoint_, GetHeight() );
 }
 
 void GL2DWidget::WheelEvent( QWheelEvent* event )
@@ -264,9 +239,7 @@ uint16_t GL2DWidget::StipplePattern( int factor /* = 1*/ ) const
 
 float GL2DWidget::Pixels( const Point2f& ) const
 {
-    if( windowWidth_ > 0 )
-        return viewport_.Width() / windowWidth_;
-    return 0.f;
+    return pixels_;
 }
 
 void GL2DWidget::SetCurrentCursor( const QCursor& cursor )
@@ -487,7 +460,6 @@ void GL2DWidget::DrawArc( const Point2f& center,
     }
 
     const float deltaAngle = ( maxAngle - minAngle ) / 24.f + 1e-6f;
-    glMatrixMode(GL_MODELVIEW);
     glPushAttrib( GL_LINE_BIT );
     glEnable( GL_LINE_SMOOTH );
     glLineWidth( width );
@@ -547,7 +519,6 @@ namespace
         radius = Radius( radius, unit, pixels );
         glPushAttrib( GL_LINE_BIT );
         glEnable( GL_LINE_SMOOTH );
-        glMatrixMode(GL_MODELVIEW);
         glPushMatrix();
             glTranslatef( center.X(), center.Y(), 0.f );
             glScalef( radius, radius, 1.f );
@@ -569,7 +540,6 @@ void GL2DWidget::DrawCircle( const Point2f& center,
     radius = Radius( radius, unit, Pixels() );
     glPushAttrib( GL_LINE_BIT );
     glEnable( GL_LINE_SMOOTH );
-    glMatrixMode( GL_MODELVIEW );
     glPushMatrix();
         glTranslatef( center.X(), center.Y(), 0.f );
         glScalef    ( radius, radius, 1.f );
@@ -663,8 +633,8 @@ void GL2DWidget::DrawApp6Symbol( const std::string& symbol,
                                  float thickness /* = 1.f*/,
                                  unsigned int direction /*= 0*/ ) const
 {
-    const auto width = static_cast< unsigned int >( windowWidth_ * thickness );
-    const auto height = static_cast< unsigned int >( windowHeight_ * thickness );
+    const auto width = static_cast< unsigned int >( GetWidth() * thickness );
+    const auto height = static_cast< unsigned int >( GetHeight() * thickness );
     thickness *= ComputeZoomFactor( factor );
     DrawApp6( symbol, where, baseWidth * factor, viewport_, width, height, direction );
 }
@@ -674,10 +644,10 @@ void GL2DWidget::DrawInfrastructureSymbol( const std::string& symbol,
                                            float factor,
                                            float thickness ) const
 {
-    const auto width = static_cast< unsigned int >( windowWidth_ * thickness );
-    const auto height = static_cast< unsigned int >( windowHeight_ * thickness );
+    const auto width = static_cast< unsigned int >( GetWidth() * thickness );
+    const auto height = static_cast< unsigned int >( GetHeight() * thickness );
     thickness *= ComputeZoomFactor( factor );
-    DrawApp6( symbol, where, baseWidth * factor, viewport_,width, height, 0, false );
+    DrawApp6( symbol, where, baseWidth * factor, viewport_, width, height, 0, false );
 }
 
 void GL2DWidget::DrawApp6SymbolFixedSize( const std::string& symbol,
@@ -720,7 +690,7 @@ void GL2DWidget::DrawUnitSymbol( const std::string& symbol,
     {
         if( !moveSymbol.empty() )
         {
-            const auto scaledDepth = symbolDepth * GetCurrentOptions().Get( "SymbolSize/CurrentFactor" ).To< float >() / defaultSymbolSize;
+            const auto scaledDepth = symbolDepth * symbolSize_ / defaultSymbolSize;
             geometry::Vector2f directionVector( 0, 1 );
             directionVector.Rotate( -3.14f * direction / 180 );
             const geometry::Point2f arrowTail = where - directionVector * depth;
@@ -848,8 +818,8 @@ void GL2DWidget::DrawSvg( const std::string& svg,
         glScalef( ratio, ratio, ratio );
     DrawSvgInViewport( svg,
                        fixedSize ? Rectangle2f( Point2f( 0.f, 0.f ), Point2f( 5000, 5000 ) ) : viewport_,
-                       windowWidth_,
-                       windowHeight_ );
+                       static_cast< unsigned >( GetWidth() ),
+                       static_cast< unsigned >( GetHeight() ) );
     glPopMatrix();
 }
 
@@ -926,7 +896,6 @@ void GL2DWidget::DrawApp6( const std::string& symbol,
     gl::Initialize();
     glPushAttrib( GL_CURRENT_BIT | GL_LINE_BIT );
     glEnable( GL_LINE_SMOOTH );
-        glMatrixMode( GL_MODELVIEW );
         glPushMatrix();
             glTranslatef( center.X(), center.Y(), 0.0f );
             glRotatef( - (GLfloat)direction, 0, 0, 1 );
@@ -951,11 +920,10 @@ void GL2DWidget::DrawApp6SymbolScaledSize( const std::string& symbol,
                                            float width,
                                            float depth ) const
 {
-    const float symbolSize = GetCurrentOptions().Get( "SymbolSize/CurrentFactor" ).To< float >();
     const float svgDeltaX = -20; // Offset of 20 in our svg files...
     const float svgDeltaY = -80 + 120; // Offset of 80 in our svg files + half of 240 which is the default height...
     const Rectangle2f viewport( 0, 0, 256, 256 );
-    factor = fabs( factor ) * zoomFactor * symbolSize / defaultSymbolSize;
+    factor = fabs( factor ) * zoomFactor * symbolSize_ / defaultSymbolSize;
     DrawApp6( symbol, where, baseWidth * factor, viewport, 4, 4, direction, true, width, depth, svgDeltaX, svgDeltaY );
 }
 
@@ -969,16 +937,8 @@ void GL2DWidget::DrawTail( const T_PointVector& points, float width ) const
 
 void GL2DWidget::DrawTextLabel( const std::string& content, const Point2f& where, int /*baseSize = 12*/ )
 {
-    HDC screen = GetDC( NULL );
-    const int hSize = GetDeviceCaps( screen, HORZSIZE );
-    const int hRes = GetDeviceCaps( screen, HORZRES );
-    ReleaseDC( NULL, screen );
-    const float scale = Pixels() * 1000.f * hRes / hSize;
-
-    if( scale < GetCurrentOptions().Get( "VisualisationScales/urban_blocks/Min" ).To< int >() ||
-        scale >= GetCurrentOptions().Get( "VisualisationScales/urban_blocks/Max" ).To< int >() )
+    if( !drawUrbanLabel_ )
         return;
-
     QFontMetrics fm( currentFont_ );
     QRect rc = fm.boundingRect( content.c_str() );
 
@@ -1066,6 +1026,26 @@ void GL2DWidget::leaveEvent( QEvent* event )
 // -----------------------------------------------------------------------------
 // OpenGL
 // -----------------------------------------------------------------------------
+void GL2DWidget::ComputeData()
+{
+    ++frame_;
+    symbolSize_ = GetCurrentOptions().Get( "SymbolSize/CurrentFactor" ).To< float >();
+    pixels_ = GetWidth() > 0 ? viewport_.Width() / GetWidth() : 0.f;
+    fixedZoom_ = symbolSize_ * pixels_ / 60;
+    adaptiveZoom_ = rZoom_ <= .00024f ? 1 :          // min zoom (far from the map), fixed size 1
+                    rZoom_ <= .002f ? pixels_ / 15 : // middle range, progressive size
+                    0.12f;                           // max zoom (close to the map), fixed size 0.12
+    {
+        HDC screen = GetDC( NULL );
+        const int hSize = GetDeviceCaps( screen, HORZSIZE );
+        const int hRes = GetDeviceCaps( screen, HORZRES );
+        ReleaseDC( NULL, screen );
+        const float scale = pixels_ * 1000.f * hRes / hSize;
+        drawUrbanLabel_ = scale >= GetCurrentOptions().Get( "VisualisationScales/urban_blocks/Min" ).To< int >() &&
+                          scale < GetCurrentOptions().Get( "VisualisationScales/urban_blocks/Max" ).To< int >();
+    }
+}
+
 void GL2DWidget::UpdateGL()
 {
     if( isVisible() )
@@ -1110,8 +1090,7 @@ void GL2DWidget::initializeGL()
 
 void GL2DWidget::resizeGL( int w, int h )
 {
-    windowHeight_ = h;
-    windowWidth_ = w;
+    makeCurrent();
     MapWidget::resizeGL( w, h );
 }
 
@@ -1121,6 +1100,7 @@ void GL2DWidget::paintGL()
         return;
     SetCurrentView( this );
     ApplyOptions();
+    ComputeData();
     for( auto it = passes_.begin(); it != passes_.end(); ++it )
         RenderPass( **it );
     if( fps_ )
@@ -1145,22 +1125,12 @@ void GL2DWidget::PickGL()
 
 void GL2DWidget::RenderPass( GlRenderPass_ABC& pass )
 {
-    ++frame_;
     currentPass_ = pass.GetName();
-    const Rectangle2f viewport = GetViewport();
-    const int windowHeight = windowHeight_;
-    const int windowWidth = windowWidth_;
-    viewport_ = pass.Viewport();
-    SetViewport( viewport_ );
-    windowWidth_ = pass.Width();
-    windowHeight_ = pass.Height();
-
-    MapWidget::resizeGL( windowWidth_, windowHeight_ );
     pass.Render( *this );
+}
 
-    SetViewport( viewport );
-    viewport_ = viewport;
-    windowHeight_ = windowHeight;
-    windowWidth_ = windowWidth;
-    MapWidget::resizeGL( windowWidth_, windowHeight_ );
+void GL2DWidget::PaintLayers()
+{
+    if( hasMultiTexturing_ )  // $$$$ LGY 2012-03-05: disable PaintLayers : crash in remote desktop
+        MapWidget::PaintLayers();
 }

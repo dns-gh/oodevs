@@ -20,12 +20,9 @@ using namespace gui;
 // Name: TextureRenderPass constructor
 // Created: SBO 2008-04-14
 // -----------------------------------------------------------------------------
-TextureRenderPass::TextureRenderPass( MapWidget_ABC& widget,
-                                      const std::string& name,
-                                      const GLView_ABC& view,
+TextureRenderPass::TextureRenderPass( const std::string& name,
                                       const std::string& option /* = ""*/ )
-    : LayersRenderPass( widget, name, true )
-    , view_( view )
+    : LayersRenderPass( name, true )
     , texture_( 0 )
     , option_( option )
 {
@@ -45,20 +42,20 @@ TextureRenderPass::~TextureRenderPass()
 // Name: TextureRenderPass::Render
 // Created: SBO 2008-04-15
 // -----------------------------------------------------------------------------
-void TextureRenderPass::Render( MapWidget_ABC& widget )
+void TextureRenderPass::Render( GLView_ABC& view )
 {
-    if( !option_.empty() && !view_.GetCurrentOptions().Get( option_ ).To< bool >() )
+    if( !option_.empty() && !view.GetCurrentOptions().Get( option_ ).To< bool >() )
         return;
     if( !texture_ )
         CreateTexture();
-    LayersRenderPass::Render( widget );
+    LayersRenderPass::Render( view );
     glBindTexture( GL_TEXTURE_2D, texture_ );
     int maxGlTextureSize = 0;
-    int width = Width();
+    int width = view.GetWidth();
     glGetIntegerv( GL_MAX_TEXTURE_SIZE, &maxGlTextureSize );
     if( maxGlTextureSize !=  0 && width > maxGlTextureSize )
         width = static_cast< unsigned short >( maxGlTextureSize );
-    glCopyTexImage2D( GL_TEXTURE_2D, 0, GL_RGBA, 0, 0, width, Height(), 0 );
+    glCopyTexImage2D( GL_TEXTURE_2D, 0, GL_RGBA, 0, 0, width, view.GetHeight(), 0 );
 }
 
 // -----------------------------------------------------------------------------
