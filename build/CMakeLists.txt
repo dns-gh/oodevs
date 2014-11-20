@@ -114,14 +114,13 @@ function( add_target target group dir )
             masa_get_library_full_name( ${next} debug release )
             masa_set_target_output_name( ${target} ${debug} ${release} )
         endif()
-        set( rundir "${MASA_RUN}" )
         if( is_plugin )
             string( REGEX REPLACE "(.+)_plugin_dll" "\\1" next ${target} )
             set( rundir "${MASA_RUN}/plugins/${next}" )
             file( MAKE_DIRECTORY "${rundir}" )
+            add_custom_command( TARGET ${target} POST_BUILD COMMAND
+                ${CMAKE_COMMAND} -E copy_if_different $<TARGET_FILE:${target}> "${rundir}" )
         endif()
-        add_custom_command( TARGET ${target} POST_BUILD COMMAND
-            ${CMAKE_COMMAND} -E copy_if_different $<TARGET_FILE:${target}> "${rundir}" )
     elseif( test )
         if( MSVC AND CMAKE_CONFIGURATION_TYPES )
             add_custom_command( TARGET ${target} POST_BUILD COMMAND ${target}
