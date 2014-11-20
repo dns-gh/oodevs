@@ -743,16 +743,37 @@ class Replay
 
     range_drag_move: (el, d) ->
         element = d3.select el
-        return unless @timeline.get_range_zone(element) != "middle"
-        return unless el.style.cursor != ""
-        @timeline.range_drag_move el, d
+        return unless @timeline.layout.select( d3.event.dx, d3.event.dy)      
+        pos = @timeline.layout.select d3.event.x, d3.event.y
+        event = @timeline.model.get d.id
+        old = min: d.min, max: d.max
+        unless @timeline.range_offsets?
+            range_zone = @timeline.get_range_zone(element)
+            @timeline.range_zone = range_zone
+            enable_popover el, false
+            first = pos - @timeline.layout.select d3.event.dx, d3.event.dy
+            @timeline.range_offsets = (first - @timeline.scale x for x in [d.min, d.max])
+            @timeline.lock()
+            set_dom_topz el
+        return unless @timeline.range_zone != "middle"
+        @timeline.layout.lane_move d, @timeline.range_zone, pos, @timeline.range_offsets
         if d.idx != 0
             previous = @model.replays[d.idx-1]
+            return if previous.min >= d.min
             @model.get(previous.id).set end: format(d.min)
-        if d.idx != (@model.replays.length - 1)
+        if d.idx != (@model.replays.length-1)
             next = @model.replays[d.idx+1]
+            return if next.max <= d.max
             @model.get(next.id).set begin: format(d.max)
-        @model.resync()
+        if d.idx != 0 and (@timeline.range_zone == "top" or @timeline.range_zone == "left")
+            event.set begin: format(d.min)
+        else
+            d.min = old.min
+        if d.idx != (@model.replays.length-1) and (@timeline.range_zone == "bottom" or @timeline.range_zone == "right")            
+            event.set end: format(d.max)
+        else
+            d.max = old.max
+        @timeline.model.resync()
 
     render: ->
         split_attributes = @layout.replay_split_attributes @w, @h
