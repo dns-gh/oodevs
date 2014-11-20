@@ -236,24 +236,6 @@ Menu::Menu( QMainWindow& mainWindow,
     AddSubMenu4( toolBar, subMenu, tr( "Tactical lines" ), MakePixmap( "tacticallines" ), controllers.options_, "TacticalLines", kernel::FourStateOption::On() );
 
     {
-        CompositeMenu< float > composite( subMenu, toolBar, tr( "Grid" ), MakePixmap( "grid" ), controllers.options_, "GridSize" );
-        composite.AddItem( tr( "100m" ), 0.1f );
-        composite.AddItem( tr( "250m" ), 0.25f );
-        composite.AddItem( tr( "500m" ), 0.5f );
-        composite.AddItem( tr( "1km" ), 1.0f );
-        composite.AddItem( tr( "2.5km" ), 2.5f );
-        composite.AddItem( tr( "5km" ), 5.0f );
-        composite.AddItem( tr( "10km" ), 10.0f );
-        composite.AddItem( tr( "100km" ), 100.0f );
-        composite.AddItem( tr( "Off" ), -1 );
-    }
-    {
-        CompositeMenu< int > composite( subMenu, toolBar, tr( "Grid type" ), MakePixmap( "grid_type" ), controllers.options_, "GridType" );
-        composite.AddItem( tr( "Local" ), eCoordinateSystem_Local );
-        composite.AddItem( tr( "MGRS" ), eCoordinateSystem_Mgrs );
-    }
-
-    {
         Q3HBox* populationBox = new Q3HBox( toolBar );
         QPushButton* populationEnabled = new QPushButton( tr( "Population" ), populationBox );
         populationEnabled->setToolTip( tr( "Show population display tool" ) );

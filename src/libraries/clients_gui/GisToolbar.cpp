@@ -10,6 +10,7 @@
 #include "clients_gui_pch.h"
 #include "GisToolbar.h"
 #include "moc_GisToolbar.cpp"
+#include "BooleanOptionButton.h"
 #include "ColorButton.h"
 #include "ContourLinesComputer.h"
 #include "ContourLinesObserver.h"
@@ -67,6 +68,9 @@ GisToolbar::GisToolbar( QMainWindow* parent,
     SubObjectName subObject( "GisToolbar" );
     auto& options = controllers_.options_;
 
+    // grid
+    auto gridEnabled = new BooleanOptionButton( controllers.options_, "GridEnable", "Grid/Enabled", MakePixmap( "grid" ), tr( "Show grid" ) );
+
     // watershed
     auto watershedEnabled = new OptionCheckBox( options, "watershedEnabled", "Watershed/Enabled", tr( "Watershed" ) );
     QToolTip::add( watershedEnabled, tr( "Enable/disable watershed display" ) );
@@ -101,6 +105,7 @@ GisToolbar::GisToolbar( QMainWindow* parent,
 
     progress_ = new QLabel();
 
+    addWidget( gridEnabled );
     addWidget( watershedEnabled );
     addWidget( mode_ );
     addWidget( watershedHeight_ );

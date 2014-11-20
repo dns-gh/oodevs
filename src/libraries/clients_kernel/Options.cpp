@@ -286,14 +286,7 @@ void Options::InitializeView()
     Create( "FogOfWar",              false, true );
     Create( "Infra",                 true,  true );
 
-    // float
-    Create( "GridSize", -1.f, false );
     Create( "3DElevationRatio", 10.f, false );
-
-    // int
-    Create( "GridType",             static_cast< int >( eCoordinateSystem_Local ), false );
-    Create( "ResourceNetworks",     0,                                             false );
-
     // tri state
     Create( "BigText",   TristateOption::Auto(), false );
     Create( "SmallText", TristateOption::Auto(), false );
@@ -356,24 +349,34 @@ void Options::InitializeView()
     Create( "FireRules/direct", QString(), true );
     Create( "FireRules/indirect", QString(), true );
 
+    // Grid
+    Create( "Grid/Enabled", false, true );
+    Create( "Grid/Size", 0.5f, true );
+    Create( "Grid/Type", static_cast< int >( eCoordinateSystem_Local ), true );
+    Create( "Grid/Color", QString( "#ffffff" ), true );
+
+
     // HillShade
     Create( "HillShade/Enabled",   false, true );
     Create( "HillShade/Direction", 335,   true );
     Create( "HillShade/Strength",  1,     true );
 
-    // lighting
+    // Lighting
     Create( "Lighting/Type",      0,                    true );
     Create( "Lighting/Direction", QString( "23:23" ),   true );
     Create( "Lighting/Ambient",   QString( "#323232" ), true );
     Create( "Lighting/Diffuse",   QString( "#c8c8c8" ), true );
 
-    // symbol size
+    // Resource networks
+    Create( "ResourceNetworks", 0, false );
+
+    // Symbol size
     Create( "SymbolSize/CurrentFactor", 3.f, false );
     for( int i = eNatureLevel_c; i < eNbrNatureLevel; ++i )
         Create( "SymbolSize/" + ENT_Tr::ConvertFromNatureLevel( static_cast< E_NatureLevel >( i ) ), 1.f, true );
     Create( "SymbolSize/Headquarters", 1.f, true );
 
-    // terrain
+    // Terrain
     QStringList order;
     tools::Xifstream xisPreferences( "preferences.xml" );
     xisPreferences >> xml::start( "preferences" ) >> xml::start( "terrains" )
@@ -390,7 +393,7 @@ void Options::InitializeView()
                        } );
     Create( "Terrains/Order", order.join( ";" ), true );
 
-    // visualisation scales
+    // Visualisation scales
     for( size_t i = 0; i < DefaultVisualisationScales::size_; ++i )
     {
         const auto& scale = DefaultVisualisationScales::data_[i];
@@ -399,7 +402,7 @@ void Options::InitializeView()
         Create( name + "/Max", scale.max_, true );
     }
 
-    // watershed
+    // Watershed
     Create( "Watershed/Color",   QString( "#14a4da" ), false );
     Create( "Watershed/Enabled", false,                false );
     Create( "Watershed/Height",  0,                    false );

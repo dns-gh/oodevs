@@ -46,7 +46,7 @@ public:
     //! @name Types
     //@{
     typedef std::function< void( const T_View& ) > T_GLObserver;
-    typedef std::map< QObject*, T_GLObserver >    T_GLObservers;
+    typedef tools::Map< QObject*, T_GLObserver >   T_GLObservers;
     //@}
 
 public:

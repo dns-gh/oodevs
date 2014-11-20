@@ -13,8 +13,10 @@
 #include "ColorButton.h"
 #include "RichSpinBox.h"
 #include "RichWidget.h"
+#include "SignalAdapter.h"
 #include "clients_kernel/OptionsController.h"
 #include "clients_kernel/OptionsObserver_ABC.h"
+#include "clients_kernel/OptionVariant.h"
 
 namespace gui
 {
@@ -150,6 +152,45 @@ namespace gui
 
     private:
         virtual void OnOptionChanged( const kernel::OptionVariant& value );
+    };
+
+    // -----------------------------------------------------------------------------
+
+    template< typename T >
+    class OptionComboBox : public OptionWidget< RichWidget< QComboBox > >
+    {
+    public:
+        OptionComboBox( kernel::OptionsController& options,
+                        const QString& objectName,
+                        const std::string& optionName,
+                        QWidget* parent = 0 )
+            : OptionWidget< RichWidget< QComboBox > >( options, objectName, optionName, parent )
+        {
+            setEditable( false );
+            gui::connect( this, SIGNAL( currentIndexChanged( int ) ), [=,&options] {
+                options.Change( optionName, itemData( currentIndex() ).value< T >() );
+            } );
+        }
+
+        virtual ~OptionComboBox()
+        {
+            // NOTHING
+        }
+
+        void AddItem( const QString& text, const T& value )
+        {
+            blockSignals( true );
+            addItem( text, value );
+            blockSignals( false );
+        }
+
+    private:
+        virtual void OnOptionChanged( const kernel::OptionVariant& value )
+        {
+            int index = findData( value.To< T >() );
+            if( index != -1 )
+                setCurrentIndex( index );
+        }
     };
 
 } //! namespace gui

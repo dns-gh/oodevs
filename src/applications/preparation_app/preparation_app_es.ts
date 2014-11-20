@@ -1043,38 +1043,6 @@ Este dato no puede ser proyectado.</translation>
         <translation>Apagado</translation>
     </message>
     <message>
-        <source>100m</source>
-        <translation>100m</translation>
-    </message>
-    <message>
-        <source>250m</source>
-        <translation>250m</translation>
-    </message>
-    <message>
-        <source>500m</source>
-        <translation>500m</translation>
-    </message>
-    <message>
-        <source>1km</source>
-        <translation>1km</translation>
-    </message>
-    <message>
-        <source>2.5km</source>
-        <translation>2.5km</translation>
-    </message>
-    <message>
-        <source>5km</source>
-        <translation>5km</translation>
-    </message>
-    <message>
-        <source>10km</source>
-        <translation>10km</translation>
-    </message>
-    <message>
-        <source>Grid</source>
-        <translation>Grilla</translation>
-    </message>
-    <message>
         <source>Terrain...</source>
         <translation>Terreno...</translation>
     </message>
@@ -1185,22 +1153,6 @@ Este dato no puede ser proyectado.</translation>
     <message>
         <source>&amp;Settings</source>
         <translation>Con&amp;figuración</translation>
-    </message>
-    <message>
-        <source>100km</source>
-        <translation type="unfinished">100km</translation>
-    </message>
-    <message>
-        <source>Local</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>MGRS</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Grid type</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Save configuration</source>

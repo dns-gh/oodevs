@@ -17,6 +17,7 @@
 #include "GLMainProxy.h"
 #include "GLOptions.h"
 #include "GraphicsPanel.h"
+#include "GridPanel.h"
 #include "LayersPanel.h"
 #include "LightingPanel.h"
 #include "PreferencesList.h"
@@ -131,6 +132,7 @@ PreferencesDialog::PreferencesDialog( QWidget* parent,
     AddPage( tr( "Refresh Rate" ),         false, *new RefreshRatePanel( this, options ) );
     AddPage( tr( "Symbol Sizes" ),         true,  *new SymbolSizePanel( this, options ) );
     AddPage( tr( "Visualisation Scales" ), true,  *new VisualisationScalesPanel( this, options ) );
+    AddPage( tr( "Grid" ),                 true,  *new GridPanel( this, options ) );
 
     connect( okButton, SIGNAL( clicked() ), SLOT( accept() ) );
     connect( cancelButton, SIGNAL( clicked() ), SLOT( reject() ) );

@@ -2503,38 +2503,6 @@ This data can&apos;t be projected.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Grid</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>100m</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>250m</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>500m</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>1km</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>2.5km</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>5km</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>10km</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Population</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2600,22 +2568,6 @@ This data can&apos;t be projected.</source>
     </message>
     <message>
         <source>Destroyed units</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>100km</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Grid type</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Local</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>MGRS</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

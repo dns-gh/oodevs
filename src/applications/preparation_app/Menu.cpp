@@ -149,22 +149,6 @@ Menu::Menu( const QString& objectName,
         AddSubMenu3( subMenu, tools::translate( "Menu", "Small text" )    , MAKE_ICON( textsmall )    , controllers.options_, "SmallText" );
         AddSubMenu3( subMenu, tools::translate( "Menu", "Large text" )    , MAKE_ICON( textbig )      , controllers.options_, "BigText" );
         AddSubMenu4( subMenu, tools::translate( "Menu", "Tactical lines" ), MAKE_ICON( tacticallines ), controllers.options_, "TacticalLines" );
-        subMenu->insertSeparator();
-        gui::OptionMenu< float >* gridMenu = new gui::OptionMenu< float >( subMenu, controllers.options_, "GridSize" );
-        gridMenu->AddItem( tools::translate( "Menu", "Off"    ),  -1 );
-        gridMenu->AddItem( tools::translate( "Menu", "100m"  ),  0.1f );
-        gridMenu->AddItem( tools::translate( "Menu", "250m" ),  0.25f );
-        gridMenu->AddItem( tools::translate( "Menu", "500m"  ),  0.5f );
-        gridMenu->AddItem( tools::translate( "Menu", "1km"  ),  1.0f );
-        gridMenu->AddItem( tools::translate( "Menu", "2.5km"  ),  2.5f );
-        gridMenu->AddItem( tools::translate( "Menu", "5km"  ),  5.0f );
-        gridMenu->AddItem( tools::translate( "Menu", "10km" ), 10.0f );
-        gridMenu->AddItem( tools::translate( "Menu", "100km" ), 100.0f );
-        subMenu->insertItem( tools::translate( "Menu", "Grid" ), gridMenu );
-        auto sizeMenu = new gui::OptionMenu< int >( subMenu, controllers.options_, "GridType" );
-        sizeMenu->AddItem( tools::translate( "Menu", "Local" ), eCoordinateSystem_Local );
-        sizeMenu->AddItem( tools::translate( "Menu", "MGRS" ), eCoordinateSystem_Mgrs );
-        subMenu->insertItem( tools::translate( "Menu", "Grid type" ), sizeMenu );
         menu->insertItem( tools::translate( "Menu", "Terrain..." ), subMenu );
         menu->insertSeparator();
 
