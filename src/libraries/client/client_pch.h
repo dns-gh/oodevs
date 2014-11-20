@@ -16,7 +16,7 @@
 
 #include <QtCore>
 #include <QtGui>
-#include <QtNetwork>
+#include <QtNetwork/QtNetwork>
 
 #ifdef _MSC_VER
 #pragma warning( pop )
