@@ -9,7 +9,7 @@
 
 #include "clients_gui_pch.h"
 #include "GLMainProxy.h"
-
+#include "moc_GLMainProxy.cpp"
 #include "AutomatsLayer.h"
 #include "ContourLinesComputer.h"
 #include "ContourLinesObserver.h"
@@ -92,9 +92,7 @@ void GLMainProxy::Purge()
 
 void GLMainProxy::AddActiveChangeObserver( QObject* parent, const T_GLObserver& observer )
 {
-    gui::connect( parent, SIGNAL( destroyed( QObject* ) ), [=] {
-        activeChangeObservers_.erase( parent );
-    } );
+    connect( parent, SIGNAL( destroyed( QObject* ) ), SLOT( RemoveActiveChangeObserver( QObject* ) ) );
     activeChangeObservers_[ parent ] = observer;
     if( activeView_ )
         observer( activeView_ );
@@ -102,9 +100,7 @@ void GLMainProxy::AddActiveChangeObserver( QObject* parent, const T_GLObserver& 
 
 void GLMainProxy::AddCreationObserver( QObject* parent, const T_GLObserver& observer )
 {
-    gui::connect( parent, SIGNAL( destroyed( QObject* ) ), [=] {
-        creationObservers_.erase( parent );
-    } );
+    connect( parent, SIGNAL( destroyed( QObject* ) ), SLOT( RemoveCreationObserver( QObject* ) ) );
     creationObservers_[ parent ] = observer;
     std::for_each( views_.begin(), views_.end(), [=]( const T_View& view ) {
         observer( view );
@@ -113,10 +109,23 @@ void GLMainProxy::AddCreationObserver( QObject* parent, const T_GLObserver& obse
 
 void GLMainProxy::AddDeletionObserver( QObject* parent, const T_GLObserver& observer )
 {
-    gui::connect( parent, SIGNAL( destroyed( QObject* ) ), [=] {
-        deletionObservers_.erase( parent );
-    } );
+    connect( parent, SIGNAL( destroyed( QObject* ) ), SLOT( RemoveDeletionObserver( QObject* ) ) );
     deletionObservers_[ parent ] = observer;
+}
+
+void GLMainProxy::RemoveActiveChangeObserver( QObject* parent )
+{
+    activeChangeObservers_.erase( parent );
+}
+
+void GLMainProxy::RemoveCreationObserver( QObject* parent )
+{
+    creationObservers_.erase( parent );
+}
+
+void GLMainProxy::RemoveDeletionObserver( QObject* parent )
+{
+    deletionObservers_.erase( parent );
 }
 
 void GLMainProxy::ApplyToOptions( const std::function< void( GLOptions& ) >& functor )
