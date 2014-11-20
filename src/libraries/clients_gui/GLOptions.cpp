@@ -32,9 +32,11 @@
 #include "clients_kernel/StaticModel.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "ENT/ENT_Tr.h"
+#include "MT_Tools/MT_Logger.h"
 #include <boost/algorithm/string.hpp>
 #include <boost/assign/list_of.hpp>
 #include <graphics/Lighting_ABC.h>
+#include <graphics/MapnikLayer.h>
 #include <xeumeuleu/xml.hpp>
 
 using namespace gui;
@@ -47,7 +49,8 @@ GLOptions::GLOptions( kernel::Controllers& controllers,
                       const kernel::Profile_ABC& profile,
                       const kernel::StaticModel& staticModel,
                       const kernel::EntityResolver_ABC& model,
-                      const std::shared_ptr< Lighting_ABC >& lighting )
+                      const std::shared_ptr< Lighting_ABC >& lighting,
+                      uint32_t mapnikThread )
     : controllers_( controllers )
     , profile_( profile )
     , map_( staticModel.detection_ )
@@ -67,6 +70,7 @@ GLOptions::GLOptions( kernel::Controllers& controllers,
     , lighting_( lighting )
     , urbanSetup_( std::make_shared< UrbanDisplayOptions >( controllers, accommodationTypes_ ) )
     , watershedTexture_( new WatershedTexture( map_ ) )
+    , mapnikThread_( mapnikThread )
 {
     contourLinesComputer_->SetContourLinesObserver( contourLinesObserver_ );
     controllers_.Register( *this );
@@ -89,6 +93,7 @@ GLOptions::GLOptions( const GLOptions& other )
     , watershedTexture_( new WatershedTexture( map_ ) )
     , filterEntity_( controllers_ )
     , lockedEntity_( controllers_ )
+    , mapnikThread_( other.mapnikThread_ )
 {
     *this = other;
     controllers_.Register( *this );
@@ -144,6 +149,7 @@ void GLOptions::Purge()
 {
     elevation2dTexture_->Purge();
     watershedTexture_->Purge();
+    mapnikLayer_.reset();
 }
 
 namespace
@@ -550,4 +556,16 @@ const std::shared_ptr< UrbanDisplayOptions >& GLOptions::GetUrbanDisplayOptions(
 const T_FireOptions& GLOptions::GetFireOptions( FireGroup group ) const
 {
     return fires_[group];
+}
+
+graphics::MapnikLayer& GLOptions::GetMapnikLayer( const tools::Path& terrain )
+{
+    if( !mapnikLayer_ )
+    {
+        MT_LOG_INFO_MSG( "mapnik-threads: " << mapnikThread_ );
+        if( terrain.IsEmpty() )
+            throw MASA_EXCEPTION( "No terrain path defined" );
+        mapnikLayer_.reset( new graphics::MapnikLayer( 0, terrain, mapnikThread_ ) );
+    }
+    return *mapnikLayer_;
 }

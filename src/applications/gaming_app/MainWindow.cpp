@@ -225,7 +225,8 @@ MainWindow::MainWindow( Controllers& controllers,
                                                       iconLayout,
                                                       *eventStrategy_,
                                                       *glProxy_,
-                                                      std::make_shared< SimulationLighting >( controllers ) ) );
+                                                      std::make_shared< SimulationLighting >( controllers ),
+                                                      config.GetMapnikThreads() ) );
     gui::connect( glWidgetManager_.get(), SIGNAL( UpdateGL() ), [&]() {
         model_.agents_.Resolver< Agent_ABC >::Apply( []( Agent_ABC& agent ) { agent.Get< kernel::Positions >().Compute(); } );
     } );
@@ -366,7 +367,7 @@ void MainWindow::CreateLayers( const std::shared_ptr< gui::ParametersLayer >& pa
     layers[ eLayerTypes_Grid ]                   = std::make_shared< gui::GridLayer >( controllers_, *glProxy_, staticModel_.coordinateConverter_ );
     layers[ eLayerTypes_Locations ]              = locations;
     if( config_.HasMapnik() )
-        layers[ eLayerTypes_Mapnik ]             = std::make_shared< gui::MapnikLayer >( controllers_, *glProxy_, config_.GetMapnikThreads() );
+        layers[ eLayerTypes_Mapnik ]             = std::make_shared< gui::MapnikLayer >( controllers_, *glProxy_ );
     layers[ eLayerTypes_Metric ]                 = std::make_shared< gui::MetricsLayer >( controllers_, staticModel_.detection_, *glProxy_ );
     layers[ eLayerTypes_ObjectKnowledges ]       = std::make_shared< ObjectKnowledgesLayer >( controllers_, *glProxy_, *strategy_, profile_ );
     layers[ eLayerTypes_Objects ]                = std::make_shared< ObjectsLayer >( controllers_, *glProxy_, *strategy_, profile_, model_.actions_, staticModel_, simulation, picker );

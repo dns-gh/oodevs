@@ -81,7 +81,8 @@ public:
                               const std::shared_ptr< IconLayout >& iconLayout,
                               EventStrategy_ABC& strategy,
                               GLMainProxy& proxy,
-                              const std::shared_ptr< Lighting_ABC >& lighting );
+                              const std::shared_ptr< Lighting_ABC >& lighting,
+                              uint32_t mapnikThread );
     virtual ~GLWidgetManager();
     //@}
 
