@@ -127,17 +127,20 @@ void GLProxyBase::FillSelection( const geometry::Point2f& point,
                                  T_ObjectsPicking& selection,
                                  const boost::optional< E_LayerTypes >& type )
 {
-    GetHoveredView().FillSelection( point, selection, type );
+    if( auto view = GetHoveredView() )
+        view->FillSelection( point, selection, type );
 }
 
 void GLProxyBase::Picking()
 {
-    GetHoveredView().Picking();
+    if( auto view = GetHoveredView() )
+        view->Picking();
 }
 
 void GLProxyBase::WheelEvent( QWheelEvent* event )
 {
-    GetHoveredView().WheelEvent( event );
+    if( auto view = GetHoveredView() )
+        view->WheelEvent( event );
 }
 
 // -----------------------------------------------------------------------------
@@ -145,7 +148,9 @@ void GLProxyBase::WheelEvent( QWheelEvent* event )
 // -----------------------------------------------------------------------------
 geometry::Point2f GLProxyBase::MapToterrainCoordinates( int x, int y )
 {
-    return GetHoveredView().MapToterrainCoordinates( x, y );
+    if( auto view = GetHoveredView() )
+        return view->MapToterrainCoordinates( x, y );
+    return geometry::Point2f();
 }
 
 // -----------------------------------------------------------------------------

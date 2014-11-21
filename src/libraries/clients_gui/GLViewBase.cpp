@@ -80,12 +80,7 @@ const GLView_ABC& GLViewBase::GetActiveView() const
     throw MASA_EXCEPTION_NOT_IMPLEMENTED;
 }
 
-GLView_ABC& GLViewBase::GetHoveredView()
-{
-    throw MASA_EXCEPTION_NOT_IMPLEMENTED;
-}
-
-const GLView_ABC& GLViewBase::GetHoveredView() const
+GLView_ABC::T_View GLViewBase::GetHoveredView() const
 {
     throw MASA_EXCEPTION_NOT_IMPLEMENTED;
 }

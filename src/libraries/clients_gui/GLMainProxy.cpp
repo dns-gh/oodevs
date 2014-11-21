@@ -113,6 +113,12 @@ void GLMainProxy::AddDeletionObserver( QObject* parent, const T_GLObserver& obse
     deletionObservers_[ parent ] = observer;
 }
 
+void GLMainProxy::AddHoveredChangeObserver( QObject* parent, const T_GLObserver& observer )
+{
+    connect( parent, SIGNAL( destroyed( QObject* ) ), SLOT( RemoveHoveredChangeObserver( QObject* ) ) );
+    hoveredChangeObservers_[ parent ] = observer;
+}
+
 void GLMainProxy::RemoveActiveChangeObserver( QObject* parent )
 {
     activeChangeObservers_.erase( parent );
@@ -126,6 +132,11 @@ void GLMainProxy::RemoveCreationObserver( QObject* parent )
 void GLMainProxy::RemoveDeletionObserver( QObject* parent )
 {
     deletionObservers_.erase( parent );
+}
+
+void GLMainProxy::RemoveHoveredChangeObserver( QObject* parent )
+{
+    hoveredChangeObservers_.erase( parent );
 }
 
 void GLMainProxy::ApplyToOptions( const std::function< void( GLOptions& ) >& functor )
@@ -197,14 +208,22 @@ unsigned GLMainProxy::GetID() const
 // -----------------------------------------------------------------------------
 // Proxy -> implementation
 // -----------------------------------------------------------------------------
+namespace
+{
+    void ApplyObservers( const GLMainProxy::T_GLObservers& observers,
+                         const GLView_ABC::T_View& view )
+    {
+        for( auto it = observers.begin(); it != observers.end(); ++it )
+            it->second( view );
+    }
+}
+
 void GLMainProxy::Register( const std::shared_ptr< GLView_ABC >& view )
 {
     GLProxyBase::Register( view );
     if( !activeView_ )
         activeView_ = view;
-    std::for_each( creationObservers_.begin(),
-                   creationObservers_.end(),
-                   [=]( const std::pair< QObject*, T_GLObserver >& observer ) { observer.second( view ); } );
+    ApplyObservers( creationObservers_, view );
 }
 
 void GLMainProxy::Unregister( const std::shared_ptr< GLView_ABC >& view )
@@ -216,9 +235,7 @@ void GLMainProxy::Unregister( const std::shared_ptr< GLView_ABC >& view )
         hoveredView_.reset();
     if( activeView_ == view && defaultView_ )
         SetActiveView( *defaultView_ );
-    std::for_each( deletionObservers_.begin(),
-                   deletionObservers_.end(),
-                   [=]( const std::pair< QObject*, T_GLObserver >& observer ) { observer.second( view ); } );
+    ApplyObservers( deletionObservers_, view );
 }
 
 namespace
@@ -256,14 +273,9 @@ const GLView_ABC& GLMainProxy::GetActiveView() const
     return ::GetView( activeView_, defaultView_, "active" );
 }
 
-GLView_ABC& GLMainProxy::GetHoveredView()
+GLView_ABC::T_View GLMainProxy::GetHoveredView() const
 {
-    return ::GetView( hoveredView_, defaultView_, "hovered" );
-}
-
-const GLView_ABC& GLMainProxy::GetHoveredView() const
-{
-    return ::GetView( hoveredView_, defaultView_, "hovered" );
+    return hoveredView_;
 }
 
 // -----------------------------------------------------------------------------
@@ -299,9 +311,7 @@ void GLMainProxy::SetActiveView( GLView_ABC& view )
     controllers_.options_.SetViewOptions( options.GetOptions() );
     controllers_.options_.UpdateViewOptions();
     profileFilter_.SetFilter( options.GetFilterEntity(), true );
-    std::for_each( activeChangeObservers_.begin(),
-                   activeChangeObservers_.end(),
-                   [=]( const std::pair< QObject*, T_GLObserver >& observer ) { observer.second( activeView_ ); } );
+    ApplyObservers( activeChangeObservers_, activeView_ );
     // reset contour lines observer
     ApplyToOptions( []( GLOptions& options ) {
         options.GetContourLinesComputer()->SetContourLinesObserver( std::shared_ptr< ContourLinesObserver >() );
@@ -317,6 +327,7 @@ void GLMainProxy::SetCurrentView( GLView_ABC* view )
 void GLMainProxy::SetHoveredView( GLView_ABC* view )
 {
     hoveredView_ = FindView( views_, view, "Unable to find the hovered view" );
+    ApplyObservers( hoveredChangeObservers_, hoveredView_ );
 }
 
 // -----------------------------------------------------------------------------

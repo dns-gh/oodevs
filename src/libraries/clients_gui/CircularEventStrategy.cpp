@@ -68,6 +68,10 @@ void CircularEventStrategy::Initialize( kernel::Controllers& controllers,
                                         const T_LayersVector& layers )
 {
     menu_.reset( new SelectionMenu( controllers, entitySymbols, colorStrategy, drawingTypes, *proxy ) );
+    proxy->AddHoveredChangeObserver( this, [ &]( const GLView_ABC::T_View& view ) {
+        if( !view )
+            HideTooltip();
+    } );
     view_ = proxy;
     default_ = defaultLayer;
     layers_ = layers;
@@ -360,6 +364,7 @@ void CircularEventStrategy::OnDisplayToolTip()
     if( !QApplication::activeWindow() ||
         QApplication::activePopupWidget() ||
         !view_ ||
+        !view_->GetHoveredView() ||
         tooltiped_ ||
         controllers_.GetCurrentMode() <= eModes_Default )
     {

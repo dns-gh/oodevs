@@ -90,8 +90,7 @@ public:
     virtual const GLView_ABC& GetActiveView() const;
     virtual GLView_ABC& GetCurrentView();
     virtual const GLView_ABC& GetCurrentView() const;
-    virtual GLView_ABC& GetHoveredView();
-    virtual const GLView_ABC& GetHoveredView() const;
+    virtual T_View GetHoveredView() const;
     //@}
 
     //! @name View setters -> forward to parent

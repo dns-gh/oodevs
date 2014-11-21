@@ -177,8 +177,7 @@ public:
     virtual const GLView_ABC& GetActiveView() const = 0;
     virtual GLView_ABC& GetCurrentView() = 0;
     virtual const GLView_ABC& GetCurrentView() const = 0;
-    virtual GLView_ABC& GetHoveredView() = 0;
-    virtual const GLView_ABC& GetHoveredView() const = 0;
+    virtual T_View GetHoveredView() const = 0;
     //@}
 
     //! @name View setters

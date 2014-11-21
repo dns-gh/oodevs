@@ -317,9 +317,11 @@ GLWidgetManager::T_GLStackedWidget GLWidgetManager::GetMainWidget() const
 // -----------------------------------------------------------------------------
 GLWidgetManager::T_GLStackedWidget GLWidgetManager::GetHoveredWidget() const
 {
-    return GetStackedWidget( [&]( const T_GLStackedWidget& widget ){
-        return widget->GetProxy().get() == &mainProxy_.GetHoveredView();
-    }, "Unable to find the hovered view" );
+    if( auto view = mainProxy_.GetHoveredView() )
+        return GetStackedWidget([ &]( const T_GLStackedWidget& widget ) {
+            return widget->GetProxy() == view;
+        }, "Unable to find the hovered view" );
+    return T_GLStackedWidget();
 }
 
 // -----------------------------------------------------------------------------
