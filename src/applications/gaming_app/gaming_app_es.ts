@@ -3582,11 +3582,11 @@ Los datos no pueden ser proyectados.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Error</source>
-        <translation type="unfinished">Error</translation>
+        <source>Unable to load configuration file</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&apos;%1&apos; is not a valid drawing file.</source>
+        <source>Unable to load drawings file</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

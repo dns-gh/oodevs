@@ -3573,12 +3573,12 @@ This data can&apos;t be projected.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Error</source>
-        <translation>Error</translation>
+        <source>Unable to load configuration file</source>
+        <translation>Unable to load configuration file</translation>
     </message>
     <message>
-        <source>&apos;%1&apos; is not a valid drawing file.</source>
-        <translation>&apos;%1&apos; is not a valid drawing file.</translation>
+        <source>Unable to load drawings file</source>
+        <translation>Unable to load drawings file</translation>
     </message>
 </context>
 <context>

@@ -324,6 +324,7 @@ void TimelineWebView::OnTriggeredEvents( const timeline::Events& events )
         if( gui::event_helpers::StringToBool( jsonPayload[ gui::event_helpers::resetDrawingsKey ] ) )
             model_.drawings_.Purge();
         tools::Path drawingsPath = tools::Path::FromUTF8( jsonPayload[ gui::event_helpers::drawingsPathKey ] );
+        QString error;
         if( drawingsPath.Exists() )
             try
             {
@@ -332,16 +333,29 @@ void TimelineWebView::OnTriggeredEvents( const timeline::Events& events )
             }
             catch( const xml::exception& )
             {
-                QMessageBox::critical( this, tr( "Error" ), tr( "'%1' is not a valid drawing file." ).arg( drawingsPath.ToUTF8().c_str() ) );
+                error = tr( "Unable to load drawings file" );
             }
-        tools::Path configurationPath = tools::Path::FromUTF8( jsonPayload[ gui::event_helpers::configurationPathKey ] );
-        if( configurationPath.Exists() )
+        if( error.isEmpty() )
         {
-            configurationPath.MakePreferred();
-            glWidgetManager_.LoadDisplaySettings( configurationPath );
+            tools::Path configurationPath = tools::Path::FromUTF8( jsonPayload[ gui::event_helpers::configurationPathKey ] );
+            if( configurationPath.Exists() )
+            {
+                configurationPath.MakePreferred();
+                if( !glWidgetManager_.LoadDisplaySettings( configurationPath, false ) )
+                    error = tr( "Unable to load configuration file" );
+            }
         }
         if( server_ )
-            server_->CloseEvent( timeline::CloseEvent( event.uuid ) );
+        {
+            timeline::CloseEvent closeEvent( event.uuid );
+            if( !error.isEmpty() )
+            {
+                closeEvent.error.code = timeline::EC_INTERNAL_SERVER_ERROR;
+                closeEvent.error.text = error.toStdString();
+                closeEvent.done = false;
+            }
+            server_->CloseEvent( closeEvent );
+        }
     }
 }
 
