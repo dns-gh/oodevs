@@ -743,7 +743,7 @@ class Replay
 
     range_drag_move: (el, d) ->
         element = d3.select el
-        return unless @timeline.layout.select( d3.event.dx, d3.event.dy)      
+        return unless @timeline.layout.select( d3.event.dx, d3.event.dy)
         pos = @timeline.layout.select d3.event.x, d3.event.y
         event = @timeline.model.get d.id
         old = min: d.min, max: d.max
@@ -769,7 +769,7 @@ class Replay
             event.set begin: format(d.min)
         else
             d.min = old.min
-        if d.idx != (@model.replays.length-1) and (@timeline.range_zone == "bottom" or @timeline.range_zone == "right")            
+        if d.idx != @model.replays.length-1 and (@timeline.range_zone == "bottom" or @timeline.range_zone == "right")            
             event.set end: format(d.max)
         else
             d.max = old.max

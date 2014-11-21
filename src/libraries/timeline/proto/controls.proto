@@ -29,30 +29,30 @@ enum ClientType
 
 enum ServerType
 {
-    SERVER_INVALID                     = 0x000;
+    SERVER_INVALID                       = 0x000;
     // commands
-    SERVER_READY                       = 0x100;
+    SERVER_READY                         = 0x100;
     // event commands
-    SERVER_EVENT_CREATED               = 0x200;
-    SERVER_EVENT_READ_ALL              = 0x201;
-    SERVER_EVENT_READ_ONE              = 0x202;
-    SERVER_EVENT_UPDATED               = 0x203;
-    SERVER_EVENT_DELETED               = 0x204;
-    SERVER_EVENT_SELECTED              = 0x205;
-    SERVER_EVENT_DESELECTED            = 0x206;
-    SERVER_EVENT_ACTIVATED             = 0x207;
-    SERVER_EVENT_CONTEXTMENU           = 0x208;
-    SERVER_EVENT_CONTEXTMENUBACKGROUND = 0x209;
-    SERVER_EVENT_TRIGGERED             = 0x20A;
-    SERVER_EVENT_CLOSED                = 0x20B;
-    SERVER_EVENT_CONTEXTMENUREPLAY     = 0x20C;
+    SERVER_EVENT_CREATED                 = 0x200;
+    SERVER_EVENT_READ_ALL                = 0x201;
+    SERVER_EVENT_READ_ONE                = 0x202;
+    SERVER_EVENT_UPDATED                 = 0x203;
+    SERVER_EVENT_DELETED                 = 0x204;
+    SERVER_EVENT_SELECTED                = 0x205;
+    SERVER_EVENT_DESELECTED              = 0x206;
+    SERVER_EVENT_ACTIVATED               = 0x207;
+    SERVER_EVENT_CONTEXT_MENU            = 0x208;
+    SERVER_EVENT_CONTEXT_MENU_BACKGROUND = 0x209;
+    SERVER_EVENT_TRIGGERED               = 0x20A;
+    SERVER_EVENT_CLOSED                  = 0x20B;
+    SERVER_EVENT_CONTEXT_MENU_REPLAY     = 0x20C;
     // keyboard event
-    SERVER_KEYBOARD_KEYDOWN            = 0x300;
-    SERVER_KEYBOARD_KEYPRESS           = 0x301;
-    SERVER_KEYBOARD_KEYUP              = 0x302;
+    SERVER_KEYBOARD_KEYDOWN              = 0x300;
+    SERVER_KEYBOARD_KEYPRESS             = 0x301;
+    SERVER_KEYBOARD_KEYUP                = 0x302;
     // serialization command
-    SERVER_EVENTS_LOADED               = 0x400;
-    SERVER_EVENTS_SAVED                = 0x401;
+    SERVER_EVENTS_LOADED                 = 0x400;
+    SERVER_EVENTS_SAVED                  = 0x401;
 }
 
 message Action

@@ -111,7 +111,7 @@ namespace
         MOCK_METHOD( CreateEvent, 2 );
         MOCK_METHOD( SelectEvent, 1 );
         MOCK_METHOD( EditEvent, 1 );
-        MOCK_METHOD( SplitEvent, 1 );
+        MOCK_METHOD( SplitEvent, 2 );
         MOCK_METHOD( DeleteEvent, 1 );
         MOCK_METHOD( GetCurrentParent, 0 );
     };

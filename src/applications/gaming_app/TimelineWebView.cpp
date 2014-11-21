@@ -133,9 +133,9 @@ void TimelineWebView::Connect()
 
     connect( server_.get(), SIGNAL( SelectedEvent( boost::shared_ptr< timeline::Event > ) ), this, SLOT( OnSelectedEvent( boost::shared_ptr< timeline::Event > ) ) );
     connect( server_.get(), SIGNAL( ActivatedEvent( const timeline::Event& ) ), this, SLOT( OnActivatedEvent( const timeline::Event& ) ) );
-    connect( server_.get(), SIGNAL( ContextMenuEvent( boost::shared_ptr< timeline::Event > ) ), this, SLOT( OnContextMenuEvent( boost::shared_ptr< timeline::Event > ) ) );
+    connect( server_.get(), SIGNAL( ContextMenuEvent( const timeline::Event& ) ), this, SLOT( OnContextMenuEvent( const timeline::Event& ) ) );
     connect( server_.get(), SIGNAL( ContextMenuBackground( const std::string& ) ), this, SLOT( OnContextMenuBackground( const std::string& ) ) );
-    connect( server_.get(), SIGNAL( ContextMenuReplay( boost::shared_ptr< timeline::Event >, const std::string& ) ), this, SLOT( OnContextMenuReplay( boost::shared_ptr< timeline::Event >, const std::string& ) ) );
+    connect( server_.get(), SIGNAL( ContextMenuReplay( const timeline::Event&, const std::string& ) ), this, SLOT( OnContextMenuReplay( const timeline::Event&, const std::string& ) ) );
     connect( server_.get(), SIGNAL( KeyUp( int ) ), this, SLOT( OnKeyUp( int ) ) );
     connect( server_.get(), SIGNAL( TriggeredEvents( const timeline::Events& ) ), this, SLOT( OnTriggeredEvents( const timeline::Events& ) ) );
 
@@ -349,12 +349,10 @@ void TimelineWebView::OnTriggeredEvents( const timeline::Events& events )
 // Name: TimelineWebView::OnContextMenuEvent
 // Created: ABR 2013-05-24
 // -----------------------------------------------------------------------------
-void TimelineWebView::OnContextMenuEvent( boost::shared_ptr< timeline::Event > event )
+void TimelineWebView::OnContextMenuEvent( const timeline::Event& event )
 {
-    if( !event )
-        return;
-    selectedDateTime_ = QDateTime::fromString( QString::fromStdString( event->begin ), Qt::ISODate );
-    GetOrCreateEvent( *event ).ContextMenu( controllers_.eventActions_, QCursor::pos(), this );
+    selectedDateTime_ = QDateTime::fromString( QString::fromStdString( event.begin ), Qt::ISODate );
+    GetOrCreateEvent( event ).ContextMenu( controllers_.eventActions_, QCursor::pos(), this );
 }
 
 // -----------------------------------------------------------------------------
@@ -371,10 +369,10 @@ void TimelineWebView::OnContextMenuBackground( const std::string& time )
 // Name: TimelineWebView::OnContextMenuReplay
 // Created: SLI 2014-11-19
 // -----------------------------------------------------------------------------
-void TimelineWebView::OnContextMenuReplay( boost::shared_ptr< timeline::Event > event, const std::string& time )
+void TimelineWebView::OnContextMenuReplay( const timeline::Event& event, const std::string& time )
 {
     selectedDateTime_ = QDateTime::fromString( QString::fromStdString( time ), Qt::ISODate );
-    const gui::ReplayEvent replay( GetOrCreateEvent( *event ), selectedDateTime_ );
+    const gui::ReplayEvent replay( GetOrCreateEvent( event ), selectedDateTime_ );
     controllers_.eventActions_.ContextMenu( this, replay, QCursor::pos() );
 }
 

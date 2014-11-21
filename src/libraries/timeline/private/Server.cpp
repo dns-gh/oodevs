@@ -239,7 +239,7 @@ void Server::OnTriggeredEvents( const Events& events )
 
 void Server::OnContextMenuEvent( const Event& event )
 {
-    emit ContextMenuEvent( boost::make_shared< Event >( event ) );
+    emit ContextMenuEvent( event );
 }
 
 void Server::OnContextMenuBackground( const std::string& time )
@@ -249,7 +249,7 @@ void Server::OnContextMenuBackground( const std::string& time )
 
 void Server::OnContextMenuReplay( const Event& event, const std::string& time )
 {
-    emit ContextMenuReplay( boost::make_shared< Event >( event ), time );
+    emit ContextMenuReplay( event, time );
 }
 
 void Server::OnKeyDown( int key )
