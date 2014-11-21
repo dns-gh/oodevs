@@ -12,7 +12,6 @@
 
 #include "clients_kernel/Extension_ABC.h"
 #include <tools/Resolver.h>
-#include <boost/noncopyable.hpp>
 
 class Object;
 
@@ -24,7 +23,6 @@ class Object;
 // =============================================================================
 class Objects : public kernel::Extension_ABC
               , public tools::Resolver< const Object >
-              , private boost::noncopyable
 {
 public:
              Objects();
