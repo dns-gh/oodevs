@@ -308,8 +308,9 @@ void PHY_DotationCategory_IndirectFire::ApplyEffect( const MIL_Agent_ABC* pFirer
                     PHY_RoleInterface_Perceiver& perceiver = observerAgent.GetRole< PHY_RoleInterface_Perceiver >();
                     if( perceiver.IsFireObserver() || &observerAgent == requester )
                     {
+                        auto& location = target.GetRole< PHY_RoleInterface_Location >();
                         boost::shared_ptr< DEC_Knowledge_Agent > knowledge = perceiver.GetKnowledgeGroup()->GetKnowledge()->GetKnowledgeAgentContainer().GetKnowledgeAgent( target );
-                        if( knowledge && knowledge->GetRelevance() == 1. && knowledge->GetCurrentPerceptionLevel() >= PHY_PerceptionLevel::detected_ )
+                        if( knowledge && perceiver.GetPerception( (*itobserver)->GetPosition(), location.GetPosition() ) > 0 )
                         {
                             const auto& damages = fireResult.GetDamages( target );
                             unsigned int damaged = 0;
