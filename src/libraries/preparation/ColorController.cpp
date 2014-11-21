@@ -12,6 +12,8 @@
 #include "LogisticBaseStates.h"
 #include "Objects.h"
 #include "Object.h"
+#include "Populations.h"
+#include "Population.h"
 #include "clients_gui/LogisticHierarchiesBase.h"
 #include "clients_kernel/Color_ABC.h"
 #include "clients_kernel/Entity_ABC.h"
@@ -48,9 +50,15 @@ ColorController::~ColorController()
 void ColorController::Add( const kernel::Entity_ABC& entity, const QColor& newColor, bool applyToSubordinates, bool force )
 {
     gui::ColorController::Add( entity, newColor, applyToSubordinates, force );
-    if( const Objects* pObjects = entity.Retrieve< Objects >() )
+    if( const auto objects = entity.Retrieve< Objects >() )
     {
-        auto it = pObjects->CreateIterator();
+        auto it = objects->CreateIterator();
+        while( it.HasMoreElements() )
+            AddColor( it.NextElement(), newColor );
+    }
+    if( const auto populations = entity.Retrieve< Populations >() )
+    {
+        auto it = populations->CreateIterator();
         while( it.HasMoreElements() )
             AddColor( it.NextElement(), newColor );
     }
@@ -63,9 +71,15 @@ void ColorController::Add( const kernel::Entity_ABC& entity, const QColor& newCo
 void ColorController::Remove( const kernel::Entity_ABC& entity, bool applyToSubordinates, bool force )
 {
     gui::ColorController::Remove( entity, applyToSubordinates, force );
-    if( const Objects* pObjects = entity.Retrieve< Objects >() )
+    if( const auto objects = entity.Retrieve< Objects >() )
     {
-        auto it = pObjects->CreateIterator();
+        auto it = objects->CreateIterator();
+        while( it.HasMoreElements() )
+            ClearColor( it.NextElement() );
+    }
+    if( const auto populations = entity.Retrieve< Populations >() )
+    {
+        auto it = populations->CreateIterator();
         while( it.HasMoreElements() )
             ClearColor( it.NextElement() );
     }
