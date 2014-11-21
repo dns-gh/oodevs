@@ -485,6 +485,17 @@
     </message>
 </context>
 <context>
+    <name>gui::AggregateToolbar</name>
+    <message>
+        <source>Aggregate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Disaggregate</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>gui::AltitudeModifierPrototype_ABC</name>
     <message>
         <source>Altitude modifier</source>
@@ -492,17 +503,6 @@
     </message>
     <message>
         <source>Height:</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>gui::AutomatsLayer</name>
-    <message>
-        <source>Aggregate</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Disaggregate</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -966,17 +966,6 @@ Please check access permissions or write protection.</source>
     </message>
     <message>
         <source>Reference distance:</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>gui::FormationLayer</name>
-    <message>
-        <source>Aggregate</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Disaggregate</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

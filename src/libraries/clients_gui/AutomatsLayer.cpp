@@ -12,6 +12,7 @@
 #include "moc_AutomatsLayer.cpp"
 #include "GLOptions.h"
 #include "Tools.h"
+#include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/Profile_ABC.h"
@@ -28,7 +29,6 @@ AutomatsLayer::AutomatsLayer( Controllers& controllers,
                               ColorStrategy_ABC& strategy,
                               const Profile_ABC& profile )
     : EntityLayer< Automat_ABC >( controllers, tools, strategy, profile, eLayerTypes_Automats )
-    , selected_( controllers )
 {
     // NOTHING
 }
@@ -40,44 +40,6 @@ AutomatsLayer::AutomatsLayer( Controllers& controllers,
 AutomatsLayer::~AutomatsLayer()
 {
     // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: AutomatsLayer::Aggregate
-// Created: SBO 2007-04-12
-// -----------------------------------------------------------------------------
-void AutomatsLayer::Aggregate()
-{
-    if( selected_ )
-        view_.GetActiveOptions().Aggregate( *selected_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: AutomatsLayer::Disaggregate
-// Created: SBO 2007-04-12
-// -----------------------------------------------------------------------------
-void AutomatsLayer::Disaggregate()
-{
-    if( selected_ )
-        view_.GetActiveOptions().Disaggregate( selected_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: AutomatsLayer::NotifyContextMenu
-// Created: SBO 2007-04-12
-// -----------------------------------------------------------------------------
-void AutomatsLayer::NotifyContextMenu( const Automat_ABC& automat, kernel::ContextMenu& menu )
-{
-    if( !profile_.IsVisible( automat ) )
-        return;
-    selected_ = &automat;
-    if( !automat.IsAnAggregatedSubordinate() )
-    {
-        if( !view_.GetActiveOptions().IsAggregated( automat ) )
-            menu.InsertItem( "Interface", tr( "Aggregate" ), this, SLOT( Aggregate() ) );
-        else
-            menu.InsertItem( "Interface", tr( "Disaggregate" ), this, SLOT( Disaggregate() ) );
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -100,15 +62,4 @@ void AutomatsLayer::ContextMenu( const GraphicalEntity_ABC& selectable, const ge
     const Automat_ABC& automat = static_cast< const Automat_ABC& >( selectable );
     if( !entity.IsAnAggregatedSubordinate() && view_.GetActiveOptions().IsAggregated( entity ) )
         controllers_.actions_.ContextMenu( this, automat, entity, point, where );
-}
-
-
-// -----------------------------------------------------------------------------
-// Name: AutomatsLayer::NotifySelectionChanged
-// Created: JSR 2012-05-31
-// -----------------------------------------------------------------------------
-void AutomatsLayer::NotifySelectionChanged( const std::vector< const kernel::Automat_ABC* >& elements )
-{
-    EntityLayer< Automat_ABC >::NotifySelectionChanged( elements );
-    selected_ = elements.size() == 1 ? elements.front() : 0;
 }

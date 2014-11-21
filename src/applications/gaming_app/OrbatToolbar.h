@@ -32,7 +32,7 @@ namespace kernel
 namespace gui
 {
     class AggregateToolbar;
-    class GLView_ABC;
+    class GLMainProxy;
 }
 
 class Filter_ABC;
@@ -66,7 +66,7 @@ public:
     //@{
              OrbatToolbar( QWidget* parent,
                            kernel::Controllers& controllers,
-                           gui::GLView_ABC& view,
+                           gui::GLMainProxy& glMainProxy,
                            const Model& model,
                            ProfileFilter& filter );
     virtual ~OrbatToolbar();

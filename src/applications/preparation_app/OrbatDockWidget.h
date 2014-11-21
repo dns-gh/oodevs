@@ -15,12 +15,13 @@
 namespace kernel
 {
     class Controllers;
+    class Profile_ABC;
 }
 
 namespace gui
 {
     class EntitySymbols;
-    class GLView_ABC;
+    class GLMainProxy;
     class ParametersLayer;
     class RichView_ABC;
     class SymbolIcons;
@@ -49,13 +50,14 @@ public:
                               QWidget* parent,
                               const QString& objectName,
                               const QString& windowTitle,
-                              gui::GLView_ABC& view,
+                              gui::GLMainProxy& glMainProxy,
                               const std::shared_ptr< gui::ParametersLayer >& paramLayer,
                               gui::EntitySymbols& icons,
                               ModelBuilder& modelBuilder,
                               Model& model,
                               StaticModel& staticModel,
-                              gui::SymbolIcons& symbols );
+                              gui::SymbolIcons& symbols,
+                              const kernel::Profile_ABC& profile );
     virtual ~OrbatDockWidget();
     //@}
 
