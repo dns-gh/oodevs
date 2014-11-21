@@ -115,6 +115,18 @@ bool MIL_ListParameter::ToNumericList( std::vector< float >& result ) const
     return true;
 }
 
+bool MIL_ListParameter::ToIntegerList( std::vector< int >& result ) const
+{
+    for( auto it = list_.begin(); it != list_.end(); ++it )
+    {
+        int param;
+        if( !(*it)->ToId( param ) )
+            return false;
+        result.push_back( param );
+    }
+    return true;
+}
+
 // -----------------------------------------------------------------------------
 // Name: MIL_ListParameter::ToPathList
 // Created: MGD 2010-11-15

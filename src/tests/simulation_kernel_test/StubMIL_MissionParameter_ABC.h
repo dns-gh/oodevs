@@ -43,6 +43,8 @@ public:
     { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
     virtual bool ToId( int& ) const
     { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
+    virtual bool ToIntegerList( std::vector< int >& ) const
+    { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
     virtual bool ToPoint( sword::Point& ) const
     { throw MASA_EXCEPTION_NOT_IMPLEMENTED; }
     virtual bool ToPointList( sword::PointList& ) const
