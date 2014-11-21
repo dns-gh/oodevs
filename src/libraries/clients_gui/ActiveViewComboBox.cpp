@@ -30,14 +30,14 @@ ActiveViewComboBox::ActiveViewComboBox( GLMainProxy& mainProxy,
         addItem( view->GetName(), QVariant::fromValue( view ) );
         setEnabled( count() > 1 );
     } );
-    mainProxy.AddDeletionObserver( this, [ &]( const GLView_ABC::T_View& view ) {
+    mainProxy.AddDeletionObserver( this, [&]( const GLView_ABC::T_View& view ) {
         removeItem( findText( view->GetName() ) );
         setEnabled( count() > 1 );
     } );
-    mainProxy.AddActiveChangeObserver( this, [ &]( const GLView_ABC::T_View& view ) {
+    mainProxy.AddActiveChangeObserver( this, [&]( const GLView_ABC::T_View& view ) {
         setCurrentIndex( findText( view->GetName() ) );
     } );
-    gui::connect( this, SIGNAL( activated( int ) ), [&]{
+    gui::connect( this, SIGNAL( activated( int ) ), [&] {
         mainProxy.SetActiveView( *itemData( currentIndex() ).value< GLView_ABC::T_View >() );
     } );
 }

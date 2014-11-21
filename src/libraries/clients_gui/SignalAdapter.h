@@ -14,7 +14,7 @@ namespace gui
 {
 // =============================================================================
 /** @class  SignalAdapter
-    @brief  A Qt signal to nulary functor adapter
+    @brief  A Qt signal to nullary functor adapter
 */
 // Created: MCO 2013-07-05
 // =============================================================================
@@ -23,19 +23,18 @@ class SignalAdapter : public QObject
     Q_OBJECT
 
 public:
-    SignalAdapter( QObject* parent, const std::function< void() >& f );
+    SignalAdapter( QObject* sender, const char* signal, const std::function< void() >& f );
 
 public slots:
     void Handle();
+    void Destroy();
 
 private:
       std::function< void() > f_;
 };
 
-inline bool connect( QObject* sender, const char * signal, const std::function< void() >& f )
-{
-    return QObject::connect( sender, signal, new gui::SignalAdapter( sender, f ), SLOT( Handle() ) );
-}
+bool connect( QObject* sender, const char* signal, const std::function< void() >& f );
+
 }
 
 #endif // __SignalAdapter_h_

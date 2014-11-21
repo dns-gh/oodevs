@@ -40,8 +40,10 @@ namespace gui
 */
 // Created: ABR 2014-06-23
 // =============================================================================
-class GLMainProxy : public GLProxyBase
+class GLMainProxy : private QObject, public GLProxyBase
 {
+    Q_OBJECT
+
 public:
     //! @name Types
     //@{
@@ -63,7 +65,7 @@ public:
     void Load( const DrawingTypes& drawingTypes );
     void Purge();
 
-    void AddActiveChangeObserver( QObject* parent, const T_GLObserver& activeChangeObserver );
+    void AddActiveChangeObserver( QObject* parent, const T_GLObserver& observer );
     void AddCreationObserver( QObject* parent, const T_GLObserver& observer );
     void AddDeletionObserver( QObject* parent, const T_GLObserver& observer );
 
@@ -164,6 +166,11 @@ public:
 
     virtual std::unique_ptr< GlTooltip_ABC > CreateTooltip() const;
     //@}
+
+private slots:
+    void RemoveActiveChangeObserver( QObject* parent );
+    void RemoveCreationObserver( QObject* parent );
+    void RemoveDeletionObserver( QObject* parent );
 
 private:
     typedef std::map< const char**, unsigned int > T_Icons;
