@@ -212,7 +212,7 @@ end
 -- @see integration.communication.Continue
 integration.communication.SlowDown = function()
     myself.speedModulation = myself.speedModulation or {}
-    myself.speedModulation.coordination = 0.01 -- scipio 
+    myself.speedModulation.coordination = 0.1 -- scipio 
     myself.slowDown = true -- ww base
 end
 
