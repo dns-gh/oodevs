@@ -3543,6 +3543,10 @@ Ces données ne peuvent pas être projetées.</translation>
         <source>Display events on read-only entities</source>
         <translation>Afficher les évènements sur les entitées en lecture seule</translation>
     </message>
+    <message>
+        <source>Display markers</source>
+        <translation>Afficher les marqueurs</translation>
+    </message>
 </context>
 <context>
     <name>TimelineWebView</name>

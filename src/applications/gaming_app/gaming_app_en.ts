@@ -3529,6 +3529,10 @@ This data can&apos;t be projected.</source>
         <source>Display events on read-only entities</source>
         <translation>Display events on read-only entities</translation>
     </message>
+    <message>
+        <source>Display markers</source>
+        <translation>Display markers</translation>
+    </message>
 </context>
 <context>
     <name>TimelineWebView</name>

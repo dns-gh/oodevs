@@ -38,6 +38,7 @@ TimelineToolBar::TimelineToolBar( kernel::Controllers& controllers,
     , displayReadOnly_( true )
     , displayOrders_( true )
     , displayTasks_( true )
+    , displayMarkers_( true )
     , displaySelected_( false )
     , contextMenuEvent_( controllers )
     , filteredEntity_( controllers )
@@ -61,6 +62,7 @@ TimelineToolBar::TimelineToolBar( const TimelineToolBar& other )
     , displayReadOnly_( other.displayReadOnly_ )
     , displayOrders_( other.displayOrders_ )
     , displayTasks_( other.displayTasks_ )
+    , displayMarkers_( other.displayMarkers_ )
     , displaySelected_( other.displaySelected_ )
     , contextMenuEvent_( other.contextMenuEvent_ )
     , filteredEntity_( other.filteredEntity_ )
@@ -121,6 +123,11 @@ void TimelineToolBar::Initialize()
     taskFilter->setCheckable( true );
     taskFilter->setChecked( displayTasks_ );
 
+    QAction* markerFilter = new QAction( tr( "Display markers" ), this );
+    connect( markerFilter, SIGNAL( toggled( bool ) ), this, SLOT( OnMarkerFilterToggled( bool ) ) );
+    markerFilter->setCheckable( true );
+    markerFilter->setChecked( displayMarkers_ );
+
     QAction* selectedFilter = new QAction( tr( "Filter on selected entity" ), this );
     connect( selectedFilter, SIGNAL( toggled( bool ) ), this, SLOT( OnSelectedFilterToggled( bool ) ) );
     selectedFilter->setCheckable( true );
@@ -134,6 +141,7 @@ void TimelineToolBar::Initialize()
     filterMenu_->addAction( orderFilter );
     filterMenu_->addAction( engagedFilter_ );
     filterMenu_->addAction( taskFilter );
+    filterMenu_->addAction( markerFilter );
     filterMenu_->addSeparator();
     filterMenu_->addAction( selectedFilter );
     filterMenu_->addAction( readOnlyFilter );
@@ -226,6 +234,16 @@ void TimelineToolBar::OnTaskFilterToggled( bool toggled )
 }
 
 // -----------------------------------------------------------------------------
+// Name: TimelineToolBar::OnMarkerFilterToggled
+// Created: JSR 2014-11-21
+// -----------------------------------------------------------------------------
+void TimelineToolBar::OnMarkerFilterToggled( bool toggled )
+{
+    displayMarkers_ = toggled;
+    emit ServicesFilterChanged( GetServicesFilter() );
+}
+
+// -----------------------------------------------------------------------------
 // Name: TimelineToolBar::OnSelectedFilterToggled
 // Created: JSR 2014-11-06
 // -----------------------------------------------------------------------------
@@ -291,9 +309,9 @@ const kernel::Entity_ABC* TimelineToolBar::GetFilteredEntity() const
 
 namespace
 {
-    std::string ConvertToFilter( bool filter )
+    std::string ConvertToFilter( bool filter, const std::string& str = "*" )
     {
-        return filter ? "*" : "0";
+        return filter ? str : "0";
     }
 }
 
@@ -305,7 +323,7 @@ std::string TimelineToolBar::GetServicesFilter() const
 {
     return "sword:" + ConvertToFilter( displayOrders_ )
          + ",none:" + ConvertToFilter( displayTasks_ )
-         + ",marker:" + gamingUuid_;
+         + ",marker:" + ConvertToFilter( displayMarkers_, gamingUuid_ );
 }
 
 // -----------------------------------------------------------------------------
