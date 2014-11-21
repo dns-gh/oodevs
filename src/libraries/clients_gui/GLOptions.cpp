@@ -189,6 +189,7 @@ void GLOptions::Load( kernel::Settings& settings )
     settings.beginGroup( "Situation" );
     SetLockedEntity( FindEntity( model_, profile_, settings.value( "LockedEntity", 0u ).toUInt() ) );
     SetFilterEntity( FindEntity( model_, profile_, settings.value( "FilterEntity", 0u ).toUInt() ) );
+    aggregatedEntities_.clear();
     StringToEntities( aggregatedEntities_, model_, profile_, settings.value( "AggregatedEntities", "" ).toString() );
     settings.endGroup();
 

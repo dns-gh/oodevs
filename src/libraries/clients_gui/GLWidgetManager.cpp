@@ -551,6 +551,7 @@ void GLWidgetManager::OnChangeMainView()
 {
     auto activeWidget = GetActiveWidget();
     kernel::Settings settings;
+    settings.remove( "TMP" );
     SaveView( settings, activeWidget, "TMP" );
     LoadView( settings, mainWidget_, "TMP" );
     settings.remove( "TMP" );
