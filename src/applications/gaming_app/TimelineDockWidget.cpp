@@ -47,9 +47,7 @@ TimelineDockWidget::TimelineDockWidget( QWidget* parent,
     : gui::RichDockWidget( controllers, parent, "timeline-dock-widget" )
     , config_( config )
     , gamingUuid_( model.GetUuid() )
-    , filterSelected_( false )
     , mainView_( 0 )
-    , filteredEntity_( controllers )
     , selectedEntity_( controllers )
 {
     // Init
@@ -139,7 +137,7 @@ TimelineToolBar* TimelineDockWidget::AddView( bool main /* = false */,
     connect( toolBar, SIGNAL( ServicesFilterChanged( const std::string& ) ), webView_.get(), SLOT( OnServicesFilterChanged( const std::string& ) ) );
     connect( toolBar, SIGNAL( KeywordFilterChanged( const std::string& ) ), webView_.get(), SLOT( OnKeywordFilterChanged( const std::string& ) ) );
     connect( toolBar, SIGNAL( HideHierarchiesFilterChanged( const std::string& ) ), webView_.get(), SLOT( OnHideHierarchiesFilterChanged( const std::string& ) ) );
-    connect( toolBar, SIGNAL( SelectedFilterChanged( bool ) ), this, SLOT( OnSelectedFilterChanged( bool ) ) );
+    connect( toolBar, SIGNAL( SelectedFilterChanged() ), this, SLOT( OnSelectedFilterChanged() ) );
     const int index = tabWidget_->addTab( toolBar, "" );
     tabWidget_->setTabText( index, main ? tr( "Main" ) : name.empty() ? tr( "View %1" ).arg( ++maxTabNumber_ ) : QString::fromStdString( name ) );
     tabWidget_->setCurrentIndex( index );
@@ -182,13 +180,8 @@ void TimelineDockWidget::RemoveCurrentView()
 // -----------------------------------------------------------------------------
 void TimelineDockWidget::OnCurrentChanged( int index )
 {
-    if( TimelineToolBar* toolbar = static_cast< TimelineToolBar* >( tabWidget_->widget( index ) ) )
-        webView_->UpdateFilters( toolbar->GetEntityFilter(),
-                                 toolbar->GetEngagedFilter(),
-                                 toolbar->GetServicesFilter(),
-                                 toolbar->GetKeywordFilter(),
-                                 toolbar->GetHideHierarchiesFilter(),
-                                 toolbar->GetShowOnlyFilter() );
+    if( auto toolbar = dynamic_cast< TimelineToolBar* >( tabWidget_->widget( index ) ) )
+        UpdateWebView( *toolbar );
 }
 
 namespace
@@ -223,22 +216,23 @@ namespace
 // Name: TimelineDockWidget::GetEntityFilter
 // Created: JSR 2014-11-07
 // -----------------------------------------------------------------------------
-std::string TimelineDockWidget::GetEntityFilter() const
+std::string TimelineDockWidget::GetEntityFilter( const TimelineToolBar& toolbar ) const
 {
-    if( !filterSelected_ )
-        return ::GetEntityFilter( filteredEntity_ );
+    const kernel::Entity_ABC* filteredEntity = toolbar.GetFilteredEntity();
+    if( !toolbar.GetSelectedFilter() )
+        return ::GetEntityFilter( filteredEntity );
     std::string result;
     if( selectedEntity_ )
     {
-        if( !filteredEntity_ || selectedEntity_ == filteredEntity_ )
+        if( !filteredEntity || selectedEntity_ == filteredEntity )
             result = ::GetEntityFilter( selectedEntity_ );
         else
         {
-            const kernel::TacticalHierarchies* hFiltered = filteredEntity_->Retrieve< kernel::TacticalHierarchies >();
+            const kernel::TacticalHierarchies* hFiltered = filteredEntity->Retrieve< kernel::TacticalHierarchies >();
             const kernel::TacticalHierarchies* hSelected = selectedEntity_->Retrieve< kernel::TacticalHierarchies >();
             if( hFiltered && hFiltered->IsSubordinateOf( *selectedEntity_ ) )
-                result = ::GetEntityFilter( filteredEntity_ );
-            else if( hSelected && hSelected->IsSubordinateOf( *filteredEntity_ ) )
+                result = ::GetEntityFilter( filteredEntity );
+            else if( hSelected && hSelected->IsSubordinateOf( *filteredEntity ) )
                 result = ::GetEntityFilter( selectedEntity_ );
         }
     }
@@ -255,13 +249,17 @@ void TimelineDockWidget::NotifyCreated( const kernel::Filter_ABC& filter )
 }
 
 // -----------------------------------------------------------------------------
-// Name: TimelineDockWidget::OnCurrentChanged
+// Name: TimelineDockWidget::NotifyUpdated
 // Created: LGY 2013-11-19
 // -----------------------------------------------------------------------------
 void TimelineDockWidget:: NotifyUpdated( const kernel::Filter_ABC& filter )
 {
-    filteredEntity_ = filter.GetFilteredEntity();
-    UpdateWebView();
+    if( mainView_ )
+    {
+        mainView_->SetFilteredEntity( filter.GetFilteredEntity() );
+        mainView_->SetEntityFilter( GetEntityFilter( *mainView_ ) );
+        UpdateWebView( *mainView_ );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -324,10 +322,13 @@ void TimelineDockWidget::OnShowOnlyFilterChanged( const std::string& uuid, const
 // Name: TimelineDockWidget::OnSelectedFilterChanged
 // Created: JSR 2014-11-06
 // -----------------------------------------------------------------------------
-void TimelineDockWidget::OnSelectedFilterChanged( bool selected )
+void TimelineDockWidget::OnSelectedFilterChanged()
 {
-    filterSelected_ = selected;
-    UpdateWebView();
+    if( mainView_ )
+    {
+        mainView_->SetEntityFilter( GetEntityFilter( *mainView_ ) );
+        UpdateWebView( *mainView_ );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -378,24 +379,28 @@ void TimelineDockWidget::Select( const actions::Action_ABC& action )
 // -----------------------------------------------------------------------------
 void TimelineDockWidget::AfterSelection()
 {
-    if( filterSelected_ )
-        UpdateWebView();
+    for( int i = 0; i < tabWidget_->count(); ++i )
+    {
+        TimelineToolBar* toolbar = dynamic_cast< TimelineToolBar* >( tabWidget_->widget( i ) );
+        if( toolbar && toolbar->GetSelectedFilter() )
+        {
+            toolbar->SetEntityFilter( GetEntityFilter( *toolbar ) );
+            UpdateWebView( *toolbar );
+        }
+    }
 }
 
 // -----------------------------------------------------------------------------
 // Name: TimelineDockWidget::UpdateWebView
 // Created: JSR 2014-11-06
 // -----------------------------------------------------------------------------
-void TimelineDockWidget::UpdateWebView() const
+void TimelineDockWidget::UpdateWebView( TimelineToolBar& toolbar ) const
 {
-    if( !mainView_ )
-        return;
-    mainView_->SetEntityFilter( GetEntityFilter() );
-    if( tabWidget_->currentIndex() == tabWidget_->indexOf( mainView_ ) )
-        webView_->UpdateFilters( mainView_->GetEntityFilter(),
-                                 mainView_->GetEngagedFilter(),
-                                 mainView_->GetServicesFilter(),
-                                 mainView_->GetKeywordFilter(),
-                                 mainView_->GetHideHierarchiesFilter(),
-                                 mainView_->GetShowOnlyFilter() );
+    if( tabWidget_->currentIndex() == tabWidget_->indexOf( &toolbar ) )
+        webView_->UpdateFilters( toolbar.GetEntityFilter(),
+                                 toolbar.GetEngagedFilter(),
+                                 toolbar.GetServicesFilter(),
+                                 toolbar.GetKeywordFilter(),
+                                 toolbar.GetHideHierarchiesFilter(),
+                                 toolbar.GetShowOnlyFilter() );
 }

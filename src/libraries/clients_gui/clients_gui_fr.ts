@@ -1847,7 +1847,7 @@ Voulez-vous le supprimer?</translation>
     </message>
     <message>
         <source>Grid</source>
-        <translation type="unfinished"></translation>
+        <translation>Grille</translation>
     </message>
 </context>
 <context>

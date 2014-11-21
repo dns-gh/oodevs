@@ -18,6 +18,7 @@ namespace kernel
 {
     class ActionController;
     class Controllers;
+    class Entity_ABC;
 }
 
 namespace gui
@@ -56,6 +57,9 @@ public:
     const std::string& GetEntityFilter() const;
     std::string GetServicesFilter() const;
     bool GetEngagedFilter() const;
+    bool GetSelectedFilter() const;
+    void SetFilteredEntity( const kernel::Entity_ABC* entity );
+    const kernel::Entity_ABC* GetFilteredEntity() const;
     void SetEntityFilter( const std::string& filter );
     std::string GetKeywordFilter() const;
     const std::string& GetShowOnlyFilter() const;
@@ -89,7 +93,7 @@ signals:
     void KeywordFilterChanged( const std::string& keyword );
     void HideHierarchiesFilterChanged( const std::string& hierarchies );
     void ShowOnlyFilterChanged( const std::string& uuid, const std::string& name );
-    void SelectedFilterChanged( bool selected );
+    void SelectedFilterChanged();
     //@}
 
 public slots:
@@ -134,6 +138,7 @@ private:
     QMenu* filterMenu_;
     QAction* engagedFilter_;
     kernel::SafePointer< gui::Event > contextMenuEvent_;
+    kernel::SafePointer< kernel::Entity_ABC > filteredEntity_;
     std::string showOnlyFilter_;
     std::set< std::string > hideHierarchiesFilter_;
     //@}
