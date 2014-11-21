@@ -16,6 +16,7 @@
 #include "clients_gui/ParametersLayer.h"
 #include "clients_gui/RichSpinBox.h"
 #include "clients_gui/RichWidget.h"
+#include "clients_gui/ShapeHandler_ABC.h"
 #include "clients_gui/SymbolSizeOptionChooser.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/UrbanObject_ABC.h"
@@ -194,20 +195,21 @@ void TerrainToolBar::NotifyContextMenu( const kernel::UrbanObject_ABC& object, k
 }
 
 // -----------------------------------------------------------------------------
-// Name: TerrainToolBar::Handle
+// Name: TerrainToolBar::CreateBlock
 // Created: ABR 2012-05-31
 // -----------------------------------------------------------------------------
-void TerrainToolBar::Handle( kernel::Location_ABC& location )
+void TerrainToolBar::CreateBlock( unsigned int parentId, kernel::Location_ABC& location )
 {
-    if( !selected_ )
-        return;
+    auto* parent = urbanModel_.Find( parentId );
+    if( !parent )
+       return; 
     std::vector< const kernel::UrbanObject_ABC* > intersectedBlocks;
     if( changingGeom_ )
-        urbanModel_.ChangeShape( location, *selected_.ConstCast(), intersectedBlocks );
+        urbanModel_.ChangeShape( location, *parent, intersectedBlocks );
     else if( isAuto_ )
-        urbanModel_.CreateAutoUrbanBlocks( location, *selected_.ConstCast(), roadWidthSpinBox_->value() );
+        urbanModel_.CreateAutoUrbanBlocks( location, *parent, roadWidthSpinBox_->value() );
     else
-        urbanModel_.CreateManualUrbanBlock( location, *selected_.ConstCast(), intersectedBlocks );
+        urbanModel_.CreateManualUrbanBlock( location, *parent, intersectedBlocks );
     if( !intersectedBlocks.empty() )
     {
         blinks_ = 6;
@@ -248,6 +250,28 @@ void TerrainToolBar::OnBlink()
     }
 }
 
+// PolygonContext is the closest thing to a closure capturing the parent
+// urban object identifier, forwarding calls from ParametersLayer to
+// TerrainToolBar.
+struct TerrainToolBar::PolygonContext : gui::ShapeHandler_ABC
+                                      , private boost::noncopyable
+{
+    PolygonContext( unsigned int parentId, TerrainToolBar& toolBar )
+        : parentId_( parentId )
+        , toolBar_( toolBar )
+    {
+    }
+
+    virtual void Handle( kernel::Location_ABC& location )
+    {
+        toolBar_.CreateBlock( parentId_, location );
+    }
+
+private:
+    unsigned int parentId_;
+    TerrainToolBar& toolBar_;
+};
+
 // -----------------------------------------------------------------------------
 // Name: TerrainToolBar::OnBlockCreation
 // Created: ABR 2012-05-15
@@ -257,7 +281,8 @@ void TerrainToolBar::OnBlockCreation()
     isAuto_ = false;
     changingGeom_ = false;
     eventStrategy_.TakeExclusiveFocus( paramLayer_ );
-    paramLayer_->StartPolygon( *this );
+    handler_.reset( new PolygonContext( selected_ ? selected_->GetId() : 0, *this ) );
+    paramLayer_->StartPolygon( *handler_ );
     eventStrategy_.ReleaseExclusiveFocus();
     UncheckBlockCreationButtons();
 }
@@ -273,7 +298,8 @@ void TerrainToolBar::OnBlockCreationAuto()
         isAuto_ = true;
         changingGeom_ = false;
         eventStrategy_.TakeExclusiveFocus( paramLayer_ );
-        paramLayer_->StartPolygon( *this );
+        handler_.reset( new PolygonContext( selected_ ? selected_->GetId() : 0, *this ) );
+        paramLayer_->StartPolygon( *handler_ );
         eventStrategy_.ReleaseExclusiveFocus();
         UncheckBlockCreationButtons();
     }
@@ -293,7 +319,8 @@ void TerrainToolBar::OnChangeShape()
 {
     changingGeom_ = true;
     eventStrategy_.TakeExclusiveFocus( paramLayer_ );
-    paramLayer_->StartPolygon( *this );
+    handler_.reset( new PolygonContext( selected_ ? selected_->GetId() : 0, *this ) );
+    paramLayer_->StartPolygon( *handler_ );
     eventStrategy_.ReleaseExclusiveFocus();
 }
 
