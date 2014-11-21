@@ -73,7 +73,7 @@ void ColorController::NotifyCreated( const kernel::Entity_ABC& entity )
             UpdateHierarchies( entity );
             return;
         }
-    if( const auto hierarchy =  entity.Retrieve< kernel::TacticalHierarchies >() )
+    if( const auto hierarchy = entity.Retrieve< kernel::TacticalHierarchies >() )
         if( const auto superior = hierarchy->GetSuperior() )
         {
             auto it = colors_.find( superior->GetId() );
@@ -175,19 +175,20 @@ void ColorController::RemoveSubordinate( const kernel::Entity_ABC& entity, const
 void ColorController::UpdateHierarchies( const kernel::Entity_ABC& entity )
 {
     controllers_.controller_.Update( entity );
-    auto type = entity.GetTypeName();
-    if( type != kernel::Object_ABC::typeName_ && type != kernel::Population_ABC::typeName_)
-        if( const auto pTactical = entity.Retrieve< kernel::TacticalHierarchies >() )
-        {
-            controllers_.controller_.Update( *pTactical );
-            if( const auto pCommunication = entity.Retrieve< kernel::CommunicationHierarchies >() )
-                controllers_.controller_.Update( *pCommunication );
-            else if( const auto pCommunication = pTactical->GetTop().Retrieve< kernel::CommunicationHierarchies >() )
-                controllers_.controller_.Update( *pCommunication );
-            if( const auto pLogistic = static_cast< const kernel::LogisticHierarchies* >( entity.Retrieve< gui::LogisticHierarchiesBase >() ) )
-                controllers_.controller_.Update( *pLogistic );
-            UpdateLogisticBaseStates( *pTactical );
-        }
+    const auto& type = entity.GetTypeName();
+    if( type == kernel::Object_ABC::typeName_ || type == kernel::Population_ABC::typeName_ )
+        return;
+    if( const auto pTactical = entity.Retrieve< kernel::TacticalHierarchies >() )
+    {
+        controllers_.controller_.Update( *pTactical );
+        if( const auto pCommunication = entity.Retrieve< kernel::CommunicationHierarchies >() )
+            controllers_.controller_.Update( *pCommunication );
+        else if( const auto pCommunication = pTactical->GetTop().Retrieve< kernel::CommunicationHierarchies >() )
+            controllers_.controller_.Update( *pCommunication );
+        if( const auto pLogistic = static_cast< const kernel::LogisticHierarchies* >( entity.Retrieve< gui::LogisticHierarchiesBase >() ) )
+            controllers_.controller_.Update( *pLogistic );
+        UpdateLogisticBaseStates( *pTactical );
+    }
 }
 
 // -----------------------------------------------------------------------------

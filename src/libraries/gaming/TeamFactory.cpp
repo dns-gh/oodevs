@@ -24,6 +24,7 @@
 #include "LogisticLinks.h"
 #include "Model.h"
 #include "Objects.h"
+#include "Populations.h"
 #include "StaticModel.h"
 #include "StaticModel.h"
 #include "Team.h"
@@ -81,6 +82,7 @@ kernel::Team_ABC* TeamFactory::CreateTeam( const sword::PartyCreation& message )
 {
     Team* result = new Team( message, controllers_, actionsModel_, profile_ );
     result->Attach( *new Objects() );
+    result->Attach( *new Populations() );
     gui::PropertiesDictionary& dico = result->Get< gui::PropertiesDictionary >();
     result->Attach( *new UrbanKnowledges( *result, controllers_.controller_, model_.urbanKnowledgeFactory_ ) );
     result->Attach< kernel::Diplomacies_ABC >( *new Diplomacies( controllers_.controller_, model_.teams_ ) );
@@ -126,6 +128,7 @@ kernel::Team_ABC* TeamFactory::CreateNoSideTeam()
 {
     auto* result = new gui::EntityImplementation< kernel::Team_ABC >( controllers_.controller_, 0, tools::translate( "TeamFactory", "No side" ), &actionsModel_ );
     result->Attach( *new Objects() );
+    result->Attach( *new Populations() );
     result->Attach< kernel::Diplomacies_ABC >( *new NoSideDiplomacy() );
     result->Attach< kernel::TacticalHierarchies >( *new TeamTacticalHierarchies( controllers_.controller_, *result ) );
     result->Update( kernel::InstanciationComplete() );

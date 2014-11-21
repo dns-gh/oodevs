@@ -11,6 +11,8 @@
 #include "ColorController.h"
 #include "Objects.h"
 #include "Object.h"
+#include "Populations.h"
+#include "Population.h"
 #include "clients_kernel/Entity_ABC.h"
 
 ColorController::ColorController( kernel::Controllers& controllers )
@@ -30,6 +32,12 @@ void ColorController::Add( const kernel::Entity_ABC& entity, const QColor& newCo
     if( const auto objects = entity.Retrieve< Objects >() )
     {
         auto it = objects->CreateIterator();
+        while( it.HasMoreElements() )
+            AddColor( it.NextElement(), newColor );
+    }
+    if( const auto populations = entity.Retrieve< Populations >() )
+    {
+        auto it = populations->CreateIterator();
         while( it.HasMoreElements() )
             AddColor( it.NextElement(), newColor );
     }

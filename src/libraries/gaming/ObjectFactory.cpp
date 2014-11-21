@@ -69,9 +69,9 @@ kernel::Object_ABC* ObjectFactory::Create( const sword::ObjectCreation& message 
     Object* result = new Object( message, controllers_.controller_, static_.coordinateConverter_, static_.objectTypes_, actionsModel_, profile_ );
     result->Attach( *new Explosions( controllers_.controller_, model_.fireResultsFactory_ ) );
     result->Attach< kernel::Positions >( *new ObjectPositions( result->GetType(), static_.coordinateConverter_ ) );
-    const auto& team = model_.teams_.GetTeam( message.party().id() );
+    auto& team = model_.teams_.GetTeam( message.party().id() );
     result->Attach< kernel::TacticalHierarchies >( *new kernel::ObjectHierarchies( *result, &team ) );
-    const_cast< kernel::Team_ABC& >( team ).Get< Objects >().AddObject( *result );
+    team.Get< Objects >().AddObject( *result );
     if( message.has_color() )
         result->Attach< kernel::Color_ABC >( *new Color( message.color() ) );
     result->Update( message );
