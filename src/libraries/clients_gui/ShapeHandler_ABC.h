@@ -10,6 +10,8 @@
 #ifndef __ShapeHandler_ABC_h_
 #define __ShapeHandler_ABC_h_
 
+#include <boost/noncopyable.hpp>
+
 namespace kernel
 {
     class Location_ABC;
@@ -28,7 +30,7 @@ namespace gui
 */
 // Created: AGE 2006-03-24
 // =============================================================================
-class ShapeHandler_ABC
+class ShapeHandler_ABC : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor

@@ -254,7 +254,6 @@ void TerrainToolBar::OnBlink()
 // urban object identifier, forwarding calls from ParametersLayer to
 // TerrainToolBar.
 struct TerrainToolBar::PolygonContext : gui::ShapeHandler_ABC
-                                      , private boost::noncopyable
 {
     PolygonContext( unsigned int parentId, TerrainToolBar& toolBar )
         : parentId_( parentId )
