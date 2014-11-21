@@ -212,25 +212,24 @@ void EntityTreeView_ABC::NotifySelectionChanged( const std::vector< const kernel
 
     blockSelect_ = true;
     selectionModel()->clearSelection();
+    setEditTriggers( NoEditTriggers );
     for( auto it = elements.begin(); it != elements.end(); ++it )
     {
-        if( *it && !IsTypeRejected( **it ) )
-            if( QStandardItem* item = dataModel_.FindDataItem( **it ) )
-                if( item->data( gui::Roles::FilterRole ).toString() == gui::StandardModel::showValue_ )
-                {
-                    QModelIndex index = proxyModel_->mapFromSource( dataModel_.indexFromItem( item ) );
-                    if( index.isValid() )
-                    {
-                        selectionModel()->select( index, QItemSelectionModel::Select | QItemSelectionModel::Rows );
-                        QTimer::singleShot( 0, this, SLOT( OnScrollToSelected() ) );
-                    }
-                }
+        const kernel::Entity_ABC* entity = *it;
+        if( !entity || IsTypeRejected( *entity ) )
+            continue;
+        QStandardItem* item = dataModel_.FindDataItem( *entity );
+        if( !item || item->data( gui::Roles::FilterRole ).toString() != gui::StandardModel::showValue_ )
+            continue;
+        QModelIndex index = proxyModel_->mapFromSource( dataModel_.indexFromItem( item ) );
+        if( index.isValid() )
+        {
+            if( entity->CanBeRenamed() )
+                setEditTriggers( SelectedClicked | EditKeyPressed );
+            selectionModel()->select( index, QItemSelectionModel::Select | QItemSelectionModel::Rows );
+            QTimer::singleShot( 0, this, SLOT( OnScrollToSelected() ) );
+        }
     }
-    auto currentEntity = dataModel_.GetDataFromIndex< kernel::Entity_ABC >( currentIndex() );
-    if( currentEntity && profile_.CanDoMagic( *currentEntity ) )
-        setEditTriggers( SelectedClicked | EditKeyPressed );
-    else
-        setEditTriggers( NoEditTriggers );
     blockSelect_ = false;
 }
 
