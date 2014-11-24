@@ -18,6 +18,7 @@
 #include "SvglRenderer.h"
 #include "FrameCounter.h"
 #include "clients_kernel/OptionVariant.h"
+#include "ENT/ENT_Tr.h"
 #include <graphics/Scale.h>
 #include <graphics/extensions.h>
 #include <boost/assign/list_of.hpp>
@@ -61,6 +62,7 @@ GL2DWidget::GL2DWidget( QWidget* parentWidget,
     , pixels_( 0.f )
     , symbolSize_( 0.f )
     , drawUrbanLabel_( false )
+    , urbanLayerAlpha_( 0.f )
 {
     setAcceptDrops( true );
     if( context() != context_ || !context_->isValid() )
@@ -639,7 +641,7 @@ void GL2DWidget::DrawInfrastructureSymbol( const std::string& symbol,
     thickness *= ComputeZoomFactor( factor );
     GLfloat color[ 4 ];
     glGetFloatv( GL_CURRENT_COLOR, color );
-    parent_.SetCurrentColor( color[ 0 ], color[ 1 ], color[ 2 ], 1.f );
+    parent_.SetCurrentColor( color[ 0 ], color[ 1 ], color[ 2 ], urbanLayerAlpha_ );
     DrawApp6( symbol, where, baseWidth * factor, viewport_, width, height, 0 );
     parent_.SetCurrentColor( color[ 0 ], color[ 1 ], color[ 2 ], color[ 3 ] );
 }
@@ -1026,6 +1028,7 @@ void GL2DWidget::ComputeData()
     adaptiveZoom_ = rZoom_ <= .00024f ? 1 :          // min zoom (far from the map), fixed size 1
                     rZoom_ <= .002f ? pixels_ / 15 : // middle range, progressive size
                     0.12f;                           // max zoom (close to the map), fixed size 0.12
+    urbanLayerAlpha_ = GetCurrentOptions().Get( "Layers/" + ENT_Tr::ConvertFromLayerTypes( eLayerTypes_Urban, ENT_Tr::eToSim ) + "/Alpha" ).To< float >();
     {
         HDC screen = GetDC( NULL );
         const int hSize = GetDeviceCaps( screen, HORZSIZE );

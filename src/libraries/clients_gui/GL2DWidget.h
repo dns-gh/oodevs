@@ -281,6 +281,7 @@ private:
     float pixels_;
     float symbolSize_;
     bool drawUrbanLabel_;
+    float urbanLayerAlpha_;
     //@}
 };
 
