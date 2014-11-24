@@ -549,10 +549,17 @@ void GLWidgetManager::NotifyContextMenu( const geometry::Point2f&, kernel::Conte
 
 void GLWidgetManager::OnChangeMainView()
 {
-    auto activeWidget = GetActiveWidget();
-    kernel::Settings settings;
-    settings.remove( "TMP" );
-    SaveView( settings, activeWidget, "TMP" );
-    LoadView( settings, mainWidget_, "TMP" );
-    settings.remove( "TMP" );
+    CopyView( GetActiveWidget(), mainWidget_ );
+}
+
+void GLWidgetManager::CopyView( const T_GLStackedWidget& source,
+                                const T_GLStackedWidget& dest )
+{
+    const auto temporaryFile = tools::Path::TemporaryFile();
+    {
+        kernel::Settings settings( temporaryFile );
+        SaveView( settings, source, "TMP" );
+        LoadView( settings, dest, "TMP" );
+    }
+    temporaryFile.Remove();
 }

@@ -130,6 +130,7 @@ private:
     //@{
     T_GLStackedWidget CreateStackedWidget( const std::shared_ptr< GLView_ABC >& proxy ) const;
     void RemoveStackedWidget( const T_GLStackedWidget& view );
+    void CopyView( const T_GLStackedWidget& source, const T_GLStackedWidget& dest );
     void SaveView( kernel::Settings& settings, const T_GLStackedWidget& view, const QString& group = "" );
     void LoadView( kernel::Settings& settings, const T_GLStackedWidget& view, const QString& group = "" );
     void PurgeViews();
