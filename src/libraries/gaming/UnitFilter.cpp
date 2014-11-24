@@ -191,7 +191,7 @@ void UnitFilter::SetFilter( const Entity_ABC& entity, bool update /* = true */ )
     if( !update )
         return;
     controller_.Update( *static_cast< Profile_ABC* >( this ) );
-    controller_.Update( *static_cast< VisibilityFilter* >( this ) );
+    controller_.Update( *static_cast< VisibilityFilter_ABC* >( this ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -221,7 +221,7 @@ void UnitFilter::RemoveFilter( bool update /* = true */ )
     if( !update )
         return;
     controller_.Update( *static_cast< Profile_ABC* >( this ) );
-    controller_.Update( *static_cast< VisibilityFilter* >( this ) );
+    controller_.Update( *static_cast< VisibilityFilter_ABC* >( this ) );
 }
 
 // -----------------------------------------------------------------------------

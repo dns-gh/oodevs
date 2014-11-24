@@ -145,7 +145,7 @@ void ProfileFilter::SetFilter( const kernel::Profile_ABC& profile, bool update /
     if( !update )
         return;
     controller_.Update( *static_cast< Profile_ABC* >( this ) );
-    controller_.Update( *static_cast< VisibilityFilter* >( this ) );
+    controller_.Update( *static_cast< VisibilityFilter_ABC* >( this ) );
 }
 
 void ProfileFilter::SetFilter( const gui::GLOptions& options, bool update /* = true*/ )

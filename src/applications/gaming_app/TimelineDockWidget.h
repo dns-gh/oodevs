@@ -25,7 +25,7 @@ namespace gui
 {
     class Event;
     class GLWidgetManager;
-    class VisibilityFilter;
+    class VisibilityFilter_ABC;
 }
 
 namespace kernel
@@ -53,7 +53,7 @@ class TimelineToolBar;
 // Created: ABR 2013-05-14
 // =============================================================================
 class TimelineDockWidget : public gui::RichDockWidget
-                         , public tools::ElementObserver_ABC< gui::VisibilityFilter >
+                         , public tools::ElementObserver_ABC< gui::VisibilityFilter_ABC >
                          , public tools::ElementObserver_ABC< gui::Event >
                          , public tools::ElementObserver_ABC< Profile >
                          , public tools::ElementObserver_ABC< kernel::ModelUnLoaded >
@@ -77,8 +77,8 @@ public:
 
     //! @name ElementObserver_ABC implementation
     //@{
-    virtual void NotifyCreated( const gui::VisibilityFilter& filter );
-    virtual void NotifyUpdated( const gui::VisibilityFilter& filter );
+    virtual void NotifyCreated( const gui::VisibilityFilter_ABC& filter );
+    virtual void NotifyUpdated( const gui::VisibilityFilter_ABC& filter );
     virtual void NotifyUpdated( const gui::Event& event );
     virtual void NotifyUpdated( const Profile& profile );
     virtual void NotifyUpdated( const kernel::ModelUnLoaded& );

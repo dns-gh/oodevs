@@ -32,7 +32,7 @@ namespace gui
     class SvglRenderer;
     class TacticalGraphics;
     class TooltipsLayer_ABC;
-    class VisibilityFilter;
+    class VisibilityFilter_ABC;
 
 // =============================================================================
 /** @class  GLMainProxy
@@ -55,7 +55,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              GLMainProxy( kernel::Controllers& controllers,
-                          VisibilityFilter& profileFilter,
+                          VisibilityFilter_ABC& filter,
                           const tools::Resolver< kernel::Formation_ABC >& formationResolver );
     virtual ~GLMainProxy();
     //@}
@@ -179,7 +179,7 @@ private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    VisibilityFilter& profileFilter_;
+    VisibilityFilter_ABC& filter_;
     const tools::Resolver< kernel::Formation_ABC >& formationResolver_;
     std::shared_ptr< ContourLinesObserver > contourLinesObserver_;
     ColorStrategy_ABC* colorStrategy_;

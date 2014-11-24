@@ -10,7 +10,7 @@
 #ifndef __PreparationProfile_h_
 #define __PreparationProfile_h_
 
-#include "clients_gui/VisibilityFilter.h"
+#include "clients_gui/VisibilityFilter_ABC.h"
 #include "clients_kernel/Profile_ABC.h"
 
 // =============================================================================
@@ -20,7 +20,7 @@
 // Created: AGE 2006-10-16
 // =============================================================================
 class PreparationProfile : public kernel::Profile_ABC
-                         , public gui::VisibilityFilter
+                         , public gui::VisibilityFilter_ABC
 {
 public:
     //! @name Statics

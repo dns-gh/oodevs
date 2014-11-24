@@ -45,7 +45,7 @@ namespace gui
     class GLView_ABC;
     class IconLayout;
     class Layer_ABC;
-    class VisibilityFilter;
+    class VisibilityFilter_ABC;
 
 // =============================================================================
 /** @class  GLWidgetManager
@@ -56,7 +56,7 @@ namespace gui
 class GLWidgetManager : public QObject
                       , public tools::Observer_ABC
                       , public kernel::OptionsObserver_ABC
-                      , public tools::ElementObserver_ABC< VisibilityFilter >
+                      , public tools::ElementObserver_ABC< VisibilityFilter_ABC >
                       , public kernel::ContextMenuObserver_ABC< geometry::Point2f >
 {
     Q_OBJECT
@@ -126,7 +126,7 @@ private:
     //@{
     virtual void NotifyContextMenu( const geometry::Point2f&, kernel::ContextMenu& );
     virtual void OptionChanged( const std::string& name, const kernel::OptionVariant& value );
-    virtual void NotifyUpdated( const VisibilityFilter& filter );
+    virtual void NotifyUpdated( const VisibilityFilter_ABC& filter );
     //@}
 
     //! @name Helpers

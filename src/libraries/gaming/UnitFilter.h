@@ -10,7 +10,7 @@
 #ifndef __UnitFilter_h_
 #define __UnitFilter_h_
 
-#include "clients_gui/VisibilityFilter.h"
+#include "clients_gui/VisibilityFilter_ABC.h"
 #include "clients_kernel/Profile_ABC.h"
 #include "clients_kernel/SafePointer.h"
 
@@ -30,7 +30,7 @@ namespace kernel
 // Created: AGE 2006-11-29
 // =============================================================================
 class UnitFilter : public kernel::Profile_ABC
-                 , public gui::VisibilityFilter
+                 , public gui::VisibilityFilter_ABC
 {
 public:
     //! @name Constructors/Destructor

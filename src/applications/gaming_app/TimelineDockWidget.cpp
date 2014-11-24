@@ -16,7 +16,7 @@
 #include "actions/Action_ABC.h"
 #include "actions/ActionTasker.h"
 #include "clients_gui/Event.h"
-#include "clients_gui/VisibilityFilter.h"
+#include "clients_gui/VisibilityFilter_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
@@ -243,7 +243,7 @@ std::string TimelineDockWidget::GetEntityFilter( const TimelineToolBar& toolbar 
 // Name: TimelineDockWidget::OnCurrentChanged
 // Created: LGY 2013-11-19
 // -----------------------------------------------------------------------------
-void TimelineDockWidget::NotifyCreated( const gui::VisibilityFilter& filter )
+void TimelineDockWidget::NotifyCreated( const gui::VisibilityFilter_ABC& filter )
 {
     NotifyUpdated( filter );
 }
@@ -252,7 +252,7 @@ void TimelineDockWidget::NotifyCreated( const gui::VisibilityFilter& filter )
 // Name: TimelineDockWidget::NotifyUpdated
 // Created: LGY 2013-11-19
 // -----------------------------------------------------------------------------
-void TimelineDockWidget:: NotifyUpdated( const gui::VisibilityFilter& filter )
+void TimelineDockWidget:: NotifyUpdated( const gui::VisibilityFilter_ABC& filter )
 {
     if( mainView_ )
     {

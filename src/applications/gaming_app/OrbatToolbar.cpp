@@ -123,7 +123,7 @@ void OrbatToolbar::OnClearFilter()
 // Name: OrbatToolbar::NotifyUpdated
 // Created: SBO 2009-03-04
 // -----------------------------------------------------------------------------
-void OrbatToolbar::NotifyUpdated( const gui::VisibilityFilter& filter )
+void OrbatToolbar::NotifyUpdated( const gui::VisibilityFilter_ABC& filter )
 {
     const QString name = filter.GetFilter();
     filterBtn_->setTextLabel( name );

@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef gui__VisibilityFilter_h_
-#define gui__VisibilityFilter_h_
+#ifndef gui__VisibilityFilter_ABC_h_
+#define gui__VisibilityFilter_ABC_h_
 
 namespace kernel
 {
@@ -20,13 +20,13 @@ namespace gui
 {
 class GLOptions;
 
-class VisibilityFilter
+class VisibilityFilter_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             VisibilityFilter() {}
-    virtual ~VisibilityFilter() {}
+             VisibilityFilter_ABC() {}
+    virtual ~VisibilityFilter_ABC() {}
     //@}
 
     //! @name Operations
@@ -43,4 +43,4 @@ public:
 
 } //! namespace kernel
 
-#endif // gui__VisibilityFilter_h_
+#endif // gui__VisibilityFilter_ABC_h_

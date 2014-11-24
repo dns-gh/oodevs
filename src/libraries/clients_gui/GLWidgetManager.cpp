@@ -25,7 +25,7 @@
 #include "Layer_ABC.h"
 #include "SignalAdapter.h"
 #include "Tools.h"
-#include "VisibilityFilter.h"
+#include "VisibilityFilter_ABC.h"
 #include "WatershedTexture.h"
 
 #include "clients_kernel/Controllers.h"
@@ -210,7 +210,7 @@ void GLWidgetManager::SetContourLinesComputer( int height, GLOptions& options )
 // Name: GLWidgetManager::NotifyUpdated
 // Created: ABR 2014-06-26
 // -----------------------------------------------------------------------------
-void GLWidgetManager::NotifyUpdated( const VisibilityFilter& filter )
+void GLWidgetManager::NotifyUpdated( const VisibilityFilter_ABC& filter )
 {
     mainProxy_.GetActiveOptions().SetFilterEntity( filter.GetFilteredEntity() );
     mainProxy_.GetActiveOptions().SetFilterProfile( filter.GetFilteredProfile() );

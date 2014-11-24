@@ -10,7 +10,7 @@
 #ifndef __ProfileFilter_h_
 #define __ProfileFilter_h_
 
-#include "clients_gui/VisibilityFilter.h"
+#include "clients_gui/VisibilityFilter_ABC.h"
 #include "clients_kernel/Profile_ABC.h"
 #include "clients_kernel/SafePointer.h"
 #include <boost/noncopyable.hpp>
@@ -29,7 +29,7 @@ namespace kernel
 // Created: LGY 2011-11-24
 // =============================================================================
 class ProfileFilter : public kernel::Profile_ABC
-                    , public gui::VisibilityFilter
+                    , public gui::VisibilityFilter_ABC
                     , private boost::noncopyable
 {
 public:
