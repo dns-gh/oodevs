@@ -161,3 +161,14 @@ const actions::Action_ABC* Event::GetAction() const
 {
     return 0;
 }
+
+// -----------------------------------------------------------------------------
+// Name: Event::ReplayEvent
+// Created: SLI 2014-11-19
+// -----------------------------------------------------------------------------
+ReplayEvent::ReplayEvent( gui::Event& event, const QDateTime& time )
+    : event_( event )
+    , time_( time )
+{
+    // NOTHING
+}

@@ -46,6 +46,11 @@ type EventListener interface {
 	DeleteEvents(events ...string)
 }
 
+type EventChecker interface {
+	CheckEvent(event *sdk.Event) error  // validate event upon creation or update
+	CheckDeleteEvent(uuid string) error // validate event deletion
+}
+
 type EventFilter func(event *sdk.Event) bool
 type EventFilterConfig map[string]interface{}
 

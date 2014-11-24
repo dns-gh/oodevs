@@ -84,6 +84,21 @@ has_end = (model) ->
     end = model.get "end"
     return end?.length > 0
 
+has_replay = (model) ->
+    action = model.get "action"
+    if !action?
+        return false
+    return action.target.indexOf("replay://", 0) == 0
+
+is_simple_event = (model) ->
+    return !has_end model
+
+is_range_event = (model) ->
+    return has_end(model) and !has_replay(model)
+
+is_replay_event = (model) ->
+    return has_end(model) and has_replay(model)
+
 # translate a <value> inside an handlebars template
 Handlebars.registerHelper "i18n", (value) ->
     return new Handlebars.SafeString i18n value
@@ -136,24 +151,30 @@ class Events extends Backbone.Collection
     resync: ->
         @models.sort @compare unless @sorted
         @sorted = true
-        @build_ranges() unless @ranges?
+        @build_ranges() unless @ranges? and @replays?
 
     # compute ranges coordinates
     build_ranges: ->
         tree = new SegmentTree()
+        replay_tree = new SegmentTree()
+        @events = []
         for it in @models
             it.children = {}
-            continue unless has_end it
             [min, max] = get_minmax_event it
-            tree.add min, max,
-                id: it.id, idx: tree.ranges.length
+            if is_range_event it
+                tree.add min, max,
+                    id: it.id, idx: tree.ranges.length
+            else if is_replay_event it
+                replay_tree.add min, max,
+                    id: it.id, idx: replay_tree.ranges.length
+            else if is_simple_event it
+                it.parent = @get it.get "parent"
+                it.parent?.children[it.id] = it
+                @events.push it
         tree.sync()
+        replay_tree.sync()
         @ranges = tree.ranges
-        @events = @models.filter (d) =>
-            [d.min, d.max] = get_minmax_event d
-            d.parent = @get d.get "parent"
-            d.parent?.children[d.id] = d
-            return !has_end d
+        @replays = replay_tree.ranges
         @trigger "resync"
 
 is_readonly_event = (event) ->
@@ -405,6 +426,7 @@ class EventsView extends Backbone.View
             $("body").on          "contextmenu", @on_contextmenu_background
             @listenTo triggers,   "activate",    @on_activate
             @listenTo triggers,   "contextmenu", @on_contextmenu
+            @listenTo triggers,   "replay_contextmenu", @on_contextmenu_replay
             @listenTo triggers,   "select",      @on_select
             @listenToOnce @model, "resync",      -> gaming.ready()
             @listenTo     @model, "change",      @on_update
@@ -422,14 +444,20 @@ class EventsView extends Backbone.View
     on_activate: (model) =>
         gaming.activated_event model.attributes
 
+    get_timestamp: (event) =>
+        dom_stop_event event
+        offset = @timeline.layout.select event.pageX, event.pageY
+        return @timeline.scale.invert offset
+
     on_contextmenu: (model) =>
         gaming.contextmenu_event model.attributes
 
+    on_contextmenu_replay: (model,event) =>
+        timestamp = format @get_timestamp event
+        gaming.contextmenu_replay model.attributes, timestamp
+
     on_contextmenu_background: (event) =>
-        dom_stop_event event
-        offset = @timeline.layout.select event.pageX, event.pageY
-        timestamp = @timeline.scale.invert offset
-        gaming.contextmenu_background format timestamp
+        gaming.contextmenu_background format @get_timestamp event
 
     on_create: (event) =>
         gaming.created_events [event.attributes], code: 200

@@ -256,6 +256,10 @@
         <source>New marker</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Replay range</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>EventOrderPresenter</name>

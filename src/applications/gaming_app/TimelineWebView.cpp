@@ -133,7 +133,9 @@ void TimelineWebView::Connect()
 
     connect( server_.get(), SIGNAL( SelectedEvent( boost::shared_ptr< timeline::Event > ) ), this, SLOT( OnSelectedEvent( boost::shared_ptr< timeline::Event > ) ) );
     connect( server_.get(), SIGNAL( ActivatedEvent( const timeline::Event& ) ), this, SLOT( OnActivatedEvent( const timeline::Event& ) ) );
-    connect( server_.get(), SIGNAL( ContextMenuEvent( boost::shared_ptr< timeline::Event >, const std::string& ) ), this, SLOT( OnContextMenuEvent( boost::shared_ptr< timeline::Event >, const std::string& ) ) );
+    connect( server_.get(), SIGNAL( ContextMenuEvent( const timeline::Event& ) ), this, SLOT( OnContextMenuEvent( const timeline::Event& ) ) );
+    connect( server_.get(), SIGNAL( ContextMenuBackground( const std::string& ) ), this, SLOT( OnContextMenuBackground( const std::string& ) ) );
+    connect( server_.get(), SIGNAL( ContextMenuReplay( const timeline::Event&, const std::string& ) ), this, SLOT( OnContextMenuReplay( const timeline::Event&, const std::string& ) ) );
     connect( server_.get(), SIGNAL( KeyUp( int ) ), this, SLOT( OnKeyUp( int ) ) );
     connect( server_.get(), SIGNAL( TriggeredEvents( const timeline::Events& ) ), this, SLOT( OnTriggeredEvents( const timeline::Events& ) ) );
 
@@ -207,6 +209,18 @@ void TimelineWebView::EditEvent( const timeline::Event& event )
 {
     if( server_ )
         server_->UpdateEvent( event );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TimelineWebView::SplitEvent
+// Created: SLI 2014-11-13
+// -----------------------------------------------------------------------------
+void TimelineWebView::SplitEvent( const timeline::Event& event, const std::string& time )
+{
+    timeline::Event split = event;
+    split.begin = time;
+    split.uuid = timeline_helpers::GenerateUuid();
+    CreateEvent( split, true );
 }
 
 // -----------------------------------------------------------------------------
@@ -335,16 +349,31 @@ void TimelineWebView::OnTriggeredEvents( const timeline::Events& events )
 // Name: TimelineWebView::OnContextMenuEvent
 // Created: ABR 2013-05-24
 // -----------------------------------------------------------------------------
-void TimelineWebView::OnContextMenuEvent( boost::shared_ptr< timeline::Event > event, const std::string& time )
+void TimelineWebView::OnContextMenuEvent( const timeline::Event& event )
+{
+    selectedDateTime_ = QDateTime::fromString( QString::fromStdString( event.begin ), Qt::ISODate );
+    GetOrCreateEvent( event ).ContextMenu( controllers_.eventActions_, QCursor::pos(), this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TimelineWebView::OnContextMenuBackground
+// Created: SLI 2014-11-19
+// -----------------------------------------------------------------------------
+void TimelineWebView::OnContextMenuBackground( const std::string& time )
 {
     selectedDateTime_ = QDateTime::fromString( QString::fromStdString( time ), Qt::ISODate );
-    if( event )
-    {
-        gui::Event& gamingEvent = GetOrCreateEvent( *event );
-        gamingEvent.ContextMenu( controllers_.eventActions_, QCursor::pos(), this );
-    }
-    else
-        controllers_.actions_.ContextMenu( this, selectedDateTime_, QCursor::pos() );
+    controllers_.actions_.ContextMenu( this, selectedDateTime_, QCursor::pos() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TimelineWebView::OnContextMenuReplay
+// Created: SLI 2014-11-19
+// -----------------------------------------------------------------------------
+void TimelineWebView::OnContextMenuReplay( const timeline::Event& event, const std::string& time )
+{
+    selectedDateTime_ = QDateTime::fromString( QString::fromStdString( time ), Qt::ISODate );
+    const gui::ReplayEvent replay( GetOrCreateEvent( event ), selectedDateTime_ );
+    controllers_.eventActions_.ContextMenu( this, replay, QCursor::pos() );
 }
 
 namespace
@@ -626,11 +655,9 @@ void TimelineWebView::OnGetEvents( const timeline::Events& events, const timelin
 // -----------------------------------------------------------------------------
 void TimelineWebView::OnLoadedEvents( const timeline::Error& error )
 {
-    if( error.code != timeline::EC_OK )
-    {
-        MT_LOG_ERROR_MSG( tr( "An error occurred during 'LoadEvents' request: %1" ).arg( QString::fromStdString( error.text ) ).toStdString() );
+    if( error.code == timeline::EC_OK )
         return;
-    }
+    MT_LOG_ERROR_MSG( tr( "An error occurred during 'LoadEvents' request: %1" ).arg( QString::fromStdString( error.text ) ).toStdString() );
 }
 
 // -----------------------------------------------------------------------------

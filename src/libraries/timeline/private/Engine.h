@@ -79,6 +79,7 @@ private:
     CefRefPtr< CefV8Value > OnTriggerEvents        ( const CefV8ValueList& args );
     CefRefPtr< CefV8Value > OnContextMenuEvent     ( const CefV8ValueList& args );
     CefRefPtr< CefV8Value > OnContextMenuBackground( const CefV8ValueList& args );
+    CefRefPtr< CefV8Value > OnContextMenuReplay    ( const CefV8ValueList& args );
     CefRefPtr< CefV8Value > OnKeyDown              ( const CefV8ValueList& args );
     CefRefPtr< CefV8Value > OnKeyPress             ( const CefV8ValueList& args );
     CefRefPtr< CefV8Value > OnKeyUp                ( const CefV8ValueList& args );

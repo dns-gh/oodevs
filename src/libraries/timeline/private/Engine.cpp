@@ -165,6 +165,7 @@ void Engine::Register( CefRefPtr< CefBrowser > browser, CefRefPtr< CefV8Context 
     SetValue( gaming, "trigger_events",         1, boost::bind( &Engine::OnTriggerEvents,         this, _1 ) );
     SetValue( gaming, "contextmenu_event",      1, boost::bind( &Engine::OnContextMenuEvent,      this, _1 ) );
     SetValue( gaming, "contextmenu_background", 1, boost::bind( &Engine::OnContextMenuBackground, this, _1 ) );
+    SetValue( gaming, "contextmenu_replay",     2, boost::bind( &Engine::OnContextMenuReplay,     this, _1 ) );
     SetValue( gaming, "keydown",                1, boost::bind( &Engine::OnKeyDown,               this, _1 ) );
     SetValue( gaming, "keypress",               1, boost::bind( &Engine::OnKeyPress,              this, _1 ) );
     SetValue( gaming, "keyup",                  1, boost::bind( &Engine::OnKeyUp,                 this, _1 ) );
@@ -441,6 +442,12 @@ CefRefPtr< CefV8Value > Engine::OnContextMenuEvent( const CefV8ValueList& args )
 CefRefPtr< CefV8Value > Engine::OnContextMenuBackground( const CefV8ValueList& args )
 {
     Post( browser_, controls::ContextMenuBackground( log_, args[0]->GetStringValue() ) );
+    return 0;
+}
+
+CefRefPtr< CefV8Value > Engine::OnContextMenuReplay( const CefV8ValueList& args )
+{
+    Post( browser_, controls::ContextMenuReplay( log_, GetEvent( args[0] ), args[1]->GetStringValue() ) );
     return 0;
 }
 

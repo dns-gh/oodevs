@@ -16,6 +16,7 @@
 namespace gui
 {
     class RichDateTimeEdit;
+    class RichLabel;
 }
 
 namespace kernel
@@ -80,6 +81,7 @@ private:
     gui::RichDateTimeEdit* beginDateTimeEdit_;
     gui::RichDateTimeEdit* endDateTimeEdit_;
     QCheckBox* hasEndDateTimeCheckbox_;
+    gui::RichLabel* endDateTimeLabel_;
 
     QDateTime selectedDateTime_;
     //@}

@@ -18,17 +18,20 @@
 #include "EventReportWidget.h"
 #include "EventMagicWidget.h"
 #include "EventMarkerWidget.h"
+#include "EventReplayWidget.h"
 #include "EventTopWidget.h"
 #include "EventTaskWidget.h"
 
 #include "clients_gui/Event.h"
 #include "clients_gui/EventFactory.h"
+#include "clients_gui/EventHelpers.h"
 #include "clients_gui/EventPresenter.h"
 #include "clients_gui/EventViewState.h"
 
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Time_ABC.h"
 #include "clients_kernel/TimelineHandler_ABC.h"
+#include "clients_kernel/TimelineHelpers.h"
 #include "clients_kernel/Tools.h"
 
 #include "gaming/Model.h"
@@ -106,6 +109,7 @@ EventDockWidget::EventDockWidget( QWidget* parent,
     stack_->insertWidget( eEventTypes_Task  , new EventTaskWidget( *presenter_, controllers, entitySymbols,
                                                                    profile, model, simulation ) );
     stack_->insertWidget( eEventTypes_Marker, new EventMarkerWidget( *presenter_, config.BuildExerciseChildFile( "" ), model.GetUuid() ) );
+    stack_->insertWidget( eEventTypes_Replay, new EventReplayWidget( *presenter_ ) );
 
     AddDefaultView( views_, *stack_, eEventTypes_Report     , new EventReportWidget( *presenter_ ) );
     AddDefaultView( views_, *stack_, eEventTypes_Multimedia , new EventMultimediaWidget( *presenter_ ) );
@@ -124,7 +128,7 @@ EventDockWidget::EventDockWidget( QWidget* parent,
     SetContentVisible( false );
 
     // Connections
-    controllers_.actions_.Unregister( *this );
+    controllers_.actions_.Unregister( *this ); // We don't want to listen to controllers_.actions_ events, but we are already registered with gui::RichDockWidget
     controllers_.eventActions_.Register( *this );
 }
 
@@ -258,6 +262,18 @@ void EventDockWidget::OnDeleteClicked()
 }
 
 // -----------------------------------------------------------------------------
+// Name: EventDockWidget::OnSplitClicked
+// Created: SLI 2014-11-13
+// -----------------------------------------------------------------------------
+void EventDockWidget::OnSplitClicked()
+{
+    if( selected_ && time_ )
+        timelineHandler_->SplitEvent( selected_->GetEvent(), time_->toString( EVENT_DATE_FORMAT ).toStdString() );
+    selected_ = 0;
+    time_ = boost::none;
+}
+
+// -----------------------------------------------------------------------------
 // Name: EventDockWidget::NotifyActivated
 // Created: ABR 2013-07-02
 // -----------------------------------------------------------------------------
@@ -285,8 +301,27 @@ void EventDockWidget::NotifyContextMenu( const gui::Event& event, kernel::Contex
     selected_ = &event;
     menu.InsertItem( "Command", event.GetEvent().done ? tr( "Display") : tr( "Edit" ),
                      this, SLOT( OnEditClicked() ) );
-    if( !event.GetEvent().done )
-        menu.InsertItem( "Command", tr( "Delete" ), this, SLOT( OnDeleteClicked() ) );
+    if( event.GetEvent().done )
+        return;
+    menu.InsertItem( "Command", tr( "Delete" ), this, SLOT( OnDeleteClicked() ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: EventDockWidget::NotifyContextMenu
+// Created: SLI 2014-11-19
+// -----------------------------------------------------------------------------
+void EventDockWidget::NotifyContextMenu( const gui::ReplayEvent& replayEvent, kernel::ContextMenu& menu )
+{
+    if( replayEvent.event_.GetType() != eEventTypes_Replay )
+        return;
+    const gui::Event& event = replayEvent.event_;
+    selected_ = &event;
+    time_ = replayEvent.time_;
+    menu.InsertItem( "Command", tr( "Edit" ), this, SLOT( OnEditClicked() ) );
+    menu.InsertItem( "Command", tr( "Split" ), this, SLOT( OnSplitClicked() ) );
+    const auto boundaries = gui::event_helpers::GetReplayBoundariesActivation( event );
+    if( boundaries.first || boundaries.second )
+        menu.InsertItem( "Command", tr( "Merge" ), this, SLOT( OnDeleteClicked() ) );
 }
 
 // -----------------------------------------------------------------------------

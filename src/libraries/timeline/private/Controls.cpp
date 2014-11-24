@@ -422,7 +422,7 @@ T_Msg controls::TriggeredEvents( const T_Logger& log, const Events& events )
 T_Msg controls::ContextMenuEvent( const T_Logger& log, const Event& event )
 {
     ServerCommand cmd;
-    cmd.set_type( sdk::SERVER_EVENT_CONTEXTMENU );
+    cmd.set_type( sdk::SERVER_EVENT_CONTEXT_MENU );
     SetEvent( *cmd.add_events(), event );
     return Pack( log, cmd );
 }
@@ -430,7 +430,16 @@ T_Msg controls::ContextMenuEvent( const T_Logger& log, const Event& event )
 T_Msg controls::ContextMenuBackground( const T_Logger& log, const std::string& time )
 {
     ServerCommand cmd;
-    cmd.set_type( sdk::SERVER_EVENT_CONTEXTMENUBACKGROUND );
+    cmd.set_type( sdk::SERVER_EVENT_CONTEXT_MENU_BACKGROUND );
+    cmd.set_time( time );
+    return Pack( log, cmd );
+}
+
+T_Msg controls::ContextMenuReplay( const T_Logger& log, const Event& event, const std::string& time )
+{
+    ServerCommand cmd;
+    cmd.set_type( sdk::SERVER_EVENT_CONTEXT_MENU_REPLAY );
+    SetEvent( *cmd.add_events(), event );
     cmd.set_time( time );
     return Pack( log, cmd );
 }
@@ -488,8 +497,9 @@ void controls::ParseServer( ServerHandler_ABC& handler,
         case sdk::SERVER_EVENT_DESELECTED:            return handler.OnDeselectedEvent();
         case sdk::SERVER_EVENT_ACTIVATED:             return handler.OnActivatedEvent( GetEvent( cmd.events() ) );
         case sdk::SERVER_EVENT_TRIGGERED:             return handler.OnTriggeredEvents( GetEvents( cmd.events() ) );
-        case sdk::SERVER_EVENT_CONTEXTMENU:           return handler.OnContextMenuEvent( GetEvent( cmd.events() ) );
-        case sdk::SERVER_EVENT_CONTEXTMENUBACKGROUND: return handler.OnContextMenuBackground( cmd.time() );
+        case sdk::SERVER_EVENT_CONTEXT_MENU:           return handler.OnContextMenuEvent( GetEvent( cmd.events() ) );
+        case sdk::SERVER_EVENT_CONTEXT_MENU_BACKGROUND: return handler.OnContextMenuBackground( cmd.time() );
+        case sdk::SERVER_EVENT_CONTEXT_MENU_REPLAY:     return handler.OnContextMenuReplay( GetEvent( cmd.events() ), cmd.time() );
         case sdk::SERVER_KEYBOARD_KEYDOWN:            return handler.OnKeyDown( cmd.keyboardevent().keydown() );
         case sdk::SERVER_KEYBOARD_KEYPRESS:           return handler.OnKeyPress( cmd.keyboardevent().keypress() );
         case sdk::SERVER_KEYBOARD_KEYUP:              return handler.OnKeyUp( cmd.keyboardevent().keyup() );

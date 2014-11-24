@@ -21,13 +21,6 @@
 
 #include <timeline/api.h>
 
-#include <boost/lexical_cast.hpp>
-#pragma warning( push )
-#pragma warning( disable : 4724 )
-#include <boost/uuid/random_generator.hpp>
-#pragma warning( pop )
-#include <boost/uuid/uuid_io.hpp>
-
 using namespace gui;
 
 // -----------------------------------------------------------------------------
@@ -397,7 +390,7 @@ void EventPresenter::Plan()
     CheckEvent();
     CheckHandler();
     auto& event = event_->GetEvent();
-    event.uuid = boost::lexical_cast< std::string >( boost::uuids::random_generator()() );
+    event.uuid = timeline_helpers::GenerateUuid();
     event.done = false;
     event.error_code = 0;
     event.error_text.clear();

@@ -524,6 +524,8 @@ func (f *FakeService) AttachObserver(observer services.Observer) {}
 func (f *FakeService) Start() error                              { return nil }
 func (f *FakeService) Stop() error                               { return nil }
 func (f *FakeService) Trigger(url.URL, *sdk.Event) error         { return nil }
+func (f *FakeService) CheckEvent(event *sdk.Event) error         { return nil }
+func (f *FakeService) CheckDeleteEvent(uuid string) error        { return nil }
 
 func (f *FakeService) UpdateEvents(events ...*sdk.Event) {
 	f.lock.Lock()
@@ -630,6 +632,10 @@ func (t *TestSuite) TestListeners(c *C) {
 	c.Assert(fakerUuids, IsNil)
 }
 
+func checkIsReplayEvent(c *C, event *sdk.Event) {
+	c.Assert(event.GetAction().GetTarget(), Equals, "replay://some_name")
+}
+
 func (t *TestSuite) TestObservers(c *C) {
 	f := t.MakeFixture(c, true)
 	defer f.Close()
@@ -650,6 +656,9 @@ func (t *TestSuite) TestObservers(c *C) {
 	c.Assert(expected.Sword.GetHasReplay(), Equals, false)
 	swtest.DeepEquals(c, msg.Services, []*sdk.Service{expected})
 
+	// Timeline server reads the service description, looking for
+	// the replay service, and updates the sword service it exposes
+	// to its clients
 	detached := f.server.GetLinks()
 	defer detached.Close()
 	for slink := range detached {
@@ -665,6 +674,8 @@ func (t *TestSuite) TestObservers(c *C) {
 	expected.Sword.HasReplay = proto.Bool(true)
 	swtest.DeepEquals(c, msg.Services, []*sdk.Service{expected})
 
+	// When replayer sends a control replay information message,
+	// timeline server updates its session with the begin/end replay time
 	expectedStart := time.Now().Truncate(time.Second).UTC()
 	expectedEnd := expectedStart.Add(60 * time.Second)
 	for slink := range detached {
@@ -691,6 +702,38 @@ func (t *TestSuite) TestObservers(c *C) {
 	c.Assert(err, IsNil)
 	c.Assert(end, Equals, expectedEnd)
 	c.Assert(start.Before(end), Equals, true)
+
+	// Timeline server creates a special range event, with the
+	// replay start and end dates. This event is tagged as replay
+	// in the action's target (replay://).
+	expectedStart = expectedStart.Add(time.Second)
+	for slink := range detached {
+		f.server.WriteReplayToClient(slink, 1, 0,
+			&sword.ReplayToClient_Content{
+				ControlReplayInformation: &sword.ControlReplayInformation{
+					CurrentTick:     proto.Int32(1),
+					InitialDateTime: swapi.MakeDateTime(expectedStart),
+					EndDateTime:     swapi.MakeDateTime(expectedEnd),
+					DateTime:        swapi.MakeDateTime(expectedStart),
+					TickDuration:    proto.Int32(10),
+					TimeFactor:      proto.Int32(1),
+					Status:          sword.EnumSimulationState_running.Enum(),
+					TickCount:       proto.Int32(6),
+				},
+			})
+	}
+	msg = waitBroadcastTag(messages, sdk.MessageTag_update_events)
+	c.Assert(msg, NotNil)
+	c.Assert(len(msg.GetEvents()), Equals, 1)
+	event := msg.GetEvents()[0]
+	checkIsReplayEvent(c, event)
+	c.Assert(string(event.Action.GetPayload()), Equals, `{"begin":false,"end":false}`)
+	start, err = util.ParseTime(event.GetBegin())
+	c.Assert(err, IsNil)
+	c.Assert(start, Equals, expectedStart)
+	end, err = util.ParseTime(event.GetEnd())
+	c.Assert(err, IsNil)
+	c.Assert(end, Equals, expectedEnd)
 }
 
 func addParty(c *C, d *swapi.ModelData, id uint32) {
@@ -1165,4 +1208,191 @@ func (t *TestSuite) TestGarbageOrdersDoesNotAbort(c *C) {
 	f.Tick()
 	f.controller.StopSession(f.session)
 	f.waitAllDoneOrDead(c, id)
+}
+
+func (t *TestSuite) TestChangeReplayRangeDates(c *C) {
+	f := t.MakeFixture(c, true)
+	defer f.Close()
+	f.sword.WaitForStatus(services.SwordStatusConnected)
+
+	// Initialize replay informations
+	link, err := f.controller.RegisterObserver(f.session, services.EventFilterConfig{})
+	c.Assert(err, IsNil)
+	defer f.controller.UnregisterObserver(f.session, link)
+	messages := make(chan interface{})
+	go func() {
+		for msg := range link.Listen() {
+			messages <- msg
+		}
+	}()
+	msg := waitBroadcastTag(messages, sdk.MessageTag_update_services)
+	c.Assert(msg, NotNil)
+	detached := f.server.GetLinks()
+	defer detached.Close()
+	for slink := range detached {
+		f.server.WriteDispatcherToClient(slink, 1, 0,
+			&sword.DispatcherToClient_Content{
+				ServicesDescription: &sword.ServicesDescription{
+					Services: []string{"struct replay::Service"},
+				},
+			})
+	}
+	msg = waitBroadcastTag(messages, sdk.MessageTag_update_services)
+	c.Assert(msg, NotNil)
+	// Replay range with 1mn length
+	replayBegin := time.Now().Truncate(time.Second).UTC()
+	replayEnd := replayBegin.Add(60 * time.Second)
+	for slink := range detached {
+		f.server.WriteReplayToClient(slink, 1, 0,
+			&sword.ReplayToClient_Content{
+				ControlReplayInformation: &sword.ControlReplayInformation{
+					CurrentTick:     proto.Int32(0),
+					InitialDateTime: swapi.MakeDateTime(replayBegin),
+					EndDateTime:     swapi.MakeDateTime(replayEnd),
+					DateTime:        swapi.MakeDateTime(replayBegin),
+					TickDuration:    proto.Int32(10),
+					TimeFactor:      proto.Int32(1),
+					Status:          sword.EnumSimulationState_running.Enum(),
+					TickCount:       proto.Int32(6),
+				},
+			})
+	}
+	msg = waitBroadcastTag(messages, sdk.MessageTag_update_events)
+	c.Assert(msg, NotNil)
+	event := msg.GetEvents()[0]
+	checkIsReplayEvent(c, event)
+	c.Assert(event.GetName(), Equals, "Replay range")
+	c.Assert(event.GetInfo(), Equals, "")
+	id := event.GetUuid()
+	validEvent := services.CloneEvent(event)
+
+	// Modifying replay range event's informations is valid
+	event = services.CloneEvent(validEvent)
+	event.Name = proto.String("New name")
+	event.Info = proto.String("New information")
+	_, err = f.controller.UpdateEvent(f.session, id, event)
+	c.Assert(err, IsNil)
+	msg = waitBroadcastTag(messages, sdk.MessageTag_update_events)
+	c.Assert(msg, NotNil)
+	c.Assert(*msg.GetEvents()[0].Name, Equals, *event.Name)
+	c.Assert(*msg.GetEvents()[0].Info, Equals, *event.Info)
+
+	// Modifying replay range event out of replay boundaries returns error
+	event = services.CloneEvent(validEvent)
+	event.Begin = proto.String(util.FormatTime(replayBegin.Add(-time.Hour)))
+	_, err = f.controller.UpdateEvent(f.session, id, event)
+	c.Assert(err, NotNil)
+	event = services.CloneEvent(validEvent)
+	event.End = proto.String(util.FormatTime(replayEnd.Add(time.Hour)))
+	_, err = f.controller.UpdateEvent(f.session, id, event)
+	c.Assert(err, NotNil)
+
+	// Modifying replay event with erroneous range returns error
+	event = services.CloneEvent(validEvent)
+	event.Begin, event.End = event.End, event.Begin
+	_, err = f.controller.UpdateEvent(f.session, id, event)
+	c.Assert(err, NotNil)
+	event = services.CloneEvent(validEvent)
+	event.Begin = event.End
+	_, err = f.controller.UpdateEvent(f.session, id, event)
+	c.Assert(err, NotNil)
+
+	// Modifying first or last replay event and creating a gap between
+	// replay boundaries and events will return an error
+	event = services.CloneEvent(validEvent)
+	event.Begin = proto.String(util.FormatTime(replayBegin.Add(time.Second)))
+	_, err = f.controller.UpdateEvent(f.session, id, event)
+	c.Assert(err, NotNil)
+	event = services.CloneEvent(validEvent)
+	event.End = proto.String(util.FormatTime(replayEnd.Add(-time.Second)))
+	_, err = f.controller.UpdateEvent(f.session, id, event)
+	c.Assert(err, NotNil)
+
+	// Valid replay event creation, split in half the current replay event
+	// The new replay event inherits its informations from the split event
+	event = services.CloneEvent(validEvent)
+	splitUuid := uuid.New()
+	event.Uuid = proto.String(splitUuid)
+	event.Begin = proto.String(util.FormatTime(replayBegin.Add(30 * time.Second)))
+	event.Name = proto.String("")
+	event.Info = proto.String("")
+	_, err = f.controller.UpdateEvent(f.session, id, event)
+	c.Assert(err, IsNil)
+	// Checks new event creation
+	msg = waitBroadcastTag(messages, sdk.MessageTag_update_events)
+	c.Assert(msg, NotNil)
+	event = msg.GetEvents()[0]
+	c.Assert(event.GetUuid(), Equals, splitUuid)
+	c.Assert(event.GetName(), Equals, "New name")
+	c.Assert(event.GetInfo(), Equals, "New information")
+	c.Assert(string(event.Action.GetPayload()), Equals, `{"begin":true,"end":false}`)
+	begin, _ := util.ParseTime(event.GetBegin())
+	end, _ := util.ParseTime(event.GetEnd())
+	c.Assert(begin, Equals, replayBegin.Add(30*time.Second))
+	c.Assert(end, Equals, replayEnd)
+	splitEvent := services.CloneEvent(event)
+	// Checks old event update
+	msg = waitBroadcastTag(messages, sdk.MessageTag_update_events)
+	c.Assert(msg, NotNil)
+	event = msg.GetEvents()[0]
+	begin, _ = util.ParseTime(event.GetBegin())
+	end, _ = util.ParseTime(event.GetEnd())
+	c.Assert(event.GetUuid(), Equals, id)
+	c.Assert(begin, Equals, replayBegin)
+	c.Assert(end, Equals, replayBegin.Add(30*time.Second))
+	c.Assert(string(event.Action.GetPayload()), Equals, `{"begin":false,"end":true}`)
+	validEvent = services.CloneEvent(event)
+
+	// Creating a new replay event cannot overlap more than one existing event
+	// and must share one of the existing event boundaries, otherwise it returns an error
+	event = services.CloneEvent(validEvent)
+	event.Uuid = proto.String(uuid.New())
+	event.Begin = proto.String(util.FormatTime(replayBegin))
+	event.End = proto.String(util.FormatTime(replayEnd))
+	_, err = f.controller.UpdateEvent(f.session, id, event)
+	c.Assert(err, NotNil)
+
+	event = services.CloneEvent(splitEvent)
+	event.Uuid = proto.String(uuid.New())
+	event.Begin = proto.String(util.FormatTime(replayBegin.Add(31 * time.Second)))
+	event.End = proto.String(util.FormatTime(replayEnd.Add(-1 * time.Second)))
+	_, err = f.controller.UpdateEvent(f.session, id, event)
+	c.Assert(err, NotNil)
+
+	// Modifying a replay event boundary modifies the previous or the next event too
+	event = services.CloneEvent(splitEvent)
+	event.Begin = proto.String(util.FormatTime(replayBegin.Add(31 * time.Second)))
+	_, err = f.controller.UpdateEvent(f.session, id, event)
+	c.Assert(err, IsNil)
+	msg = waitBroadcastTag(messages, sdk.MessageTag_update_events)
+	c.Assert(msg, NotNil)
+	event = msg.GetEvents()[0]
+	c.Assert(event.GetUuid(), Equals, splitUuid)
+	begin, _ = util.ParseTime(event.GetBegin())
+	c.Assert(begin, Equals, replayBegin.Add(31*time.Second))
+	splitEvent = services.CloneEvent(event)
+	msg = waitBroadcastTag(messages, sdk.MessageTag_update_events)
+	c.Assert(msg, NotNil)
+	event = msg.GetEvents()[0]
+	end, _ = util.ParseTime(event.GetEnd())
+	c.Assert(event.GetUuid(), Equals, id)
+	c.Assert(end, Equals, replayBegin.Add(31*time.Second))
+	validEvent = services.CloneEvent(event)
+
+	// Removing a replay event fills the gap with the previous event
+	err = f.controller.DeleteEvent(f.session, splitUuid)
+	c.Assert(err, IsNil)
+	msg = waitBroadcastTag(messages, sdk.MessageTag_delete_events)
+	c.Assert(msg, NotNil)
+	msg = waitBroadcastTag(messages, sdk.MessageTag_update_events)
+	c.Assert(msg, NotNil)
+	event = msg.GetEvents()[0]
+	end, _ = util.ParseTime(event.GetEnd())
+	c.Assert(event.GetUuid(), Equals, id)
+	c.Assert(end, Equals, replayEnd)
+	c.Assert(string(event.Action.GetPayload()), Equals, `{"begin":false,"end":false}`)
+
+	// Cannot remove the last event
+	err = f.controller.DeleteEvent(f.session, id)
+	c.Assert(err, NotNil)
 }

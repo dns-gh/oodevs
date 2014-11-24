@@ -117,3 +117,9 @@ message CloseEvent
     optional string error_text = 3;
     optional bool   lock       = 4;
 }
+
+message ReplayPayload
+{
+    required bool begin = 1;
+    required bool end = 2;
+}

@@ -176,7 +176,7 @@ private:
     MIL_PopulationConcentration* pSourceConcentration_;
     MIL_PopulationConcentration* pDestConcentration_;
     MT_Vector2D primaryDestination_;
-    MT_Vector2D alternateDestination_; // Used when the flow is splitted
+    MT_Vector2D alternateDestination_; // Used when the flow is split
     boost::shared_ptr< DEC_Population_Path > pHeadPath_;
     boost::shared_ptr< DEC_Population_Path > pTailPath_;
     MT_Vector2D direction_;

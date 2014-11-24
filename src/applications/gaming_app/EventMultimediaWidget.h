@@ -25,7 +25,7 @@ class EventMultimediaWidget : public EventDefaultWidget_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             EventMultimediaWidget( gui::EventPresenter& presenter );
+    explicit EventMultimediaWidget( gui::EventPresenter& presenter );
     virtual ~EventMultimediaWidget();
     //@}
 };

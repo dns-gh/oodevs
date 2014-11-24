@@ -653,6 +653,14 @@ Raison: %3
         <source>Display</source>
         <translation>Afficher</translation>
     </message>
+    <message>
+        <source>Split</source>
+        <translation>Diviser</translation>
+    </message>
+    <message>
+        <source>Merge</source>
+        <translation>Fusionner</translation>
+    </message>
 </context>
 <context>
     <name>EventMagicWidget</name>
@@ -729,6 +737,17 @@ Raison: %3
     <message>
         <source>Recipient</source>
         <translation>Destinataire</translation>
+    </message>
+</context>
+<context>
+    <name>EventReplayWidget</name>
+    <message>
+        <source>Label</source>
+        <translation>Label</translation>
+    </message>
+    <message>
+        <source>Description</source>
+        <translation>Description</translation>
     </message>
 </context>
 <context>

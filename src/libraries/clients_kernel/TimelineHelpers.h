@@ -20,6 +20,7 @@
 #define EVENT_MULTIMEDIA_PROTOCOL "sword"
 #define EVENT_MULTIMEDIA_SERVICE "multimedia"
 #define EVENT_MARKER_PROTOCOL "marker"
+#define EVENT_REPLAY_PROTOCOL "replay"
 
 namespace timeline
 {
@@ -29,6 +30,7 @@ namespace timeline
 namespace timeline_helpers
 {
     std::string CreateEventTarget( const std::string& protocol, const std::string& service );
+    std::string GenerateUuid();
     E_EventTypes GetEventType( const timeline::Event& event );
 }
 

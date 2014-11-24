@@ -193,6 +193,7 @@ func (c *Controller) AttachSwordService(uuid, name string, clock bool, address s
 		}
 		session.AttachListener(sword)
 		session.AttachFilterer(sword)
+		session.AttachChecker(sword)
 		return nil
 	})
 }
@@ -222,9 +223,9 @@ func (c *Controller) StopSession(uuid string) (*sdk.Session, error) {
 	})
 }
 
-func (c *Controller) CreateEvent(uuid string, msg *sdk.Event) (*sdk.Event, error) {
-	value, err := c.apply(uuid, func(session *Session) (interface{}, error) {
-		return session.CreateEvent(uuid, msg)
+func (c *Controller) CreateEvent(sessionUuid string, msg *sdk.Event) (*sdk.Event, error) {
+	value, err := c.apply(sessionUuid, func(session *Session) (interface{}, error) {
+		return session.CreateEvent(sessionUuid, msg)
 	})
 	if err != nil {
 		return nil, err
