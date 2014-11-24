@@ -82,6 +82,10 @@ func (s *SdkHandler) Start(args *sdk.SessionStart) error {
 }
 
 func (s *SdkHandler) CreateEvent(args *sdk.EventCreate) error {
-	_, err := s.controller.CreateEvent(args.GetSession(), args.GetEvent())
+	id := ""
+	if args.GetEvent().Uuid != nil {
+		id = *args.GetEvent().Uuid
+	}
+	_, err := s.controller.UpdateEvent(args.GetSession(), id, args.GetEvent())
 	return err
 }

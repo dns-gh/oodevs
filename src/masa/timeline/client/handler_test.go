@@ -101,12 +101,6 @@ func (f *FakeHandler) StopSession(uuid string) (*sdk.Session, error) {
 	return DummySession, DummyError
 }
 
-func (f *FakeHandler) CreateEvent(uuid string, event *sdk.Event) (*sdk.Event, error) {
-	f.uuid = uuid
-	f.event = event
-	return DummyEvent, DummyError
-}
-
 func (f *FakeHandler) ReadServices(uuid string) ([]*sdk.Service, error) {
 	f.uuid = uuid
 	return DummyServices, DummyError

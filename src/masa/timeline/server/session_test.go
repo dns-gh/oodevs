@@ -110,7 +110,7 @@ func (f *Fixture) createFullEvent(uuid, name, protocol, target, parent, metadata
 	if !end.IsZero() {
 		msg.End = proto.String(util.FormatTime(end))
 	}
-	return f.controller.CreateEvent(f.session, &msg)
+	return f.controller.UpdateEvent(f.session, uuid, &msg)
 }
 
 func (f *Fixture) createEvent(uuid, name, protocol, target string, payload []byte) (*sdk.Event, error) {

@@ -223,16 +223,6 @@ func (c *Controller) StopSession(uuid string) (*sdk.Session, error) {
 	})
 }
 
-func (c *Controller) CreateEvent(sessionUuid string, msg *sdk.Event) (*sdk.Event, error) {
-	value, err := c.apply(sessionUuid, func(session *Session) (interface{}, error) {
-		return session.CreateEvent(sessionUuid, msg)
-	})
-	if err != nil {
-		return nil, err
-	}
-	return value.(*sdk.Event), nil
-}
-
 func (c *Controller) ReadServices(uuid string) ([]*sdk.Service, error) {
 	value, err := c.apply(uuid, func(session *Session) (interface{}, error) {
 		return session.ReadServices(), nil

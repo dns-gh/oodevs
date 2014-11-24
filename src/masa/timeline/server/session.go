@@ -434,7 +434,7 @@ func makeUpdate(event *Event) (EventSlice, []*sdk.Event) {
 	return updates, encoded
 }
 
-func (s *Session) CreateEvent(uuid string, msg *sdk.Event) (*sdk.Event, error) {
+func (s *Session) createEvent(uuid string, msg *sdk.Event) (*sdk.Event, error) {
 	err := s.checkers.CheckEvent(msg)
 	if err != nil {
 		return nil, err
@@ -455,7 +455,7 @@ func (s *Session) CreateEvent(uuid string, msg *sdk.Event) (*sdk.Event, error) {
 func (s *Session) UpdateEvent(uuid string, msg *sdk.Event) (*sdk.Event, error) {
 	event := s.events.Find(uuid)
 	if event == nil {
-		return s.CreateEvent(uuid, msg)
+		return s.createEvent(uuid, msg)
 	}
 	err := s.checkers.CheckEvent(msg)
 	if err != nil {
