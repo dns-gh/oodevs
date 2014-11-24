@@ -434,34 +434,21 @@ func makeUpdate(event *Event) (EventSlice, []*sdk.Event) {
 	return updates, encoded
 }
 
-func (s *Session) createEvent(uuid string, msg *sdk.Event) (*sdk.Event, error) {
-	err := s.checkers.CheckEvent(msg)
-	if err != nil {
-		return nil, err
-	}
-	event, err := NewEvent(msg, s.events)
-	if err != nil {
-		return nil, err
-	}
-	if event := s.events.Find(event.uuid); event != nil {
-		return nil, ErrEventUuidTaken
-	}
-	s.events.Append(event)
-	updates, encoded := makeUpdate(event)
-	s.listeners.UpdateEncodedEvents(updates, encoded)
-	return encoded[0], nil
-}
-
 func (s *Session) UpdateEvent(uuid string, msg *sdk.Event) (*sdk.Event, error) {
-	event := s.events.Find(uuid)
-	if event == nil {
-		return s.createEvent(uuid, msg)
-	}
 	err := s.checkers.CheckEvent(msg)
 	if err != nil {
 		return nil, err
 	}
-	modified, triggered, children, err := event.Update(msg, s.tick, s.events)
+	event := s.events.Find(uuid)
+	modified := true
+	triggered := false
+	children := false
+	if event == nil {
+		event, err = NewEvent(msg, s.events)
+		s.events.Append(event)
+	} else {
+		modified, triggered, children, err = event.Update(msg, s.tick, s.events)
+	}
 	if err != nil {
 		return nil, err
 	}
