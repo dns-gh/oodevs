@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef gui__Filter_ABC_h_
-#define gui__Filter_ABC_h_
+#ifndef gui__VisibilityFilter_h_
+#define gui__VisibilityFilter_h_
 
 namespace kernel
 {
@@ -16,21 +16,17 @@ namespace kernel
     class Profile_ABC;
 }
 
-namespace kernel
+namespace gui
 {
-// =============================================================================
-/** @class  Filter_ABC
-    @brief  Filter definition
-*/
-// Created: LGY 2011-11-24
-// =============================================================================
-class Filter_ABC
+class GLOptions;
+
+class VisibilityFilter
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             Filter_ABC() {}
-    virtual ~Filter_ABC() {}
+             VisibilityFilter() {}
+    virtual ~VisibilityFilter() {}
     //@}
 
     //! @name Operations
@@ -38,6 +34,7 @@ public:
     virtual QString GetFilter() const = 0;
     virtual void SetFilter( const kernel::Entity_ABC& entity, bool update = true ) = 0;
     virtual void SetFilter( const kernel::Profile_ABC& profile, bool update = true ) = 0;
+    virtual void SetFilter( const GLOptions& options, bool update = true ) = 0;
     virtual void RemoveFilter( bool update = true ) = 0;
     virtual const kernel::Entity_ABC* GetFilteredEntity() const = 0;
     virtual const kernel::Profile_ABC* GetFilteredProfile() const = 0;
@@ -46,4 +43,4 @@ public:
 
 } //! namespace kernel
 
-#endif // gui__Filter_ABC_h_
+#endif // gui__VisibilityFilter_h_

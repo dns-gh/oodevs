@@ -10,6 +10,7 @@
 #include "gaming_pch.h"
 #include "ProfileFilter.h"
 #include "UnitFilter.h"
+#include "clients_gui/GLOptions.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
 
 // -----------------------------------------------------------------------------
@@ -144,7 +145,17 @@ void ProfileFilter::SetFilter( const kernel::Profile_ABC& profile, bool update /
     if( !update )
         return;
     controller_.Update( *static_cast< Profile_ABC* >( this ) );
-    controller_.Update( *static_cast< Filter_ABC* >( this ) );
+    controller_.Update( *static_cast< VisibilityFilter* >( this ) );
+}
+
+void ProfileFilter::SetFilter( const gui::GLOptions& options, bool update /* = true*/ )
+{
+    if( const auto* entity = options.GetFilterEntity() )
+        SetFilter( *entity, update );
+    else if( const auto* profile = options.GetFilterProfile() )
+        SetFilter( *profile, update );
+    else
+        RemoveFilter( update );
 }
 
 void ProfileFilter::RemoveFilter( bool update /* = true */ )

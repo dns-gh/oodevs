@@ -226,7 +226,8 @@ MainWindow::MainWindow( Controllers& controllers,
                                                       *eventStrategy_,
                                                       *glProxy_,
                                                       std::make_shared< SimulationLighting >( controllers ),
-                                                      config.GetMapnikThreads() ) );
+                                                      config.GetMapnikThreads(),
+                                                      model.profiles_ ) );
     gui::connect( glWidgetManager_.get(), SIGNAL( UpdateGL() ), [&]() {
         model_.agents_.Resolver< Agent_ABC >::Apply( []( Agent_ABC& agent ) { agent.Get< kernel::Positions >().Compute(); } );
     } );

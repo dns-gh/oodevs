@@ -16,7 +16,6 @@
 namespace kernel
 {
     class Controllers;
-    class Filter_ABC;
     class Formation_ABC;
     template< typename T > class Resolver;
 }
@@ -29,10 +28,11 @@ namespace gui
     class GLProxyBase;
     class GLSymbols;
     class PickingSelector;
-    class SvglRenderer;
     class SvglProxy;
+    class SvglRenderer;
     class TacticalGraphics;
     class TooltipsLayer_ABC;
+    class VisibilityFilter;
 
 // =============================================================================
 /** @class  GLMainProxy
@@ -55,7 +55,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              GLMainProxy( kernel::Controllers& controllers,
-                          kernel::Filter_ABC& profileFilter,
+                          VisibilityFilter& profileFilter,
                           const tools::Resolver< kernel::Formation_ABC >& formationResolver );
     virtual ~GLMainProxy();
     //@}
@@ -179,7 +179,7 @@ private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    kernel::Filter_ABC& profileFilter_;
+    VisibilityFilter& profileFilter_;
     const tools::Resolver< kernel::Formation_ABC >& formationResolver_;
     std::shared_ptr< ContourLinesObserver > contourLinesObserver_;
     ColorStrategy_ABC* colorStrategy_;

@@ -122,3 +122,8 @@ const kernel::Profile_ABC* PreparationProfile::GetFilteredProfile() const
 {
     return 0;
 }
+
+void PreparationProfile::SetFilter( const gui::GLOptions& /*options*/, bool /*update  = true*/ )
+{
+    // NOTHING
+}

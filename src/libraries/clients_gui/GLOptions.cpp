@@ -28,9 +28,11 @@
 #include "clients_kernel/OptionVariant.h"
 #include "clients_kernel/Positions.h"
 #include "clients_kernel/Profile_ABC.h"
+#include "clients_kernel/ProfilesModel_ABC.h"
 #include "clients_kernel/Settings.h"
 #include "clients_kernel/StaticModel.h"
 #include "clients_kernel/TacticalHierarchies.h"
+#include "clients_kernel/UserProfile_ABC.h"
 #include "ENT/ENT_Tr.h"
 #include "MT_Tools/MT_Logger.h"
 #include <boost/algorithm/string.hpp>
@@ -50,7 +52,8 @@ GLOptions::GLOptions( kernel::Controllers& controllers,
                       const kernel::StaticModel& staticModel,
                       const kernel::EntityResolver_ABC& model,
                       const std::shared_ptr< Lighting_ABC >& lighting,
-                      uint32_t mapnikThread )
+                      uint32_t mapnikThread,
+                      const kernel::ProfilesModel_ABC& profilesModel )
     : controllers_( controllers )
     , profile_( profile )
     , map_( staticModel.detection_ )
@@ -69,6 +72,7 @@ GLOptions::GLOptions( kernel::Controllers& controllers,
     , elevation2dTexture_( std::make_shared< Elevation2dTexture >( map_ ) )
     , graphicSetup_( std::make_shared< TerrainSettings >() )
     , lighting_( lighting )
+    , profilesModel_( profilesModel )
     , urbanSetup_( std::make_shared< UrbanDisplayOptions >( controllers, accommodationTypes_ ) )
     , watershedTexture_( new WatershedTexture( map_ ) )
     , mapnikThread_( mapnikThread )
@@ -96,6 +100,7 @@ GLOptions::GLOptions( const GLOptions& other )
     , filterProfile_( controllers_ )
     , lockedEntity_( controllers_ )
     , mapnikThread_( other.mapnikThread_ )
+    , profilesModel_( other.profilesModel_ )
 {
     *this = other;
     controllers_.Register( *this );
@@ -199,6 +204,7 @@ void GLOptions::Load( kernel::Settings& settings )
     SetLockedEntity( FindEntity( model_, profile_, settings.value( "LockedEntity", 0u ).toUInt() ) );
     SetFilterEntity( FindEntity( model_, profile_, settings.value( "FilterEntity", 0u ).toUInt() ) );
     aggregatedEntities_.clear();
+    SetFilterProfile( profilesModel_.Find( settings.value( "FilterProfile", "" ).toString() ) );
     StringToEntities( aggregatedEntities_, model_, profile_, settings.value( "AggregatedEntities", "" ).toString() );
     settings.endGroup();
 
@@ -219,6 +225,7 @@ void GLOptions::Save( kernel::Settings& settings )
     settings.beginGroup( "Situation" );
     settings.setValue( "LockedEntity", lockedEntity_ ? static_cast< unsigned int >( lockedEntity_->GetId() ) : 0u );
     settings.setValue( "FilterEntity", filterEntity_ ? static_cast< unsigned int >( filterEntity_->GetId() ) : 0u );
+    settings.setValue( "FilterProfile", filterProfile_ ? filterProfile_->GetLogin(): "" );
     settings.setValue( "AggregatedEntities", EntitiesToString( aggregatedEntities_ ) );
     settings.endGroup();
 

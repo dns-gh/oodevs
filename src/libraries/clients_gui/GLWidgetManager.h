@@ -17,8 +17,8 @@ namespace kernel
 {
     class Controllers;
     class EntityResolver_ABC;
-    class Filter_ABC;
     class Profile_ABC;
+    class ProfilesModel_ABC;
     class StaticModel;
     class Settings;
 }
@@ -36,15 +36,16 @@ namespace gui
 {
     class ContourLinesObserver;
     class DrawingTypes;
+    class GL2DWidget;
     class GLDockWidget;
     class GLMainProxy;
     class GLOptions;
     class GLProxy_ABC;
     class GLStackedWidget;
-    class GL2DWidget;
     class GLView_ABC;
     class IconLayout;
     class Layer_ABC;
+    class VisibilityFilter;
 
 // =============================================================================
 /** @class  GLWidgetManager
@@ -55,7 +56,7 @@ namespace gui
 class GLWidgetManager : public QObject
                       , public tools::Observer_ABC
                       , public kernel::OptionsObserver_ABC
-                      , public tools::ElementObserver_ABC< kernel::Filter_ABC >
+                      , public tools::ElementObserver_ABC< VisibilityFilter >
                       , public kernel::ContextMenuObserver_ABC< geometry::Point2f >
 {
     Q_OBJECT
@@ -82,7 +83,8 @@ public:
                               EventStrategy_ABC& strategy,
                               GLMainProxy& proxy,
                               const std::shared_ptr< Lighting_ABC >& lighting,
-                              uint32_t mapnikThread );
+                              uint32_t mapnikThread,
+                              const kernel::ProfilesModel_ABC& profilesModel );
     virtual ~GLWidgetManager();
     //@}
 
@@ -124,7 +126,7 @@ private:
     //@{
     virtual void NotifyContextMenu( const geometry::Point2f&, kernel::ContextMenu& );
     virtual void OptionChanged( const std::string& name, const kernel::OptionVariant& value );
-    virtual void NotifyUpdated( const kernel::Filter_ABC& filter );
+    virtual void NotifyUpdated( const VisibilityFilter& filter );
     //@}
 
     //! @name Helpers

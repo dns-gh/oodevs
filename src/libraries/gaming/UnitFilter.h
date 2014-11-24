@@ -10,8 +10,8 @@
 #ifndef __UnitFilter_h_
 #define __UnitFilter_h_
 
+#include "clients_gui/VisibilityFilter.h"
 #include "clients_kernel/Profile_ABC.h"
-#include "clients_kernel/Filter_ABC.h"
 #include "clients_kernel/SafePointer.h"
 
 namespace kernel
@@ -30,7 +30,7 @@ namespace kernel
 // Created: AGE 2006-11-29
 // =============================================================================
 class UnitFilter : public kernel::Profile_ABC
-                 , public kernel::Filter_ABC
+                 , public gui::VisibilityFilter
 {
 public:
     //! @name Constructors/Destructor
@@ -54,6 +54,7 @@ public:
     virtual QString GetFilter() const;
     virtual void SetFilter( const kernel::Entity_ABC& entity, bool update = true );
     virtual void SetFilter( const kernel::Profile_ABC& profile, bool update = true );
+    virtual void SetFilter( const gui::GLOptions& options, bool update = true );
     virtual void RemoveFilter( bool update = true );
     const kernel::Entity_ABC* GetFilteredEntity() const;
     const kernel::Profile_ABC* GetFilteredProfile() const;

@@ -29,7 +29,6 @@
 #include "gaming/Profile.h"
 #include "gaming/Simulation.h"
 #include "gaming/TeamsModel.h"
-#include "gaming/UnitFilter.h"
 
 // -----------------------------------------------------------------------------
 // Name: OrbatToolbar constructor
@@ -124,7 +123,7 @@ void OrbatToolbar::OnClearFilter()
 // Name: OrbatToolbar::NotifyUpdated
 // Created: SBO 2009-03-04
 // -----------------------------------------------------------------------------
-void OrbatToolbar::NotifyUpdated( const kernel::Filter_ABC& filter )
+void OrbatToolbar::NotifyUpdated( const gui::VisibilityFilter& filter )
 {
     const QString name = filter.GetFilter();
     filterBtn_->setTextLabel( name );

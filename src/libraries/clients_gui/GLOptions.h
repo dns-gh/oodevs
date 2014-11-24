@@ -32,6 +32,7 @@ namespace kernel
     class OptionVariant;
     class Options;
     class Profile_ABC;
+    class ProfilesModel_ABC;
     class Settings;
     class StaticModel;
     class UrbanObject_ABC;
@@ -73,7 +74,8 @@ public:
                         const kernel::StaticModel& staticModel,
                         const kernel::EntityResolver_ABC& model,
                         const std::shared_ptr< Lighting_ABC >& lighting,
-                        uint32_t mapnikThread );
+                        uint32_t mapnikThread,
+                        const kernel::ProfilesModel_ABC& profilesModel );
              // create a GLOptions by copy
              GLOptions( const GLOptions& other );
     virtual ~GLOptions();
@@ -173,6 +175,7 @@ private:
     std::shared_ptr< Elevation2dTexture > elevation2dTexture_;
     std::shared_ptr< TerrainSettings > graphicSetup_;
     std::shared_ptr< Lighting_ABC > lighting_;
+    const kernel::ProfilesModel_ABC& profilesModel_;
     std::shared_ptr< UrbanDisplayOptions > urbanSetup_;
     std::unique_ptr< WatershedTexture > watershedTexture_;
     std::unique_ptr< graphics::MapnikLayer > mapnikLayer_;

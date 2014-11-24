@@ -47,6 +47,7 @@ public:
     virtual kernel::ProfileEditor* CreateProfileEditor() const;
     virtual kernel::ProfileEditor* CreateProfileEditor( kernel::UserProfile_ABC& profile ) const;
     virtual void Apply( std::function< void( kernel::UserProfile_ABC& ) > functor );
+    virtual const kernel::UserProfile_ABC* Find( const QString& login ) const;
     //@}
 
     //! @name Operations
@@ -54,7 +55,6 @@ public:
     void CreateProfile( const sword::ProfileCreation& message );
     void DeleteProfile( const sword::ProfileDestruction& message );
     kernel::UserProfile_ABC& Get( const QString& login );
-    const kernel::UserProfile_ABC* Find( const QString& login ) const;
     void Purge();
     //@}
 

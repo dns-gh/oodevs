@@ -191,7 +191,7 @@ void UnitFilter::SetFilter( const Entity_ABC& entity, bool update /* = true */ )
     if( !update )
         return;
     controller_.Update( *static_cast< Profile_ABC* >( this ) );
-    controller_.Update( *static_cast< Filter_ABC* >( this ) );
+    controller_.Update( *static_cast< VisibilityFilter* >( this ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -199,6 +199,11 @@ void UnitFilter::SetFilter( const Entity_ABC& entity, bool update /* = true */ )
 // Created: LGY 2011-11-24
 // -----------------------------------------------------------------------------
 void UnitFilter::SetFilter( const kernel::Profile_ABC& /*profile*/, bool /* update = true */ )
+{
+    // NOTHING
+}
+
+void UnitFilter::SetFilter( const gui::GLOptions& /*options*/, bool /*update = true*/ )
 {
     // NOTHING
 }
@@ -216,7 +221,7 @@ void UnitFilter::RemoveFilter( bool update /* = true */ )
     if( !update )
         return;
     controller_.Update( *static_cast< Profile_ABC* >( this ) );
-    controller_.Update( *static_cast< Filter_ABC* >( this ) );
+    controller_.Update( *static_cast< VisibilityFilter* >( this ) );
 }
 
 // -----------------------------------------------------------------------------

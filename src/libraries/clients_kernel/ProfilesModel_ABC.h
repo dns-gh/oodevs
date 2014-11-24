@@ -36,6 +36,7 @@ public:
     virtual kernel::ProfileEditor* CreateProfileEditor() const = 0;
     virtual kernel::ProfileEditor* CreateProfileEditor( kernel::UserProfile_ABC& profile ) const = 0;
     virtual void Apply( std::function< void( kernel::UserProfile_ABC& ) > functor ) = 0;
+    virtual const kernel::UserProfile_ABC* Find( const QString& login ) const = 0;
     //@}
 };
 

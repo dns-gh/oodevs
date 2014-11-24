@@ -10,7 +10,7 @@
 #ifndef __PreparationProfile_h_
 #define __PreparationProfile_h_
 
-#include "clients_kernel/Filter_ABC.h"
+#include "clients_gui/VisibilityFilter.h"
 #include "clients_kernel/Profile_ABC.h"
 
 // =============================================================================
@@ -20,7 +20,7 @@
 // Created: AGE 2006-10-16
 // =============================================================================
 class PreparationProfile : public kernel::Profile_ABC
-                         , public kernel::Filter_ABC
+                         , public gui::VisibilityFilter
 {
 public:
     //! @name Statics
@@ -46,6 +46,7 @@ public:
     virtual QString GetFilter() const;
     virtual void SetFilter( const kernel::Entity_ABC& entity, bool update = true );
     virtual void SetFilter( const kernel::Profile_ABC& profile, bool update = true );
+    virtual void SetFilter( const gui::GLOptions& options, bool update = true );
     virtual void RemoveFilter( bool update = true );
     virtual const kernel::Entity_ABC* GetFilteredEntity() const;
     virtual const kernel::Profile_ABC* GetFilteredProfile() const;
