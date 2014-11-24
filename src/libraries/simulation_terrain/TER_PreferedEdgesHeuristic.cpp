@@ -9,46 +9,73 @@
 
 #include "simulation_terrain_pch.h"
 #include "TER_PreferedEdgesHeuristic.h"
+#include "TER_PathIndex.h"
 #include "TER_PathFinder_ABC.h"
 #include "TER_World.h"
-#include "MT_Tools/MT_Logger.h"
 #include "MT_Tools/MT_Vector2d.h"
 #include "protocol/Simulation.h"
+#include <pathfind/TerrainRule_ABC.h>
 #include <boost/make_shared.hpp>
+#include "MT_Tools/MT_Logger.h"
 
 namespace
 {
 
-const float squareEpsilon = 100; // 10 meters
+// Relative value of actual costs of non-path edges.
+static const float costMultiplier = 20.f;
 
-TerrainData ReadTerrainData( const sword::TerrainData& data )
+class TER_PreferedEdges : public TerrainRule_ABC
 {
-    return TerrainData( static_cast< unsigned char >( data.area() ),
-                        static_cast< unsigned char >( data.left() ),
-                        static_cast< unsigned char >( data.right() ),
-                        static_cast< unsigned short >( data.linear() ) );
-}
+public:
+    TER_PreferedEdges( const std::vector< geometry::Point2f >& path,
+                       TerrainRule_ABC& rule,
+                       geometry::Point2f to )
+        : rule_( rule )
+    {
+        if( !path.empty() )
+            index_.reset( new TER_PathIndex( path, to ) );
+        const geometry::Point2f p1( 0, 0 );
+        const geometry::Point2f p2( 10000, 0 );
+        speedFactor_ = rule_.EvaluateCost( p1, p2 ) / p1.Distance( p2 );
+    }
 
-TerrainPathPoint ReadPathPoint( const sword::PathPoint& point )
-{
-    MT_Vector2D position;
-    TER_World::GetWorld().MosToSimMgrsCoord(
-            point.coordinate().latitude(),
-            point.coordinate().longitude(),
-            position );
-    return TerrainPathPoint( geometry::Point2f( static_cast< float >( position.GetX() ),
-                                                static_cast< float >( position.GetY() ) ),
-                             ReadTerrainData( point.current() ), ReadTerrainData( point.next() ) );
-}
+    virtual float EvaluateCost( const geometry::Point2f& from,
+                                const geometry::Point2f& to )
+    {
+        const auto cost = rule_.EvaluateCost( from, to );
+        if( !index_ || cost <= 0 )
+            return cost;
+        const auto dist = index_->GetDistanceUsingPath( to );
+        const auto pathCost = costMultiplier*dist.startToPath
+            + dist.alongPath
+            + costMultiplier*dist.pathToDest;
+        return std::min( cost, speedFactor_*pathCost );
+    }
 
-TER_PreferedEdgesHeuristic::T_PathPoints ReadPathPoints( const sword::PathResult& result )
-{
-    TER_PreferedEdgesHeuristic::T_PathPoints points;
-    for( auto it = result.points().begin(); it != result.points().end(); ++it )
-        points.push_back( std::make_pair( ReadPathPoint( *it ),
-                          it->has_waypoint() ? it->waypoint() : -1 ) );
-    return points;
-}
+    virtual float GetCost( const geometry::Point2f& from,
+                           const geometry::Point2f& to,
+                           const TerrainData& terrainTo,
+                           const TerrainData& terrainBetween,
+                           std::ostream* reason )
+    {
+        const auto cost = rule_.GetCost( from, to, terrainTo, terrainBetween, reason );
+        if( cost < 0 )
+            return cost;
+        if( index_->IsPathEdge( from, to )  )
+            return cost;
+        return costMultiplier*cost;
+    }
+
+    virtual bool ShouldEndComputation()
+    {
+        return rule_.ShouldEndComputation();
+    }
+
+private:
+    std::unique_ptr< TER_PathIndex > index_;
+    TerrainRule_ABC& rule_;
+    float speedFactor_;
+};
 
 }  // namespace
 
@@ -56,9 +83,21 @@ TER_PreferedEdgesHeuristic::TER_PreferedEdgesHeuristic(
         const boost::shared_ptr< TER_Pathfinder_ABC >& pathfinder,
         const sword::Pathfind& pathfind )
     : pathfinder_( pathfinder )
-    , pathfind_( pathfind )
 {
-    // NOTHING
+    if( !pathfind.has_result() )
+        return;
+    const auto& points = pathfind.result().points();
+    for( int i = 0; i < points.size(); ++i )
+    {
+        MT_Vector2D current;
+        TER_World::GetWorld().MosToSimMgrsCoord(
+                points.Get( i ).coordinate().latitude(),
+                points.Get( i ).coordinate().longitude(),
+                current );
+        geometry::Point2f p( static_cast< float >( current.rX_ ),
+                             static_cast< float >( current.rY_ ) );
+        points_.push_back( p );
+    }
 }
 
 void TER_PreferedEdgesHeuristic::SetChoiceRatio( float ratio )
@@ -71,54 +110,10 @@ void TER_PreferedEdgesHeuristic::SetConfiguration( unsigned refine, unsigned int
     pathfinder_->SetConfiguration( refine, subdivisions );
 }
 
-TER_PreferedEdgesHeuristic::T_Waypoints TER_PreferedEdgesHeuristic::FindWaypoints(
-        const TER_PreferedEdgesHeuristic::T_PathPoints& points, const geometry::Point2f& point )
-{
-    T_Waypoints result;
-    for( size_t i = 0; i < points.size(); ++i )
-        if( points[ i ].second >= 0 && points[ i ].first.Point().SquareDistance( point ) < squareEpsilon )
-            result.push_back( std::make_pair( static_cast< int >( i ), points[ i ].second ) );
-    return result;
-}
-
-std::pair< int, int > TER_PreferedEdgesHeuristic::MatchWaypoints(
-        const TER_PreferedEdgesHeuristic::T_Waypoints& from, const TER_PreferedEdgesHeuristic::T_Waypoints& to )
-{
-    if( !from.empty() && !to.empty() )
-        for( auto it = from.begin(); it != from.end(); ++it )
-        {
-            const auto toWaypoint = std::find_if( to.begin(), to.end(),
-                [&]( const T_Waypoints::value_type& value )
-                {
-                    return std::abs( value.second - it->second ) == 1;
-                } );
-            if( toWaypoint != to.end() )
-                return std::make_pair( it->first, toWaypoint->first );
-        }
-    return std::make_pair( -1, -1 );
-}
-
 PathResultPtr TER_PreferedEdgesHeuristic::ComputePath( const geometry::Point2f& from,
         const geometry::Point2f& to, TerrainRule_ABC& rule )
 {
-    const T_PathPoints points = ReadPathPoints( pathfind_.result() );
-    const auto segment = MatchWaypoints( FindWaypoints( points, from ),
-                                         FindWaypoints( points, to ) );
-    if( segment.first < 0 || segment.second < 0 )
-    {
-        MT_LOG_INFO_MSG( "Segment [" << from << "] -> [" << to << "] not found in itinerary id='" << pathfind_.id() << "', computing a new path." );
-        return pathfinder_->ComputePath( from, to, rule );
-    }
-    const auto res = boost::make_shared< PathResult >();
-    res->found = false;
-    res->points.reserve( segment.second - segment.first + 1 );
-    for( int i = segment.first; i <= segment.second; ++i )
-    {
-        const auto& current = points[ i ];
-        res->points.push_back( current.first );
-        const auto& point = pathfind_.result().points().Get( i );
-        res->found = point.waypoint() >= 0 && point.reached();
-    }
-    return res;
+    TER_PreferedEdges heuristic( points_, rule, to );
+    return pathfinder_->ComputePath( from, to, heuristic );
 }
 
