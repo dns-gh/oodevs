@@ -931,10 +931,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Selection</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Tooltip</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1044,6 +1040,10 @@
     </message>
     <message>
         <source>Marker</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rectangle selection</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -8,7 +8,7 @@
 // *****************************************************************************
 
 #include "clients_gui_pch.h"
-#include "SelectionLayer.h"
+#include "RectangleSelectionLayer.h"
 
 #include "GLView_ABC.h"
 
@@ -18,11 +18,11 @@
 using namespace gui;
 
 // -----------------------------------------------------------------------------
-// Name: SelectionLayer constructor
+// Name: RectangleSelectionLayer constructor
 // Created: JSR 2012-05-23
 // -----------------------------------------------------------------------------
-SelectionLayer::SelectionLayer( kernel::Controllers& controllers, gui::GLView_ABC& tools )
-    : Layer2D( controllers, tools, eLayerTypes_Selection )
+RectangleSelectionLayer::RectangleSelectionLayer( kernel::Controllers& controllers, gui::GLView_ABC& tools )
+    : Layer2D( controllers, tools, eLayerTypes_RectangleSelection )
     , displaying_   ( false )
     , firstPointSet_( false )
 {
@@ -30,19 +30,19 @@ SelectionLayer::SelectionLayer( kernel::Controllers& controllers, gui::GLView_AB
 }
 
 // -----------------------------------------------------------------------------
-// Name: SelectionLayer destructor
+// Name: RectangleSelectionLayer destructor
 // Created: JSR 2012-05-23
 // -----------------------------------------------------------------------------
-SelectionLayer::~SelectionLayer()
+RectangleSelectionLayer::~RectangleSelectionLayer()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: SelectionLayer::Paint
+// Name: RectangleSelectionLayer::Paint
 // Created: JSR 2012-05-23
 // -----------------------------------------------------------------------------
-void SelectionLayer::Paint( const geometry::Rectangle2f& /*viewport*/ )
+void RectangleSelectionLayer::Paint( const geometry::Rectangle2f& /*viewport*/ )
 {
     if( !displaying_ )
         return;
@@ -58,19 +58,19 @@ void SelectionLayer::Paint( const geometry::Rectangle2f& /*viewport*/ )
 }
 
 // -----------------------------------------------------------------------------
-// Name: SelectionLayer::Reset
+// Name: RectangleSelectionLayer::Reset
 // Created: JSR 2012-05-23
 // -----------------------------------------------------------------------------
-void SelectionLayer::Reset()
+void RectangleSelectionLayer::Reset()
 {
     // TODO
 }
 
 // -----------------------------------------------------------------------------
-// Name: SelectionLayer::HandleMousePress
+// Name: RectangleSelectionLayer::HandleMousePress
 // Created: JSR 2012-05-23
 // -----------------------------------------------------------------------------
-bool SelectionLayer::HandleMousePress( QMouseEvent* event, const geometry::Point2f& point )
+bool RectangleSelectionLayer::HandleMousePress( QMouseEvent* event, const geometry::Point2f& point )
 {
     if( !controllers_.actions_.HasMultipleSelection() )
         return false;
@@ -83,10 +83,10 @@ bool SelectionLayer::HandleMousePress( QMouseEvent* event, const geometry::Point
 }
 
 // -----------------------------------------------------------------------------
-// Name: SelectionLayer::HandleMouseRelease
+// Name: RectangleSelectionLayer::HandleMouseRelease
 // Created: LGY 2013-03-08
 // -----------------------------------------------------------------------------
-bool SelectionLayer::HandleMouseRelease( QMouseEvent* event, const geometry::Point2f& /*point*/ )
+bool RectangleSelectionLayer::HandleMouseRelease( QMouseEvent* event, const geometry::Point2f& /*point*/ )
 {
     if( !controllers_.actions_.HasMultipleSelection() )
         return false;
@@ -100,10 +100,10 @@ bool SelectionLayer::HandleMouseRelease( QMouseEvent* event, const geometry::Poi
 }
 
 // -----------------------------------------------------------------------------
-// Name: SelectionLayer::HandleMouseMove
+// Name: RectangleSelectionLayer::HandleMouseMove
 // Created: JSR 2012-05-23
 // -----------------------------------------------------------------------------
-bool SelectionLayer::HandleMouseMove( QMouseEvent* event, const geometry::Point2f& point )
+bool RectangleSelectionLayer::HandleMouseMove( QMouseEvent* event, const geometry::Point2f& point )
 {
     if( !controllers_.actions_.HasMultipleSelection() )
         return false;

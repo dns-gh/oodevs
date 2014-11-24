@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __gui_SelectionLayer_h_
-#define __gui_SelectionLayer_h_
+#ifndef __gui_RectangleSelectionLayer_h_
+#define __gui_RectangleSelectionLayer_h_
 
 #include "Layer.h"
 
@@ -20,18 +20,18 @@ namespace kernel
 namespace gui
 {
 // =============================================================================
-/** @class  SelectionLayer
-    @brief  SelectionLayer
+/** @class  RectangleSelectionLayer
+    @brief  RectangleSelectionLayer
 */
 // Created: JSR 2012-05-23
 // =============================================================================
-class SelectionLayer : public Layer2D
+class RectangleSelectionLayer : public Layer2D
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             SelectionLayer( kernel::Controllers& controllers, GLView_ABC& tools );
-    virtual ~SelectionLayer();
+             RectangleSelectionLayer( kernel::Controllers& controllers, GLView_ABC& tools );
+    virtual ~RectangleSelectionLayer();
     //@}
 
     //! @name Operations
@@ -60,4 +60,4 @@ private:
 
 }
 
-#endif // __gui_SelectionLayer_h_
+#endif // __gui_RectangleSelectionLayer_h_

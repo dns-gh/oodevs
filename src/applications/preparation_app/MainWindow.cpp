@@ -73,7 +73,7 @@
 #include "clients_gui/RichItemFactory.h"
 #include "clients_gui/RichLineEdit.h"
 #include "clients_gui/SelectionColorModifier.h"
-#include "clients_gui/SelectionLayer.h"
+#include "clients_gui/RectangleSelectionLayer.h"
 #include "clients_gui/SelectionMenu.h"
 #include "clients_gui/StatusBar.h"
 #include "clients_gui/SymbolIcons.h"
@@ -291,8 +291,8 @@ void MainWindow::CreateLayers( const std::shared_ptr< gui::ParametersLayer >& pa
     layers[ eLayerTypes_Objects ]            = std::make_shared< ObjectsLayer >( controllers_, *glProxy_, *strategy_, profile, picker );
     layers[ eLayerTypes_Parameters ]         = parameters;
     layers[ eLayerTypes_Raster ]             = std::make_shared< gui::RasterLayer >( controllers_, *glProxy_ );
+    layers[ eLayerTypes_RectangleSelection ] = std::make_shared< gui::RectangleSelectionLayer >( controllers_, *glProxy_ );
     layers[ eLayerTypes_ResourceNetworks ]   = std::make_shared< gui::ResourceNetworksLayer >( controllers_, *glProxy_, *strategy_, profile );
-    layers[ eLayerTypes_Selection ]          = std::make_shared< gui::SelectionLayer >( controllers_, *glProxy_ );
     layers[ eLayerTypes_TacticalLines ]      = std::make_shared< LimitsLayer >( controllers_, *glProxy_, *strategy_, parameters, *modelBuilder_, profile );
     layers[ eLayerTypes_Terrain ]            = std::make_shared< gui::TerrainLayer >( controllers_, *glWidgetManager_, *glProxy_, picker );
     layers[ eLayerTypes_TerrainProfiler ]    = profiler;

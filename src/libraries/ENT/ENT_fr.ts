@@ -943,10 +943,6 @@
         <translation>Raster</translation>
     </message>
     <message>
-        <source>Selection</source>
-        <translation>Séléction</translation>
-    </message>
-    <message>
         <source>Tooltip</source>
         <translation>Infobulle</translation>
     </message>
@@ -1045,6 +1041,10 @@
     <message>
         <source>Marker</source>
         <translation>Marqueur</translation>
+    </message>
+    <message>
+        <source>Rectangle selection</source>
+        <translation>Selection rectangulaire</translation>
     </message>
 </context>
 <context>
