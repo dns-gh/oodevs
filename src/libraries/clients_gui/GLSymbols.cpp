@@ -43,23 +43,24 @@ GLSymbols::~GLSymbols()
 // Name: GLSymbols::PrintApp6
 // Created: SBO 2006-12-15
 // -----------------------------------------------------------------------------
-void GLSymbols::PrintApp6( const std::string& symbolName, const std::string& style, const geometry::Rectangle2f& viewport,
+void GLSymbols::PrintApp6( const std::string& symbol, const std::string& style, const geometry::Rectangle2f& viewport,
                            unsigned vWidth /* = 640*/, unsigned vHeight /* = 480*/, bool pickingMode /* = false*/ )
 {
-    if( symbolName.empty() )
+    if( symbol.empty() )
         return;
-    const T_SymbolKey key( symbolName, style );
+    const T_SymbolKey key( symbol, style );
+    const bool create = symbols_.find( key ) == symbols_.end();
     auto& node = symbols_[ key ];
-    if( !node.first || !node.second )
+    if( create )
     {
         try
         {
-            node.first.reset( Compile( symbolName, 10, true ) );
-            node.second.reset( Compile( symbolName, 100, false ) );
+            node.first.reset( Compile( symbol, 10, true ) );
+            node.second.reset( Compile( symbol, 100, false ) );
         }
         catch( ... )
         {
-            MT_LOG_ERROR_MSG( "Could not open svg symbol '" << symbolName << ".svg', and cannot find the closest symbol." );
+            MT_LOG_ERROR_MSG( "Could not open svg symbol '" << symbol << ".svg', and cannot find the closest symbol." );
         }
     }
     const auto& renderNode = viewport.Width() > 30000 ? node.second : node.first;  // $$$$ AGE 2006-09-11: hardcoded lod
