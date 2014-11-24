@@ -699,7 +699,7 @@ func (model *ModelData) handlePopulationUpdate(m *sword.SimToClient_Content) err
 
 func (model *ModelData) handleUnitPathfind(m *sword.SimToClient_Content) error {
 	mm := m.GetUnitPathfind()
-	if mm == nil {
+	if mm == nil || !model.RecordUnitPaths {
 		return ErrSkipHandler
 	}
 	unit, ok := model.Units[mm.GetUnit().GetId()]
@@ -708,9 +708,12 @@ func (model *ModelData) handleUnitPathfind(m *sword.SimToClient_Content) error {
 			mm.GetUnit().GetId())
 	}
 	if mm.Path != nil && mm.Path.Location != nil {
-		unit.PathPoints = uint32(0)
+		unit.Path = nil
 		if mm.Path.Location.Coordinates != nil {
-			unit.PathPoints = uint32(len(mm.Path.Location.Coordinates.Elem))
+			for _, p := range mm.Path.Location.Coordinates.Elem {
+				point := Point{X: p.GetLongitude(), Y: p.GetLatitude()}
+				unit.Path = append(unit.Path, point)
+			}
 		}
 	}
 	return nil

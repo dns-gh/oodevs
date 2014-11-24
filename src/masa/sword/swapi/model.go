@@ -268,7 +268,15 @@ func (model *Model) UnregisterListener(listener int32) {
 }
 
 func (model *Model) RecordReports() {
-	model.data.RecordReports = true
+	model.waitCommand(func(model *Model) {
+		model.data.RecordReports = true
+	})
+}
+
+func (model *Model) RecordUnitPaths() {
+	model.waitCommand(func(model *Model) {
+		model.data.RecordUnitPaths = true
+	})
 }
 
 // Post and wait for a condition to be validated. Return false on

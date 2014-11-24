@@ -21,7 +21,9 @@ const (
 )
 
 func (s *TestSuite) TestCleanPathAfterTeleport(c *C) {
-	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadSmallOrbat))
+	opts := NewAllUserOpts(ExCrossroadSmallOrbat)
+	opts.RecordUnitPaths()
+	sim, client := connectAndWaitModel(c, opts)
 	defer stopSimAndClient(c, sim, client)
 	automat := createAutomat(c, client)
 	from := swapi.Point{X: -15.9219, Y: 28.3456}
@@ -37,7 +39,7 @@ func (s *TestSuite) TestCleanPathAfterTeleport(c *C) {
 	c.Assert(err, IsNil)
 
 	// Check unit path is empty
-	c.Assert(unit.PathPoints, Equals, uint32(0))
+	c.Assert(len(unit.Path), Equals, 0)
 
 	// Send moveTo mission
 	_, err = client.SendUnitOrder(unit.Id, MissionMoveId, params)
@@ -45,7 +47,7 @@ func (s *TestSuite) TestCleanPathAfterTeleport(c *C) {
 
 	// Check unit path is sent
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return data.Units[unit.Id].PathPoints != uint32(0)
+		return len(data.Units[unit.Id].Path) > 0
 	})
 
 	// Teleport unit
@@ -54,7 +56,7 @@ func (s *TestSuite) TestCleanPathAfterTeleport(c *C) {
 
 	// Wait its path is reset
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return data.Units[unit.Id].PathPoints == uint32(0)
+		return len(data.Units[unit.Id].Path) == 0
 	})
 }
 
