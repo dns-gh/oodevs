@@ -70,9 +70,7 @@ namespace
 void Options::PurgeDynamicOptions()
 {
     for( auto it = allowedDynamicKeys.begin(); it != allowedDynamicKeys.end(); ++it )
-    {
         for( auto itOption = options_.begin(); itOption != options_.end(); )
-        {
             if( itOption->first.find( "allowedDynamicKeys" ) == 0 )
             {
                 auto copy = itOption++;
@@ -80,8 +78,6 @@ void Options::PurgeDynamicOptions()
             }
             else
                 ++itOption;
-        }
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -166,7 +162,7 @@ OptionVariant Options::CreateVariant( Settings_ABC& settings, const std::string&
         return OptionVariant( settings, name, FourStateOption::Selected() );
     else if( type == Settings_ABC::stringPrefix )
         return OptionVariant( settings, name, QString( "" ) );
-    throw MASA_EXCEPTION( "Invalid option type:" + std::string( &type ) );
+    throw MASA_EXCEPTION( std::string( "Invalid option type: " ) + type );
 }
 
 // -----------------------------------------------------------------------------
@@ -180,8 +176,8 @@ void Options::Load( Settings_ABC& settings, const std::string& path /*= ""*/ )
     for( ; itDynamicKey != allowedDynamicKeys.end(); ++itDynamicKey )
         if( root.find( itDynamicKey->first ) == 0 )
             break;
-    auto list = settings.EntryList( root.c_str() );
-    for( auto it = list.begin(); it != list.end(); ++it )
+    const auto entries = settings.EntryList( root.c_str() );
+    for( auto it = entries.begin(); it != entries.end(); ++it )
     {
         const std::string typedName = (*it).toStdString();
         if( !typedName.empty() )
@@ -195,7 +191,7 @@ void Options::Load( Settings_ABC& settings, const std::string& path /*= ""*/ )
                 if( !Has( name ) )
                 {
                     // At this point, if we dont have 'name' already, it's either an
-                    // old registry entry, either a user-created option.
+                    // old registry entry, or a user-created option.
                     if( itDynamicKey != allowedDynamicKeys.end() )
                         Create( name, variant, itDynamicKey->second );
                     else
@@ -210,8 +206,8 @@ void Options::Load( Settings_ABC& settings, const std::string& path /*= ""*/ )
             }
         }
     }
-    list = settings.SubEntriesList( root.c_str() );
-    for( auto it = list.begin(); it != list.end(); ++it )
+    const auto subEntries = settings.SubEntriesList( root.c_str() );
+    for( auto it = subEntries.begin(); it != subEntries.end(); ++it )
         Load( settings, ( root + (*it).toStdString() ).c_str() );
 }
 
