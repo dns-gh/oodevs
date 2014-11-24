@@ -321,8 +321,7 @@ public:
                             const std::string& style,
                             const geometry::Rectangle2f& viewport,
                             unsigned vWidth = 640,
-                            unsigned vHeight = 480,
-                            bool checkAlpha = true ) const = 0;
+                            unsigned vHeight = 480 ) const = 0;
     //@}
 
     //! @name Drawing

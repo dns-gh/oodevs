@@ -40,7 +40,7 @@ public:
 
     //! @name Operations
     //@{
-    void Purge();
+    void PurgeDynamicOptions();
     void InitializeGeneral();
     void InitializeView();
     void InitializeLayers( const std::vector< E_LayerTypes >& types );

@@ -210,7 +210,6 @@ private:
                                 unsigned int printWidth,
                                 unsigned int printHeight,
                                 unsigned int direction,
-                                bool checkAlpha = true,
                                 float xFactor = 1.,
                                 float yFactor = 1.,
                                 float svgDeltaX = -20,
@@ -282,6 +281,7 @@ private:
     float pixels_;
     float symbolSize_;
     bool drawUrbanLabel_;
+    float urbanLayerAlpha_;
     //@}
 };
 

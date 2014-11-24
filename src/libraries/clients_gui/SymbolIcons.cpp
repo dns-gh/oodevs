@@ -42,7 +42,6 @@ void SymbolIcons::Initialize( GL2DWidget* widget )
     context_ = new QGLWidget( 0, widget );
     context_->resize( iconSize, iconSize );
     context_->makeCurrent();
-    glEnable( GL_LINE_SMOOTH );
     glClearColor( 1, 1, 1, 0 );
     glViewport( 0, 0, iconSize, iconSize );
     glMatrixMode( GL_PROJECTION );

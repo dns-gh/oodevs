@@ -108,8 +108,7 @@ public:
                             const std::string& style,
                             const geometry::Rectangle2f& viewport,
                             unsigned vWidth = 640,
-                            unsigned vHeight = 480,
-                            bool checkAlpha = true ) const;
+                            unsigned vHeight = 480 ) const;
     //@}
 
 protected:

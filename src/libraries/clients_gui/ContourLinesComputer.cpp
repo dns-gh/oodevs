@@ -122,7 +122,6 @@ unsigned int ContourLinesComputer::CreateCallList()
     callList_ = glGenLists( 1 );
     glNewList( callList_, GL_COMPILE );
     glPushAttrib( GL_LINE_BIT );
-    glEnable( GL_LINE_SMOOTH );
     glHint( GL_LINE_SMOOTH_HINT, GL_NICEST );
     glEnableClientState( GL_VERTEX_ARRAY );
     glLineWidth( 2.f );

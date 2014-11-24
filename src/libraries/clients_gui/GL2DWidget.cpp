@@ -18,6 +18,7 @@
 #include "SvglRenderer.h"
 #include "FrameCounter.h"
 #include "clients_kernel/OptionVariant.h"
+#include "ENT/ENT_Tr.h"
 #include <graphics/Scale.h>
 #include <graphics/extensions.h>
 #include <boost/assign/list_of.hpp>
@@ -61,6 +62,7 @@ GL2DWidget::GL2DWidget( QWidget* parentWidget,
     , pixels_( 0.f )
     , symbolSize_( 0.f )
     , drawUrbanLabel_( false )
+    , urbanLayerAlpha_( 0.f )
 {
     setAcceptDrops( true );
     if( context() != context_ || !context_->isValid() )
@@ -265,7 +267,6 @@ void GL2DWidget::DrawCross( const Point2f& at,
             size *= GetAdaptiveZoomFactor();
     }
     glPushAttrib( GL_LINE_BIT );
-    glEnable( GL_LINE_SMOOTH );
     glBegin( GL_LINES );
         glVertex2f( at.X() - size, at.Y() - size );
         glVertex2f( at.X() + size, at.Y() + size );
@@ -280,7 +281,6 @@ void GL2DWidget::DrawLine( const Point2f& from,
                            float width ) const
 {
     glPushAttrib( GL_LINE_BIT );
-    glEnable( GL_LINE_SMOOTH );
     if( width >= 0.f )
         glLineWidth( width );
     glBegin( GL_LINES );
@@ -316,7 +316,6 @@ void GL2DWidget::DrawLines( const T_PointVector& points ) const
     if( !points.empty() )
     {
         glPushAttrib( GL_LINE_BIT );
-        glEnable( GL_LINE_SMOOTH );
         glVertexPointer( 2, GL_FLOAT, 0, (const void*)(&points.front()) );
         glDrawArrays( GL_LINE_STRIP, 0, static_cast< GLsizei >( points.size() ) );
         glPopAttrib();
@@ -328,7 +327,6 @@ void GL2DWidget::DrawRectangle( const T_PointVector& points ) const
     if( points.size() > 1 )
     {
         glPushAttrib( GL_LINE_BIT );
-        glEnable( GL_LINE_SMOOTH );
         glBegin( GL_LINE_LOOP );
             glVertex2f( points.front().X(), points.front().Y() );
             glVertex2f( points.front().X(), points.back().Y() );
@@ -355,7 +353,6 @@ void GL2DWidget::DrawPolygon( const T_PointVector& points ) const
     if( !GetPickingSelector().IsPickingMode() )
         color[3] *= 0.5;
     glColor4fv( color );
-    glEnable( GL_POLYGON_SMOOTH );
     glDrawArrays( GL_TRIANGLE_FAN, 0, static_cast< GLsizei >( points.size() ) );
     glPopAttrib();
 }
@@ -428,7 +425,6 @@ void GL2DWidget::DrawArrow( const Point2f& from,
     const Point2f right = end + ( - u - v ) * tipFactor;
 
     glPushAttrib( GL_LINE_BIT );
-    glEnable( GL_LINE_SMOOTH );
     glBegin( GL_LINES );
         glVertex2f( end.X(), end.Y() );
         glVertex2f( left.X(), left.Y() );
@@ -461,7 +457,6 @@ void GL2DWidget::DrawArc( const Point2f& center,
 
     const float deltaAngle = ( maxAngle - minAngle ) / 24.f + 1e-6f;
     glPushAttrib( GL_LINE_BIT );
-    glEnable( GL_LINE_SMOOTH );
     glLineWidth( width );
     glPushMatrix();
         glTranslatef( center.X(), center.Y(), 0.f );
@@ -518,7 +513,6 @@ namespace
     {
         radius = Radius( radius, unit, pixels );
         glPushAttrib( GL_LINE_BIT );
-        glEnable( GL_LINE_SMOOTH );
         glPushMatrix();
             glTranslatef( center.X(), center.Y(), 0.f );
             glScalef( radius, radius, 1.f );
@@ -539,7 +533,6 @@ void GL2DWidget::DrawCircle( const Point2f& center,
 {
     radius = Radius( radius, unit, Pixels() );
     glPushAttrib( GL_LINE_BIT );
-    glEnable( GL_LINE_SMOOTH );
     glPushMatrix();
         glTranslatef( center.X(), center.Y(), 0.f );
         glScalef    ( radius, radius, 1.f );
@@ -584,7 +577,6 @@ void GL2DWidget::DrawLife( const Point2f& where,
     const float xdelta = h * halfWidth * 2;
     const float alpha = GetCurrentAlpha();
     glPushAttrib( GL_CURRENT_BIT | GL_LINE_BIT );
-    glEnable( GL_LINE_SMOOTH );
         glLineWidth( 1. );
         glColor4f( 0.8f, 0.8f, 0.8f, alpha );  // light gray
         glBegin( GL_QUADS );
@@ -647,7 +639,11 @@ void GL2DWidget::DrawInfrastructureSymbol( const std::string& symbol,
     const auto width = static_cast< unsigned int >( GetWidth() * thickness );
     const auto height = static_cast< unsigned int >( GetHeight() * thickness );
     thickness *= ComputeZoomFactor( factor );
-    DrawApp6( symbol, where, baseWidth * factor, viewport_, width, height, 0, false );
+    GLfloat color[ 4 ];
+    glGetFloatv( GL_CURRENT_COLOR, color );
+    parent_.SetCurrentColor( color[ 0 ], color[ 1 ], color[ 2 ], urbanLayerAlpha_ );
+    DrawApp6( symbol, where, baseWidth * factor, viewport_, width, height, 0 );
+    parent_.SetCurrentColor( color[ 0 ], color[ 1 ], color[ 2 ], color[ 3 ] );
 }
 
 void GL2DWidget::DrawApp6SymbolFixedSize( const std::string& symbol,
@@ -655,7 +651,7 @@ void GL2DWidget::DrawApp6SymbolFixedSize( const std::string& symbol,
                                           float factor ) const
 {
     const Rectangle2f viewport( 0, 0, 600, 600 );
-    DrawApp6( symbol, where, baseWidth * factor, viewport, 900, 900, 0, 1, 1 );
+    DrawApp6( symbol, where, baseWidth * factor, viewport, 900, 900, 0 );
 }
 
 void GL2DWidget::DrawApp6SymbolFixedSize( const std::string& symbol,
@@ -883,7 +879,6 @@ void GL2DWidget::DrawApp6( const std::string& symbol,
                            unsigned int printWidth,
                            unsigned int printHeight,
                            unsigned int direction,
-                           bool checkAlpha /* = true */,
                            float xFactor /* = 1. */,
                            float yFactor /* = 1. */,
                            float svgDeltaX /* = -20 */,
@@ -891,19 +886,17 @@ void GL2DWidget::DrawApp6( const std::string& symbol,
 {
     const float svgWidth = 360;
     const float expectedHeight = expectedWidth * 0.660f;
-    const Point2f center = Point2f( where.X() /*- expectedWidth * 0.5f*/, where.Y() /*+ expectedHeight*/ );
     const float scaleRatio = ( expectedWidth / svgWidth );
     gl::Initialize();
     glPushAttrib( GL_CURRENT_BIT | GL_LINE_BIT );
-    glEnable( GL_LINE_SMOOTH );
         glPushMatrix();
-            glTranslatef( center.X(), center.Y(), 0.0f );
+            glTranslatef( where.X(), where.Y(), 0.0f );
             glRotatef( - (GLfloat)direction, 0, 0, 1 );
             glScalef( xFactor, yFactor, 1 );
             glTranslatef( - expectedWidth * 0.5f, expectedHeight, 0.0f );
             glScalef( scaleRatio, -scaleRatio, 1 );
             glTranslatef( svgDeltaX, svgDeltaY, 0.0f );
-            PrintApp6( symbol, SvglRenderer::DefaultStyle(), viewport, printWidth, printHeight, checkAlpha );
+            PrintApp6( symbol, SvglRenderer::DefaultStyle(), viewport, printWidth, printHeight );
         glPopMatrix();
     glPopAttrib();
 }
@@ -924,7 +917,7 @@ void GL2DWidget::DrawApp6SymbolScaledSize( const std::string& symbol,
     const float svgDeltaY = -80 + 120; // Offset of 80 in our svg files + half of 240 which is the default height...
     const Rectangle2f viewport( 0, 0, 256, 256 );
     factor = fabs( factor ) * zoomFactor * symbolSize_ / defaultSymbolSize;
-    DrawApp6( symbol, where, baseWidth * factor, viewport, 4, 4, direction, true, width, depth, svgDeltaX, svgDeltaY );
+    DrawApp6( symbol, where, baseWidth * factor, viewport, 4, 4, direction, width, depth, svgDeltaX, svgDeltaY );
 }
 
 void GL2DWidget::DrawTail( const T_PointVector& points, float width ) const
@@ -1035,6 +1028,7 @@ void GL2DWidget::ComputeData()
     adaptiveZoom_ = rZoom_ <= .00024f ? 1 :          // min zoom (far from the map), fixed size 1
                     rZoom_ <= .002f ? pixels_ / 15 : // middle range, progressive size
                     0.12f;                           // max zoom (close to the map), fixed size 0.12
+    urbanLayerAlpha_ = GetCurrentOptions().Get( "Layers/" + ENT_Tr::ConvertFromLayerTypes( eLayerTypes_Urban, ENT_Tr::eToSim ) + "/Alpha" ).To< float >();
     {
         HDC screen = GetDC( NULL );
         const int hSize = GetDeviceCaps( screen, HORZSIZE );
@@ -1082,8 +1076,8 @@ void GL2DWidget::initializeGL()
     circle_ = GenerateCircle();
     halfCircle_ = GenerateHalfCircle();
     glEnableClientState( GL_VERTEX_ARRAY );
+    glEnable( GL_POLYGON_SMOOTH );
     gl::Initialize();
-    glEnable( GL_LINE_SMOOTH );
     glEnable( GL_BLEND );
     hasMultiTexturing_ = gl::HasMultiTexturing();
 }
@@ -1117,9 +1111,13 @@ void GL2DWidget::PickGL()
     makeCurrent();
     SetCurrentView( this );
     ApplyOptions();
+    glDisable( GL_POLYGON_SMOOTH );
+    glDisable( GL_LINE_SMOOTH );
     for( auto it = passes_.begin(); it != passes_.end(); ++it )
         if( ( *it )->GetName() == "main" )
             RenderPass( **it );
+    glEnable( GL_LINE_SMOOTH );
+    glEnable( GL_POLYGON_SMOOTH );
     SetCurrentView( 0 );
 }
 

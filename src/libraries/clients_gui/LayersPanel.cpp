@@ -11,6 +11,7 @@
 #include "clients_gui_pch.h"
 #include "LayersPanel.h"
 #include "moc_LayersPanel.cpp"
+#include "GLOptions.h"
 #include "GLView_ABC.h"
 #include "Layer_ABC.h"
 #include "OptionWidgets.h"
@@ -36,8 +37,6 @@ namespace
         eAlpha,
         eDynamic,
         eOptionName,
-        ePositionBackup,
-        eAlphaBackup
     };
     QStandardItem* GetItemFromProxy( const QStandardItemModel& model, const QSortFilterProxyModel& proxy, int row )
     {
@@ -162,8 +161,6 @@ void LayersPanel::Load( const GLView_ABC& proxy )
         item->setData( alpha, eAlpha );
         item->setData( layer->GetType() == eLayerTypes_RasterDynamic, eDynamic );
         item->setData( QString::fromStdString( optionName ), eOptionName );
-        item->setData( position, ePositionBackup );
-        item->setData( alpha, eAlphaBackup );
         dataModel_.appendRow( QList< QStandardItem* >() << item );
     } ) );
     UpdateLeastAndMostVisible();
@@ -181,8 +178,7 @@ void LayersPanel::OnAlphaChanged()
         return;
     const float alpha = transparency_->value() * 0.01f;
     item->setData( alpha, eAlpha );
-    options_.Change( GetLayerOptionText( *item, "Alpha" ), alpha ); 
-    item->data( eData ).value< T_Layer >()->SetAlpha( alpha );
+    view_.GetActiveOptions().Set( GetLayerOptionText( *item, "Alpha" ), alpha ); 
 }
 
 // -----------------------------------------------------------------------------

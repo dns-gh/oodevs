@@ -471,7 +471,6 @@ void GLMainProxy::SetCurrentColor( float r, float g, float b, float a /* = 1 */ 
     glColor4f( r, g, b, a );
     renderer_->SetCurrentColor( r, g, b, a );
     graphics_->SetCurrentColor( r, g, b, a );
-    symbols_->SetCurrentColor( r, g, b, a );
     alpha_ = a;
 }
 
@@ -579,16 +578,14 @@ void GLMainProxy::PrintApp6( const std::string& symbol,
                              const std::string& style,
                              const geometry::Rectangle2f& viewport,
                              unsigned vWidth /* = 640 */,
-                             unsigned vHeight /* = 480 */,
-                             bool checkAlpha /* = true */ ) const
+                             unsigned vHeight /* = 480 */ ) const
 {
     symbols_->PrintApp6( symbol,
                          style,
                          viewport,
                          vWidth,
                          vHeight,
-                         pickingSelector_->IsPickingMode(),
-                         checkAlpha );
+                         pickingSelector_->IsPickingMode() );
 }
 
 void GLMainProxy::DrawSvgInViewport( const std::string& filename,

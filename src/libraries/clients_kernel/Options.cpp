@@ -16,6 +16,8 @@
 #include "ENT/ENT_Tr.h"
 #include "tools/FileWrapper.h"
 #include "tools/GeneralConfig.h"
+#include "MT_Tools/MT_Logger.h"
+#include <boost/assign.hpp>
 #include <tools/Path.h>
 
 using namespace kernel;
@@ -57,13 +59,25 @@ Options& Options::operator=( const Options& other )
     return *this;
 }
 
-// -----------------------------------------------------------------------------
-// Name: Options::Purge
-// Created: ABR 2014-07-17
-// -----------------------------------------------------------------------------
-void Options::Purge()
+namespace
 {
-    options_.clear();
+    // Temporary solution to ignore old registry entries: we list the keys where
+    // the user can create options dynamically, so we can ignore others.
+    // The boolean value below is the 'isInPreferencePanel' parameter.
+    const std::map< std::string, bool > allowedDynamicKeys = boost::assign::map_list_of( "/Elevation/Gradients/", true );
+}
+
+void Options::PurgeDynamicOptions()
+{
+    for( auto it = allowedDynamicKeys.begin(); it != allowedDynamicKeys.end(); ++it )
+        for( auto itOption = options_.begin(); itOption != options_.end(); )
+            if( itOption->first.find( "allowedDynamicKeys" ) == 0 )
+            {
+                auto copy = itOption++;
+                options_.erase( copy );
+            }
+            else
+                ++itOption;
 }
 
 // -----------------------------------------------------------------------------
@@ -148,7 +162,7 @@ OptionVariant Options::CreateVariant( Settings_ABC& settings, const std::string&
         return OptionVariant( settings, name, FourStateOption::Selected() );
     else if( type == Settings_ABC::stringPrefix )
         return OptionVariant( settings, name, QString( "" ) );
-    throw MASA_EXCEPTION( "Invalid option type" );
+    throw MASA_EXCEPTION( std::string( "Invalid option type: " ) + type );
 }
 
 // -----------------------------------------------------------------------------
@@ -157,58 +171,44 @@ OptionVariant Options::CreateVariant( Settings_ABC& settings, const std::string&
 // -----------------------------------------------------------------------------
 void Options::Load( Settings_ABC& settings, const std::string& path /*= ""*/ )
 {
-    const std::string root = QString( path.c_str() ).endsWith( "/" ) ? path : path + "/";
-    QStringList list = settings.EntryList( root.c_str() );
-    for( auto it = list.begin(); it != list.end(); ++it )
+    const auto root = QString( path.c_str() ).endsWith( "/" ) ? path : path + "/";
+    auto itDynamicKey = allowedDynamicKeys.begin();
+    for( ; itDynamicKey != allowedDynamicKeys.end(); ++itDynamicKey )
+        if( root.find( itDynamicKey->first ) == 0 )
+            break;
+    const auto entries = settings.EntryList( root.c_str() );
+    for( auto it = entries.begin(); it != entries.end(); ++it )
     {
         const std::string typedName = (*it).toStdString();
-        if( ! typedName.empty() )
+        if( !typedName.empty() )
         {
             char type = typedName[0];
             std::string name = root + typedName.substr( 1 );
             name = name[0] == '/' ? name.substr( 1 ) : name;
-            auto variant = CreateVariant( settings, name, type );
-            if( !Has( name ) )
-                // At this point, if we dont have 'name' already, it's either an
-                // old registry entry, either a user-created option.
-                // Since the only way to add options is by using the
-                // preferences panel (elevation gradients), we force
-                // IsInPreferencePanel parameter to true here, but we should
-                // fix that someday.
-                Create( name, variant, true );
-            else
-                Set( name, variant );
+            try
+            {
+                auto variant = CreateVariant( settings, name, type );
+                if( !Has( name ) )
+                {
+                    // At this point, if we dont have 'name' already, it's either an
+                    // old registry entry, or a user-created option.
+                    if( itDynamicKey != allowedDynamicKeys.end() )
+                        Create( name, variant, itDynamicKey->second );
+                    else
+                        MT_LOG_WARNING_MSG( "Deprecated option '" + name + "'" );
+                }
+                else
+                    Set( name, variant );
+            }
+            catch( std::exception& e )
+            {
+                MT_LOG_WARNING_MSG( "Failed to load option '" + name + "': " + tools::GetExceptionMsg( e ) );
+            }
         }
     }
-    list = settings.SubEntriesList( root.c_str() );
-    for( auto it = list.begin(); it != list.end(); ++it )
+    const auto subEntries = settings.SubEntriesList( root.c_str() );
+    for( auto it = subEntries.begin(); it != subEntries.end(); ++it )
         Load( settings, ( root + (*it).toStdString() ).c_str() );
-
-    // TMP, the following will be removed in few weeks when everyone will have a clean registry.
-    // This is due to the fact that the options were added before the xml was filled with the category information,
-    // so right now the registry may be dirty with an empty value in that field.
-    // Uninstalling and reinstalling will also fix that problem.
-    bool hasEmptyCategory = false;
-    Apply( [&hasEmptyCategory]( const std::string& name, const OptionVariant& value, bool ){
-        if( name.find( "Terrains/" ) != 0 ||
-            name.find( "/Category" ) == std::string::npos )
-            return;
-        if( value.To< QString >().isEmpty() )
-            hasEmptyCategory = true;
-    } );
-    if( !hasEmptyCategory )
-        return;
-    QStringList order;
-    tools::Xifstream xisPreferences( "preferences.xml" );
-    xisPreferences >> xml::start( "preferences" ) >> xml::start( "terrains" )
-                   >> xml::list( "terrain", [&]( xml::xistream& x ) {
-                       const auto type = x.attribute< std::string >( "type" );
-                       const QString category = x.attribute< QString >( "category" );
-                       Create( "Terrains/" + type + "/Category", category, true );
-                       if( !category.isEmpty() && !order.contains( category ) )
-                           order << category;
-                       } );
-    Create( "Terrains/Order", order.join( ";" ), true );
 }
 
 // -----------------------------------------------------------------------------

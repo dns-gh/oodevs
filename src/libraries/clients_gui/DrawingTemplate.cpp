@@ -450,7 +450,6 @@ void DrawingTemplate::DrawSample()
     glViewport( 0, 0, SYMBOL_ICON_SIZE, SYMBOL_ICON_SIZE );
 
     glPushAttrib( GL_CURRENT_BIT | GL_LINE_BIT );
-    glEnable( GL_LINE_SMOOTH );
     glMatrixMode( GL_PROJECTION );
     glPushMatrix();
     glLoadIdentity();

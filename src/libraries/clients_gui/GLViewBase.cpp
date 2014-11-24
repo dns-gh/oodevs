@@ -217,10 +217,9 @@ void GLViewBase::PrintApp6( const std::string& symbol,
                             const std::string& style,
                             const geometry::Rectangle2f& viewport,
                             unsigned vWidth /* = 640 */,
-                            unsigned vHeight /* = 480 */,
-                            bool checkAlpha /* = true */ ) const
+                            unsigned vHeight /* = 480 */ ) const
 {
-    parent_.PrintApp6( symbol, style, viewport, vWidth, vHeight, checkAlpha );
+    parent_.PrintApp6( symbol, style, viewport, vWidth, vHeight );
 }
 
 void GLViewBase::DrawSvgInViewport( const std::string& filename,

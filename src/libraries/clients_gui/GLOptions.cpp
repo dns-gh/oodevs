@@ -194,7 +194,7 @@ void GLOptions::Load( kernel::Settings& settings )
     settings.endGroup();
 
     settings.beginGroup( "Display" );
-    options_->Purge();
+    options_->PurgeDynamicOptions();
     options_->Load( settings );
     settings.endGroup();
     Purge();

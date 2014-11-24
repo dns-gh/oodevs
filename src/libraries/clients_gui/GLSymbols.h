@@ -53,12 +53,10 @@ public:
                     const geometry::Rectangle2f& viewport,
                     unsigned vWidth = 640,
                     unsigned vHeight = 480,
-                    bool pickingMode = false,
-                    bool checkAlpha = true );
+                    bool pickingMode = false );
     void Load( const tools::ExerciseConfig& config );
     void SetSymbolsPath( const tools::Path& symbolPath );
     const std::vector< std::string >& GetNotFoundSymbol() const;
-    void SetCurrentColor( float r, float g, float b, float a );
     //@}
 
 private:
@@ -69,10 +67,9 @@ private:
 
     //! @name Types
     //@{
-    typedef std::pair< std::string, std::string >       T_SymbolKey;
+    typedef std::pair< std::string, std::string > T_SymbolKey;
     typedef std::pair< std::shared_ptr< svg::Node_ABC >, std::shared_ptr< svg::Node_ABC > > T_LodSymbol;
-    typedef std::map< T_SymbolKey, T_LodSymbol >        T_Symbols;
-    typedef std::map< T_SymbolKey, float >              T_AlphaSymbols;
+    typedef std::map< T_SymbolKey, T_LodSymbol > T_Symbols;
     //@}
 
 private:
@@ -81,10 +78,8 @@ private:
     SvglRenderer& renderer_;
     tools::Path symbolsPath_;
     std::unique_ptr< tools::zip::InputArchive > archive_;
-    T_Symbols                      symbols_;
-    T_AlphaSymbols                 alphaSymbols_;
-    std::vector< std::string >     notFoundSymbols_;
-    float                          alpha_;
+    T_Symbols symbols_;
+    std::vector< std::string > notFoundSymbols_;
     //@}
 };
 
