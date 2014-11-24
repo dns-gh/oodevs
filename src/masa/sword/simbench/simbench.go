@@ -174,6 +174,122 @@ func BenchmarkPathfindImpossible(quick bool) ([]float64, error) {
 	return benchmarkPathfind(from, to, quick)
 }
 
+func benchmarkMoveAlongItinerary(from, to swapi.Point, path []swapi.Point,
+	quick bool) ([]float64, error) {
+
+	moveAlongItinerary := uint32(445949284)
+
+	opts := NewAdminOpts(ExSwTerrain2Empty)
+	opts.RecordUnitPaths()
+	sim, client, err := connectAndWaitModel(opts)
+	if err != nil {
+		return nil, err
+	}
+	defer swrun.StopSimAndClient(sim, client)
+	phydb, err := loadPhysicalData(sim.Opts.DataDir, "test")
+	if err != nil {
+		return nil, err
+	}
+
+	// Create a single VW Combi unit
+	party := &swrun.Party{
+		Name: "party1",
+		Formations: []*swrun.Formation{
+			&swrun.Formation{
+				Name: "formation1",
+				Automats: []*swrun.Automat{
+					&swrun.Automat{
+						Name: "automat",
+						Type: "VW Combi Rally",
+						Units: []*swrun.Unit{
+							&swrun.Unit{
+								Name: "unit",
+								Type: "VW Main Battle Combi",
+							},
+						},
+					},
+				},
+			},
+		},
+	}
+	err = swrun.FindOrCreateEntities(client, phydb, party)
+	if err != nil {
+		return nil, err
+	}
+
+	unit := party.Formations[0].Automats[0].Units[0].Entity
+	err = client.SetAutomatMode(unit.AutomatId, false)
+	if err != nil {
+		return nil, err
+	}
+
+	// Create the path
+	pathfind, err := client.CreatePathfind(unit.Id, path...)
+	if err != nil {
+		return nil, err
+	}
+
+	loops := 10
+	if quick {
+		loops = 1
+	}
+	durations := []float64{}
+	for i := 0; i < loops; i++ {
+		// Mission depends on unit location, reset it
+		err = client.Teleport(swapi.MakeUnitTasker(unit.Id), from)
+		if err != nil {
+			return nil, err
+		}
+		start := time.Now()
+		_, err = client.SendUnitOrder(unit.Id, moveAlongItinerary, swapi.MakeParameters(
+			swapi.MakeHeading(0),
+			nil,
+			nil,
+			nil,
+			swapi.MakePathfind(pathfind),
+			swapi.MakePointParam(to)))
+		if err != nil {
+			return nil, err
+		}
+		points := 0
+		ok := client.Model.WaitConditionTimeout(time.Minute,
+			func(data *swapi.ModelData) bool {
+				path := data.Units[unit.Id].Path
+				if len(path) == 0 {
+					return false
+				}
+				points = len(path)
+				data.Units[unit.Id].Path = nil
+				return true
+			})
+		if !ok {
+			return nil, fmt.Errorf("mission timed out")
+		}
+		if points < 10 {
+			return nil, fmt.Errorf("not enough points in pathfind")
+		}
+		end := time.Now()
+		durations = append(durations, float64(end.Sub(start)/time.Millisecond))
+	}
+
+	return durations, nil
+}
+
+// The pathfind is the same than the one in BenchmarkPathfindLong. Supplied
+// itinerary accounts for approximatively 3/4 of total length.
+func BenchmarkLongMoveAlongItinerary(quick bool) ([]float64, error) {
+	from := swapi.Point{X: 14.7215, Y: 58.2794}
+	to := swapi.Point{X: 16.4767, Y: 58.7091}
+	path := []swapi.Point{
+		swapi.Point{X: 15.095583080589005, Y: 58.349055230012013},
+		swapi.Point{X: 15.512249966973673, Y: 58.515865821386654},
+		swapi.Point{X: 15.777367666691255, Y: 58.586042869019082},
+		swapi.Point{X: 15.890960774807114, Y: 58.537821670017614},
+		swapi.Point{X: 16.14147747476629, Y: 58.591311336816936},
+	}
+	return benchmarkMoveAlongItinerary(from, to, path, quick)
+}
+
 // A single measure
 type BenchmarkResult struct {
 	Name     string   `xml:"name,attr"`     // Measure identifier
@@ -270,9 +386,10 @@ various flags shared with the testing framework.
 
 	failed := 0
 	benchmarks := map[string]BenchFunc{
-		"sw_pathfind_short":      BenchmarkPathfindShort,
-		"sw_pathfind_long":       BenchmarkPathfindLong,
-		"sw_pathfind_impossible": BenchmarkPathfindImpossible,
+		"sw_move_along_itinerary_long": BenchmarkLongMoveAlongItinerary,
+		"sw_pathfind_short":            BenchmarkPathfindShort,
+		"sw_pathfind_long":             BenchmarkPathfindLong,
+		"sw_pathfind_impossible":       BenchmarkPathfindImpossible,
 	}
 	sorted := []string{}
 	for k, _ := range benchmarks {
