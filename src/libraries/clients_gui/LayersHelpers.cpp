@@ -200,7 +200,7 @@ const layers::Descriptor descriptors_[] = {
     { eLayerTypes_UnitsComposite,         "main,tooltip",                     true,   true,
       eModes_All,                         eModes_Terrain | eModes_Itinerary,  eModes_None,
       ba::list_of( eLayerTypes_Parties )( eLayerTypes_Formations )( eLayerTypes_Automats )
-                 ( eLayerTypes_Ghosts )( eLayerTypes_Agents )( eLayerTypes_AgentKnowledges )
+                 ( eLayerTypes_Ghosts )( eLayerTypes_AgentKnowledges )( eLayerTypes_Agents )
                  ( eLayerTypes_WeaponRanges )( eLayerTypes_Tooltips ) },
     { eLayerTypes_Urban,                  "main",                             true,  true,
       eModes_All,                         eModes_Itinerary,                   eModes_None,
