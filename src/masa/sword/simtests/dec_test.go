@@ -697,12 +697,15 @@ func (s *TestSuite) TestDecGetClosestPath(c *C) {
 	c.Assert(err, IsNil)
 
 	// Send pathfind to unit
-	heading := swapi.MakeHeading(0)
-	params := swapi.MakeParameters(heading, nil, nil, nil, swapi.MakePathfind(pathfind))
-	// Should work with disengaged unit
 	err = client.SetAutomatMode(automat.Id, false)
 	c.Assert(err, IsNil)
-	_, err = client.SendUnitOrder(unit.Id, MissionMoveAlongId, params)
+	_, err = client.SendUnitOrder(unit.Id, MissionMoveAlongId, swapi.MakeParameters(
+		swapi.MakeHeading(0),
+		nil,
+		nil,
+		nil,
+		swapi.MakePathfind(pathfind),
+		swapi.MakePointParam(positions[len(positions)-1])))
 	// wait for first move
 	waitCondition(c, client.Model, func(m *swapi.ModelData) bool {
 		return !isNearby(startPosition, m.Units[unit.Id].Position)

@@ -269,13 +269,16 @@ func (s *TestSuite) TestUnitOrderWithItineraryParameter(c *C) {
 	pathfind, err := client.CreatePathfind(unit.Id, positions...)
 	c.Assert(err, IsNil)
 
-	// Send pathfind to unit
-	heading := swapi.MakeHeading(0)
-	params := swapi.MakeParameters(heading, nil, nil, nil, swapi.MakePathfind(pathfind))
 	// Should work with disengaged unit
 	err = client.SetAutomatMode(automat.Id, false)
 	c.Assert(err, IsNil)
-	_, err = client.SendUnitOrder(unit.Id, MissionMoveAlongId, params)
+	_, err = client.SendUnitOrder(unit.Id, MissionMoveAlongId, swapi.MakeParameters(
+		swapi.MakeHeading(0),
+		nil,
+		nil,
+		nil,
+		swapi.MakePathfind(pathfind),
+		swapi.MakePointParam(positions[len(positions)-1])))
 	c.Assert(err, IsNil)
 	for _, p := range pathfind.Result {
 		if p.Waypoint < 0 {
@@ -307,13 +310,16 @@ func (s *TestSuite) TestUnitOrderWithItineraryRevertedIfAgentCloserToDestination
 	pathfind, err := client.CreatePathfind(unit.Id, positions...)
 	c.Assert(err, IsNil)
 
-	// Send pathfind to unit
-	heading := swapi.MakeHeading(0)
-	params := swapi.MakeParameters(heading, nil, nil, nil, swapi.MakePathfind(pathfind))
 	// Should work with disengaged unit
 	err = client.SetAutomatMode(automat.Id, false)
 	c.Assert(err, IsNil)
-	_, err = client.SendUnitOrder(unit.Id, MissionMoveAlongId, params)
+	_, err = client.SendUnitOrder(unit.Id, MissionMoveAlongId, swapi.MakeParameters(
+		swapi.MakeHeading(0),
+		nil,
+		nil,
+		nil,
+		swapi.MakePathfind(pathfind),
+		swapi.MakePointParam(positions[len(positions)-1])))
 	c.Assert(err, IsNil)
 	for i := len(pathfind.Result) - 1; i >= 0; i-- {
 		p := pathfind.Result[i]
