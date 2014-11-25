@@ -26,7 +26,7 @@ namespace
 std::pair< float, size_t > DistanceToPathPoints( geometry::Point2f p,
         const std::vector< geometry::Point2f >& path )
 {
-    float distance = -1;
+    float distance = std::numeric_limits< float >::max();
     size_t index = 0;
     for( size_t i = 0; i < path.size(); ++i )
     {
@@ -55,6 +55,7 @@ Point MakePoint( geometry::Point2f point )
 {
     Point p;
     static const float precision = 3.f;
+    // Snap on a grid to avoid floating point noise when matching points.
     p.x = static_cast< uint32_t >( point.X() / precision );
     p.y = static_cast< uint32_t >( point.Y() / precision );
     return p;

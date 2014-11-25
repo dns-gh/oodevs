@@ -26,7 +26,7 @@ public:
         float pathToDest;
     };
 
-    // Throws if path is empty.
+    // Throws if path has less than two points.
     TER_PathIndex( const std::vector< geometry::Point2f >& path,
                    geometry::Point2f destination );
     ~TER_PathIndex();
