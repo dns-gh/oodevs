@@ -345,17 +345,6 @@ void TimelineWebView::OnTriggeredEvents( const timeline::Events& events )
                     error = tr( "Unable to load configuration file" );
             }
         }
-        if( server_ )
-        {
-            timeline::CloseEvent closeEvent( event.uuid );
-            if( !error.isEmpty() )
-            {
-                closeEvent.error.code = timeline::EC_INTERNAL_SERVER_ERROR;
-                closeEvent.error.text = error.toStdString();
-                closeEvent.done = false;
-            }
-            server_->CloseEvent( closeEvent );
-        }
     }
 }
 
