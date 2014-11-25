@@ -79,10 +79,10 @@ const QPixmap& EntitySymbols::GetSymbol(
 }
 
 // -----------------------------------------------------------------------------
-// Name: EntitySymbols::RecGenerateSymbols
+// Name: EntitySymbols::GenerateSymbols
 // Created: ABR 2013-02-18
 // -----------------------------------------------------------------------------
-void EntitySymbols::RecGenerateSymbols( const kernel::Entity_ABC& entity ) const
+void EntitySymbols::GenerateSymbols( const kernel::Entity_ABC& entity ) const
 {
     if( const kernel::Hierarchies* hierarchy = entity.Retrieve< kernel::TacticalHierarchies >() )
     {
@@ -90,7 +90,7 @@ void EntitySymbols::RecGenerateSymbols( const kernel::Entity_ABC& entity ) const
         while( it.HasMoreElements() )
         {
             const kernel::Entity_ABC& child = it.NextElement();
-            RecGenerateSymbols( child );
+            GenerateSymbols( child );
 
             const kernel::Symbol_ABC* symbol = child.Retrieve< kernel::TacticalHierarchies >();
             if( !symbol )
@@ -115,5 +115,5 @@ void EntitySymbols::GenerateSymbols( const tools::Resolver< kernel::Team_ABC >& 
 {
     tools::Iterator< const kernel::Team_ABC& > it = teamResolver.CreateIterator();
     while( it.HasMoreElements() )
-        RecGenerateSymbols( it.NextElement() );
+        GenerateSymbols( it.NextElement() );
 }
