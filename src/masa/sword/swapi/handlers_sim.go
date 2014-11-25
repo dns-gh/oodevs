@@ -710,10 +710,7 @@ func (model *ModelData) handleUnitPathfind(m *sword.SimToClient_Content) error {
 	if mm.Path != nil && mm.Path.Location != nil {
 		unit.Path = nil
 		if mm.Path.Location.Coordinates != nil {
-			for _, p := range mm.Path.Location.Coordinates.Elem {
-				point := Point{X: p.GetLongitude(), Y: p.GetLatitude()}
-				unit.Path = append(unit.Path, point)
-			}
+			unit.Path = ReadPoints(mm.Path.Location.Coordinates.Elem)
 		}
 	}
 	return nil
