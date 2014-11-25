@@ -838,7 +838,7 @@ void GL2DWidget::DrawShapeText( const QImage& image,
         glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
 
         glTranslatef( where.X(), where.Y(), 300.f );
-        glScalef( ( float ) image.width() *  Pixels(), ( float ) image.height() * Pixels(), 1.f );
+        glScalef( image.width() * Pixels(), image.height() * Pixels(), 1.f );
         glBegin( GL_QUADS );
             glTexCoord2f( 0.f, 1.f );
             glVertex2f( 0.f, -1.f );
