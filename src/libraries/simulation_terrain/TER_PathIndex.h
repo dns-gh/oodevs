@@ -45,7 +45,10 @@ private:
 
 private:
     const std::vector< geometry::Point2f > path_;
+    // Distance of each path point along the path to the point closest to
+    // the destination.
     std::vector< float > distances_;
+    // Distance of the destination to the path point the closest to it
     float distanceToDest_;
     std::unique_ptr< Indexes > indexes_;
 };
