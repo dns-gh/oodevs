@@ -41,6 +41,7 @@ const T_LayerTypesVector defaultDisplayOrder_ = ba::list_of
     ( eLayerTypes_UnitsComposite )
     ( eLayerTypes_Grid )
     // always on top layers
+    ( eLayerTypes_Selection )
     ( eLayerTypes_Actions )
     ( eLayerTypes_Parameters )
     ( eLayerTypes_Metric )
@@ -55,7 +56,7 @@ const T_LayerTypesVector defaultDisplayOrder_ = ba::list_of
     ( eLayerTypes_RectangleSelection )
     ( eLayerTypes_Fog );
 
-const T_LayerTypesVector eventOrder_ = ba::list_of< E_LayerTypes >
+const T_LayerTypesVector eventOrder_ = ba::list_of
     ( eLayerTypes_Weather )
     ( eLayerTypes_Elevation3d )
     ( eLayerTypes_Metric )
@@ -176,11 +177,14 @@ const layers::Descriptor descriptors_[] = {
     { eLayerTypes_RasterDynamic,          "main,composition",                 false,  true,
       eModes_All,                         eModes_Terrain | eModes_Itinerary,  eModes_None,
       T_LayerTypesVector() },
-    { eLayerTypes_RectangleSelection,              "main",                             false,  false,
+    { eLayerTypes_RectangleSelection,              "main",                    false,  false,
       eModes_AllPrepare,                  eModes_Itinerary,                   eModes_None,
       T_LayerTypesVector() },
     { eLayerTypes_ResourceNetworks,       "main",                             false,  false,
       eModes_All,                         eModes_Terrain | eModes_Itinerary,  eModes_None,
+      T_LayerTypesVector() },
+    { eLayerTypes_Selection,              "main",                             true,  false,
+      eModes_AllPrepare,                  eModes_Terrain | eModes_Itinerary,  eModes_None,
       T_LayerTypesVector() },
     { eLayerTypes_TacticalLines,          "main",                             true,   false,
       eModes_All,                         eModes_Terrain | eModes_Itinerary,  eModes_LivingArea,

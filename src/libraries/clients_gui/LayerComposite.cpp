@@ -285,3 +285,11 @@ void LayerComposite::HideTooltip()
 {
     Forward( layers_, [&]( const T_Layer& layer ) { layer->HideTooltip(); } );
 }
+
+T_Layer LayerComposite::GetSubLayer( const T_LayerFunctor& functor ) const
+{
+    for( auto it = layers_.begin(); it != layers_.end(); ++it )
+        if( functor( *it ) )
+            return *it;
+    return T_Layer();
+}

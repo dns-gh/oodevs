@@ -18,7 +18,7 @@ namespace gui
     class Layer_ABC;
 
     typedef std::shared_ptr< Layer_ABC >            T_Layer;
-    typedef std::function< void( const T_Layer& ) > T_LayerFunctor;
+    typedef std::function< bool( const T_Layer& ) > T_LayerFunctor;
     typedef std::map< E_LayerTypes, T_Layer >       T_LayersMap;
     typedef std::vector< T_Layer >                  T_LayersVector;
     typedef std::vector< E_LayerTypes >             T_LayerTypesVector;

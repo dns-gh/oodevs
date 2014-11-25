@@ -127,6 +127,11 @@ bool Layer::IsConfigurable() const
     return descriptor_.configurable_;
 }
 
+T_Layer Layer::GetSubLayer( const T_LayerFunctor& ) const
+{
+    return T_Layer();
+}
+
 // -----------------------------------------------------------------------------
 // Name: Layer::SetVisible
 // Created: ABR 2012-05-14

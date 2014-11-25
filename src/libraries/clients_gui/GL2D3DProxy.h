@@ -18,9 +18,9 @@
 namespace kernel
 {
     class Controllers;
+    class Entity_ABC;
     class EntityResolver_ABC;
     class Filter_ABC;
-    class GraphicalEntity_ABC;
     class StaticModel;
     class Options;
     class OptionsController;
@@ -128,7 +128,7 @@ public:
     //! @name Layers helpers -> implementation
     //@{
     virtual const T_LayersVector& GetLayers() const;
-    virtual bool IsInAReadOnlyLayer( const kernel::GraphicalEntity_ABC& selectable ) const;
+    virtual T_Layer GetLayer( const T_LayerFunctor& functor ) const;
     virtual void UpdateLayerOrder();
     //@}
 

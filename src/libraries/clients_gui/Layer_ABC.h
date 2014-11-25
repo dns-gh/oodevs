@@ -11,6 +11,7 @@
 #define __Layer_ABC_h_
 
 #include "ENT/ENT_Enums.h"
+#include "LayersHelpers.h"
 #include "clients_kernel/GraphicalEntity_ABC.h"
 #include "clients_kernel/DisplayableModesObserver_ABC.h"
 #include "clients_kernel/ContextMenu.h"
@@ -73,6 +74,7 @@ public:
     virtual bool IsIn( const kernel::GraphicalEntity_ABC& ) const = 0;
     virtual bool IsEnabled() const = 0;
     virtual bool IsConfigurable() const = 0;
+    virtual T_Layer GetSubLayer( const T_LayerFunctor& functor ) const = 0;
     //@}
 };
 

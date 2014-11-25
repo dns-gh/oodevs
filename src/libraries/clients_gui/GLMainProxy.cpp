@@ -428,9 +428,9 @@ const T_LayersVector& GLMainProxy::GetLayers() const
     return GetCurrentView().GetLayers();
 }
 
-bool GLMainProxy::IsInAReadOnlyLayer( const kernel::GraphicalEntity_ABC& selectable ) const
+T_Layer GLMainProxy::GetLayer( const T_LayerFunctor& functor ) const
 {
-    return GetCurrentView().IsInAReadOnlyLayer( selectable );
+    return GetCurrentView().GetLayer( functor );
 }
 
 void GLMainProxy::UpdateLayerOrder()

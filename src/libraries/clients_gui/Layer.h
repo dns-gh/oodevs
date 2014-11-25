@@ -65,6 +65,7 @@ public:
 
     virtual bool IsEnabled() const;
     virtual bool IsConfigurable() const;
+    virtual T_Layer GetSubLayer( const T_LayerFunctor& entity ) const;
     virtual void Reset();
 
     virtual bool IsIn( const kernel::GraphicalEntity_ABC& ) const { return false; }
