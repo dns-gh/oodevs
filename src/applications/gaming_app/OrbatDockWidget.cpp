@@ -65,7 +65,7 @@ OrbatDockWidget::OrbatDockWidget( kernel::Controllers& controllers,
                                   QWidget* parent,
                                   const QString& objectName,
                                   ProfileFilter& filter,
-                                  gui::GLMainProxy& glMainProxy,
+                                  gui::GLView_ABC& view,
                                   const std::shared_ptr< gui::ParametersLayer >& paramLayer,
                                   Model& model,
                                   const StaticModel& staticModel,
@@ -82,7 +82,7 @@ OrbatDockWidget::OrbatDockWidget( kernel::Controllers& controllers,
 
     Q3VBox* box = new Q3VBox( this );
     setWidget( box );
-    OrbatToolbar* orbatToolbar = new OrbatToolbar( box, controllers, glMainProxy, model, filter );
+    OrbatToolbar* orbatToolbar = new OrbatToolbar( box, controllers, view, model, filter );
     const gui::AggregateToolbar* toolbar = orbatToolbar->GetToolbar();
     QTabWidget* mainTab = new QTabWidget( box );
     QTabWidget* unitTab = new QTabWidget();

@@ -37,7 +37,7 @@
 // -----------------------------------------------------------------------------
 OrbatToolbar::OrbatToolbar( QWidget* parent,
                             kernel::Controllers& controllers,
-                            gui::GLMainProxy& glMainProxy,
+                            gui::GLView_ABC& view,
                             const Model& model,
                             ProfileFilter& filter )
     : QFrame( parent )
@@ -52,7 +52,7 @@ OrbatToolbar::OrbatToolbar( QWidget* parent,
     setMaximumWidth( 440 );
 
     QGridLayout* toolbarBox = new QGridLayout( this );
-    pAggregateToolbar_ = new gui::AggregateToolbar( controllers, glMainProxy, filter, model.teams_, model.agents_, true );
+    pAggregateToolbar_ = new gui::AggregateToolbar( controllers, view, filter, model.teams_, model.agents_, true );
     toolbarBox->addLayout( pAggregateToolbar_, 0, 0, 1, 1, Qt::AlignLeft );
 
     filterBtn_ = new QToolButton();

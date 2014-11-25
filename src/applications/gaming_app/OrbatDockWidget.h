@@ -16,7 +16,7 @@ namespace gui
 {
     class ChangeSuperiorDialog;
     class EntitySymbols;
-    class GLMainProxy;
+    class GLView_ABC;
     class ModelObserver_ABC;
     class ParametersLayer;
     class RenameInterface;
@@ -51,7 +51,7 @@ public:
                      QWidget* parent,
                      const QString& objectName,
                      ProfileFilter& filter,
-                     gui::GLMainProxy& glMainProxy,
+                     gui::GLView_ABC& view,
                      const std::shared_ptr< gui::ParametersLayer >& paramLayer,
                      Model& model,
                      const StaticModel& staticModel,

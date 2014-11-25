@@ -27,7 +27,6 @@ namespace kernel
 
 namespace gui
 {
-    class GLMainProxy;
     class GLView_ABC;
 
 // =============================================================================
@@ -47,7 +46,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              AggregateToolbar( kernel::Controllers& controllers,
-                               GLMainProxy& view,
+                               GLView_ABC& view,
                                const kernel::Profile_ABC& profile,
                                const tools::Resolver< kernel::Formation_ABC >& formations,
                                const tools::Resolver< kernel::Automat_ABC >& automats,
@@ -67,7 +66,6 @@ private slots:
     void AggregateAllAutomat();
     void DisaggregateAll();
     void ToggleAggregationLevel( QAction* action );
-    void OnLockDragAndDropToggled( bool toggled );
     void OnChangeDisplay( int id );
     void UpdateLevelMenu();
     //@}
@@ -88,8 +86,10 @@ private:
     const tools::Resolver< kernel::Formation_ABC >& formations_;
     const tools::Resolver< kernel::Automat_ABC >& automats_;
     kernel::SafePointer< kernel::Entity_ABC > selected_;
+    std::string currentLevel_;
     QMenu* levelMenu_;
     QMenu* displayMenu_;
+    bool modelLoaded_;
     //@}
 };
 

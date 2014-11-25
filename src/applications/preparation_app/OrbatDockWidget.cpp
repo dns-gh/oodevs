@@ -32,7 +32,7 @@ OrbatDockWidget::OrbatDockWidget( kernel::Controllers& controllers,
                                   QWidget* parent,
                                   const QString& objectName,
                                   const QString& windowTitle,
-                                  gui::GLMainProxy& glMainProxy,
+                                  gui::GLView_ABC& view,
                                   const std::shared_ptr< gui::ParametersLayer >& paramLayer,
                                   gui::EntitySymbols& icons,
                                   ModelBuilder& modelBuilder,
@@ -50,7 +50,7 @@ OrbatDockWidget::OrbatDockWidget( kernel::Controllers& controllers,
 {
     gui::SubObjectName subObject( "OrbatDockWidget" );
     QGridLayout* toolbarBox = new QGridLayout();
-    auto aggregateToolbar = new gui::AggregateToolbar( controllers, glMainProxy, profile, *model.formations_, *model.agents_, false );
+    auto aggregateToolbar = new gui::AggregateToolbar( controllers, view, profile, *model.formations_, *model.agents_, false );
     toolbarBox->addLayout( aggregateToolbar, 0, 0, 1, 1, Qt::AlignLeft );
 
     expandButton_ = new gui::RichWidget< QToolButton >( "expandButton" );

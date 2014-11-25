@@ -21,7 +21,7 @@ namespace kernel
 namespace gui
 {
     class EntitySymbols;
-    class GLMainProxy;
+    class GLView_ABC;
     class ParametersLayer;
     class RichView_ABC;
     class SymbolIcons;
@@ -50,7 +50,7 @@ public:
                               QWidget* parent,
                               const QString& objectName,
                               const QString& windowTitle,
-                              gui::GLMainProxy& glMainProxy,
+                              gui::GLView_ABC& view,
                               const std::shared_ptr< gui::ParametersLayer >& paramLayer,
                               gui::EntitySymbols& icons,
                               ModelBuilder& modelBuilder,
