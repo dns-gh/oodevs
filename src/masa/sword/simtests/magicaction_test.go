@@ -523,14 +523,14 @@ func (s *TestSuite) TestReportCreation(c *C) {
 	defer stopSimAndClient(c, sim, client)
 	phydb := loadPhysical(c, "test")
 	data := client.Model.GetData()
-
+	count := uint32(1)
 	// Invalid report identifier
-	err := client.CreateReport(InvalidIdentifier, InvalidIdentifier)
+	err := client.CreateReport(count, InvalidIdentifier, InvalidIdentifier)
 	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	// Invalid source identifier
 	startMissionId := uint32(79)
-	err = client.CreateReport(startMissionId, InvalidIdentifier)
+	err = client.CreateReport(count, startMissionId, InvalidIdentifier)
 	c.Assert(err, IsSwordError, "error_invalid_parameter")
 
 	unitId := getSomeUnit(c, data).Id
@@ -540,16 +540,16 @@ func (s *TestSuite) TestReportCreation(c *C) {
 	)
 	reporter.Start(client.Model)
 
-	err = client.CreateReport(startMissionId, unitId)
+	err = client.CreateReport(count, startMissionId, unitId)
 	c.Assert(err, IsNil)
 
 	CBRNProtectionId := uint32(525)
-	err = client.CreateReport(CBRNProtectionId, unitId, swapi.MakeInt(345))
+	err = client.CreateReport(3, CBRNProtectionId, unitId, swapi.MakeInt(345))
 	c.Assert(err, IsNil)
 
 	client.Model.WaitTicks(1)
 	reports := reporter.Stop()
-	c.Assert(len(reports), Equals, 2)
+	c.Assert(len(reports), Equals, 4)
 }
 
 func ParseTime(c *C, value *sword.DateTime) time.Time {
@@ -569,14 +569,12 @@ func CreateReports(c *C, client *swapi.Client) {
 	// Create a bunch of reports
 	startMissionId := uint32(79)
 	unitId := getSomeUnit(c, client.Model.GetData()).Id
-	for i := 0; i < 10; i++ {
-		err := client.CreateReport(startMissionId, unitId)
-		c.Assert(err, IsNil)
-	}
+	err := client.CreateReport(10, startMissionId, unitId)
+	c.Assert(err, IsNil)
 
 	// Create a report with a parameter
 	CBRNProtectionId := uint32(525)
-	err := client.CreateReport(CBRNProtectionId, unitId, swapi.MakeInt(345))
+	err = client.CreateReport(1, CBRNProtectionId, unitId, swapi.MakeInt(345))
 	c.Assert(err, IsNil)
 }
 

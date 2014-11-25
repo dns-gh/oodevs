@@ -2206,21 +2206,23 @@ void MIL_EntityManager::OnReceiveKnowledgeGroupCreation( const MagicAction& mess
 
 void MIL_EntityManager::OnReceiveReportCreation( const sword::MissionParameters& params )
 {
-    protocol::CheckCount( params, 3, 4 );
-    const auto reportId = protocol::GetIdentifier( params, 1 );
+    protocol::CheckCount( params, 4, 5 );
+    const auto count = protocol::GetIdentifier( params, 1 );
+    const auto reportId = protocol::GetIdentifier( params, 2 );
     const MIL_Report* pReport = MIL_Report::Find( reportId );
     protocol::Check( pReport, "invalid report identifier" );
-    const auto sourceId = protocol::GetIdentifier( params, 2 );
+    const auto sourceId = protocol::GetIdentifier( params, 3 );
     Tasker tasker;
     SetToTasker( tasker, sourceId );
     sword::MissionParameters reportParams;
-    if( params.elem_size() > 3 )
+    if( params.elem_size() > 4 )
     {
         const auto& param = params.elem( 3 ).value( 0 );
         for( int i = 0; i < param.list_size(); ++i )
             *reportParams.add_elem()->add_value() = param.list( i );
     }
-    pReport->Send( tasker, reportParams );
+    for( uint32_t i = 0; i < count; ++i )
+        pReport->Send( tasker, reportParams );
 }
 
 // -----------------------------------------------------------------------------
