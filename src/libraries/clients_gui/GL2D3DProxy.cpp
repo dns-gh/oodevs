@@ -37,11 +37,12 @@ GL2D3DProxy::GL2D3DProxy( GLView_ABC& parent,
                           const kernel::EntityResolver_ABC& model,
                           const std::shared_ptr< Lighting_ABC >& lighting,
                           const QString& name,
-                          const unsigned id )
+                          const unsigned id,
+                          uint32_t mapnikThread )
     : name_( name )
     , id_( id )
     , parent_( parent )
-    , options_( new GLOptions( controllers, profile, staticModel, model, lighting ) )
+    , options_( new GLOptions( controllers, profile, staticModel, model, lighting, mapnikThread ) )
 {
     // NOTHING
 }

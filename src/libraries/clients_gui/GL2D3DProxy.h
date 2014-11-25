@@ -66,7 +66,8 @@ public:
                  const kernel::EntityResolver_ABC& model,
                  const std::shared_ptr< Lighting_ABC >& lighting,
                  const QString& name,
-                 const unsigned id );
+                 const unsigned id,
+                 uint32_t mapnikThread );
     // create a GL2D3DProxy with a clone of the given GLView
     GL2D3DProxy( GLView_ABC& parent,
                  const GLView_ABC& view,

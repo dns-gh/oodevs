@@ -61,7 +61,8 @@ GLWidgetManager::GLWidgetManager( QMainWindow& mainWindow,
                                   const std::shared_ptr< IconLayout >& iconLayout,
                                   EventStrategy_ABC& strategy,
                                   GLMainProxy& mainProxy,
-                                  const std::shared_ptr< Lighting_ABC >& lighting )
+                                  const std::shared_ptr< Lighting_ABC >& lighting,
+                                  uint32_t mapnikThread )
     : QObject( &mainWindow )
     , mainWindow_( mainWindow )
     , controllers_( controllers )
@@ -87,7 +88,8 @@ GLWidgetManager::GLWidgetManager( QMainWindow& mainWindow,
                                                   model,
                                                   lighting,
                                                   tr( "Main view" ),
-                                                  0 );
+                                                  0,
+                                                  mapnikThread );
     mainWidget_ = CreateStackedWidget( proxy );
     mainWindow_.setCentralWidget( mainWidget_.get() );
     gui::connect( displayTimer_.get(), SIGNAL( timeout() ), [&]() {

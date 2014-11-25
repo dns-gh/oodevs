@@ -179,7 +179,8 @@ MainWindow::MainWindow( kernel::Controllers& controllers,
                                                       std::make_shared< gui::IconLayout >(),
                                                       *eventStrategy_,
                                                       *glProxy_,
-                                                      std::make_shared< gui::LightingProxy >() ) );
+                                                      std::make_shared< gui::LightingProxy >(),
+                                                      config.GetMapnikThreads() ) );
 
     // Text editor
     textEditor_.reset( new gui::TextEditor( this ) );
@@ -302,7 +303,7 @@ void MainWindow::CreateLayers( const std::shared_ptr< gui::ParametersLayer >& pa
     layers[ eLayerTypes_Inhabitants ]        = std::make_shared< InhabitantLayer >( controllers_, *glProxy_, *strategy_, profile, dockContainer_->GetLivingAreaPanel() );
     layers[ eLayerTypes_Locations ]          = locations;
     if( config_.HasMapnik() )
-        layers[ eLayerTypes_Mapnik ]         = std::make_shared< gui::MapnikLayer >( controllers_, *glProxy_, config_.GetMapnikThreads() );
+        layers[ eLayerTypes_Mapnik ]         = std::make_shared< gui::MapnikLayer >( controllers_, *glProxy_ );
     layers[ eLayerTypes_Metric ]             = std::make_shared< gui::MetricsLayer >( controllers_, staticModel_.detection_, *glProxy_ );
     layers[ eLayerTypes_ObjectCreation ]     = std::make_shared< gui::MiscLayer< ObjectCreationPanel > >( controllers_, *glProxy_, eLayerTypes_ObjectCreation, dockContainer_->GetObjectCreationPanel() );
     layers[ eLayerTypes_Objects ]            = std::make_shared< ObjectsLayer >( controllers_, *glProxy_, *strategy_, profile, picker );

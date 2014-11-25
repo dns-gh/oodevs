@@ -16,6 +16,11 @@
 #include <boost/noncopyable.hpp>
 #include <boost/optional.hpp>
 
+namespace graphics
+{
+    class MapnikLayer;
+}
+
 namespace kernel
 {
     class AccommodationTypes;
@@ -30,6 +35,11 @@ namespace kernel
     class Settings;
     class StaticModel;
     class UrbanObject_ABC;
+}
+
+namespace tools
+{
+    class Path;
 }
 
 class QColor;
@@ -62,7 +72,8 @@ public:
                         const kernel::Profile_ABC& profile,
                         const kernel::StaticModel& staticModel,
                         const kernel::EntityResolver_ABC& model,
-                        const std::shared_ptr< Lighting_ABC >& lighting );
+                        const std::shared_ptr< Lighting_ABC >& lighting,
+                        uint32_t mapnikThread );
              // create a GLOptions by copy
              GLOptions( const GLOptions& other );
     virtual ~GLOptions();
@@ -128,6 +139,8 @@ public:
     QColor ComputeUrbanColor( const kernel::UrbanObject_ABC& object ) const;
 
     const T_FireOptions& GetFireOptions( FireGroup group ) const;
+
+    graphics::MapnikLayer& GetMapnikLayer( const tools::Path& terrain );
     //@}
 
 private:
@@ -145,6 +158,7 @@ private:
     const kernel::DetectionMap& map_;
     const kernel::EntityResolver_ABC& model_;
     const kernel::AccommodationTypes& accommodationTypes_;
+    const uint32_t mapnikThread_;
 
     // View options
     bool selected_;
@@ -159,6 +173,7 @@ private:
     std::shared_ptr< Lighting_ABC > lighting_;
     std::shared_ptr< UrbanDisplayOptions > urbanSetup_;
     std::unique_ptr< WatershedTexture > watershedTexture_;
+    std::unique_ptr< graphics::MapnikLayer > mapnikLayer_;
 
     // Exercise options
     kernel::SafePointer< kernel::Entity_ABC > filterEntity_;

@@ -38,7 +38,7 @@ class MapnikLayer : public Layer2D
                   , public tools::ElementObserver_ABC< kernel::ModelLoaded >
 {
 public:
-    explicit MapnikLayer( kernel::Controllers& controllers, GLView_ABC& tools, uint32_t theads );
+    explicit MapnikLayer( kernel::Controllers& controllers, GLView_ABC& tools );
     virtual ~MapnikLayer();
 
     virtual void Paint( const geometry::Rectangle2f& viewport );
@@ -46,16 +46,10 @@ public:
     virtual void Reset();
 
 private:
-    void Initialize( double width, double height );
-    void Generate();
-    void Update( const geometry::Rectangle2f& viewport );
-
-private:
     boost::scoped_ptr< graphics::MapnikLayer > layer_;
     tools::Path terrain_;
-    const uint32_t threads_;
 };
 
-}
+} //! namespace gui
 
 #endif // MapnikLayer_h

@@ -9,17 +9,17 @@
 
 #include "clients_gui_pch.h"
 #include "MapnikLayer.h"
+#include "GLOptions.h"
+#include "GLView_ABC.h"
 #include "clients_kernel/ModelLoaded.h"
 #include "clients_kernel/Controllers.h"
 #include "tools/ExerciseConfig.h"
-#include "MT_Tools/MT_Logger.h"
 #include <graphics/MapnikLayer.h>
 
 using namespace gui;
 
-MapnikLayer::MapnikLayer( kernel::Controllers& controllers, GLView_ABC& tools, uint32_t threads )
+MapnikLayer::MapnikLayer( kernel::Controllers& controllers, GLView_ABC& tools )
     : Layer2D( controllers, tools, eLayerTypes_Mapnik )
-    , threads_( threads )
 {
     SetAlpha( 0 );
     controllers_.Update( *this );
@@ -45,10 +45,5 @@ void MapnikLayer::Paint( const geometry::Rectangle2f& viewport )
 {
     if( !ShouldDrawPass() || terrain_.IsEmpty() )
         return;
-    if( !layer_ )
-    {
-        MT_LOG_INFO_MSG( "mapnik-threads: " << threads_ );
-        layer_.reset( new graphics::MapnikLayer( 0, terrain_, threads_ ) );
-    }
-    layer_->Paint( viewport, GetAlpha() );
+    view_.GetCurrentOptions().GetMapnikLayer( terrain_ ).Paint( viewport, GetAlpha() );
 }
