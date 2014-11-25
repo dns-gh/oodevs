@@ -98,7 +98,7 @@ struct EdgeHasher
 
 } // namespace
 
-struct TER_PathIndex::Private
+struct TER_PathIndex::Indexes
 {
     // Path edges, snapped on a grid to reduce the effect of floating point
     // noise.
@@ -110,7 +110,7 @@ TER_PathIndex::TER_PathIndex( const std::vector< geometry::Point2f >& path,
     : path_( path )
     , bestIndex_( 0 )
     , distanceToDest_( std::numeric_limits< float >::infinity() )
-    , private_( new Private() )
+    , indexes_( new Indexes() )
 {
     if( path_.empty() )
         throw MASA_EXCEPTION( "invalid empty path" );
@@ -131,7 +131,7 @@ TER_PathIndex::TER_PathIndex( const std::vector< geometry::Point2f >& path,
     }
 
     for( size_t i = 1; i < path_.size(); ++i )
-        private_->edges.insert( MakeEdge( path_[i-1], path_[i] ));
+        indexes_->edges.insert( MakeEdge( path_[i-1], path_[i] ));
 }
 
 TER_PathIndex::~TER_PathIndex()
@@ -150,5 +150,5 @@ TER_PathIndex::Distance TER_PathIndex::GetDistanceUsingPath( geometry::Point2f p
 
 bool TER_PathIndex::IsPathEdge( geometry::Point2f p1, geometry::Point2f p2 ) const
 {
-    return private_->edges.count( MakeEdge( p1, p2 ) ) > 0;
+    return indexes_->edges.count( MakeEdge( p1, p2 ) ) > 0;
 }
