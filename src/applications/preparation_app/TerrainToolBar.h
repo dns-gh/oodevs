@@ -11,7 +11,6 @@
 #define __TerrainToolBar_h_
 
 #include "clients_gui/RichToolBar.h"
-#include "clients_gui/ShapeHandler_ABC.h"
 #include "clients_kernel/ContextMenuObserver_ABC.h"
 #include "clients_kernel/SafePointer.h"
 #include "clients_kernel/UrbanColor_ABC.h"
@@ -43,7 +42,6 @@ class UrbanModel;
 class TerrainToolBar : public gui::RichToolBar
                      , public tools::SelectionObserver< kernel::UrbanObject_ABC >
                      , public kernel::ContextMenuObserver_ABC< kernel::UrbanObject_ABC >
-                     , public gui::ShapeHandler_ABC
 {
     Q_OBJECT
 
@@ -69,11 +67,6 @@ public:
     virtual void NotifyContextMenu( const kernel::UrbanObject_ABC& object, kernel::ContextMenu& menu );
     //@}
 
-    //! @name ShapeHandler_ABC
-    //@{
-    virtual void Handle( kernel::Location_ABC& location );
-    //@}
-
     //! @name DisplayableModeObserver_ABC
     //@{
     virtual void NotifyModeChanged( E_Modes newMode, bool useDefault, bool firstChangeToSavedMode );
@@ -84,6 +77,7 @@ private:
     //@{
     void UncheckBlockCreationButtons();
     void EnableBlockCreationButtons( bool enabled );
+    void CreateBlock( unsigned int parentId, kernel::Location_ABC& location );
     //@}
 
 private slots:
@@ -97,6 +91,10 @@ private slots:
     //@}
 
 private:
+    struct PolygonContext;
+    friend struct PolygonContext;
+
+private:
     //! @name Types
     //@{
     typedef std::map< kernel::SafePointer< kernel::UrbanObject_ABC >*, kernel::UrbanBlockColor > T_UrbanColors;
@@ -106,6 +104,8 @@ private:
     //@{
     gui::ExclusiveEventStrategy& eventStrategy_;
     std::shared_ptr< gui::ParametersLayer > paramLayer_;
+    // ShapeHandler_ABC created for the most recent polygon editing request
+    std::unique_ptr< PolygonContext > handler_;
     UrbanModel& urbanModel_;
     kernel::SafePointer< kernel::UrbanObject_ABC > selected_;
     gui::RichWidget< QToolButton >* switchModeButton_;
