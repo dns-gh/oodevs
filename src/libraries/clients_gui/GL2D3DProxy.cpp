@@ -16,7 +16,6 @@
 #include "GlTooltip.h"
 #include "GL2DWidget.h"
 #include "Layer.h"
-#include "SvglProxy.h"
 #include "TacticalGraphics.h"
 #include "TooltipsLayer_ABC.h"
 #include "clients_kernel/Options.h"
