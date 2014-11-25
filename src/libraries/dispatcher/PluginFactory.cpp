@@ -19,6 +19,7 @@
 #include "FileLogger.h"
 #include "PluginFactory_ABC.h"
 #include "CheckpointFilterPlugin.h"
+#include "hierarchy_plugin/HierarchyPlugin.h"
 #include "rights_plugin/RightsPlugin.h"
 #include "logger_plugin/LoggerPlugin.h"
 #include "reports_plugin/ReportsPlugin.h"
@@ -161,6 +162,7 @@ void PluginFactory::Instanciate()
                 staticModel_, config_, services_ ) );
     checkpointFilter_->Add( logistic::CreateLogisticPlugin( *model_, staticModel_, config_ ) );
     checkpointFilter_->Add( boost::make_shared< reports::ReportsPlugin >( config_, false ) );
+    checkpointFilter_->Add( boost::make_shared< HierarchyPlugin >( config_, false ) );
     tools::Xifstream xis( config_.GetSessionFile() );
     xis >> xml::start( "session" )
             >> xml::start( "config" )

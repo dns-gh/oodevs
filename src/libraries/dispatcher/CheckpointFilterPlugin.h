@@ -12,15 +12,25 @@
 
 #include "PluginContainer.h"
 
+namespace plugins
+{
+namespace rights
+{
+    class RightsPlugin;
+}
+}
+
 namespace dispatcher
 {
-class AuthenticatedLinkResolver_ABC;
-class ClientPublisher_ABC;
+    class ClientPublisher_ABC;
+}
 
+namespace dispatcher
+{
 class CheckpointFilterPlugin: public PluginContainer
 {
 public:
-    explicit CheckpointFilterPlugin( const AuthenticatedLinkResolver_ABC& resolver );
+    explicit CheckpointFilterPlugin( const plugins::rights::RightsPlugin& rights );
     virtual ~CheckpointFilterPlugin();
 
     virtual void NotifySimulationLeft();
@@ -30,7 +40,7 @@ private:
     void Reset();
 
 private:
-    const AuthenticatedLinkResolver_ABC& resolver_;
+    const plugins::rights::RightsPlugin& rights_;
     bool checkpointInProgress_;
     ClientPublisher_ABC* client_;
 };

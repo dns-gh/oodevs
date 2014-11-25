@@ -81,6 +81,8 @@ public:
     virtual unsigned int GetClientID( const std::string& link ) const;
 
     unsigned int RegisterClient( const std::string& link );
+
+    void SendPluginsState( dispatcher::ClientPublisher_ABC& client ) const;
     //@}
 
 private:

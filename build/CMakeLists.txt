@@ -318,6 +318,7 @@ endfunction()
 # plugins
 add_plugin( aar_plugin )
 add_plugin( dis_plugin )
+add_plugin( hierarchy_plugin )
 add_plugin( hla_plugin )
 target_link_libraries( hla_plugin
     dispatcher
@@ -381,6 +382,7 @@ target_link_libraries( dispatcher
     3a
     aar_plugin
     clients_kernel
+    hierarchy_plugin
     indicators
     logger_plugin
     logistic_plugin

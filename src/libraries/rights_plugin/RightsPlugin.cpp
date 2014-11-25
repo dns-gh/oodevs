@@ -347,11 +347,16 @@ void RightsPlugin::OnReceiveMsgAuthenticationRequest( const std::string& link, c
         // Send initial state
         client::ControlSendCurrentStateBegin().Send( client );
         model_.Send( client );
-        container_.SendState( client );
+        SendPluginsState( client );
         client::ControlSendCurrentStateEnd().Send( client );
 
         MT_LOG_INFO_MSG( currentConnections_ << " clients authentified" );
     }
+}
+
+void RightsPlugin::SendPluginsState( dispatcher::ClientPublisher_ABC& client ) const
+{
+    container_.SendState( client );
 }
 
 // -----------------------------------------------------------------------------
