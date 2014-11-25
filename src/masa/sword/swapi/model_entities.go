@@ -62,6 +62,7 @@ type PathPoint struct {
 	Reached  bool
 	Current  TerrainData
 	Next     TerrainData
+	Slope    float32
 }
 
 func NewPathPoint(point Point) PathPoint {

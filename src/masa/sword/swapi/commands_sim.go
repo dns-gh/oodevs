@@ -1820,6 +1820,9 @@ func ReadPathPoints(pathPoints []*sword.PathPoint) []PathPoint {
 		if next := v.Next; next != nil {
 			point.Next = NewTerrainData(next.GetArea(), next.GetLinear(), next.GetLeft(), next.GetRight())
 		}
+		if slope := v.Slope; slope != nil {
+			point.Slope = *slope
+		}
 		points = append(points, point)
 	}
 	return points

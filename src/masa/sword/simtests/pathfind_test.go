@@ -578,11 +578,12 @@ func (s *TestSuite) TestMoveAlongItineraryOnHorseshoe(c *C) {
 }
 
 func testPathEdgeSplit(c *C, client *swapi.Client, unit *swapi.Unit,
-	from, to swapi.Point, points int, split bool) []swapi.PathPoint {
+	from, to swapi.Point, split bool, points int, minDegrees, maxDegrees int) []swapi.PathPoint {
 
 	rq := sword.PathfindRequest{
 		Unit: swapi.MakeId(unit.Id),
 		DisableSplitOnElevationGrid: proto.Bool(!split),
+		ReturnSlopes:                proto.Bool(true),
 	}
 	path, err := client.PathfindRequest(&rq, from, to)
 	c.Assert(err, IsNil)
@@ -591,6 +592,16 @@ func testPathEdgeSplit(c *C, client *swapi.Client, unit *swapi.Unit,
 	// Check points are monotonically increasing from west to east
 	for i := 1; i < len(path); i++ {
 		c.Assert(path[i-1].Point.X, Lesser, path[i].Point.X)
+	}
+	for _, p := range path {
+		degrees := math.Atan(float64(p.Slope)) * 180. / math.Pi
+		if degrees == 0 {
+			// Ignore zero entries which appear when slopes are not returned
+			// or when a sequence of points have the same slope.
+			continue
+		}
+		c.Assert(degrees, GreaterOrEquals, float64(minDegrees))
+		c.Assert(degrees, LesserOrEquals, float64(maxDegrees))
 	}
 	return path
 }
@@ -603,9 +614,17 @@ func (s *TestSuite) TestPathEdgesSplitOnElevationGrid(c *C) {
 	phydb := loadPhysicalData(c, "test")
 	from := swapi.Point{X: -15.9384, Y: 28.220}
 	to := swapi.Point{X: -15.71, Y: from.Y}
-	unit := CreateCombiVW(c, phydb, client, from)
+	unit := CreateTestUnit(c, phydb, client, "VW Combi 4x4", from)
 
-	testPathEdgeSplit(c, client, unit, from, to, 14, false)
-	// Split path has more points
-	testPathEdgeSplit(c, client, unit, from, to, 18, true)
+	// Minimum slope with disabled slope computation
+	testPathEdgeSplit(c, client, unit, from, to, false, 14, 0, 0)
+
+	// https://masagroup.atlassian.net/browse/SWBUG-13524
+	// Minimum slope
+	testPathEdgeSplit(c, client, unit, from, to, true, 18, 0, 8)
+
+	// Slope around 16 degrees
+	from.Y = 28.2603
+	to.Y = 28.2603
+	testPathEdgeSplit(c, client, unit, from, to, true, 23, 15, 28)
 }

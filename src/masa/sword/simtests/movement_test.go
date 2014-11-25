@@ -25,8 +25,8 @@ const (
 	CombiVWUnitId     = uint32(2)
 )
 
-func CreateCombiVW(c *C, phydb *phy.PhysicalData, client *swapi.Client,
-	pos swapi.Point) *swapi.Unit {
+func CreateTestUnit(c *C, phydb *phy.PhysicalData, client *swapi.Client,
+	unitType string, pos swapi.Point) *swapi.Unit {
 
 	party := &swrun.Party{
 		Name: "party1",
@@ -40,7 +40,7 @@ func CreateCombiVW(c *C, phydb *phy.PhysicalData, client *swapi.Client,
 						Units: []*swrun.Unit{
 							&swrun.Unit{
 								Name: "unit",
-								Type: "VW Combi",
+								Type: unitType,
 								Pos:  pos,
 							},
 						},
@@ -55,6 +55,12 @@ func CreateCombiVW(c *C, phydb *phy.PhysicalData, client *swapi.Client,
 	err = client.SetAutomatMode(unit.AutomatId, false)
 	c.Assert(err, IsNil)
 	return unit
+}
+
+func CreateCombiVW(c *C, phydb *phy.PhysicalData, client *swapi.Client,
+	pos swapi.Point) *swapi.Unit {
+
+	return CreateTestUnit(c, phydb, client, "VW Combi", pos)
 }
 
 func checkSpeed(c *C, phydb *phy.PhysicalData, client *swapi.Client, from,
