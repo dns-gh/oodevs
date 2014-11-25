@@ -736,10 +736,27 @@ func (t *TestSuite) TestObservers(c *C) {
 	c.Assert(end, Equals, expectedEnd)
 }
 
+var (
+	hierarchyIds uint32 = 0
+)
+
+func addHierarchy(d *swapi.ModelData, id, parent uint32) {
+	hierarchyIds++
+	d.Hierarchies[id] = swapi.Hierarchies{
+		swapi.Hierarchy{
+			Id:     hierarchyIds,
+			Entity: id,
+			Parent: parent,
+			Tick:   0,
+		},
+	}
+}
+
 func addParty(c *C, d *swapi.ModelData, id uint32) {
 	d.Parties[id] = &swapi.Party{
 		Id: id,
 	}
+	addHierarchy(d, id, 0)
 }
 
 func addFormation(c *C, d *swapi.ModelData, id, party, parent uint32) {
@@ -748,6 +765,10 @@ func addFormation(c *C, d *swapi.ModelData, id, party, parent uint32) {
 		PartyId:  party,
 		ParentId: parent,
 	}
+	if parent == 0 {
+		parent = party
+	}
+	addHierarchy(d, id, parent)
 }
 
 func addAutomat(c *C, d *swapi.ModelData, id, formation uint32) {
@@ -755,6 +776,7 @@ func addAutomat(c *C, d *swapi.ModelData, id, formation uint32) {
 		Id:          id,
 		FormationId: formation,
 	}
+	addHierarchy(d, id, formation)
 }
 
 func addUnit(c *C, d *swapi.ModelData, id, automat uint32) {
@@ -762,6 +784,7 @@ func addUnit(c *C, d *swapi.ModelData, id, automat uint32) {
 		Id:        id,
 		AutomatId: automat,
 	}
+	addHierarchy(d, id, automat)
 }
 
 func addCrowd(c *C, d *swapi.ModelData, id, party uint32) {
@@ -769,6 +792,7 @@ func addCrowd(c *C, d *swapi.ModelData, id, party uint32) {
 		Id:      id,
 		PartyId: party,
 	}
+	addHierarchy(d, id, party)
 }
 
 func addPopulation(c *C, d *swapi.ModelData, id, party uint32) {
@@ -776,6 +800,7 @@ func addPopulation(c *C, d *swapi.ModelData, id, party uint32) {
 		Id:      id,
 		PartyId: party,
 	}
+	addHierarchy(d, id, party)
 }
 
 func addObject(c *C, d *swapi.ModelData, id, party uint32) {
@@ -783,6 +808,7 @@ func addObject(c *C, d *swapi.ModelData, id, party uint32) {
 		Id:      id,
 		PartyId: party,
 	}
+	addHierarchy(d, id, party)
 }
 
 func addKnowledgeGroup(c *C, d *swapi.ModelData, id, party uint32) {
@@ -790,6 +816,7 @@ func addKnowledgeGroup(c *C, d *swapi.ModelData, id, party uint32) {
 		Id:      id,
 		PartyId: party,
 	}
+	addHierarchy(d, id, party)
 }
 
 func (f *Fixture) findEvent(c *C, uuid string) *sdk.Event {
