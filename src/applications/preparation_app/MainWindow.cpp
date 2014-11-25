@@ -24,6 +24,7 @@
 #include "GhostsLayer.h"
 #include "LimitsLayer.h"
 #include "Menu.h"
+#include "Menu.h"
 #include "ModelBuilder.h"
 #include "ModelConsistencyDialog.h"
 #include "ObjectCreationPanel.h"
@@ -101,14 +102,15 @@
 #include "frontend/CreateExercise.h"
 #include "geodata/ProjectionException.h"
 #include "preparation/AgentsModel.h"
+#include "preparation/ColorController.h"
+#include "preparation/Exercise.h"
 #include "preparation/FormationModel.h"
 #include "preparation/GhostModel.h"
-#include "preparation/Exercise.h"
 #include "preparation/Model.h"
+#include "preparation/ProfilesModel.h"
 #include "preparation/ScoresModel.h"
 #include "preparation/StaticModel.h"
 #include "preparation/TeamsModel.h"
-#include "preparation/ColorController.h"
 #include "tools/ExerciseConfig.h"
 #include "tools/SchemaWriter.h"
 #include "MT_Tools/MT_Logger.h"
@@ -180,7 +182,8 @@ MainWindow::MainWindow( kernel::Controllers& controllers,
                                                       *eventStrategy_,
                                                       *glProxy_,
                                                       std::make_shared< gui::LightingProxy >(),
-                                                      config.GetMapnikThreads() ) );
+                                                      config.GetMapnikThreads(),
+                                                      *model_.profiles_ ) );
 
     // Text editor
     textEditor_.reset( new gui::TextEditor( this ) );

@@ -10,8 +10,8 @@
 #ifndef __OrbatToolbar_h_
 #define __OrbatToolbar_h_
 
+#include "clients_gui/VisibilityFilter_ABC.h"
 #include "clients_kernel/ContextMenuObserver_ABC.h"
-#include "clients_kernel/Filter_ABC.h"
 #include "clients_kernel/SafePointer.h"
 #include <tools/ElementObserver_ABC.h>
 
@@ -57,7 +57,7 @@ class OrbatToolbar : public QFrame
                    , public kernel::ContextMenuObserver_ABC< kernel::AgentKnowledge_ABC >
                    , public kernel::ContextMenuObserver_ABC< kernel::ObjectKnowledge_ABC >
                    , public tools::ElementObserver_ABC< Profile >
-                   , public tools::ElementObserver_ABC< kernel::Filter_ABC >
+                   , public tools::ElementObserver_ABC< gui::VisibilityFilter_ABC >
 {
     Q_OBJECT;
 
@@ -99,7 +99,7 @@ private:
     virtual void NotifyContextMenu( const kernel::AgentKnowledge_ABC& entity, kernel::ContextMenu& menu );
     virtual void NotifyContextMenu( const kernel::ObjectKnowledge_ABC& entity, kernel::ContextMenu& menu );
 
-    virtual void NotifyUpdated( const kernel::Filter_ABC& filter );
+    virtual void NotifyUpdated( const gui::VisibilityFilter_ABC& filter );
     virtual void NotifyUpdated( const Profile& profile );
 
     void Filter( const kernel::Entity_ABC& entity );

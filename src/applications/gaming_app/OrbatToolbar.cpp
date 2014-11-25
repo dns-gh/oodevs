@@ -29,7 +29,6 @@
 #include "gaming/Profile.h"
 #include "gaming/Simulation.h"
 #include "gaming/TeamsModel.h"
-#include "gaming/UnitFilter.h"
 
 // -----------------------------------------------------------------------------
 // Name: OrbatToolbar constructor
@@ -107,7 +106,7 @@ void OrbatToolbar::OnSetFilter()
 // -----------------------------------------------------------------------------
 void OrbatToolbar::Filter( const kernel::Entity_ABC& entity )
 {
-    filter_.SetFilter( &entity );
+    filter_.SetFilter( entity );
     entity.Select( controllers_.actions_ );
 }
 
@@ -117,14 +116,14 @@ void OrbatToolbar::Filter( const kernel::Entity_ABC& entity )
 // -----------------------------------------------------------------------------
 void OrbatToolbar::OnClearFilter()
 {
-    filter_.SetFilter( nullptr );
+    filter_.RemoveFilter();
 }
 
 // -----------------------------------------------------------------------------
 // Name: OrbatToolbar::NotifyUpdated
 // Created: SBO 2009-03-04
 // -----------------------------------------------------------------------------
-void OrbatToolbar::NotifyUpdated( const kernel::Filter_ABC& filter )
+void OrbatToolbar::NotifyUpdated( const gui::VisibilityFilter_ABC& filter )
 {
     const QString name = filter.GetFilter();
     filterBtn_->setTextLabel( name );

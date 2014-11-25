@@ -10,8 +10,8 @@
 #ifndef __ProfileFilter_h_
 #define __ProfileFilter_h_
 
+#include "clients_gui/VisibilityFilter_ABC.h"
 #include "clients_kernel/Profile_ABC.h"
-#include "clients_kernel/Filter_ABC.h"
 #include "clients_kernel/SafePointer.h"
 #include <boost/noncopyable.hpp>
 
@@ -29,7 +29,7 @@ namespace kernel
 // Created: LGY 2011-11-24
 // =============================================================================
 class ProfileFilter : public kernel::Profile_ABC
-                    , public kernel::Filter_ABC
+                    , public gui::VisibilityFilter_ABC
                     , private boost::noncopyable
 {
 public:
@@ -51,9 +51,12 @@ public:
     virtual bool HasTimeControl() const;
 
     virtual QString GetFilter() const;
-    virtual void SetFilter( const kernel::Entity_ABC* entity, bool update = true );
-    virtual void SetFilter( const kernel::Profile_ABC& profile );
+    virtual void SetFilter( const kernel::Entity_ABC& entity, bool update = true );
+    virtual void SetFilter( const kernel::Profile_ABC& profile, bool update = true );
+    virtual void SetFilter( const gui::GLOptions& options, bool update = true );
+    virtual void RemoveFilter( bool update = true );
     virtual const kernel::Entity_ABC* GetFilteredEntity() const;
+    virtual const kernel::Profile_ABC* GetFilteredProfile() const;
     //@}
 
 private:

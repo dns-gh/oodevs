@@ -25,11 +25,11 @@
 #include "Layer_ABC.h"
 #include "SignalAdapter.h"
 #include "Tools.h"
+#include "VisibilityFilter_ABC.h"
 #include "WatershedTexture.h"
 
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
-#include "clients_kernel/Filter_ABC.h"
 #include "clients_kernel/ModeController.h"
 #include "clients_kernel/Options.h"
 #include "clients_kernel/OptionsController.h"
@@ -62,7 +62,8 @@ GLWidgetManager::GLWidgetManager( QMainWindow& mainWindow,
                                   EventStrategy_ABC& strategy,
                                   GLMainProxy& mainProxy,
                                   const std::shared_ptr< Lighting_ABC >& lighting,
-                                  uint32_t mapnikThread )
+                                  uint32_t mapnikThread,
+                                  const kernel::ProfilesModel_ABC& profilesModel )
     : QObject( &mainWindow )
     , mainWindow_( mainWindow )
     , controllers_( controllers )
@@ -87,6 +88,7 @@ GLWidgetManager::GLWidgetManager( QMainWindow& mainWindow,
                                                   staticModel_,
                                                   model,
                                                   lighting,
+                                                  profilesModel,
                                                   tr( "Main view" ),
                                                   0,
                                                   mapnikThread );
@@ -208,9 +210,10 @@ void GLWidgetManager::SetContourLinesComputer( int height, GLOptions& options )
 // Name: GLWidgetManager::NotifyUpdated
 // Created: ABR 2014-06-26
 // -----------------------------------------------------------------------------
-void GLWidgetManager::NotifyUpdated( const kernel::Filter_ABC& filter )
+void GLWidgetManager::NotifyUpdated( const VisibilityFilter_ABC& filter )
 {
     mainProxy_.GetActiveOptions().SetFilterEntity( filter.GetFilteredEntity() );
+    mainProxy_.GetActiveOptions().SetFilterProfile( filter.GetFilteredProfile() );
 }
 
 // -----------------------------------------------------------------------------

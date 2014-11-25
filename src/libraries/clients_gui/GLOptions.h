@@ -32,6 +32,7 @@ namespace kernel
     class OptionVariant;
     class Options;
     class Profile_ABC;
+    class ProfilesModel_ABC;
     class Settings;
     class StaticModel;
     class UrbanObject_ABC;
@@ -73,7 +74,8 @@ public:
                         const kernel::StaticModel& staticModel,
                         const kernel::EntityResolver_ABC& model,
                         const std::shared_ptr< Lighting_ABC >& lighting,
-                        uint32_t mapnikThread );
+                        uint32_t mapnikThread,
+                        const kernel::ProfilesModel_ABC& profilesModel );
              // create a GLOptions by copy
              GLOptions( const GLOptions& other );
     virtual ~GLOptions();
@@ -114,6 +116,8 @@ public:
 
     const kernel::Entity_ABC* GetFilterEntity() const;
     void SetFilterEntity( const kernel::Entity_ABC* filterEntity );
+    const kernel::Profile_ABC* GetFilterProfile() const;
+    void SetFilterProfile( const kernel::Profile_ABC* filterProfile );
 
     const kernel::Entity_ABC* GetLockedEntity() const;
     void SetLockedEntity( const kernel::Entity_ABC* lockedEntity );
@@ -171,12 +175,14 @@ private:
     std::shared_ptr< Elevation2dTexture > elevation2dTexture_;
     std::shared_ptr< TerrainSettings > graphicSetup_;
     std::shared_ptr< Lighting_ABC > lighting_;
+    const kernel::ProfilesModel_ABC& profilesModel_;
     std::shared_ptr< UrbanDisplayOptions > urbanSetup_;
     std::unique_ptr< WatershedTexture > watershedTexture_;
     std::unique_ptr< graphics::MapnikLayer > mapnikLayer_;
 
     // Exercise options
     kernel::SafePointer< kernel::Entity_ABC > filterEntity_;
+    kernel::SafePointer< kernel::Profile_ABC > filterProfile_;
     kernel::SafePointer< kernel::Entity_ABC > lockedEntity_;
     std::vector< const kernel::Entity_ABC* > aggregatedEntities_;
     //@}

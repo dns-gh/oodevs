@@ -16,7 +16,6 @@
 namespace kernel
 {
     class Controllers;
-    class Filter_ABC;
 }
 
 // =============================================================================
@@ -26,7 +25,6 @@ namespace kernel
 // Created: SLI 2014-04-09
 // =============================================================================
 class ItineraryEditionDockWidget : public gui::RichDockWidget
-                                 , public tools::ElementObserver_ABC< kernel::Filter_ABC >
 {
     Q_OBJECT
 

@@ -23,8 +23,8 @@
 #include "SvglRenderer.h"
 #include "TacticalGraphics.h"
 #include "TooltipsLayer_ABC.h"
+#include "VisibilityFilter_ABC.h"
 #include "clients_kernel/Entity_ABC.h"
-#include "clients_kernel/Filter_ABC.h"
 #include "clients_kernel/Options.h"
 #include "clients_kernel/OptionsController.h"
 #include "clients_kernel/OptionVariant.h"
@@ -39,10 +39,10 @@ using namespace gui;
 // Created: ABR 2014-06-23
 // -----------------------------------------------------------------------------
 GLMainProxy::GLMainProxy( kernel::Controllers& controllers,
-                          kernel::Filter_ABC& profileFilter,
+                          VisibilityFilter_ABC& filter,
                           const tools::Resolver< kernel::Formation_ABC >& formationResolver )
     : controllers_( controllers )
-    , profileFilter_( profileFilter )
+    , filter_( filter )
     , formationResolver_( formationResolver )
     , colorStrategy_( 0 )
     , billboard_( 0 )
@@ -310,7 +310,7 @@ void GLMainProxy::SetActiveView( GLView_ABC& view )
     // can access an option with the new value
     controllers_.options_.SetViewOptions( options.GetOptions() );
     controllers_.options_.UpdateViewOptions();
-    profileFilter_.SetFilter( options.GetFilterEntity(), true );
+    filter_.SetFilter( options, true );
     ApplyObservers( activeChangeObservers_, activeView_ );
     // reset contour lines observer
     ApplyToOptions( []( GLOptions& options ) {
@@ -359,7 +359,7 @@ void GLMainProxy::ApplyOptions()
         if( const auto* position = entity->Retrieve< kernel::Positions >() )
             currentView.CenterOn( position->GetPosition( false ) );
     // orbat filter
-    profileFilter_.SetFilter( options.GetFilterEntity(), false );
+    filter_.SetFilter( options, false );
     // layers alpha
     auto& layers = currentView.GetLayers();
     std::for_each( layers.begin(), layers.end(), [&options]( const T_Layer& layer ) -> bool {

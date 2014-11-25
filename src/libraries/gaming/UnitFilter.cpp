@@ -182,25 +182,46 @@ bool UnitFilter::IsPerceived( const kernel::Entity_ABC& entity ) const
 // Name: UnitFilter::SetFilter
 // Created: AGE 2006-11-29
 // -----------------------------------------------------------------------------
-void UnitFilter::SetFilter( const Entity_ABC* entity, bool update /* = true */ )
+void UnitFilter::SetFilter( const Entity_ABC& entity, bool update /* = true */ )
 {
-    filtered_ = entity;
-    tHierarchies_ = entity ? entity->Retrieve< TacticalHierarchies >() : nullptr;
-    cHierarchies_ = entity ? entity->Retrieve< CommunicationHierarchies >() : nullptr;
-    entity_ = tHierarchies_ && !cHierarchies_ ? &tHierarchies_->GetTop() : entity;
+    filtered_ = &entity;
+    tHierarchies_ = entity.Retrieve< TacticalHierarchies >();
+    cHierarchies_ = entity.Retrieve< CommunicationHierarchies >();
+    entity_ = tHierarchies_ && !cHierarchies_ ? &tHierarchies_->GetTop() : &entity;
     if( !update )
         return;
     controller_.Update( *static_cast< Profile_ABC* >( this ) );
-    controller_.Update( *static_cast< Filter_ABC* >( this ) );
+    controller_.Update( *static_cast< VisibilityFilter_ABC* >( this ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: UnitFilter::SetFilter
 // Created: LGY 2011-11-24
 // -----------------------------------------------------------------------------
-void UnitFilter::SetFilter( const  kernel::Profile_ABC& /*profile*/ )
+void UnitFilter::SetFilter( const kernel::Profile_ABC& /*profile*/, bool /* update = true */ )
 {
     // NOTHING
+}
+
+void UnitFilter::SetFilter( const gui::GLOptions& /*options*/, bool /*update = true*/ )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: UnitFilter::RemoveFilter
+// Created: LGY 2011-11-24
+// -----------------------------------------------------------------------------
+void UnitFilter::RemoveFilter( bool update /* = true */ )
+{
+    filtered_ = 0;
+    tHierarchies_ = 0;
+    cHierarchies_ = 0;
+    entity_ = 0;
+    if( !update )
+        return;
+    controller_.Update( *static_cast< Profile_ABC* >( this ) );
+    controller_.Update( *static_cast< VisibilityFilter_ABC* >( this ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -355,4 +376,9 @@ bool UnitFilter::IsObjectOfSameTeam( const Entity_ABC& entity ) const
 const kernel::Entity_ABC* UnitFilter::GetFilteredEntity() const
 {
     return filtered_;
+}
+
+const kernel::Profile_ABC* UnitFilter::GetFilteredProfile() const
+{
+    return 0;
 }

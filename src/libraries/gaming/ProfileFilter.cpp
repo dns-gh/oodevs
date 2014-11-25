@@ -10,6 +10,7 @@
 #include "gaming_pch.h"
 #include "ProfileFilter.h"
 #include "UnitFilter.h"
+#include "clients_gui/GLOptions.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
 
 // -----------------------------------------------------------------------------
@@ -127,21 +128,40 @@ QString ProfileFilter::GetFilter() const
 // Name: ProfileFilter::SetFilter
 // Created: LGY 2011-11-24
 // -----------------------------------------------------------------------------
-void ProfileFilter::SetFilter( const kernel::Entity_ABC* entity, bool update /* = true */ )
+void ProfileFilter::SetFilter( const kernel::Entity_ABC& entity, bool update /* = true */ )
 {
+    RemoveFilter( false );
     pUnitFilter_->SetFilter( entity, update );
-    if( !entity )
-        profile_ = 0;
 }
 
 // -----------------------------------------------------------------------------
 // Name: ProfileFilter::SetFilter
 // Created: LGY 2011-11-24
 // -----------------------------------------------------------------------------
-void ProfileFilter::SetFilter( const kernel::Profile_ABC& profile )
+void ProfileFilter::SetFilter( const kernel::Profile_ABC& profile, bool update /* = true */ )
 {
+    RemoveFilter( false );
     profile_ = &profile;
-    controller_.Update( *static_cast< Filter_ABC* >( this ) );
+    if( !update )
+        return;
+    controller_.Update( *static_cast< Profile_ABC* >( this ) );
+    controller_.Update( *static_cast< VisibilityFilter_ABC* >( this ) );
+}
+
+void ProfileFilter::SetFilter( const gui::GLOptions& options, bool update /* = true*/ )
+{
+    if( const auto* entity = options.GetFilterEntity() )
+        SetFilter( *entity, update );
+    else if( const auto* profile = options.GetFilterProfile() )
+        SetFilter( *profile, update );
+    else
+        RemoveFilter( update );
+}
+
+void ProfileFilter::RemoveFilter( bool update /* = true */ )
+{
+    profile_ = 0;
+    pUnitFilter_->RemoveFilter( update );
 }
 
 // -----------------------------------------------------------------------------
@@ -151,4 +171,9 @@ void ProfileFilter::SetFilter( const kernel::Profile_ABC& profile )
 const kernel::Entity_ABC* ProfileFilter::GetFilteredEntity() const
 {
     return pUnitFilter_->GetFilteredEntity();
+}
+
+const kernel::Profile_ABC* ProfileFilter::GetFilteredProfile() const
+{
+    return profile_;
 }
