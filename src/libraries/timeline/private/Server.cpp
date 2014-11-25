@@ -167,9 +167,9 @@ void Server::CloseEvent( const timeline::CloseEvent& msg )
     browser_->Post( controls::CloseEvent( logger_, msg ) );
 }
 
-void Server::LoadEvents( const std::string& events )
+void Server::LoadEvents( const timeline::LoadEvents& msg )
 {
-    browser_->Post( controls::LoadEvents( logger_, events ) );
+    browser_->Post( controls::LoadEvents( logger_, msg ) );
 }
 
 void Server::SaveEvents() const

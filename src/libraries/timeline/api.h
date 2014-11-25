@@ -128,6 +128,20 @@ struct CloseEvent
     bool        lock;
 };
 
+
+struct LoadEvents
+{
+    explicit LoadEvents( const std::string& data )
+        : data( data )
+        , isReplay( false )
+    {
+        // NOTHING
+    }
+    std::string data;
+    std::string markersHost;
+    bool        isReplay;
+};
+
 class Server_ABC : public QObject
                  , public boost::noncopyable
 {
@@ -149,7 +163,7 @@ public slots:
     virtual void ReadEvent( const std::string& uuid ) = 0;
     virtual void UpdateEvent( const timeline::Event& event ) = 0;
     virtual void DeleteEvents( const std::vector< std::string >& uuids ) = 0;
-    virtual void LoadEvents( const std::string& events ) = 0;
+    virtual void LoadEvents( const timeline::LoadEvents& msg ) = 0;
     virtual void SaveEvents() const = 0;
     virtual void CloseEvent( const timeline::CloseEvent& msg ) = 0;
 

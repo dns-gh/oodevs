@@ -134,9 +134,9 @@ void Client::OnCloseEvent( const timeline::CloseEvent& msg )
     PostTask( TID_RENDERER, NewCefRunnableMethod( engine_.get(), &Engine::CloseEvent, msg ) );
 }
 
-void Client::OnLoadEvents( const std::string& events )
+void Client::OnLoadEvents( const timeline::LoadEvents& msg )
 {
-    PostTask( TID_RENDERER, NewCefRunnableMethod( engine_.get(), &Engine::LoadEvents, events ) );
+    PostTask( TID_RENDERER, NewCefRunnableMethod( engine_.get(), &Engine::LoadEvents, msg ) );
 }
 
 void Client::OnSaveEvents()

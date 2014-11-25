@@ -227,6 +227,14 @@ namespace
         msg.lock = src.lock();
         return msg;
     }
+
+    timeline::LoadEvents GetLoadEvents( const sdk::LoadEvents& src )
+    {
+        timeline::LoadEvents msg( src.data() );
+        msg.markersHost = src.markers_host();
+        msg.isReplay= src.is_replay();
+        return msg;
+    }
 }
 
 T_Msg controls::CreateEvents( const T_Logger& log, const std::vector< Event >& events )
@@ -284,11 +292,14 @@ T_Msg controls::CloseEvent( const T_Logger& log, const timeline::CloseEvent& msg
     return Pack( log, cmd );
 }
 
-T_Msg controls::LoadEvents( const T_Logger& log, const std::string& events )
+T_Msg controls::LoadEvents( const T_Logger& log, const timeline::LoadEvents& events )
 {
     ClientCommand cmd;
     cmd.set_type( sdk::CLIENT_EVENTS_LOAD );
-    cmd.set_data( events );
+    auto loadEvents = cmd.mutable_load_events();
+    loadEvents->set_data( events.data );
+    loadEvents->set_markers_host( events.markersHost );
+    loadEvents->set_is_replay( events.isReplay );
     return Pack( log, cmd );
 }
 
@@ -314,7 +325,7 @@ void controls::ParseClient( ClientHandler_ABC& handler,
         case sdk::CLIENT_EVENT_UPDATE:          return handler.OnUpdateEvent( GetEvent( cmd.events() ) );
         case sdk::CLIENT_EVENT_DELETE:          return handler.OnDeleteEvents( GetEventUuids( cmd.events() ) );
         case sdk::CLIENT_EVENT_CLOSE:           return handler.OnCloseEvent( GetCloseEvent( cmd.close_event() ) );
-        case sdk::CLIENT_EVENTS_LOAD:           return handler.OnLoadEvents( cmd.data() );
+        case sdk::CLIENT_EVENTS_LOAD:           return handler.OnLoadEvents( GetLoadEvents( cmd.load_events() ) );
         case sdk::CLIENT_EVENTS_SAVE:           return handler.OnSaveEvents();
     }
 }
