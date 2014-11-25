@@ -108,7 +108,6 @@ struct TER_PathIndex::Indexes
 TER_PathIndex::TER_PathIndex( const std::vector< geometry::Point2f >& path,
                               geometry::Point2f destination )
     : path_( path )
-    , bestIndex_( 0 )
     , distanceToDest_( std::numeric_limits< float >::infinity() )
     , indexes_( new Indexes() )
 {
@@ -116,15 +115,15 @@ TER_PathIndex::TER_PathIndex( const std::vector< geometry::Point2f >& path,
         throw MASA_EXCEPTION( "invalid empty path" );
     const auto d = DistanceToPathPoints( destination, path );
     distanceToDest_ = d.first;
-    bestIndex_ = d.second;
+    const auto bestIndex = d.second;
 
     distances_.resize( path_.size() );
-    for( size_t i = bestIndex_; i > 0; --i )
+    for( size_t i = bestIndex; i > 0; --i )
     {
         const auto d = path_[i].Distance( path_[i-1] );
         distances_[i-1] = distances_[i] + d;
     }
-    for( size_t i = bestIndex_ + 1; i < path_.size(); ++i )
+    for( size_t i = bestIndex + 1; i < path_.size(); ++i )
     {
         const auto d = path_[i].Distance( path_[i-1] );
         distances_[i] = distances_[i-1] + d;

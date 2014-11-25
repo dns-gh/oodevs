@@ -46,7 +46,6 @@ private:
 private:
     const std::vector< geometry::Point2f > path_;
     std::vector< float > distances_;
-    size_t bestIndex_;
     float distanceToDest_;
     std::unique_ptr< Indexes > indexes_;
 };
