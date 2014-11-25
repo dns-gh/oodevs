@@ -10,7 +10,6 @@
 #include "clients_gui_pch.h"
 #include "AggregateToolbar.h"
 #include "moc_AggregateToolbar.cpp"
-#include "GLMainProxy.h"
 #include "GLOptions.h"
 #include "GLView_ABC.h"
 #include "resources.h"
