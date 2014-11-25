@@ -38,7 +38,6 @@ TacticalLinesLayer::TacticalLinesLayer( kernel::Controllers& controllers,
     , model_       ( model )
     , isLimit_     ( true )
     , isEditing_   ( false )
-    , selected_    ( controllers_ )
 {
     controllers_.Update( *this );
 }
@@ -117,7 +116,6 @@ void TacticalLinesLayer::NotifySelectionChanged( const std::vector< const kernel
         parameters_->Reset();
         isEditing_ = false;
     }
-    selected_ = newSelected;
     gui::EntityLayer< kernel::TacticalLine_ABC >::NotifySelectionChanged( elements );
 }
 

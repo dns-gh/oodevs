@@ -52,15 +52,10 @@ public:
     virtual ~ObjectsLayer();
     //@}
 
+private:
     //! @name Operations
     //@{
     virtual bool HandleKeyPress( QKeyEvent* key );
-    //@}
-
-private:
-    //! @name Helpers
-    //@{
-    virtual void NotifySelectionChanged( const std::vector< const kernel::Object_ABC* >& elements );
     //@}
 
 private:
@@ -69,7 +64,6 @@ private:
     actions::ActionsModel& actionsModel_;
     const StaticModel& static_;
     const kernel::Time_ABC& simulation_;
-    kernel::SafePointer< kernel::Object_ABC > selected_;
     //@}
 };
 

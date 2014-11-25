@@ -121,17 +121,17 @@ protected:
     //! @name Protected member data
     //@{
     const kernel::Profile_ABC& profile_;
-    T_Entities                 entities_;
-    geometry::Rectangle2f      world_;
-    ColorStrategy_ABC&         strategy_;
+    T_Entities entities_;
+    geometry::Rectangle2f world_;
+    ColorStrategy_ABC& strategy_;
+    kernel::SafePointer< kernel::Entity_ABC > selected_;
     //@}
 
 private:
     //! @name Private Member data
     //@{
-    std::unique_ptr< InformationToolTip >     infoTooltip_;
-    kernel::SafePointer< kernel::Entity_ABC > selected_;
-    std::set< unsigned int >                  selection_;
+    std::unique_ptr< InformationToolTip > infoTooltip_;
+    std::set< unsigned int > selection_;
     //@}
 };
 

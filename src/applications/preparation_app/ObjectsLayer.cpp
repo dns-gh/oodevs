@@ -60,7 +60,6 @@ ObjectsLayer::ObjectsLayer( kernel::Controllers& controllers,
                             const kernel::Profile_ABC& profile,
                             gui::TerrainPicker& picker )
     : gui::ObjectsLayer( controllers, view, strategy, profile, picker )
-    , selected_( controllers )
     , dummy_( new QWidget() )
 {
     // NOTHING
@@ -83,7 +82,7 @@ bool ObjectsLayer::HandleKeyPress( QKeyEvent* key )
 {
     if( selected_ && key->key() == Qt::Key_Delete )
     {
-        delete static_cast< const kernel::Object_ABC* >( selected_ );
+        delete selected_;
         return true;
     }
     return false;
@@ -182,16 +181,6 @@ bool ObjectsLayer::HandleLeaveDragEvent( QDragLeaveEvent* /*event*/ )
         return true;
     }
     return false;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ObjectsLayer::NotifySelectionChanged
-// Created: JSR 2012-05-31
-// -----------------------------------------------------------------------------
-void ObjectsLayer::NotifySelectionChanged( const std::vector< const kernel::Object_ABC* >& elements )
-{
-    selected_ = elements.size() == 1 ? elements.front() : 0;
-    gui::ObjectsLayer::NotifySelectionChanged( elements );
 }
 
 // -----------------------------------------------------------------------------

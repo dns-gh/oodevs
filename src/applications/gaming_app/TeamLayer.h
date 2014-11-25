@@ -11,7 +11,6 @@
 #define __TeamLayer_h_
 
 #include "clients_gui/EntityLayer.h"
-#include "clients_kernel/SafePointer.h"
 
 namespace kernel
 {
@@ -64,19 +63,12 @@ public:
     //@}
 
 private:
-    //! @name Helpers
-    //@{
-    virtual void NotifySelectionChanged( const std::vector< const kernel::Team_ABC* >& elements );
-    //@}
-
-private:
     //! @name Member data
     //@{
     actions::ActionsModel& actionsModel_;
     const StaticModel& static_;
     const kernel::Time_ABC& simulation_;
     AgentServerMsgMgr& messageManager_;
-    kernel::SafePointer< kernel::Team_ABC > selected_;
     //@}
 };
 

@@ -16,7 +16,6 @@
 #include "clients_kernel/TacticalLine_ABC.h"
 #include "clients_kernel/LocationVisitor_ABC.h"
 #include "clients_kernel/OptionsObserver_ABC.h"
-#include "clients_kernel/SafePointer.h"
 
 namespace kernel
 {
@@ -99,7 +98,6 @@ protected:
     ModelObserver_ABC& model_;
     bool isLimit_;
     bool isEditing_;
-    kernel::SafePointer< kernel::TacticalLine_ABC > selected_;
     //@}
 };
 

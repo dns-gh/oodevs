@@ -35,7 +35,6 @@ TeamLayer::TeamLayer( kernel::Controllers& controllers,
     , static_( staticModel )
     , simulation_( simulation )
     , messageManager_( messageManager )
-    , selected_( controllers )
 {
     // NOTHING
 }
@@ -91,16 +90,6 @@ bool TeamLayer::HandleMousePress( QMouseEvent* , const geometry::Point2f& )
 bool TeamLayer::HandleMouseMove( QMouseEvent* , const geometry::Point2f& )
 {
     return false;
-}
-
-// -----------------------------------------------------------------------------
-// Name: TeamLayer::NotifySelectionChanged
-// Created: JSR 2012-05-31
-// -----------------------------------------------------------------------------
-void TeamLayer::NotifySelectionChanged( const std::vector< const kernel::Team_ABC* >& elements )
-{
-    selected_ = elements.size() == 1 ? elements.front() : 0;
-    gui::EntityLayer< kernel::Team_ABC >::NotifySelectionChanged( elements );
 }
 
 // -----------------------------------------------------------------------------

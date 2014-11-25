@@ -30,7 +30,6 @@ AgentsLayer::AgentsLayer( kernel::Controllers& controllers,
                           actions::ActionsModel& actionsModel,
                           const kernel::Time_ABC& simulation )
     : gui::EntityLayer< kernel::Agent_ABC >( controllers, view, strategy, profile, eLayerTypes_Agents )
-    , selected_( controllers )
     , actionsModel_( actionsModel )
     , simulation_( simulation )
     , displayDestroyedUnits_( true )
@@ -70,16 +69,6 @@ bool AgentsLayer::HandleDropEvent( QDropEvent* event, const geometry::Point2f& p
         return true;
     }
     return false;
-}
-
-// -----------------------------------------------------------------------------
-// Name: AgentsLayer::NotifySelectionChanged
-// Created: JSR 2013-02-28
-// -----------------------------------------------------------------------------
-void AgentsLayer::NotifySelectionChanged( const std::vector< const kernel::Agent_ABC* >& elements )
-{
-    selected_ = elements.size() == 1 ? elements.front() : 0;
-    gui::EntityLayer< kernel::Agent_ABC >::NotifySelectionChanged( elements );
 }
 
 // -----------------------------------------------------------------------------

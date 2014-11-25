@@ -45,7 +45,6 @@ public:
 private:
     //! @name Helpers
     //@{
-    virtual void NotifySelectionChanged( const std::vector< const kernel::Object_ABC* >& elements );
     virtual bool HandleMousePress( QMouseEvent* event, const geometry::Point2f& point );
     bool IsEligibleForDrag() const;
     //@}
@@ -53,7 +52,6 @@ private:
 private:
     //! @name Member data
     //@{
-    kernel::SafePointer< kernel::Object_ABC > selected_;
     geometry::Point2f draggingPoint_;
     geometry::Point2f oldPosition_;
     std::unique_ptr< QWidget > dummy_;

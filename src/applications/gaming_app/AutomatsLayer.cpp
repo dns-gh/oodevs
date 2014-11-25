@@ -26,7 +26,6 @@ AutomatsLayer::AutomatsLayer( kernel::Controllers& controllers,
                               actions::ActionsModel& actionsModel )
     : gui::AutomatsLayer( controllers, view, strategy, profile )
     , actionsModel_( actionsModel )
-    , selected_    ( controllers )
 {
     // NOTHING
 }
@@ -56,16 +55,6 @@ void AutomatsLayer::Draw( const kernel::Entity_ABC& entity, gui::Viewport_ABC& v
         selected_->Get< MissionParameters >().Draw( position, viewport, view_ );
         selected_->Get< ConvexHulls >().Draw( position, viewport, view_ );
     }
-}
-
-// -----------------------------------------------------------------------------
-// Name: AutomatsLayer::NotifySelectionChanged
-// Created: JSR 2012-05-31
-// -----------------------------------------------------------------------------
-void AutomatsLayer::NotifySelectionChanged( const std::vector< const kernel::Automat_ABC* >& elements )
-{
-    selected_ = elements.size() == 1 ? elements.front() : 0;
-    gui::AutomatsLayer::NotifySelectionChanged( elements );
 }
 
 // -----------------------------------------------------------------------------
