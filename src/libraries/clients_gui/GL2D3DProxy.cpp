@@ -125,14 +125,9 @@ const GLView_ABC& GL2D3DProxy::GetCurrentView() const
     throw MASA_EXCEPTION( "No default view defined" );
 }
 
-GLView_ABC& GL2D3DProxy::GetHoveredView()
+GLView_ABC::T_View GL2D3DProxy::GetHoveredView() const
 {
-    return GetCurrentView();
-}
-
-const GLView_ABC& GL2D3DProxy::GetHoveredView() const
-{
-    return GetCurrentView();
+    return defaultView_;
 }
 
 // -----------------------------------------------------------------------------

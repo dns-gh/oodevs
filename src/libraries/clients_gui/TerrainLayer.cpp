@@ -260,7 +260,10 @@ bool TerrainLayer::HandleMouseMove( QMouseEvent* mouse, const geometry::Point2f&
 // -----------------------------------------------------------------------------
 TerrainData TerrainLayer::Pick( int x, int y )
 {
-    auto currentWidget = glWidgetManager_.GetHoveredWidget()->GetCurrentWidget();
+    auto hoveredWidget = glWidgetManager_.GetHoveredWidget();
+    if( !hoveredWidget )
+        return TerrainData();
+    auto currentWidget = hoveredWidget->GetCurrentWidget();
     if( !pickingEnabled_ || !currentWidget )
         return TerrainData();
     currentWidget->makeCurrent();

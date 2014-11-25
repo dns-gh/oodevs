@@ -258,7 +258,7 @@ namespace
     class RichMenu : public kernel::ContextMenu
     {
     public:
-        explicit RichMenu( GLView_ABC& view )
+        explicit RichMenu( const GLView_ABC::T_View& view )
             : kernel::ContextMenu( 0 )
             , button_( Qt::NoButton )
             , view_( view )
@@ -276,11 +276,12 @@ namespace
         }
         virtual void wheelEvent( QWheelEvent* event )
         {
-            view_.WheelEvent( event );
+            if( view_ )
+                view_->WheelEvent( event );
         }
 
     private:
-        GLView_ABC& view_;
+        GLView_ABC::T_View view_;
         Qt::MouseButton button_;
     };
 

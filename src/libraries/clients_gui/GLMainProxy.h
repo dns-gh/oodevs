@@ -68,6 +68,7 @@ public:
     void AddActiveChangeObserver( QObject* parent, const T_GLObserver& observer );
     void AddCreationObserver( QObject* parent, const T_GLObserver& observer );
     void AddDeletionObserver( QObject* parent, const T_GLObserver& observer );
+    void AddHoveredChangeObserver( QObject* parent, const T_GLObserver& observer );
 
     void ApplyToOptions( const std::function< void( GLOptions& ) >& functor );
     void ApplyToOptions( const std::function< void( const GLOptions& ) >& functor ) const;
@@ -95,8 +96,7 @@ public:
     virtual const GLView_ABC& GetActiveView() const;
     virtual GLView_ABC& GetCurrentView();
     virtual const GLView_ABC& GetCurrentView() const;
-    virtual GLView_ABC& GetHoveredView();
-    virtual const GLView_ABC& GetHoveredView() const;
+    virtual T_View GetHoveredView() const;
 
     virtual void SetActiveView( GLView_ABC& activeView );
     virtual void SetCurrentView( GLView_ABC* view );
@@ -170,6 +170,7 @@ private slots:
     void RemoveActiveChangeObserver( QObject* parent );
     void RemoveCreationObserver( QObject* parent );
     void RemoveDeletionObserver( QObject* parent );
+    void RemoveHoveredChangeObserver( QObject* parent );
 
 private:
     typedef std::map< const char**, unsigned int > T_Icons;
@@ -186,6 +187,7 @@ private:
     T_GLObservers activeChangeObservers_;
     T_GLObservers creationObservers_;
     T_GLObservers deletionObservers_;
+    T_GLObservers hoveredChangeObservers_;
 
     std::unique_ptr< SvglRenderer > renderer_;
     std::unique_ptr< SvglProxy > svgl_;
