@@ -143,34 +143,34 @@ func (t *TestSuite) TestFilters(c *C) {
 
 	f.WaitConnected()
 	f.server.CreateProfile(&sword.Profile{
-		Login:             proto.String("automat_1_only"),
-		ReadOnlyAutomates: swapi.MakeIdList(1),
+		Login:             proto.String("automat_11_only"),
+		ReadOnlyAutomates: swapi.MakeIdList(11),
 		Supervisor:        proto.Bool(false),
 	})
 	f.server.CreateProfile(&sword.Profile{
-		Login:              proto.String("formation_1_only"),
-		ReadOnlyFormations: swapi.MakeIdList(1),
+		Login:              proto.String("formation_21_only"),
+		ReadOnlyFormations: swapi.MakeIdList(21),
 		Supervisor:         proto.Bool(false),
 	})
 	f.server.CreateProfile(&sword.Profile{
-		Login:              proto.String("formation_2_only"),
-		ReadOnlyFormations: swapi.MakeIdList(2),
+		Login:              proto.String("formation_22_only"),
+		ReadOnlyFormations: swapi.MakeIdList(22),
 		Supervisor:         proto.Bool(false),
 	})
 	f.server.CreateProfile(&sword.Profile{
-		Login:           proto.String("party_1_only"),
-		ReadOnlyParties: swapi.MakeIdList(1),
+		Login:           proto.String("party_31_only"),
+		ReadOnlyParties: swapi.MakeIdList(31),
 		Supervisor:      proto.Bool(false),
 	})
 	f.server.CreateProfile(&sword.Profile{
-		Login:          proto.String("crowd_1_only"),
-		ReadOnlyCrowds: swapi.MakeIdList(1),
+		Login:          proto.String("crowd_41_only"),
+		ReadOnlyCrowds: swapi.MakeIdList(41),
 		Supervisor:     proto.Bool(false),
 	})
 	f.server.CreateProfile(&sword.Profile{
-		Login:               proto.String("f1_read_f3_write"),
-		ReadOnlyFormations:  swapi.MakeIdList(1),
-		ReadWriteFormations: swapi.MakeIdList(3),
+		Login:               proto.String("f21_read_f23_write"),
+		ReadOnlyFormations:  swapi.MakeIdList(21),
+		ReadWriteFormations: swapi.MakeIdList(23),
 		Supervisor:          proto.Bool(false),
 	})
 	f.sword.WaitFor(func(d *swapi.ModelData) bool {
@@ -180,59 +180,59 @@ func (t *TestSuite) TestFilters(c *C) {
 	// abuse wait command to create hierarchy
 	// u1 u2 u3 u4 u5
 	// | /  /   /  |
-	// a1 a2  a3   a4
+	// a11 a12 a13 a14
 	// | /    /    |
-	// f1   f3     f4
+	// f21  f23    f24
 	//  \  /       |
-	//   f2        |
+	//   f22       |
 	//   |         |
-	//   p1        p2
+	//   p31       p32
 	//  / \       / \
-	// c1 i1    c2   i2
+	// c41 i51   c42 i52
 	f.sword.WaitFor(func(d *swapi.ModelData) bool {
-		addParty(c, d, 1)
-		addParty(c, d, 2)
-		addFormation(c, d, 2, 1, 0)
-		addFormation(c, d, 1, 0, 2)
-		addFormation(c, d, 3, 0, 2)
-		addFormation(c, d, 4, 2, 0)
-		addAutomat(c, d, 1, 1)
-		addAutomat(c, d, 2, 1)
-		addAutomat(c, d, 3, 3)
-		addAutomat(c, d, 4, 4)
-		addUnit(c, d, 1, 1)
-		addUnit(c, d, 2, 1)
-		addUnit(c, d, 3, 2)
-		addUnit(c, d, 4, 3)
-		addUnit(c, d, 5, 4)
-		addCrowd(c, d, 1, 1)
-		addCrowd(c, d, 2, 2)
-		addPopulation(c, d, 1, 1)
-		addPopulation(c, d, 2, 2)
+		addParty(c, d, 31)
+		addParty(c, d, 32)
+		addFormation(c, d, 22, 31, 0)
+		addFormation(c, d, 21, 0, 22)
+		addFormation(c, d, 23, 0, 22)
+		addFormation(c, d, 24, 32, 0)
+		addAutomat(c, d, 11, 21)
+		addAutomat(c, d, 12, 21)
+		addAutomat(c, d, 13, 23)
+		addAutomat(c, d, 14, 24)
+		addUnit(c, d, 1, 11)
+		addUnit(c, d, 2, 11)
+		addUnit(c, d, 3, 12)
+		addUnit(c, d, 4, 13)
+		addUnit(c, d, 5, 14)
+		addCrowd(c, d, 41, 31)
+		addCrowd(c, d, 42, 32)
+		addPopulation(c, d, 51, 31)
+		addPopulation(c, d, 52, 32)
 		return true
 	})
 	f.addSwordEvent(c, "u1", "some_name", f.getSomeUnitOrder(c, 1, 0)) // event without automat
-	f.addSwordEvent(c, "u2", "some_name", f.getSomeUnitOrder(c, 2, 2))
-	f.addSwordEvent(c, "u3", "some_name", f.getSomeUnitOrder(c, 3, 3))
-	f.addSwordEvent(c, "u4", "some_name", f.getSomeUnitOrder(c, 4, 4))
-	f.addSwordEvent(c, "u5", "some_name", f.getSomeUnitOrder(c, 5, 5))
-	f.addSwordEvent(c, "a1", "some_name", f.getSomeAutomatOrder(c, 1))
-	f.addSwordEvent(c, "a2", "some_name", f.getSomeAutomatOrder(c, 2))
-	f.addSwordEvent(c, "a3", "some_name", f.getSomeAutomatOrder(c, 3))
-	f.addSwordEvent(c, "a4", "some_name", f.getSomeAutomatOrder(c, 4))
-	f.addSwordEvent(c, "f1", "some_name", f.getSomeFragOrder(c, swapi.MakeFormationTasker(1)))
-	f.addSwordEvent(c, "f2", "some_name", f.getSomeFragOrder(c, swapi.MakeFormationTasker(2)))
-	f.addSwordEvent(c, "f3", "some_name", f.getSomeFragOrder(c, swapi.MakeFormationTasker(3)))
-	f.addSwordEvent(c, "f4", "some_name", f.getSomeFragOrder(c, swapi.MakeFormationTasker(4)))
-	f.addSwordEvent(c, "c1", "some_name", f.getSomeCrowdOrder(c, 1))
-	f.addSwordEvent(c, "c2", "some_name", f.getSomeCrowdOrder(c, 2))
-	f.addSwordEvent(c, "i1", "some_name", f.getSomeFragOrder(c, swapi.MakePopulationTasker(1)))
-	f.addSwordEvent(c, "i2", "some_name", f.getSomeFragOrder(c, swapi.MakePopulationTasker(2)))
-	f.addSwordEvent(c, "p1", "some_name", f.getSomeFragOrder(c, swapi.MakePartyTasker(1)))
-	f.addSwordEvent(c, "p2", "some_name", f.getSomeFragOrder(c, swapi.MakePartyTasker(2)))
+	f.addSwordEvent(c, "u2", "some_name", f.getSomeUnitOrder(c, 2, 12))
+	f.addSwordEvent(c, "u3", "some_name", f.getSomeUnitOrder(c, 3, 13))
+	f.addSwordEvent(c, "u4", "some_name", f.getSomeUnitOrder(c, 4, 14))
+	f.addSwordEvent(c, "u5", "some_name", f.getSomeUnitOrder(c, 5, 15))
+	f.addSwordEvent(c, "a11", "some_name", f.getSomeAutomatOrder(c, 11))
+	f.addSwordEvent(c, "a12", "some_name", f.getSomeAutomatOrder(c, 12))
+	f.addSwordEvent(c, "a13", "some_name", f.getSomeAutomatOrder(c, 13))
+	f.addSwordEvent(c, "a14", "some_name", f.getSomeAutomatOrder(c, 14))
+	f.addSwordEvent(c, "f21", "some_name", f.getSomeFragOrder(c, swapi.MakeFormationTasker(21)))
+	f.addSwordEvent(c, "f22", "some_name", f.getSomeFragOrder(c, swapi.MakeFormationTasker(22)))
+	f.addSwordEvent(c, "f23", "some_name", f.getSomeFragOrder(c, swapi.MakeFormationTasker(23)))
+	f.addSwordEvent(c, "f24", "some_name", f.getSomeFragOrder(c, swapi.MakeFormationTasker(24)))
+	f.addSwordEvent(c, "c41", "some_name", f.getSomeCrowdOrder(c, 41))
+	f.addSwordEvent(c, "c42", "some_name", f.getSomeCrowdOrder(c, 42))
+	f.addSwordEvent(c, "i51", "some_name", f.getSomeFragOrder(c, swapi.MakePopulationTasker(51)))
+	f.addSwordEvent(c, "i52", "some_name", f.getSomeFragOrder(c, swapi.MakePopulationTasker(52)))
+	f.addSwordEvent(c, "p31", "some_name", f.getSomeFragOrder(c, swapi.MakePartyTasker(31)))
+	f.addSwordEvent(c, "p32", "some_name", f.getSomeFragOrder(c, swapi.MakePartyTasker(32)))
 	f.addSwordEvent(c, "uf1", "some_name", f.getSomeFragOrder(c, swapi.MakeUnitTasker(1)))
-	f.addSwordEvent(c, "af1", "some_name", f.getSomeFragOrder(c, swapi.MakeAutomatTasker(1)))
-	f.addSwordEvent(c, "cf1", "some_name", f.getSomeFragOrder(c, swapi.MakeCrowdTasker(1)))
+	f.addSwordEvent(c, "af11", "some_name", f.getSomeFragOrder(c, swapi.MakeAutomatTasker(11)))
+	f.addSwordEvent(c, "cf41", "some_name", f.getSomeFragOrder(c, swapi.MakeCrowdTasker(41)))
 	id := uuid.New()
 	_, err := f.controller.CreateEvent(f.session, &sdk.Event{
 		Uuid:  proto.String(id),
@@ -245,35 +245,35 @@ func (t *TestSuite) TestFilters(c *C) {
 
 	// test sword_profile
 	f.applyFilters(c, parseFilters(c,
-		"sword_profile", "automat_1_only",
+		"sword_profile", "automat_11_only",
 	), 5+1)
 	f.applyFilters(c, parseFilters(c,
-		"sword_profile", "formation_1_only",
+		"sword_profile", "formation_21_only",
 	), 8+1)
 	f.applyFilters(c, parseFilters(c,
-		"sword_profile", "formation_2_only",
+		"sword_profile", "formation_22_only",
 	), 12+1)
 	f.applyFilters(c, parseFilters(c,
-		"sword_profile", "party_1_only",
+		"sword_profile", "party_31_only",
 	), 16+1)
 	f.applyFilters(c, parseFilters(c,
-		"sword_profile", "f1_read_f3_write",
+		"sword_profile", "f21_read_f23_write",
 	), 11+1)
 	f.applyFilters(c, parseFilters(c,
-		"sword_profile", "crowd_1_only",
+		"sword_profile", "crowd_41_only",
 	), 2+1)
 
 	// test sword_read_only
 	f.applyFilters(c, parseFilters(c,
-		"sword_profile", "party_1_only",
+		"sword_profile", "party_31_only",
 		"sword_read_only", "false",
 	), 0+1)
 	f.applyFilters(c, parseFilters(c,
-		"sword_profile", "f1_read_f3_write",
+		"sword_profile", "f21_read_f23_write",
 		"sword_read_only", "false",
 	), 3+1)
 	f.applyFilters(c, parseFilters(c,
-		"sword_profile", "f1_read_f3_write",
+		"sword_profile", "f21_read_f23_write",
 		"sword_read_only", "true",
 	), 11+1)
 
@@ -282,22 +282,22 @@ func (t *TestSuite) TestFilters(c *C) {
 		"sword_filter", "u:1,u:2",
 	), 3+1)
 	f.applyFilters(c, parseFilters(c,
-		"sword_filter", "a:1",
+		"sword_filter", "a:11",
 	), 5+1)
 	f.applyFilters(c, parseFilters(c,
-		"sword_filter", "f:3",
+		"sword_filter", "f:23",
 	), 3+1)
 	f.applyFilters(c, parseFilters(c,
-		"sword_filter", "p:2",
+		"sword_filter", "p:32",
 	), 6+1)
 	f.applyFilters(c, parseFilters(c,
-		"sword_filter", "c:1",
+		"sword_filter", "c:41",
 	), 2+1)
 	f.applyFilters(c, parseFilters(c,
-		"sword_filter", "i:1",
+		"sword_filter", "i:51",
 	), 1+1)
 	f.applyFilters(c, parseFilters(c,
-		"sword_filter", "a:1,f:3,p:2,c:1",
+		"sword_filter", "a:11,f:23,p:32,c:41",
 	), 16+1)
 	f.applyFilters(c, parseFilters(c,
 		"sword_filter", "u:0",
@@ -315,7 +315,7 @@ func (t *TestSuite) TestFilters(c *C) {
 	f.applyFilters(c, parseFilters(c,
 		"filter_keyword", " U "), 6)
 	f.applyFilters(c, parseFilters(c,
-		"filter_keyword", "p2"), 1)
+		"filter_keyword", "p32"), 1)
 	f.applyFilters(c, parseFilters(c,
 		"filter_keyword", "u\\d"), 0)
 }
@@ -401,8 +401,8 @@ func (t *TestSuite) TestIncompleteMissionsAreVisibleByAnyProfile(c *C) {
 
 	f.WaitConnected()
 	f.server.CreateProfile(&sword.Profile{
-		Login:           proto.String("party_1_only"),
-		ReadOnlyParties: swapi.MakeIdList(1),
+		Login:           proto.String("party_31_only"),
+		ReadOnlyParties: swapi.MakeIdList(31),
 		Supervisor:      proto.Bool(false),
 	})
 	f.sword.WaitFor(func(d *swapi.ModelData) bool {
@@ -410,18 +410,18 @@ func (t *TestSuite) TestIncompleteMissionsAreVisibleByAnyProfile(c *C) {
 	})
 
 	f.addSwordEvent(c, "u1", "some_name", f.getSomeUnitOrder(c, 0, 0))
-	f.addSwordEvent(c, "a1", "some_name", f.getSomeAutomatOrder(c, 0))
-	f.addSwordEvent(c, "c1", "some_name", f.getSomeCrowdOrder(c, 0))
+	f.addSwordEvent(c, "a11", "some_name", f.getSomeAutomatOrder(c, 0))
+	f.addSwordEvent(c, "c41", "some_name", f.getSomeCrowdOrder(c, 0))
 	f.addSwordEvent(c, "u2", "some_name", f.getSomeFragOrder(c, swapi.MakeUnitTasker(0)))
-	f.addSwordEvent(c, "a2", "some_name", f.getSomeFragOrder(c, swapi.MakeAutomatTasker(0)))
-	f.addSwordEvent(c, "f1", "some_name", f.getSomeFragOrder(c, swapi.MakeFormationTasker(0)))
-	f.addSwordEvent(c, "p1", "some_name", f.getSomeFragOrder(c, swapi.MakePartyTasker(0)))
-	f.addSwordEvent(c, "c2", "some_name", f.getSomeFragOrder(c, swapi.MakeCrowdTasker(0)))
-	f.addSwordEvent(c, "i1", "some_name", f.getSomeFragOrder(c, swapi.MakePopulationTasker(0)))
+	f.addSwordEvent(c, "a12", "some_name", f.getSomeFragOrder(c, swapi.MakeAutomatTasker(0)))
+	f.addSwordEvent(c, "f21", "some_name", f.getSomeFragOrder(c, swapi.MakeFormationTasker(0)))
+	f.addSwordEvent(c, "p31", "some_name", f.getSomeFragOrder(c, swapi.MakePartyTasker(0)))
+	f.addSwordEvent(c, "c42", "some_name", f.getSomeFragOrder(c, swapi.MakeCrowdTasker(0)))
+	f.addSwordEvent(c, "i51", "some_name", f.getSomeFragOrder(c, swapi.MakePopulationTasker(0)))
 
 	f.applyFilters(c, services.EventFilterConfig{}, 9)
 	f.applyFilters(c, parseFilters(c,
-		"sword_profile", "party_1_only",
+		"sword_profile", "party_31_only",
 	), 9)
 }
 
@@ -431,23 +431,23 @@ func (t *TestSuite) TestFiltersOnMagicActions(c *C) {
 
 	f.WaitConnected()
 	f.server.CreateProfile(&sword.Profile{
-		Login:           proto.String("party_1_only"),
-		ReadOnlyParties: swapi.MakeIdList(1),
+		Login:           proto.String("party_31_only"),
+		ReadOnlyParties: swapi.MakeIdList(31),
 		Supervisor:      proto.Bool(false),
 	})
 	f.server.CreateProfile(&sword.Profile{
-		Login:           proto.String("party_2_only"),
-		ReadOnlyParties: swapi.MakeIdList(2),
+		Login:           proto.String("party_32_only"),
+		ReadOnlyParties: swapi.MakeIdList(32),
 		Supervisor:      proto.Bool(false),
 	})
 	f.server.CreateProfile(&sword.Profile{
-		Login:            proto.String("party_1_supervisor"),
-		ReadWriteParties: swapi.MakeIdList(1),
+		Login:            proto.String("party_31_supervisor"),
+		ReadWriteParties: swapi.MakeIdList(31),
 		Supervisor:       proto.Bool(true),
 	})
 	f.server.CreateProfile(&sword.Profile{
 		Login:            proto.String("supervisor"),
-		ReadWriteParties: swapi.MakeIdList(1, 2),
+		ReadWriteParties: swapi.MakeIdList(31, 32),
 		Supervisor:       proto.Bool(true),
 	})
 	f.sword.WaitFor(func(d *swapi.ModelData) bool {
@@ -456,35 +456,35 @@ func (t *TestSuite) TestFiltersOnMagicActions(c *C) {
 
 	// abuse wait command to create hierarchy
 	f.sword.WaitFor(func(d *swapi.ModelData) bool {
-		addParty(c, d, 1)
-		addParty(c, d, 2)
-		addFormation(c, d, 1, 1, 0)
-		addFormation(c, d, 2, 2, 0)
-		addAutomat(c, d, 1, 1)
-		addAutomat(c, d, 2, 2)
-		addUnit(c, d, 1, 1)
-		addUnit(c, d, 2, 2)
-		addCrowd(c, d, 1, 1)
-		addCrowd(c, d, 2, 2)
-		addPopulation(c, d, 1, 1)
-		addPopulation(c, d, 2, 2)
-		addObject(c, d, 1, 1)
-		addObject(c, d, 2, 2)
-		addKnowledgeGroup(c, d, 1, 1)
-		addKnowledgeGroup(c, d, 2, 2)
+		addParty(c, d, 31)
+		addParty(c, d, 32)
+		addFormation(c, d, 21, 31, 0)
+		addFormation(c, d, 22, 32, 0)
+		addAutomat(c, d, 11, 21)
+		addAutomat(c, d, 12, 22)
+		addUnit(c, d, 1, 11)
+		addUnit(c, d, 2, 12)
+		addCrowd(c, d, 41, 31)
+		addCrowd(c, d, 42, 32)
+		addPopulation(c, d, 51, 31)
+		addPopulation(c, d, 52, 32)
+		addObject(c, d, 61, 31)
+		addObject(c, d, 62, 32)
+		addKnowledgeGroup(c, d, 71, 31)
+		addKnowledgeGroup(c, d, 72, 32)
 		return true
 	})
 
 	f.addSwordEvent(c, "ma1", "some_name", f.getSomeMagicAction(c))
 	f.addSwordEvent(c, "uma1", "some_name", f.getSomeUnitMagicAction(c, swapi.MakeUnitTasker(1)))
-	f.addSwordEvent(c, "ama1", "some_name", f.getSomeUnitMagicAction(c, swapi.MakeAutomatTasker(1)))
-	f.addSwordEvent(c, "cma1", "some_name", f.getSomeUnitMagicAction(c, swapi.MakeCrowdTasker(1)))
-	f.addSwordEvent(c, "ima1", "some_name", f.getSomeUnitMagicAction(c, swapi.MakePopulationTasker(1)))
+	f.addSwordEvent(c, "ama11", "some_name", f.getSomeUnitMagicAction(c, swapi.MakeAutomatTasker(11)))
+	f.addSwordEvent(c, "cma41", "some_name", f.getSomeUnitMagicAction(c, swapi.MakeCrowdTasker(41)))
+	f.addSwordEvent(c, "ima51", "some_name", f.getSomeUnitMagicAction(c, swapi.MakePopulationTasker(51)))
 	f.addSwordEvent(c, "cuma1", "some_name", f.getSomeClientUnitMagicAction(c, swapi.MakeUnitTasker(1)))
 	f.addSwordEvent(c, "cuma2", "some_name", f.getSomeClientUnitMagicAction(c, swapi.MakeUnitTasker(2)))
-	f.addSwordEvent(c, "oma1", "some_name", f.getSomeObjectMagicAction(c, 1))
-	f.addSwordEvent(c, "kma1", "some_name", f.getSomeKnowledgeMagicAction(c, 1))
-	f.addSwordEvent(c, "amma1", "some_name", f.getSomeAutomatModeMagicAction(c, 1))
+	f.addSwordEvent(c, "oma61", "some_name", f.getSomeObjectMagicAction(c, 61))
+	f.addSwordEvent(c, "kma71", "some_name", f.getSomeKnowledgeMagicAction(c, 71))
+	f.addSwordEvent(c, "amma11", "some_name", f.getSomeAutomatModeMagicAction(c, 11))
 
 	f.addSwordEvent(c, "i0", "some_name", f.getSomeClientUnitMagicAction(c, swapi.MakeUnitTasker(0)))
 
@@ -492,28 +492,28 @@ func (t *TestSuite) TestFiltersOnMagicActions(c *C) {
 
 	// test sword_profile
 	f.applyFilters(c, parseFilters(c,
-		"sword_profile", "party_1_only",
+		"sword_profile", "party_31_only",
 	), 2+1)
 	f.applyFilters(c, parseFilters(c,
-		"sword_profile", "party_2_only",
+		"sword_profile", "party_32_only",
 	), 1+1)
 	f.applyFilters(c, parseFilters(c,
-		"sword_profile", "party_1_supervisor",
+		"sword_profile", "party_31_supervisor",
 	), 9+1)
 	f.applyFilters(c, parseFilters(c,
 		"sword_profile", "supervisor",
 	), 10+1)
 	// combine profile & read_only
 	f.applyFilters(c, parseFilters(c,
-		"sword_profile", "party_1_only",
+		"sword_profile", "party_31_only",
 		"sword_read_only", "false",
 	), 0+1)
 	f.applyFilters(c, parseFilters(c,
-		"sword_profile", "party_2_only",
+		"sword_profile", "party_32_only",
 		"sword_read_only", "false",
 	), 0+1)
 	f.applyFilters(c, parseFilters(c,
-		"sword_profile", "party_1_supervisor",
+		"sword_profile", "party_31_supervisor",
 		"sword_read_only", "false",
 	), 9+1)
 	f.applyFilters(c, parseFilters(c,
@@ -522,12 +522,12 @@ func (t *TestSuite) TestFiltersOnMagicActions(c *C) {
 	), 10+1)
 	// combine both profile & custom profile
 	f.applyFilters(c, parseFilters(c,
-		"sword_profile", "party_1_supervisor",
-		"sword_filter", "i:1",
-	), 1+2) // ima1 + ma1 + i0
+		"sword_profile", "party_31_supervisor",
+		"sword_filter", "i:51",
+	), 1+2) // ima51 + ma1 + i0
 	f.applyFilters(c, parseFilters(c,
-		"sword_profile", "party_1_only",
-		"sword_filter", "i:1",
+		"sword_profile", "party_31_only",
+		"sword_filter", "i:51",
 	), 0+1) // i0
 }
 
@@ -584,28 +584,28 @@ func (t *TestSuite) TestFiltersMetadata(c *C) {
 
 	f.WaitConnected()
 	f.server.CreateProfile(&sword.Profile{
-		Login:           proto.String("party_1_only"),
-		ReadOnlyParties: swapi.MakeIdList(1),
+		Login:           proto.String("party_31_only"),
+		ReadOnlyParties: swapi.MakeIdList(31),
 		Supervisor:      proto.Bool(false),
 	})
 	f.server.CreateProfile(&sword.Profile{
-		Login:              proto.String("formation_2_only"),
-		ReadOnlyFormations: swapi.MakeIdList(2),
+		Login:              proto.String("formation_22_only"),
+		ReadOnlyFormations: swapi.MakeIdList(22),
 		Supervisor:         proto.Bool(false),
 	})
 	f.server.CreateProfile(&sword.Profile{
-		Login:              proto.String("formation_3_only"),
-		ReadOnlyFormations: swapi.MakeIdList(3),
+		Login:              proto.String("formation_23_only"),
+		ReadOnlyFormations: swapi.MakeIdList(23),
 		Supervisor:         proto.Bool(false),
 	})
 	f.server.CreateProfile(&sword.Profile{
-		Login:             proto.String("automat_4_only"),
-		ReadOnlyAutomates: swapi.MakeIdList(4),
+		Login:             proto.String("automat_14_only"),
+		ReadOnlyAutomates: swapi.MakeIdList(14),
 		Supervisor:        proto.Bool(false),
 	})
 	f.server.CreateProfile(&sword.Profile{
-		Login:          proto.String("crowd_6_only"),
-		ReadOnlyCrowds: swapi.MakeIdList(6),
+		Login:          proto.String("crowd_46_only"),
+		ReadOnlyCrowds: swapi.MakeIdList(46),
 		Supervisor:     proto.Bool(false),
 	})
 	f.sword.WaitFor(func(d *swapi.ModelData) bool {
@@ -613,81 +613,81 @@ func (t *TestSuite) TestFiltersMetadata(c *C) {
 	})
 
 	// abuse wait command to create hierarchy
-	//     p1
+	//    p31
 	//  /  |  \
-	// f2  c6  i7
+	// f22 c46 i57
 	// |
-	// f3
+	// f23
 	// |
-	// a4
+	// a14
 	// |
 	// u5
 	f.sword.WaitFor(func(d *swapi.ModelData) bool {
-		addParty(c, d, 1)
-		addFormation(c, d, 2, 1, 0)
-		addFormation(c, d, 3, 0, 2)
-		addAutomat(c, d, 4, 3)
-		addUnit(c, d, 5, 4)
-		addCrowd(c, d, 6, 1)
-		addPopulation(c, d, 7, 1)
+		addParty(c, d, 31)
+		addFormation(c, d, 22, 31, 0)
+		addFormation(c, d, 23, 0, 22)
+		addAutomat(c, d, 14, 23)
+		addUnit(c, d, 5, 14)
+		addCrowd(c, d, 46, 31)
+		addPopulation(c, d, 57, 31)
 		return true
 	})
 
 	f.addTaskEvent(c, "task_alone", f.begin, f.begin.Add(1*time.Hour), "")
 	f.addTaskEvent(c, "task_invalid_unit", f.begin, f.begin.Add(1*time.Hour), "{\"sword_entity\":0}")
-	f.addTaskEvent(c, "task_p1", f.begin, f.begin.Add(1*time.Hour), "{\"sword_entity\":1}")
-	f.addTaskEvent(c, "task_f2", f.begin, f.begin.Add(1*time.Hour), "{\"sword_entity\":2}")
-	f.addTaskEvent(c, "task_f3", f.begin, f.begin.Add(1*time.Hour), "{\"sword_entity\":3}")
-	f.addTaskEvent(c, "task_a4", f.begin, f.begin.Add(1*time.Hour), "{\"sword_entity\":4}")
+	f.addTaskEvent(c, "task_p31", f.begin, f.begin.Add(1*time.Hour), "{\"sword_entity\":31}")
+	f.addTaskEvent(c, "task_f22", f.begin, f.begin.Add(1*time.Hour), "{\"sword_entity\":22}")
+	f.addTaskEvent(c, "task_f23", f.begin, f.begin.Add(1*time.Hour), "{\"sword_entity\":23}")
+	f.addTaskEvent(c, "task_a14", f.begin, f.begin.Add(1*time.Hour), "{\"sword_entity\":14}")
 	f.addTaskEvent(c, "task_u5", f.begin, f.begin.Add(1*time.Hour), "{\"sword_entity\":5}")
-	f.addTaskEvent(c, "task_c6", f.begin, f.begin.Add(1*time.Hour), "{\"sword_entity\":6}")
-	event := f.addTaskEvent(c, "task_i7", f.begin, f.begin.Add(1*time.Hour), "{\"sword_entity\":7}")
+	f.addTaskEvent(c, "task_c46", f.begin, f.begin.Add(1*time.Hour), "{\"sword_entity\":46}")
+	event := f.addTaskEvent(c, "task_i57", f.begin, f.begin.Add(1*time.Hour), "{\"sword_entity\":57}")
 
 	// ensure we do get all our events
 	f.applyFilters(c, services.EventFilterConfig{}, 9)
 	// test sword_profile
 	f.applyFilters(c, parseFilters(c,
-		"sword_profile", "party_1_only",
+		"sword_profile", "party_31_only",
 	), 7+2)
 	f.applyFilters(c, parseFilters(c,
-		"sword_profile", "formation_2_only",
+		"sword_profile", "formation_22_only",
 	), 4+2)
 	f.applyFilters(c, parseFilters(c,
-		"sword_profile", "formation_3_only",
+		"sword_profile", "formation_23_only",
 	), 3+2)
 	f.applyFilters(c, parseFilters(c,
-		"sword_profile", "automat_4_only",
+		"sword_profile", "automat_14_only",
 	), 2+2)
 	f.applyFilters(c, parseFilters(c,
-		"sword_profile", "crowd_6_only",
+		"sword_profile", "crowd_46_only",
 	), 1+2)
 
 	// test sword_filter
 	f.applyFilters(c, parseFilters(c,
-		"sword_filter", "p:1"), 7+2)
+		"sword_filter", "p:31"), 7+2)
 	f.applyFilters(c, parseFilters(c,
-		"sword_filter", "f:2"), 4+2)
+		"sword_filter", "f:22"), 4+2)
 	f.applyFilters(c, parseFilters(c,
-		"sword_filter", "f:3"), 3+2)
+		"sword_filter", "f:23"), 3+2)
 	f.applyFilters(c, parseFilters(c,
-		"sword_filter", "a:4"), 2+2)
+		"sword_filter", "a:14"), 2+2)
 	f.applyFilters(c, parseFilters(c,
 		"sword_filter", "u:5"), 1+2)
 	f.applyFilters(c, parseFilters(c,
-		"sword_filter", "c:6"), 1+2)
+		"sword_filter", "c:46"), 1+2)
 	f.applyFilters(c, parseFilters(c,
-		"sword_filter", "i:7"), 1+2)
+		"sword_filter", "i:57"), 1+2)
 	f.applyFilters(c, parseFilters(c,
-		"sword_filter", "u:5,i:7,c:6"), 3+2)
+		"sword_filter", "u:5,i:57,c:46"), 3+2)
 
 	// remove event metadata and try again
 	event.Metadata = nil
 	_, err := f.controller.UpdateEvent(f.session, event.GetUuid(), event)
 	c.Assert(err, IsNil)
 	f.applyFilters(c, parseFilters(c,
-		"sword_profile", "automat_4_only",
+		"sword_profile", "automat_14_only",
 	), 2+3)
 	f.applyFilters(c, parseFilters(c,
-		"sword_filter", "a:4",
+		"sword_filter", "a:14",
 	), 2+3)
 }
