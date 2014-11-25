@@ -724,20 +724,20 @@ void GL2DWidget::DrawUnitSymbolAndTail( const std::string& symbol,
                                         const std::string& level,
                                         const T_PointVector& points ) const
 {
-    geometry::Point2f penultimatePoint = points.at( points.size() -2 );
-    geometry::Point2f lastPoint = points.back();
-    float symbolDepth = 240;
+    const geometry::Point2f penultimatePoint = points.at( points.size() - 2 );
+    const geometry::Point2f lastPoint = points.back();
+    static const float symbolDepth = 240;
     geometry::Vector2f directionVector( penultimatePoint, lastPoint );
     directionVector.Normalize();
-    geometry::Vector2f vertical( 0.f, 1.f );
-    float radians = Angle( vertical, directionVector );
+    const geometry::Vector2f vertical( 0.f, 1.f );
+    const float radians = Angle( vertical, directionVector );
     int direction = static_cast< int >( radians * 180 / 3.14f );
     if( direction < 0 )
         direction = 360 + direction;
-    bool mirror = direction > 180;
-    float xFactor = mirror ? -1.f : 1.f;
+    const bool mirror = direction > 180;
+    const float xFactor = mirror ? -1.f : 1.f;
     unsigned int udirection = 360 - static_cast< unsigned int >( direction );
-    geometry::Point2f symbolTail = lastPoint + directionVector * (-symbolDepth/2);
+    const geometry::Point2f symbolTail = lastPoint + directionVector * ( -symbolDepth / 2 );
     DrawApp6SymbolScaledSize( symbol, lastPoint, -1.f, udirection, xFactor, 1 );
     DrawApp6SymbolScaledSize( level, lastPoint, -1.f, udirection, xFactor, 1 );
     T_PointVector arrowPoints( points );
@@ -770,7 +770,6 @@ void GL2DWidget::DrawIcon( const char** xpm,
         return;
     if( size < 0 )
         size = 32 * Pixels();
-
     factor *= GetAdaptiveZoomFactor( unit != GLView_ABC::pixels );
     size *= 0.7f * factor;
     glPushMatrix();
@@ -780,7 +779,7 @@ void GL2DWidget::DrawIcon( const char** xpm,
         glDisable( GL_TEXTURE_GEN_T );
         BindIcon( xpm );
         const geometry::Point2f iconTranslation = iconLayout_->IconLocation( xpm );
-        glTranslatef( where.X() + iconTranslation.X()*factor, where.Y() + iconTranslation.Y()*factor, 0.f );
+        glTranslatef( where.X() + iconTranslation.X() * factor, where.Y() + iconTranslation.Y() * factor, 0.f );
         glScalef( size, size, size );
         DrawBillboardRect();
         glPopMatrix();
