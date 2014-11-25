@@ -64,8 +64,7 @@ void GLSymbols::PrintApp6( const std::string& symbol, const std::string& style, 
         }
     }
     const auto& renderNode = viewport.Width() > 30000 ? node.second : node.first;  // $$$$ AGE 2006-09-11: hardcoded lod
-    if( renderNode )
-        renderer_.Render( renderNode, style, viewport, vWidth, vHeight, pickingMode );
+    renderer_.Render( renderNode, style, viewport, vWidth, vHeight, pickingMode );
 }
 
 // -----------------------------------------------------------------------------
