@@ -528,9 +528,10 @@ class EventsView extends Backbone.View
                         text: xhr.statusText
         return
 
-    load_events: (text) =>
+    load_events: (load) =>
         url = @model.url.replace "/events", "/import"
-        post_ajax url, "", text,
+        url += "?" + $.param markers_host: load.markers_host, replay: load.is_replay 
+        post_ajax url, "", load.data,
             -> gaming.loaded_events code: 200,
             (xhr) ->
                 gaming.loaded_events
