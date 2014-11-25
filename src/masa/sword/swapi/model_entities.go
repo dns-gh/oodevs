@@ -957,8 +957,11 @@ func (model *ModelData) addKnowledgeGroup(group *KnowledgeGroup) bool {
 	if _, ok := model.Parties[group.PartyId]; !ok {
 		return false
 	}
-	// FIXME checking conflicts break replayer tests
+	size := len(model.KnowledgeGroups)
 	model.KnowledgeGroups[group.Id] = group
+	created := size != len(model.KnowledgeGroups)
+	model.notifyCreate(created, KnowledgeGroupCreate, KnowledgeGroupUpdate, group.Id)
+	// FIXME checking conflicts break replayer tests
 	return true
 }
 
@@ -980,7 +983,11 @@ func (model *ModelData) removeKnowledgeGroup(id uint32) bool {
 	}
 	size := len(model.KnowledgeGroups)
 	delete(model.KnowledgeGroups, id)
-	return size != len(model.KnowledgeGroups)
+	deleted := size != len(model.KnowledgeGroups)
+	if deleted {
+		model.listeners.NotifyId(KnowledgeGroupDelete, id)
+	}
+	return deleted
 }
 
 func (model *ModelData) addUnitKnowledge(knowledge *UnitKnowledge) bool {
@@ -1108,13 +1115,19 @@ func (model *ModelData) changeFormationSupplyQuotas(suppliedId uint32, quotas ma
 func (model *ModelData) addObject(object *Object) bool {
 	size := len(model.Objects)
 	model.Objects[object.Id] = object
-	return size != len(model.Objects)
+	created := size != len(model.Objects)
+	model.notifyCreate(created, ObjectCreate, ObjectUpdate, object.Id)
+	return created
 }
 
 func (model *ModelData) removeObject(objectId uint32) bool {
 	size := len(model.Objects)
 	delete(model.Objects, objectId)
-	return size != len(model.Objects)
+	deleted := size != len(model.Objects)
+	if deleted {
+		model.listeners.NotifyId(ObjectDelete, objectId)
+	}
+	return deleted
 }
 
 func (model *ModelData) addFireEffect(effect *FireEffect) bool {
