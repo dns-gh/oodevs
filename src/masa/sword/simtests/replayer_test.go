@@ -214,6 +214,12 @@ func (s *TestSuite) TestReplayerModels(c *C) {
 	step := int32(1)
 	cfg, dumps := getReplayDumps(c, step)
 	c.Assert(len(dumps), Greater, 0)
+	// Fix model dumps:
+	// * hierarchies are complete from the beginning
+	last := dumps[len(dumps)-1]
+	for _, dump := range dumps {
+		dump.model.Hierarchies = last.model.Hierarchies
+	}
 	// TODO: find a way to test all dumps, the replayer refuses to move right
 	// after the last one, possibly because of empty ticks.
 	dumps = dumps[:len(dumps)-1]
