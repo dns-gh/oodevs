@@ -45,13 +45,13 @@ struct Point
     uint32_t x;
     uint32_t y;
 
-    bool operator==( Point other ) const
+    bool operator==( const Point& other ) const
     {
         return x == other.x && y == other.y;
     }
 };
 
-Point MakePoint( geometry::Point2f point )
+Point MakePoint( const geometry::Point2f& point )
 {
     Point p;
     static const float precision = 3.f;
@@ -66,7 +66,7 @@ struct Edge
     Point p1;
     Point p2;
 
-    bool operator==( Edge other ) const
+    bool operator==( const Edge& other ) const
     {
         return p1 == other.p1 && p2 == other.p2;
     }
@@ -85,7 +85,7 @@ Edge MakeEdge( geometry::Point2f p1, geometry::Point2f p2 )
 
 struct EdgeHasher
 {
-    size_t operator()( Edge e ) const
+    size_t operator()( const Edge& e ) const
     {
         size_t h = 0;
         boost::hash_combine( h, e.p1.x );
@@ -137,7 +137,7 @@ TER_PathIndex::~TER_PathIndex()
 {
 }
 
-TER_PathIndex::Distance TER_PathIndex::GetDistanceUsingPath( geometry::Point2f point ) const
+TER_PathIndex::Distance TER_PathIndex::GetDistanceUsingPath( const geometry::Point2f& point ) const
 {
     const auto startToPath = DistanceToPathPoints( point, path_ );
     Distance d;
@@ -147,7 +147,7 @@ TER_PathIndex::Distance TER_PathIndex::GetDistanceUsingPath( geometry::Point2f p
     return d;
 }
 
-bool TER_PathIndex::IsPathEdge( geometry::Point2f p1, geometry::Point2f p2 ) const
+bool TER_PathIndex::IsPathEdge( const geometry::Point2f& p1, const geometry::Point2f& p2 ) const
 {
     return indexes_->edges.count( MakeEdge( p1, p2 ) ) > 0;
 }

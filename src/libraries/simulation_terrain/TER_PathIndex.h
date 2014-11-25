@@ -35,10 +35,10 @@ public:
     // along the path of the closest point on path to point and closest path
     // to destination and distance from closest point to destination and
     // destination.
-    Distance GetDistanceUsingPath( geometry::Point2f point ) const;
+    Distance GetDistanceUsingPath( const geometry::Point2f& point ) const;
 
     // Returns true if [p1, p2] edge belongs to the path.
-    bool IsPathEdge( geometry::Point2f p1, geometry::Point2f p2 ) const;
+    bool IsPathEdge( const geometry::Point2f& p1, const geometry::Point2f& p2 ) const;
 
 private:
     struct Indexes;
