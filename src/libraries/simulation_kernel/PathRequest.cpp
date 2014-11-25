@@ -19,7 +19,6 @@
 #include "protocol/Serialization.h"
 #include "simulation_terrain/TER_Path_ABC.h"
 #include "simulation_terrain/TER_Pathfinder.h"
-
 #include <boost/serialization/optional.hpp>
 
 BOOST_SERIALIZATION_SPLIT_FREE( sword::PathResult );
@@ -132,7 +131,8 @@ bool PathRequest::Update( ActionManager& actions )
     const auto result = future_->Get();
     if( !result )
         return false;
-    result->points = SplitEdgesOnElevationGrid( result->points );
+    if( !request_.disable_split_on_elevation_grid() )
+        result->points = SplitEdgesOnElevationGrid( result->points );
     const bool ok = result->state != TER_Path_ABC::eInvalid &&
         result->state != TER_Path_ABC::eImpossible;
     path_ = sword::PathResult();

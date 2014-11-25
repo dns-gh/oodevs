@@ -9,9 +9,11 @@
 package simtests
 
 import (
+	"code.google.com/p/goprotobuf/proto"
 	. "launchpad.net/gocheck"
 	"masa/sword/swapi"
 	"masa/sword/swapi/phy"
+	"masa/sword/sword"
 	"masa/sword/swrun"
 	"masa/sword/swtest"
 	"math"
@@ -575,18 +577,14 @@ func (s *TestSuite) TestMoveAlongItineraryOnHorseshoe(c *C) {
 		[]int{-24, 1, -1, 32, -3, 25, -4})
 }
 
-func testPathEdgeSplit(c *C, phydb *phy.PhysicalData, exercise string,
-	points int) []swapi.PathPoint {
+func testPathEdgeSplit(c *C, client *swapi.Client, unit *swapi.Unit,
+	from, to swapi.Point, points int, split bool) []swapi.PathPoint {
 
-	opts := NewAdminOpts(exercise)
-	sim, client := connectAndWaitModel(c, opts)
-	defer stopSimAndClient(c, sim, client)
-
-	from := swapi.Point{X: -15.9384, Y: 28.220}
-	to := swapi.Point{X: -15.71, Y: from.Y}
-	unit := CreateCombiVW(c, phydb, client, from)
-
-	path, err := client.UnitPathfindRequest(unit.Id, from, to)
+	rq := sword.PathfindRequest{
+		Unit: swapi.MakeId(unit.Id),
+		DisableSplitOnElevationGrid: proto.Bool(!split),
+	}
+	path, err := client.PathfindRequest(&rq, from, to)
 	c.Assert(err, IsNil)
 	c.Assert(len(path), Equals, points)
 
@@ -598,13 +596,16 @@ func testPathEdgeSplit(c *C, phydb *phy.PhysicalData, exercise string,
 }
 
 func (s *TestSuite) TestPathEdgesSplitOnElevationGrid(c *C) {
+	opts := NewAdminOpts(ExGradXYTestEmpty)
+	sim, client := connectAndWaitModel(c, opts)
+	defer stopSimAndClient(c, sim, client)
+
 	phydb := loadPhysicalData(c, "test")
-	// Two simulations have to be started because edge splitting cannot be
-	// disabled and elevation interpolation or another effect creates slopes
-	// in grad.xy terrain where there should be none. Instead, we use two
-	// exercises, one without elevation and one with and compare the same
-	// itinerary. Additional points should appear on the one where edges
-	// splitting occurs.
-	testPathEdgeSplit(c, phydb, ExCrossroadSmallTest, 15)
-	testPathEdgeSplit(c, phydb, ExGradXYTestEmpty, 18)
+	from := swapi.Point{X: -15.9384, Y: 28.220}
+	to := swapi.Point{X: -15.71, Y: from.Y}
+	unit := CreateCombiVW(c, phydb, client, from)
+
+	testPathEdgeSplit(c, client, unit, from, to, 14, false)
+	// Split path has more points
+	testPathEdgeSplit(c, client, unit, from, to, 18, true)
 }
