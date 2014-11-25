@@ -574,6 +574,25 @@
               <xsl:when test="@id=787">eRC_IEDHeard</xsl:when>
               <xsl:when test="@id=801">eRC_WaitingConditionToExfiltrate</xsl:when>
               <xsl:when test="@id=810">eRC_InFireObject</xsl:when>
+              <xsl:when test="@id=835">eRC_AutonomyDrone</xsl:when>
+              <xsl:when test="@id=836">eRC_OutOfRangeDrone</xsl:when>
+              <xsl:when test="@id=837">eRC_DroneAlreadyLoaded</xsl:when>
+              <xsl:when test="@id=838">eRC_NoLoadingStationAvailable</xsl:when>
+              <xsl:when test="@id=839">eRC_ResupplyInterupted</xsl:when>
+              <xsl:when test="@id=846">eRC_AskForEngineerSupport</xsl:when>
+              <xsl:when test="@id=847">eRC_RecompletementCarburantOK</xsl:when>
+              <xsl:when test="@id=848">eRC_RecompletementCarburantNOK</xsl:when>
+              <xsl:when test="@id=849">eRC_AIRDebutRavitaillement</xsl:when>
+              <xsl:when test="@id=850">eRC_AIRManqueCarburant</xsl:when>
+              <xsl:when test="@id=851">eRC_AIRAvionNonPret</xsl:when>
+              <xsl:when test="@id=852">eRC_AIRManqueCarburantRavitailleur</xsl:when>
+              <xsl:when test="@id=853">eRC_AirIsNotAbleToSupply</xsl:when>
+              <xsl:when test="@id=854">eRC_AirTooLowHeight</xsl:when>
+              <xsl:when test="@id=855">eRC_TooLowOrDeadTarget</xsl:when>
+              <xsl:when test="@id=856">eRC_AIRAbsenceDAeroport</xsl:when>
+              <xsl:when test="@id=858">eRC_PercentLoading</xsl:when>
+              <xsl:when test="@id=859">eRC_AutonomyDroneUseOldFlyPath</xsl:when>
+              <xsl:when test="@id=860">eRC_OutOfRangeDroneUseOldFlyPath</xsl:when>
             </xsl:choose>
           </xsl:attribute>
           <xsl:apply-templates select="node()|@*"/>
