@@ -138,15 +138,12 @@ func getReplayDumps(c *C, step int32) (*simu.SimOpts, []ModelDump) {
 	skip(step)
 
 	unit := CreateUnit(c, client, automat.Id)
-	_ = unit
 	skip(step)
 
 	crowd := CreateCrowdFromParty(c, client, party.Name)
-	_ = crowd
 	skip(step)
 
 	object, err := client.CreateObject("jamming area", party.Id, swapi.MakePointLocation(swapi.Point{X: -15.8193, Y: 28.3456}))
-	_ = object
 	c.Assert(err, IsNil)
 	skip(step)
 
@@ -160,7 +157,6 @@ func getReplayDumps(c *C, step int32) (*simu.SimOpts, []ModelDump) {
 	skip(step)
 
 	kg, err := client.CreateKnowledgeGroup(party.Id, "Standard")
-	_ = kg
 	c.Assert(err, IsNil)
 	skip(step)
 
