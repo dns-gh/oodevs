@@ -267,9 +267,9 @@ func runTests(tests []Test, baseArgs []string, srcDir, exeDir string,
 	running.Wait()
 	close(results)
 
-	reports := []*swtest.TestReport{}
+	successes := []*swtest.TestReport{}
+	failures := []*swtest.TestReport{}
 	otherErrors := []RunResult{}
-	failures := 0
 	configDisplayed := false
 	for result := range results {
 		report := swtest.ProcessReport(result.Output)
@@ -278,17 +278,24 @@ func runTests(tests []Test, baseArgs []string, srcDir, exeDir string,
 			configDisplayed = true
 		}
 		if result.Err != nil {
-			failures += 1
 			// Convoluted way to check exit status != 1 (non-test failure)
 			if err, ok := result.Err.(*exec.ExitError); ok {
 				if s, ok := err.Sys().(syscall.WaitStatus); ok && s.ExitCode != 1 {
 					otherErrors = append(otherErrors, result)
+					continue
 				}
 			}
+			failures = append(failures, report)
+		} else {
+			successes = append(successes, report)
 		}
-		reports = append(reports, report)
 	}
-	for _, report := range reports {
+	for _, report := range successes {
+		for _, output := range report.Sections {
+			fmt.Printf("%s\n", output)
+		}
+	}
+	for _, report := range failures {
 		for _, output := range report.Sections {
 			fmt.Printf("%s\n", output)
 		}
@@ -297,8 +304,9 @@ func runTests(tests []Test, baseArgs []string, srcDir, exeDir string,
 		fmt.Printf("test %s/%s failed: %s:\n%s\n", result.Test.Package,
 			result.Test.Name, result.Err, result.Output)
 	}
-	if failures > 0 {
-		return fmt.Errorf("%d tests failed", failures)
+	errors := len(failures) + len(otherErrors)
+	if errors > 0 {
+		return fmt.Errorf("%d tests failed", errors)
 	}
 	return nil
 }
