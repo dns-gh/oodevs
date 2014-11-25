@@ -21,7 +21,7 @@
 #include "preparation/FormationModel.h"
 #include "preparation/Model.h"
 #include "clients_gui/ExtensionsPanel.h"
-#include "clients_gui/GLView_ABC.h"
+#include "clients_gui/GLMainProxy.h"
 #include "clients_gui/RichDockWidget.h"
 #include "clients_gui/TerrainProfiler.h"
 #include "clients_kernel/Tools.h"
@@ -43,7 +43,7 @@ DockContainer::DockContainer( QMainWindow* parent,
                               const tools::ExerciseConfig& config,
                               gui::SymbolIcons& symbols,
                               gui::ColorStrategy_ABC& colorStrategy,
-                              gui::GLView_ABC& glProxy,
+                              gui::GLMainProxy& glMainProxy,
                               ColorController& colorController,
                               const kernel::Profile_ABC& profile )
     : pCreationPanel_  ( 0 )
@@ -53,7 +53,7 @@ DockContainer::DockContainer( QMainWindow* parent,
     // Agent list panel
     {
         orbatDockWidget_ = new OrbatDockWidget( controllers, parent, "orbat", tools::translate( "DockContainer", "ORBAT" ),
-                                                glProxy, paramLayer, icons, modelBuilder, model, staticModel, symbols );
+                                                glMainProxy, paramLayer, icons, modelBuilder, model, staticModel, symbols, profile );
         orbatDockWidget_->SetModes( eModes_Default | eModes_LivingArea, eModes_None, true );
         parent->addDockWidget( Qt::LeftDockWidgetArea, orbatDockWidget_ );
     }
@@ -62,7 +62,7 @@ DockContainer::DockContainer( QMainWindow* parent,
     {
         gui::RichDockWidget* pPropertiesDockWnd = new gui::RichDockWidget( controllers, parent, "properties", tools::translate( "DockContainer", "Properties" ) );
         pPropertiesDockWnd->SetModes( eModes_Default | eModes_LivingArea, eModes_None, true );
-        PropertiesPanel* propertiesPanel = new PropertiesPanel( pPropertiesDockWnd, controllers, model, staticModel, glProxy, config );
+        PropertiesPanel* propertiesPanel = new PropertiesPanel( pPropertiesDockWnd, controllers, model, staticModel, glMainProxy, config );
         pPropertiesDockWnd->setWidget( propertiesPanel );
         parent->addDockWidget( Qt::RightDockWidgetArea, pPropertiesDockWnd );
     }
@@ -70,7 +70,7 @@ DockContainer::DockContainer( QMainWindow* parent,
     {
         gui::RichDockWidget* pCreationDockWnd = new gui::RichDockWidget( controllers, parent, "creation", tools::translate( "DockContainer", "Creation" ) );
         pCreationDockWnd->SetModes( eModes_Default | eModes_LivingArea | eModes_Terrain );
-        pCreationPanel_ = new CreationPanels( pCreationDockWnd, controllers, staticModel, model, config, symbols, colorStrategy, paramLayer, weatherLayer, glProxy, colorController );
+        pCreationPanel_ = new CreationPanels( pCreationDockWnd, controllers, staticModel, model, config, symbols, colorStrategy, paramLayer, weatherLayer, glMainProxy, colorController );
         pCreationDockWnd->setWidget( pCreationPanel_ );
         parent->addDockWidget( Qt::RightDockWidgetArea, pCreationDockWnd );
     }
@@ -107,7 +107,7 @@ DockContainer::DockContainer( QMainWindow* parent,
     }
     // Living area panel
     {
-        pLivingAreaPanel_ = new LivingAreaPanel( parent, controllers, paramLayer, glProxy );
+        pLivingAreaPanel_ = new LivingAreaPanel( parent, controllers, paramLayer, glMainProxy );
         pLivingAreaPanel_->SetModes( eModes_Default | eModes_Prepare | eModes_Terrain, eModes_LivingArea );
         parent->addDockWidget( Qt::TopDockWidgetArea, pLivingAreaPanel_ );
     }

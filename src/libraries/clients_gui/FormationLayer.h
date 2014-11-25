@@ -11,19 +11,10 @@
 #define __gui_FormationLayer_h_
 
 #include "EntityLayer.h"
-#include "clients_kernel/SafePointer.h"
 #include "clients_kernel/Formation_ABC.h"
-#include <tools/SelectionObserver_ABC.h>
-#include <set>
-
-namespace kernel
-{
-    class Formation_ABC;
-}
 
 namespace gui
 {
-    class ColorStrategy_ABC;
 
 // =============================================================================
 /** @class  FormationLayer
@@ -32,7 +23,6 @@ namespace gui
 // Created: AGE 2007-05-31
 // =============================================================================
 class FormationLayer : public EntityLayer< kernel::Formation_ABC >
-                     , public kernel::ContextMenuObserver_ABC< kernel::Formation_ABC >
 {
     Q_OBJECT
 
@@ -47,32 +37,8 @@ public:
     //@}
 
 protected:
-    //! @name Operations
-    //@{
-    virtual void NotifySelectionChanged( const std::vector< const kernel::Formation_ABC* >& elements );
     virtual void NotifyActivated( const kernel::Formation_ABC& formation );
-    //@}
-
-private slots:
-    //! @name Slots
-    //@{
-    void Aggregate();
-    void Disaggregate();
-    //@}
-
-private:
-    //! @name Operations
-    //@{
-    virtual void NotifyContextMenu( const kernel::Formation_ABC& formation, kernel::ContextMenu& menu );
     virtual void ContextMenu( const kernel::GraphicalEntity_ABC&, const geometry::Point2f&, const QPoint& );
-    //@}
-
-private:
-    //! @name Member data
-    //@{
-    ColorStrategy_ABC& strategy_;
-    kernel::SafePointer< kernel::Formation_ABC > selected_;
-    //@}
 };
 
 } //! namespace gui

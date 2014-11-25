@@ -28,8 +28,6 @@ FormationLayer::FormationLayer( kernel::Controllers& controllers,
                                 ColorStrategy_ABC& strategy,
                                 const kernel::Profile_ABC& profile )
     : EntityLayer< kernel::Formation_ABC >( controllers, view, strategy, profile, eLayerTypes_Formations )
-    , strategy_( strategy )
-    , selected_( controllers )
 {
     // NOTHING
 }
@@ -41,44 +39,6 @@ FormationLayer::FormationLayer( kernel::Controllers& controllers,
 FormationLayer::~FormationLayer()
 {
     // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: FormationLayer::Aggregate
-// Created: LGY 2011-03-03
-// -----------------------------------------------------------------------------
-void FormationLayer::Aggregate()
-{
-    if( selected_ )
-        view_.GetActiveOptions().Aggregate( *selected_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: FormationLayer::Disaggregate
-// Created: LGY 2011-03-03
-// -----------------------------------------------------------------------------
-void FormationLayer::Disaggregate()
-{
-    if( selected_ )
-        view_.GetActiveOptions().Disaggregate( selected_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: FormationLayer::NotifyContextMenu
-// Created: LGY 2011-03-03
-// -----------------------------------------------------------------------------
-void FormationLayer::NotifyContextMenu( const kernel::Formation_ABC& formation, kernel::ContextMenu& menu )
-{
-    if( !profile_.IsVisible( formation ) )
-        return;
-    selected_ = &formation;
-    if( !formation.IsAnAggregatedSubordinate() )
-    {
-        if( !view_.GetActiveOptions().IsAggregated( formation )  )
-            menu.InsertItem( "Interface", tr( "Aggregate" ), this, SLOT( Aggregate() ) );
-        else
-            menu.InsertItem( "Interface", tr( "Disaggregate" ), this, SLOT( Disaggregate() ) );
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -101,14 +61,4 @@ void FormationLayer::ContextMenu( const GraphicalEntity_ABC& selectable, const g
     const Formation_ABC& formation = static_cast< const Formation_ABC& >( entity );
     if( !formation.IsAnAggregatedSubordinate() && view_.GetActiveOptions().IsAggregated( formation ) )
         controllers_.actions_.ContextMenu( this, formation, entity, point, where );
-}
-
-// -----------------------------------------------------------------------------
-// Name: FormationLayer::NotifySelectionChanged
-// Created: JSR 2012-05-31
-// -----------------------------------------------------------------------------
-void FormationLayer::NotifySelectionChanged( const std::vector< const kernel::Formation_ABC* >& elements )
-{
-    EntityLayer< kernel::Formation_ABC >::NotifySelectionChanged( elements );
-    selected_ = elements.size() == 1 ? elements.front() : 0;
 }

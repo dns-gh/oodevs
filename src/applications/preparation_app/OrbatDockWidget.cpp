@@ -38,7 +38,8 @@ OrbatDockWidget::OrbatDockWidget( kernel::Controllers& controllers,
                                   ModelBuilder& modelBuilder,
                                   Model& model,
                                   StaticModel& staticModel,
-                                  gui::SymbolIcons& symbols )
+                                  gui::SymbolIcons& symbols,
+                                  const kernel::Profile_ABC& profile )
     : gui::RichDockWidget( controllers, parent, objectName, windowTitle )
     , pTreeViewPanel_( 0 )
     , expandIcon_  ( qApp->layoutDirection() == Qt::RightToLeft ? ICON_LEFT : ICON_RIGHT )
@@ -49,7 +50,7 @@ OrbatDockWidget::OrbatDockWidget( kernel::Controllers& controllers,
 {
     gui::SubObjectName subObject( "OrbatDockWidget" );
     QGridLayout* toolbarBox = new QGridLayout();
-    gui::AggregateToolbar* aggregateToolbar = new gui::AggregateToolbar( view, *model.formations_, *model.agents_, false );
+    auto aggregateToolbar = new gui::AggregateToolbar( controllers, view, profile, *model.formations_, *model.agents_, false );
     toolbarBox->addLayout( aggregateToolbar, 0, 0, 1, 1, Qt::AlignLeft );
 
     expandButton_ = new gui::RichWidget< QToolButton >( "expandButton" );

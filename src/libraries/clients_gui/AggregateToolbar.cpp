@@ -20,6 +20,7 @@
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/HierarchyLevel_ABC.h"
+#include "clients_kernel/Profile_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Tools.h"
 #include "clients_kernel/ContextMenu.h"
@@ -33,10 +34,9 @@ namespace
     static const std::vector< std::string > LEVELS = boost::assign::list_of( "o" )( "oo" )( "ooo" )
                                                                            ( "i" )( "ii" )( "iii" )
                                                                            ( "x" )( "xx" )( "xxx" )( "xxxx" );
-    bool IsLess( const std::string& level, const std::string& maxLevel )
+    bool IsLess( const std::string& lhs, const std::string& rhs )
     {
-        return std::distance( LEVELS.begin(), std::find( LEVELS.begin(), LEVELS.end(), level ) ) <=
-               std::distance( LEVELS.begin(), std::find( LEVELS.begin(), LEVELS.end(), maxLevel ) );
+        return std::find( LEVELS.begin(), LEVELS.end(), lhs ) <= std::find( LEVELS.begin(), LEVELS.end(), rhs );
     }
 }
 
@@ -44,31 +44,42 @@ namespace
 // Name: AggregateToolbar constructor
 // Created: LGY 2011-10-14
 // -----------------------------------------------------------------------------
-AggregateToolbar::AggregateToolbar( GLView_ABC& view,
+AggregateToolbar::AggregateToolbar( kernel::Controllers& controllers,
+                                    GLView_ABC& view,
+                                    const kernel::Profile_ABC& profile,
                                     const tools::Resolver< kernel::Formation_ABC >& formations,
                                     const tools::Resolver< kernel::Automat_ABC >& automats,
                                     bool showDisplayModes )
     : QHBoxLayout()
+    , controllers_( controllers )
     , view_( view )
+    , profile_( profile )
     , automats_( automats )
     , formations_( formations )
     , displayMenu_( 0 )
+    , selected_( controllers )
 {
     SubObjectName subObject( "AggregateToolbar" );
-    RichWidget< QToolButton >* btn = new RichWidget< QToolButton >( "aggregate" );
+    auto* btn = new RichWidget< QToolButton >( "aggregate" );
     btn->setAutoRaise( true );
     btn->setPopupDelay( 0 );
     btn->setIconSet( MAKE_ICON( aggregate ) );
-    btn->setPopupMode( RichWidget< QToolButton >::MenuButtonPopup );
+    btn->setPopupMode( QToolButton::MenuButtonPopup );
     QToolTip::add( btn, tools::translate( "AggregateToolbar", "Aggregate all automats" ) );
-    connect( btn, SIGNAL( clicked() ), SLOT( Aggregate() ) );
+    connect( btn, SIGNAL( clicked() ), SLOT( AggregateAllAutomat() ) );
     addWidget( btn );
 
-    levelMenu_ = new kernel::ContextMenu( btn );
+    levelMenu_ = new RichWidget< QMenu >( "aggregationLevelMenu", btn );
     for( unsigned int i = 0u; i < LEVELS.size(); ++i )
-        levelMenu_->insertItem( tools::translate( "ENT_Tr", LEVELS[ i ].c_str() ), i );
+        if( auto action = levelMenu_->addAction( tools::translate( "ENT_Tr", LEVELS[ i ].c_str() ) ) )
+        {
+            action->setData( QString::fromStdString( LEVELS[ i ] ) );
+            action->setCheckable( true );
+            action->setChecked( false);
+        }
     btn->setPopup( levelMenu_ );
-    connect( levelMenu_, SIGNAL( activated( int ) ), SLOT( Aggregate( int ) ) );
+    connect( levelMenu_, SIGNAL( aboutToShow() ), SLOT( UpdateLevelMenu() ) );
+    connect( levelMenu_, SIGNAL( triggered( QAction* ) ), SLOT( ToggleAggregationLevel( QAction* ) ) );
 
     btn = new RichWidget< QToolButton >( "disaggregateAll" );
     btn->setAutoRaise( true );
@@ -85,7 +96,7 @@ AggregateToolbar::AggregateToolbar( GLView_ABC& view,
     btn->setToggleButton( true );
     btn->setAutoRaise( true );
     QToolTip::add( btn, tools::translate( "AggregateToolbar", "Lock/Unlock drag-and-drop" ) );
-    connect( btn, SIGNAL( toggled( bool ) ), SLOT( OnLockDragAndDropToggled( bool ) ) );
+    connect( btn, SIGNAL( toggled( bool ) ), SIGNAL( LockDragAndDrop( bool ) ) );
     addWidget( btn );
 
     if( showDisplayModes)
@@ -97,7 +108,7 @@ AggregateToolbar::AggregateToolbar( GLView_ABC& view,
         QToolTip::add( btn, tools::translate( "AggregateToolbar", "Change Orbat display mode" ) );
         addWidget( btn );
 
-        displayMenu_ = new kernel::ContextMenu( btn );
+        displayMenu_ = new RichWidget< QMenu >( "displayMenu", btn );
         displayMenu_->insertItem( tools::translate( "AggregateToolbar", "Observable units (Default)" ), 0 );
         displayMenu_->insertItem( tools::translate( "AggregateToolbar", "Controlled units" ), 1 );
         displayMenu_->insertItem( tools::translate( "AggregateToolbar", "Sides" ), 2 );
@@ -105,6 +116,7 @@ AggregateToolbar::AggregateToolbar( GLView_ABC& view,
         btn->setPopup( displayMenu_ );
         connect( displayMenu_, SIGNAL( activated( int ) ), SLOT( OnChangeDisplay( int ) ) );
     }
+    controllers_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -113,70 +125,157 @@ AggregateToolbar::AggregateToolbar( GLView_ABC& view,
 // -----------------------------------------------------------------------------
 AggregateToolbar::~AggregateToolbar()
 {
-    // NOTHING
+    controllers_.Unregister( *this );
 }
 
-// -----------------------------------------------------------------------------
-// Name: AggregateToolbar::Aggregate
-// Created: LGY 2011-10-14
-// -----------------------------------------------------------------------------
-void AggregateToolbar::Aggregate()
+void AggregateToolbar::UpdateLevelMenu()
+{
+    // An aggregation level is checked if it is the highest level with:
+    //  - All the automats and formations equal or below this level are aggregated
+    //  - There is at least one of such aggregated entity
+    const auto& aggregatedEntities = view_.GetActiveOptions().GetAggregatedEntities();
+    const auto actions = levelMenu_->actions();
+    currentLevel_.clear();
+    for( int i = actions.size() - 1; i >= 0; --i )
+        if( auto action = actions[ i ] )
+        {
+            const auto level = action->data().toString().toStdString();
+            if( currentLevel_.empty() )
+            {
+                bool levelOn = true;
+                bool atLeastOne = false;
+                bool hasChanged = false;
+                automats_.Apply( [&]( const kernel::Automat_ABC& automat )
+                {
+                    auto automatLevel = automat.Get< kernel::TacticalHierarchies >().GetLevel();
+                    if( automatLevel.size() < 7 )
+                        return;
+                    automatLevel = automatLevel.substr( 7, automatLevel.length() );
+                    if( IsLess( automatLevel, level ) )
+                    {
+                        levelOn &= std::find( aggregatedEntities.begin(), aggregatedEntities.end(), &automat ) != aggregatedEntities.end();
+                        atLeastOne |= level == automatLevel;
+                        hasChanged = true;
+                    }
+                } );
+                formations_.Apply( [&]( const kernel::Formation_ABC& formation )
+                {
+                    const auto formationLevel = ENT_Tr::ConvertFromNatureLevel( formation.GetLevel() );
+                    if( IsLess( formationLevel, level ) )
+                    {
+                        levelOn &= std::find( aggregatedEntities.begin(), aggregatedEntities.end(), &formation ) != aggregatedEntities.end();
+                        atLeastOne |= level == formationLevel;
+                        hasChanged = true;
+                    }
+                } );
+                if( !hasChanged || !atLeastOne )
+                    levelOn = false;
+                if( levelOn )
+                    currentLevel_ = level;
+            }
+            action->setChecked( currentLevel_ == level );
+        }
+}
+
+void AggregateToolbar::AggregateAllAutomat()
 {
     auto& options = view_.GetActiveOptions();
+    options.Disaggregate();
     automats_.Apply( [&]( const kernel::Automat_ABC& automat ) {
         options.Aggregate( automat );
     } );
 }
 
-// -----------------------------------------------------------------------------
-// Name: AggregateToolbar::DisaggregateAll
-// Created: LGY 2011-10-14
-// -----------------------------------------------------------------------------
 void AggregateToolbar::DisaggregateAll()
 {
     view_.GetActiveOptions().Disaggregate();
-    for( unsigned int i = 0u; i < LEVELS.size(); ++i )
-        levelMenu_->setItemChecked( i, false );
 }
 
-
-// -----------------------------------------------------------------------------
-// Name: AggregateToolbar::Aggregate
-// Created: LGY 2011-10-14
-// -----------------------------------------------------------------------------
-void AggregateToolbar::Aggregate( int id )
+void AggregateToolbar::ToggleAggregationLevel( QAction* action )
 {
-    const auto& level = LEVELS[ id ];
-    levelMenu_->setItemChecked( id, true );
+    if( !action )
+        return;
+    DisaggregateLevel( currentLevel_ );
+    if( action->isChecked() )
+        AggregateLevel( action->data().toString().toStdString() );
+}
+
+void AggregateToolbar::AggregateLevel( const std::string& level )
+{
+    if( level.empty() )
+        return;
     auto& options = view_.GetActiveOptions();
-    formations_.Apply( [&]( const kernel::Formation_ABC& formation ) {
+    formations_.Apply( [&]( const kernel::Formation_ABC& formation )
+    {
         if( IsLess( ENT_Tr::ConvertFromNatureLevel( formation.GetLevel() ), level ) )
             options.Aggregate( formation );
     } );
-    automats_.Apply( [&]( const kernel::Automat_ABC& automat ) {
+    automats_.Apply( [&]( const kernel::Automat_ABC& automat )
+    {
         const auto automatLevel = automat.Get< kernel::TacticalHierarchies >().GetLevel();
         if( automatLevel.size() >= 7 && IsLess( automatLevel.substr( 7, automatLevel.length() ), level ) )
             options.Aggregate( automat );
     } );
 }
 
-// -----------------------------------------------------------------------------
-// Name: AggregateToolbar::OnLockDragAndDropToggled
-// Created: JSR 2012-06-28
-// -----------------------------------------------------------------------------
-void AggregateToolbar::OnLockDragAndDropToggled( bool toggled )
+void AggregateToolbar::DisaggregateLevel( const std::string& level )
 {
-    emit LockDragAndDrop( toggled );
+    if( level.empty() )
+        return;
+    auto& options = view_.GetActiveOptions();
+    formations_.Apply( [&]( const kernel::Formation_ABC& formation )
+    {
+        if( IsLess( ENT_Tr::ConvertFromNatureLevel( formation.GetLevel() ), level ) )
+            options.Disaggregate( &formation );
+    } );
+    automats_.Apply( [&]( const kernel::Automat_ABC& automat )
+    {
+        const auto automatLevel = automat.Get< kernel::TacticalHierarchies >().GetLevel();
+        if( automatLevel.size() >= 7 && IsLess( automatLevel.substr( 7, automatLevel.length() ), level ) )
+            options.Disaggregate( &automat );
+    } );
 }
 
-// -----------------------------------------------------------------------------
-// Name: AggregateToolbar::OnChangeDisplay
-// Created: JSR 2013-01-18
-// -----------------------------------------------------------------------------
 void AggregateToolbar::OnChangeDisplay( int id )
 {
     emit ChangeDisplay( id );
     displayMenu_->setItemChecked( 0, 0 == id );
     displayMenu_->setItemChecked( 1, 1 == id );
     displayMenu_->setItemChecked( 2, 2 == id );
+}
+
+void AggregateToolbar::Aggregate()
+{
+    if( selected_ )
+        view_.GetActiveOptions().Aggregate( *selected_ );
+}
+
+void AggregateToolbar::Disaggregate()
+{
+    if( selected_ )
+        view_.GetActiveOptions().Disaggregate( selected_ );
+}
+
+void AggregateToolbar::NotifyContextMenu( const kernel::Formation_ABC& formation, kernel::ContextMenu& menu )
+{
+    OnContextMenu( formation, menu );
+}
+
+void AggregateToolbar::NotifyContextMenu( const kernel::Automat_ABC& automat, kernel::ContextMenu& menu )
+{
+    OnContextMenu( automat, menu );
+}
+
+void AggregateToolbar::OnContextMenu( const kernel::Entity_ABC& entity, kernel::ContextMenu& menu )
+{
+    if( !profile_.IsVisible( entity ) )
+        return;
+    selected_ = &entity;
+    if( !entity.IsAnAggregatedSubordinate() )
+    {
+        if( !view_.GetActiveOptions().IsAggregated( entity ) )
+            menu.InsertItem( "Interface", tr( "Aggregate" ), this, SLOT( Aggregate() ) );
+        else
+            menu.InsertItem( "Interface", tr( "Disaggregate" ), this, SLOT( Disaggregate() ) );
+    }
 }

@@ -66,7 +66,6 @@ class LoggerProxy;
 class Simulation;
 class SimulationController;
 class ColorController;
-class OrbatDockWidget;
 class ProfileFilter;
 class DockContainer;
 class IndicatorPlotFactory;

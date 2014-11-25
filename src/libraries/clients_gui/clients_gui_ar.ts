@@ -490,6 +490,17 @@
     </message>
 </context>
 <context>
+    <name>gui::AggregateToolbar</name>
+    <message>
+        <source>Aggregate</source>
+        <translation type="unfinished">المجمعة</translation>
+    </message>
+    <message>
+        <source>Disaggregate</source>
+        <translation type="unfinished">تفصيل</translation>
+    </message>
+</context>
+<context>
     <name>gui::AltitudeModifierPrototype_ABC</name>
     <message>
         <source>Altitude modifier</source>
@@ -498,17 +509,6 @@
     <message>
         <source>Height:</source>
         <translation type="unfinished">الارتفاع:</translation>
-    </message>
-</context>
-<context>
-    <name>gui::AutomatsLayer</name>
-    <message>
-        <source>Aggregate</source>
-        <translation type="unfinished">المجمعة</translation>
-    </message>
-    <message>
-        <source>Disaggregate</source>
-        <translation type="unfinished">تفصيل</translation>
     </message>
 </context>
 <context>
@@ -973,17 +973,6 @@ Please check access permissions or write protection.</source>
     <message>
         <source>Flood</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>gui::FormationLayer</name>
-    <message>
-        <source>Aggregate</source>
-        <translation type="unfinished">المجمعة</translation>
-    </message>
-    <message>
-        <source>Disaggregate</source>
-        <translation type="unfinished">تفصيل</translation>
     </message>
 </context>
 <context>

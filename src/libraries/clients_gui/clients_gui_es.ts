@@ -492,6 +492,17 @@
     </message>
 </context>
 <context>
+    <name>gui::AggregateToolbar</name>
+    <message>
+        <source>Aggregate</source>
+        <translation type="unfinished">Agregar</translation>
+    </message>
+    <message>
+        <source>Disaggregate</source>
+        <translation type="unfinished">Desagregar</translation>
+    </message>
+</context>
+<context>
     <name>gui::AltitudeModifierPrototype_ABC</name>
     <message>
         <source>Altitude modifier</source>
@@ -500,17 +511,6 @@
     <message>
         <source>Height:</source>
         <translation>Altura:</translation>
-    </message>
-</context>
-<context>
-    <name>gui::AutomatsLayer</name>
-    <message>
-        <source>Aggregate</source>
-        <translation>Agregar</translation>
-    </message>
-    <message>
-        <source>Disaggregate</source>
-        <translation>Desagregar</translation>
     </message>
 </context>
 <context>
@@ -976,17 +976,6 @@ Porfavor revisar permisos de acceso o proteccion de escritura.</translation>
     <message>
         <source>Flood</source>
         <translation>Inundación</translation>
-    </message>
-</context>
-<context>
-    <name>gui::FormationLayer</name>
-    <message>
-        <source>Aggregate</source>
-        <translation>Agregar</translation>
-    </message>
-    <message>
-        <source>Disaggregate</source>
-        <translation>Desagregar</translation>
     </message>
 </context>
 <context>

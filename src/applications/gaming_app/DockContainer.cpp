@@ -41,7 +41,7 @@
 #include "ENT/ENT_Enums.h"
 #include "clients_gui/DisplayExtractor.h"
 #include "clients_gui/EventPresenter.h"
-#include "clients_gui/GLView_ABC.h"
+#include "clients_gui/GLMainProxy.h"
 #include "clients_gui/Logger.h"
 #include "clients_gui/TerrainProfiler.h"
 #include "clients_gui/RichItemFactory.h"
@@ -69,7 +69,7 @@ DockContainer::DockContainer( QMainWindow* parent,
                               const std::shared_ptr< gui::ParametersLayer >& paramLayer,
                               const std::shared_ptr< gui::TerrainProfilerLayer >& profilerLayer,
                               const std::shared_ptr< ::WeatherLayer >& weatherLayer,
-                              gui::GLView_ABC& view,
+                              gui::GLMainProxy& glMainProxy,
                               gui::GLWidgetManager& glWidgetManager,
                               gui::RichItemFactory& factory,
                               gui::ColorStrategy_ABC& colorStrategy,
@@ -121,20 +121,20 @@ DockContainer::DockContainer( QMainWindow* parent,
     }
     // Properties
     {
-        Properties* properties = new Properties( parent, controllers, view );
+        Properties* properties = new Properties( parent, controllers, glMainProxy );
         properties->SetModes( eModes_Default );
         parent->addDockWidget( Qt::LeftDockWidgetArea, properties );
     }
     // Event panel
     {
-        eventDockWidget_ = new EventDockWidget( parent, controllers, model, config, simulation, *interfaceBuilder_, profile, view, entitySymbols );
+        eventDockWidget_ = new EventDockWidget( parent, controllers, model, config, simulation, *interfaceBuilder_, profile, glMainProxy, entitySymbols );
         eventDockWidget_->SetModes( eModes_Default );
         eventDockWidget_->SetMenuVisibility( false );
         parent->addDockWidget( Qt::LeftDockWidgetArea, eventDockWidget_ );
     }
     // Orbat panel
     {
-        orbatDockWidget_ = new OrbatDockWidget( controllers, parent, "orbat", profile, view, paramLayer,
+        orbatDockWidget_ = new OrbatDockWidget( controllers, parent, "orbat", profile, glMainProxy, paramLayer,
                                                 model, staticModel, simulation, entitySymbols, drawingsBuilder );
         orbatDockWidget_->SetModes( eModes_Default, eModes_None, true );
         parent->addDockWidget( Qt::LeftDockWidgetArea, orbatDockWidget_ );
@@ -156,7 +156,7 @@ DockContainer::DockContainer( QMainWindow* parent,
     // -----------------------------------------------------------------------------
     // Creation panel
     {
-        creationPanel_ = new CreationPanels( parent, controllers, staticModel, model, simulation, paramLayer, weatherLayer, view, symbolIcons, colorStrategy, config );
+        creationPanel_ = new CreationPanels( parent, controllers, staticModel, model, simulation, paramLayer, weatherLayer, glMainProxy, symbolIcons, colorStrategy, config );
         creationPanel_->SetModes( eModes_Default );
         parent->addDockWidget( Qt::RightDockWidgetArea, creationPanel_ );
     }

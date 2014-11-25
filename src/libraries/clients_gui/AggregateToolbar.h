@@ -10,6 +10,8 @@
 #ifndef gui_AggregateToolbar_h
 #define gui_AggregateToolbar_h
 
+#include "clients_kernel/ContextMenuObserver_ABC.h"
+#include "clients_kernel/SafePointer.h"
 #include <tools/Resolver.h>
 #include <vector>
 
@@ -17,8 +19,10 @@ namespace kernel
 {
     class Automat_ABC;
     class Formation_ABC;
-    class Controller;
+    class Entity_ABC;
+    class Controllers;
     class ContextMenu;
+    class Profile_ABC;
 }
 
 namespace gui
@@ -32,13 +36,18 @@ namespace gui
 // Created: LGY 2011-10-14
 // =============================================================================
 class AggregateToolbar : public QHBoxLayout
+                       , public tools::Observer_ABC
+                       , public kernel::ContextMenuObserver_ABC< kernel::Automat_ABC >
+                       , public kernel::ContextMenuObserver_ABC< kernel::Formation_ABC >
 {
     Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
     //@{
-             AggregateToolbar( GLView_ABC& view,
+             AggregateToolbar( kernel::Controllers& controllers,
+                               GLView_ABC& view,
+                               const kernel::Profile_ABC& profile,
                                const tools::Resolver< kernel::Formation_ABC >& formations,
                                const tools::Resolver< kernel::Automat_ABC >& automats,
                                bool showDisplayModes );
@@ -53,20 +62,34 @@ private slots:
     //! @name Slots
     //@{
     void Aggregate();
+    void Disaggregate();
+    void AggregateAllAutomat();
     void DisaggregateAll();
-    void Aggregate( int id );
-    void OnLockDragAndDropToggled( bool toggled );
+    void ToggleAggregationLevel( QAction* action );
     void OnChangeDisplay( int id );
+    void UpdateLevelMenu();
     //@}
+
+private:
+    virtual void NotifyContextMenu( const kernel::Automat_ABC&, kernel::ContextMenu& );
+    virtual void NotifyContextMenu( const kernel::Formation_ABC&, kernel::ContextMenu& );
+    void OnContextMenu( const kernel::Entity_ABC&, kernel::ContextMenu& );
+    void AggregateLevel( const std::string& level );
+    void DisaggregateLevel( const std::string& level );
 
 private:
     //! @name Member data
     //@{
+    kernel::Controllers& controllers_;
     GLView_ABC& view_;
+    const kernel::Profile_ABC& profile_;
     const tools::Resolver< kernel::Formation_ABC >& formations_;
     const tools::Resolver< kernel::Automat_ABC >& automats_;
-    kernel::ContextMenu* levelMenu_;
-    kernel::ContextMenu* displayMenu_;
+    kernel::SafePointer< kernel::Entity_ABC > selected_;
+    std::string currentLevel_;
+    QMenu* levelMenu_;
+    QMenu* displayMenu_;
+    bool modelLoaded_;
     //@}
 };
 

@@ -291,11 +291,8 @@ void Menu::mousePressEvent( QMouseEvent* event )
 {
     if( windowMenu_ )
         delete windowMenu_;
-    //if( controllers_.GetCurrentMode() > eModes_Default )
-    //{
-        windowMenu_ = tools::CreateWindowMenu( controllers_, mainWindow_, glWidgetManager_ );
-        insertMenu( helpMenuAction_, windowMenu_ );
-    //}
+    windowMenu_ = tools::CreateWindowMenu( controllers_, mainWindow_, glWidgetManager_ );
+    insertMenu( helpMenuAction_, windowMenu_ );
     if( event )
         QMenuBar::mousePressEvent( event );
 }

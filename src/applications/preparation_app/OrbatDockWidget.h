@@ -15,6 +15,7 @@
 namespace kernel
 {
     class Controllers;
+    class Profile_ABC;
 }
 
 namespace gui
@@ -55,7 +56,8 @@ public:
                               ModelBuilder& modelBuilder,
                               Model& model,
                               StaticModel& staticModel,
-                              gui::SymbolIcons& symbols );
+                              gui::SymbolIcons& symbols,
+                              const kernel::Profile_ABC& profile );
     virtual ~OrbatDockWidget();
     //@}
 
