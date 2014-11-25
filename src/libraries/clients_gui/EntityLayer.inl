@@ -79,8 +79,7 @@ void EntityLayer< ConcreteEntity >::NotifyActivated( const ConcreteEntity& entit
 template< typename ConcreteEntity >
 void EntityLayer< ConcreteEntity >::NotifySelectionChanged( const std::vector< const ConcreteEntity* >& elements )
 {
-    if( elements.size() >= 1 )
-        SelectEntity( *elements.front() );
+    SelectEntity( elements.size() >= 1 ? elements.front() : 0 );
 }
 
 // -----------------------------------------------------------------------------
@@ -131,7 +130,7 @@ void EntityLayer< ConcreteEntity >::FillContextMenu( unsigned int id, kernel::Co
 template< typename ConcreteEntity >
 bool EntityLayer< ConcreteEntity >::IsIn( const kernel::GraphicalEntity_ABC& selectable ) const
 {
-    return dynamic_cast< const ConcreteEntity* >( &selectable ) != 0;
+    return std::find( entities_.begin(), entities_.end(), &selectable ) != entities_.end();
 }
 
 }

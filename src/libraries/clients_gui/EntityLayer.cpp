@@ -70,19 +70,17 @@ void EntityLayerBase::Initialize( const geometry::Rectangle2f& extent )
 void EntityLayerBase::Paint( Viewport_ABC& viewport )
 {
     strategy_.SetAlpha( GetAlpha() );
-    bool pickingMode = view_.GetPickingSelector().IsPickingMode();
+    const bool pickingMode = view_.GetPickingSelector().IsPickingMode();
 
-    // Draw the entities
+    // Draw not selected and not highlighted entities
     for( auto it = entities_.begin(); it != entities_.end(); ++it )
-        if( *it != &*selected_ && !(*it)->IsHighlighted() )
+        if( *it != selected_ && !( *it )->IsHighlighted() )
             Draw( **it, viewport, pickingMode );
-    // Draw the highlighted entities
+    // Then draw not selected and highlighted entities
     for( auto it = entities_.begin(); it != entities_.end(); ++it )
-        if( *it != &*selected_ && (*it)->IsHighlighted() )
+        if( *it != selected_ && ( *it )->IsHighlighted() )
             Draw( **it, viewport, pickingMode );
-    // Draw the selected entity
-    if( selected_ )
-        Draw( *selected_, viewport, pickingMode );
+    // Finaly, selected entity will be drawn by SelectionLayer
 
     if( !pickingMode )
         infoTooltip_->Draw();
@@ -263,10 +261,9 @@ void EntityLayerBase::ActivateEntity( const Entity_ABC& entity )
 // Name: EntityLayerBase::SelectEntity
 // Created: AGE 2006-06-19
 // -----------------------------------------------------------------------------
-void EntityLayerBase::SelectEntity( const Entity_ABC& entity )
+void EntityLayerBase::SelectEntity( const Entity_ABC* entity )
 {
-    if( std::find( entities_.begin(), entities_.end(), &entity ) != entities_.end() )
-        selected_ = &entity;
+    selected_ = std::find( entities_.begin(), entities_.end(), entity ) != entities_.end() ? entity : nullptr;
 }
 
 // -----------------------------------------------------------------------------

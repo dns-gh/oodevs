@@ -1046,6 +1046,10 @@
         <source>Rectangle selection</source>
         <translation>Selection rectangulaire</translation>
     </message>
+    <message>
+        <source>Selection</source>
+        <translation>Selection</translation>
+    </message>
 </context>
 <context>
     <name>LocationCategory</name>

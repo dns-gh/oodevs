@@ -488,6 +488,7 @@ T_ConverterLayerTypes LayerTypesConverter_[] =
     T_ConverterLayerTypes( "raster_dynamic",           QT_TRANSLATE_NOOP( "ENT_Tr", "User layer [%1]" ),             eLayerTypes_RasterDynamic ),
     T_ConverterLayerTypes( "rectangle_selection",      QT_TRANSLATE_NOOP( "ENT_Tr", "Rectangle selection" ),         eLayerTypes_RectangleSelection ),
     T_ConverterLayerTypes( "resource_network",         QT_TRANSLATE_NOOP( "ENT_Tr", "Resource networks" ),           eLayerTypes_ResourceNetworks ),
+    T_ConverterLayerTypes( "selection",                QT_TRANSLATE_NOOP( "ENT_Tr", "Selection" ),                   eLayerTypes_Selection ),
     T_ConverterLayerTypes( "tactical_lines",           QT_TRANSLATE_NOOP( "ENT_Tr", "Tactical lines" ),              eLayerTypes_TacticalLines ),
     T_ConverterLayerTypes( "tactical_lines_composite", QT_TRANSLATE_NOOP( "ENT_Tr", "Tactical lines and drawings" ), eLayerTypes_TacticalLinesComposite ),
     T_ConverterLayerTypes( "terrain",                  QT_TRANSLATE_NOOP( "ENT_Tr", "Terrain" ),                     eLayerTypes_Terrain ),

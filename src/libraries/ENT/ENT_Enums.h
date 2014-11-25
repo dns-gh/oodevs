@@ -48,6 +48,7 @@ enum E_LayerTypes
     eLayerTypes_RasterDynamic,
     eLayerTypes_RectangleSelection,
     eLayerTypes_ResourceNetworks,
+    eLayerTypes_Selection,
     eLayerTypes_TacticalLines,
     eLayerTypes_TacticalLinesComposite,
     eLayerTypes_Terrain,

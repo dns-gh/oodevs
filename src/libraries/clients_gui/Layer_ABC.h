@@ -21,6 +21,11 @@
 
 class ViewFrustum;
 
+namespace kernel
+{
+    class Entity_ABC;
+}
+
 namespace gui
 {
     class Viewport_ABC;
@@ -56,6 +61,7 @@ public:
     virtual void Paint( const ViewFrustum& frustum ) = 0;
     virtual void Paint( Viewport_ABC& viewport ) = 0;
     using MapLayer_ABC::Paint;
+    virtual void Draw( const kernel::Entity_ABC& entity, Viewport_ABC& viewport, bool pickingMode ) = 0;
 
     virtual E_LayerTypes GetType() const = 0;
     virtual void SetAlpha( float ) = 0;

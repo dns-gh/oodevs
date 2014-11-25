@@ -87,7 +87,7 @@ protected:
     virtual void AddEntity( const kernel::Entity_ABC& );
     virtual bool RemoveEntity( const kernel::Entity_ABC& );
     virtual void ActivateEntity( const kernel::Entity_ABC& );
-    virtual void SelectEntity( const kernel::Entity_ABC& );
+    virtual void SelectEntity( const kernel::Entity_ABC* );
 
     virtual void SelectColor( const kernel::Entity_ABC& );
     virtual bool ShouldDisplay( const kernel::Entity_ABC& );

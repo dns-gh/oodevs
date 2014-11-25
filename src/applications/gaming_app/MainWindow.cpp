@@ -115,6 +115,7 @@
 #include "clients_gui/ResourceNetworksLayer.h"
 #include "clients_gui/RichItemFactory.h"
 #include "clients_gui/SelectionColorModifier.h"
+#include "clients_gui/SelectionLayer.h"
 #include "clients_gui/SelectionMenu.h"
 #include "clients_gui/SignalAdapter.h"
 #include "clients_gui/SoundPanel.h"
@@ -377,6 +378,7 @@ void MainWindow::CreateLayers( const std::shared_ptr< gui::ParametersLayer >& pa
     layers[ eLayerTypes_Pathfinds ]              = std::make_shared< PathfindLayer >( controllers_, *glProxy_, *strategy_, profile_, model_, *drawingsBuilder_ );
     layers[ eLayerTypes_Raster ]                 = std::make_shared< gui::RasterLayer >( controllers_, *glProxy_ );
     layers[ eLayerTypes_ResourceNetworks ]       = std::make_shared< gui::ResourceNetworksLayer >( controllers_, *glProxy_, *strategy_, profile_ );
+    layers[ eLayerTypes_Selection ]              = std::make_shared< gui::SelectionLayer >( controllers_, *glProxy_, *strategy_ );
     layers[ eLayerTypes_TacticalLines ]          = std::make_shared< LimitsLayer >( controllers_, *glProxy_, *strategy_, parameters, model_.tacticalLineFactory_, profile_, *drawingsBuilder_ );
     layers[ eLayerTypes_Terrain ]                = std::make_shared< gui::TerrainLayer >( controllers_, *glWidgetManager_, *glProxy_, picker );
     layers[ eLayerTypes_TerrainProfiler ]        = profiler;

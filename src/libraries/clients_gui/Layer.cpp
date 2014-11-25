@@ -77,6 +77,11 @@ void Layer::Paint( Viewport_ABC& )
     // NOTHING
 }
 
+void Layer::Draw( const kernel::Entity_ABC&, Viewport_ABC&, bool )
+{
+    throw MASA_EXCEPTION_NOT_IMPLEMENTED;
+}
+
 // -----------------------------------------------------------------------------
 // Name: Layer::SetAlpha
 // Created: AGE 2007-02-23
