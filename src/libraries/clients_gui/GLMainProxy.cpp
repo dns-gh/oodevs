@@ -65,11 +65,12 @@ GLMainProxy::~GLMainProxy()
 // -----------------------------------------------------------------------------
 // MainProxy operations
 // -----------------------------------------------------------------------------
-void GLMainProxy::Load( const DrawingTypes& drawingTypes )
+void GLMainProxy::Load( const DrawingTypes& drawingTypes, const tools::ExerciseConfig& config )
 {
     renderer_.reset( new SvglRenderer() );
     svgl_.reset( new SvglProxy( *renderer_ ) );
     symbols_.reset( new GLSymbols( *renderer_ ) );
+    symbols_->Load( config );
     graphics_.reset( new TacticalGraphics( drawingTypes  ) );
     pickingSelector_.reset( new PickingSelector() );
     contourLinesObserver_.reset( new ContourLinesObserver() );

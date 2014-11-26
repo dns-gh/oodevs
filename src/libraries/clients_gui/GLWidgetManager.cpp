@@ -121,7 +121,7 @@ void GLWidgetManager::Load( const DrawingTypes& drawingTypes,
 {
     settingsDirectory_ = settingsDirectory / tools::Path::FromUnicode( tr( "config.ini" ).toStdWString() );
     mainWidget_->Load();
-    mainProxy_.Load( drawingTypes );
+    mainProxy_.Load( drawingTypes, config_ );
 }
 
 // -----------------------------------------------------------------------------
