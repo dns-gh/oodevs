@@ -41,7 +41,7 @@ EntitySymbols::~EntitySymbols()
 
 const QPixmap& EntitySymbols::GetSymbol( const kernel::Entity_ABC& entity, ColorMode colorMode ) const
 {
-    const kernel::Symbol_ABC* symbol = entity.Retrieve< kernel::TacticalHierarchies >();
+    const auto* symbol = entity.Retrieve< kernel::TacticalHierarchies >();
     if( !symbol )
         return icons_.GetDefaultSymbol();
     const std::string symbolName = symbol->GetSymbol();
@@ -84,15 +84,15 @@ const QPixmap& EntitySymbols::GetSymbol(
 // -----------------------------------------------------------------------------
 void EntitySymbols::GenerateSymbols( const kernel::Entity_ABC& entity ) const
 {
-    if( const kernel::Hierarchies* hierarchy = entity.Retrieve< kernel::TacticalHierarchies >() )
+    if( const auto* hierarchy = entity.Retrieve< kernel::TacticalHierarchies >() )
     {
-        tools::Iterator< const kernel::Entity_ABC& > it = hierarchy->CreateSubordinateIterator();
+        auto it = hierarchy->CreateSubordinateIterator();
         while( it.HasMoreElements() )
         {
-            const kernel::Entity_ABC& child = it.NextElement();
+            const auto& child = it.NextElement();
             GenerateSymbols( child );
 
-            const kernel::Symbol_ABC* symbol = child.Retrieve< kernel::TacticalHierarchies >();
+            const auto* symbol = child.Retrieve< kernel::TacticalHierarchies >();
             if( !symbol )
                 continue;
             const std::string symbolName = symbol->GetSymbol();
@@ -113,7 +113,7 @@ void EntitySymbols::GenerateSymbols( const kernel::Entity_ABC& entity ) const
 // -----------------------------------------------------------------------------
 void EntitySymbols::GenerateSymbols( const tools::Resolver< kernel::Team_ABC >& teamResolver ) const
 {
-    tools::Iterator< const kernel::Team_ABC& > it = teamResolver.CreateIterator();
+    auto it = teamResolver.CreateIterator();
     while( it.HasMoreElements() )
         GenerateSymbols( it.NextElement() );
 }

@@ -239,12 +239,12 @@ void SelectionMenu::GenerateIcons()
                     static const QPixmap pathfind( "resources/symbols/pathfind.png" );
                     pixmap = pathfind;
                 }
-                else if( const TacticalHierarchies* hierarchies = entity->Retrieve< TacticalHierarchies >() )   // Entity & Knowledge ?
+                else if( const auto* hierarchies = entity->Retrieve< TacticalHierarchies >() )   // Entity & Knowledge ?
                 {
-                    if( const kernel::Symbol_ABC* symbol = entity->Retrieve< kernel::TacticalHierarchies >() )
+                    if( const auto* symbol = entity->Retrieve< kernel::TacticalHierarchies >() )
                     {
                         const std::string symbolName = symbol->GetSymbol();
-                        const std::string levelName  = symbol->GetLevel();
+                        const std::string levelName = symbol->GetLevel();
                         pixmap = entitySymbols_.GetSymbol( *entity, symbolName, levelName, EntitySymbols::eColorWithModifier );
                     }
                 }
