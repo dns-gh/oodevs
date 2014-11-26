@@ -17,7 +17,6 @@
 #include "meteo/Meteo.h"
 #include "simulation_terrain/TER_Localisation.h"
 #include <boost/assign.hpp>
-#include <tools/InputBinaryStream.h>
 #include <tools/Path.h>
 #include <boost/lexical_cast.hpp>
 
@@ -36,11 +35,14 @@ PHY_RawVisionData::PHY_RawVisionData( const weather::Meteo& globalMeteo,
         const tools::Path& detection )
     : nNbrCol_( 0 )
     , nNbrRow_( 0 )
-    , pElevationGrid_( 0 )
     , globalMeteo_( globalMeteo )
 {
     MT_LOG_INFO_MSG( "Initializing vision data" );
-    Read( detection );
+    pElevationGrid_ = LoadElevationGrid( detection );
+    nNbrCol_ = pElevationGrid_->GetWidth();
+    nNbrRow_ = pElevationGrid_->GetHeight();
+    rCellSize_ = pElevationGrid_->GetCellSize();
+    CalcMinMaxAltitude();
 }
 
 //-----------------------------------------------------------------------------
@@ -220,48 +222,6 @@ void PHY_RawVisionData::UnregisterWeatherEffect( const MT_Ellipse& surface, cons
 
                 delete pEffect;
             }
-}
-
-//-----------------------------------------------------------------------------
-// Name: PHY_RawVisionData::Read
-// Created: JVT 02-12-11
-// Last modified: JVT 04-03-24
-//-----------------------------------------------------------------------------
-bool PHY_RawVisionData::Read( const tools::Path& path )
-{
-    tools::InputBinaryStream archive( path );
-    if( !archive )
-        throw MASA_EXCEPTION( "Cannot open file " + path.ToUTF8() );
-    if( !( archive >> rCellSize_ >> nNbrRow_ >> nNbrCol_ ) )
-       throw MASA_EXCEPTION( "Error reading file " + path.ToUTF8() );
-
-    ElevationCell** ppCells = new ElevationCell*[ nNbrCol_ ];
-
-    uint16_t elevation;
-    uint8_t env, delta;
-    for( unsigned int x = 0; x < nNbrCol_; ++x )
-    {
-        ElevationCell* pTmp = new ElevationCell[ nNbrRow_ ];
-        ppCells[ x ] = pTmp;
-
-        for( unsigned int i = 0; i < nNbrRow_; ++i )
-        {
-            archive >> elevation >> delta >> env;
-            if( !archive )
-                throw MASA_EXCEPTION( "Error reading file " + path.ToUTF8() );
-            pTmp->h = elevation;
-            pTmp->dh = delta;
-            pTmp->e = env;
-            pTmp->weatherId = 0;
-            pTmp->pEffects = 0;
-            pTmp++;
-        }
-    }
-
-    pElevationGrid_.reset( new ElevationGrid( rCellSize_, nNbrCol_, nNbrRow_, ppCells ) );
-
-    CalcMinMaxAltitude();
-    return true;
 }
 
 namespace

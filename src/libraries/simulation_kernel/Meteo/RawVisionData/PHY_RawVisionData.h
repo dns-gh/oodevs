@@ -10,6 +10,7 @@
 #ifndef __PHY_RawVisionData_h_
 #define __PHY_RawVisionData_h_
 
+#include <memory>
 #include <set>
 #include <unordered_map>
 
@@ -100,7 +101,6 @@ public:
     void RegisterWeatherEffect  ( const MT_Ellipse& surface, const PHY_IndirectFireDotationClass& weaponCategory );
     void UnregisterWeatherEffect( const MT_Ellipse& surface, const PHY_IndirectFireDotationClass& weaponCategory );
 
-    bool Read( const tools::Path& file );
     //@}
 
 private:
@@ -119,7 +119,7 @@ private:
 
     double rMinAltitude_;
     double rMaxAltitude_;
-    std::auto_ptr< ElevationGrid > pElevationGrid_;
+    std::unique_ptr< ElevationGrid > pElevationGrid_;
 
     const weather::Meteo& globalMeteo_;
     // Patched weather instances. It also ensures that weather pointers

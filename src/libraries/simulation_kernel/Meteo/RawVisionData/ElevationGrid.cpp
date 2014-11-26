@@ -9,6 +9,8 @@
 
 #include "simulation_kernel_pch.h"
 #include "ElevationGrid.h"
+#include <tools/InputBinaryStream.h>
+#include <tools/Path.h>
 
 ElevationCell ElevationGrid::emptyCell_;
 
@@ -60,4 +62,40 @@ ElevationCell& ElevationGrid::GetCell( unsigned int x, unsigned int y ) const
 ElevationCell& ElevationGrid::GetEmptyCell() const
 {
     return emptyCell_;
+}
+
+std::unique_ptr< ElevationGrid > LoadElevationGrid( const tools::Path& path )
+{
+    tools::InputBinaryStream archive( path );
+    if( !archive )
+        throw MASA_EXCEPTION( "Cannot open file " + path.ToUTF8() );
+    double cellSize = 0;
+    unsigned int rows = 0, columns = 0;
+    if( !( archive >> cellSize >> rows >> columns ) )
+       throw MASA_EXCEPTION( "Error reading file " + path.ToUTF8() );
+
+    ElevationCell** cells = new ElevationCell*[ columns ];
+
+    uint16_t elevation;
+    uint8_t env, delta;
+    for( unsigned int x = 0; x < columns; ++x )
+    {
+        ElevationCell* cell = new ElevationCell[ rows ];
+        cells[ x ] = cell;
+
+        for( unsigned int i = 0; i < rows; ++i )
+        {
+            archive >> elevation >> delta >> env;
+            if( !archive )
+                throw MASA_EXCEPTION( "Error reading file " + path.ToUTF8() );
+            cell->h = elevation;
+            cell->dh = delta;
+            cell->e = env;
+            cell->weatherId = 0;
+            cell->pEffects = 0;
+            cell++;
+        }
+    }
+    return std::unique_ptr< ElevationGrid >(
+            new ElevationGrid( cellSize, columns, rows, cells ) );
 }

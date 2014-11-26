@@ -11,10 +11,19 @@
 #define ElevationGrid_h
 
 #include <graphics/ElevationBaseGrid.h>
+#include <memory>
+
+namespace tools
+{
+    class Path;
+}
 
 class PHY_AmmoEffect;
+class ElevationGrid;
 
 typedef unsigned char envBits;  // bit field
+
+std::unique_ptr< ElevationGrid > LoadElevationGrid( const tools::Path& path );
 
 struct ElevationCell
 {
@@ -38,6 +47,7 @@ public:
     }
 private:
     friend class PHY_RawVisionData;
+    friend std::unique_ptr< ElevationGrid > LoadElevationGrid( const tools::Path& );
 
     // Take care to pack the following fields to save memory when
     // loading large elevation maps.
