@@ -642,6 +642,17 @@ func (s *Sword) setReplayRangeDates(link *SwordLink, start, end time.Time) {
 	if link == s.link {
 		s.startTime = start
 		s.endTime = end
+		// remove all replay events except the first
+		for i, event := range s.replays {
+			if i > 0 {
+				s.observer.DeleteEvent(event.GetUuid())
+			}
+		}
+		if len(s.replays) > 0 {
+			s.replays = s.replays[:1]
+			ReplayRangeUuid = s.replays[0].GetUuid()
+		}
+		// create a new replay event
 		event := &sdk.Event{
 			Uuid:     proto.String(ReplayRangeUuid),
 			Name:     proto.String("Replay range"),
@@ -653,8 +664,8 @@ func (s *Sword) setReplayRangeDates(link *SwordLink, start, end time.Time) {
 				Payload: marshal(false, false),
 			},
 		}
-		s.observer.UpdateEvent(ReplayRangeUuid, event)
 		s.observer.UpdateRangeDates(start, end)
+		s.observer.UpdateEvent(ReplayRangeUuid, event)
 	}
 }
 

@@ -25,6 +25,7 @@ type Observer interface {
 	UpdateEvent(uuid string, event *sdk.Event)
 	UpdateServices()
 	UpdateRangeDates(start, end time.Time)
+	DeleteEvent(uuid string)
 	// invalid all active filters
 	InvalidateFilters()
 	// post command to observer loop

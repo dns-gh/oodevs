@@ -350,3 +350,9 @@ func (c *ControllerObserver) UpdateRangeDates(start, end time.Time) {
 		session.UpdateRangeDates(start, end)
 	})
 }
+
+func (c *ControllerObserver) DeleteEvent(uuid string) {
+	c.controller.post(c.session, func(session *Session) {
+		session.DeleteEvent(uuid)
+	})
+}
