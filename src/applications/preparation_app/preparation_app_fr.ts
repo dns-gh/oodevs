@@ -964,7 +964,7 @@ This data can&apos;t be projected.</source>
 Ces données ne peuvent pas être projetées.</translation>
     </message>
     <message>
-        <source>Generate symbols</source>
+        <source>Generating symbols ...</source>
         <translation>Génération des symboles</translation>
     </message>
 </context>

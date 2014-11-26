@@ -528,7 +528,7 @@ void MainWindow::LoadExercise()
         glWidgetManager_->Load( staticModel_.drawings_,
                                 config_.GetExerciseDir( config_.GetExerciseName() ) );
         symbolIcons_->Initialize( glWidgetManager_->GetMainWidget()->GetWidget2d().get() );
-        SetProgression( 90, tools::translate( "MainWindow", "Generate symbols" ) );
+        SetProgression( 90, tools::translate( "MainWindow", "Generating symbols ..." ) );
         icons_->GenerateSymbols( *model_.teams_ );
     }
     catch( const std::exception& e )
