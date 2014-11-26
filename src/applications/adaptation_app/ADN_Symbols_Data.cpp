@@ -215,7 +215,6 @@ ADN_Symbols_Data::SymbolsInfra::~SymbolsInfra()
 ADN_Symbols_Data::ADN_Symbols_Data()
     : ADN_Data_ABC( eSymbols )
     , svgRender_( new gui::SvglRenderer() )
-    , glSymbols_( new gui::GLSymbols( *svgRender_ ) )
 {
     // NOTHING
 
@@ -266,7 +265,8 @@ void ADN_Symbols_Data::WriteArchive( xml::xostream& xos ) const
 void ADN_Symbols_Data::ReadArchive( xml::xistream& xis )
 {
     factory_.reset( new kernel::SymbolFactory( xis ) );
-    glSymbols_->SetSymbolsPath( ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData() / ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szSymbolsPath_ );
+    glSymbols_.reset( new gui::GLSymbols( *svgRender_,
+        ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData() / ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szSymbolsPath_ ) );
 
     // Units
     const std::string strUndefined = "undefined";
