@@ -914,10 +914,6 @@
         <translation>Chargement du modèle physique ...</translation>
     </message>
     <message>
-        <source>Loading options ...</source>
-        <translation>Chargement des options ...</translation>
-    </message>
-    <message>
         <source>Loading exercise ...</source>
         <translation>Chargement de l&apos;exercice ...</translation>
     </message>
@@ -964,8 +960,34 @@ This data can&apos;t be projected.</source>
 Ces données ne peuvent pas être projetées.</translation>
     </message>
     <message>
-        <source>Generate symbols</source>
-        <translation>Génération des symboles</translation>
+        <source>Error closing exercise: </source>
+        <translation>Erreur à la fermeture de l&apos;exercise: </translation>
+    </message>
+    <message>
+        <source>Error loading exercise: </source>
+        <translation>Erreur lors du chargement de l&apos;exercice: </translation>
+    </message>
+    <message>
+        <source>Unsaved modification detected.
+Do you want to save the exercise &apos;%1&apos;?</source>
+        <translation type="unfinished">Modifications détectées.
+Voulez-vous sauvegarder l&apos;exercice &apos;%1&apos; ?</translation>
+    </message>
+    <message>
+        <source>Loading failed</source>
+        <translation>Echec de chargement</translation>
+    </message>
+    <message>
+        <source>Generate symbols ...</source>
+        <translation>Génération des symboles ...</translation>
+    </message>
+    <message>
+        <source>Loading options ...</source>
+        <translation>Chargement des options ...</translation>
+    </message>
+    <message>
+        <source>Checking consistency ...</source>
+        <translation>Contrôle de cohérence ...</translation>
     </message>
 </context>
 <context>
@@ -1155,11 +1177,11 @@ Ces données ne peuvent pas être projetées.</translation>
     </message>
     <message>
         <source>Save configuration</source>
-        <translation type="unfinished"></translation>
+        <translation>Sauvegarder la configuration</translation>
     </message>
     <message>
         <source>Load configuration</source>
-        <translation type="unfinished"></translation>
+        <translation>Charger une configuration</translation>
     </message>
 </context>
 <context>
@@ -1190,7 +1212,7 @@ Ces données ne peuvent pas être projetées.</translation>
     </message>
     <message>
         <source>Change superior</source>
-        <translation type="unfinished"></translation>
+        <translation>Changer de supérieur</translation>
     </message>
 </context>
 <context>
@@ -2817,23 +2839,6 @@ Ces données ne peuvent pas être projetées.</translation>
     <message>
         <source>Ghost:</source>
         <translation>Fantôme:</translation>
-    </message>
-</context>
-<context>
-    <name>tools</name>
-    <message>
-        <source>Error reading xml file: </source>
-        <translation>Erreur au chargement du fichier xml: </translation>
-    </message>
-    <message>
-        <source>Error loading exercise: </source>
-        <translation>Erreur lors du chargement de l&apos;exercice: </translation>
-    </message>
-    <message>
-        <source>Unsaved modification detected.
-Do you want to save the exercise &apos;%1&apos;?</source>
-        <translation>Modifications détectées.
-Voulez-vous sauvegarder l&apos;exercice &apos;%1&apos; ?</translation>
     </message>
 </context>
 </TS>

@@ -99,7 +99,7 @@ int Application::Run()
     }
 
     mainWindow_->show();
-    mainWindow_->Load();
+    mainWindow_->Initialize();
     observer_->DisplayErrors();
     return qApp->exec();
 }

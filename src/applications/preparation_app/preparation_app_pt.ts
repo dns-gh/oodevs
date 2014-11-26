@@ -898,10 +898,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Loading options ...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Loading exercise ...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -963,7 +959,32 @@ This data can&apos;t be projected.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Generate symbols</source>
+        <source>Error closing exercise: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error loading exercise: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unsaved modification detected.
+Do you want to save the exercise &apos;%1&apos;?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Loading failed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Generate symbols ...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Loading options ...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Checking consistency ...</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2814,22 +2835,6 @@ This data can&apos;t be projected.</source>
     <name>preparation::OrbatPanel</name>
     <message>
         <source>Ghost:</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>tools</name>
-    <message>
-        <source>Error reading xml file: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Error loading exercise: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Unsaved modification detected.
-Do you want to save the exercise &apos;%1&apos;?</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

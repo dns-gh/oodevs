@@ -73,8 +73,7 @@ public:
     //! @name Operations
     //@{
     QMessageBox::StandardButton CheckSaving( bool checkConsistency = false );
-
-    void Load();
+    void Initialize();
     //@}
 
 public slots:
@@ -82,7 +81,7 @@ public slots:
     //@{
     void New();
     void Open();
-    bool Close();
+    bool Close( bool askForSaving = true );
     void Save( bool checkConsistency = true );
     void SaveAs();
     void ToggleFullScreen();
@@ -104,26 +103,32 @@ signals:
 private:
     //! @name Helpers
     //@{
-    bool DoLoad();
-    void LoadExercise();
     void CreateLayers( const std::shared_ptr< gui::ParametersLayer >& parameters,
                        const std::shared_ptr< gui::Layer_ABC >& locations,
                        const std::shared_ptr< gui::Layer_ABC >& weather,
                        const std::shared_ptr< gui::Layer_ABC >& profilerLayer,
                        gui::TerrainPicker& picker );
-    void closeEvent( QCloseEvent* pEvent );
-    void DoClose();
-    void DoLoad( const tools::Path& filename );
+    // Load exercise and generate score if needed
+    void LoadExercise();
+    // Initialize config with filename if needed, Load static model, LoadExercise, then load gui
+    void FullLoad( const tools::Path& filename = tools::Path() );
+    // Close if needed, then FullLoad
+    void Reload( const tools::Path& filename );
+
+    void GenerateScores();
     void MigrateExercises();
     bool MigrateExercise( const tools::Path& path );
-
-    void NotifyModeChanged( E_Modes newMode );
-    virtual void NotifyCreated();
-    virtual void NotifyUpdated();
-    virtual void NotifyDeleted();
     void SetWindowTitle( bool needsSaving );
     void SetNeedsSaving( bool status );
     void SetProgression( int value, const QString& text );
+    void CatchException( const QString& msg, const std::exception& e );
+
+    virtual void closeEvent( QCloseEvent* event );
+
+    virtual void NotifyModeChanged( E_Modes newMode );
+    virtual void NotifyCreated();
+    virtual void NotifyUpdated();
+    virtual void NotifyDeleted();
     //@}
 
 private:
@@ -133,7 +138,7 @@ private:
     StaticModel&         staticModel_;
     Model&               model_;
     PrepaConfig&         config_;
-    bool                 loading_;
+    bool                 loadingExercise_;
     bool                 needsSaving_;
 
     std::unique_ptr< gui::TextEditor >             textEditor_; // should move in parameter layers

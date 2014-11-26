@@ -221,12 +221,22 @@ geometry::Vector3f tools::StringToVector3f( const QString& vector )
     return geometry::Vector3f( coords.at( 0 ).toFloat(), coords.at( 1 ).toFloat(), coords.at( 2 ).toFloat() );
 }
 
+void tools::RejectVisibleDialogs( QWidget& parent )
+{
+    auto dialogs = qFindChildren< QDialog* >( &parent );
+    for( auto it = dialogs.begin(); it != dialogs.end(); ++it )
+    {
+        QDialog* widget = *it;
+        if( widget->isVisible() )
+            widget->reject();
+    }
+}
+
 QMenu* tools::CreateWindowMenu( kernel::Controllers& controllers, QWidget& parent, QObject& glWidgetManager )
 {
     QMap< QString, QAction* > glActions;
     auto glDockwidgets = qFindChildren< gui::GLDockWidget* >( &parent );
     for( auto it = glDockwidgets.begin(); it != glDockwidgets.end(); ++it )
-
     {
         gui::GLDockWidget* widget = *it;
         glActions[ widget->windowTitle() ] = widget->ToggleViewAction();

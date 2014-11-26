@@ -82,6 +82,7 @@
 #include "clients_gui/TerrainProfiler.h"
 #include "clients_gui/TerrainProfilerLayer.h"
 #include "clients_gui/TextEditor.h"
+#include "clients_gui/Tools.h"
 #include "clients_gui/TooltipsLayer.h"
 #include "clients_gui/UrbanLayer.h"
 #include "clients_gui/WatershedLayer.h"
@@ -134,7 +135,7 @@ MainWindow::MainWindow( kernel::Controllers& controllers,
     , staticModel_( staticModel )
     , model_( model )
     , config_( config )
-    , loading_( false )
+    , loadingExercise_( false )
     , needsSaving_( false )
     , modelBuilder_( new ModelBuilder( controllers, model ) )
     , colorController_( new ColorController( controllers_ ) )
@@ -236,17 +237,10 @@ MainWindow::MainWindow( kernel::Controllers& controllers,
     progressDialog_->setContentsMargins( 5, 5, 5, 5 );
     progressDialog_->setCancelButton( 0 );
 
-    // Read settings
-    controllers_.modes_.LoadOptions( eModes_Prepare );
-    controllers_.modes_.LoadGeometry( eModes_Prepare );
-
-    // Initialize
-    SetWindowTitle( false );
     setLocale( QLocale() );
     setMinimumSize( 800, 600 );
     setIcon( gui::Pixmap( tools::GeneralConfig::BuildResourceChildFile( "images/gui/logo32x32.png" ) ) );
 
-    controllers_.ChangeMode( eModes_Default );
     controllers_.Register( *this );
 }
 
@@ -259,21 +253,6 @@ MainWindow::~MainWindow()
     if( process_ )
         process_->kill();
     controllers_.Unregister( *this );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MainWindow::Load
-// Created: MCO 2013-04-10
-// -----------------------------------------------------------------------------
-void MainWindow::Load()
-{
-    if( config_.GetExerciseFile().Exists() )
-    {
-        SetProgression( 0, tools::translate( "MainWindow", "Initialize data ..." ) );
-        if( DoLoad() )
-            LoadExercise();
-        SetProgression( 100, tools::translate( "MainWindow", "Loading complete" ) );
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -341,50 +320,224 @@ void MainWindow::CreateLayers( const std::shared_ptr< gui::ParametersLayer >& pa
 }
 
 // -----------------------------------------------------------------------------
-// Name: MainWindow::New
-// Created: FDS 2010-11-03
+// First load, last close
+// -----------------------------------------------------------------------------
+void MainWindow::Initialize()
+{
+    controllers_.modes_.LoadOptions( eModes_Prepare );
+    controllers_.modes_.LoadGeometry( eModes_Prepare );
+    controllers_.ChangeMode( eModes_Default );
+    if( config_.GetExerciseFile().Exists() )
+        FullLoad(); // config already initialized in ExerciseConfig::Parse
+}
+
+void MainWindow::closeEvent( QCloseEvent* event )
+{
+    if( !Close() )
+    {
+        event->ignore();
+        return;
+    }
+    QMainWindow::closeEvent( event );
+}
+
+// -----------------------------------------------------------------------------
+// Close / Load
+// -----------------------------------------------------------------------------
+bool MainWindow::Close( bool askForSaving /* = true */ )
+{
+    if( !askForSaving )
+        needsSaving_ = false;
+    try
+    {
+        if( model_.IsLoaded() && CheckSaving() == QMessageBox::Cancel )
+            return false;
+        // save options
+        controllers_.modes_.SaveGeometry( eModes_Prepare );
+        controllers_.modes_.SaveOptions( eModes_Prepare );
+        // close gui
+        tools::RejectVisibleDialogs( *this );
+        // score dialogs open others score dialogs when they close, so they need
+        // a specific close signal
+        emit CloseDialogs();
+        dialogContainer_->Purge();
+        dockContainer_->Purge();
+        glWidgetManager_->Purge();
+        // restore default gui
+        SetWindowTitle( false );
+        controllers_.ChangeMode( eModes_Default );
+        // purge data
+        model_.Purge();
+        staticModel_.Purge();
+    }
+    catch( const std::exception& e )
+    {
+        CatchException( tr( "Error closing exercise: " ), e );
+    }
+    return true;
+}
+
+void MainWindow::FullLoad( const tools::Path& filename /* = tools::Path() */ )
+{
+    try
+    {
+        SetProgression( 0, tr( "Initialize data ..." ) );
+        if( !filename.IsEmpty() )
+        {
+            SetProgression( 10, tr( "Loading configuration ..." ) );
+            config_.LoadExercise( filename );
+        }
+        SetProgression( 20, tr( "Loading physical model ..." ) );
+        staticModel_.Load( config_ );
+        SetProgression( 50, tr( "Loading exercise ..." ) );
+        LoadExercise();
+        SetProgression( 80, tr( "Loading graphical interface ..." ) );
+        dialogContainer_->Load();
+        dockContainer_->Load();
+        glWidgetManager_->Load( staticModel_.drawings_,
+                                config_.GetExerciseDir( config_.GetExerciseName() ) );
+        SetProgression( 85, tr( "Generate symbols ..." ) );
+        symbolIcons_->Initialize( glWidgetManager_->GetMainWidget()->GetWidget2d().get() );
+        icons_->GenerateSymbols( *model_.teams_ );
+        SetProgression( 90, tr( "Loading options ..." ) );
+        controllers_.modes_.LoadOptions( eModes_Prepare );
+        controllers_.ChangeMode( eModes_Prepare );
+        SetProgression( 95, tr( "Checking consistency ..." ) );
+        emit CheckConsistency();
+        SetWindowTitle( !model_.GetLoadingErrors().empty() ||
+                        model_.ghosts_->NeedSaving() ||
+                        model_.HasConsistencyErrorsOnLoad() ||
+                        model_.OldUrbanMode() );
+        SetProgression( 100, tr( "Loading complete" ) );
+    }
+    catch( const std::exception& e )
+    {
+        SetProgression( 100, tr( "Loading failed" ) );
+        CatchException( tr( "Error loading exercise: " ), e );
+    }
+}
+
+void MainWindow::LoadExercise()
+{
+    try
+    {
+        loadingExercise_ = true;
+        model_.Load( config_ );
+        if( config_.HasGenerateScores() )
+            GenerateScores();
+        loadingExercise_ = false;
+    }
+    catch( const std::exception& e )
+    {
+        loadingExercise_ = false;
+        CatchException( tr( "Error loading exercise: " ), e );
+        throw;
+    }
+}
+
+void MainWindow::Reload( const tools::Path& filename )
+{
+    if( filename.IsEmpty() || !Close() )
+        return;
+    FullLoad( filename );
+}
+
+void MainWindow::CatchException( const QString& msg, const std::exception& e )
+{
+    Close( false );
+    QMessageBox::critical( this,
+                           tools::translate( "Application", "SWORD" ),
+                           msg + QString::fromStdString( tools::GetExceptionMsg( e ) ) );
+}
+
+// -----------------------------------------------------------------------------
+// New, Open, Reload
 // -----------------------------------------------------------------------------
 void MainWindow::New()
 {
     ExerciseCreationDialog exerciseCreationDialog( this, config_ );
     if( exerciseCreationDialog.exec() == QDialog::Accepted )
-    {
-        auto filename = exerciseCreationDialog.GetFileName();
-        if( filename.IsEmpty() || !Close() )
-            return;
-        DoLoad( filename );
-    }
+        Reload( exerciseCreationDialog.GetFileName() );
 }
 
-// -----------------------------------------------------------------------------
-// Name: MainWindow::DoLoad
-// Created: LDC 2010-12-01
-// -----------------------------------------------------------------------------
-void MainWindow::DoLoad( const tools::Path& filename )
+void MainWindow::Open()
 {
-    if( filename.IsEmpty() )
-        return;
-    SetProgression( 0, tools::translate( "MainWindow", "Initialize data ..." ) );
-    try
-    {
-        config_.LoadExercise( filename );
-    }
-    catch( ... )
-    {
-        SetProgression( 100, "" );
-        throw;
-    }
-    if( DoLoad() )
-    {
-        SetWindowTitle( true );
-        LoadExercise();
-    }
-    SetProgression( 100, tools::translate( "MainWindow", "Loading complete" ) );
+    Reload( gui::FileDialog::getOpenFileName( this, tr( "Load exercise definition file (exercise.xml)" ),
+                                                      config_.GetExerciseFile(), "Exercise (exercise.xml)" ) );
+}
+
+void MainWindow::ReloadExercise()
+{
+    Reload( config_.GetExerciseFile() );
 }
 
 // -----------------------------------------------------------------------------
-// Name: MainWindow::MigrateExercise
-// Created: ABR 2013-03-07
+// Save, Save As
+// -----------------------------------------------------------------------------
+void MainWindow::Save( bool checkConsistency /* = true */ )
+{
+    if( needsSaving_ )
+    {
+        if( checkConsistency )
+        {
+            ClearLoadingErrors();
+            emit CheckConsistency();
+        }
+        model_.SaveExercise( config_ );
+        SetWindowTitle( false );
+    }
+}
+
+void MainWindow::SaveAs()
+{
+    static const QString title = tools::translate( "MainWindow", "Save exercise as ..." );
+    static const QString enterNewName = tools::translate( "MainWindow", "Enter an exercise name:" );
+    static const QString nameAlreadyExist = tools::translate( "MainWindow", "The exercise '%1' already exists. Please, enter a new exercise name:" );
+    static const QString content = tools::translate( "MainWindow", "Type exercise name here" );
+    bool exist = false;
+    tools::Path exerciseName;
+    tools::Path exerciseDirectory;
+    QString name;
+    do
+    {
+        bool ok = false;
+        name = QInputDialog::getText( title, ( exist ) ? nameAlreadyExist.arg( name ) : enterNewName, gui::RichLineEdit::Normal, content, &ok, this );
+        if( ok && !name.isEmpty() )
+        {
+            exerciseName = tools::Path::FromUnicode( name.toStdWString() );
+            exerciseName = exerciseName.Relative();
+            exerciseDirectory = config_.GetExercisesDir() / exerciseName;
+            exist = frontend::commands::ExerciseExists( config_, exerciseName ) || exerciseDirectory.Exists();
+        }
+        else
+            return;
+    }
+    while( exist );
+
+    exerciseDirectory.CreateDirectories();
+    tools::Path newExerciseFile = config_.tools::ExerciseConfig::GeneralConfig::GetExerciseFile( exerciseName );
+    config_.GetExerciseFile().Copy( newExerciseFile );
+    config_.LoadExercise( newExerciseFile );
+    model_.exercise_->SetName( exerciseName.FileName().ToUTF8().c_str() );
+    dialogContainer_->Purge();
+    needsSaving_ = true;
+    Save();
+    dialogContainer_->Load();
+}
+
+// -----------------------------------------------------------------------------
+// Scores generation
+// -----------------------------------------------------------------------------
+void MainWindow::GenerateScores()
+{
+    model_.scores_->GenerateScoresFromTemplate( config_.GetPhyLoader() );
+    const tools::SchemaWriter schemaWriter;
+    if( model_.scores_->CheckValidity( schemaWriter ) )
+        model_.scores_->Serialize( config_.GetScoresFile(), schemaWriter );
+}
+
+// -----------------------------------------------------------------------------
+// Migrations
 // -----------------------------------------------------------------------------
 bool MainWindow::MigrateExercise( const tools::Path& path )
 {
@@ -411,217 +564,12 @@ bool MainWindow::MigrateExercise( const tools::Path& path )
     return false;
 }
 
-// -----------------------------------------------------------------------------
-// Name: MainWindow::MigrateExercises
-// Created: JSR 2011-09-07
-// -----------------------------------------------------------------------------
 void MainWindow::MigrateExercises()
 {
     const tools::Path root = config_.GetFolderToMigrate();
     if( !root.Exists() )
         throw MASA_EXCEPTION( ( "The folder " + config_.GetFolderToMigrate().ToUTF8() + " does not exist" ).c_str() );
     root.Apply( boost::bind( &MainWindow::MigrateExercise, this, _1 ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MainWindow::Open
-// Created: FDS 2010-11-03
-// -----------------------------------------------------------------------------
-void MainWindow::Open()
-{
-    // Open exercise file dialog
-    tools::Path filename = gui::FileDialog::getOpenFileName( this, tr( "Load exercise definition file (exercise.xml)" ), config_.GetExerciseFile(), "Exercise (exercise.xml)" );
-    if( filename.IsEmpty() || !Close() )
-        return;
-    // Load exercise
-    DoLoad( filename );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MainWindow::DoLoad
-// Created: AGE 2006-05-03
-// -----------------------------------------------------------------------------
-bool MainWindow::DoLoad()
-{
-    try
-    {
-        SetProgression( 10, tools::translate( "MainWindow", "Loading configuration ..." ) );
-        controllers_.modes_.SaveOptions( eModes_Prepare );
-        dockContainer_->Purge();
-        model_.Purge();
-        glProxy_->Purge();
-        SetProgression( 20, tools::translate( "MainWindow", "Loading physical model ..." ) );
-        staticModel_.Load( config_ );
-        SetProgression( 50, tools::translate( "MainWindow", "Loading graphical interface ..." ) );
-        dialogContainer_->Purge();
-        dialogContainer_->Load();
-        SetProgression( 60, tools::translate( "MainWindow", "Loading options ..." ) );
-        SetWindowTitle( false );
-    }
-    catch( const xml::exception& e )
-    {
-        SetNeedsSaving( false );
-        Close();
-        QMessageBox::critical( this, tools::translate( "Application", "SWORD" )
-                                   , tools::translate( "tools", "Error reading xml file: " ) + tools::GetExceptionMsg( e ).c_str() );
-        return false;
-    }
-    controllers_.modes_.LoadOptions( eModes_Prepare );
-    return true;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MainWindow::Close
-// Created: SBO 2006-05-24
-// -----------------------------------------------------------------------------
-bool MainWindow::Close()
-{
-    if( model_.IsLoaded() && CheckSaving() == QMessageBox::Cancel )
-        return false;
-    emit CloseDialogs();
-    DoClose();
-    controllers_.ChangeMode( eModes_Default );
-    return true;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MainWindow::PrepareClosing
-// Created: JSR 2012-06-21
-// -----------------------------------------------------------------------------
-void MainWindow::DoClose()
-{
-    glWidgetManager_->Purge();
-    dockContainer_->Purge();
-    model_.Purge();
-    staticModel_.Purge();
-    dialogContainer_->Purge();
-    SetWindowTitle( false );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MainWindow::LoadExercise
-// Created: SBO 2008-08-21
-// -----------------------------------------------------------------------------
-void MainWindow::LoadExercise()
-{
-    try
-    {
-        loading_ = true;
-        SetProgression( 70, tools::translate( "MainWindow", "Loading exercise ..." ) );
-        model_.Load( config_ );
-        dockContainer_->Load();
-        if( config_.HasGenerateScores() )
-        {
-            model_.scores_->GenerateScoresFromTemplate( config_.GetPhyLoader() );
-            const tools::SchemaWriter schemaWriter;
-            if( model_.scores_->CheckValidity( schemaWriter ) )
-                model_.scores_->Serialize( config_.GetScoresFile(), schemaWriter );
-            return;
-        }
-        loading_ = false;
-        controllers_.ChangeMode( eModes_Prepare );
-        emit CheckConsistency();
-        SetWindowTitle( !model_.GetLoadingErrors().empty() ||
-                        model_.ghosts_->NeedSaving() ||
-                        model_.HasConsistencyErrorsOnLoad() ||
-                        model_.OldUrbanMode() );
-        glWidgetManager_->Load( staticModel_.drawings_,
-                                config_.GetExerciseDir( config_.GetExerciseName() ) );
-        symbolIcons_->Initialize( glWidgetManager_->GetMainWidget()->GetWidget2d().get() );
-        SetProgression( 90, tools::translate( "MainWindow", "Generate symbols" ) );
-        icons_->GenerateSymbols( *model_.teams_ );
-    }
-    catch( const std::exception& e )
-    {
-        SetNeedsSaving( false );
-        Close();
-        QMessageBox::critical( this, tools::translate( "Application", "SWORD" )
-                                   , tools::translate( "tools", "Error loading exercise: " ) + tools::GetExceptionMsg( e ).c_str() );
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: MainWindow::ReloadExercise
-// Created: ABR 2011-06-24
-// -----------------------------------------------------------------------------
-void MainWindow::ReloadExercise()
-{
-    if( Close() )
-        DoLoad( config_.GetExerciseFile() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MainWindow::Save
-// Created: SBO 2006-09-06
-// -----------------------------------------------------------------------------
-void MainWindow::Save( bool checkConsistency /* = true */ )
-{
-    if( needsSaving_ )
-    {
-        if( checkConsistency )
-        {
-            ClearLoadingErrors();
-            emit CheckConsistency();
-        }
-        model_.SaveExercise( config_ );
-        SetWindowTitle( false );
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: MainWindow::SaveAs
-// Created: ABR 2011-04-13
-// -----------------------------------------------------------------------------
-void MainWindow::SaveAs()
-{
-    static const QString title = tools::translate( "MainWindow", "Save exercise as ..." );
-    static const QString enterNewName = tools::translate( "MainWindow", "Enter an exercise name:" );
-    static const QString nameAlreadyExist = tools::translate( "MainWindow", "The exercise '%1' already exists. Please, enter a new exercise name:" );
-    static const QString content = tools::translate( "MainWindow", "Type exercise name here" );
-    bool exist = false;
-    tools::Path exerciseName;
-    tools::Path exerciseDirectory;
-    QString name;
-    do
-    {
-        bool ok = false;
-        name = QInputDialog::getText( title, ( exist ) ? nameAlreadyExist.arg( name ) : enterNewName, gui::RichLineEdit::Normal, content, &ok, this );
-        if( ok && !name.isEmpty() )
-        {
-            exerciseName = tools::Path::FromUnicode( name.toStdWString() );
-            exerciseName = exerciseName.Relative();
-            exerciseDirectory = config_.GetExercisesDir() / exerciseName;
-            exist = frontend::commands::ExerciseExists( config_, exerciseName ) || exerciseDirectory.Exists();
-        }
-        else
-            return;
-    } while( exist );
-
-    exerciseDirectory.CreateDirectories();
-    tools::Path newExerciseFile = config_.tools::ExerciseConfig::GeneralConfig::GetExerciseFile( exerciseName );
-    config_.GetExerciseFile().Copy( newExerciseFile );
-    config_.LoadExercise( newExerciseFile );
-    model_.exercise_->SetName( exerciseName.FileName().ToUTF8().c_str() );
-    dialogContainer_->Purge();
-    needsSaving_ = true;
-    Save();
-    dialogContainer_->Load();
-}
-
-// -----------------------------------------------------------------------------
-// Name: MainWindow::closeEvent
-// Created: AGE 2006-02-27
-// -----------------------------------------------------------------------------
-void MainWindow::closeEvent( QCloseEvent* pEvent )
-{
-    if( !Close() )
-    {
-        pEvent->ignore();
-        return;
-    }
-    controllers_.modes_.SaveGeometry( eModes_Prepare );
-    controllers_.modes_.SaveOptions( eModes_Prepare );
-    QMainWindow::closeEvent( pEvent );
 }
 
 // -----------------------------------------------------------------------------
@@ -650,7 +598,7 @@ void MainWindow::ClearLoadingErrors()
 // -----------------------------------------------------------------------------
 void MainWindow::NotifyCreated()
 {
-    if( !loading_ )
+    if( !loadingExercise_ )
         SetWindowTitle( true );
 }
 
@@ -660,7 +608,7 @@ void MainWindow::NotifyCreated()
 // -----------------------------------------------------------------------------
 void MainWindow::NotifyUpdated()
 {
-    if( !loading_ )
+    if( !loadingExercise_ )
         SetWindowTitle( true );
 }
 
@@ -670,7 +618,7 @@ void MainWindow::NotifyUpdated()
 // -----------------------------------------------------------------------------
 void MainWindow::NotifyDeleted()
 {
-    if( !loading_ )
+    if( !loadingExercise_ )
         SetWindowTitle( true );
 }
 
@@ -692,7 +640,7 @@ void MainWindow::SetWindowTitle( bool needsSaving )
 {
     if( QThread::currentThread() != thread() ) // si setCaption est appelé par un autre thread -> assert QT.
         return;
-    SetNeedsSaving( needsSaving );
+    needsSaving_ = needsSaving;
     QString filename;
     QString mode = ENT_Tr::ConvertFromModes( GetCurrentMode(), ENT_Tr::eToTr ).c_str();
     if( model_.IsLoaded() && isVisible() )
@@ -728,8 +676,8 @@ QMessageBox::StandardButton MainWindow::CheckSaving( bool checkConsistency /* = 
     QMessageBox::StandardButton result = QMessageBox::NoButton;
     if( needsSaving_ )
     {
-        result = QMessageBox::question( this, tools::translate( "Application", "SWORD" ),
-                                        tools::translate( "tools", "Unsaved modification detected.\nDo you want to save the exercise \'%1\'?" ).arg( config_.GetExerciseName().ToUTF8().c_str() ),
+        const QString unsavedText = tr( "Unsaved modification detected.\nDo you want to save the exercise \'%1\'?" ).arg( config_.GetExerciseName().ToUTF8().c_str() );
+        result = QMessageBox::question( this, tools::translate( "Application", "SWORD" ), unsavedText,
                                         QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel, QMessageBox::Yes );
         if( result == QMessageBox::Yes )
             Save( !checkConsistency );

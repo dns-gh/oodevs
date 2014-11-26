@@ -44,7 +44,6 @@ class LogisticStocksAndQuotasDialog : public QDialog
                                     , public tools::Observer_ABC
                                     , public kernel::ContextMenuObserver_ABC< kernel::Automat_ABC >
                                     , public kernel::ContextMenuObserver_ABC< kernel::Formation_ABC >
-                                    , public tools::ElementObserver_ABC< kernel::ModelUnLoaded >
 {
     Q_OBJECT
     
@@ -57,7 +56,6 @@ public:
 
     //! @name Operations
     //@{
-    virtual void NotifyUpdated( const kernel::ModelUnLoaded& );
     virtual void NotifyContextMenu( const kernel::Automat_ABC& automat, kernel::ContextMenu& menu );
     virtual void NotifyContextMenu( const kernel::Formation_ABC& formation, kernel::ContextMenu& menu );
     //@}
@@ -72,7 +70,7 @@ private slots:
     //! @name Slots
     //@{
     void Accept();
-    void Reject();
+    virtual void reject();
     void ShowAutomaticDialog();
     void ShowDialog();
     //@}

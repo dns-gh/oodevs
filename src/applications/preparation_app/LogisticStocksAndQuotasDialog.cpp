@@ -58,7 +58,7 @@ LogisticStocksAndQuotasDialog::LogisticStocksAndQuotasDialog( QWidget* parent, k
              quotasEditor_, SLOT( NotifyAutomaticQuotas( const std::map< const kernel::Entity_ABC*, std::map< const kernel::DotationType*, unsigned int > >& ) ) );
     connect( automaticEditButton, SIGNAL( clicked() ), SLOT( ShowAutomaticDialog() ) );
     connect( okButton, SIGNAL( clicked() ), SLOT( Accept() ) );
-    connect( cancelButton, SIGNAL( clicked() ), SLOT( Reject() ) );
+    connect( cancelButton, SIGNAL( clicked() ), SLOT( reject() ) );
 
     hide();
 
@@ -72,15 +72,6 @@ LogisticStocksAndQuotasDialog::LogisticStocksAndQuotasDialog( QWidget* parent, k
 LogisticStocksAndQuotasDialog::~LogisticStocksAndQuotasDialog()
 {
     controllers_.Unregister( *this );
-}
-
-// -----------------------------------------------------------------------------
-// Name: LogisticStocksAndQuotasDialog::NotifyUpdated
-// Created: MMC 2013-10-24
-// -----------------------------------------------------------------------------
-void LogisticStocksAndQuotasDialog::NotifyUpdated( const kernel::ModelUnLoaded& )
-{
-    Reject();
 }
 
 // -----------------------------------------------------------------------------
@@ -99,12 +90,12 @@ void LogisticStocksAndQuotasDialog::Accept()
 }
 
 // -----------------------------------------------------------------------------
-// Name: LogisticStocksAndQuotasDialog::Reject
+// Name: LogisticStocksAndQuotasDialog::reject
 // Created: MMC 2013-10-24
 // -----------------------------------------------------------------------------
-void LogisticStocksAndQuotasDialog::Reject()
+void LogisticStocksAndQuotasDialog::reject()
 {
-    reject();
+    QDialog::reject();
     selected_ = 0;
 }
 
