@@ -11,11 +11,13 @@ package simtests
 import (
 	"bufio"
 	"bytes"
+	"code.google.com/p/goprotobuf/proto"
 	"fmt"
 	"io"
 	. "launchpad.net/gocheck"
 	"masa/sword/swapi"
 	"masa/sword/swapi/simu"
+	"masa/sword/sword"
 	"masa/sword/swrun"
 	"masa/sword/swtest"
 	"os"
@@ -724,4 +726,91 @@ func (s *TestSuite) TestDecGetClosestPath(c *C) {
 	result, err := strconv.ParseBool(output)
 	c.Assert(err, IsNil)
 	c.Assert(result, Equals, true)
+}
+
+const (
+	FragOrder = uint32(4)
+)
+
+func CheckParameter(c *C, client *swapi.Client, id uint32, function, expected string) {
+	script := `function TestFunction()
+        local fragorders = DEC_GetOrdersCategory()
+        if #fragorders > 0 then
+            {{.function}}
+        end
+        return ""
+    end`
+	output, err := client.ExecTemplate(id, "TestFunction", script,
+		map[string]interface{}{
+			"function": function,
+		})
+	c.Assert(err, IsNil)
+	c.Assert(output, Equals, expected)
+}
+
+func (s *TestSuite) TestFragOrderParameters(c *C) {
+	phydb := loadPhysical(c, "test")
+	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadSmallTest))
+	defer stopSimAndClient(c, sim, client)
+
+	// Create following unit
+	pos := swapi.Point{X: -15.9268, Y: 28.3453}
+	unit := CreateUnitInParty(c, client, phydb, "party1", "VW Combi Rally",
+		"VW Direct Fire", pos)
+
+	// Send frag order
+	params := swapi.MakeParameters(
+		swapi.MakeString("string_value"),
+		swapi.MakeParameter(
+			&sword.MissionParameter_Value{
+				Point: &sword.Point{
+					Location: swapi.MakePointLocation(
+						swapi.Point{X: -15.926, Y: 28.3453}),
+				},
+			},
+			&sword.MissionParameter_Value{
+				Point: &sword.Point{
+					Location: swapi.MakePointLocation(
+						swapi.Point{X: -15.026, Y: 28.3053}),
+				},
+			},
+		),
+		swapi.MakeParameter(
+			&sword.MissionParameter_Value{
+				IntValue: proto.Int32(29),
+			},
+			&sword.MissionParameter_Value{
+				IntValue: proto.Int32(500),
+			},
+		),
+	)
+	_, err := client.SendUnitFragOrder(unit.Id, FragOrder, params)
+	c.Assert(err, IsNil)
+
+	// String parameter
+	CheckParameter(c, client, unit.Id,
+		`return fragorders[ 1 ]:GetStringParameter("string_")`,
+		"string_value")
+
+	// Point list parameter
+	CheckParameter(c, client, unit.Id,
+		`local points = fragorders[ 1 ]:GetPointListParameter("pointList_")
+        result = ""
+        for i = 1, #points do
+            result = result .. tostring(DEC_DebugPointXY(points[i])) .. "\n"
+        end
+        return result`,
+		"x = 1376.11, y = 13970.6\n"+
+			"x = 89578.1, y = 9766.46\n")
+
+	// Integer list parameter
+	CheckParameter(c, client, unit.Id,
+		`local integers = fragorders[ 1 ]:GetIntegerListParameter("integerList_")
+        result = ""
+        for i = 1, #integers do
+            result = result .. tostring(integers[i]) .. "\n"
+        end
+        return result`,
+		"29\n"+
+			"500\n")
 }
