@@ -42,6 +42,15 @@ namespace
             ")" ) );
         db.Commit( *tr );
     }
+
+    void AddEntityIndex( tools::Sql_ABC& db )
+    {
+        auto tr = db.Begin();
+        Execute( *db.Prepare( *tr,
+            "CREATE INDEX IF NOT EXISTS index_entity"
+            "  ON hierarchies (entity)" ) );
+        db.Commit( *tr );
+    }
 }
 
 Hierarchies::Hierarchies( const tools::Path& root,
@@ -51,6 +60,7 @@ Hierarchies::Hierarchies( const tools::Path& root,
     , tick_    ( 0 )
 {
     MakeTable( *database_ );
+    AddEntityIndex( *database_ );
 }
 
 Hierarchies::~Hierarchies()
