@@ -71,7 +71,8 @@ public:
                     gui::GLView_ABC& tools,
                     gui::SymbolIcons& icons,
                     gui::ColorStrategy_ABC& colorStrategy,
-                    const tools::ExerciseConfig& config );
+                    const tools::ExerciseConfig& config,
+                    const kernel::Profile_ABC& profile );
     virtual ~CreationPanels();
     //@}
 

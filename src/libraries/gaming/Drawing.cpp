@@ -15,9 +15,10 @@
 #include "clients_gui/DrawingTemplate.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
+#include "clients_kernel/EntityResolver_ABC.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/LocationProxy.h"
-#include "clients_kernel/EntityResolver_ABC.h"
+#include "clients_kernel/Profile_ABC.h"
 #include "protocol/Protocol.h"
 
 namespace
@@ -89,6 +90,15 @@ void Drawing::SetLocation( const sword::CoordLatLongList& list )
     location.release();
     for( int i = 0; i < list.elem_size(); ++i )
         location_.AddPoint( converter_.ConvertToXY( list.elem( i ) ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Drawing::IsControlledBy
+// Created: JSR 2014-11-26
+// -----------------------------------------------------------------------------
+bool Drawing::IsControlledBy( const kernel::Profile_ABC& profile ) const
+{
+    return !entity_ && profile.IsSupervision() || entity_ && profile.CanBeOrdered( *entity_ );
 }
 
 // -----------------------------------------------------------------------------

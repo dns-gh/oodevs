@@ -16,6 +16,7 @@ class QColor;
 namespace kernel
 {
 class Location_ABC;
+class Profile_ABC;
 
 // =============================================================================
 /** @class  Drawing_ABC
@@ -50,6 +51,7 @@ public:
     virtual void ChangeColor( const QColor& color ) = 0;
     virtual void Serialize( xml::xostream& xos ) const = 0;
     virtual const kernel::Entity_ABC* GetDiffusionEntity() const = 0;
+    virtual bool IsControlledBy( const kernel::Profile_ABC& profile ) const = 0;
     virtual void NotifyDestruction() const = 0;
     virtual const kernel::Location_ABC& GetLocation() const = 0;
     virtual void ChangeSuperior( const kernel::Entity_ABC& target ) = 0;

@@ -27,6 +27,7 @@
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/Location_ABC.h"
+#include "clients_kernel/Profile_ABC.h"
 #include "resources.h"
 #include "tools/ExerciseConfig.h"
 #include "tools/SchemaWriter.h"
@@ -60,11 +61,13 @@ DrawerPanel::DrawerPanel( QWidget* parent,
                           kernel::Controllers& controllers,
                           DrawerModel& model,
                           DrawingTypes& types,
-                          const tools::ExerciseConfig& config )
+                          const tools::ExerciseConfig& config,
+                          const kernel::Profile_ABC& profile )
     : InfoPanel_ABC( parent, panel, tr( "Drawings" ) )
+    , model_          ( model )
+    , profile_        ( profile )
     , controllers_    ( controllers )
     , layer_          ( layer )
-    , model_          ( model )
     , types_          ( types )
     , config_         ( config )
     , selectedStyle_  ( 0 )
@@ -300,21 +303,29 @@ void DrawerPanel::OnColorChange( const QColor& color )
 // -----------------------------------------------------------------------------
 void DrawerPanel::StartDrawing()
 {
-    if( selectedStyle_ )
-    {
-        if( selectedStyle_->GetType() == "line" )
-            layer_->StartLine( *this );
-        else if( selectedStyle_->GetType() == "polygon" )
-            layer_->StartPolygon( *this );
-        else if( selectedStyle_->GetType() == "point" )
-            layer_->StartPoint( *this );
-        else if( selectedStyle_->GetType() == "circle" )
-            layer_->StartCircle( *this );
-        else if( selectedStyle_->GetType() == "curve" )
-            layer_->StartCurve( *this );
-        else if( selectedStyle_->GetType() == "rectangle" )
-            layer_->StartRectangle( *this );
-    }
+    if( !selectedStyle_ )
+        return;
+    const kernel::Entity_ABC* entity = 0;
+    if( selectedDrawing_ )
+        entity = selectedDrawing_->GetDiffusionEntity();
+    else
+        entity = selectedEntity_;
+    if( !entity && !profile_.IsSupervision() || entity && !profile_.CanBeOrdered( *entity ) )
+        return;
+
+    const QString type = selectedStyle_->GetType();
+    if( type == "line" )
+        layer_->StartLine( *this );
+    else if( type == "polygon" )
+        layer_->StartPolygon( *this );
+    else if( type == "point" )
+        layer_->StartPoint( *this );
+    else if( type == "circle" )
+        layer_->StartCircle( *this );
+    else if( type == "curve" )
+        layer_->StartCurve( *this );
+    else if( type == "rectangle" )
+        layer_->StartRectangle( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -379,7 +390,7 @@ void DrawerPanel::Save()
 // -----------------------------------------------------------------------------
 void DrawerPanel::Clear()
 {
-    model_.Purge();
+    DoClear();
     selectedDrawing_ = 0;
 }
 

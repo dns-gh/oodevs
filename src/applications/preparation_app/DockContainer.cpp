@@ -70,7 +70,7 @@ DockContainer::DockContainer( QMainWindow* parent,
     {
         gui::RichDockWidget* pCreationDockWnd = new gui::RichDockWidget( controllers, parent, "creation", tools::translate( "DockContainer", "Creation" ) );
         pCreationDockWnd->SetModes( eModes_Default | eModes_LivingArea | eModes_Terrain );
-        pCreationPanel_ = new CreationPanels( pCreationDockWnd, controllers, staticModel, model, config, symbols, colorStrategy, paramLayer, weatherLayer, glMainProxy, colorController );
+        pCreationPanel_ = new CreationPanels( pCreationDockWnd, controllers, staticModel, model, config, symbols, colorStrategy, paramLayer, weatherLayer, glMainProxy, colorController, profile );
         pCreationDockWnd->setWidget( pCreationPanel_ );
         parent->addDockWidget( Qt::RightDockWidgetArea, pCreationDockWnd );
     }

@@ -156,7 +156,7 @@ DockContainer::DockContainer( QMainWindow* parent,
     // -----------------------------------------------------------------------------
     // Creation panel
     {
-        creationPanel_ = new CreationPanels( parent, controllers, staticModel, model, simulation, paramLayer, weatherLayer, glMainProxy, symbolIcons, colorStrategy, config );
+        creationPanel_ = new CreationPanels( parent, controllers, staticModel, model, simulation, paramLayer, weatherLayer, glMainProxy, symbolIcons, colorStrategy, config, profile );
         creationPanel_->SetModes( eModes_Default );
         parent->addDockWidget( Qt::RightDockWidgetArea, creationPanel_ );
     }
@@ -218,7 +218,7 @@ DockContainer::DockContainer( QMainWindow* parent,
     // Timelines
     {
         // New Timeline
-        auto timeline = new TimelineDockWidget( parent, controllers, config, model, glWidgetManager );
+        auto timeline = new TimelineDockWidget( parent, controllers, config, model, glWidgetManager, profile );
         timeline->SetModes( eModes_Default );
         parent->addDockWidget( Qt::TopDockWidgetArea, timeline );
         eventDockWidget_->SetTimelineHandler( timeline->GetWebView() );

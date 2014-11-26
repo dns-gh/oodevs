@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __DrawerPanel_h_
-#define __DrawerPanel_h_
+#ifndef __gui_DrawerPanel_h_
+#define __gui_DrawerPanel_h_
 
 #include "InfoPanel_ABC.h"
 #include "Drawing.h"
@@ -24,7 +24,7 @@ namespace kernel
     class Entity_ABC;
     class Formation_ABC;
     class ModelLoaded;
-    class Drawing_ABC;
+    class Profile_ABC;
 }
 
 namespace tools
@@ -70,7 +70,8 @@ public:
                           kernel::Controllers& controllers,
                           DrawerModel& model,
                           DrawingTypes& types,
-                          const tools::ExerciseConfig& config );
+                          const tools::ExerciseConfig& config,
+                          const kernel::Profile_ABC& profile );
     virtual ~DrawerPanel();
     //@}
 
@@ -91,6 +92,7 @@ private slots:
 private:
     //! @name Helpers
     //@{
+    virtual void DoClear() const = 0;
     virtual void NotifyCreated( const DrawingCategory& category );
     virtual void NotifyDeleted( const DrawingCategory& category );
     virtual void NotifyUpdated( const kernel::ModelLoaded& model );
@@ -110,12 +112,18 @@ private:
     typedef std::map< const DrawingCategory*, DrawingCategoryItem* > T_CategoryItems;
     //@}
 
+protected:
+    //! @name Member data
+    //@{
+    DrawerModel& model_;
+    const kernel::Profile_ABC& profile_;
+    //@}
+
 private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
     std::shared_ptr< ParametersLayer > layer_;
-    DrawerModel& model_;
     DrawingTypes& types_;
     const tools::ExerciseConfig& config_;
     ColorButton* color_;
@@ -131,4 +139,4 @@ private:
 
 }
 
-#endif // __DrawerPanel_h_
+#endif // __gui_DrawerPanel_h_

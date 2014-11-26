@@ -68,7 +68,8 @@ public:
                               const GamingConfig& config,
                               kernel::Controllers& controllers,
                               Model& model,
-                              gui::GLWidgetManager& glWidgetManager );
+                              gui::GLWidgetManager& glWidgetManager,
+                              const kernel::Profile_ABC& profile );
     virtual ~TimelineWebView();
     //@}
 
@@ -166,6 +167,7 @@ private:
     kernel::Controllers& controllers_;
     Model& model_;
     gui::GLWidgetManager& glWidgetManager_;
+    const kernel::Profile_ABC& profile_;
 
     boost::scoped_ptr< timeline::Server_ABC > server_;
     boost::shared_ptr< timeline::Event > selected_;
