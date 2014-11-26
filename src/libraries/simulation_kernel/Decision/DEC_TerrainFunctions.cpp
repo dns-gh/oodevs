@@ -9,8 +9,8 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_TerrainFunctions.h"
-#include "DEC_Decision.h"
-#include "Brain.h"
+#include "Decision/Brain.h"
+#include "Decision/DEC_Decision.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Terrain/PHY_RoleInterface_TerrainAnalysis.h"
 #include "simulation_terrain/TER_Analyzer.h"
@@ -18,25 +18,36 @@
 #include "simulation_terrain/TER_World.h"
 #include <spatialcontainer/TerrainData.h>
 
+void DEC_TerrainFunctions::Register( sword::Brain& brain )
+{
+    brain.RegisterFunction( "DEC_Geometrie_FindRoadIntersectionWithZone", &DEC_TerrainFunctions::GetRoadIntersectionsWithZone );
+    brain.RegisterFunction( "DEC_Geometrie_IsLinearRiverInBetween", &DEC_TerrainFunctions::IsLinearRiverInBetween );
+    brain.RegisterFunction( "DEC_Geometrie_IsWaterInBetween", &DEC_TerrainFunctions::IsWaterInBetween );
+    brain.RegisterFunction( "DEC_Geometrie_GetTerrainData", &DEC_TerrainFunctions::GetTerrainData );
+    brain.RegisterFunction( "_DEC_FindSafetyPositions", &DEC_TerrainFunctions::FindSafetyPositionsWithinCircle );
+    brain.RegisterFunction( "_DEC_Crossroads", &DEC_TerrainFunctions::GetCrossroads );
+    brain.RegisterFunction( "DEC_Agent_CanMoveOn", &DEC_TerrainFunctions::CanMoveOn );
+}
+
 // -----------------------------------------------------------------------------
 // Name: DEC_TerrainFunctions::GetCrossroads
 // Created: MGD 2009-08-19
 // -----------------------------------------------------------------------------
-void DEC_TerrainFunctions::GetCrossroads( sword::Brain& brain, MIL_AgentPion& pion, directia::tools::binders::ScriptRef& knowledgeCreateFunction, const directia::tools::binders::ScriptRef& table )
+std::vector< boost::shared_ptr< MT_Vector2D > > DEC_TerrainFunctions::GetCrossroads( DEC_Decision_ABC* agent )
 {
     std::vector< boost::shared_ptr< MT_Vector2D > > points;
-    pion.GetRole< PHY_RoleInterface_TerrainAnalysis >().GetCrossroads( points );
-    knowledgeCreateFunction( table, brain.GetScriptRef( "integration.ontology.types.point" ), points, true );
+    agent->GetPion().GetRole< PHY_RoleInterface_TerrainAnalysis >().GetCrossroads( points );
+    return points;
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_TerrainFunctions::FindSafetyPositionsWithinCircle
 // Created: LDC 2010-10-27
 // -----------------------------------------------------------------------------
-std::vector< boost::shared_ptr< MT_Vector2D > > DEC_TerrainFunctions::FindSafetyPositionsWithinCircle( MIL_AgentPion& pion, float radius, float safetyDistance )
+std::vector< boost::shared_ptr< MT_Vector2D > > DEC_TerrainFunctions::FindSafetyPositionsWithinCircle( DEC_Decision_ABC* agent, float radius, float safetyDistance )
 {
     std::vector< boost::shared_ptr< MT_Vector2D > > points;
-    pion.GetRole< PHY_RoleInterface_TerrainAnalysis >().FindSafetyPositionsWithinCircle( points, radius, safetyDistance );
+    agent->GetPion().GetRole< PHY_RoleInterface_TerrainAnalysis >().FindSafetyPositionsWithinCircle( points, radius, safetyDistance );
     return points;
 }
 

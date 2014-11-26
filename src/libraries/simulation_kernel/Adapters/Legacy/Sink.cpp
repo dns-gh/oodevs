@@ -12,11 +12,11 @@
 #include "Adapters/SinkRoleExtender.h"
 #include "propagation/FloodModel.h"
 #include "propagation/ElevationGetter_ABC.h"
-#include "RolePion_Decision.h"
 #include "NullRoleAdapter.h"
 #include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
 #include "Entities/Agents/Roles/Urban/PHY_RoleInterface_UrbanLocation.h"
 #include "Entities/Agents/Actions/Moving/PHY_RoleAction_Moving.h"
+#include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
 #include "Entities/Agents/Roles/Perception/PHY_RolePion_Perceiver.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
 #include "Entities/Agents/Actions/Loading/PHY_RoleAction_Loading.h"
@@ -156,7 +156,7 @@ void Sink::Clean()
 void Sink::CreateRoles( sword::SinkRoleExtender& ext )
 {
     ext.AddFactory< sword::legacy::NullRoleAdapter >( boost::bind( boost::factory< sword::legacy::NullRoleAdapter* >() ) );
-    ext.AddFactory< sword::legacy::RolePion_Decision >( boost::bind( boost::factory< sword::legacy::RolePion_Decision* >() ,_1, gcPause_, gcMult_, decLogger_.get() ) );
+    ext.AddFactory< DEC_RolePion_Decision >( boost::bind( boost::factory< DEC_RolePion_Decision* >() ,_1, gcPause_, gcMult_, decLogger_.get() ) );
     ext.AddFactory< moving::PHY_RoleAction_Moving >( boost::bind( boost::factory< moving::PHY_RoleAction_Moving* >() ,_1 ) );
     ext.AddFactory< PHY_RolePion_Location >( boost::bind( boost::factory< PHY_RolePion_Location* >() ,_1 ) );
     ext.AddFactory< PHY_RolePion_Perceiver >( boost::bind( boost::factory< PHY_RolePion_Perceiver* >() ,_1 ) );

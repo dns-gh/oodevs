@@ -14,12 +14,14 @@
 
 #include "MT_Tools/MT_Vector2DTypes.h"
 
+namespace sword
+{
+    class Brain;
+}
+
 class DEC_Decision_ABC;
 class DEC_ResourceNetwork;
-class MIL_Agent_ABC;
-class MIL_Automate;
 class PHY_ComposanteTypePion;
-class PHY_ComposantePion;
 class PHY_HumanWound;
 
 // =============================================================================
@@ -28,6 +30,8 @@ class PHY_HumanWound;
 class DEC_LogisticFunctions
 {
 public:
+    static void Register( sword::Brain& brain );
+
     //! @name Maintenance
     //@{
     static void MaintenanceEnableSystem( DEC_Decision_ABC* caller );
@@ -64,20 +68,20 @@ public:
     static void SupplyEnableSystem( DEC_Decision_ABC* caller );
     static void SupplyDisableSystem( DEC_Decision_ABC* caller );
 
-    static void ConvoyNotifyMovedToSupplier( MIL_Agent_ABC& callerAgent );
-    static void ConvoyNotifyMovedToTransportersProvider( MIL_Agent_ABC& callerAgent );
-    static void ConvoyNotifyMovedToSupplyRecipient( MIL_Agent_ABC& callerAgent );
-    static void ConvoyEndMission( MIL_Agent_ABC& callerAgent );
-    static int  ConvoyGetCurrentAction( const MIL_Agent_ABC& callerAgent );
-    static DEC_Decision_ABC* ConvoyGetCurrentSupplyRecipient( const MIL_Agent_ABC& callerAgent );
-    static DEC_Decision_ABC* ConvoyGetTransportersProvider  ( const MIL_Agent_ABC& callerAgent );
-    static DEC_Decision_ABC* ConvoyGetSupplier              ( const MIL_Agent_ABC& callerAgent );
-    static std::vector< boost::shared_ptr< MT_Vector2D > > ConvoyGetPathToNextDestination( const MIL_Agent_ABC& callerAgent );
-    static bool ConvoyIsPushedFlow( const MIL_Agent_ABC& callerAgent );
+    static void ConvoyNotifyMovedToSupplier( DEC_Decision_ABC* callerAgent );
+    static void ConvoyNotifyMovedToTransportersProvider( DEC_Decision_ABC* callerAgent );
+    static void ConvoyNotifyMovedToSupplyRecipient( DEC_Decision_ABC* callerAgent );
+    static void ConvoyEndMission( DEC_Decision_ABC* callerAgent );
+    static int  ConvoyGetCurrentAction( const DEC_Decision_ABC* callerAgent );
+    static DEC_Decision_ABC* ConvoyGetCurrentSupplyRecipient( const DEC_Decision_ABC* callerAgent );
+    static DEC_Decision_ABC* ConvoyGetTransportersProvider  ( const DEC_Decision_ABC* callerAgent );
+    static DEC_Decision_ABC* ConvoyGetSupplier              ( const DEC_Decision_ABC* callerAgent );
+    static std::vector< boost::shared_ptr< MT_Vector2D > > ConvoyGetPathToNextDestination( const DEC_Decision_ABC* callerAgent );
+    static bool ConvoyIsPushedFlow( const DEC_Decision_ABC* callerAgent );
 
     static void RequestSupply( DEC_Decision_ABC* caller );
 
-    static void ChangeDotationsValueUsingTC2( MIL_Agent_ABC& callerAgent, int dotationType, const double rCapacityFactor, int ammoDotationClassId );
+    static void ChangeDotationsValueUsingTC2( DEC_Decision_ABC* callerAgent, int dotationType, const double rCapacityFactor, int ammoDotationClassId );
     static void EnforceAviationResources( DEC_Decision_ABC* callerAgent, int aviationRange );
 
     static void ConnectToResourceNode( DEC_Decision_ABC* callerAgent, boost::shared_ptr< DEC_ResourceNetwork > resourceNetwork );
@@ -86,12 +90,12 @@ public:
 
     //! @name Misc
     //@{
-    static DEC_Decision_ABC* PionGetPcTC2( const MIL_Agent_ABC& );
+    static DEC_Decision_ABC* PionGetPcTC2( const DEC_Decision_ABC* );
     static DEC_Decision_ABC* AutomateGetPcTC2( const DEC_Decision_ABC* );
 
-    static void UndoLendCollectionComposantes( MIL_Agent_ABC& callerAgent, const DEC_Decision_ABC* pTarget, const unsigned int nNbrToGetBack );
-    static void UndoLendHaulerComposantes( MIL_Agent_ABC& callerAgent, const DEC_Decision_ABC* pTarget, const unsigned int nNbrToGetBack );
-    static void UndoLendSpecificComposantes( MIL_Agent_ABC& callerAgent, const DEC_Decision_ABC* pTarget, PHY_ComposanteTypePion* type, const unsigned int nNbrToGetBack );
+    static void UndoLendCollectionComposantes( DEC_Decision_ABC* callerAgent, const DEC_Decision_ABC* pTarget, unsigned int nNbrToGetBack );
+    static void UndoLendHaulerComposantes( DEC_Decision_ABC* callerAgent, const DEC_Decision_ABC* pTarget, unsigned int nNbrToGetBack );
+    static void UndoLendSpecificComposantes( DEC_Decision_ABC* callerAgent, const DEC_Decision_ABC* pTarget, PHY_ComposanteTypePion* type, unsigned int nNbrToGetBack );
     //@}
 };
 

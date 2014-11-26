@@ -10,6 +10,7 @@
 #include "simulation_kernel_pch.h"
 #include "DEC_AutomateFunctions.h"
 #include "DEC_GeometryFunctions.h"
+#include "Decision/Brain.h"
 #include "Entities/Automates/DEC_AutomateDecision.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Communications/PHY_RolePion_Communications.h"
@@ -27,6 +28,57 @@
 #include "protocol/ClientSenders.h"
 #include "DEC_PerceptionFunctions.h"
 #include "Tools/MIL_Tools.h"
+
+void DEC_AutomateFunctions::Register( sword::Brain& brain )
+{
+    // Accessors
+    brain.RegisterFunction( "_DEC_Automate_PionsSansPC", &DEC_AutomateFunctions::GetPionsWithoutPC );
+    brain.RegisterFunction( "_DEC_Automate_PionPC", &DEC_AutomateFunctions::GetPionPC );
+    brain.RegisterFunction( "DEC_Automate_PionPCDeAutomate", &DEC_AutomateFunctions::GetPionPCOfAutomate );
+    brain.RegisterFunction( "DEC_Automate_PionsDeAutomateSansPC", &DEC_AutomateFunctions::GetPionsOfAutomateWithoutPC );
+    brain.RegisterFunction( "DEC_Automate_PionsDeAutomateAvecPC", &DEC_AutomateFunctions::GetAutomatPionsWithPC );
+    brain.RegisterFunction( "DEC_Automate_PionsDeAutomateSansPCCommunication", &DEC_AutomateFunctions::GetCommunicationPionsOfAutomateWithoutPC );
+    brain.RegisterFunction( "DEC_Automate_PionsDeAutomateAvecPCCommunication", &DEC_AutomateFunctions::GetCommunicationAutomatPionsWithPC );
+    brain.RegisterFunction( "_DEC_Automate_AutomatesSubordonnes", &DEC_AutomateFunctions::GetAutomates );
+    brain.RegisterFunction( "_DEC_Automate_PionsMelee", &DEC_AutomateFunctions::GetPionsMelee );
+    brain.RegisterFunction( "_DEC_Automate_PionsGenie", &DEC_AutomateFunctions::GetPionsGenie );
+    brain.RegisterFunction( "_DEC_AutomateSuperieur_EstEmbraye", &DEC_AutomateFunctions::IsParentAutomateEngaged );
+    brain.RegisterFunction( "_DEC_Automate_PionsAvecPCCommunication", &DEC_AutomateFunctions::GetCommunicationPionsWithPC );
+    brain.RegisterFunction( "_DEC_Automate_PionsSansPCCommunication", &DEC_AutomateFunctions::GetCommunicationPionsWithoutPC );
+    brain.RegisterFunction( "DEC_Automate_Position", &DEC_AutomateFunctions::GetBarycenter );
+
+    // State
+    brain.RegisterFunction( "_DEC_Automate_ROE", &DEC_AutomateFunctions::GetRulesOfEngagementState );
+    brain.RegisterFunction( "_DEC_Automate_ChangeEtatROE", &DEC_AutomateFunctions::NotifyRulesOfEngagementStateChanged );
+    brain.RegisterFunction( "_DEC_Automate_ChangeEtatROEPopulation", &DEC_AutomateFunctions::NotifyRulesOfEngagementPopulationStateChanged );
+    brain.RegisterFunction( "_DEC_Automate_ROEPopulation", &DEC_AutomateFunctions::GetRoePopulation );
+    brain.RegisterFunction( "_DEC_Automate_isLogistic", &DEC_AutomateFunctions::IsLogistic );
+
+    // Agent accessors
+    brain.RegisterFunction( "_DEC_Automate_PionEstContamine", &DEC_AutomateFunctions::IsPionContaminated );
+    brain.RegisterFunction( "_DEC_Automate_PionEstEmpoisonne", &DEC_AutomateFunctions::IsPionIntoxicated );
+    brain.RegisterFunction( "_DEC_Automate_PionEstNeutralise", &DEC_AutomateFunctions::IsPionNeutralized );
+    brain.RegisterFunction( "_DEC_Automate_PionEstTransporte", &DEC_AutomateFunctions::IsPionTransported );
+    brain.RegisterFunction( "_DEC_Automate_PionRelevePion",  &DEC_AutomateFunctions::MakePionRelievePion );
+    brain.RegisterFunction( "_DEC_Automate_PionPeutReleverPion",  &DEC_AutomateFunctions::CanPionRelievePion );
+    brain.RegisterFunction( "_DEC_Automate_EstPointDansFuseauPion", &DEC_AutomateFunctions::IsPointInPionFuseau );
+    brain.RegisterFunction( "_DEC_Automate_PionPeutConstruireObjet", &DEC_AutomateFunctions::CanPionConstructObject );
+    brain.RegisterFunction( "_DEC_Automate_PionPeutConstruireObjetAvecLocalisation", &DEC_AutomateFunctions::CanPionConstructObjectWithLocalisation );
+    brain.RegisterFunction( "_DEC_Automate_PionPeutConstruireContournementObjet", &DEC_AutomateFunctions::CanPionBypassObject );
+    brain.RegisterFunction( "_DEC_Automate_PionPeutDetruireObjet", &DEC_AutomateFunctions::CanPionDestroyObject );
+    brain.RegisterFunction( "_DEC_Automate_PionPeutDevaloriserObjet", &DEC_AutomateFunctions::CanPionDemineObject );
+
+    brain.RegisterFunction( "_DEC_Pion_ChangeAutomate", &DEC_AutomateFunctions::PionChangeAutomate );
+    brain.RegisterFunction( "DEC_Automate_PionPosition", &DEC_AutomateFunctions::GetPionPosition );
+    brain.RegisterFunction( "DEC_Automate_PerceptionPourPion", &DEC_AutomateFunctions::GetPerceptionForPion );
+    brain.RegisterFunction( "DEC_Automate_CalculerPositionParRapportALimaPourPion", &DEC_AutomateFunctions::ComputePointBeforeLimaForPion );
+    brain.RegisterFunction( "DEC_Automate_PionTempsPourParcourirDistanceEnLigneDroite", &DEC_AutomateFunctions::PionTimeToMoveDistance );
+    brain.RegisterFunction( "DEC_GetRawMission", &DEC_AutomateFunctions::GetMission );
+    brain.RegisterFunction( "DEC_SetMission", &DEC_AutomateFunctions::SetMission );
+
+    brain.RegisterFunction( "DEC_Automate_CalculerPointProcheLocalisationDansFuseauPourPion", &DEC_AutomateFunctions::ComputePionNearestLocalisationPointInFuseau );
+    brain.RegisterFunction( "DEC_Automate_GetEfficacite", &DEC_AutomateFunctions::GetPionEfficiency );
+}
 
 // -----------------------------------------------------------------------------
 // Name: DEC_AutomateFunctions::GetBarycenter
@@ -472,7 +524,7 @@ double DEC_AutomateFunctions::GetPerceptionForPion( const DEC_Decision_ABC* pPio
 {
     if( !pPion )
         throw MASA_EXCEPTION( "Invalid pion in GetPerceptionForPion" );
-    return DEC_PerceptionFunctions::GetPerception( pPion->GetPion(), pPoint, pTarget );
+    return DEC_PerceptionFunctions::GetPerception( pPion, pPoint, pTarget );
 }
 
 // -----------------------------------------------------------------------------

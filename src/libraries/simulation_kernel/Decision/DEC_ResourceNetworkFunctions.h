@@ -12,6 +12,11 @@
 
 #include "Knowledge/DEC_Knowledge_Def.h"
 
+namespace sword
+{
+    class Brain;
+}
+
 class DEC_Decision_ABC;
 class DEC_Knowledge_Object;
 class DEC_ResourceNetwork;
@@ -29,6 +34,8 @@ class TER_Localisation;
 class DEC_ResourceNetworkFunctions
 {
 public:
+    static void Register( sword::Brain& brain );
+
     //! @name Functions
     //@{
     static boost::shared_ptr< MT_Vector2D > GetResourceNetworkPosition( boost::shared_ptr< DEC_ResourceNetwork > resourceNetwork );

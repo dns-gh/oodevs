@@ -9,6 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_KnowledgeObjectFunctions.h"
+#include "Decision/Brain.h"
 #include "Decision/DEC_Decision_ABC.h"
 #include "Decision/DEC_Tools.h"
 #include "Entities/MIL_Army.h"
@@ -46,14 +47,71 @@
 #include "Knowledge/MIL_KnowledgeGroup.h"
 #include "Knowledge/DEC_BlackBoard_CanContainKnowledgeObject.h"
 
+void DEC_KnowledgeObjectFunctions::Register( sword::Brain& brain )
+{
+    brain.RegisterFunction( "DEC_ConnaissanceObjet_PeutEtreValorise", &DEC_KnowledgeObjectFunctions::CanBeValorized );
+    brain.RegisterFunction( "DEC_ConnaissanceObjet_EstUneIssueDeReseauSouterrain", &DEC_KnowledgeObjectFunctions::IsUndergroundNetworkExit );
+    brain.RegisterFunction( "DEC_ConnaissanceObjet_ActiverIssueDeReseauSouterrain", &DEC_KnowledgeObjectFunctions::ActivateUndergroundNetworkExit );
+    brain.RegisterFunction( "DEC_ConnaissanceObjet_DesactiverIssueDeReseauSouterrain", &DEC_KnowledgeObjectFunctions::DeactivateUndergroundNetworkExit );
+    brain.RegisterFunction( "DEC_ConnaissanceObjet_IssuesDuMemeReseauSouterrain", DEC_KnowledgeObjectFunctions::EnterAndExitInSameUndergroundNetwork );
+    brain.RegisterFunction( "DEC_ObjectKnowledge_HasCapacity", &DEC_KnowledgeObjectFunctions::HasCapacity );
+    brain.RegisterFunction( "DEC_ObjectKnowledge_BuildInstantaneously", &DEC_KnowledgeObjectFunctions::BuildInstantaneously );
+    brain.RegisterFunction( "DEC_ObjectKnowledge_IsFullMined", &DEC_KnowledgeObjectFunctions::IsFullMined );
+    brain.RegisterFunction( "DEC_ObjectKnowledge_MustBeMined", &DEC_KnowledgeObjectFunctions::MustBeMined );
+    brain.RegisterFunction( "DEC_ObjectKnowledge_IsTrafficable", &DEC_KnowledgeObjectFunctions::IsObjectTrafficable );
+    brain.RegisterFunction( "DEC_ConnaissanceObjet_EstConstuit", &DEC_KnowledgeObjectFunctions::IsConstructed );
+    brain.RegisterFunction( "DEC_ConnaissanceObjet_EstObstacleDeManoeuvreActif", &DEC_KnowledgeObjectFunctions::IsObstacleActivated );
+    brain.RegisterFunction( "DEC_ConnaissanceObjet_DateActivationObstacle", &DEC_KnowledgeObjectFunctions::GetActivationTime );
+    brain.RegisterFunction( "DEC_ConnaissanceObjet_EstObstacleDeManoeuvre", &DEC_KnowledgeObjectFunctions::IsActivableObstacle );
+    brain.RegisterFunction( "DEC_ConnaissanceObjet_EstContourne", &DEC_KnowledgeObjectFunctions::IsBypassed );
+    brain.RegisterFunction( "DEC_ConnaissanceObjet_EstValorise", &DEC_KnowledgeObjectFunctions::IsMined );
+    brain.RegisterFunction( "DEC_ConnaissanceObjet_EstBreche", &DEC_KnowledgeObjectFunctions::IsBreached );
+    brain.RegisterFunction( "DEC_ConnaissanceObjet_NiveauConstruction", &DEC_KnowledgeObjectFunctions::GetConstructionLevel );
+    brain.RegisterFunction( "DEC_ConnaissanceObjet_NiveauValorisation", &DEC_KnowledgeObjectFunctions::GetValorizationLevel );
+    brain.RegisterFunction( "DEC_ConnaissanceObjet_Localisation", &DEC_KnowledgeObjectFunctions::GetLocalisation );
+    brain.RegisterFunction( "DEC_ConnaissanceObjet_Type", &DEC_KnowledgeObjectFunctions::GetType );
+    brain.RegisterFunction( "DEC_ConnaissanceObjet_Name", &DEC_KnowledgeObjectFunctions::GetName );
+    brain.RegisterFunction( "DEC_ConnaissanceObjet_NiveauAnimation", &DEC_KnowledgeObjectFunctions::GetAnimationLevel );
+    brain.RegisterFunction( "DEC_ConnaissanceObjet_LargeurSiteFranchissement", &DEC_KnowledgeObjectFunctions::GetSiteFranchissementWidth );
+    brain.RegisterFunction( "DEC_ConnaissanceObjet_EstReconnu", &DEC_KnowledgeObjectFunctions::IsRecon );
+    brain.RegisterFunction( "DEC_ConnaissanceObjet_PeutEtreContourne", &DEC_KnowledgeObjectFunctions::CanBeBypassed );
+    brain.RegisterFunction( "DEC_ConnaissanceObjet_ChangeDensitePopulationSortante", &DEC_KnowledgeObjectFunctions::SetExitingPopulationDensity );
+    brain.RegisterFunction( "DEC_ConnaissanceObjet_ResetDensitePopulationSortante", &DEC_KnowledgeObjectFunctions::ResetExitingPopulationDensity );
+    brain.RegisterFunction( "DEC_ConnaissanceObjet_PointEstDansZoneEvitement", &DEC_KnowledgeObjectFunctions::IsInAvoidanceArea );
+    brain.RegisterFunction( "DEC_ConnaissanceObjet_PointEstProcheZoneEffet", &DEC_KnowledgeObjectFunctions::IsNearEffectArea );
+    brain.RegisterFunction( "DEC_ConnaissanceObjet_BurningLevel", &DEC_KnowledgeObjectFunctions::GetBurningLevel );
+    brain.RegisterFunction( "DEC_IsValidKnowledgeObject", &DEC_KnowledgeObjectFunctions::IsKnowledgeValid );  
+
+    brain.RegisterFunction( "DEC_Agent_SeDissimulerDansReseauSouterrain", &DEC_KnowledgeObjectFunctions::HideInUndergroundNetwork );
+    brain.RegisterFunction( "DEC_Agent_SortirDuReseauSouterrain", &DEC_KnowledgeObjectFunctions::GetOutFromUndergroundNetwork );
+    brain.RegisterFunction( "DEC_Agent_TempsPourTraverserReseauSouterrain", &DEC_KnowledgeObjectFunctions::EstimatedUndergroundTime );
+    brain.RegisterFunction( "DEC_ConnaissanceObjet_DemandeDeDecontaminationSurPion", &DEC_KnowledgeObjectFunctions::QueueUnitForDecontamination );
+    brain.RegisterFunction( "DEC_Agent_DecontamineConnaissance",
+        std::function< int( boost::shared_ptr< DEC_Knowledge_Agent >, boost::shared_ptr< DEC_Knowledge_Object > ) >( boost::bind( &DEC_KnowledgeObjectFunctions::QueueKnowledgeForDecontamination, _1, _2 ) ) );
+    brain.RegisterFunction( "DEC_Circulation_EquiperItineraireLogistique", &DEC_KnowledgeObjectFunctions::EquipLogisticRoute );
+
+    brain.RegisterFunction( "DEC_ObjectKnowledge_IsImpassable", &DEC_KnowledgeObjectFunctions::IsImpassable );
+
+    // Agent
+    brain.RegisterFunction( "_DEC_ConnaissanceObjet_EstUnEnnemi", &DEC_KnowledgeObjectFunctions::IsAnEnemy );
+    brain.RegisterFunction( "_DEC_ConnaissanceObjet_EstUnAllie", &DEC_KnowledgeObjectFunctions::IsAFriend );
+    brain.RegisterFunction( "_DEC_ConnaissanceObjet_Reconnaitre", &DEC_KnowledgeObjectFunctions::Recon );
+    brain.RegisterFunction( "_DEC_ConnaissanceObjet_PeutEtreOccupe", &DEC_KnowledgeObjectFunctions::CanBeOccupied );
+    brain.RegisterFunction( "_DEC_ConnaissanceObjet_PeutEtreAnime", &DEC_KnowledgeObjectFunctions::CanBeAnimated );
+    brain.RegisterFunction( "_DEC_ConnaissanceObjet_Degrader", &DEC_KnowledgeObjectFunctions::DamageObject );
+    brain.RegisterFunction( "_DEC_ConnaissanceObjet_NiveauDePerceptionCourant", &DEC_KnowledgeObjectFunctions::GetCurrentPerceptionLevel );
+    brain.RegisterFunction( "_DEC_Agent_TempsPourDegagerUnObjet", &DEC_KnowledgeObjectFunctions::EstimatedWorkTime );
+    brain.RegisterFunction( "_DEC_DecontaminerZone", &DEC_KnowledgeObjectFunctions::DecontaminateZone );
+}
+
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeObjectFunctions::Recon
 // Created: NLD 2004-10-29
 // -----------------------------------------------------------------------------
-void DEC_KnowledgeObjectFunctions::Recon( const MIL_Agent_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
+void DEC_KnowledgeObjectFunctions::Recon( const DEC_Decision_ABC* callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
 {
     if( pKnowledge && pKnowledge->IsValid() )
-        pKnowledge->Recon( callerAgent );
+        pKnowledge->Recon( callerAgent->GetPion() );
 }
 
 namespace
@@ -129,10 +187,10 @@ int DEC_KnowledgeObjectFunctions::QueueKnowledgeForDecontamination( boost::share
 // Name: DEC_KnowledgeObjectFunctions::CanBeAnimated
 // Created: NLD 2004-11-03
 // -----------------------------------------------------------------------------
-bool DEC_KnowledgeObjectFunctions::CanBeAnimated( const MIL_Agent_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
+bool DEC_KnowledgeObjectFunctions::CanBeAnimated( const DEC_Decision_ABC* callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
 {
     if( const MIL_Object_ABC* object = GetObjectKnown( pKnowledge ) )
-        return ( *object )().CanBeAnimatedBy( callerAgent );
+        return ( *object )().CanBeAnimatedBy( callerAgent->GetPion() );
     return false;
 }
 
@@ -151,7 +209,7 @@ float DEC_KnowledgeObjectFunctions::GetAnimationLevel( boost::shared_ptr< DEC_Kn
 // Name: DEC_KnowledgeObjectFunctions::DecontaminateZone
 // Created: NLD 2005-03-22
 // -----------------------------------------------------------------------------
-void DEC_KnowledgeObjectFunctions::DecontaminateZone( const MIL_Agent_ABC& callerAgent, const TER_Localisation* location )
+void DEC_KnowledgeObjectFunctions::DecontaminateZone( const DEC_Decision_ABC* callerAgent, const TER_Localisation* location )
 {
     if( !location )
         throw MASA_EXCEPTION( "invalid parameter." );
@@ -159,7 +217,7 @@ void DEC_KnowledgeObjectFunctions::DecontaminateZone( const MIL_Agent_ABC& calle
     filter.Set( "nbc zone" );
     filter.Set( "nbc cloud" );
     T_KnowledgeObjectVector knownObjects;
-    if( DEC_BlackBoard_CanContainKnowledgeObject* container = callerAgent.GetKnowledgeGroup()->GetKnowledgeObjectContainer() )
+    if( DEC_BlackBoard_CanContainKnowledgeObject* container = callerAgent->GetKnowledgeGroup()->GetKnowledgeObjectContainer() )
         container->GetObjects( knownObjects, filter );
     for( auto it = knownObjects.begin(); it != knownObjects.end(); ++it )
         if( *it && location->IsIntersecting( ( *it )->GetLocalisation() ) )
@@ -175,13 +233,13 @@ void DEC_KnowledgeObjectFunctions::DecontaminateZone( const MIL_Agent_ABC& calle
 // Name: DEC_KnowledgeObjectFunctions::DamageObject
 // Created: SBO 2006-01-23
 // -----------------------------------------------------------------------------
-int DEC_KnowledgeObjectFunctions::DamageObject( MIL_Agent_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge, float factor, const PHY_DotationCategory* dotation )
+int DEC_KnowledgeObjectFunctions::DamageObject( DEC_Decision_ABC* callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge, float factor, const PHY_DotationCategory* dotation )
 {
     if( MIL_Object_ABC* pObject = GetObjectKnown( pKnowledge ) )
         if( ( *pObject )().CanBePerceived() )
         {
             ( *pObject )().Destroy( factor );
-            callerAgent.Get< dotation::PHY_RoleInterface_Dotations >().AddFireReservation( *dotation, 1 );
+            callerAgent->GetPion().Get< dotation::PHY_RoleInterface_Dotations >().AddFireReservation( *dotation, 1 );
             return static_cast< int >( eQueryValid );
         }
     return static_cast< int >( eQueryInvalid );
@@ -191,10 +249,10 @@ int DEC_KnowledgeObjectFunctions::DamageObject( MIL_Agent_ABC& callerAgent, boos
 // Name: DEC_KnowledgeObjectFunctions::CanBeOccupied
 // Created: NLD 2004-11-26
 // -----------------------------------------------------------------------------
-bool DEC_KnowledgeObjectFunctions::CanBeOccupied( const MIL_Agent_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
+bool DEC_KnowledgeObjectFunctions::CanBeOccupied( const DEC_Decision_ABC* callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
 {
     if( const MIL_Object_ABC* pObject = GetObjectKnown( pKnowledge ) )
-        return ( *pObject )().CanBeOccupiedBy( callerAgent );
+        return ( *pObject )().CanBeOccupiedBy( callerAgent->GetPion() );
     return false;
 }
 
@@ -442,10 +500,10 @@ bool DEC_KnowledgeObjectFunctions::IsRecon( boost::shared_ptr< DEC_Knowledge_Obj
 // Name: DEC_KnowledgeObjectFunctions::IsAnEnemy
 // Created: MGD 2010-01-26
 // -----------------------------------------------------------------------------
-int DEC_KnowledgeObjectFunctions::IsAnEnemy( const MIL_Entity_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
+int DEC_KnowledgeObjectFunctions::IsAnEnemy( const DEC_Decision_ABC* callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
 {
     if( pKnowledge && pKnowledge->IsValid() )
-        return static_cast< int >( pKnowledge->IsAnEnemy( callerAgent.GetArmy() ) );
+        return static_cast< int >( pKnowledge->IsAnEnemy( callerAgent->GetEntity().GetArmy() ) );
     return static_cast< int >( eTristate_DontKnow );
 }
 
@@ -453,10 +511,10 @@ int DEC_KnowledgeObjectFunctions::IsAnEnemy( const MIL_Entity_ABC& callerAgent, 
 // Name: DEC_KnowledgeObjectFunctions::IsAFriend
 // Created: MGD 2010-01-26
 // -----------------------------------------------------------------------------
-int DEC_KnowledgeObjectFunctions::IsAFriend( const MIL_Entity_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
+int DEC_KnowledgeObjectFunctions::IsAFriend( const DEC_Decision_ABC* callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
 {
     if( pKnowledge && pKnowledge->IsValid() )
-        return static_cast< int >( pKnowledge->IsAFriend( callerAgent.GetArmy() ) );
+        return static_cast< int >( pKnowledge->IsAFriend( callerAgent->GetEntity().GetArmy() ) );
     return static_cast< int >( eTristate_DontKnow );
 }
 
@@ -464,10 +522,10 @@ int DEC_KnowledgeObjectFunctions::IsAFriend( const MIL_Entity_ABC& callerAgent, 
 // Name: DEC_KnowledgeObjectFunctions::GetCurrentPerceptionLevel
 // Created: SLG 2010-01-27
 // -----------------------------------------------------------------------------
-int DEC_KnowledgeObjectFunctions::GetCurrentPerceptionLevel( const MIL_Agent_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
+int DEC_KnowledgeObjectFunctions::GetCurrentPerceptionLevel( const DEC_Decision_ABC* callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
 {
     if( pKnowledge && pKnowledge->IsValid() )
-        return static_cast< int >( pKnowledge->GetCurrentPerceptionLevel( callerAgent ).GetID() );
+        return static_cast< int >( pKnowledge->GetCurrentPerceptionLevel( callerAgent->GetPion() ).GetID() );
     return 0;
 }
 
@@ -517,14 +575,14 @@ float DEC_KnowledgeObjectFunctions::GetValorizationLevel( boost::shared_ptr< DEC
 // Name: DEC_KnowledgeObjectFunctions::EstimatedWorkTime
 // Created: GGE & PSN 2010-04-09
 // -----------------------------------------------------------------------------
-float DEC_KnowledgeObjectFunctions::EstimatedWorkTime( MIL_Agent_ABC& pion, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
+double DEC_KnowledgeObjectFunctions::EstimatedWorkTime( DEC_Decision_ABC* pion, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
 {
     if( MIL_Object_ABC* object = GetObjectKnown( pKnowledge ) )
     {
-        PHY_RoleAction_Objects_DataComputer dataComputer( pion, eDestroy, *object );
-        return static_cast< float >( dataComputer.ComputeWorkTime() );
+        PHY_RoleAction_Objects_DataComputer dataComputer( pion->GetPion(), eDestroy, *object );
+        return dataComputer.ComputeWorkTime();
     }
-    return -1.0f;
+    return -1.0;
 }
 
 // -----------------------------------------------------------------------------

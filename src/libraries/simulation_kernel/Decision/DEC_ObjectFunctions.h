@@ -12,12 +12,15 @@
 #ifndef __DEC_ObjectFunctions_h_
 #define __DEC_ObjectFunctions_h_
 
-#include "Entities/Objects/MIL_Object_ABC.h"
-#include "Knowledge/DEC_Knowledge_Object.h"
-#include "protocol/Protocol.h"
+namespace sword
+{
+    class Brain;
+}
 
 class DEC_Decision_ABC;
+class DEC_Knowledge_Object;
 class DEC_Gen_Object;
+class TER_Localisation;
 
 // =============================================================================
 // Created: NLD 2004-03-31
@@ -25,7 +28,7 @@ class DEC_Gen_Object;
 class DEC_ObjectFunctions
 {
 public:
-
+    static void Register( sword::Brain& brain );
     static void RegisterObjectNames( xml::xistream& xis );
 
     //! @name Functions

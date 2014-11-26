@@ -11,6 +11,7 @@
 #include "DEC_ResourceNetworkFunctions.h"
 #include "DEC_ResourceNetwork.h"
 #include "MIL_AgentServer.h"
+#include "Decision/Brain.h"
 #include "Decision/DEC_Decision_ABC.h"
 #include "Entities/MIL_Army_ABC.h"
 #include "Entities/MIL_EntityManager.h"
@@ -27,6 +28,27 @@
 #include "Knowledge/MIL_KnowledgeGroup.h"
 #include "Knowledge/DEC_BlackBoard_CanContainKnowledgeObject.h"
 #include <boost/make_shared.hpp>
+
+void DEC_ResourceNetworkFunctions::Register( sword::Brain& brain )
+{
+    brain.RegisterFunction( "DEC_ReseauRessource_Position", &DEC_ResourceNetworkFunctions::GetResourceNetworkPosition );
+    brain.RegisterFunction( "DEC_ReseauRessource_DesactiverElement", &DEC_ResourceNetworkFunctions::DeactivateResourceNetworkElement );
+    brain.RegisterFunction( "DEC_ReseauRessource_ActiverElement", &DEC_ResourceNetworkFunctions::ActivateResourceNetworkElement );
+    brain.RegisterFunction( "DEC_CreerLienObjetVersReseau", &DEC_ResourceNetworkFunctions::CreateResourceNetworkObjectAndLinkReturn ); // obsolete?
+    brain.RegisterFunction( "DEC_DetruireObjetResourceSansDelais", &DEC_ResourceNetworkFunctions::DestroyResourceNetworkObjectLink ); // obsolete?
+    brain.RegisterFunction( "DEC_ReseauRessourceAugmenteProduction", &DEC_ResourceNetworkFunctions::IncreaseResourceProduction );
+    brain.RegisterFunction( "DEC_ReseauRessourceBaisseProduction", &DEC_ResourceNetworkFunctions::DecreaseResourceProduction );
+    brain.RegisterFunction( "DEC_ResourceNetwork_NodesInZone", &DEC_ResourceNetworkFunctions::GetResourceNetworksInZone );
+    brain.RegisterFunction( "DEC_ResourceNetwork_NodesInZoneByType", &DEC_ResourceNetworkFunctions::GetResourceNetworksInZoneByType );
+    brain.RegisterFunction( "DEC_ResourceNetwork_CreateLinkFromObject", &DEC_ResourceNetworkFunctions::CreateResourceNetworkLinkFromObject );
+    brain.RegisterFunction( "DEC_ResourceNetwork_CreateLinkFromUrbanBlock", &DEC_ResourceNetworkFunctions::CreateResourceNetworkLinkFromUrbanBlock );
+    brain.RegisterFunction( "DEC_ResourceNetwork_CreateLinkFromNode", &DEC_ResourceNetworkFunctions::CreateResourceNetworkLinkFromResourceNetwork );
+    brain.RegisterFunction( "DEC_ResourceNetwork_DestroyLink", &DEC_ResourceNetworkFunctions::DestroyResourceNetworkLink );
+    brain.RegisterFunction( "DEC_ResourceNetwork_DestroyLinkWithObject", &DEC_ResourceNetworkFunctions::DestroyResourceNetworkLinkWithObject );
+    brain.RegisterFunction( "DEC_ResourceNetwork_Create", &DEC_ResourceNetworkFunctions::CreateNode );
+    brain.RegisterFunction( "DEC_ResourceNetwork_GetSupply", &DEC_ResourceNetworkFunctions::GetSupply );
+    brain.RegisterFunction( "DEC_ResourceNetwork_Supply", &DEC_ResourceNetworkFunctions::Supply );
+}
 
 namespace
 {

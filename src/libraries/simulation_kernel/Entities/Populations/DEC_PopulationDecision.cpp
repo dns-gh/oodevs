@@ -96,14 +96,6 @@ std::string DEC_PopulationDecision::GetGroupName()
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_PopulationDecision::RegisterUserFunctions
-// Created: LDC 2009-04-09
-// -----------------------------------------------------------------------------
-void DEC_PopulationDecision::RegisterUserFunctions( sword::Brain& )
-{
-}
-
-// -----------------------------------------------------------------------------
 // Name: DEC_PopulationDecision::StartMissionBehavior
 // Created: NLD 2004-09-03
 // -----------------------------------------------------------------------------

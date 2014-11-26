@@ -12,6 +12,11 @@
 #ifndef __DEC_PopulationFunctions_h_
 #define __DEC_PopulationFunctions_h_
 
+namespace sword
+{
+    class Brain;
+}
+
 class DEC_Decision_ABC;
 class MIL_Population;
 class MIL_Mission_ABC;
@@ -21,13 +26,14 @@ class DEC_Knowledge_Object;
 class MIL_UrbanObject_ABC;
 class DEC_Knowledge_Agent;
 
-
 // =============================================================================
 // Created: NLD 2004-03-31
 // =============================================================================
 class DEC_PopulationFunctions
 {
 public:
+    static void Register( sword::Brain& brain );
+
     //! @name Functions
     //@{
     // State

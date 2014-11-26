@@ -12,25 +12,50 @@
 #include "simulation_kernel_pch.h"
 #include "DEC_ObjectFunctions.h"
 #include "MIL_AgentServer.h"
+#include "Decision/Brain.h"
 #include "Decision/DEC_Decision_ABC.h"
 #include "Decision/DEC_Gen_Object.h"
+#include "Decision/DEC_Tools.h"
 #include "Entities/MIL_Army_ABC.h"
 #include "Entities/MIL_EntityManager.h"
 #include "Entities/Automates/MIL_Automate.h"
+#include "Entities/Objects/MIL_Object_ABC.h"
 #include "Entities/Objects/MIL_ObjectType_ABC.h"
 #include "Entities/Objects/MIL_ObjectManipulator_ABC.h"
 #include "Entities/Objects/ObstacleAttribute.h"
+#include "Knowledge/DEC_Knowledge_Object.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
 #include "Knowledge/DEC_KS_ObjectKnowledgeSynthetizer.h"
 #include "Knowledge/MIL_KnowledgeGroup.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
 #include "simulation_terrain/TER_ObjectManager.h"
 #include "simulation_terrain/TER_World.h"
+#include "protocol/Protocol.h"
 #include <boost/make_shared.hpp>
+
+void DEC_ObjectFunctions::Register( sword::Brain& brain )
+{
+    brain.RegisterFunction( "S_TypeObject_ToString", &DEC_ObjectFunctions::ConvertTypeObjectToString );
+    brain.RegisterFunction( "DEC_ActiverObjet", &DEC_ObjectFunctions::ActivateObject );
+    brain.RegisterFunction( "DEC_CreateDynamicGenObject", &DEC_ObjectFunctions::CreateDynamicGenObject );
+    brain.RegisterFunction( "DEC_CreateDynamicGenObjectFromSharedLocalisation", &DEC_ObjectFunctions::CreateDynamicGenObjectFromSharedLocalisation );
+    brain.RegisterFunction( "DEC_DetruireObjetIdSansDelais", &DEC_ObjectFunctions::MagicDestroyObjectId );
+    brain.RegisterFunction( "DEC_DetruireObjetSansDelais", &DEC_ObjectFunctions::MagicDestroyObject );
+    brain.RegisterFunction( "_DEC_CreerObjetSansDelais", &DEC_ObjectFunctions::MagicCreateObject );
+    brain.RegisterFunction( "_DEC_MagicGetOrCreateObject", &DEC_ObjectFunctions::MagicGetOrCreateObject );
+
+    // Engineering objects
+    brain.RegisterFunction( "DEC_GenObject_Type", &DEC_ObjectFunctions::GetGenObjectType );
+    brain.RegisterFunction( "DEC_GenObject_ExternalIdentifier", &DEC_ObjectFunctions::GetGenObjectExternalIdentifier );
+    brain.RegisterFunction( "DEC_GenObject_Localisation", &DEC_ObjectFunctions::GetGenObjectLocalisation );
+    brain.RegisterFunction( "DEC_GenObjectKnowledge_Localisation", &DEC_ObjectFunctions::GetObjectKnowledgeLocalisation );
+    brain.RegisterFunction( "DEC_GenObject_TypeObstacleManoeuvre", &DEC_ObjectFunctions::GetGenObjectReservedObstacle );
+    brain.RegisterFunction( "DEC_GenObject_TC2", &DEC_ObjectFunctions::GetGenObjectTC2 );
+    brain.RegisterFunction( "DEC_GenObject_Mining", &DEC_ObjectFunctions::GetGenObjectMining );
+}
 
 namespace
 {
-
 
 int MagicCreateObjectInArmy( MIL_Army_ABC& army, const std::string& type, const TER_Localisation& localisation )
 {

@@ -11,7 +11,9 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_MiscFunctions.h"
+#include "Decision/Brain.h"
 #include "Decision/DEC_Representations.h"
+#include "Decision/DEC_Tools.h"
 #include "Entities/MIL_Entity_ABC.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Reinforcement/PHY_RoleInterface_Reinforcement.h"
@@ -27,24 +29,90 @@
 #include "Network/NET_Publisher_ABC.h"
 #include "Tools/MIL_Config.h"
 #include "protocol/ClientSenders.h"
+#include <directia/tools/binders/ScriptRef.h>
 #include <tools/Set.h>
+
+void DEC_MiscFunctions::Register( sword::Brain& brain, bool isMasalife )
+{
+    brain.RegisterFunction( "DEC_GetSzName", &DEC_MiscFunctions::GetName );
+
+    // Gestion des renforts
+    brain.RegisterFunction( "_DEC_Renforts", &DEC_MiscFunctions::GetReinforcements );
+    brain.RegisterFunction( "_DEC_Renforce", &DEC_MiscFunctions::Reinforce );
+    brain.RegisterFunction( "_DEC_AnnuleRenforcement", &DEC_MiscFunctions::CancelReinforcement );
+
+    brain.RegisterFunction( "DEC_GetModulationVitesseMax", &DEC_MiscFunctions::GetMaxSpeedModificator );
+    brain.RegisterFunction( "_DEC_ModulationVitesseCourante", &DEC_MiscFunctions::SetCurrentSpeedModificator );
+    brain.RegisterFunction( "_DEC_ModulationVitesseMax", &DEC_MiscFunctions::SetMaxSpeedModificator );
+
+    // Debug
+    brain.RegisterFunction( "_DEC_DebugAffichePoint", &DEC_MiscFunctions::DebugDrawPoint );
+    brain.RegisterFunction( "_DEC_DebugAffichePoints", &DEC_MiscFunctions::DebugDrawPoints );
+    brain.RegisterFunction( "_DEC_Debug", &DEC_MiscFunctions::Debug );
+    brain.RegisterFunction( "_DEC_Trace", &DEC_MiscFunctions::Trace );
+
+    brain.RegisterFunction( "DEC_Agent_Renforts", &DEC_MiscFunctions::GetAgentReinforcements );
+    brain.RegisterFunction( "DEC_Agent_NombreRenforts", &DEC_MiscFunctions::GetAgentReinforcementsNumber );
+    brain.RegisterFunction( "DEC_GetAutomate", &DEC_MiscFunctions::GetAutomate );
+
+    brain.RegisterFunction( "DEC_AddEnemyRepresentation", &DEC_MiscFunctions::AddEnemyRepresentation );
+    brain.RegisterFunction( "DEC_RemoveEnemyRepresentation", &DEC_MiscFunctions::RemoveEnemyRepresentation );
+    brain.RegisterFunction( "DEC_GetEnemyRepresentations", &DEC_MiscFunctions::GetEnemyRepresentation );
+
+    // Representations
+    brain.RegisterFunction( "_DEC_GetOrdersCategory", &DEC_MiscFunctions::GetOrdersCategory );
+    brain.RegisterFunction( "_DEC_GetPointsCategory", &DEC_MiscFunctions::GetPointsCategory );
+    brain.RegisterFunction( "_DEC_RemoveFromOrdersCategory", &DEC_MiscFunctions::RemoveFromOrdersCategory );
+    brain.RegisterFunction( "_DEC_DeleteRepresentation", &DEC_MiscFunctions::DeleteOrderRepresentation );
+    brain.RegisterFunction( "_DEC_RemoveFromPointsCategory", &DEC_MiscFunctions::RemoveFromPointsCategory );
+
+    brain.RegisterFunction( "DEC_Copie_DirectionDanger_Mission", &DEC_MiscFunctions::CopyDirectionDanger );
+    brain.RegisterFunction( "DEC_DebugPointXY", &DEC_MiscFunctions::GetPointXY );
+
+    // Time
+    brain.RegisterFunction( "DEC_GetTimeInSeconds", &DEC_MiscFunctions::GetTimeInSeconds );
+
+    directia::tools::binders::ScriptRef initParameterFunction = brain.GetScriptRef( "InitTaskParameter" );
+    brain.RegisterFunction( "DEC_FillMissionParameters",
+        std::function< void( const directia::tools::binders::ScriptRef&, boost::shared_ptr< MIL_Mission_ABC > ) >( boost::bind( &DEC_MiscFunctions::FillMissionParameters, boost::ref(brain), initParameterFunction, _1 , _2, isMasalife ) ) );
+
+    // Report
+    brain.RegisterFunction( "DEC_RC1", &DEC_MiscFunctions::Report );
+    brain.RegisterFunction( "DEC_RC_AgentKnowledge", &DEC_MiscFunctions::ReportAgentKnowledge );
+    brain.RegisterFunction( "DEC_RC_DotationType", &DEC_MiscFunctions::ReportDotationType );
+    brain.RegisterFunction( "DEC_RC_EquipmentType", &DEC_MiscFunctions::ReportEquipmentType );
+    brain.RegisterFunction( "DEC_RC_Float", &DEC_MiscFunctions::ReportFloat );
+    brain.RegisterFunction( "DEC_RC_Int_Int", &DEC_MiscFunctions::ReportIntInt );
+    brain.RegisterFunction( "DEC_RC_AgentKnowledge_Int", &DEC_MiscFunctions::ReportAgentKnowledgeInt );
+    brain.RegisterFunction( "DEC_RC_Float_Float", &DEC_MiscFunctions::ReportFloatFloat );
+    brain.RegisterFunction( "DEC_RC_Id", &DEC_MiscFunctions::ReportId );
+    brain.RegisterFunction( "DEC_RC_ObjectKnowledge", &DEC_MiscFunctions::ReportObjectKnoweldge );
+    brain.RegisterFunction( "DEC_RC_Pion", &DEC_MiscFunctions::ReportPion );
+    brain.RegisterFunction( "DEC_RC_Pion_Automate", &DEC_MiscFunctions::ReportPionAutomate );
+    brain.RegisterFunction( "DEC_RC_Pion_Pion", &DEC_MiscFunctions::ReportPionPion );
+    brain.RegisterFunction( "DEC_RC_Pion_Int", &DEC_MiscFunctions::ReportPionInt );
+    brain.RegisterFunction( "DEC_RC_PopulationKnowledge", &DEC_MiscFunctions::ReportPopulationKnowledge );
+    brain.RegisterFunction( "DEC_RC_TirPion", &DEC_MiscFunctions::ReportTirPion );
+    brain.RegisterFunction( "DEC_RC_String", &DEC_MiscFunctions::ReportString );
+    brain.RegisterFunction( "DEC_RC_Stage", &DEC_MiscFunctions::ReportStage );
+}
 
 // -----------------------------------------------------------------------------
 // Name: DEC_MiscFunctions::SetCurrentSpeedModificator
 // Created: NLD 2004-09-23
 // -----------------------------------------------------------------------------
-void DEC_MiscFunctions::SetCurrentSpeedModificator( MIL_AgentPion& callerAgent, double rFactor )
+void DEC_MiscFunctions::SetCurrentSpeedModificator( DEC_Decision_ABC* callerAgent, double rFactor )
 {
-    callerAgent.GetRole< moving::PHY_RoleAction_InterfaceMoving >().SetSpeedModificator( rFactor );
+    callerAgent->GetPion().GetRole< moving::PHY_RoleAction_InterfaceMoving >().SetSpeedModificator( rFactor );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_MiscFunctions::SetMaxSpeedModificator
 // Created: NLD 2004-09-23
 // -----------------------------------------------------------------------------
-void DEC_MiscFunctions::SetMaxSpeedModificator( MIL_AgentPion& callerAgent, double rFactor )
+void DEC_MiscFunctions::SetMaxSpeedModificator( DEC_Decision_ABC* callerAgent, double rFactor )
 {
-    callerAgent.GetRole< moving::PHY_RoleAction_InterfaceMoving >().SetMaxSpeedModificator( rFactor );
+    callerAgent->GetPion().GetRole< moving::PHY_RoleAction_InterfaceMoving >().SetMaxSpeedModificator( rFactor );
 }
 
 // -----------------------------------------------------------------------------
@@ -70,7 +138,7 @@ std::vector<DEC_Decision_ABC*> DEC_MiscFunctions::GetAgentReinforcements( const 
 {
     if( !pAgent )
         throw MASA_EXCEPTION( "invalid parameter." );
-   return DEC_MiscFunctions::GetReinforcements( pAgent->GetPion() );
+   return DEC_MiscFunctions::GetReinforcements( pAgent );
 }
 
 // -----------------------------------------------------------------------------
@@ -78,9 +146,9 @@ std::vector<DEC_Decision_ABC*> DEC_MiscFunctions::GetAgentReinforcements( const 
 // Created: NLD 2004-10-01
 // Modified: RPD 2009-08-03
 // -----------------------------------------------------------------------------
-std::vector<DEC_Decision_ABC*> DEC_MiscFunctions::GetReinforcements( const MIL_AgentPion& callerAgent )
+std::vector<DEC_Decision_ABC*> DEC_MiscFunctions::GetReinforcements( const DEC_Decision_ABC* callerAgent )
 {
-    const auto& reinforcements = callerAgent.GetRole< PHY_RoleInterface_Reinforcement >().GetReinforcements();
+    const auto& reinforcements = callerAgent->GetPion().GetRole< PHY_RoleInterface_Reinforcement >().GetReinforcements();
     std::vector< DEC_Decision_ABC* > result;
     for( auto it = reinforcements.begin(); it != reinforcements.end(); ++it )
         result.push_back( &(*it)->GetRole< DEC_RolePion_Decision >() );
@@ -105,11 +173,11 @@ int DEC_MiscFunctions::GetAgentReinforcementsNumber( const DEC_Decision_ABC* pAg
 // Created: NLD 2003-03-12
 // Modified: RPD 2009-08-03
 //-----------------------------------------------------------------------------
-bool DEC_MiscFunctions::Reinforce( MIL_AgentPion& callerAgent, const DEC_Decision_ABC* pTarget )
+bool DEC_MiscFunctions::Reinforce( DEC_Decision_ABC* callerAgent, const DEC_Decision_ABC* pTarget )
 {
     if ( !pTarget )
         throw MASA_EXCEPTION( "invalid parameter." );
-    return callerAgent.GetRole< PHY_RoleInterface_Reinforcement >().Reinforce( pTarget->GetPion() );
+    return callerAgent->GetPion().GetRole< PHY_RoleInterface_Reinforcement >().Reinforce( pTarget->GetPion() );
 }
 
 //-----------------------------------------------------------------------------
@@ -117,9 +185,9 @@ bool DEC_MiscFunctions::Reinforce( MIL_AgentPion& callerAgent, const DEC_Decisio
 // Created: NLD 2003-03-12
 // Modified: RPD 2009-08-03
 //-----------------------------------------------------------------------------
-void DEC_MiscFunctions::CancelReinforcement( MIL_AgentPion& callerAgent )
+void DEC_MiscFunctions::CancelReinforcement( DEC_Decision_ABC* callerAgent )
 {
-    callerAgent.GetRole< PHY_RoleInterface_Reinforcement >().CancelReinforcement();
+    callerAgent->GetPion().GetRole< PHY_RoleInterface_Reinforcement >().CancelReinforcement();
 }
 
 // -----------------------------------------------------------------------------

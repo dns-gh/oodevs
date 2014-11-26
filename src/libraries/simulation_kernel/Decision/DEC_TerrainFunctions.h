@@ -10,26 +10,14 @@
 #ifndef __DEC_TerrainFunctions_h_
 #define __DEC_TerrainFunctions_h_
 
-class DEC_Decision_ABC;
-class MIL_AgentPion;
-class TER_Localisation;
-class MT_Vector2D;
-
 namespace sword
 {
     class Brain;
 }
 
-namespace directia
-{
-namespace tools
-{
-namespace binders
-{
-    class ScriptRef;
-}
-}
-}
+class DEC_Decision_ABC;
+class TER_Localisation;
+class MT_Vector2D;
 
 // =============================================================================
 /** @class  DEC_TerrainFunctions
@@ -40,12 +28,14 @@ namespace binders
 class DEC_TerrainFunctions
 {
 public:
+    static void Register( sword::Brain& brain );
+
     //! @name Functions
     //@{
 
     // Keypoint
-    static void GetCrossroads( sword::Brain& brain, MIL_AgentPion& pion, directia::tools::binders::ScriptRef& knowledgeCreateFunction, const directia::tools::binders::ScriptRef& table );
-    static std::vector< boost::shared_ptr< MT_Vector2D > > FindSafetyPositionsWithinCircle( MIL_AgentPion& pion, float radius, float safetyDistance );
+    static std::vector< boost::shared_ptr< MT_Vector2D > > GetCrossroads( DEC_Decision_ABC* agent );
+    static std::vector< boost::shared_ptr< MT_Vector2D > > FindSafetyPositionsWithinCircle( DEC_Decision_ABC* agent, float radius, float safetyDistance );
     static std::vector< boost::shared_ptr< MT_Vector2D > > GetRoadIntersectionsWithZone( const TER_Localisation* zone );
     static bool IsLinearRiverInBetween( const MT_Vector2D* from, const MT_Vector2D* to );
     static bool IsWaterInBetween( const MT_Vector2D* from, const MT_Vector2D* to );

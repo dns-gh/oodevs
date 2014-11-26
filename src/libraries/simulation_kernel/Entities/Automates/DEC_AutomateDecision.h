@@ -131,8 +131,6 @@ protected:
     virtual void EndCleanStateAfterCrash();
     virtual std::string GetGroupName();
 
-    virtual void RegisterUserFunctions( sword::Brain& brain );
-
     virtual void PostStartMission();
     virtual void PostStopMission();
     //@}

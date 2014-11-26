@@ -14,13 +14,18 @@
 
 #include <boost/make_shared.hpp>
 #include "DEC_Decision_ABC.h"
+#include "Entities/Populations/MIL_Population.h"
+
+namespace sword
+{
+    class Brain;
+}
 
 class DEC_Knowledge_Agent;
 class DEC_Knowledge_Object;
 class DEC_Knowledge_Population;
 class MIL_AgentPion;
 class MIL_Entity_ABC;
-class MIL_Population;
 class PHY_Action_ABC;
 class MT_Vector2D;
 class PHY_DotationCategory;
@@ -31,6 +36,8 @@ class PHY_DotationCategory;
 class DEC_ActionFunctions
 {
 public:
+    static void Register( sword::Brain& brain );
+
     //! @name Functions
     //@{
     template< typename ActionType > static unsigned int StartAction  ( DEC_Decision_ABC* caller );
@@ -45,26 +52,26 @@ public:
     static void ResumeAction( const DEC_Decision_ABC* caller, unsigned int actionId );
     static unsigned int GetActionState( const DEC_Decision_ABC* caller, unsigned int actionId );
 
-    static void Orientate                 ( MIL_AgentPion& callerAgent, boost::shared_ptr< MT_Vector2D > dir );
+    static void Orientate                 ( DEC_Decision_ABC* callerAgent, boost::shared_ptr< MT_Vector2D > dir );
 
-    static void Transport_MagicLoadPionInCarrier    ( MIL_AgentPion& caller, const DEC_Decision_ABC* pCarrier );
-    static void Transport_MagicUnloadPionFromCarrier( MIL_AgentPion& caller );
-    static DEC_Decision_ABC* Transport_GetCarrier   ( const MIL_AgentPion& caller );
+    static void Transport_MagicLoadPionInCarrier    ( DEC_Decision_ABC* caller, const DEC_Decision_ABC* pCarrier );
+    static void Transport_MagicUnloadPionFromCarrier( DEC_Decision_ABC*caller );
+    static DEC_Decision_ABC* Transport_GetCarrier   ( const DEC_Decision_ABC* caller );
 
-    static void Transport_AddPion         ( MIL_AgentPion& callerAgent, DEC_Decision_ABC* pPion, bool bTransportOnlyLoadable );
-    static void Transport_AddPions        ( MIL_AgentPion& callerAgent, const std::vector< DEC_Decision_ABC* >& pions, bool bTransportOnlyLoadable );
+    static void Transport_AddPion         ( DEC_Decision_ABC* callerAgent, DEC_Decision_ABC* pPion, bool bTransportOnlyLoadable );
+    static void Transport_AddPions        ( DEC_Decision_ABC* callerAgent, const std::vector< DEC_Decision_ABC* >& pions, bool bTransportOnlyLoadable );
     static void TransportKnowledge_AddPion( DEC_Decision_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge, bool bTransportOnlyLoadable );
-    static void Transport_MagicLoadPion   ( MIL_AgentPion& callerAgent, const DEC_Decision_ABC* pPion, bool bTransportOnlyLoadable );
-    static void Transport_MagicLoadPions  ( MIL_AgentPion& callerAgent, const std::vector< DEC_Decision_ABC* >& pions, bool bTransportOnlyLoadable );
-    static void Transport_MagicUnloadPion ( MIL_AgentPion& callerAgent, const DEC_Decision_ABC* pPion );
-    static void Transport_MagicUnloadPions( MIL_AgentPion& callerAgent, const std::vector< DEC_Decision_ABC* >& pions );
-    static bool Transport_IsFinished      ( const MIL_AgentPion& callerAgent );
-    static bool Transport_IsTransporting  ( const MIL_AgentPion& callerAgent );
-    static void Transport_Cancel          ( MIL_AgentPion& callerAgent );
+    static void Transport_MagicLoadPion   ( DEC_Decision_ABC* callerAgent, const DEC_Decision_ABC* pPion, bool bTransportOnlyLoadable );
+    static void Transport_MagicLoadPions  ( DEC_Decision_ABC* callerAgent, const std::vector< DEC_Decision_ABC* >& pions, bool bTransportOnlyLoadable );
+    static void Transport_MagicUnloadPion ( DEC_Decision_ABC* callerAgent, const DEC_Decision_ABC* pPion );
+    static void Transport_MagicUnloadPions( DEC_Decision_ABC* callerAgent, const std::vector< DEC_Decision_ABC* >& pions );
+    static bool Transport_IsFinished      ( const DEC_Decision_ABC* callerAgent );
+    static bool Transport_IsTransporting  ( const DEC_Decision_ABC* callerAgent );
+    static void Transport_Cancel          ( DEC_Decision_ABC* callerAgent );
     static bool AgentCanTransportPion     ( const DEC_Decision_ABC* agent, const DEC_Decision_ABC* pPion, bool bTransportOnlyLoadable );
     static bool CanLoad                   ( const DEC_Decision_ABC* pPion, const DEC_Decision_ABC* pTarget, bool bTransportOnlyLoadable );
     static double GetNumberOfRoundTripsLeftToTransportPion( const DEC_Decision_ABC* pPion, const DEC_Decision_ABC* pTarget, bool bTransportOnlyLoadable );
-    static double GetNumberOfRoundTripToTransportPion( const MIL_AgentPion& callerAgent, const DEC_Decision_ABC* pPion, bool bTransportOnlyLoadable );
+    static double GetNumberOfRoundTripToTransportPion( const DEC_Decision_ABC* callerAgent, const DEC_Decision_ABC* pPion, bool bTransportOnlyLoadable );
     static bool CanTransportKnowledge     ( DEC_Decision_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge, bool bTransportOnlyLoadable );
     static double GetNumberOfRoundTripToTransportKnowledge( DEC_Decision_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge, bool bTransportOnlyLoadable );
     static bool CanTransportCrowd         ( DEC_Decision_ABC& callerAgent );
@@ -73,15 +80,15 @@ public:
     static bool IsSurrendered             ( DEC_Decision_ABC& callerAgent );
     static std::vector< DEC_Decision_ABC* > GetTransportedUnits( DEC_Decision_ABC& callerAgent );
 
-    static void Prisoners_CaptureAndLoad  ( MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
-    static void Prisoners_Unload          ( MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
-    static void Prisoners_UnloadInCamp    ( MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge, boost::shared_ptr< DEC_Knowledge_Object > campKnowledgeID );
+    static void Prisoners_CaptureAndLoad  ( DEC_Decision_ABC* callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
+    static void Prisoners_Unload          ( DEC_Decision_ABC* callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
+    static void Prisoners_UnloadInCamp    ( DEC_Decision_ABC* callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge, boost::shared_ptr< DEC_Knowledge_Object > campKnowledgeID );
     static bool Prisoners_IsUnloadedInCamp( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge, boost::shared_ptr< DEC_Knowledge_Object > campKnowledgeID );
 
-    static void Refugees_OrientateAndLoad( MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
-    static void Refugees_Unload          ( MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
-    static void Refugees_UnloadInCamp    ( MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge, boost::shared_ptr< DEC_Knowledge_Object > campKnowledgeID );
-    static bool PrisonnersRefugees_IsLoaded( MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
+    static void Refugees_OrientateAndLoad( DEC_Decision_ABC* callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
+    static void Refugees_Unload          ( DEC_Decision_ABC* callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
+    static void Refugees_UnloadInCamp    ( DEC_Decision_ABC* callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge, boost::shared_ptr< DEC_Knowledge_Object > campKnowledgeID );
+    static bool PrisonnersRefugees_IsLoaded( DEC_Decision_ABC* callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
     static bool Refugees_IsUnloadedInCamp( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge, boost::shared_ptr< DEC_Knowledge_Object > campKnowledgeID );
     static void Knowledge_Load           ( DEC_Decision_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
 
@@ -90,9 +97,9 @@ public:
     static bool IsAgentLoaded            ( DEC_Decision_ABC& callerAgent, DEC_Decision_ABC* pPion );
     static bool IsRefugee                ( DEC_Decision_ABC* pPion );
 
-    static bool Stock_IsExtractPossible( MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge, const std::vector< const PHY_DotationCategory* >& dotationTypes );
-    static bool Stock_IsSupplyPossible( MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge, const std::vector< const PHY_DotationCategory* >& dotationTypes );
-    static bool Stock_IsDistributePossible( MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge, boost::shared_ptr< DEC_Knowledge_Population > population );
+    static bool Stock_IsExtractPossible( DEC_Decision_ABC* callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge, const std::vector< const PHY_DotationCategory* >& dotationTypes );
+    static bool Stock_IsSupplyPossible( DEC_Decision_ABC* callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge, const std::vector< const PHY_DotationCategory* >& dotationTypes );
+    static bool Stock_IsDistributePossible( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge, boost::shared_ptr< DEC_Knowledge_Population > population );
     //@}
 };
 

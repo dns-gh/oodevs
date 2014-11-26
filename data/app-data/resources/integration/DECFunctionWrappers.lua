@@ -21,6 +21,10 @@ end
 --
 -- Debug
 --
+function BreakForDebug( message )
+    _BreakForDebug( myself, message )
+end
+
 function DEC_DebugAffichePoint( point )
     _DEC_DebugAffichePoint( myself, point )
 end
@@ -312,6 +316,50 @@ end
 
 function DEC_Geometrie_GetPointsLimas( limaType, divider )
     return _DEC_Geometrie_GetPointsLimas( myself, limaType, divider )
+end
+
+function DEC_Geometrie_CalculerPositionAppui( agentToSupport, distance )
+    return _DEC_Geometrie_CalculerPositionAppui( myself, agentToSupport, distance )
+end
+
+function DEC_Geometrie_CalculerPositionEmbuscade( ambushPosition, retreatPosition, distance )
+    return _DEC_Geometrie_CalculerPositionEmbuscade( myself, ambushPosition, retreatPosition, distance )
+end
+
+function DEC_Geometrie_CalculerPositionSurete( enemyKnowledge, minDistance )
+    return _DEC_Geometrie_CalculerPositionSurete( myself, enemyKnowledge, minDistance )
+end
+
+function DEC_Geometrie_CalculerPositionSureteAvecPopulation( populationKnowledgeId, minDistance )
+    return _DEC_Geometrie_CalculerPositionSureteAvecPopulation( myself, populationKnowledgeId, minDistance )
+end
+
+function DEC_Geometrie_CalculerPositionSureteAvecObjectif( enemyKnowledge, minDistance, objective )
+    return _DEC_Geometrie_CalculerPositionSureteAvecObjectif( myself, enemyKnowledge, minDistance, objective )
+end
+
+function DEC_Geometrie_CalculerEntreeFuseauLaPlusProche()
+    return _DEC_Geometrie_CalculerEntreeFuseauLaPlusProche( myself )
+end
+
+function DEC_Geometry_SplitLocalisationSurface( localization, averageArea, direction )
+    return _DEC_Geometry_SplitLocalisationSurface( myself, localization, averageArea, direction )
+end
+
+function DEC_Geometry_RecursiveSplitLocalisationSurface( localization, averageArea )
+    return _DEC_Geometry_RecursiveSplitLocalisationSurface( myself, localization, averageArea )
+end
+
+function DEC_Geometrie_CalculerTrafficableBarycentreLocalisation( localization )
+    return _DEC_Geometrie_CalculerTrafficableBarycentreLocalisation( myself, localization )
+end
+
+function DEC_IsPointInUrbanBlockTrafficable( point )
+    return DEC_IsPointInUrbanBlockTrafficableForPlatoon( myself, point )
+end
+
+function DEC_Geometrie_GetLeavingAreaPosition( localization )
+    return _DEC_Geometrie_GetLeavingAreaPosition( myself, localization )
 end
 
 --
@@ -910,3 +958,1224 @@ end
 function DEC_Start_EmergencyUnloadActivity( activity, influence )
     return _DEC_Start_EmergencyUnloadActivity( myself, activity, influence )
 end
+
+function DEC_Agent_ADotationPourConstruireObjet( type )
+    return _DEC_Agent_ADotationPourConstruireObjet( myself, type )
+end
+
+function DEC_Agent_ADotationPourConstruireObjetSansRenforts( type )
+    return _DEC_Agent_ADotationPourConstruireObjetSansRenforts( myself, type )
+end
+
+function DEC_Stock_IsExtractPossible( knowledge, dotationTypes )
+    return _DEC_Stock_IsExtractPossible( myself, knowledge, dotationTypes )
+end
+
+function DEC_Stock_IsSupplyPossible( knowledge, dotationTypes )
+    return _DEC_Stock_IsSupplyPossible( myself, knowledge, dotationTypes )
+end
+
+function DEC_Transport_AjouterPion( agent, transportOnlyLoadable )
+    _DEC_Transport_AjouterPion( myself, agent, transportOnlyLoadable )
+end
+
+function DEC_Transport_AjouterPions( agents, transportOnlyLoadable )
+    _DEC_Transport_AjouterPions( myself, agents, transportOnlyLoadable )
+end
+
+function DEC_Transport_EmbarquerDansTransporteurSansDelais( carrier )
+    _DEC_Transport_EmbarquerDansTransporteurSansDelais( myself, carrier )
+end
+
+function DEC_Transport_DebarquerDeTransporteurSansDelais()
+    _DEC_Transport_DebarquerDeTransporteurSansDelais( myself )
+end
+
+function DEC_Transport_Transporteur()
+    return _DEC_Transport_Transporteur( myself )
+end
+
+function DEC_Transport_EmbarquerPionSansDelais( agent, transportOnlyLoadable )
+    _DEC_Transport_EmbarquerPionSansDelais( myself, agent, transportOnlyLoadable )
+end
+
+function DEC_Transport_EmbarquerPionsSansDelais( agents, transportOnlyLoadable )
+    _DEC_Transport_EmbarquerPionsSansDelais( myself, agents, transportOnlyLoadable )
+end
+
+function DEC_Transport_DebarquerPionSansDelais( agent )
+    _DEC_Transport_DebarquerPionSansDelais( myself, agent )
+end
+
+function DEC_Transport_DebarquerPionsSansDelais( agents )
+    _DEC_Transport_DebarquerPionsSansDelais( myself, agents )
+end
+
+function DEC_Transport_EstTermine()
+    return _DEC_Transport_EstTermine( myself )
+end
+
+function DEC_Transport_Annuler()
+    _DEC_Transport_Annuler( myself )
+end
+
+function DEC_Transport_EnCoursDeTransport()
+    return _DEC_Transport_EnCoursDeTransport( myself )
+end
+
+function DEC_Agent_PeutTransporterPion( agent, transportOnlyLoadable )
+    return _DEC_Agent_PeutTransporterPion( myself, agent, transportOnlyLoadable )
+end
+
+function DEC_Agent_TransportNombreAllerRetour( agent, transportOnlyLoadable )
+    return _DEC_Agent_TransportNombreAllerRetour( myself, agent, transportOnlyLoadable )
+end
+
+function DEC_Prisonniers_CapturerEtEmbarquer( knowledge )
+    _DEC_Prisonniers_CapturerEtEmbarquer( myself, knowledge )
+end
+
+function DEC_Prisonniers_Debarquer( knowledge )
+    _DEC_Prisonniers_Debarquer( myself, knowledge )
+end
+
+function DEC_Prisonniers_DebarquerDansCamp( knowledge, campKnowledge )
+    _DEC_Prisonniers_DebarquerDansCamp( myself, knowledge, campKnowledge )
+end
+
+function DEC_Prisonniers_EstEmbarque( knowledge )
+    return _DEC_PrisonniersRefugies_EstEmbarque( myself, knowledge )
+end
+
+function DEC_Refugies_OrienterEtEmbarquer( knowledge )
+    _DEC_Refugies_OrienterEtEmbarquer( myself, knowledge )
+end
+
+function DEC_Refugies_Debarquer( knowledge )
+    _DEC_Refugies_Debarquer( myself, knowledge )
+end
+
+function DEC_Refugies_DebarquerDansCamp( knowledge, campKnowledge )
+    _DEC_Refugies_DebarquerDansCamp( myself, knowledge, campKnowledge )
+end
+
+function DEC_Refugies_EstEmbarque( knowledge )
+    return _DEC_PrisonniersRefugies_EstEmbarque( myself, knowledge )
+end
+
+function DEC_Orientate( direction )
+    _DEC_Orientate( myself, direction )
+end
+
+-- Orders
+function DEC_CreerMissionPion( mission )
+    return _DEC_CreerMissionPion( myself, mission )
+end
+
+function DEC_CreerMissionPionVersPion( mission )
+    return _DEC_CreerMissionPionVersPion( myself, mission )
+end
+
+function DEC_DonnerMissionPion( mission )
+    _DEC_DonnerMissionPion( myself, mission )
+end
+
+function DEC_DonnerMissionPionVersPion( mission )
+    _DEC_DonnerMissionPionVersPion( myself, mission )
+end
+
+-- Loading/Unloading
+function DEC_Agent_EstEmbarquable()
+    return _DEC_Agent_EstEmbarquable( myself )
+end
+
+function DEC_Agent_EstEmbarque()
+    return _DEC_Agent_EstEmbarque( myself )
+end
+
+function DEC_Agent_EstDebarque()
+    return _DEC_Agent_EstDebarque( myself )
+end
+
+function DEC_Agent_DureeEmbarquement()
+    return _DEC_Agent_DureeEmbarquement( myself )
+end
+
+function DEC_Agent_DureeDebarquement()
+    return _DEC_Agent_DureeDebarquement( myself )
+end
+
+function DEC_Agent_TransporteursPret()
+    return _DEC_Agent_TransporteursPret( myself )
+end
+
+function DEC_LaisserTransporteursSansDelai()
+    _DEC_LaisserTransporteursSansDelai( myself )
+end
+
+function DEC_RecupererTransporteursSansDelai()
+    _DEC_RecupererTransporteursSansDelai( myself )
+end
+
+-- Perception
+function DEC_Identification_DistanceMaxCompMajeure()
+    return _DEC_Identification_DistanceMaxCompMajeure( myself )
+end
+
+function DEC_Reconnoissance_MajorComponentMinDistance()
+    return _DEC_Reconnoissance_MajorComponentMinDistance( myself )
+end
+
+function DEC_Detection_Distance()
+    return _DEC_Detection_Distance( myself )
+end
+
+function DEC_Perception_EstFurtif()
+    return _DEC_Perception_EstFurtif( myself )
+end
+
+function DEC_Perception_Furtivite( factor )
+    _DEC_Perception_Furtivite( myself, factor )
+end
+
+-- Reinforcement
+function DEC_Renforts()
+    return _DEC_Renforts( myself )
+end
+
+function DEC_Renforce( target )
+    return _DEC_Renforce( myself, target )
+end
+
+function DEC_AnnuleRenforcement()
+    _DEC_AnnuleRenforcement( myself )
+end
+
+-- Installation
+function DEC_Agent_EstInstalle()
+    return _DEC_Agent_EstInstalle( myself )
+end
+
+function DEC_Agent_EstDesinstalle()
+    return _DEC_Agent_EstDesinstalle( myself )
+end
+
+function DEC_Agent_SInstaller()
+    _DEC_Agent_SInstaller( myself )
+end
+
+-- Deployment
+function DEC_Agent_IsDeployed()
+    return _DEC_Agent_IsDeployed( myself )
+end
+
+function DEC_Agent_IsUndeployed()
+    return _DEC_Agent_IsUndeployed( myself )
+end
+
+function DEC_Agent_Deploy()
+    _DEC_Agent_Deploy( myself )
+end
+
+function DEC_Agent_Undeploye()
+    _DEC_Agent_Undeploye( myself )
+end
+
+-- Accessors
+function DEC_Agent_EstPC()
+    return _DEC_Agent_EstPC( myself )
+end
+
+function DEC_Agent_EstTransporte()
+    return _DEC_Agent_EstTransporte( myself )
+end
+
+function DEC_Agent_EstEnVol()
+    return _DEC_Agent_EstEnVol( myself )
+end
+
+function DEC_Agent_HauteurDeVol( height )
+    _DEC_Agent_HauteurDeVol( myself, height )
+end
+
+function DEC_Agent_EnVille()
+    return _DEC_Agent_EnVille( myself )
+end
+
+function DEC_Agent_EtatOps()
+    return _DEC_Agent_EtatOps( myself )
+end
+
+function DEC_Agent_EtatOpsMajeur()
+    return _DEC_Agent_EtatOpsMajeur( myself )
+end
+
+function DEC_Agent_PeutConstruireObjet( type )
+    return _DEC_Agent_PeutConstruireObjet( myself, type )
+end
+
+function DEC_Agent_PeutConstruireObjetAvecLocalisation( type, location )
+    return _DEC_Agent_PeutConstruireObjetAvecLocalisation( myself, type, location )
+end
+
+function DEC_Agent_PeutConstruireObjetSansRenforts( type )
+    return _DEC_Agent_PeutConstruireObjetSansRenforts( myself, type )
+end
+
+function DEC_Agent_PeutConstruireObjetSansRenfortsAvecLocalisation( type, location )
+    return _DEC_Agent_PeutConstruireObjetSansRenfortsAvecLocalisation( myself, type, location )
+end
+
+function DEC_Agent_PeutConstruireObjetEmbarque( type )
+    return _DEC_Agent_PeutConstruireObjetEmbarque( myself, type )
+end
+
+function DEC_Agent_PeutConstruireObjetEmbarqueAvecLocalisation( type, location )
+    return _DEC_Agent_PeutConstruireObjetEmbarqueAvecLocalisation( myself, type, location )
+end
+
+function DEC_Agent_PeutConstruireContournementObjet( object )
+    return _DEC_Agent_PeutConstruireContournementObjet( myself, object )
+end
+
+function DEC_Agent_PeutDetruireObjet( object )
+    return _DEC_Agent_PeutDetruireObjet( myself, object )
+end
+
+function DEC_Agent_PeutValoriserObjet( object )
+    return _DEC_Agent_PeutValoriserObjet( myself, object )
+end
+
+function DEC_Agent_PeutDevaloriserObjet( object )
+    return _DEC_Agent_PeutDevaloriserObjet( myself, object )
+end
+
+function DEC_Agent_ActiverModeDiscret()
+    _DEC_Agent_ActiverModeDiscret( myself )
+end
+
+function DEC_Agent_DesactiverModeDiscret()
+    _DEC_Agent_DesactiverModeDiscret( myself )
+end
+
+function DEC_Agent_EstNeutralise()
+    return _DEC_Agent_EstNeutralise( myself )
+end
+
+function DEC_Agent_EstCibleTirIndirect()
+    return _DEC_Agent_EstCibleTirIndirect( myself )
+end
+
+function DEC_Agent_AutomateEstEmbraye()
+    return _DEC_Agent_AutomateEstEmbraye( myself )
+end
+
+function DEC_Agent_Position()
+    return _DEC_Agent_Position( myself )
+end
+
+function DEC_Agent_Direction()
+    return _DEC_Agent_Direction( myself )
+end
+
+function DEC_Agent_EstMort()
+    return _DEC_Agent_EstMort( myself )
+end
+
+function DEC_Agent_RoePopulation()
+    return _DEC_Agent_RoePopulation( myself )
+end
+
+function DEC_HasDotation( category )
+    return _DEC_HasDotation( myself, category )
+end
+
+function DEC_CanUseDotation( category )
+    return _DEC_CanUseDotation( myself, category )
+end
+
+function DEC_GetDotation( id )
+    return _DEC_GetDotation( myself, id )
+end
+
+function DEC_Agent_IlluminateRange()
+    return _DEC_Agent_IlluminateRange( myself )
+end
+
+function DEC_Agent_CanExtinguish( knowledge )
+    return _DEC_Agent_CanExtinguish( myself, knowledge )
+end
+
+function DEC_Agent_CanFly()
+    return DEC_Pion_CanFly( myself )
+end
+
+function DEC_Agent_AutonomieEnDeplacement()
+    return _DEC_Agent_AutonomieEnDeplacement( myself )
+end
+
+function DEC_Agent_TempsPourParcourirDistanceEnLigneDroite( distance )
+    return _DEC_Agent_TempsPourParcourirDistanceEnLigneDroite( myself, distance )
+end
+
+function DEC_Agent_AutomateForcerReddition( automaton )
+    return _DEC_Agent_AutomateForcerReddition( myself, automaton )
+end
+
+function DEC_Agent_ChangerAmbianceEnSurete( safety )
+    _DEC_Agent_ChangerAmbianceEnSurete( myself, safety )
+end
+
+function DEC_ReleverPion( agent )
+    return _DEC_ReleverPion( myself, agent )
+end
+
+function DEC_ReleverUnite( agent )
+    return _DEC_ReleverPion( myself, agent )
+end
+
+function DEC_PeutReleverPion( agent )
+    return DEC_PeutReleverPion( myself, agent )
+end
+
+function DEC_Suicide()
+    _DEC_Suicide( myself )
+end
+
+function DEC_Agent_EstDansLeFuseau()
+    return _DEC_Agent_EstDansLeFuseau( myself )
+end
+
+-- NBC
+function DEC_Agent_SeDecontaminer()
+    _DEC_Agent_SeDecontaminer( myself )
+end
+
+function DEC_Agent_EstAgentNBC()
+    return _DEC_Agent_EstAgentNBC( myself )
+end
+
+function DEC_Agent_EstContamine()
+    return myself:DEC_Agent_EstContamine()
+end
+
+function DEC_Agent_EstEmpoisonne()
+    return _DEC_Agent_EstEmpoisonne( myself )
+end
+
+function DEC_Agent_MettreTenueProtectionNBC()
+    _DEC_Agent_MettreTenueProtectionNBC( myself )
+end
+
+function DEC_Agent_EnleverTenueProtectionNBC()
+    _DEC_Agent_EnleverTenueProtectionNBC( myself )
+end
+
+function DEC_Agent_NiveauProtectionNBC()
+    return DEC_Agent_NiveauProtectionNBC( myself )
+end
+
+function DEC_Agent_ImmuniserNbc()
+    _DEC_Agent_ImmuniserNbc( myself )
+end
+
+function DEC_Agent_StopImmuniserNbc()
+    _DEC_Agent_StopImmuniserNbc( myself )
+end
+
+-- Blackout
+function DEC_Agent_PasserEnSilenceRadio()
+    _DEC_Agent_PasserEnSilenceRadio( myself )
+end
+
+function DEC_Agent_ArreterSilenceRadio()
+    _DEC_Agent_ArreterSilenceRadio( myself )
+end
+
+function DEC_Agent_PasserEnSilenceRadioPartiel()
+    _DEC_Agent_PasserEnSilenceRadioPartiel( myself, true )
+end
+
+function DEC_Agent_PasserEnEmissionRestreinte()
+    _DEC_Agent_PasserEnSilenceRadioPartiel( myself, false )
+end
+
+-- Knowledge sharing
+function DEC_EnableSharedPerception( agent )
+    _DEC_EnableSharedPerception( myself, agent )
+end
+
+function DEC_DisabledSharedPerception( agent )
+    _DEC_DisabledSharedPerception( myself, agent )
+end
+
+function DEC_EnableSharingKnowledges( agent )
+    _DEC_EnableSharingKnowledges( myself, agent )
+end
+
+function DEC_DisabledSharingKnowledges( agent )
+    _DEC_DisabledSharingKnowledges( myself, agent )
+end
+
+-- Decisional state
+function DEC_Agent_ChangeEtatRapportDeForce( state )
+    _DEC_Agent_ChangeEtatRapportDeForce( myself, state )
+end
+
+function DEC_Agent_ChangeEtatROE( state )
+    _DEC_Agent_ChangeEtatROE( myself, state )
+end
+
+function DEC_Agent_GetEtatROE()
+    return _DEC_Agent_GetEtatROE( myself )
+end
+
+function DEC_Agent_ChangeEtatROEPopulation( population )
+    _DEC_Agent_ChangeEtatROEPopulation( myself, population )
+end
+
+function DEC_Agent_ChangeEtatCombatDeRencontre( state )
+    _DEC_Agent_ChangeEtatCombatDeRencontre( myself, state )
+end
+
+function DEC_Agent_ChangeEtatOperationnel( state )
+    _DEC_Agent_ChangeEtatOperationnel( myself, state )
+end
+
+function DEC_Agent_ChangeDisponibiliteAuTirIndirect( state )
+    _DEC_Agent_ChangeDisponibiliteAuTirIndirect( myself, state )
+end
+
+-- Human factors
+function DEC_FacteurHumain_Fatigue()
+    return _DEC_FacteurHumain_Fatigue( myself )
+end
+
+function DEC_FacteurHumain_Moral()
+    return _DEC_FacteurHumain_Moral( myself )
+end
+
+-- Hierarchy
+function DEC_Pion_PionsAvecPC()
+    return myself:DEC_Pion_PionsAvecPC()
+end
+
+function DEC_Pion_PionsSansPC()
+    return _DEC_Pion_PionsSansPC( myself )
+end
+
+function DEC_Pion_PionsAvecPCCommunication()
+    return myself:DEC_Pion_PionsAvecPCCommunication()
+end
+
+function DEC_Pion_PionsSansPCCommunication()
+    return _DEC_Pion_PionsSansPCCommunication( myself )
+end
+
+function DEC_Pion_PionPC()
+    return _DEC_Pion_PionPC( myself )
+end
+
+function DEC_Pion_ChangeAutomate( arg1, arg2 )
+    -- TODO: Rewrite?
+    if not arg2 then
+        _DEC_Pion_ChangeAutomate( myself, arg1 )
+    else
+        _DEC_Pion_ChangeAutomate( arg1, arg2 )
+    end
+end
+
+function DEC_Agent_PositionInterception( knowledge )
+    return _DEC_Agent_PositionInterception( myself, knowledge )
+end
+
+-- Knowledge objects
+function DEC_ConnaissanceObjet_EstUnEnnemi( knowledge )
+    return _DEC_ConnaissanceObjet_EstUnEnnemi( myself, knowledge )
+end
+
+function DEC_ConnaissanceObjet_EstUnAllie( knowledge )
+    return _DEC_ConnaissanceObjet_EstUnAllie( myself, knowledge )
+end
+
+function DEC_ConnaissanceObjet_Reconnaitre( knowledge )
+    _DEC_ConnaissanceObjet_Reconnaitre( myself, knowledge )
+end
+
+function DEC_ConnaissanceObjet_PeutEtreOccupe( knowledge )
+    return _DEC_ConnaissanceObjet_PeutEtreOccupe( myself, knowledge )
+end
+
+function DEC_ConnaissanceObjet_PeutEtreAnime( knowledge )
+    return _DEC_ConnaissanceObjet_PeutEtreAnime( myself, knowledge )
+end
+
+function DEC_ConnaissanceObjet_Degrader( knowledge, factor, dotation )
+    return _DEC_ConnaissanceObjet_Degrader( myself, knowledge, factor, dotation )
+end
+
+function DEC_ConnaissanceObjet_NiveauDePerceptionCourant( knowledge )
+    return _DEC_ConnaissanceObjet_NiveauDePerceptionCourant( myself, knowledge )
+end
+
+function DEC_Agent_TempsPourDegagerUnObjet( knowledge )
+    return _DEC_Agent_TempsPourDegagerUnObjet( myself, knowledge )
+end
+
+function DEC_DecontaminerZone( location )
+    _DEC_DecontaminerZone( myself, location )
+end
+
+-- Population knowledge accessors
+function DEC_ConnaissancePopulation_Attitude( knowledgeId )
+    return _DEC_ConnaissancePopulation_Attitude( myself, knowledgeId )
+end
+
+function DEC_ConnaissancePopulation_Reconnaitre( knowledgeId )
+    _DEC_ConnaissancePopulation_Reconnaitre( myself, knowledgeId )
+end
+
+function DEC_ConnaissancePopulation_EstReconnu( knowledgeId )
+    return _DEC_ConnaissancePopulation_EstReconnu( myself, knowledgeId )
+end
+
+function DEC_ConnaissancePopulation_EstPercueParUnite( knowledgeId )
+    return _DEC_ConnaissancePopulation_EstPercueParUnite( myself, knowledgeId )
+end
+
+function DEC_ConnaissancePopulation_Dangerosite( knowledgeId )
+    return _DEC_ConnaissancePopulation_Dangerosite( myself, knowledgeId )
+end
+
+function DEC_ConnaissancePopulation_PointPlusProche( knowledgeId )
+    return _DEC_ConnaissancePopulation_PointPlusProche( myself, knowledgeId )
+end
+
+function DEC_ConnaissancePopulation_Securiser( knowledgeId )
+    _DEC_ConnaissancePopulation_Securiser( myself, knowledgeId )
+end
+
+function DEC_ConnaissancePopulation_PointSecurisation( knowledgeId )
+    return _DEC_ConnaissancePopulation_PointSecurisation( myself, knowledgeId )
+end
+
+function DEC_ConnaissancePopulation_EstEnnemi( knowledgeId )
+    return _DEC_ConnaissancePopulation_EstEnnemi( myself, knowledgeId )
+end
+
+function DEC_ConnaissancePopulation_Exterminer( knowledgeId, surface, dotation )
+    return _DEC_ConnaissancePopulation_Exterminer( myself, knowledgeId, surface, dotation )
+end
+
+function DEC_GetAdhesionPopulation( knowledgeId )
+    return _DEC_GetAdhesionPopulation( myself, knowledgeId )
+end
+
+function DEC_GetAttitudePopulation( knowledgeId )
+    return _DEC_GetAttitudePopulation( myself, knowledgeId )
+end
+
+function DEC_StartHidingInCrowd( knowledgeId )
+    _DEC_StartHidingInCrowd( myself, knowledgeId )
+end
+
+function DEC_StopHidingInCrowd( knowledgeId )
+    _DEC_StopHidingInCrowd( myself, knowledgeId )
+end
+
+function DEC_GetAgentsHiddenInCrowd( knowledgeId )
+    return _DEC_GetAgentsHiddenInCrowd( myself, knowledgeId )
+end
+
+function DEC_Crowd_ExtractWoundedFromCrowd( knowledgeId, position )
+    return _DEC_Crowd_ExtractWoundedFromCrowd( myself, knowledgeId, position )
+end
+
+function DEC_Crowd_ExtractDeadFromCrowd( knowledgeId, position )
+    return _DEC_Crowd_ExtractDeadFromCrowd( myself, knowledgeId, position )
+end
+
+function DEC_Crowd_HealWoundedHumans( knowledgeId )
+    return _DEC_Crowd_HealWoundedHumans( myself, knowledgeId )
+end
+
+function DEC_ConnaissancePopulation_Verrouiller( knowledgeId )
+    _DEC_ConnaissancePopulation_Verrouiller( myself, knowledgeId )
+end
+
+function DEC_ConnaissancePopulation_Deverrouiller( knowledgeId )
+    _DEC_ConnaissancePopulation_Deverrouiller( myself, knowledgeId )
+end
+
+function DEC_ObtenirRenseignementCritiqueSurFoule( knowledgeId )
+    return _DEC_ObtenirRenseignementCritiqueSurFoule( myself, knowledgeId )
+end
+
+function DEC_Agent_ChangerNombreIndividuArmeDansFoule( knowledgeId, armedIndividuals )
+    _DEC_Agent_ChangerNombreIndividuArmeDansFoule( myself, knowledgeId, armedIndividuals )
+end
+
+function DEC_Connaissances_BlocUrbain( results )
+    local blocks = _DEC_Connaissances_BlocUrbain( myself )
+    InitQueryReturn( results, integration.ontology.types.urbanBlock, blocks, true )
+end
+
+function DEC_Connaissances_BlocUrbainPourPosition( position )
+    return _DEC_Connaissances_BlocUrbainPourPosition( myself, position )
+end
+
+function DEC_Connaissances_BlocUrbainDansZone( location )
+    return _DEC_Connaissances_BlocUrbainDansZone( myself, location )
+end
+
+function DEC_Connaissances_BlocUrbainDansOuIntersectentZone( location )
+    return _DEC_Connaissances_BlocUrbainDansOuIntersectentZone( myself, location )
+end
+
+-- Urban block
+function DEC_ConnaissanceUrbanBlock_NiveauDeReconnaissanceCourant( urbanObject )
+    return _DEC_ConnaissanceUrbanBlock_NiveauDeReconnaissanceCourant( myself, urbanObject )
+end
+
+function DEC_ConnaissanceBlocUrbain_Traficabilite( urbanObject )
+    return _DEC_ConnaissanceBlocUrbain_Traficabilite( myself, urbanObject )
+end
+
+function DEC_DetruireBlocUrbain( urbanObject, category )
+    _DEC_DetruireBlocUrbain( myself, urbanObject, category )
+end
+
+function DEC_ConnaissanceBlocUrbain_RapForLocal( urbanObject )
+    return _DEC_ConnaissanceBlocUrbain_RapForLocal( myself, urbanObject )
+end
+
+function DEC_Connaissances_UnitesEnnemiesVivantesDansBlocUrbain( urbanObject )
+    return _DEC_Connaissances_UnitesEnnemiesVivantesDansBlocUrbain( myself, urbanObject )
+end
+
+-- Agent knowledge
+function DEC_ConnaissanceAgent_AttritionPotentielle( knowledge, position )
+    return _DEC_ConnaissanceAgent_AttritionPotentielle( myself, knowledge, position )
+end
+
+function DEC_ConnaissanceAgent_Dangerosite( knowledge )
+    return _DEC_ConnaissanceAgent_Dangerosite( myself, knowledge )
+end
+
+function DEC_ConnaissanceAgent_NiveauDePerceptionCourant( knowledge )
+    return _DEC_ConnaissanceAgent_NiveauDePerceptionCourant( myself, knowledge )
+end
+
+function DEC_ConnaissanceAgent_EstPercuParUnite( knowledge )
+    return _DEC_ConnaissanceAgent_EstPercuParUnite( myself, knowledge )
+end
+
+function DEC_ConnaissanceAgent_EstUnEnnemi( knowledge )
+    return _DEC_ConnaissanceAgent_EstUnEnnemi( myself, knowledge )
+end
+
+function DEC_ConnaissanceAgent_EstUnAllie( knowledge )
+    return _DEC_ConnaissanceAgent_EstUnAllie( myself, knowledge )
+end
+
+function DEC_ConnaissanceAgent_PercoitUnite( knowledge )
+    return _DEC_ConnaissanceAgent_PercoitUnite( myself, knowledge )
+end
+
+function DEC_ConnaissanceAgent_EstAPorteDeCapteurDansCone( knowledge, direction, angle )
+    return _DEC_ConnaissanceAgent_EstAPorteDeCapteurDansCone( myself, knowledge, direction, angle )
+end
+
+function DEC_ConnaissanceAgent_PeutEtreIllumine( knowledge )
+    return _DEC_ConnaissanceAgent_PeutEtreIllumine( myself, knowledge )
+end
+
+function DEC_ConnaissanceAgent_PeutIlluminer()
+    return _DEC_ConnaissanceAgent_PeutIlluminer( myself )
+end
+
+function DEC_KnowledgeAgent_IsInObject( objectType, knowledge, isFriend )
+    return _DEC_KnowledgeAgent_IsInObject( myself, objectType, knowledge, isFriend )
+end
+
+function DEC_KnowledgeAgent_IsInObjectWithCapacity( capacity, knowledge, isFriend )
+    return _DEC_KnowledgeAgent_IsInObjectWithCapacity( myself, capacity, knowledge, isFriend )
+end
+
+-- Knowledge
+function DEC_RapportDeForceLocal()
+    return _DEC_RapportDeForceLocal( myself )
+end
+
+function DEC_Connaissances_UnitesEnnemiesDangereuses()
+    return _DEC_Connaissances_UnitesEnnemiesDangereuses( myself )
+end
+
+function DEC_Connaissances_UnitesDetecteesDansFuseau()
+    return _DEC_Connaissances_UnitesDetecteesDansFuseau( myself )
+end
+
+function DEC_Connaissances_UnitesDetecteesDansZone( zone )
+    return _DEC_Connaissances_UnitesDetecteesDansZone( myself, zone )
+end
+
+function DEC_Connaissances_UnitesPrenantAPartie()
+    return _DEC_Connaissances_UnitesPrenantAPartie( myself )
+end
+
+function DEC_Connaissances_UnitesEnnemiesVivantesPercues()
+    return _DEC_Connaissances_UnitesEnnemiesVivantesPercues( myself )
+end
+
+function DEC_Connaissances_Observable( results )
+    local enemies = DEC_Knowledge_GetEnemies( myself )
+    InitQueryReturn( results, integration.ontology.types.agentKnowledge, enemies, true )
+    
+    local objects = DEC_Knowledge_GetObjects
+    InitQueryReturn( results, integration.ontology.types.object, objects, true )
+    
+    local blocks = DEC_Knowledge_GetUrbanBlocks( myself )
+    InitQueryReturn( results, integration.ontology.types.urbanBlock, blocks, true )
+end
+
+function DEC_Connaissances_Destroyable( results )
+    local enemies = DEC_Knowledge_GetEnemies( myself )
+    InitQueryReturn( results, integration.ontology.types.agentKnowledge, enemies, true )
+end
+
+function DEC_Connaissances_Identifiable( results )
+    local enemies = DEC_Knowledge_GetEnemies( myself )
+    InitQueryReturn( results, integration.ontology.types.agentKnowledge, enemies, true )    
+end
+
+function DEC_Connaissances_UnitesEnnemiesVivantesPercuesDansFuseau()
+    return _DEC_Connaissances_UnitesEnnemiesVivantesPercuesDansFuseau( myself )
+end
+
+function DEC_Connaissances_UnitesEnnemiesVivantesDansFuseau()
+    return _DEC_Connaissances_UnitesEnnemiesVivantesDansFuseau( myself )
+end
+
+function DEC_Connaissances_UnitesEnnemiesVivantesDansZone( zone )
+    return _DEC_Connaissances_UnitesEnnemiesVivantesDansZone( myself, zone )
+end
+
+function DEC_Connaissances_UnitesBlesseesDansZone( zone )
+    return _DEC_Connaissances_UnitesBlesseesDansZone( myself, zone )
+end
+
+function DEC_Connaissances_UnitesCivilesDansZone( zone )
+    return _DEC_Connaissances_UnitesCivilesDansZone( myself, zone )
+end
+
+function DEC_Connaissances_UnitesEnnemiesVivantesDansCercle( center, radius )
+    return _DEC_Connaissances_UnitesEnnemiesVivantesDansCercle( myself, center, radius )
+end
+
+function DEC_Connaissances_UnitesBlesseesOuTueesDansCercle( center, radius )
+    return _DEC_Connaissances_UnitesBlesseesOuTueesDansCercle( myself, center, radius )
+end
+
+function DEC_Connaissances_RefugiesAProximite( radius )
+    return _DEC_Connaissances_RefugiesAProximite( myself, radius )
+end
+
+function DEC_Connaissances_TerroristsAProximite( radius )
+    return _DEC_Connaissances_TerroristsAProximite( myself, radius )
+end
+
+function DEC_Connaissances_UnitesRenduesAProximite( radius )
+    return _DEC_Connaissances_UnitesRenduesAProximite( myself, radius )
+end
+
+function DEC_Connaissances_PresenceEnnemieDansCercle( center, radius )
+    return _DEC_Connaissances_PresenceEnnemieDansCercle( myself, center, radius )
+end
+
+function DEC_Connaissances_UnitesAmiesDansZone( zone )
+    return _DEC_Connaissances_UnitesAmiesDansZone( myself, zone )
+end
+
+function DEC_ObjectKnowledgesIntersectingInZone( location, parameters )
+    return _DEC_ObjectKnowledgesIntersectingInZone( myself, location, parameters )
+end
+
+function DEC_Connaissances_CollisionsObjets()
+    return _DEC_Connaissances_CollisionsObjets( myself )
+end
+
+function DEC_Connaissances_CollisionsDesastres()
+    return _DEC_Connaissances_CollisionsDesastres( myself )
+end
+
+function DEC_Connaissances_Desastres()
+    return _DEC_Connaissances_Desastres( myself )
+end
+
+function DEC_Connaissances_CollisionsObjetsDeType( objectType )
+    return _DEC_Connaissances_CollisionsObjetsDeType( myself, objectType )
+end
+
+function DEC_Connaissances_ObjetLePlusProche( type )
+    return _DEC_Connaissances_ObjetLePlusProche( myself, type )
+end
+
+function DEC_Connaissances_ObjetAmiLePlusProche( type )
+    return _DEC_Connaissances_ObjetAmiLePlusProche( myself, type )
+end
+
+function DEC_Connaissances_CollisionsPopulations()
+    return _DEC_Connaissances_CollisionsPopulations( myself )
+end
+
+function DEC_Connaissances_PopulationsPrenantAPartie()
+    return _DEC_Connaissances_PopulationsPrenantAPartie( myself )
+end
+
+function DEC_Connaissances_EstPrisAPartieParPopulation( knowledgeId )
+    return _DEC_Connaissances_EstPrisAPartieParPopulation( myself, knowledgeId )
+end
+
+-- Logistics
+function DEC_RecupererComposantes( target, type, numToGetBack )
+    _DEC_RecupererComposantes( myself, target, type, numToGetBack )
+end
+
+function DEC_RecupererVSRAM( target, numToGetBack )
+    _DEC_RecupererVSRAM( myself, target, numToGetBack )
+end
+
+function DEC_RecupererRemorqueurs( target, numToGetBack )
+    _DEC_RecupererRemorqueurs( myself, target, numToGetBack )
+end
+
+function DEC_Pion_PcDeTC2()
+    return _DEC_Pion_PcDeTC2( myself )
+end
+
+function DEC_ChangeValeurDotations2( dotationType, capacityFactor )
+    _DEC_ChangeValeurDotations( myself, dotationType, capacityFactor, -1 )
+end
+
+function DEC_ChangeValeurDotations3( dotationType, capacityFactor, ammoDotationClassId )
+    _DEC_ChangeValeurDotations( myself, dotationType, capacityFactor, ammoDotationClassId )
+end
+
+function DEC_Ravitaillement_Convoi_DeplacementVersRavitailleurEffectue()
+    _DEC_Ravitaillement_Convoi_DeplacementVersRavitailleurEffectue( myself )
+end
+
+function DEC_Ravitaillement_Convoi_DeplacementVersTransporteurEffectue()
+    _DEC_Ravitaillement_Convoi_DeplacementVersTransporteurEffectue( myself )
+end
+
+function DEC_Ravitaillement_Convoi_DeplacementVersDestinataireEffectue()
+    _DEC_Ravitaillement_Convoi_DeplacementVersDestinataireEffectue( myself )
+end
+
+function DEC_Ravitaillement_Convoi_FinMission()
+    _DEC_Ravitaillement_Convoi_FinMission( myself )
+end
+
+function DEC_Ravitaillement_Convoi_ActionCourante()
+    return _DEC_Ravitaillement_Convoi_ActionCourante( myself )
+end
+
+function DEC_Ravitaillement_Convoi_DestinataireCourant()
+    return _DEC_Ravitaillement_Convoi_DestinataireCourant( myself )
+end
+
+function DEC_Ravitaillement_Convoi_Ravitailleur()
+    return _DEC_Ravitaillement_Convoi_Ravitailleur( myself )
+end
+
+function DEC_Ravitaillement_Convoi_Transporteur()
+    return _DEC_Ravitaillement_Convoi_Transporteur( myself )
+end
+
+function DEC_Ravitaillement_Convoi_ItineraireVersProchaineDestination()
+    return _DEC_Ravitaillement_Convoi_ItineraireVersProchaineDestination( myself )
+end
+
+function DEC_Ravitaillement_Convoi_EstFluxPousse()
+    return _DEC_Ravitaillement_Convoi_EstFluxPousse( myself )
+end
+
+function DEC_CreateBreakdown( type, breakdown )
+    return _DEC_CreateBreakdown( myself, type, breakdown )
+end
+
+-- Misc
+function DEC_ModulationVitesseCourante( factor )
+    _DEC_ModulationVitesseCourante( myself, factor )
+end
+
+function DEC_ModulationVitesseMax( factor )
+    _DEC_ModulationVitesseMax( myself, factor )
+end
+
+-- Path
+function DEC_CreerItineraire( endPoint, pathType )
+    return _DEC_CreerItineraire( myself, endPoint, pathType )
+end
+
+function DEC_CreerItineraireBM( endPoint, pathType )
+    return _DEC_CreerItineraireBM( myself, endPoint, pathType )
+end
+
+function DEC_CreerItineraireListe( points, pathType )
+    return _DEC_CreerItineraireListe( myself, points, pathType )
+end
+
+function DEC_Itineraire_EstEnMouvementSur( path )
+    return _DEC_Itineraire_EstEnMouvementSur( myself, path )
+end
+
+function DEC_GetNextObjectOnPath( oId, oDistance, params )
+    return _DEC_GetNextObjectOnPath( myself, oId, oDistance, params )
+end
+
+function DEC_GetNextObjectOnPathWithBypassed( oId, oDistance, params )
+    return _DEC_GetNextObjectOnPathWithBypassed( myself, oId, oDistance, params )
+end
+
+function DEC_Itineraire_ExtrapolerPosition( time, boundOnPath )
+    return myself:DEC_Itineraire_ExtrapolerPosition( time, boundOnPath )
+end
+
+-- Perception
+function DEC_Perception_ActiverCoupsDeSonde()
+    _DEC_Perception_ActiverCoupsDeSonde( myself )
+end
+
+function DEC_Perception_DesactiverCoupsDeSonde()
+    _DEC_Perception_DesactiverCoupsDeSonde( myself )
+end
+
+function DEC_Perception_ActiverSenseursSurDecision()
+    _DEC_Perception_ActiverSenseursSurDecision( myself )
+end
+
+function DEC_Perception_DesactiverSenseursSurDecision()
+    _DEC_Perception_DesactiverSenseursSurDecision( myself )
+end
+
+function DEC_Perception_ActiverSenseurs()
+    _DEC_Perception_ActiverSenseurs( myself, true )
+end
+
+function DEC_Perception_DesactiverSenseurs()
+    _DEC_Perception_ActiverSenseurs( myself, false )
+end
+
+function DEC_Perception_ActiverRadar( radarClass )
+    _DEC_Perception_ActiverRadar( myself, radarClass )
+end
+
+function DEC_Perception_DesactiverRadar( radarClass )
+    _DEC_Perception_DesactiverRadar( myself, radarClass )
+end
+
+function DEC_Perception_ActiverRadarSurLocalisation( radarClass, localization )
+    return _DEC_Perception_ActiverRadarSurLocalisation( myself, radarClass, localization )
+end
+
+function DEC_Perception_ActiverRadarSurPointPtr( radarClass, point )
+    return _DEC_Perception_ActiverRadarSurPointPtr( myself, radarClass, point )
+end
+
+function DEC_Perception_DesactiverRadarSurLocalisation( radarClass, id )
+    _DEC_Perception_DesactiverRadarSurLocalisation( myself, radarClass, id )
+end
+
+function DEC_Perception_ActiverPerceptionTirsIndirect( localization )
+    return _DEC_Perception_ActiverPerceptionTirsIndirect( myself, localization )
+end
+
+function DEC_Perception_DesactiverPerceptionTirsIndirect( id )
+    _DEC_Perception_DesactiverPerceptionTirsIndirect( myself, id )
+end
+
+function DEC_Perception_ActiverReconnaissanceLocalisation( localization )
+    return _DEC_Perception_ActiverReconnaissanceLocalisation( myself, localization )
+end
+
+function DEC_Perception_ActivateLocationProgressiveRecce( localization, speedGrowth )
+    return _DEC_Perception_ActivateLocationProgressiveRecce( myself, localization, speedGrowth )
+end
+
+function DEC_Perception_DesactiverReconnaissanceLocalisation( id )
+    _DEC_Perception_DesactiverReconnaissanceLocalisation( myself, id )
+end
+
+function DEC_Perception_ActiverReconnaissanceDansBlocUrbain( urbanBlock )
+    return _DEC_Perception_ActiverReconnaissanceDansBlocUrbain( myself, urbanBlock )
+end
+
+function DEC_Perception_DesactiverReconnaissanceDansBlocUrbain( id )
+    _DEC_Perception_DesactiverReconnaissanceDansBlocUrbain( myself, id )
+end
+
+function DEC_Perception_ActiverDetectionObjetLocalisation( localization, center, speedGrowth )
+    return _DEC_Perception_ActiverDetectionObjetLocalisation( myself, localization, center, speedGrowth )
+end
+
+function DEC_Perception_DesactiverDetectionObjetLocalisation( id )
+    _DEC_Perception_DesactiverDetectionObjetLocalisation( myself, id )
+end
+
+function DEC_Perception_ActiverReconnaissancePoint( center, size, speedGrowth )
+    return _DEC_Perception_ActiverReconnaissancePoint( myself, center, size, speedGrowth )
+end
+
+function DEC_Perception_DesactiverReconnaissancePoint( id )
+    _DEC_Perception_DesactiverReconnaissancePoint( myself, id )
+end
+
+function DEC_Perception_VisionVerrouilleeSurDirection( direction )
+    _DEC_Perception_VisionVerrouilleeSurDirection( myself, direction )
+end
+
+function DEC_Perception_VisionVerrouilleeSurPoint( point )
+    _DEC_Perception_VisionVerrouilleeSurPoint( myself, point )
+end
+
+function DEC_Perception_VisionVerrouilleeSurPointPtr( point )
+    _DEC_Perception_VisionVerrouilleeSurPointPtr( myself, point )
+end
+
+function DEC_Perception_VisionNormale()
+    _DEC_Perception_VisionNormale( myself )
+end
+
+function DEC_Perception_ActiverObserveurTir()
+    _DEC_Perception_ActiverObserveurTir( myself )
+end
+
+function DEC_Perception_DesactiverObserveurTir()
+    _DEC_Perception_DesactiverObserveurTir( myself )
+end
+
+function DEC_Perception_PointEstVisible( point )
+    return _DEC_Perception_PointEstVisible( myself, point )
+end
+
+function DEC_Connaissances_IdentifierToutesUnitesDansZone( location )
+    _DEC_Connaissances_IdentifierToutesUnitesDansZone( myself, location )
+end
+
+function DEC_GetPerception( point, target )
+    return _DEC_GetPerception( myself, point, target )
+end
+
+function DEC_Perception_ActiverModeEnregistrement()
+    _DEC_Perception_ActiverModeEnregistrement( myself )
+end
+
+function DEC_Perception_DesactiverModeEnregistrement()
+    _DEC_Perception_DesactiverModeEnregistrement( myself )
+end
+
+function DEC_ALAT_ActiverReconnaissance( location )
+    _DEC_ALAT_ActiverReconnaissance( myself, location )
+end
+
+function DEC_ALAT_DesactiverReconnaissance()
+    _DEC_ALAT_DesactiverReconnaissance( myself )
+end
+
+function DEC_ALAT_ReconnaissanceNonVuTerminee()
+    return _DEC_ALAT_ReconnaissanceNonVuTerminee( myself )
+end
+
+function DEC_Perception_ActiverSurveillance( localization )
+    return _DEC_Perception_ActiverSurveillance( myself, localization )
+end
+
+function DEC_Perception_DesactiverSurveillance( id )
+    _DEC_Perception_DesactiverSurveillance( myself, id )
+end
+
+-- Fire
+function DEC_Tir_PorteeMaxPourTirerSurUnite( knowledge, ph )
+    return _DEC_Tir_PorteeMaxPourTirerSurUnite( myself, knowledge, ph )
+end
+
+function DEC_Tir_PorteeMaxPourTirerSurUniteAvecMunition( knowledge, ph, dotation )
+    return _DEC_Tir_PorteeMaxPourTirerSurUniteAvecMunition( myself, knowledge, ph, dotation )
+end
+
+function DEC_Tir_PorteeMinPourTirerSurUnite( knowledge, ph )
+    return _DEC_Tir_PorteeMinPourTirerSurUnite( myself, knowledge, ph )
+end
+
+function DEC_Tir_PorteeMaxPourTirerSurUnitePosturesReelles( knowledge, ph )
+    return _DEC_Tir_PorteeMaxPourTirerSurUnitePosturesReelles( myself, knowledge, ph )
+end
+
+function DEC_Tir_PorteeMinPourTirerSurUnitePosturesReelles( knowledge, ph )
+    return _DEC_Tir_PorteeMinPourTirerSurUnitePosturesReelles( myself, knowledge, ph )
+end
+
+function DEC_Tir_PorteeMaxPourTirerDebarqueSurUnite( knowledge, ph )
+    return _DEC_Tir_PorteeMaxPourTirerDebarqueSurUnite( myself, knowledge, ph )
+end
+
+function DEC_Tir_PorteeMaxPourEtreTireParUnite( knowledge, ph )
+    return _DEC_Tir_PorteeMaxPourEtreTireParUnite( myself, knowledge, ph )
+end
+
+function DEC_Tir_PorteeMaxTirIndirect( dotation )
+    return _DEC_Tir_PorteeMaxTirIndirect( myself, dotation )
+end
+
+function DEC_Tir_PorteeMinTirIndirect( dotation )
+    return _DEC_Tir_PorteeMinTirIndirect( myself, dotation )
+end
+
+function DEC_Tir_PorteeMaxTirIndirect_SansTesterEtatMunitions( dotation )
+    return _DEC_Tir_PorteeMaxTirIndirect_SansTesterEtatMunitions( myself, dotation )
+end
+
+function DEC_Tir_PorteeMinTirIndirect_SansTesterEtatMunitions( dotation )
+    return _DEC_Tir_PorteeMinTirIndirect_SansTesterEtatMunitions( myself, dotation )
+end
+
+function DEC_Tir_PorteeTheoriqueMaxTirIndirect( dotation )
+    return _DEC_Tir_PorteeTheoriqueMaxTirIndirect( myself, dotation )
+end
+
+function DEC_Tir_PorteeTheoriqueMinTirIndirect( dotation )
+    return _DEC_Tir_PorteeTheoriqueMinTirIndirect( myself, dotation )
+end
+
+function DEC_Tir_LancerFumigeneSurConnaissance( target )
+    return _DEC_Tir_LancerFumigeneSurConnaissance( myself, target )
+end
+
+function DEC_Tir_MunitionPourTirIndirect( indirectFireDotationClassId, target )
+    return _DEC_Tir_MunitionPourTirIndirect( myself, indirectFireDotationClassId, target )
+end
+
+function DEC_Pion_InterdireMunition( dotationCategories )
+    _DEC_Pion_InterdireMunition( myself, dotationCategories )
+end
+
+function DEC_Pion_AutoriserMunition( dotationCategories )
+    _DEC_Pion_AutoriserMunition( myself, dotationCategories )
+end
+
+function DEC_Pion_AutoriserToutesMunitions()
+    _DEC_Pion_AutoriserToutesMunitions( myself )
+end
+
+-- Terrain
+function DEC_FindSafetyPositions( radius, safetyDistance )
+    return _DEC_FindSafetyPositions( myself, radius, safetyDistance )
+end
+
+function DEC_Crossroads( results )
+    local points = _DEC_Crossroads( myself )
+    InitQueryReturn( results, integration.ontology.types.point, points, true )
+end
+

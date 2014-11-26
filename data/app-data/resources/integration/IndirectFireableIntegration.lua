@@ -254,7 +254,7 @@ end
 -- This method can only be called by an agent.
 -- @return Float, the maximum range (in meters)
 integration.getMaxRangeIndirectFireWithoutSelectAmmo = function()
-    return DEC_Tir_PorteeMaxTirIndirectSansChoisirMunition()
+    return DEC_Tir_PorteeMaxTirIndirectSansChoisirMunition( myself )
 end
 
 -- Returns the indirect fire range for the given agent

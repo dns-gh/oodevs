@@ -1,9 +1,15 @@
 #include "simulation_kernel_pch.h"
 #include "DEC_EntityFunctions.h"
-#include "DEC_Decision_ABC.h"
+#include "Decision/Brain.h"
+#include "Decision/DEC_Decision_ABC.h"
 #include "Entities/MIL_Entity_ABC.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
+
+void DEC_EntityFunctions::Register( sword::Brain& brain )
+{
+    brain.RegisterFunction( "_DEC_DecisionalState", &DEC_EntityFunctions::DecisionalState );
+}
 
 void DEC_EntityFunctions::DecisionalState( const DEC_Decision_ABC* agent, const std::string& key, const std::string& value )
 {

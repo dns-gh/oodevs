@@ -13,6 +13,7 @@
 #include "DEC_KnowledgePopulationFunctions.h"
 #include "DEC_Decision_ABC.h"
 #include "MIL_AgentServer.h"
+#include "Decision/Brain.h"
 #include "Entities/MIL_Army.h"
 #include "Entities/MIL_EntityManager.h"
 #include "Entities/Agents/MIL_AgentPion.h"
@@ -22,11 +23,53 @@
 #include "Entities/Orders/MIL_PopulationOrderManager.h"
 #include "Entities/Populations/DEC_PopulationDecision.h"
 #include "Entities/Populations/MIL_Population.h"
+#include "Entities/Populations/MIL_PopulationAttitude.h"
 #include "Entities/Populations/MIL_PopulationType.h"
 #include "Entities/Populations/MIL_PopulationConcentration.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
+#include "Knowledge/DEC_Knowledge_Population.h"
+#include "Knowledge/MIL_KnowledgeGroup.h"
 #include "Knowledge/QueryValidity.h"
+
+void DEC_KnowledgePopulationFunctions::Register( sword::Brain& brain )
+{
+    brain.RegisterFunction( "_DEC_KnowledgePopulation_Domination",  &DEC_KnowledgePopulationFunctions::GetDominationState );
+    brain.RegisterFunction( "_DEC_ConnaissancePopulation_EstDansZone", &DEC_KnowledgePopulationFunctions::IsInZone );
+    brain.RegisterFunction( "_DEC_KnowledgePopulation_GetBarycenter", &DEC_KnowledgePopulationFunctions::GetBarycenter );
+    brain.RegisterFunction( "_DEC_Crowd_GetHumansFromAllTypes", &DEC_KnowledgePopulationFunctions::GetHumansFromAllTypes );
+    brain.RegisterFunction( "_DEC_ConnaissancePopulation_Attitude", &DEC_KnowledgePopulationFunctions::GetAttitude );
+    brain.RegisterFunction( "_DEC_ConnaissancePopulation_Reconnaitre", &DEC_KnowledgePopulationFunctions::Recon );
+    brain.RegisterFunction( "_DEC_ConnaissancePopulation_EstReconnu", &DEC_KnowledgePopulationFunctions::IsRecon );
+    brain.RegisterFunction( "_DEC_ConnaissancePopulation_EstPercueParUnite",  &DEC_KnowledgePopulationFunctions::IsPerceivedByAgent );
+    brain.RegisterFunction( "_DEC_ConnaissancePopulation_Dangerosite",  &DEC_KnowledgePopulationFunctions::GetDangerosity );
+    brain.RegisterFunction( "_DEC_ConnaissancePopulation_PointPlusProche", &DEC_KnowledgePopulationFunctions::ClosestPoint );
+    brain.RegisterFunction( "_DEC_ConnaissancePopulation_Securiser", &DEC_KnowledgePopulationFunctions::Secure );
+    brain.RegisterFunction( "_DEC_ConnaissancePopulation_PointSecurisation", &DEC_KnowledgePopulationFunctions::SecuringPoint );
+    brain.RegisterFunction( "_DEC_ConnaissancePopulation_EstEnnemi", &DEC_KnowledgePopulationFunctions::IsEnemy );
+    brain.RegisterFunction( "_DEC_ConnaissancePopulation_Exterminer", &DEC_KnowledgePopulationFunctions::Exterminate );
+    brain.RegisterFunction( "_DEC_GetAdhesionPopulation", &DEC_KnowledgePopulationFunctions::GetCrowdAffinity );
+    brain.RegisterFunction( "_DEC_GetAttitudePopulation", &DEC_KnowledgePopulationFunctions::GetCrowdAttitude );
+    brain.RegisterFunction( "_DEC_StartHidingInCrowd", &DEC_KnowledgePopulationFunctions::StartHidingInCrowd );
+    brain.RegisterFunction( "_DEC_StopHidingInCrowd", &DEC_KnowledgePopulationFunctions::StopHidingInCrowd );
+    brain.RegisterFunction( "_DEC_GetAgentsHiddenInCrowd", &DEC_KnowledgePopulationFunctions::GetAgentsHiddenInCrowd );
+    brain.RegisterFunction( "_DEC_Crowd_ExtractWoundedFromCrowd", &DEC_KnowledgePopulationFunctions::ExtractWoundedFromCrowd );
+    brain.RegisterFunction( "_DEC_Crowd_ExtractDeadFromCrowd", &DEC_KnowledgePopulationFunctions::ExtractDeadFromCrowd );
+    brain.RegisterFunction( "_DEC_Crowd_HealWoundedHumans", &DEC_KnowledgePopulationFunctions::HealWoundedHumans );
+    brain.RegisterFunction( "_DEC_ConnaissancePopulation_Verrouiller", &DEC_KnowledgePopulationFunctions::Lock );
+    brain.RegisterFunction( "_DEC_ConnaissancePopulation_Deverrouiller", &DEC_KnowledgePopulationFunctions::Unlock );
+    brain.RegisterFunction( "_DEC_ObtenirRenseignementCritiqueSurFoule", &DEC_KnowledgePopulationFunctions::GetCriticalIntelligence );
+    brain.RegisterFunction( "_DEC_Agent_ChangerNombreIndividuArmeDansFoule", &DEC_KnowledgePopulationFunctions::ChangeArmedIndividuals );
+    brain.RegisterFunction( "DEC_GetConcentrationLaPlusProche", &DEC_KnowledgePopulationFunctions::GetClosestConcentration );
+    brain.RegisterFunction( "DEC_CrowdKnowledge_IsValid", &DEC_KnowledgePopulationFunctions::IsValid );
+    brain.RegisterFunction( "DEC_GetPositionConcentration", &DEC_KnowledgePopulationFunctions::GetConcentrationPosition  );
+    brain.RegisterFunction( "DEC_GetNombrePersonnesDansConcentration", &DEC_KnowledgePopulationFunctions::GetAllHumansInConcentration );
+    brain.RegisterFunction( "DEC_GetNombrePersonnesDansFoule", &DEC_KnowledgePopulationFunctions::GetAllHumans );
+    brain.RegisterFunction( "DEC_GetKnowledgeBrain", &DEC_KnowledgePopulationFunctions::GetBrain );
+    brain.RegisterFunction( "DEC_ConnaissancePopulation_HasFlow", &DEC_KnowledgePopulationFunctions::IsFlowKnown );
+    brain.RegisterFunction( "DEC_CrowdKnowledge_CanLoadCrowdConcentration", &DEC_KnowledgePopulationFunctions::CanLoadCrowdConcentration );
+    brain.RegisterFunction( "DEC_ConnaissancePopulation_PointEnTeteDeFlux", &DEC_KnowledgePopulationFunctions::GetFlowHead );
+}
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgePopulationFunctions::GetDominationState
@@ -61,18 +104,50 @@ boost::shared_ptr< MT_Vector2D > DEC_KnowledgePopulationFunctions::GetBarycenter
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_KnowledgePopulationFunctions::GetAttitude
+// Created: SBO 2006-04-05
+// -----------------------------------------------------------------------------
+unsigned int DEC_KnowledgePopulationFunctions::GetAttitude( const DEC_Decision_ABC* caller, unsigned int knowledgeId )
+{
+    auto bbKg = caller->GetKnowledgeGroup()->GetKnowledge();
+    if( bbKg )
+    {
+        boost::shared_ptr< DEC_Knowledge_Population > pKnowledge = bbKg->GetKnowledgePopulationFromID( knowledgeId );
+        if( pKnowledge )
+            return pKnowledge->GetAttitude().GetID();
+    }
+    return 0;
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_KnowledgePopulationFunctions::Recon
 // Created: NLD 2004-10-29
 // -----------------------------------------------------------------------------
-void DEC_KnowledgePopulationFunctions::Recon( const MIL_AgentPion& callerAgent, int knowledgeId )
+void DEC_KnowledgePopulationFunctions::Recon( const DEC_Decision_ABC* callerAgent, int knowledgeId )
 {
-    auto bbKg = callerAgent.GetKnowledgeGroup()->GetKnowledge();
+    auto bbKg = callerAgent->GetKnowledgeGroup()->GetKnowledge();
     if( bbKg )
     {
         boost::shared_ptr< DEC_Knowledge_Population > pKnowledge = bbKg->GetKnowledgePopulationFromID( knowledgeId );
         if( pKnowledge )
             pKnowledge->Recon();
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgePopulationFunctions::IsRecon
+// Created: NLD 2005-01-26
+// -----------------------------------------------------------------------------
+bool DEC_KnowledgePopulationFunctions::IsRecon( const DEC_Decision_ABC* caller, unsigned int knowledgeId )
+{
+    auto bbKg = caller->GetKnowledgeGroup()->GetKnowledge();
+    if( bbKg )
+    {
+        boost::shared_ptr< DEC_Knowledge_Population > pKnowledge = bbKg->GetKnowledgePopulationFromID( knowledgeId );
+        if( pKnowledge )
+            return pKnowledge->IsRecon();
+    }
+    return false;
 }
 
 // -----------------------------------------------------------------------------
@@ -95,34 +170,34 @@ bool DEC_KnowledgePopulationFunctions::IsInZone( const DEC_Decision_ABC* caller,
 // Name: DEC_KnowledgePopulationFunctions::GetDangerosity
 // Created: NLD 2005-11-10
 // -----------------------------------------------------------------------------
-float DEC_KnowledgePopulationFunctions::GetDangerosity( const MIL_AgentPion& caller, int knowledgeId )
+double DEC_KnowledgePopulationFunctions::GetDangerosity( const DEC_Decision_ABC* caller, int knowledgeId )
 {
-    auto bbKg = caller.GetKnowledgeGroup()->GetKnowledge();
+    auto bbKg = caller->GetKnowledgeGroup()->GetKnowledge();
     if( bbKg )
     {
         boost::shared_ptr< DEC_Knowledge_Population > pKnowledge = bbKg->GetKnowledgePopulationFromID( knowledgeId );
         if( pKnowledge )
         {
             // For DIA, the dangerosity value is 1 <= dangerosity <= 2
-            const double rDangerosity = pKnowledge->GetDangerosity( caller );
-            return (float)( rDangerosity + 1. ) ;
+            const double rDangerosity = pKnowledge->GetDangerosity( caller->GetPion() );
+            return rDangerosity + 1.0;
         }
     }
-    return 0.f;
+    return 0.0;
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgePopulationFunctions::Secure
 // Created: NLD 2005-12-02
 // -----------------------------------------------------------------------------
-void DEC_KnowledgePopulationFunctions::Secure( const MIL_AgentPion& caller, int knowledgeId )
+void DEC_KnowledgePopulationFunctions::Secure( const DEC_Decision_ABC* caller, int knowledgeId )
 {
-    auto bbKg = caller.GetKnowledgeGroup()->GetKnowledge();
+    auto bbKg = caller->GetKnowledgeGroup()->GetKnowledge();
     if( bbKg )
     {
         boost::shared_ptr< DEC_Knowledge_Population > pKnowledge = bbKg->GetKnowledgePopulationFromID( knowledgeId );
         if( pKnowledge )
-            pKnowledge->Secure( caller );
+            pKnowledge->Secure( caller->GetPion() );
     }
 }
 
@@ -130,14 +205,14 @@ void DEC_KnowledgePopulationFunctions::Secure( const MIL_AgentPion& caller, int 
 // Name: DEC_KnowledgePopulationFunctions::SecuringPoint
 // Created: SBO 2005-12-16
 // -----------------------------------------------------------------------------
-boost::shared_ptr<MT_Vector2D> DEC_KnowledgePopulationFunctions::SecuringPoint( const MIL_AgentPion& caller, int knowledgeId )
+boost::shared_ptr<MT_Vector2D> DEC_KnowledgePopulationFunctions::SecuringPoint( const DEC_Decision_ABC* caller, int knowledgeId )
 {
-    auto bbKg = caller.GetKnowledgeGroup()->GetKnowledge();
+    auto bbKg = caller->GetKnowledgeGroup()->GetKnowledge();
     if( bbKg )
     {
         boost::shared_ptr< DEC_Knowledge_Population > pKnowledge = bbKg->GetKnowledgePopulationFromID( knowledgeId );
         if( pKnowledge )
-            return pKnowledge->GetSecuringPoint( caller );
+            return pKnowledge->GetSecuringPoint( caller->GetPion() );
     }
     return boost::shared_ptr< MT_Vector2D >();
 }
@@ -194,15 +269,15 @@ unsigned int DEC_KnowledgePopulationFunctions::GetAllHumans( const DEC_Decision_
 // Name: DEC_KnowledgePopulationFunctions::ClosestPoint
 // Created: NLD 2005-12-05
 // -----------------------------------------------------------------------------
-boost::shared_ptr<MT_Vector2D> DEC_KnowledgePopulationFunctions::ClosestPoint( const MIL_AgentPion& caller, int knowledgeId )
+boost::shared_ptr<MT_Vector2D> DEC_KnowledgePopulationFunctions::ClosestPoint( const DEC_Decision_ABC* caller, int knowledgeId )
 {
-    auto bbKg = caller.GetKnowledgeGroup()->GetKnowledge();
+    auto bbKg = caller->GetKnowledgeGroup()->GetKnowledge();
     if( bbKg )
     {
         boost::shared_ptr< DEC_Knowledge_Population > pKnowledge = bbKg->GetKnowledgePopulationFromID( knowledgeId );
         if( pKnowledge )
         {
-            MT_Vector2D* pResult = new MT_Vector2D( pKnowledge->GetClosestPoint( caller.GetRole< PHY_RoleInterface_Location >().GetPosition() ) ); //$$$ RAM
+            MT_Vector2D* pResult = new MT_Vector2D( pKnowledge->GetClosestPoint( caller->GetPion().GetRole< PHY_RoleInterface_Location >().GetPosition() ) ); //$$$ RAM
             return boost::shared_ptr< MT_Vector2D >( pResult );
         }
     }
@@ -213,14 +288,14 @@ boost::shared_ptr<MT_Vector2D> DEC_KnowledgePopulationFunctions::ClosestPoint( c
 // Name: DEC_KnowledgePopulationFunctions::IsEnemy
 // Created: HME 2005-12-29
 // -----------------------------------------------------------------------------
-bool DEC_KnowledgePopulationFunctions::IsEnemy( const MIL_AgentPion& caller, int knowledgeId )
+bool DEC_KnowledgePopulationFunctions::IsEnemy( const DEC_Decision_ABC* caller, int knowledgeId )
 {
-    auto bbKg = caller.GetKnowledgeGroup()->GetKnowledge();
+    auto bbKg = caller->GetKnowledgeGroup()->GetKnowledge();
     if( bbKg )
     {
         boost::shared_ptr< DEC_Knowledge_Population > pKnowledge = bbKg->GetKnowledgePopulationFromID( knowledgeId );
         if( pKnowledge )
-            return eTristate_True == caller.GetArmy().IsAnEnemy( pKnowledge->GetArmy() );
+            return eTristate_True == caller->GetEntity().GetArmy().IsAnEnemy( pKnowledge->GetArmy() );
     }
     return false;
 }
@@ -229,16 +304,17 @@ bool DEC_KnowledgePopulationFunctions::IsEnemy( const MIL_AgentPion& caller, int
 // Name: DEC_KnowledgePopulationFunctions::Exterminate
 // Created: SBO 2005-12-22
 // -----------------------------------------------------------------------------
-int DEC_KnowledgePopulationFunctions::Exterminate( MIL_AgentPion& caller, int knowledgeId, float surface, const PHY_DotationCategory* dotation )
+int DEC_KnowledgePopulationFunctions::Exterminate( DEC_Decision_ABC* caller, int knowledgeId, float surface, const PHY_DotationCategory* dotation )
 {
-    auto bbKg = caller.GetKnowledgeGroup()->GetKnowledge();
+    auto bbKg = caller->GetKnowledgeGroup()->GetKnowledge();
     if( bbKg )
     {
         boost::shared_ptr< DEC_Knowledge_Population > pKnowledge = bbKg->GetKnowledgePopulationFromID( knowledgeId );
         if( pKnowledge )
         {
-            pKnowledge->Exterminate( caller, surface );
-            caller.Get< dotation::PHY_RoleInterface_Dotations >().AddFireReservation( *dotation, 1 );
+            MIL_AgentPion& agent = caller->GetPion();
+            pKnowledge->Exterminate( agent, surface );
+            agent.Get< dotation::PHY_RoleInterface_Dotations >().AddFireReservation( *dotation, 1 );
             return eQueryValid;
         }
     }
@@ -249,14 +325,14 @@ int DEC_KnowledgePopulationFunctions::Exterminate( MIL_AgentPion& caller, int kn
 // Name: DEC_KnowledgePopulationFunctions::IsPerceivedByAgent
 // Created: SBO 2006-01-18
 // -----------------------------------------------------------------------------
-bool DEC_KnowledgePopulationFunctions::IsPerceivedByAgent( const MIL_AgentPion& caller, int knowledgeId )
+bool DEC_KnowledgePopulationFunctions::IsPerceivedByAgent( const DEC_Decision_ABC* caller, int knowledgeId )
 {
-    auto bbKg = caller.GetKnowledgeGroup()->GetKnowledge();
+    auto bbKg = caller->GetKnowledgeGroup()->GetKnowledge();
     if( bbKg )
     {
         boost::shared_ptr< DEC_Knowledge_Population > pKnowledge = bbKg->GetKnowledgePopulationFromID( knowledgeId );
         if( pKnowledge )
-            return caller.GetKnowledge().IsPerceived( pKnowledge->GetPopulationKnown() );
+            return caller->GetPion().GetKnowledge().IsPerceived( pKnowledge->GetPopulationKnown() );
     }
     return false;
 }
@@ -265,9 +341,9 @@ bool DEC_KnowledgePopulationFunctions::IsPerceivedByAgent( const MIL_AgentPion& 
 // Name: DEC_KnowledgePopulationFunctions::GetCriticalIntelligence
 // Created: ABR 2011-03-16
 // -----------------------------------------------------------------------------
-std::string DEC_KnowledgePopulationFunctions::GetCriticalIntelligence( const MIL_AgentPion& caller, int knowledgeId )
+std::string DEC_KnowledgePopulationFunctions::GetCriticalIntelligence( const DEC_Decision_ABC* caller, int knowledgeId )
 {
-    auto bbKg = caller.GetKnowledgeGroup()->GetKnowledge();
+    auto bbKg = caller->GetKnowledgeGroup()->GetKnowledge();
     if( bbKg )
     {
         boost::shared_ptr< DEC_Knowledge_Population > pKnowledge = bbKg->GetKnowledgePopulationFromID( knowledgeId );
@@ -284,9 +360,9 @@ std::string DEC_KnowledgePopulationFunctions::GetCriticalIntelligence( const MIL
 // Name: DEC_KnowledgePopulationFunctions::ChangeArmedIndividuals
 // Created: LMT 2011-04-01
 // -----------------------------------------------------------------------------
-void DEC_KnowledgePopulationFunctions::ChangeArmedIndividuals( const MIL_AgentPion& callerAgent, int knowledgeId, const double rArmedIndividuals )
+void DEC_KnowledgePopulationFunctions::ChangeArmedIndividuals( const DEC_Decision_ABC* callerAgent, int knowledgeId, const double rArmedIndividuals )
 {
-    auto bbKg = callerAgent.GetKnowledgeGroup()->GetKnowledge();
+    auto bbKg = callerAgent->GetKnowledgeGroup()->GetKnowledge();
     if( bbKg )
     {
         boost::shared_ptr< DEC_Knowledge_Population > pKnowledge = bbKg->GetKnowledgePopulationFromID( knowledgeId );
@@ -299,15 +375,15 @@ void DEC_KnowledgePopulationFunctions::ChangeArmedIndividuals( const MIL_AgentPi
 // Name: DEC_KnowledgePopulationFunctions::GetCrowdAffinity
 // Created: DDA 2011-05-02
 // -----------------------------------------------------------------------------
-float DEC_KnowledgePopulationFunctions::GetCrowdAffinity( const MIL_AgentPion& callerAgent, int knowledgeId )
+float DEC_KnowledgePopulationFunctions::GetCrowdAffinity( const DEC_Decision_ABC* callerAgent, int knowledgeId )
 {
-    auto bbKg = callerAgent.GetKnowledgeGroup()->GetKnowledge();
+    auto bbKg = callerAgent->GetKnowledgeGroup()->GetKnowledge();
     if( bbKg )
     {
         boost::shared_ptr< DEC_Knowledge_Population > pKnowledge = bbKg->GetKnowledgePopulationFromID( knowledgeId );
         if( pKnowledge )
         {
-            MIL_Army_ABC& army = callerAgent.GetArmy();
+            MIL_Army_ABC& army = callerAgent->GetEntity().GetArmy();
             return pKnowledge->GetPopulationKnown().GetAffinity( army.GetID() );
         }
     }
@@ -318,9 +394,9 @@ float DEC_KnowledgePopulationFunctions::GetCrowdAffinity( const MIL_AgentPion& c
 // Name: DEC_KnowledgePopulationFunctions::GetCrowdAttitude
 // Created: DDA 2011-05-17
 // -----------------------------------------------------------------------------
-int DEC_KnowledgePopulationFunctions::GetCrowdAttitude( const MIL_AgentPion& callerAgent, int knowledgeId )
+int DEC_KnowledgePopulationFunctions::GetCrowdAttitude( const DEC_Decision_ABC* callerAgent, int knowledgeId )
 {
-    auto bbKg = callerAgent.GetKnowledgeGroup()->GetKnowledge();
+    auto bbKg = callerAgent->GetKnowledgeGroup()->GetKnowledge();
     if( bbKg )
     {
         boost::shared_ptr< DEC_Knowledge_Population > pKnowledge = bbKg->GetKnowledgePopulationFromID( knowledgeId );
@@ -334,14 +410,14 @@ int DEC_KnowledgePopulationFunctions::GetCrowdAttitude( const MIL_AgentPion& cal
 // Name: DEC_KnowledgePopulationFunctions::StartHidingInCrowd
 // Created: MCO 2013-05-07
 // -----------------------------------------------------------------------------
-void DEC_KnowledgePopulationFunctions::StartHidingInCrowd( MIL_AgentPion& callerAgent, int knowledgeId )
+void DEC_KnowledgePopulationFunctions::StartHidingInCrowd( DEC_Decision_ABC* callerAgent, int knowledgeId )
 {
-    auto bbKg = callerAgent.GetKnowledgeGroup()->GetKnowledge();
+    auto bbKg = callerAgent->GetKnowledgeGroup()->GetKnowledge();
     if( bbKg )
     {
         boost::shared_ptr< DEC_Knowledge_Population > pKnowledge = bbKg->GetKnowledgePopulationFromID( knowledgeId );
         if( pKnowledge )
-            pKnowledge->GetPopulationKnown().AddHidden( callerAgent );
+            pKnowledge->GetPopulationKnown().AddHidden( callerAgent->GetPion() );
     }
 }
 
@@ -349,14 +425,14 @@ void DEC_KnowledgePopulationFunctions::StartHidingInCrowd( MIL_AgentPion& caller
 // Name: DEC_KnowledgePopulationFunctions::StopHidingInCrowd
 // Created: MCO 2013-05-07
 // -----------------------------------------------------------------------------
-void DEC_KnowledgePopulationFunctions::StopHidingInCrowd( MIL_AgentPion& callerAgent, int knowledgeId )
+void DEC_KnowledgePopulationFunctions::StopHidingInCrowd( DEC_Decision_ABC* callerAgent, int knowledgeId )
 {
-    auto bbKg = callerAgent.GetKnowledgeGroup()->GetKnowledge();
+    auto bbKg = callerAgent->GetKnowledgeGroup()->GetKnowledge();
     if( bbKg )
     {
         boost::shared_ptr< DEC_Knowledge_Population > pKnowledge = bbKg->GetKnowledgePopulationFromID( knowledgeId );
         if( pKnowledge )
-            pKnowledge->GetPopulationKnown().RemoveHidden( callerAgent );
+            pKnowledge->GetPopulationKnown().RemoveHidden( callerAgent->GetPion() );
     }
 }
 
@@ -364,10 +440,10 @@ void DEC_KnowledgePopulationFunctions::StopHidingInCrowd( MIL_AgentPion& callerA
 // Name: DEC_KnowledgePopulationFunctions::GetAgentsHiddenInCrowd
 // Created: MCO 2013-05-23
 // -----------------------------------------------------------------------------
-std::vector< DEC_Decision_ABC* > DEC_KnowledgePopulationFunctions::GetAgentsHiddenInCrowd( MIL_AgentPion& callerAgent, int knowledgeId )
+std::vector< DEC_Decision_ABC* > DEC_KnowledgePopulationFunctions::GetAgentsHiddenInCrowd( DEC_Decision_ABC* callerAgent, int knowledgeId )
 {
     std::vector< DEC_Decision_ABC* > result;
-    auto bbKg = callerAgent.GetKnowledgeGroup()->GetKnowledge();
+    auto bbKg = callerAgent->GetKnowledgeGroup()->GetKnowledge();
     if( bbKg )
     {
         boost::shared_ptr< DEC_Knowledge_Population > pKnowledge = bbKg->GetKnowledgePopulationFromID( knowledgeId );
@@ -424,9 +500,9 @@ int DEC_KnowledgePopulationFunctions::GetClosestConcentration( const DEC_Decisio
 // Name: DEC_KnowledgePopulationFunctions::Lock
 // Created: LDC 2013-05-22
 // -----------------------------------------------------------------------------
-void DEC_KnowledgePopulationFunctions::Lock( const MIL_AgentPion& callerAgent, int knowledgeId )
+void DEC_KnowledgePopulationFunctions::Lock( const DEC_Decision_ABC* callerAgent, int knowledgeId )
 {
-    auto bbKg = callerAgent.GetKnowledgeGroup()->GetKnowledge();
+    auto bbKg = callerAgent->GetKnowledgeGroup()->GetKnowledge();
     if( bbKg )
     {
         boost::shared_ptr< DEC_Knowledge_Population > pKnowledge = bbKg->GetKnowledgePopulationFromID( knowledgeId );
@@ -439,9 +515,9 @@ void DEC_KnowledgePopulationFunctions::Lock( const MIL_AgentPion& callerAgent, i
 // Name: DEC_KnowledgePopulationFunctions::Unlock
 // Created: LDC 2013-05-22
 // -----------------------------------------------------------------------------
-void DEC_KnowledgePopulationFunctions::Unlock( const MIL_AgentPion& callerAgent, int knowledgeId )
+void DEC_KnowledgePopulationFunctions::Unlock( const DEC_Decision_ABC* callerAgent, int knowledgeId )
 {
-    auto bbKg = callerAgent.GetKnowledgeGroup()->GetKnowledge();
+    auto bbKg = callerAgent->GetKnowledgeGroup()->GetKnowledge();
     if( bbKg )
     {
         boost::shared_ptr< DEC_Knowledge_Population > pKnowledge = bbKg->GetKnowledgePopulationFromID( knowledgeId );
@@ -454,11 +530,11 @@ void DEC_KnowledgePopulationFunctions::Unlock( const MIL_AgentPion& callerAgent,
 // Name: DEC_KnowledgePopulationFunctions::ExtractWoundedFromCrowd
 // Created: JSR 2012-01-18
 // -----------------------------------------------------------------------------
-unsigned int DEC_KnowledgePopulationFunctions::ExtractWoundedFromCrowd( const MIL_AgentPion& callerAgent, unsigned int knowledgeId, const MT_Vector2D* position )
+unsigned int DEC_KnowledgePopulationFunctions::ExtractWoundedFromCrowd( const DEC_Decision_ABC* callerAgent, unsigned int knowledgeId, const MT_Vector2D* position )
 {
     if( !position )
         throw MASA_EXCEPTION( "invalid parameter." );
-    auto bbKg = callerAgent.GetKnowledgeGroup()->GetKnowledge();
+    auto bbKg = callerAgent->GetKnowledgeGroup()->GetKnowledge();
     if( !bbKg )
         return 0;
     boost::shared_ptr< DEC_Knowledge_Population > pKnowledge = bbKg->GetKnowledgePopulationFromID( knowledgeId );
@@ -473,7 +549,7 @@ unsigned int DEC_KnowledgePopulationFunctions::ExtractWoundedFromCrowd( const MI
         MIL_Population* newPopulation = MIL_AgentServer::GetWorkspace().GetEntityManager().CreateCrowd( population.GetType().GetName(), *position, wounded, population.GetName() + " - wounded", population.GetArmy() );
         if( newPopulation )
         {
-            DEC_Knowledge_Population& knowledgePopulation = callerAgent.GetKnowledgeGroup()->GetPopulationKnowledgeToUpdate( *newPopulation );
+            DEC_Knowledge_Population& knowledgePopulation = callerAgent->GetKnowledgeGroup()->GetPopulationKnowledgeToUpdate( *newPopulation );
             knowledgePopulation.UpdateFromCrowdPerception( newPopulation->GetConcentration( *position ), MIL_Time_ABC::GetTime().GetCurrentTimeStep() );
             newPopulation->ChangeComposition( 0, wounded, 0, 0 );
             return newPopulation->GetID();
@@ -486,9 +562,9 @@ unsigned int DEC_KnowledgePopulationFunctions::ExtractWoundedFromCrowd( const MI
 // Name: DEC_KnowledgePopulationFunctions::HealWoundedHumans
 // Created: MIA 2011-02-15
 // -----------------------------------------------------------------------------
-bool DEC_KnowledgePopulationFunctions::HealWoundedHumans( const MIL_AgentPion& caller, int knowledgeId )
+bool DEC_KnowledgePopulationFunctions::HealWoundedHumans( const DEC_Decision_ABC* caller, int knowledgeId )
 {
-    auto bbKg = caller.GetKnowledgeGroup()->GetKnowledge();
+    auto bbKg = caller->GetKnowledgeGroup()->GetKnowledge();
     if( bbKg )
     {
         boost::shared_ptr< DEC_Knowledge_Population > pKnowledge = bbKg->GetKnowledgePopulationFromID( knowledgeId );
@@ -558,11 +634,11 @@ bool DEC_KnowledgePopulationFunctions::IsFlowKnown( const DEC_Decision_ABC& call
 // Name: DEC_KnowledgePopulationFunctions::ExtractDeadFromCrowd
 // Created: NMI 2013-07-25
 // -----------------------------------------------------------------------------
-unsigned int DEC_KnowledgePopulationFunctions::ExtractDeadFromCrowd( const MIL_AgentPion& caller, unsigned int knowledgeId, const MT_Vector2D* position )
+unsigned int DEC_KnowledgePopulationFunctions::ExtractDeadFromCrowd( const DEC_Decision_ABC* caller, unsigned int knowledgeId, const MT_Vector2D* position )
 {
     if( !position )
         throw MASA_EXCEPTION( "invalid parameter." );
-    auto bbKg = caller.GetKnowledgeGroup()->GetKnowledge();
+    auto bbKg = caller->GetKnowledgeGroup()->GetKnowledge();
     if( !bbKg )
         return 0;
     boost::shared_ptr< DEC_Knowledge_Population > pKnowledge = bbKg->GetKnowledgePopulationFromID( knowledgeId );
@@ -577,7 +653,7 @@ unsigned int DEC_KnowledgePopulationFunctions::ExtractDeadFromCrowd( const MIL_A
         MIL_Population* newPopulation = MIL_AgentServer::GetWorkspace().GetEntityManager().CreateCrowd( population.GetType().GetName(), *position, dead, population.GetName() + " - dead", population.GetArmy() );
         if( newPopulation )
         {
-            DEC_Knowledge_Population& knowledgePopulation = caller.GetKnowledgeGroup()->GetPopulationKnowledgeToUpdate( *newPopulation );
+            DEC_Knowledge_Population& knowledgePopulation = caller->GetKnowledgeGroup()->GetPopulationKnowledgeToUpdate( *newPopulation );
             knowledgePopulation.UpdateFromCrowdPerception( newPopulation->GetConcentration( *position ), MIL_Time_ABC::GetTime().GetCurrentTimeStep() );
             newPopulation->ChangeComposition( 0, 0, 0, dead );
             return newPopulation->GetID();

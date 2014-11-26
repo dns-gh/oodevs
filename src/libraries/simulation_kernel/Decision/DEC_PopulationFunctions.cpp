@@ -38,8 +38,56 @@
 #include "MIL_AgentServer.h"
 #include "protocol/ClientSenders.h"
 #include "simulation_terrain/TER_ObjectManager.h"
-#include "simulation_terrain/TER_World.h"
 
+void DEC_PopulationFunctions::Register( sword::Brain& brain )
+{
+    // Population
+    brain.RegisterFunction( "DEC_GetDomination", &DEC_PopulationFunctions::GetDominationState );
+    brain.RegisterFunction( "DEC_ConnaissanceAgent_RoePopulation", &DEC_PopulationFunctions::GetKnowledgeAgentRoePopulation );
+    brain.RegisterFunction( "DEC_ConnaissanceObjet_Localisation", &DEC_PopulationFunctions::GetKnowledgeObjectLocalisation );
+    brain.RegisterFunction( "DEC_ConnaissanceObjet_Degrader", &DEC_PopulationFunctions::DamageObject );
+
+    // Self
+    brain.RegisterFunction( "_DEC_GetPosition", &DEC_PopulationFunctions::GetBarycenter );
+    brain.RegisterFunction( "_DEC_GetNombrePersonne",  &DEC_PopulationFunctions::GetHealthyHumans );
+    brain.RegisterFunction( "_DEC_GetNombrePersonneContaminee", &DEC_PopulationFunctions::GetContaminatedHumans );
+
+    // Security
+    brain.RegisterFunction( "_DEC_GetUrbanBlockAngriness", &DEC_PopulationFunctions::GetUrbanBlockAngriness );
+    brain.RegisterFunction( "_DEC_ReintegrateUrbanBlock", &DEC_PopulationFunctions::ReintegrateUrbanBlock );
+    brain.RegisterFunction( "_DEC_Population_HealWounded", &DEC_PopulationFunctions::HealWounded );
+
+    // Move
+    brain.RegisterFunction( "_DEC_HasFlow", &DEC_PopulationFunctions::HasFlow );
+    brain.RegisterFunction( "_DEC_Population_HasReachedBlockBorder", &DEC_PopulationFunctions::HasReachedBlockBorder );
+    brain.RegisterFunction( "_DEC_Population_HasReachedDestination", &DEC_PopulationFunctions::HasReachedDestination );
+    brain.RegisterFunction( "_DEC_Population_HasReachedDestinationCompletely", &DEC_PopulationFunctions::HasReachedDestinationCompletely );
+
+    // Etats decisionnel
+    brain.RegisterFunction( "_DEC_Population_ChangeEtatDomination", &DEC_PopulationFunctions::NotifyDominationStateChanged );
+    brain.RegisterFunction( "_DEC_Population_Morts", &DEC_PopulationFunctions::GetDeadHumans );
+
+    // Effects
+    brain.RegisterFunction( "_DEC_Population_RalentissementPion_ChangeVitesse", &DEC_PopulationFunctions::SetPionMaxSpeed );
+    brain.RegisterFunction( "_DEC_Population_RalentissementPion_VitesseParDefaut", &DEC_PopulationFunctions::ResetPionMaxSpeed );
+    brain.RegisterFunction( "_DEC_Population_ChangerAttitude", &DEC_PopulationFunctions::SetAttitude );
+    brain.RegisterFunction( "_DEC_Population_Attitude", &DEC_PopulationFunctions::GetAttitude );
+    brain.RegisterFunction( "_DEC_Population_Positions", &DEC_PopulationFunctions::GetCurrentLocations );
+    brain.RegisterFunction( "_DEC_Population_ChangeUrbanDestructionState", &DEC_PopulationFunctions::SetUrbanDestructionState );
+    brain.RegisterFunction( "_DEC_Population_UrbanDestructionState", &DEC_PopulationFunctions::GetUrbanDestructionState );
+    brain.RegisterFunction( "_DEC_Population_ChangeDemonstrationState", &DEC_PopulationFunctions::SetDemonstrationState );
+    brain.RegisterFunction( "_DEC_Population_DemonstrationState", &DEC_PopulationFunctions::GetDemonstrationState );
+
+    // Knowledge objects
+    brain.RegisterFunction( "_DEC_ObjectKnowledgesInCircle", &DEC_PopulationFunctions::GetObjectsInCircle );
+    brain.RegisterFunction( "_DEC_ConnaissanceObjet_Distance", &DEC_PopulationFunctions::GetKnowledgeObjectDistance );
+    brain.RegisterFunction( "_DEC_ConnaissanceObjet_PointPlusProche", &DEC_PopulationFunctions::GetKnowledgeObjectClosestPoint );
+    brain.RegisterFunction( "_DEC_ConnaissanceObjet_EstEnnemi", &DEC_PopulationFunctions::IsEnemy );
+
+    // Knowledge agents
+    brain.RegisterFunction( "_DEC_Connaissances_PionsPrenantAPartie", &DEC_PopulationFunctions::GetPionsAttacking );
+    brain.RegisterFunction( "_DEC_Connaissances_PionsSecurisant", &DEC_PopulationFunctions::GetPionsSecuring );
+}
 
 void DEC_PopulationFunctions::ResetPionMaxSpeed( DEC_Decision_ABC* callerPopulation )
 {
