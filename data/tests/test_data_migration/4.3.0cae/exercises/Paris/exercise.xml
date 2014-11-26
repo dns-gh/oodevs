@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<exercise model-version="4.2.6">
-  <profiles file="profiles.xml"/>
-  <orbat file="orbat.xml"/>
-  <weather file="weather.xml"/>
-  <terrain name="Paris_Est"/>
-  <model dataset="@DATASET@" physical="@PHYSICAL@"/>
-</exercise>

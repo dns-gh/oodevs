@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<natures xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/physical/ResourceNatures.xsd">
-  <nature id="1" type="Kerosene"/>
-  <nature id="2" type="Gasoil"/>
-  <nature id="3" type="Solide"/>
-</natures>
