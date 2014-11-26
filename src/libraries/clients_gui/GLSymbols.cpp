@@ -42,15 +42,10 @@ void GLSymbols::PrintApp6( const std::string& symbol, const std::string& style, 
     auto& node = symbols_[ key ];
     if( create )
     {
-        try
-        {
-            node.first.reset( Compile( symbol, 10, true ) );
-            node.second.reset( Compile( symbol, 100, false ) );
-        }
-        catch( ... )
-        {
+        node.first.reset( Compile( symbol, 10, true ) );
+        node.second.reset( Compile( symbol, 100, false ) );
+        if( !node.first || !node.second )
             MT_LOG_ERROR_MSG( "Could not open svg symbol '" << symbol << ".svg', and cannot find the closest symbol." );
-        }
     }
     const auto& renderNode = viewport.Width() > 30000 ? node.second : node.first;  // $$$$ AGE 2006-09-11: hardcoded lod
     renderer_.Render( renderNode, style, viewport, vWidth, vHeight, pickingMode );
@@ -60,43 +55,38 @@ svg::Node_ABC* GLSymbols::Compile( std::string symbol, float lod, bool first )
 {
     while( symbol.size() )
     {
-        try
+        auto* node = Compile( symbol, lod );
+        if( node )
+            return node;
+        if( first )
         {
-            return Compile( symbol, lod );
+            notFoundSymbols_.push_back( symbol.substr( 8, symbol.size() - 8 ) );
+            first = false;
         }
-        catch( ... )
-        {
-            if( first )
-            {
-                notFoundSymbols_.push_back( symbol.substr( 8, symbol.size() - 8 ) );
-                first = false;
-            }
-            symbol.pop_back();
-        }
+        symbol.pop_back();
     }
-    throw "not found";
+    return 0;
 }
 
 svg::Node_ABC* GLSymbols::Compile( const std::string& symbol, float lod ) const
 {
-    const tools::Path symbolFile = tools::Path::FromUTF8( symbol ) + ".svg";
+    const auto symbolFile = tools::Path::FromUTF8( symbol ) + ".svg";
     if( symbolPath_.Exists() )
     {
-        tools::Xifstream xis( symbolPath_ / symbolFile );
+        const auto fullPath = symbolPath_ / symbolFile;
+        if( !fullPath.Exists() )
+            return 0;
+        tools::Xifstream xis( fullPath );
         return renderer_.Compile( xis, lod );
     }
-    else
-    {
-        svg::Node_ABC* node = 0;
-        if( !archive_->ReadFile( symbolFile,
-            [&]( std::istream& s )
-            {
-                xml::xistreamstream xis( s );
-                node = renderer_.Compile( xis, lod );
-            } ) )
-            throw "not found";
-        return node;
-    }
+    svg::Node_ABC* node = 0;
+    archive_->ReadFile( symbolFile,
+        [&]( std::istream& s )
+        {
+            xml::xistreamstream xis( s );
+            node = renderer_.Compile( xis, lod );
+        } );
+    return node;
 }
 
 const std::vector< std::string >& GLSymbols::GetNotFoundSymbol() const
