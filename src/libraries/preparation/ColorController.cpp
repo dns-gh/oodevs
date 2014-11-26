@@ -50,6 +50,8 @@ ColorController::~ColorController()
 void ColorController::Add( const kernel::Entity_ABC& entity, const QColor& newColor, bool applyToSubordinates, bool force )
 {
     gui::ColorController::Add( entity, newColor, applyToSubordinates, force );
+    if( !applyToSubordinates )
+        return;
     if( const auto objects = entity.Retrieve< Objects >() )
     {
         auto it = objects->CreateIterator();
@@ -71,6 +73,8 @@ void ColorController::Add( const kernel::Entity_ABC& entity, const QColor& newCo
 void ColorController::Remove( const kernel::Entity_ABC& entity, bool applyToSubordinates, bool force )
 {
     gui::ColorController::Remove( entity, applyToSubordinates, force );
+    if( !applyToSubordinates )
+        return;
     if( const auto objects = entity.Retrieve< Objects >() )
     {
         auto it = objects->CreateIterator();
