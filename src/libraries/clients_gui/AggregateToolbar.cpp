@@ -72,14 +72,10 @@ AggregateToolbar::AggregateToolbar( kernel::Controllers& controllers,
     levelMenu_ = new RichWidget< QMenu >( "aggregationLevelMenu", btn );
     for( unsigned int i = 0u; i < LEVELS.size(); ++i )
         if( auto action = levelMenu_->addAction( tools::translate( "ENT_Tr", LEVELS[ i ].c_str() ) ) )
-        {
             action->setData( QString::fromStdString( LEVELS[ i ] ) );
-            action->setCheckable( true );
-            action->setChecked( false);
-        }
     btn->setPopup( levelMenu_ );
     connect( levelMenu_, SIGNAL( aboutToShow() ), SLOT( UpdateLevelMenu() ) );
-    connect( levelMenu_, SIGNAL( triggered( QAction* ) ), SLOT( ToggleAggregationLevel( QAction* ) ) );
+    connect( levelMenu_, SIGNAL( triggered( QAction* ) ), SLOT( AggregateLevel( QAction* ) ) );
 
     btn = new RichWidget< QToolButton >( "disaggregateAll" );
     btn->setAutoRaise( true );
@@ -128,55 +124,6 @@ AggregateToolbar::~AggregateToolbar()
     controllers_.Unregister( *this );
 }
 
-void AggregateToolbar::UpdateLevelMenu()
-{
-    // An aggregation level is checked if it is the highest level with:
-    //  - All the automats and formations equal or below this level are aggregated
-    //  - There is at least one of such aggregated entity
-    const auto& aggregatedEntities = view_.GetActiveOptions().GetAggregatedEntities();
-    const auto actions = levelMenu_->actions();
-    currentLevel_.clear();
-    for( int i = actions.size() - 1; i >= 0; --i )
-        if( auto action = actions[ i ] )
-        {
-            const auto level = action->data().toString().toStdString();
-            if( currentLevel_.empty() )
-            {
-                bool levelOn = true;
-                bool atLeastOne = false;
-                bool hasChanged = false;
-                automats_.Apply( [&]( const kernel::Automat_ABC& automat )
-                {
-                    auto automatLevel = automat.Get< kernel::TacticalHierarchies >().GetLevel();
-                    if( automatLevel.size() < 7 )
-                        return;
-                    automatLevel = automatLevel.substr( 7, automatLevel.length() );
-                    if( IsLess( automatLevel, level ) )
-                    {
-                        levelOn &= std::find( aggregatedEntities.begin(), aggregatedEntities.end(), &automat ) != aggregatedEntities.end();
-                        atLeastOne |= level == automatLevel;
-                        hasChanged = true;
-                    }
-                } );
-                formations_.Apply( [&]( const kernel::Formation_ABC& formation )
-                {
-                    const auto formationLevel = ENT_Tr::ConvertFromNatureLevel( formation.GetLevel() );
-                    if( IsLess( formationLevel, level ) )
-                    {
-                        levelOn &= std::find( aggregatedEntities.begin(), aggregatedEntities.end(), &formation ) != aggregatedEntities.end();
-                        atLeastOne |= level == formationLevel;
-                        hasChanged = true;
-                    }
-                } );
-                if( !hasChanged || !atLeastOne )
-                    levelOn = false;
-                if( levelOn )
-                    currentLevel_ = level;
-            }
-            action->setChecked( currentLevel_ == level );
-        }
-}
-
 void AggregateToolbar::AggregateAllAutomat()
 {
     auto& options = view_.GetActiveOptions();
@@ -191,20 +138,15 @@ void AggregateToolbar::DisaggregateAll()
     view_.GetActiveOptions().Disaggregate();
 }
 
-void AggregateToolbar::ToggleAggregationLevel( QAction* action )
+void AggregateToolbar::AggregateLevel( QAction* action )
 {
     if( !action )
         return;
-    DisaggregateLevel( currentLevel_ );
-    if( action->isChecked() )
-        AggregateLevel( action->data().toString().toStdString() );
-}
-
-void AggregateToolbar::AggregateLevel( const std::string& level )
-{
+    const auto level = action->data().toString().toStdString();
     if( level.empty() )
         return;
     auto& options = view_.GetActiveOptions();
+    options.Disaggregate();
     formations_.Apply( [&]( const kernel::Formation_ABC& formation )
     {
         if( IsLess( ENT_Tr::ConvertFromNatureLevel( formation.GetLevel() ), level ) )
@@ -215,24 +157,6 @@ void AggregateToolbar::AggregateLevel( const std::string& level )
         const auto automatLevel = automat.Get< kernel::TacticalHierarchies >().GetLevel();
         if( automatLevel.size() >= 7 && IsLess( automatLevel.substr( 7, automatLevel.length() ), level ) )
             options.Aggregate( automat );
-    } );
-}
-
-void AggregateToolbar::DisaggregateLevel( const std::string& level )
-{
-    if( level.empty() )
-        return;
-    auto& options = view_.GetActiveOptions();
-    formations_.Apply( [&]( const kernel::Formation_ABC& formation )
-    {
-        if( IsLess( ENT_Tr::ConvertFromNatureLevel( formation.GetLevel() ), level ) )
-            options.Disaggregate( &formation );
-    } );
-    automats_.Apply( [&]( const kernel::Automat_ABC& automat )
-    {
-        const auto automatLevel = automat.Get< kernel::TacticalHierarchies >().GetLevel();
-        if( automatLevel.size() >= 7 && IsLess( automatLevel.substr( 7, automatLevel.length() ), level ) )
-            options.Disaggregate( &automat );
     } );
 }
 
