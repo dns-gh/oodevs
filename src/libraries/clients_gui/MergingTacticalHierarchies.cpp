@@ -77,7 +77,6 @@ void MergingTacticalHierarchies::UpdateSymbolUpward()
 {
     if( !symbolCanBeUpdated_ )
         return;
-    entity_.Get< SymbolHierarchy_ABC >().PrepareForMerge();
     UpdateSymbol();
     if( TacticalHierarchies* superior = SuperiorHierarchy() )
         superior->UpdateSymbolUpward();
