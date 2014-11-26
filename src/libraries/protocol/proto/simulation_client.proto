@@ -3180,10 +3180,22 @@ message SegmentRequestAck {
     optional string    error_msg      = 3;
 }
 
+/** @struct Hierarchy
+    @brief Updates the parent of some entity
+
+    This message is sent each time an entity has a new parent
+    Those messages are unordered:
+        * between themselves
+        * with their root action
+*/
 message Hierarchy {
+    //! unique message id
     required uint32 id     = 1;
+    //! entity id
     required uint32 entity = 2;
+    //! parent id
     required uint32 parent = 3;
+    //! current tick
     required uint32 tick   = 4;
 }
 
