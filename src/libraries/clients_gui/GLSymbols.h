@@ -51,6 +51,7 @@ public:
 
 private:
     svg::Node_ABC* Compile( std::string symbol, float lod, bool first );
+    svg::Node_ABC* Compile( const std::string& symbol, float lod ) const;
 
 private:
     typedef std::pair< std::string, std::string > T_SymbolKey;
