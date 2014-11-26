@@ -2041,6 +2041,7 @@ void AgentServerMsgMgr::OnReceiveSimToClient( const std::string& /*from*/, const
         { &sword::SimToClient_Content::has_control_send_current_state_begin,            nullptr },
         { &sword::SimToClient_Content::has_control_stop_ack,                            nullptr },
         { &sword::SimToClient_Content::has_crowd_damaged_by_unit_fire,                  nullptr },
+        { &sword::SimToClient_Content::has_hierarchy_creation,                          nullptr },
         { &sword::SimToClient_Content::has_list_enabled_vision_cones_ack,               nullptr },
         { &sword::SimToClient_Content::has_log_supply_request_creation,                 nullptr },
         { &sword::SimToClient_Content::has_log_supply_request_destruction,              nullptr },

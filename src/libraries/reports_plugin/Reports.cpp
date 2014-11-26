@@ -142,10 +142,10 @@ void Reports::AddReport( const sword::Report& report, int tick )
             ",           parameters "
             ") VALUES  ( ?, ?, ?, ?, ?, ?, ?, ? ) "
             );
-        st->Bind( static_cast< int64_t >( report.report().id() ) );
-        st->Bind( static_cast< int >( source->first ) );
-        st->Bind( static_cast< int >( source->second ) );
-        st->Bind( static_cast< int >( report.type().id() ) );
+        st->Bind( report.report().id() );
+        st->Bind( source->first );
+        st->Bind( source->second );
+        st->Bind( report.type().id() );
         st->Bind( report.category() );
         st->Bind( report.time().data() );
         st->Bind( tick );
@@ -176,7 +176,7 @@ namespace
         if( static_cast< unsigned int >( reports.reports_size() ) < count )
         {
             auto& report = *reports.add_reports();
-            report.mutable_report()->set_id( static_cast< int32_t >( st.ReadInt64() ) );
+            report.mutable_report()->set_id( st.ReadInt() );
             const auto sourceId = st.ReadInt();
             const auto sourceType = st.ReadInt();
             *report.mutable_source() = IdToTasker( sourceId, sourceType );
@@ -189,7 +189,7 @@ namespace
                     xml::xistringstream( st.ReadText() ) >> xml::start( "parameters" ) );
         }
         else
-            reports.set_next_report( static_cast< int32_t >( st.ReadInt64() ) );
+            reports.set_next_report( st.ReadInt() );
     }
 }
 
@@ -222,8 +222,8 @@ void Reports::ListReports( sword::ListReportsAck& reports, unsigned int count,
         st->Bind( fromTick );
         st->Bind( toTick );
         if( fromReport )
-            st->Bind( static_cast< int64_t >( *fromReport ) );
-        st->Bind( static_cast< int64_t >( count + 1 ) );
+            st->Bind( *fromReport );
+        st->Bind( count + 1 );
 
         while( st->Next() )
             MakeReport( reports, *st, count );

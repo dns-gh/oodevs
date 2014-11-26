@@ -138,15 +138,12 @@ func getReplayDumps(c *C, step int32) (*simu.SimOpts, []ModelDump) {
 	skip(step)
 
 	unit := CreateUnit(c, client, automat.Id)
-	_ = unit
 	skip(step)
 
 	crowd := CreateCrowdFromParty(c, client, party.Name)
-	_ = crowd
 	skip(step)
 
 	object, err := client.CreateObject("jamming area", party.Id, swapi.MakePointLocation(swapi.Point{X: -15.8193, Y: 28.3456}))
-	_ = object
 	c.Assert(err, IsNil)
 	skip(step)
 
@@ -160,7 +157,6 @@ func getReplayDumps(c *C, step int32) (*simu.SimOpts, []ModelDump) {
 	skip(step)
 
 	kg, err := client.CreateKnowledgeGroup(party.Id, "Standard")
-	_ = kg
 	c.Assert(err, IsNil)
 	skip(step)
 
@@ -218,6 +214,12 @@ func (s *TestSuite) TestReplayerModels(c *C) {
 	step := int32(1)
 	cfg, dumps := getReplayDumps(c, step)
 	c.Assert(len(dumps), Greater, 0)
+	// Fix model dumps:
+	// * hierarchies are complete from the beginning
+	last := dumps[len(dumps)-1]
+	for _, dump := range dumps {
+		dump.model.Hierarchies = last.model.Hierarchies
+	}
 	// TODO: find a way to test all dumps, the replayer refuses to move right
 	// after the last one, possibly because of empty ticks.
 	dumps = dumps[:len(dumps)-1]
@@ -298,4 +300,65 @@ func (s *TestSuite) TestReplayerTimetable(c *C) {
 
 	_, err = client.GetTimetable(2, 100000, false)
 	c.Assert(err, ErrorMatches, ".*equal or less.*")
+}
+
+func (s *TestSuite) TestReplayerHierarchies(c *C) {
+	opts, last, party, unit := func(step int32) (*simu.SimOpts, int32, uint32, uint32) {
+		cfg := NewAdminOpts(ExCrossroadSmallEmpty)
+		cfg.Paused = true
+		sim, client := connectAndWaitModel(c, cfg)
+		defer stopSimAndClient(c, sim, client)
+		skip := func(n int32) {
+			tick := client.Model.GetTick()
+			if tick == 0 {
+				tick++ // looks like a bug
+			}
+			client.Resume(uint32(n))
+			client.Model.WaitUntilTickEnds(tick + n)
+		}
+		skip(step)
+
+		party := getSomeParty(c, client.Model.GetData())
+		formation := CreateFormation(c, client, party.Id)
+		skip(step)
+
+		automat := CreateAutomat(c, client, formation.Id, 0)
+		skip(step)
+
+		unit := CreateUnit(c, client, automat.Id)
+		skip(step)
+
+		err := client.DeleteUnit(unit.Id)
+		c.Assert(err, IsNil)
+		skip(step)
+
+		future, err := swapi.GetTime("20200908T060504")
+		c.Assert(err, IsNil)
+		err = client.ChangeTime(future)
+		c.Assert(err, IsNil)
+		skip(step)
+
+		return sim.Opts, client.Model.GetData().Tick, party.Id, unit.Id
+	}(3)
+	replay := startReplay(c, opts)
+	defer replay.Stop()
+	client := loginAndWaitModel(c, replay, NewAdminOpts(""))
+	defer client.Close()
+	profile := swapi.Profile{
+		ReadOnlyParties: map[uint32]struct{}{party: struct{}{}},
+	}
+	// unit is created in the future
+	err := client.SkipToTick(1)
+	c.Assert(err, IsNil)
+	client.Model.WaitUntilTickEnds(2)
+	c.Assert(client.Model.Query(func(d *swapi.ModelData) bool {
+		return d.IsUnitInProfile(unit, &profile)
+	}), Equals, true)
+	// unit has been deleted in the past
+	err = client.SkipToTick(last - 2)
+	c.Assert(err, IsNil)
+	client.Model.WaitUntilTickEnds(last - 1)
+	c.Assert(client.Model.Query(func(d *swapi.ModelData) bool {
+		return d.IsUnitInProfile(unit, &profile)
+	}), Equals, true)
 }

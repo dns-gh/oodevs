@@ -13,6 +13,7 @@ import (
 	"encoding/gob"
 	"fmt"
 	"masa/sword/sword"
+	"sort"
 	"time"
 )
 
@@ -602,6 +603,22 @@ type Report struct {
 	Id uint32
 }
 
+type Hierarchy struct {
+	Id     uint32
+	Entity uint32
+	Parent uint32
+	Tick   uint32
+}
+
+type Hierarchies []Hierarchy
+
+func (h Hierarchies) Search(id, tick uint32) int {
+	return sort.Search(len(h), func(i int) bool {
+		v := &h[i]
+		return v.Tick >= tick && v.Id >= id
+	})
+}
+
 type ModelData struct {
 	Actions              map[uint32]*Action
 	Automats             map[uint32]*Automat
@@ -611,6 +628,7 @@ type ModelData struct {
 	FireEffects          map[uint32]*FireEffect
 	Formations           map[uint32]*Formation
 	FuneralHandlings     map[uint32]*FuneralHandling
+	Hierarchies          map[uint32]Hierarchies
 	KnowledgeGroups      map[uint32]*KnowledgeGroup
 	LocalWeathers        map[uint32]*LocalWeather
 	MaintenanceHandlings map[uint32]*MaintenanceHandling
@@ -658,6 +676,7 @@ func NewModelData(listeners *ModelListeners) *ModelData {
 		FireEffects:          map[uint32]*FireEffect{},
 		Formations:           map[uint32]*Formation{},
 		FuneralHandlings:     map[uint32]*FuneralHandling{},
+		Hierarchies:          map[uint32]Hierarchies{},
 		KnowledgeGroups:      map[uint32]*KnowledgeGroup{},
 		KnownScores:          map[string]struct{}{},
 		LocalWeathers:        map[uint32]*LocalWeather{},
@@ -957,8 +976,11 @@ func (model *ModelData) addKnowledgeGroup(group *KnowledgeGroup) bool {
 	if _, ok := model.Parties[group.PartyId]; !ok {
 		return false
 	}
-	// FIXME checking conflicts break replayer tests
+	size := len(model.KnowledgeGroups)
 	model.KnowledgeGroups[group.Id] = group
+	created := size != len(model.KnowledgeGroups)
+	model.notifyCreate(created, KnowledgeGroupCreate, KnowledgeGroupUpdate, group.Id)
+	// FIXME checking conflicts break replayer tests
 	return true
 }
 
@@ -980,7 +1002,11 @@ func (model *ModelData) removeKnowledgeGroup(id uint32) bool {
 	}
 	size := len(model.KnowledgeGroups)
 	delete(model.KnowledgeGroups, id)
-	return size != len(model.KnowledgeGroups)
+	deleted := size != len(model.KnowledgeGroups)
+	if deleted {
+		model.listeners.NotifyId(KnowledgeGroupDelete, id)
+	}
+	return deleted
 }
 
 func (model *ModelData) addUnitKnowledge(knowledge *UnitKnowledge) bool {
@@ -1108,13 +1134,19 @@ func (model *ModelData) changeFormationSupplyQuotas(suppliedId uint32, quotas ma
 func (model *ModelData) addObject(object *Object) bool {
 	size := len(model.Objects)
 	model.Objects[object.Id] = object
-	return size != len(model.Objects)
+	created := size != len(model.Objects)
+	model.notifyCreate(created, ObjectCreate, ObjectUpdate, object.Id)
+	return created
 }
 
 func (model *ModelData) removeObject(objectId uint32) bool {
 	size := len(model.Objects)
 	delete(model.Objects, objectId)
-	return size != len(model.Objects)
+	deleted := size != len(model.Objects)
+	if deleted {
+		model.listeners.NotifyId(ObjectDelete, objectId)
+	}
+	return deleted
 }
 
 func (model *ModelData) addFireEffect(effect *FireEffect) bool {
@@ -1161,6 +1193,24 @@ func (model *ModelData) addReport(report *Report) bool {
 	return size != len(model.Reports)
 }
 
+func (model *ModelData) addHierarchy(hierarchy *Hierarchy) bool {
+	data, ok := model.Hierarchies[hierarchy.Entity]
+	if !ok {
+		model.Hierarchies[hierarchy.Entity] = Hierarchies{*hierarchy}
+		return true
+	}
+	idx := data.Search(hierarchy.Id, hierarchy.Tick)
+	if idx < len(data) && data[idx].Id == hierarchy.Id {
+		data[idx] = *hierarchy
+		return true
+	}
+	data = append(data, Hierarchy{})
+	copy(data[idx+1:], data[idx:])
+	data[idx] = *hierarchy
+	model.Hierarchies[hierarchy.Entity] = data
+	return true
+}
+
 var (
 	simToClientHandlers = []func(model *ModelData, m *sword.SimToClient_Content) error{
 		(*ModelData).handleActionCreation,
@@ -1203,6 +1253,7 @@ var (
 		(*ModelData).handleFormationDestruction,
 		(*ModelData).handleFormationUpdate,
 		(*ModelData).handleFragOrder,
+		(*ModelData).handleHierarchy,
 		(*ModelData).handleKnowledgeGroupCreation,
 		(*ModelData).handleKnowledgeGroupDestruction,
 		(*ModelData).handleKnowledgeGroupUpdate,

@@ -137,7 +137,7 @@ void Sql::Save( const tools::Path& filename )
     sqlite3* to = 0;
     int err = sqlite3_open( filename.ToUTF8().c_str(), &to );
     if( err != SQLITE_OK )
-        ThrowSqlException( "Unable to copy reports.db to " + filename.ToDebug(), err );
+        ThrowSqlException( "Unable to copy database to " + filename.ToDebug(), err );
 
     sqlite3_backup* pBackup = sqlite3_backup_init( to, "main", db_.get(), "main" );
     if( pBackup )
@@ -150,7 +150,7 @@ void Sql::Save( const tools::Path& filename )
     sqlite3_close( to );
 
     if( err != SQLITE_OK )
-        ThrowSqlException( "Unable to copy reports.db to " + filename.ToDebug(), err );
+        ThrowSqlException( "Unable to copy database to " + filename.ToDebug(), err );
 }
 
 // -----------------------------------------------------------------------------
@@ -239,6 +239,11 @@ void Statement::Bind( int64_t value )
     const int err = sqlite3_bind_int64( stmt_.get(), bind_++, value );
     if( err != SQLITE_OK )
         ThrowSqlException( "Unable to bind 64-bit integer", err );
+}
+
+void Statement::Bind( uint32_t value )
+{
+    Bind( static_cast< int64_t >( value ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -355,6 +360,11 @@ int64_t Statement::ReadInt64()
 {
     CheckType( stmt_.get(), SQLITE_INTEGER, read_ );
     return sqlite3_column_int64( stmt_.get(), read_++ );
+}
+
+uint32_t Statement::ReadUint32()
+{
+    return static_cast< uint32_t >( ReadInt64() );
 }
 
 // -----------------------------------------------------------------------------

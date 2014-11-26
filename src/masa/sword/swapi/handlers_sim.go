@@ -1678,3 +1678,20 @@ func (model *ModelData) handleReportCreation(m *sword.SimToClient_Content) error
 	}
 	return nil
 }
+
+func (model *ModelData) handleHierarchy(m *sword.SimToClient_Content) error {
+	mm := m.GetHierarchyCreation()
+	if mm == nil {
+		return ErrSkipHandler
+	}
+	hierarchy := &Hierarchy{
+		Id:     mm.GetId(),
+		Entity: mm.GetEntity(),
+		Parent: mm.GetParent(),
+		Tick:   mm.GetTick(),
+	}
+	if !model.addHierarchy(hierarchy) {
+		return fmt.Errorf("cannot insert hierarchy %d", hierarchy.Id)
+	}
+	return nil
+}

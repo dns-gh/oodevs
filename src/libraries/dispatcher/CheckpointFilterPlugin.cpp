@@ -9,14 +9,14 @@
 
 #include "dispatcher_pch.h"
 #include "CheckpointFilterPlugin.h"
-#include "AuthenticatedLinkResolver_ABC.h"
+#include "rights_plugin/RightsPlugin.h"
 #include "protocol/ClientPublisher_ABC.h"
 #include "protocol/Simulation.h"
 
 using namespace dispatcher;
 
-CheckpointFilterPlugin::CheckpointFilterPlugin( const AuthenticatedLinkResolver_ABC& resolver )
-    : resolver_( resolver )
+CheckpointFilterPlugin::CheckpointFilterPlugin( const plugins::rights::RightsPlugin& rights )
+    : rights_( rights )
     , checkpointInProgress_( false )
     , client_( 0 )
 {
@@ -40,13 +40,16 @@ bool CheckpointFilterPlugin::ForwardSimToClient( const sword::SimToClient& msg )
             checkpointInProgress_ = true;
         else if( checkpointInProgress_ &&
                 msg.message().has_control_send_current_state_begin() )
-            client_ = &resolver_.GetAuthenticatedPublisher( msg.client_id() );
+            client_ = &rights_.GetAuthenticatedPublisher( msg.client_id() );
     }
 
     if( client_ )
     {
+        const bool last = msg.message().has_control_send_current_state_end();
+        if( last )
+            rights_.SendPluginsState( *client_ );
         client_->Send( msg );
-        if( msg.message().has_control_send_current_state_end() )
+        if( last )
             Reset();
         return false;
     }

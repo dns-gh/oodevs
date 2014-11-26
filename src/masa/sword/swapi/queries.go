@@ -20,14 +20,6 @@ func (model *Model) Query(query func(d *ModelData) bool) bool {
 	return reply
 }
 
-func (d *ModelData) IsUnitInProfile(id uint32, profile *Profile) bool {
-	unit, ok := d.Units[id]
-	if !ok {
-		return false
-	}
-	return d.IsAutomatInProfile(unit.AutomatId, profile)
-}
-
 func hasId(ro, rw map[uint32]struct{}, id uint32) bool {
 	_, ok := ro[id]
 	if !ok {
@@ -36,69 +28,93 @@ func hasId(ro, rw map[uint32]struct{}, id uint32) bool {
 	return ok
 }
 
-func (d *ModelData) IsAutomatInProfile(id uint32, profile *Profile) bool {
-	if hasId(profile.ReadOnlyAutomats, profile.ReadWriteAutomats, id) {
-		return true
+func (d *ModelData) isEntityInProfile(id uint32, profile *Profile, noside bool) bool {
+	done := map[uint32]struct{}{}
+	for id != 0 {
+		size := len(done)
+		done[id] = struct{}{}
+		// prevent potential cycles
+		if size == len(done) {
+			return false
+		}
+		group, ok := d.Hierarchies[id]
+		if !ok {
+			return false
+		}
+		if hasId(profile.ReadOnlyAutomats, profile.ReadWriteAutomats, id) ||
+			hasId(profile.ReadOnlyFormations, profile.ReadWriteFormations, id) ||
+			hasId(profile.ReadOnlyParties, profile.ReadWriteParties, id) ||
+			hasId(profile.ReadOnlyCrowds, profile.ReadWriteCrowds, id) {
+			return true
+		}
+		// find closest hierarchy
+		last := Hierarchy{}
+		for _, hierarchy := range group {
+			if last.Id == 0 || int32(hierarchy.Tick) <= d.Tick && hierarchy.Tick >= last.Tick {
+				last = hierarchy
+			}
+			if int32(hierarchy.Tick) > d.Tick {
+				break
+			}
+		}
+		// no side entities without parents are always in profile
+		if noside && last.Parent == 0 {
+			return true
+		}
+		// try again with its parent
+		id = last.Parent
+		// disable noside special case on parents
+		noside = false
 	}
-	automat, ok := d.Automats[id]
-	return ok && d.IsFormationInProfile(automat.FormationId, profile)
+	return false
+}
+
+func (d *ModelData) IsUnitInProfile(id uint32, profile *Profile) bool {
+	return d.isEntityInProfile(id, profile, false)
+}
+
+func (d *ModelData) IsAutomatInProfile(id uint32, profile *Profile) bool {
+	return d.isEntityInProfile(id, profile, false)
 }
 
 func (d *ModelData) IsFormationInProfile(id uint32, profile *Profile) bool {
-	if hasId(profile.ReadOnlyFormations, profile.ReadWriteFormations, id) {
-		return true
-	}
-	formation, ok := d.Formations[id]
-	if !ok {
-		return false
-	}
-	if formation.ParentId != 0 {
-		return d.IsFormationInProfile(formation.ParentId, profile)
-	}
-	return d.IsPartyInProfile(formation.PartyId, profile)
+	return d.isEntityInProfile(id, profile, false)
 }
 
 func (d *ModelData) IsPopulationInProfile(id uint32, profile *Profile) bool {
-	population, ok := d.Populations[id]
-	return ok && d.IsPartyInProfile(population.PartyId, profile)
+	return d.isEntityInProfile(id, profile, false)
 }
 
 func (d *ModelData) IsCrowdInProfile(id uint32, profile *Profile) bool {
-	if hasId(profile.ReadOnlyCrowds, profile.ReadWriteCrowds, id) {
-		return true
-	}
-	crowd, ok := d.Crowds[id]
-	return ok && d.IsPartyInProfile(crowd.PartyId, profile)
+	return d.isEntityInProfile(id, profile, false)
 }
 
 func (d *ModelData) IsPartyInProfile(id uint32, profile *Profile) bool {
-	return hasId(profile.ReadOnlyParties, profile.ReadWriteParties, id)
+	return d.isEntityInProfile(id, profile, false)
 }
 
 func (d *ModelData) IsTaskerInProfile(tasker *sword.Tasker, profile *Profile) bool {
 	switch {
 	case tasker.Unit != nil:
-		return d.IsUnitInProfile(tasker.Unit.GetId(), profile)
+		return d.isEntityInProfile(tasker.Unit.GetId(), profile, false)
 	case tasker.Automat != nil:
-		return d.IsAutomatInProfile(tasker.Automat.GetId(), profile)
+		return d.isEntityInProfile(tasker.Automat.GetId(), profile, false)
 	case tasker.Formation != nil:
-		return d.IsFormationInProfile(tasker.Formation.GetId(), profile)
+		return d.isEntityInProfile(tasker.Formation.GetId(), profile, false)
 	case tasker.Party != nil:
-		return d.IsPartyInProfile(tasker.Party.GetId(), profile)
+		return d.isEntityInProfile(tasker.Party.GetId(), profile, false)
 	case tasker.Crowd != nil:
-		return d.IsCrowdInProfile(tasker.Crowd.GetId(), profile)
+		return d.isEntityInProfile(tasker.Crowd.GetId(), profile, false)
 	case tasker.Population != nil:
-		return d.IsPopulationInProfile(tasker.Population.GetId(), profile)
+		return d.isEntityInProfile(tasker.Population.GetId(), profile, false)
 	}
 	return false
 }
 
 func (d *ModelData) IsKnowledgeGroupInProfile(id uint32, profile *Profile) bool {
-	knowledgeGroup, ok := d.KnowledgeGroups[id]
-	return ok && d.IsPartyInProfile(knowledgeGroup.PartyId, profile)
+	return d.isEntityInProfile(id, profile, false)
 }
 
 func (d *ModelData) IsObjectInProfile(id uint32, profile *Profile) bool {
-	object, ok := d.Objects[id]
-	return ok && (object.PartyId == 0 || d.IsPartyInProfile(object.PartyId, profile))
+	return d.isEntityInProfile(id, profile, true)
 }

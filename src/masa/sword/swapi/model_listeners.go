@@ -25,6 +25,12 @@ const (
 	FormationDelete
 	FormationReparent
 	FormationUpdate
+	KnowledgeGroupCreate
+	KnowledgeGroupDelete
+	KnowledgeGroupUpdate
+	ObjectCreate
+	ObjectDelete
+	ObjectUpdate
 	PartyCreate
 	PartyUpdate
 	PopulationCreate

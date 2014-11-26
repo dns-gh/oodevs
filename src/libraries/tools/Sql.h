@@ -92,6 +92,7 @@ struct Statement : public Statement_ABC
     //@{
     virtual void        Bind( bool value );
     virtual void        Bind( int value );
+    virtual void        Bind( uint32_t value );
     virtual void        Bind( int64_t value );
     virtual void        Bind( double value );
     virtual void        Bind( const std::string& value );
@@ -102,6 +103,7 @@ struct Statement : public Statement_ABC
     virtual void        SkipNull();
     virtual bool        ReadBool();
     virtual int         ReadInt();
+    virtual uint32_t    ReadUint32();
     virtual int64_t     ReadInt64();
     virtual double      ReadDouble();
     virtual std::string ReadText();
