@@ -26,8 +26,6 @@
     <property name="version.major" value="6.0.0"/>
     <property name="version.version" value="${version.major}.${git.revision}.${git.hash}"/>
     <property name="unicode.extension" value=" ゑ"/>
-    <!-- Maximum number of concurrently running simulations in data_migrations_test -->
-    <property name="migrations.jobs" value="4"/>
 
     <!-- admin properties -->
     <property name="admin.dir" location="${root.dir}/src/masa/admin"/>
@@ -444,26 +442,6 @@
         <!-- This should be replaced by an equivalent test on ww-ML
         <test-exercise exercise="scipio/Poseidon VA"/>
         -->
-    </target>
-
-    <target name="data_migrations_test" depends="deploy-application-data" description="test data migrations">
-        <exec taskname="migrations_test" executable="${root.dir}/bin/migrations_test.exe" failonerror="true">
-            <arg value="${root.dir}"/>
-            <arg value="${data.dir}"/>
-            <arg value="${out.dir}"/>
-            <arg value="${run.dir}"/>
-            <arg value="${test.port}"/>
-            <arg value="${migrations.jobs}"/>
-            <arg value="CabourgOld,3.0"/>
-            <arg value="Cabourg,4.2.0"/>
-            <arg value="Cabourg,4.2.1"/>
-            <arg value="Cabourg,4.2.2"/>
-            <arg value="Cabourg,4.3.0"/>
-            <arg value="Egypt,4.3.4embraer"/>
-            <arg value="Paris,4.3.0cae"/>
-            <arg value="Egypt,5.0.0"/>
-            <arg value="Egypt,5.2.2"/>
-        </exec>
     </target>
 
     <macrodef name="check-gui">
@@ -1461,7 +1439,6 @@
         ,app_test
         ,checkpoint_test
         ,sim_unicode_test
-        ,data_migrations_test
         ,exercises_test
         ,qt_name_test
         ,scripts_test

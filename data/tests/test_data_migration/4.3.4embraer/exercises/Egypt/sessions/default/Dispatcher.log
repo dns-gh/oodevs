@@ -1,7 +1,0 @@
-[2012-02-03 18:04:50] <Dispatcher> <info> Starting dispatcher server on port 55007
-[2012-02-03 18:04:51] <Dispatcher> <info> Recorder enabled - data stored in ..\..\data\exercises\worldwide\Egypt\sessions\default\record
-[2012-02-03 18:04:51] <Dispatcher> <info> Connected to '127.0.0.1:55006'
-[2012-02-03 18:04:51] <Dispatcher> <info> **** Time tick 0 - Memory: 50.9961 MB / 366.992 MB (VM)
-[2012-02-03 18:05:03] <Dispatcher> <functERR> Saver plugin : Error writing to file : ../../data/exercises/worldwide/Egypt/sessions/default/record/current/key
-[2012-02-03 18:05:03] <Dispatcher> <functERR> Saver plugin : Error writing to file : ../../data/exercises/worldwide/Egypt/sessions/default/record/current/index
-[2012-02-03 18:05:03] <Dispatcher> <functERR> Saver plugin : Error writing to file : ../../data/exercises/worldwide/Egypt/sessions/default/record/current/info
