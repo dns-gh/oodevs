@@ -63,10 +63,9 @@ svg::Node_ABC* GLSymbols::Compile( std::string symbol, float lod, bool first )
         try
         {
             const tools::Path symbolFile = tools::Path::FromUTF8( symbol ) + ".svg";
-            if( !symbolPath_.IsEmpty() && symbolPath_.Exists() )
+            if( symbolPath_.Exists() )
             {
-                tools::Path symbolPath = symbolPath_ / symbolFile;
-                tools::Xifstream xis( symbolPath );
+                tools::Xifstream xis( symbolPath_ / symbolFile );
                 return renderer_.Compile( xis, lod );
             }
             else
