@@ -28,7 +28,9 @@ namespace tools
 
 namespace plugins
 {
-
+// Hierarchies stores hierarchies between entities
+// in a persistent database and send updated state
+// on authenticated clients
 class Hierarchies : private boost::noncopyable
 {
 public:
@@ -44,10 +46,10 @@ public:
     virtual void UnregisterClient( dispatcher::ClientPublisher_ABC& );
 
 private:
-    const tools::Path root_;
-    std::unique_ptr< tools::Sql_ABC > database_;
-    std::set< dispatcher::ClientPublisher_ABC* > clients_;
-    uint32_t tick_;
+    const tools::Path root_; // database root file path
+    std::unique_ptr< tools::Sql_ABC > database_; // database handle
+    std::set< dispatcher::ClientPublisher_ABC* > clients_; // authenticated clients
+    uint32_t tick_; // current tick
 };
 
 }
