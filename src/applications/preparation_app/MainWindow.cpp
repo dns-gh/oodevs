@@ -739,12 +739,7 @@ void MainWindow::SetProgression( int value, const QString& text )
     if( !progressDialog_.get() )
         return;
     if( !value )
-    {
-        const QRect rc = QApplication::desktop()->availableGeometry( QApplication::desktop()->screenNumber( this ) );
-        const QSize size = progressDialog_->size();
-        progressDialog_->move( ( rc.topLeft() + rc.bottomRight() - QPoint( size.width(), size.height() ) ) / 2 );
         progressDialog_->show();
-    }
     progressDialog_->setLabelText( text );
     progressDialog_->setValue( value );
     qApp->processEvents();
