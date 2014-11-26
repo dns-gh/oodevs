@@ -490,10 +490,10 @@ void MainWindow::Save( bool checkConsistency /* = true */ )
 
 void MainWindow::SaveAs()
 {
-    static const QString title = tools::translate( "MainWindow", "Save exercise as ..." );
-    static const QString enterNewName = tools::translate( "MainWindow", "Enter an exercise name:" );
-    static const QString nameAlreadyExist = tools::translate( "MainWindow", "The exercise '%1' already exists. Please, enter a new exercise name:" );
-    static const QString content = tools::translate( "MainWindow", "Type exercise name here" );
+    static const QString title = tr( "Save exercise as ..." );
+    static const QString enterNewName = tr( "Enter an exercise name:" );
+    static const QString nameAlreadyExist = tr( "The exercise '%1' already exists. Please, enter a new exercise name:" );
+    static const QString content = tr( "Type exercise name here" );
     bool exist = false;
     tools::Path exerciseName;
     tools::Path exerciseDirectory;
@@ -646,14 +646,14 @@ void MainWindow::SetWindowTitle( bool needsSaving )
     if( model_.IsLoaded() && isVisible() )
     {
         filename = model_.exercise_->GetName().isEmpty()
-            ? ( config_.GetExerciseName().IsEmpty() ? tools::translate( "MainWindow", "Untitled" ) : config_.GetExerciseName().ToUTF8().c_str() )
+            ? ( config_.GetExerciseName().IsEmpty() ? tr( "Untitled" ) : config_.GetExerciseName().ToUTF8().c_str() )
             : model_.exercise_->GetName();
         filename += ( needsSaving ) ? "*" : "";
     }
     if( filename.isEmpty() )
-        setCaption( tools::translate( "MainWindow", "Preparation - [%1]" ).arg( tools::translate( "MainWindow", "No file loaded" ) ) );
+        setCaption( tr( "Preparation - [%1]" ).arg( tr( "No file loaded" ) ) );
     else
-        setCaption( tools::translate( "MainWindow", "Preparation - %1 - [%2]" ).arg( mode ).arg( filename ) );
+        setCaption( tr( "Preparation - %1 - [%2]" ).arg( mode ).arg( filename ) );
     if( menu_.get() )
         menu_->GetSaveAction()->setEnabled( needsSaving );
 }
@@ -753,8 +753,8 @@ void MainWindow::OnAddRaster()
 {
     if( !config_.BuildTerrainChildFile( "config.xml" ).Exists() )
     {
-            QMessageBox::warning( 0, tools::translate( "MainWindow", "Warning" ),
-                tools::translate( "MainWindow", "This functionality is not available with old terrain format." ) );
+            QMessageBox::warning( 0, tr( "Warning" ),
+                tr( "This functionality is not available with old terrain format." ) );
         return;
     }
     try
@@ -770,18 +770,18 @@ void MainWindow::OnAddRaster()
                     if( !exitCode )
                         glProxy_->AddLayers( gui::T_LayersVector( 1, std::make_shared< gui::RasterLayer >( controllers_, *glProxy_, output, dialog->GetName() ) ) );
                     else
-                        QMessageBox::warning( this, tools::translate( "MainWindow", "Error loading image file" ),
-                            error.empty() ? tools::translate( "MainWindow", "Error while loading Raster source." ) : error.c_str() );
+                        QMessageBox::warning( this, tr( "Error loading image file" ),
+                            error.empty() ? tr( "Error while loading Raster source." ) : error.c_str() );
                 } );
         }
     }
     catch( const geodata::ProjectionException& )
     {
-        QMessageBox::information( this, tools::translate( "MainWindow", "Error loading image file" ), tools::translate( "MainWindow", "The following raster you add is missing spatial reference information.\nThis data can't be projected.") ) ;
+        QMessageBox::information( this, tr( "Error loading image file" ), tr( "The following raster you add is missing spatial reference information.\nThis data can't be projected.") ) ;
         // Created: AME 2010-09-16 : TODO->allow user to set the projection in UI
     }
     catch( ... )
     {
-        QMessageBox::critical( this, tools::translate( "MainWindow", "Error loading image file" ), tools::translate( "MainWindow", "Fatal error adding Raster source." ), QMessageBox::Ok, QMessageBox::NoButton, QMessageBox::NoButton );
+        QMessageBox::critical( this, tr( "Error loading image file" ), tr( "Fatal error adding Raster source." ), QMessageBox::Ok, QMessageBox::NoButton, QMessageBox::NoButton );
     }
 }
