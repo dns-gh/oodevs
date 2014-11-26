@@ -612,9 +612,10 @@ type Hierarchy struct {
 
 type Hierarchies []Hierarchy
 
-func (h Hierarchies) Search(tick uint32) int {
+func (h Hierarchies) Search(id, tick uint32) int {
 	return sort.Search(len(h), func(i int) bool {
-		return h[i].Tick >= tick
+		v := &h[i]
+		return v.Tick >= tick && v.Id >= id
 	})
 }
 
@@ -1198,7 +1199,7 @@ func (model *ModelData) addHierarchy(hierarchy *Hierarchy) bool {
 		model.Hierarchies[hierarchy.Entity] = Hierarchies{*hierarchy}
 		return true
 	}
-	idx := data.Search(hierarchy.Tick)
+	idx := data.Search(hierarchy.Id, hierarchy.Tick)
 	if idx < len(data) && data[idx].Id == hierarchy.Id {
 		data[idx] = *hierarchy
 		return true

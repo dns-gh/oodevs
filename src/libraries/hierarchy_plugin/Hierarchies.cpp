@@ -81,7 +81,7 @@ namespace
             "FROM   hierarchies "
             "WHERE  entity = ? "
             "AND    tick <= ? "
-            "ORDER BY tick DESC "
+            "ORDER BY tick DESC, id DESC "
             "LIMIT  1"
         );
         st->Bind( entity );
