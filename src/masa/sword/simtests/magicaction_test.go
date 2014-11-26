@@ -701,6 +701,8 @@ func (s *TestSuite) TestReplayListReports(c *C) {
 	tickBis := tick + delay
 	c.Assert(tickBis, Greater, tick)
 
+	client.Model.WaitUntilTickEnds(tickBis)
+
 	// Get all reports
 	allReports, _, err := client.ListReports(math.MaxInt32, 0)
 	c.Assert(err, IsNil)

@@ -68,13 +68,15 @@ namespace
                 "date1", CreateUnitTasker( 1234 ) );
             FillReport( report2, 541, 1, sword::Report_EnumReportType_operational,
                 "date2", CreateFormationTasker( 12345 ) );
-            reports->AddReport( report1, 12 );
-            reports->AddReport( report2, 12 );
+            reports->AddReport( report1 );
+            reports->AddReport( report2 );
+            reports->Save( 12 );
 
             FillReport( report3, 540, 2, sword::Report_EnumReportType_exceptional_event,
                 "date3", CreateCrowdTasker( 123456 ) );
             FillParameters( report3 );
-            reports->AddReport( report3, 14 );
+            reports->AddReport( report3 );
+            reports->Save( 14 );
         }
     tools::TemporaryDirectory tempDir;
     std::unique_ptr< Reports > reports;

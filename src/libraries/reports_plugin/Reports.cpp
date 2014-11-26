@@ -121,52 +121,63 @@ namespace
     }
 }
 
-void Reports::AddReport( const sword::Report& report, int tick )
+void Reports::Save( int tick )
 {
+    if( reports_.empty() )
+        return;
     try
     {
-        const auto source = TaskerToId( report.source() );
-        if( !source )
-            throw MASA_EXCEPTION( "Invalid tasker" );
-
         auto tr = database_->Begin( true );
-        auto st = database_->Prepare( *tr,
-            "INSERT INTO reports ("
-            "            id "
-            ",           source "
-            ",           source_type "
-            ",           type "
-            ",           category "
-            ",           time "
-            ",           tick "
-            ",           parameters "
-            ") VALUES  ( ?, ?, ?, ?, ?, ?, ?, ? ) "
-            );
-        st->Bind( report.report().id() );
-        st->Bind( source->first );
-        st->Bind( source->second );
-        st->Bind( report.type().id() );
-        st->Bind( report.category() );
-        st->Bind( report.time().data() );
-        st->Bind( tick );
-        if( report.has_parameters() )
+        for( auto it = reports_.begin(); it != reports_.end(); ++it )
         {
-            xml::xostringstream xos;
-            xos << xml::start( "parameters" );
-            protocol::Write( xos, kernel::XmlWriterEmptyAdapter(), report.parameters() );
-            xos << xml::end;
-            st->Bind( xos.str() );
-        }
-        else
-            st->Bind();
+            const auto source = TaskerToId( it->source() );
+            if( !source )
+                throw MASA_EXCEPTION( "Invalid tasker" );
 
-        Execute( *st );
+            auto st = database_->Prepare( *tr,
+                "INSERT INTO reports ("
+                "            id "
+                ",           source "
+                ",           source_type "
+                ",           type "
+                ",           category "
+                ",           time "
+                ",           tick "
+                ",           parameters "
+                ") VALUES  ( ?, ?, ?, ?, ?, ?, ?, ? ) "
+                );
+            st->Bind( static_cast< int64_t >( it->report().id() ) );
+            st->Bind( static_cast< int >( source->first ) );
+            st->Bind( static_cast< int >( source->second ) );
+            st->Bind( static_cast< int >( it->type().id() ) );
+            st->Bind( it->category() );
+            st->Bind( it->time().data() );
+            st->Bind( tick );
+            if( it->has_parameters() )
+            {
+                xml::xostringstream xos;
+                xos << xml::start( "parameters" );
+                protocol::Write( xos, kernel::XmlWriterEmptyAdapter(), it->parameters() );
+                xos << xml::end;
+                st->Bind( xos.str() );
+            }
+            else
+                st->Bind();
+
+            Execute( *st );
+        }
         database_->Commit( *tr );
     }
     catch( const tools::SqlException& err )
     {
         MT_LOG_ERROR_MSG( err.msg );
     }
+    reports_.clear();
+}
+
+void Reports::AddReport( const sword::Report& report )
+{
+    reports_.push_back( report );
 }
 
 namespace

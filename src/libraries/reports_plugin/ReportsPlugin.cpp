@@ -57,9 +57,12 @@ void ReportsPlugin::Receive( const sword::SimToClient& msg )
     if( msg.message().has_control_information() )
         currentTick_ = msg.message().control_information().current_tick();
     else if( msg.message().has_control_end_tick() )
+    {
         currentTick_ = msg.message().control_end_tick().current_tick();
+        reports_->Save( currentTick_ );
+    }
     else if( msg.message().has_report() )
-        reports_->AddReport( msg.message().report(), currentTick_ );
+        reports_->AddReport( msg.message().report() );
     else if( msg.message().has_control_checkpoint_save_end() )
     {
         const auto checkpointName = tools::Path::FromUTF8( msg.message().control_checkpoint_save_end().name() );

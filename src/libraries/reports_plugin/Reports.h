@@ -14,6 +14,7 @@
 #include <boost/optional.hpp>
 #include <boost/noncopyable.hpp>
 #include <memory>
+#include <vector>
 
 namespace tools
 {
@@ -41,11 +42,12 @@ public:
 
     //! @name Operations
     //@{
-    void AddReport( const sword::Report& report, int tick );
+    void AddReport( const sword::Report& report );
     void ListReports( sword::ListReportsAck& reports, unsigned int count,
                       const boost::optional< unsigned int >& fromReport,
                       int fromTick,
                       int toTick );
+    void Save( int tick );
     void Save( const tools::Path& filename );
     //@}
 
@@ -53,6 +55,7 @@ private:
     //! @name Member data
     //@{
     std::unique_ptr< tools::Sql_ABC > database_;
+    std::vector< sword::Report > reports_;
     //@}
 };
 }
