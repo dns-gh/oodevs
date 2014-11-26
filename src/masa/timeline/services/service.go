@@ -42,14 +42,14 @@ type Service interface {
 	Trigger(target url.URL, event *sdk.Event) error
 }
 
+type EventChecker interface {
+	CheckEvents(events ...*sdk.Event) ([]*sdk.Event, bool, error) // validate event upon creation or update, returns events modifications
+	CheckDeleteEvent(uuid string) error                           // validate event deletion
+}
+
 type EventListener interface {
 	UpdateEvents(events ...*sdk.Event) // create & update are merged
 	DeleteEvents(events ...string)
-}
-
-type EventChecker interface {
-	CheckEvent(event *sdk.Event) error  // validate event upon creation or update
-	CheckDeleteEvent(uuid string) error // validate event deletion
 }
 
 type EventFilter func(event *sdk.Event) bool

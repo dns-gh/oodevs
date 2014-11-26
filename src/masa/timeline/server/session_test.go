@@ -702,26 +702,9 @@ func (t *TestSuite) TestObservers(c *C) {
 	c.Assert(err, IsNil)
 	c.Assert(end, Equals, expectedEnd)
 	c.Assert(start.Before(end), Equals, true)
-
 	// Timeline server creates a special range event, with the
 	// replay start and end dates. This event is tagged as replay
 	// in the action's target (replay://).
-	expectedStart = expectedStart.Add(time.Second)
-	for slink := range detached {
-		f.server.WriteReplayToClient(slink, 1, 0,
-			&sword.ReplayToClient_Content{
-				ControlReplayInformation: &sword.ControlReplayInformation{
-					CurrentTick:     proto.Int32(1),
-					InitialDateTime: swapi.MakeDateTime(expectedStart),
-					EndDateTime:     swapi.MakeDateTime(expectedEnd),
-					DateTime:        swapi.MakeDateTime(expectedStart),
-					TickDuration:    proto.Int32(10),
-					TimeFactor:      proto.Int32(1),
-					Status:          sword.EnumSimulationState_running.Enum(),
-					TickCount:       proto.Int32(6),
-				},
-			})
-	}
 	msg = waitBroadcastTag(messages, sdk.MessageTag_update_events)
 	c.Assert(msg, NotNil)
 	c.Assert(len(msg.GetEvents()), Equals, 1)
@@ -1345,30 +1328,29 @@ func (t *TestSuite) TestChangeReplayRangeDates(c *C) {
 	event.Info = proto.String("")
 	_, err = f.controller.UpdateEvent(f.session, id, event)
 	c.Assert(err, IsNil)
-	// Checks new event creation
 	msg = waitBroadcastTag(messages, sdk.MessageTag_update_events)
 	c.Assert(msg, NotNil)
-	event = msg.GetEvents()[0]
-	c.Assert(event.GetUuid(), Equals, splitUuid)
-	c.Assert(event.GetName(), Equals, "New name")
-	c.Assert(event.GetInfo(), Equals, "New information")
-	c.Assert(string(event.Action.GetPayload()), Equals, `{"begin":true,"end":false}`)
+	c.Assert(len(msg.GetEvents()), Equals, 2)
+	// Checks old event update
+	event = msg.GetEvents()[1]
 	begin, _ := util.ParseTime(event.GetBegin())
 	end, _ := util.ParseTime(event.GetEnd())
-	c.Assert(begin, Equals, replayBegin.Add(30*time.Second))
-	c.Assert(end, Equals, replayEnd)
-	splitEvent := services.CloneEvent(event)
-	// Checks old event update
-	msg = waitBroadcastTag(messages, sdk.MessageTag_update_events)
-	c.Assert(msg, NotNil)
-	event = msg.GetEvents()[0]
-	begin, _ = util.ParseTime(event.GetBegin())
-	end, _ = util.ParseTime(event.GetEnd())
 	c.Assert(event.GetUuid(), Equals, id)
 	c.Assert(begin, Equals, replayBegin)
 	c.Assert(end, Equals, replayBegin.Add(30*time.Second))
 	c.Assert(string(event.Action.GetPayload()), Equals, `{"begin":false,"end":true}`)
 	validEvent = services.CloneEvent(event)
+	// Checks new event creation
+	event = msg.GetEvents()[0]
+	c.Assert(event.GetUuid(), Equals, splitUuid)
+	c.Assert(event.GetName(), Equals, "New name")
+	c.Assert(event.GetInfo(), Equals, "New information")
+	c.Assert(string(event.Action.GetPayload()), Equals, `{"begin":true,"end":false}`)
+	begin, _ = util.ParseTime(event.GetBegin())
+	end, _ = util.ParseTime(event.GetEnd())
+	c.Assert(begin, Equals, replayBegin.Add(30*time.Second))
+	c.Assert(end, Equals, replayEnd)
+	splitEvent := services.CloneEvent(event)
 
 	// Creating a new replay event cannot overlap more than one existing event
 	// and must share one of the existing event boundaries, otherwise it returns an error
@@ -1393,14 +1375,13 @@ func (t *TestSuite) TestChangeReplayRangeDates(c *C) {
 	c.Assert(err, IsNil)
 	msg = waitBroadcastTag(messages, sdk.MessageTag_update_events)
 	c.Assert(msg, NotNil)
+	c.Assert(len(msg.GetEvents()), Equals, 2)
 	event = msg.GetEvents()[0]
 	c.Assert(event.GetUuid(), Equals, splitUuid)
 	begin, _ = util.ParseTime(event.GetBegin())
 	c.Assert(begin, Equals, replayBegin.Add(31*time.Second))
 	splitEvent = services.CloneEvent(event)
-	msg = waitBroadcastTag(messages, sdk.MessageTag_update_events)
-	c.Assert(msg, NotNil)
-	event = msg.GetEvents()[0]
+	event = msg.GetEvents()[1]
 	end, _ = util.ParseTime(event.GetEnd())
 	c.Assert(event.GetUuid(), Equals, id)
 	c.Assert(end, Equals, replayBegin.Add(31*time.Second))

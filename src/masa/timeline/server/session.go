@@ -275,14 +275,17 @@ func (s *Session) stopServices() error {
 	return nil
 }
 
-func (s EventCheckers) CheckEvent(event *sdk.Event) error {
+func (s EventCheckers) CheckEvents(events ...*sdk.Event) ([]*sdk.Event, bool, error) {
 	for _, checker := range s {
-		err := checker.CheckEvent(event)
+		result, modified, err := checker.CheckEvents(events...)
 		if err != nil {
-			return err
+			return events, false, err
+		}
+		if modified {
+			return result, true, nil
 		}
 	}
-	return nil
+	return events, false, nil
 }
 
 func (s EventCheckers) CheckDeleteEvent(uuid string) error {
@@ -435,36 +438,48 @@ func makeUpdate(event *Event) (EventSlice, []*sdk.Event) {
 }
 
 func (s *Session) UpdateEvent(uuid string, msg *sdk.Event) (*sdk.Event, error) {
-	err := s.checkers.CheckEvent(msg)
+	events := []*sdk.Event{msg}
+	// FIX: We should recheck new events if modification occurs
+	//      if another service than sword is added
+	events, _, err := s.checkers.CheckEvents(events...)
 	if err != nil {
 		return nil, err
 	}
-	event := s.events.Find(uuid)
-	modified := true
-	triggered := false
-	children := false
-	if event == nil {
-		event, err = NewEvent(msg, s.events)
-		s.events.Append(event)
-	} else {
-		modified, triggered, children, err = event.Update(msg, s.tick, s.events)
-	}
-	if err != nil {
-		return nil, err
-	}
-	if !modified {
-		return event.Proto(), nil
-	}
-	updates, encoded := makeUpdate(event)
-	if children {
-		for child := range event.children {
-			updates = append(updates, child)
-			encoded = append(encoded, child.Proto())
+	updates := EventSlice{}
+	encoded := []*sdk.Event{}
+	for _, e := range events { // Apply all modifications
+		event := s.events.Find(e.GetUuid())
+		if event == nil { // Event Creation
+			event, err = NewEvent(e, s.events)
+			if err != nil {
+				return nil, err
+			}
+			s.events.Append(event)
+		} else { // Event modification
+			modified, triggered, children, err := event.Update(e, s.tick, s.events)
+			if err != nil {
+				return nil, err
+			}
+			if !modified {
+				continue
+			}
+			if children {
+				for child := range event.children {
+					updates = append(updates, child)
+					encoded = append(encoded, child.Proto())
+				}
+			}
+			if triggered {
+				s.triggerEvent(event)
+			}
 		}
+		eventUpdates, eventEncoded := makeUpdate(event)
+		updates = append(updates[:0], append(eventUpdates, updates[0:]...)...) // push_front
+		encoded = append(encoded[:0], append(eventEncoded, encoded[0:]...)...) // push_front
 	}
 	s.listeners.UpdateEncodedEvents(updates, encoded)
-	if triggered {
-		s.triggerEvent(event)
+	if len(encoded) == 0 {
+		return msg, nil
 	}
 	return encoded[0], nil
 }
