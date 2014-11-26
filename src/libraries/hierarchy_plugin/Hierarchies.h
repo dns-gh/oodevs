@@ -11,7 +11,6 @@
 #define __Hierarchy_h_
 
 #include "tools/Path.h"
-#include "tools/Sql_ABC.h"
 #include <boost/noncopyable.hpp>
 #include <memory>
 #include <set>
@@ -24,6 +23,7 @@ namespace dispatcher
 namespace tools
 {
     class Path;
+    struct Sql_ABC;
 }
 
 namespace plugins
