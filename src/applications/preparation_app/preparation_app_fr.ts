@@ -965,7 +965,7 @@ Ces données ne peuvent pas être projetées.</translation>
     </message>
     <message>
         <source>Generating symbols ...</source>
-        <translation>Génération des symboles</translation>
+        <translation>Génération des symboles ...</translation>
     </message>
 </context>
 <context>
