@@ -56,9 +56,8 @@ void GLSymbols::PrintApp6( const std::string& symbol, const std::string& style, 
     renderer_.Render( renderNode, style, viewport, vWidth, vHeight, pickingMode );
 }
 
-svg::Node_ABC* GLSymbols::Compile( std::string symbol, float lod, bool firstNode )
+svg::Node_ABC* GLSymbols::Compile( std::string symbol, float lod, bool first )
 {
-    bool firstTime = true;
     while( symbol.size() )
     {
         try
@@ -85,15 +84,15 @@ svg::Node_ABC* GLSymbols::Compile( std::string symbol, float lod, bool firstNode
         }
         catch( ... )
         {
-            if( firstNode && firstTime )
+            if( first )
             {
                 notFoundSymbols_.push_back( symbol.substr( 8, symbol.size() - 8 ) );
-                firstTime = false;
+                first = false;
             }
             symbol.pop_back();
         }
     }
-    throw MASA_EXCEPTION( "Symbol not found" );
+    throw "not found";
 }
 
 const std::vector< std::string >& GLSymbols::GetNotFoundSymbol() const
