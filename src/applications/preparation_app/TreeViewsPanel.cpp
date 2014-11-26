@@ -141,7 +141,7 @@ TreeViewsPanel::TreeViewsPanel( kernel::Controllers& controllers,
                                 const std::shared_ptr< gui::ParametersLayer >& paramLayer )
     : gui::RichWidget< QTabWidget >( "TreeViewsPanel" )
     , changeSuperiorDialog_( new gui::ChangeSuperiorDialog( controllers, icons, this ) )
-    , renameInterface_( new gui::RenameInterface( controllers, this ) )
+    , renameInterface_( new gui::RenameInterface( controllers, PreparationProfile::GetProfile(), this ) )
 {
     // Tactical
     gui::SubObjectName subObject( "TreeViewsPanel" );

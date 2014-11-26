@@ -131,12 +131,23 @@ void DrawingsBuilder::SetChangeSuperiorDialog( const std::shared_ptr< gui::Chang
     changeSuperiorDialog_ = changeSuperiorDialog;
 }
 
+namespace
+{
+    bool ShouldDisplayMenu( const kernel::Entity_ABC& entity, const kernel::Profile_ABC& profile )
+    {
+        auto type = entity.GetTypeName();
+        if( type == kernel::Drawing_ABC::typeName_ )
+            return static_cast< const kernel::Drawing_ABC& >( entity ).IsControlledBy( profile );
+        if( type == kernel::TacticalLine_ABC::typeName_ )
+            return CanBeOrdered( entity, profile );
+        return false;
+    }
+}
+
 void DrawingsBuilder::NotifyContextMenu( const kernel::Entity_ABC& entity, kernel::ContextMenu& menu )
 {
     currentEntity_ = 0;
-    auto type = entity.GetTypeName();
-    if( type == kernel::Drawing_ABC::typeName_ ||
-        ( type == kernel::TacticalLine_ABC::typeName_ && CanBeOrdered( entity, profile_ ) ) )
+    if( ShouldDisplayMenu( entity, profile_ ) )
     {
         currentEntity_= &entity;
         menu.InsertItem( "Command", tr( "Delete" ), this, SLOT( OnDelete() ), false, 5 );

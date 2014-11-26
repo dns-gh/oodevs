@@ -224,7 +224,7 @@ void EntityTreeView_ABC::NotifySelectionChanged( const std::vector< const kernel
         QModelIndex index = proxyModel_->mapFromSource( dataModel_.indexFromItem( item ) );
         if( index.isValid() )
         {
-            if( entity->CanBeRenamed() )
+            if( CanBeRenamed( *entity ) )
                 setEditTriggers( SelectedClicked | EditKeyPressed );
             selectionModel()->select( index, QItemSelectionModel::Select | QItemSelectionModel::Rows );
             QTimer::singleShot( 0, this, SLOT( OnScrollToSelected() ) );
@@ -336,6 +336,15 @@ bool EntityTreeView_ABC::IsTypeRejected( const kernel::Entity_ABC& /*entity*/ ) 
 Qt::ItemFlags EntityTreeView_ABC::ItemSpecificFlags( const kernel::Entity_ABC& /*entity*/ ) const
 {
     return 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: EntityTreeView_ABC::CanBeRenamed
+// Created: JSR 2014-11-26
+// -----------------------------------------------------------------------------
+bool EntityTreeView_ABC::CanBeRenamed( const kernel::Entity_ABC& entity ) const
+{
+    return entity.CanBeRenamed();
 }
 
 // -----------------------------------------------------------------------------

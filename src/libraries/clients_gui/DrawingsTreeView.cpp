@@ -141,6 +141,17 @@ bool DrawingsTreeView::ApplyProfileFilter( QStandardItem& item ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: DrawingsTreeView::CanBeRenamed
+// Created: JSR 2014-11-26
+// -----------------------------------------------------------------------------
+bool DrawingsTreeView::CanBeRenamed( const kernel::Entity_ABC& entity ) const
+{
+    if( entity.GetTypeName() == kernel::Drawing_ABC::typeName_ )
+        return static_cast< const kernel::Drawing_ABC& >( entity ).IsControlledBy( profile_ );
+    return EntityTreeView_ABC::CanBeRenamed( entity );
+}
+
+// -----------------------------------------------------------------------------
 // Name: DrawingsTreeView::keyPressEvent
 // Created: LGY 2014-05-07
 // -----------------------------------------------------------------------------
@@ -152,7 +163,8 @@ void DrawingsTreeView::keyPressEvent( QKeyEvent* event )
         if( event->key() == Qt::Key_Delete )
         {
             if( kernel::Entity_ABC* entity = dataModel_.GetDataFromIndex< kernel::Entity_ABC >( index ) )
-                modelObserver_.DeleteEntity( *entity );
+                if( entity->GetTypeName() != kernel::Drawing_ABC::typeName_ || static_cast< kernel::Drawing_ABC* >( entity )->IsControlledBy( profile_) )
+                    modelObserver_.DeleteEntity( *entity );
         }
         else if( event->key() == Qt::Key_Escape )
             paramLayer_->Reset();

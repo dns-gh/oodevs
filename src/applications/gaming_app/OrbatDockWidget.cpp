@@ -75,7 +75,7 @@ OrbatDockWidget::OrbatDockWidget( kernel::Controllers& controllers,
     : gui::RichDockWidget( controllers, parent, objectName )
     , changeSuperiorDialog_( new gui::ChangeSuperiorDialog( controllers, icons, this ) )
     , observer_( new gui::DummyModelObserver() )
-    , renameInterface_( new gui::RenameInterface( controllers, this ) )
+    , renameInterface_( new gui::RenameInterface( controllers, filter, this ) )
     , logisticListView_( 0 )
 {
     setWindowTitle( tools::translate( "OrbatDockWidget", "Orbat" ) );
