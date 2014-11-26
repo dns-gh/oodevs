@@ -348,7 +348,12 @@ void MainWindow::New()
 {
     ExerciseCreationDialog exerciseCreationDialog( this, config_ );
     if( exerciseCreationDialog.exec() == QDialog::Accepted )
-        DoLoad( exerciseCreationDialog.GetFileName() );
+    {
+        auto filename = exerciseCreationDialog.GetFileName();
+        if( filename.IsEmpty() || !Close() )
+            return;
+        DoLoad( filename );
+    }
 }
 
 // -----------------------------------------------------------------------------
