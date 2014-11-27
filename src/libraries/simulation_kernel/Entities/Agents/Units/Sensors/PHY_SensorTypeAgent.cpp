@@ -371,7 +371,8 @@ const double PHY_SensorTypeAgent::RayTrace( const MT_Vector2D& vSource , const M
 
     double rVisionNRJ = rDetectionDist_;
     const auto& data = MIL_AgentServer::GetWorkspace().GetMeteoDataManager().GetRawVisionData();
-    rVisionNRJ *= lightingFactors_[ data.GetLighting( data( vTarget ) ).GetID() ];
+    const auto& cell = data.GetVisionCell( vTarget.rX_, vTarget.rY_ );
+    rVisionNRJ *= lightingFactors_[ data.GetLighting( cell ).GetID() ];
     const bool isAroundUrbanBlock = distance_modifiers::ComputeUrbanExtinction( vSource, vTarget, rVisionNRJ, urbanFactors_, posted );
 
     PHY_RawVisionDataIterator it( vSource3D, vTarget3D );
@@ -398,7 +399,8 @@ const PHY_PerceptionLevel& PHY_SensorTypeAgent::RayTrace( const MT_Vector2D& vSo
 
     double rVisionNRJ = rDetectionDist_;
     const auto& data = MIL_AgentServer::GetWorkspace().GetMeteoDataManager().GetRawVisionData();
-    rVisionNRJ *= lightingFactors_[ data.GetLighting( data( vTarget ) ).GetID() ];
+    const auto& cell = data.GetVisionCell( vTarget.rX_, vTarget.rY_ );
+    rVisionNRJ *= lightingFactors_[ data.GetLighting( cell ).GetID() ];
     const bool isAroundUrbanBlock = distance_modifiers::ComputeUrbanExtinction( vSource, vTarget, rVisionNRJ, urbanFactors_, posted );
 
     PHY_RawVisionDataIterator it( vSource3D, vTarget3D );

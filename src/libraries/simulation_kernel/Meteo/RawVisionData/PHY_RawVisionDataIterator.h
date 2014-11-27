@@ -16,6 +16,7 @@
 struct ElevationCell;
 typedef unsigned char envBits;
 class PHY_RawVisionData;
+struct VisionCell;
 
 namespace weather
 {
@@ -112,6 +113,7 @@ protected:
 
     // Environnement courrant
     const ElevationCell* pCurrentCell_;
+    const VisionCell* visionCell_;
     bool bIsInGround_;
     bool bIsInEnv_;
 };

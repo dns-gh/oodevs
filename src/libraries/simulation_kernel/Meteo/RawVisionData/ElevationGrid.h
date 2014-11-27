@@ -18,7 +18,6 @@ namespace tools
     class Path;
 }
 
-class PHY_AmmoEffect;
 class ElevationGrid;
 
 typedef unsigned char envBits;  // bit field
@@ -32,8 +31,6 @@ public:
         : h       ( 0 )
         , dh      ( 0 )
         , e       ( 0 )
-        , weatherId( 0 )
-        , pEffects( 0 )
     {
         // NOTHING
     }
@@ -51,11 +48,9 @@ private:
 
     // Take care to pack the following fields to save memory when
     // loading large elevation maps.
-    PHY_AmmoEffect* pEffects;       // ammunitions effects
     uint16_t h;     // elevation
     uint8_t  dh;    // elevation delta caused by environment
     envBits  e;     // static environment bits
-    uint32_t weatherId; // local weather identifier, 0 if unset
 };
 //@}
 

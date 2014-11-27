@@ -26,6 +26,50 @@ std::map< std::string, PHY_RawVisionData::E_VisionObject > PHY_RawVisionData::en
     ( "Foret"  , PHY_RawVisionData::eVisionForest )
     ( "Urbain" , PHY_RawVisionData::eVisionUrban );
 
+struct VisionCell
+{
+    VisionCell()
+        : effect( 0 )
+        , weatherId( 0 )
+    {
+    }
+
+    PHY_AmmoEffect* effect; // linked list of ammunition effects
+    uint32_t weatherId; // local weather identifier, 0 if unset
+};
+
+namespace
+{
+
+VisionCell emptyCell;
+
+} // namespace
+
+// Similar to ElevationGrid but with ammunition effects and local weather
+struct PHY_RawVisionData::VisionData
+{
+    VisionData( unsigned int width, unsigned int height )
+        : cells_( width )
+        , width_( width )
+        , height_( height )
+    {
+        for( size_t i = 0; i < width; ++i )
+            cells_[i].resize( height );
+    }
+
+    VisionCell& GetCell( unsigned int x, unsigned int y )
+    {
+        if( x >= width_ || y >= height_ )
+            return emptyCell;
+        return cells_[ x ][ y ];
+    }
+
+private:
+    std::vector< std::vector< VisionCell > > cells_;
+    unsigned int width_;
+    unsigned int height_;
+};
+
 //-----------------------------------------------------------------------------
 // Name: PHY_RawVisionData constructor
 // Created: JVT 02-11-05
@@ -42,6 +86,7 @@ PHY_RawVisionData::PHY_RawVisionData( const weather::Meteo& globalMeteo,
     nNbrCol_ = pElevationGrid_->GetWidth();
     nNbrRow_ = pElevationGrid_->GetHeight();
     rCellSize_ = pElevationGrid_->GetCellSize();
+    visionData_.reset( new VisionData( nNbrCol_, nNbrRow_ ) );
     CalcMinMaxAltitude();
 }
 
@@ -109,7 +154,7 @@ void PHY_RawVisionData::RegisterMeteoPatch(
     {
         for( unsigned int y = nYBeg; y <= nYEnd; ++y )
         {
-            ElevationCell& cell = pElevationGrid_->GetCell( nXBeg, y );
+            auto& cell = visionData_->GetCell( nXBeg, y );
             cell.weatherId = pMeteo->GetId();
         }
         ++nXBeg;
@@ -147,7 +192,7 @@ void PHY_RawVisionData::UnregisterMeteoPatch(
     {
         for( unsigned int y = nYBeg; y <= nYEnd; ++y )
         {
-            ElevationCell& cell = pElevationGrid_->GetCell( nXBeg, y );
+            auto& cell = visionData_->GetCell( nXBeg, y );
             const auto pos = geometry::Point2f(
                     static_cast< float >( nXBeg * rCellSize_ ),
                     static_cast< float >( y * rCellSize_ ) );
@@ -172,11 +217,11 @@ void PHY_RawVisionData::RegisterWeatherEffect( const MT_Ellipse& surface, const 
         for( double y = yMin; y < yMax; y += rCellSize_ )
             if( surface.IsInside( MT_Vector2D( x, y ) ) )
             {
-                ElevationCell& cell = pElevationGrid_->GetCell( GetCol( x ), GetRow( y ) );
-                if( &cell == &pElevationGrid_->GetEmptyCell() )
+                auto& cell = visionData_->GetCell( GetCol( x ), GetRow( y ) );
+                if( &cell == &emptyCell )
                     continue;
-                PHY_AmmoEffect* pEffect = new PHY_AmmoEffect( weaponClass, cell.pEffects );
-                cell.pEffects = pEffect;
+                PHY_AmmoEffect* effect = new PHY_AmmoEffect( weaponClass, cell.effect );
+                cell.effect = effect;
             }
 }
 
@@ -196,31 +241,31 @@ void PHY_RawVisionData::UnregisterWeatherEffect( const MT_Ellipse& surface, cons
         for( double y = yMin; y < yMax; y += rCellSize_ )
             if( surface.IsInside( MT_Vector2D( x, y ) ) )
             {
-                 ElevationCell& cell = pElevationGrid_->GetCell( GetCol( x ), GetRow( y ) );
-                if( &cell == &pElevationGrid_->GetEmptyCell() )
+                auto& cell = visionData_->GetCell( GetCol( x ), GetRow( y ) );
+                if( &cell == &emptyCell )
                     continue;
 
-                PHY_AmmoEffect* pPrevEffect = 0;
-                PHY_AmmoEffect* pEffect = cell.pEffects;
+                PHY_AmmoEffect* prevEffect = 0;
+                PHY_AmmoEffect* effect = cell.effect;
 
-                while( pEffect && !pEffect->HandleAmmo( weaponClass ) )
+                while( effect && !effect->HandleAmmo( weaponClass ) )
                 {
-                    pPrevEffect = pEffect;
-                    pEffect     = pEffect->GetNextEffect();
+                    prevEffect = effect;
+                    effect     = effect->GetNextEffect();
                 }
 
-                if( !pEffect || !pEffect->HandleAmmo( weaponClass ) )
+                if( !effect || !effect->HandleAmmo( weaponClass ) )
                 {
                     assert( false );
                     return;
                 }
 
-                if( pPrevEffect )
-                    pPrevEffect->SetNextEffect( pEffect->GetNextEffect() );
+                if( prevEffect )
+                    prevEffect->SetNextEffect( effect->GetNextEffect() );
                 else
-                    cell.pEffects = pEffect->GetNextEffect();
+                    cell.effect = effect->GetNextEffect();
 
-                delete pEffect;
+                delete effect;
             }
 }
 
@@ -305,12 +350,22 @@ ElevationCell& PHY_RawVisionData::operator() ( double rCol, double rRow )
     return pElevationGrid_->GetCell( GetCol( rCol ), GetRow( rRow ) );
 }
 
-const weather::Meteo& PHY_RawVisionData::GetWeather( const MT_Vector2D& pos ) const
+const VisionCell& PHY_RawVisionData::GetVisionCell( double x, double y ) const
 {
-    return GetWeather( operator()( pos ) );
+    return visionData_->GetCell( GetCol( x ), GetRow( y ) );
 }
 
-const weather::Meteo& PHY_RawVisionData::GetWeather( const ElevationCell& cell ) const
+const VisionCell& PHY_RawVisionData::GetVisionCell( unsigned int col, unsigned int row ) const
+{
+    return visionData_->GetCell( col, row );
+}
+
+const weather::Meteo& PHY_RawVisionData::GetWeather( const MT_Vector2D& pos ) const
+{
+    return GetWeather( GetVisionCell( pos.rX_, pos.rY_ ) );
+}
+
+const weather::Meteo& PHY_RawVisionData::GetWeather( const VisionCell& cell ) const
 {
     if( !cell.weatherId )
         return globalMeteo_;
@@ -323,22 +378,22 @@ const weather::Meteo& PHY_RawVisionData::GetWeather( const ElevationCell& cell )
 // -----------------------------------------------------------------------------
 const weather::PHY_Precipitation& PHY_RawVisionData::GetPrecipitation( const MT_Vector2D& vPos ) const
 {
-    return GetPrecipitation( operator()( vPos ) );
+    return GetPrecipitation( GetVisionCell( vPos.rX_, vPos.rY_ ) );
 }
 
-const weather::PHY_Precipitation& PHY_RawVisionData::GetPrecipitation( const ElevationCell& cell ) const
+const weather::PHY_Precipitation& PHY_RawVisionData::GetPrecipitation( const VisionCell& cell ) const
 {
     const auto& meteo = GetWeather( cell );
-    if( cell.pEffects )
-        return cell.pEffects->GetPrecipitation( meteo.GetPrecipitation() );
+    if( cell.effect )
+        return cell.effect->GetPrecipitation( meteo.GetPrecipitation() );
     return meteo.GetPrecipitation();
 }
 
-const weather::PHY_Lighting& PHY_RawVisionData::GetLighting( const ElevationCell& cell ) const
+const weather::PHY_Lighting& PHY_RawVisionData::GetLighting( const VisionCell& cell ) const
 {
     const auto& meteo = GetWeather( cell );
-    if( cell.pEffects )
-        return cell.pEffects->GetLighting( meteo.GetLighting() );
+    if( cell.effect )
+        return cell.effect->GetLighting( meteo.GetLighting() );
     return meteo.GetLighting();
 }
 

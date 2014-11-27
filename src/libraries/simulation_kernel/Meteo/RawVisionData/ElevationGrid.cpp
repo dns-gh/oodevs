@@ -91,8 +91,6 @@ std::unique_ptr< ElevationGrid > LoadElevationGrid( const tools::Path& path )
             cell->h = elevation;
             cell->dh = delta;
             cell->e = env;
-            cell->weatherId = 0;
-            cell->pEffects = 0;
             cell++;
         }
     }
