@@ -20,6 +20,7 @@ namespace tools
 namespace kernel
 {
     class Controllers;
+    class Profile_ABC;
 }
 
 namespace gui
@@ -60,7 +61,8 @@ public:
                              const std::shared_ptr< gui::ParametersLayer >& paramLayer,
                              const std::shared_ptr< gui::WeatherLayer >& weatherLayer,
                              gui::GLView_ABC& glProxy,
-                             ColorController& colorController );
+                             ColorController& colorController,
+                             const kernel::Profile_ABC& profile );
     virtual ~CreationPanels();
     //@}
 

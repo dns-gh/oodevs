@@ -55,6 +55,7 @@ public:
     //! @name Operations
     //@{
     virtual void DoUpdate( const sword::ShapeUpdate& message );
+    virtual bool IsControlledBy( const kernel::Profile_ABC& profile ) const;
     virtual void NotifyDestruction() const;
     virtual void ChangeSuperior( const kernel::Entity_ABC& target );
     //@}

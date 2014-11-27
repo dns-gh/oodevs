@@ -28,6 +28,7 @@ namespace kernel
     class Object_ABC;
     class Pathfind_ABC;
     class Population_ABC;
+    class Profile_ABC;
     class TacticalLine_ABC;
     class Team_ABC;
 }
@@ -62,7 +63,7 @@ class RenameInterface : public QObject
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit RenameInterface( kernel::Controllers& controllers, QObject* parent = 0 );
+    explicit RenameInterface( kernel::Controllers& controllers, const kernel::Profile_ABC& profile, QObject* parent = 0 );
     virtual ~RenameInterface();
     //@}
 
@@ -103,6 +104,7 @@ private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
+    const kernel::Profile_ABC& profile_;
     kernel::SafePointer< kernel::Entity_ABC > contextMenuEntity_;
     std::vector< gui::EntityTreeView_ABC* > views_;
     gui::EntityTreeView_ABC* contextMenuView_;

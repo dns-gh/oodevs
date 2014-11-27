@@ -68,7 +68,8 @@ void DrawerLayer::NotifyContextMenu( const kernel::Drawing_ABC& drawing, kernel:
         vector.push_back( &drawing );
         NotifySelectionChanged( vector );
     }
-    menu.InsertItem( "Creation", tools::translate( "gui::DrawerLayer", "Edit..." ), this, SLOT( OnEditDrawing() ) );
+    if( drawing.IsControlledBy( profile_ ) )
+        menu.InsertItem( "Creation", tools::translate( "gui::DrawerLayer", "Edit..." ), this, SLOT( OnEditDrawing() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -153,7 +154,7 @@ bool DrawerLayer::HandleKeyPress( QKeyEvent* k )
     const int key = k->key();
     if( key == Qt::Key_Backspace || key == Qt::Key_Delete )
     {
-        if( selected_ )
+        if( selected_ && selected_->IsControlledBy( profile_ ) )
             model_.DeleteEntity( *selected_ );
         return true;
     }

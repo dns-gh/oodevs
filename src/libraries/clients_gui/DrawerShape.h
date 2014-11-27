@@ -61,6 +61,7 @@ public:
     //@{
     virtual QColor GetColor() const;
     virtual const kernel::Entity_ABC* GetDiffusionEntity() const;
+    virtual bool IsControlledBy( const kernel::Profile_ABC& profile ) const;
     const DrawingTemplate& GetDrawingTemplate() const;
     //@}
 

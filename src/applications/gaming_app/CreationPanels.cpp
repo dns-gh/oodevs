@@ -9,6 +9,7 @@
 
 #include "gaming_app_pch.h"
 #include "CreationPanels.h"
+#include "DrawerPanel.h"
 #include "gaming/DrawingsModel.h"
 #include "gaming/Model.h"
 #include "gaming/StaticModel.h"
@@ -17,7 +18,6 @@
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Profile_ABC.h"
 #include "clients_kernel/Tools.h"
-#include "clients_gui/DrawerPanel.h"
 #include "clients_gui/PopulationsPanel.h"
 #include "clients_gui/UnitsPanel.h"
 #include "tools/ExerciseConfig.h"
@@ -26,25 +26,22 @@
 #include "ObjectCreationPanel.h"
 #include "WeatherPanel.h"
 
-using namespace kernel;
-using namespace gui;
-using namespace actions;
-
 // -----------------------------------------------------------------------------
 // Name: CreationPanels constructor
 // Created: SBO 2007-06-19
 // -----------------------------------------------------------------------------
 CreationPanels::CreationPanels( QWidget* parent,
-                                Controllers& controllers,
+                                kernel::Controllers& controllers,
                                 const ::StaticModel& staticModel,
                                 const Model& model,
-                                const Time_ABC& simulation,
-                                const std::shared_ptr< ParametersLayer >& paramLayer,
-                                const std::shared_ptr< ::WeatherLayer >& weatherLayer,
-                                GLView_ABC& tools,
-                                SymbolIcons& icons,
-                                ColorStrategy_ABC& colorStrategy,
-                                const tools::ExerciseConfig& config )
+                                const kernel::Time_ABC& simulation,
+                                const std::shared_ptr< gui::ParametersLayer >& paramLayer,
+                                const std::shared_ptr< WeatherLayer >& weatherLayer,
+                                gui::GLView_ABC& tools,
+                                gui::SymbolIcons& icons,
+                                gui::ColorStrategy_ABC& colorStrategy,
+                                const tools::ExerciseConfig& config,
+                                const kernel::Profile_ABC& profile )
     : gui::RichDockWidget( controllers, parent, "creation-panel" )
 {
     gui::SubObjectName subObject( "CreationPanels" );
@@ -53,12 +50,12 @@ CreationPanels::CreationPanels( QWidget* parent,
     setWidget( panels_ );
 
     setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Expanding );
-    panels_->AddPanel( units_ = new UnitsPanel( panels_, *panels_, controllers, staticModel.types_, icons, colorStrategy ) );
-    panels_->AddPanel( crowds_ = new PopulationsPanel( panels_, *panels_, controllers, staticModel.types_ ) );
+    panels_->AddPanel( units_ = new gui::UnitsPanel( panels_, *panels_, controllers, staticModel.types_, icons, colorStrategy ) );
+    panels_->AddPanel( crowds_ = new gui::PopulationsPanel( panels_, *panels_, controllers, staticModel.types_ ) );
     panels_->AddPanel( objects_ = new ObjectCreationPanel( panels_, *panels_, controllers, model.actions_, staticModel, simulation, model.teams_.GetNoSideTeam(), paramLayer, tools, config ) );
     panels_->AddPanel( fires_ = new FireCreationPanel( panels_, *panels_, controllers, model.actions_, simulation, staticModel, paramLayer, tools ) );
-    panels_->AddPanel( weather_ = new ::WeatherPanel( panels_, *panels_, controllers, model.actions_, staticModel, simulation, weatherLayer ) );
-    panels_->AddPanel( drawings_ = new DrawerPanel( panels_, *panels_, paramLayer, controllers, model.drawings_, staticModel.drawings_, config ) );
+    panels_->AddPanel( weather_ = new WeatherPanel( panels_, *panels_, controllers, model.actions_, staticModel, simulation, weatherLayer ) );
+    panels_->AddPanel( drawings_ = new DrawerPanel( panels_, *panels_, paramLayer, controllers, model.drawings_, staticModel.drawings_, config, profile ) );
     controllers_.Update( *this );
 }
 
@@ -85,7 +82,7 @@ void CreationPanels::Draw( gui::Viewport_ABC& viewport ) const
 // Name: CreationPanels::NotifyUpdated
 // Created: JSR 2011-01-12
 // -----------------------------------------------------------------------------
-void CreationPanels::NotifyUpdated( const ModelLoaded& )
+void CreationPanels::NotifyUpdated( const kernel::ModelLoaded& )
 {
     AddPanels();
     panels_->Add( drawings_ );
@@ -95,7 +92,7 @@ void CreationPanels::NotifyUpdated( const ModelLoaded& )
 // Name: CreationPanels::NotifyUpdated
 // Created: JSR 2011-01-12
 // -----------------------------------------------------------------------------
-void CreationPanels::NotifyUpdated( const ModelUnLoaded& )
+void CreationPanels::NotifyUpdated( const kernel::ModelUnLoaded& )
 {
     RemovePanels();
     panels_->Remove( drawings_ );

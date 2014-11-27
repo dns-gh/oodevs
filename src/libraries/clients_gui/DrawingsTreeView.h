@@ -59,6 +59,7 @@ protected:
     virtual void NotifyCreated( const kernel::Team_ABC& team );
     virtual void NotifyCreated( const kernel::Pathfind_ABC& pathfind );
     virtual bool ApplyProfileFilter( QStandardItem& item ) const;
+    virtual bool CanBeRenamed( const kernel::Entity_ABC& entity ) const;
     virtual void keyPressEvent( QKeyEvent* event );
     //@}
 

@@ -24,6 +24,7 @@
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/Pathfind_ABC.h"
 #include "clients_kernel/Population_ABC.h"
+#include "clients_kernel/Profile_ABC.h"
 #include "clients_kernel/TacticalLine_ABC.h"
 #include "clients_kernel/Team_ABC.h"
 
@@ -33,9 +34,10 @@ using namespace gui;
 // Name: RenameInterface constructor
 // Created: ABR 2014-09-03
 // -----------------------------------------------------------------------------
-RenameInterface::RenameInterface( kernel::Controllers& controllers, QObject* parent /* = 0 */ )
+RenameInterface::RenameInterface( kernel::Controllers& controllers, const kernel::Profile_ABC& profile, QObject* parent /* = 0 */ )
     : QObject( parent )
     , controllers_( controllers )
+    , profile_( profile )
     , contextMenuEntity_( controllers )
 {
     controllers_.Register( *this );
@@ -75,6 +77,16 @@ void RenameInterface::OnRename()
     contextMenuView_ = 0;
 }
 
+namespace
+{
+    bool CanBeRenamed( const kernel::Entity_ABC& entity, const kernel::Profile_ABC& profile )
+    {
+        if( entity.GetTypeName() == kernel::Drawing_ABC::typeName_ )
+            return static_cast< const kernel::Drawing_ABC& >( entity ).IsControlledBy( profile );
+        return entity.CanBeRenamed();
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: RenameInterface::AddCommonMenu
 // Created: ABR 2014-09-03
@@ -83,7 +95,7 @@ void RenameInterface::AddCommonMenu( const kernel::Entity_ABC& entity, kernel::C
 {
     contextMenuView_ = 0;
     contextMenuEntity_ = &entity;
-    if( entity.CanBeRenamed() )
+    if( CanBeRenamed( entity, profile_ ) )
     {
         auto it = std::find( views_.begin(), views_.end(), controllers_.actions_.GetEmitter() );
         if( it != views_.end() )

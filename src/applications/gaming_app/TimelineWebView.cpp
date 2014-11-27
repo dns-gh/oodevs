@@ -24,6 +24,7 @@
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/ContextMenu.h"
 #include "clients_kernel/Controllers.h"
+#include "clients_kernel/Drawing_ABC.h"
 #include "clients_kernel/Profile_ABC.h"
 #include "clients_kernel/TimelineHelpers.h"
 #include "ENT/ENT_Tr.h"
@@ -52,12 +53,14 @@ TimelineWebView::TimelineWebView( QWidget* parent,
                                   const GamingConfig& config,
                                   kernel::Controllers& controllers,
                                   Model& model,
-                                  gui::GLWidgetManager& glWidgetManager )
+                                  gui::GLWidgetManager& glWidgetManager,
+                                  const kernel::Profile_ABC& profile )
     : QWidget( parent )
     , config_( config )
     , controllers_( controllers )
     , model_( model )
     , glWidgetManager_( glWidgetManager )
+    , profile_( profile )
     , server_( 0 )
     , creationSignalMapper_( 0 )
     , horizontal_( false )
@@ -322,7 +325,13 @@ void TimelineWebView::OnTriggeredEvents( const timeline::Events& events )
             ( gui::event_helpers::configurationPathKey, "" );
         gui::event_helpers::ReadJsonPayload( event, jsonPayload );
         if( gui::event_helpers::StringToBool( jsonPayload[ gui::event_helpers::resetDrawingsKey ] ) )
-            model_.drawings_.Purge();
+        {
+            model_.drawings_.Apply( [&]( const kernel::Drawing_ABC& drawing )
+            {
+                if( drawing.IsControlledBy( profile_ ) )
+                    drawing.NotifyDestruction();
+            } );
+        }
         tools::Path drawingsPath = tools::Path::FromUTF8( jsonPayload[ gui::event_helpers::drawingsPathKey ] );
         if( drawingsPath.Exists() )
             try

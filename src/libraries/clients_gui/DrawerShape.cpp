@@ -114,6 +114,15 @@ const kernel::Entity_ABC* DrawerShape::GetDiffusionEntity() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: DrawerShape::IsControlledBy
+// Created: JSR 2014-11-26
+// -----------------------------------------------------------------------------
+bool DrawerShape::IsControlledBy( const kernel::Profile_ABC& ) const
+{
+    return true;
+}
+
+// -----------------------------------------------------------------------------
 // Name: DrawerShape::Update
 // Created: SBO 2008-06-05
 // -----------------------------------------------------------------------------

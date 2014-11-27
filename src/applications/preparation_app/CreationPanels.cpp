@@ -9,8 +9,8 @@
 
 #include "preparation_app_pch.h"
 #include "CreationPanels.h"
+#include "DrawerPanel.h"
 #include "clients_kernel/AgentTypes.h"
-#include "clients_gui/DrawerPanel.h"
 #include "clients_gui/PopulationsPanel.h"
 #include "clients_gui/UnitsPanel.h"
 #include "preparation/Model.h"
@@ -22,8 +22,6 @@
 #include "ObjectCreationPanel.h"
 #include "WeatherPanel.h"
 #include "tools/ExerciseConfig.h"
-
-using namespace kernel;
 
 // -----------------------------------------------------------------------------
 // Name: CreationPanels constructor
@@ -39,12 +37,13 @@ CreationPanels::CreationPanels( QWidget* parent,
                                 const std::shared_ptr< gui::ParametersLayer >& paramLayer,
                                 const std::shared_ptr< gui::WeatherLayer >& weatherLayer,
                                 gui::GLView_ABC& view,
-                                ColorController& colorController )
+                                ColorController& colorController,
+                                const kernel::Profile_ABC& profile )
     : Panels( "CreationPanels", parent )
 {
     gui::SubObjectName subObject( "CreationPanels" );
     AddPanel( new gui::UnitsPanel ( this, *this, controllers, staticModel.types_, icons, colorStrategy ) );
-    AddPanel( new gui::PopulationsPanel( this, *this, controllers, ( tools::Resolver< PopulationType >&)( staticModel.types_ ) ) );
+    AddPanel( new gui::PopulationsPanel( this, *this, controllers, ( tools::Resolver< kernel::PopulationType >&)( staticModel.types_ ) ) );
     inhabitantCreationPanel_ = new InhabitantCreationPanel( this, *this, controllers, staticModel.types_, *model.agents_, paramLayer, view );
     AddPanel( inhabitantCreationPanel_ );
     objectCreationPanel_ = new ObjectCreationPanel( this, *this, controllers, staticModel, *model.objects_, *model.urban_, *model.weather_, model.teams_->GetNoSideTeam(), paramLayer, view, config );
@@ -52,7 +51,7 @@ CreationPanels::CreationPanels( QWidget* parent,
     ghostPanel_ = new GhostsPanel( this, *this, controllers, model.GetSymbolsFactory(), icons, colorStrategy );
     AddPanel( ghostPanel_ );
     AddPanel( new TemplatesPanel( this, *this, controllers, *model.agents_, *model.formations_, *model.ghosts_, staticModel.types_, colorController ) );
-    AddPanel( new gui::DrawerPanel( this, *this, paramLayer, controllers, *model.drawings_, staticModel.drawings_, config ) );
+    AddPanel( new DrawerPanel( this, *this, paramLayer, controllers, *model.drawings_, staticModel.drawings_, config, profile ) );
     weatherPanel_ = new WeatherPanel( this, *this, controllers, staticModel.coordinateConverter_, weatherLayer );
     AddPanel( weatherPanel_ );
 }

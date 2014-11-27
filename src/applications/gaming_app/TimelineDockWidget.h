@@ -33,6 +33,7 @@ namespace kernel
     class Controllers;
     class Entity_ABC;
     class ModelUnLoaded;
+    class Profile_ABC;
 }
 
 namespace tools
@@ -66,7 +67,7 @@ class TimelineDockWidget : public gui::RichDockWidget
 public:
     //! @name Constructors/Destructor
     //@{
-             TimelineDockWidget( QWidget* parent, kernel::Controllers& controllers, const GamingConfig& config, Model& model, gui::GLWidgetManager& glWidgetManager );
+             TimelineDockWidget( QWidget* parent, kernel::Controllers& controllers, const GamingConfig& config, Model& model, gui::GLWidgetManager& glWidgetManager, const kernel::Profile_ABC& profile );
     virtual ~TimelineDockWidget();
     //@}
 
