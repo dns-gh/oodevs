@@ -1,14 +1,18 @@
 /* MASA Group style */
 
 @scale:     8%;
-@green:     darken(#93C47D, @scale);
 @yellow:    darken(#FFD966, @scale);
 @blue:      darken(#6FA8DC, @scale);
-@red:       darken(#E06666, @scale);
 @grey:      darken(#999,    @scale);
 @purple:    darken(#8E7CC3, @scale);
 @blueline:  #6baed6;
 @bluefill:  #c6dbef;
+
+@order:         @blue;
+@order_checked: darken(#93C47D, @scale);
+@task:          #D2691E;
+@task_checked:  #DAA520;
+@marker:        #CD5C5C;
 
 @white:     #FFF;
 @frame:     #DDD;
@@ -42,14 +46,29 @@
     border: 2px solid lighten(@color, 20%);
 }
 
-.bk_waiting, .bk_waiting .vertical_separator
+.bk_order, .bk_order .vertical_separator
 {
-    .color_event( @blue  );
+    .color_event( @order );
 }
 
-.bk_done, .bk_done .vertical_separator
+.bk_order_checked, .bk_order_checked .vertical_separator
 {
-    .color_event( @green );
+    .color_event( @order_checked );
+}
+
+.bk_task, .bk_task .vertical_separator
+{
+    .color_event( @task );
+}
+
+.bk_task_checked, .bk_task_checked .vertical_separator
+{
+    .color_event( @task_checked );
+}
+
+.bk_marker, .bk_marker .vertical_separator
+{
+    .color_event( @marker );
 }
 
 .bk_cluster, .bk_cluster .vertical_separator
@@ -66,9 +85,6 @@
 {
     .color_event( @grey );
 }
-
-.waiting { color: @blue  }
-.done    { color: @green }
 
 .selected .event, .selected .vertical_separator
 {

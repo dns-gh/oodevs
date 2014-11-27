@@ -92,6 +92,7 @@ has_scheme = (model, scheme) ->
 
 has_replay = (model) -> has_scheme model, "replay://"
 has_marker = (model) -> has_scheme model, "marker://"
+has_sword  = (model) -> has_scheme model, "sword://"
 
 is_simple_event = (model) ->
     return !has_end model
@@ -198,8 +199,11 @@ render_event = (event, has_html, has_done) ->
     end   = event.get "end"
     done  = event.get "done"
     done  = done? and done
-    color = "bk_waiting"
-    color = "bk_done" if done
+    color = "bk_task"
+    color = "bk_task_checked" if done
+    color = "bk_marker" if has_marker event
+    if has_sword event
+        color = if done then "bk_order_checked" else "bk_order"
     color = "bk_readonly" if is_readonly_event event
     return event_template
         has_html:   has_html
