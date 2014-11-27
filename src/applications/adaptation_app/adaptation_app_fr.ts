@@ -3162,6 +3162,10 @@ PNG (*.png)
         <source>Owned equipment only</source>
         <translation>Uniquement les équipements possédés</translation>
     </message>
+    <message>
+        <source>Allowed object knowledge types</source>
+        <translation>Types de connaissances d'objet autorisés</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Models_Data</name>

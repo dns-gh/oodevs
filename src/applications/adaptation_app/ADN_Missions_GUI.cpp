@@ -163,7 +163,7 @@ QWidget* ADN_Missions_GUI::BuildMissions( E_MissionType eMissionType )
     connect( paramList, SIGNAL( TypeChanged( E_MissionParameterType ) ), pEnum, SLOT( OnTypeChanged( E_MissionParameterType ) ) );
 
     ADN_MissionParameter_GroupBox* pChoice = new ADN_MissionParameter_GroupBox( 1, Qt::Horizontal, tr( "Allowed types" ), eMissionParameterTypeLocationComposite );
-    new ADN_MissionTypes_Table( builder.GetChildName( "allowed-types-table" ), vInfosConnectors[ eChoiceValues ], pChoice );
+    auto* typesTable = new ADN_MissionTypes_Table( builder.GetChildName( "allowed-types-table" ), vInfosConnectors[ eChoiceValues ], pChoice );
     connect( paramList, SIGNAL( TypeChanged( E_MissionParameterType ) ), pChoice, SLOT( OnTypeChanged( E_MissionParameterType ) ) );
 
     ADN_MissionParameter_GroupBox* pLimit = new ADN_MissionParameter_GroupBox( 1, Qt::Horizontal, tr( "Limits" ), eMissionParameterTypeNumeric );
@@ -172,11 +172,12 @@ QWidget* ADN_Missions_GUI::BuildMissions( E_MissionType eMissionType )
     builder.AddField< ADN_EditLine_Int >( pLimitHolder, "limit-max", tr( "Maximum" ), vInfosConnectors[ eMaxValue ] );
     connect( paramList, SIGNAL( TypeChanged( E_MissionParameterType ) ), pLimit, SLOT( OnTypeChanged( E_MissionParameterType ) ) );
 
-    ADN_MissionParameter_GroupBox* pKnowledgeObject = new ADN_MissionParameter_GroupBox( 1, Qt::Horizontal, tr( "Allowed types" ),
+    ADN_MissionParameter_GroupBox* pKnowledgeObject = new ADN_MissionParameter_GroupBox( 1, Qt::Horizontal, tr( "Allowed object knowledge types" ),
         std::vector< E_MissionParameterType >( boost::assign::list_of( eMissionParameterTypeObjectKnowledge )
                                                                      ( eMissionParameterTypeGenObject )
                                                                      ( eMissionParameterTypePhaseLine )
                                                                      ( eMissionParameterTypeLocationComposite ) ) );
+    connect( &typesTable->GetDelegate(), SIGNAL( CheckedStateChanged( const QStandardItem& ) ), pKnowledgeObject, SLOT( OnMissionTypeChanged( const QStandardItem& ) ) );
     {
         QCheckBox* all = new QCheckBox( pKnowledgeObject );
         all->setText( tr( "all" ) );

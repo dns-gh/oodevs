@@ -38,12 +38,15 @@ public slots:
     //! @name Slots
     //@{
     void OnTypeChanged( E_MissionParameterType type );
+    void OnMissionTypeChanged( const QStandardItem& item );
     //@}
 
 private:
     //! @name Member Data
     //@{
     const std::vector< E_MissionParameterType > authorized_;
+    bool typeVisible_;
+    bool objectVisible_;
     //@}
 };
 
