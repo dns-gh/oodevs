@@ -50,7 +50,7 @@
                         <i class="checker icon-{{icon}} icon-white"></i>
                         {{/if}}
                     {{else}}
-                        <i class="icon-cogs icon-white"></i>
+                        <i class="icon-bookmark icon-white"></i>
                     {{/if}}
                     {{#if has_error}}
                     <i class="event_error icon-warning-sign"></i>

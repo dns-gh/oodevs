@@ -21,6 +21,7 @@ import (
 	"masa/timeline/sdk"
 	"masa/timeline/server"
 	"masa/timeline/util"
+	"net/http"
 	"os"
 	"testing"
 	"time"
@@ -205,7 +206,7 @@ func (TestSuite) TestFilterAndModifyEvents(c *C) {
 				Apply:   proto.Bool(true),
 				Payload: payload1,
 			},
-			ErrorCode: proto.Int32(500),
+			ErrorCode: proto.Int32(http.StatusInternalServerError),
 			ErrorText: proto.String("skipped"),
 		},
 		{

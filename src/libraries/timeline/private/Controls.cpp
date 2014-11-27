@@ -228,6 +228,13 @@ namespace
         return msg;
     }
 
+    void SetLoadEvents( sdk::LoadEvents& dst, const timeline::LoadEvents& src )
+    {
+        dst.set_data( src.data );
+        dst.set_markers_host( src.markersHost );
+        dst.set_is_replay( src.isReplay );
+    }
+
     timeline::LoadEvents GetLoadEvents( const sdk::LoadEvents& src )
     {
         timeline::LoadEvents msg( src.data() );
@@ -292,14 +299,11 @@ T_Msg controls::CloseEvent( const T_Logger& log, const timeline::CloseEvent& msg
     return Pack( log, cmd );
 }
 
-T_Msg controls::LoadEvents( const T_Logger& log, const timeline::LoadEvents& events )
+T_Msg controls::LoadEvents( const T_Logger& log, const timeline::LoadEvents& msg )
 {
     ClientCommand cmd;
     cmd.set_type( sdk::CLIENT_EVENTS_LOAD );
-    auto loadEvents = cmd.mutable_load_events();
-    loadEvents->set_data( events.data );
-    loadEvents->set_markers_host( events.markersHost );
-    loadEvents->set_is_replay( events.isReplay );
+    SetLoadEvents( *cmd.mutable_load_events(), msg );
     return Pack( log, cmd );
 }
 

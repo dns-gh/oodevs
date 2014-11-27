@@ -537,9 +537,7 @@ func (s *Server) importSession(req *restful.Request) (interface{}, error) {
 	uuid := req.PathParameter("uuid")
 	markersHost := req.QueryParameter("markers_host")
 	replay, err := strconv.ParseBool(req.QueryParameter("replay"))
-	if err != nil {
-		replay = false
-	}
+	replay = replay && err == nil
 	data, err := ioutil.ReadAll(req.Request.Body)
 	if err != nil {
 		return nil, err
