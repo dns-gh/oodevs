@@ -101,6 +101,7 @@ public:
     virtual bool ToElement( sword::MissionParameter_Value& ) const = 0;
 
     // The lifecycle of pointers in all functions below must be handled by MIL_MissionParameter_ABC
+    virtual bool ToIntegerList( std::vector< int >& ) const = 0;
     virtual bool ToDirection( boost::shared_ptr< MT_Vector2D >& ) const = 0;
     virtual bool ToPoint( boost::shared_ptr< MT_Vector2D >& ) const = 0;
     virtual bool ToPointList( std::vector< boost::shared_ptr< MT_Vector2D > >& ) const = 0;

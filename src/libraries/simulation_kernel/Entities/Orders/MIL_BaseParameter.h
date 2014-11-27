@@ -36,6 +36,7 @@ public:
     virtual bool ToList( ::google::protobuf::RepeatedPtrField< ::sword::MissionParameter_Value >& ) const;
     virtual bool ToBool( bool& ) const;
     virtual bool ToId( int& ) const;
+    virtual bool ToIntegerList( std::vector< int >& ) const;
     virtual bool ToString( std::string& ) const;
     virtual bool ToPoint( boost::shared_ptr< MT_Vector2D >& ) const;
     virtual bool ToPointList( std::vector< boost::shared_ptr< MT_Vector2D > >& ) const;

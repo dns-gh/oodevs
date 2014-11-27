@@ -221,6 +221,14 @@ integration.getIntegerParameter = function( fragorder, parameterName )
     return fragorder.source:GetIntegerParameter( parameterName )
 end
 
+--- Returns the fragmentary order's "Integer List" parameter with the given name.
+-- @param fragorder DirectIA fragmentary order
+-- @param parameterName String, the name of the parameter
+-- @return List of integer
+integration.getIntegerListParameter = function( fragorder, parameterName )
+    return fragorder.source:GetIntegerListParameter( parameterName )
+end
+
 --- Returns the fragmentary order's "Automat list" parameter with the given name.
 -- @param fragorder DirectIA fragmentary order
 -- @param parameterName String, the name of the parameter
@@ -245,12 +253,28 @@ integration.getLocationParameter = function( fragorder, parameterName )
     return fragorder.source:GetLocationParameter( parameterName )
 end
 
+--- Returns the fragmentary order's "String" parameter with the given name.
+-- @param fragorder DirectIA fragmentary order
+-- @param parameterName String, the name of the parameter
+-- @return String
+integration.getStringParameter = function( fragorder, parameterName )
+    return fragorder.source:GetStringParameter( parameterName )
+end
+
 --- Returns the fragmentary order's "Point" parameter with the given name.
 -- @param fragorder DirectIA fragmentary order
 -- @param parameterName String, the name of the parameter
 -- @return Simulation point
 integration.getPointParameter = function( fragorder, parameterName )
     return fragorder.source:GetPointParameter( parameterName )
+end
+
+--- Returns the fragmentary order's "Point list" parameter with the given name.
+-- @param fragorder DirectIA fragmentary order
+-- @param parameterName String, the name of the parameter
+-- @return List of simulation points
+integration.getPointListParameter = function( fragorder, parameterName )
+    return fragorder.source:GetPointListParameter( parameterName )
 end
 
 --- Returns the fragmentary order's "Human wounds list" parameter with the given name.

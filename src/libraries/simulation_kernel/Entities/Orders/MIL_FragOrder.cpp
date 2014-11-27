@@ -141,10 +141,13 @@ void MIL_FragOrder::Register( sword::Brain& brain )
     brain.RegisterMethod( "GetorderConduiteModifierPrioritesTactiquesReparations_", &MIL_FragOrder::GetOrderConduiteModifierPrioritesTactiquesReparations );
     brain.RegisterMethod( "GetEquipmentTypeListParameter", &MIL_FragOrder::GetEquipmentTypeListParameter );
     brain.RegisterMethod( "GetIntegerParameter", &MIL_FragOrder::GetIntegerParameter );
+    brain.RegisterMethod( "GetIntegerListParameter", &MIL_FragOrder::GetIntegerListParameter );
+    brain.RegisterMethod( "GetStringParameter", &MIL_FragOrder::GetStringParameter );
     brain.RegisterMethod( "GetAutomatListParameter", &MIL_FragOrder::GetAutomatListParameter );
     brain.RegisterMethod( "GetAgentParameter", &MIL_FragOrder::GetAgentParameter );
     brain.RegisterMethod( "GetLocationParameter", &MIL_FragOrder::GetLocationParameter );
     brain.RegisterMethod( "GetPointParameter", &MIL_FragOrder::GetPointParameter );
+    brain.RegisterMethod( "GetPointListParameter", &MIL_FragOrder::GetPointListParameter );
     brain.RegisterMethod( "GetMedicalPriorityParameter", &MIL_FragOrder::GetMedicalPriorityParameter );
     brain.RegisterMethod( "GetAgentKnowledgeParameter", &MIL_FragOrder::GetAgentKnowledgeParameter );
     brain.RegisterMethod( "GetResourceTypeParameter", &MIL_FragOrder::GetResourceTypeParameter );
@@ -399,6 +402,38 @@ int MIL_FragOrder::GetIntegerParameter( const std::string& name ) const
     throw MASA_EXCEPTION( "Frag Order " + type_.GetName() + " : Unknown parameter: " + name );
 }
 
+std::vector< int > MIL_FragOrder::GetIntegerListParameter( const std::string& name ) const
+{
+    unsigned int parametersNumber = static_cast< unsigned >( parameters_.size() );
+    for( unsigned int i = 0; i < parametersNumber; ++i )
+    {
+        if( type_.GetParameterName( i ) == name )
+        {
+            std::vector< int > result;
+            if( parameters_[i]->ToIntegerList( result ) )
+                return result;
+            return std::vector< int >();
+        }
+    }
+    throw MASA_EXCEPTION( "Frag Order " + type_.GetName() + " : Unknown parameter: " + name );
+}
+
+std::string MIL_FragOrder::GetStringParameter( const std::string& name ) const
+{
+    unsigned int parametersNumber = static_cast< unsigned >( parameters_.size() );
+    for( unsigned int i = 0; i < parametersNumber; ++i )
+    {
+        if( type_.GetParameterName( i ) == name )
+        {
+            std::string result;
+            if( parameters_[i]->ToString( result ) )
+                return result;
+            return "";
+        }
+    }
+    throw MASA_EXCEPTION( "Frag Order " + type_.GetName() + " : Unknown parameter: " + name );
+}
+
 std::vector< DEC_Decision_ABC* > MIL_FragOrder::GetAutomatListParameter( const std::string& name ) const
 {
     unsigned int parametersNumber = static_cast< unsigned >( parameters_.size() );
@@ -462,6 +497,22 @@ boost::shared_ptr< MT_Vector2D > MIL_FragOrder::GetPointParameter( const std::st
                 return result;
             else
                 return boost::shared_ptr< MT_Vector2D >();
+        }
+    }
+    throw MASA_EXCEPTION( "Frag Order " + type_.GetName() + " : Unknown parameter: " + name );
+}
+
+std::vector< boost::shared_ptr< MT_Vector2D > > MIL_FragOrder::GetPointListParameter( const std::string& name ) const
+{
+    unsigned int parametersNumber = static_cast< unsigned >( parameters_.size() );
+    for( unsigned int i = 0; i < parametersNumber; ++i )
+    {
+        if( type_.GetParameterName( i ) == name )
+        {
+            std::vector< boost::shared_ptr< MT_Vector2D > > result;
+            if( parameters_[i]->ToPointList( result ) )
+                return result;
+            return std::vector< boost::shared_ptr< MT_Vector2D > >();
         }
     }
     throw MASA_EXCEPTION( "Frag Order " + type_.GetName() + " : Unknown parameter: " + name );

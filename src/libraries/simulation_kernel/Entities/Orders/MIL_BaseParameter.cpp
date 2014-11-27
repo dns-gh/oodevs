@@ -49,6 +49,11 @@ bool MIL_BaseParameter::ToId( int& ) const
     return false;
 }
 
+bool MIL_BaseParameter::ToIntegerList( std::vector< int >& ) const
+{
+    return false;
+}
+
 // -----------------------------------------------------------------------------
 // Name: MIL_BaseParameter::ToNumeric
 // Created: LDC 2009-05-20

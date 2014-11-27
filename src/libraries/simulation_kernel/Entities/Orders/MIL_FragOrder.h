@@ -104,10 +104,13 @@ public:
     std::vector< DEC_Decision_ABC* > GetOrderConduiteModifierPrioritesTactiquesReparations() const;
     std::vector< const PHY_ComposanteTypePion* > GetEquipmentTypeListParameter( const std::string& ) const;
     int GetIntegerParameter( const std::string& ) const;
+    std::vector< int > GetIntegerListParameter( const std::string& ) const;
+    std::string GetStringParameter( const std::string& ) const;
     std::vector< DEC_Decision_ABC* > GetAutomatListParameter( const std::string& ) const;
     const DEC_Decision_ABC* GetAgentParameter( const std::string& ) const;
     boost::shared_ptr< TER_Localisation > GetLocationParameter( const std::string& ) const;
     boost::shared_ptr< MT_Vector2D > GetPointParameter( const std::string& ) const;
+    std::vector< boost::shared_ptr< MT_Vector2D > > GetPointListParameter( const std::string& ) const;
     T_MedicalPriorityVector GetMedicalPriorityParameter( const std::string& ) const;
     boost::shared_ptr< DEC_Knowledge_Agent > GetAgentKnowledgeParameter( const std::string& ) const;
     const PHY_DotationCategory* GetResourceTypeParameter( const std::string& ) const;

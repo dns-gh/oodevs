@@ -40,6 +40,7 @@ public:
     virtual bool ToElement( sword::MissionParameter_Value& ) const;
     virtual bool ToList( ::google::protobuf::RepeatedPtrField< ::sword::MissionParameter_Value >& message ) const;
     virtual bool ToList( std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> >& result ) const;
+    virtual bool ToIntegerList( std::vector< int >& ) const;
     virtual bool ToNumericList( std::vector< float >& result ) const;
     virtual bool ToPathList( std::vector< std::vector< boost::shared_ptr< MT_Vector2D > > >& ) const;
     virtual bool ToPointList( std::vector< boost::shared_ptr< MT_Vector2D > >& result ) const;
