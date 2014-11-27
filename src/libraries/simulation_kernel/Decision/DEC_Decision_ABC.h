@@ -100,6 +100,7 @@ public:
     virtual void StopMissionBehavior ( const boost::shared_ptr< MIL_Mission_ABC > mission ) = 0;
     virtual bool IsFragOrderAvailableForMission( const MIL_MissionType_ABC& missionType, const MIL_FragOrderType& fragOrderType ) const = 0;
     virtual bool IsFragOrderAvailable( const MIL_FragOrderType& fragOrderType ) const = 0;
+    virtual void FillMissionParameters( directia::tools::binders::ScriptRef& initTaskFunction, const directia::tools::binders::ScriptRef& refMission, boost::shared_ptr< MIL_Mission_ABC > mission, bool isMasalife ) = 0;
 
     virtual int  GeteEtatPhaseMission() const = 0;
     virtual void SeteEtatPhaseMission( int value ) = 0;

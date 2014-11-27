@@ -83,6 +83,7 @@ public:
     virtual void StopMissionBehavior ( const boost::shared_ptr< MIL_Mission_ABC > mission );
     virtual bool IsFragOrderAvailableForMission( const MIL_MissionType_ABC& missionType, const MIL_FragOrderType& fragOrderType ) const;
     virtual bool IsFragOrderAvailable( const MIL_FragOrderType& fragOrderType ) const;
+    virtual void FillMissionParameters( directia::tools::binders::ScriptRef& initTaskFunction, const directia::tools::binders::ScriptRef& refMission, boost::shared_ptr< MIL_Mission_ABC > mission, bool isMasalife );
 
     virtual int  GeteEtatPhaseMission() const;
     virtual void SeteEtatPhaseMission( int value );
@@ -679,6 +680,12 @@ template< class T >
 bool DEC_Decision< T >::IsFragOrderAvailableForMission( const MIL_MissionType_ABC& missionType, const MIL_FragOrderType& fragOrderType ) const
 {
     return model_->IsFragOrderAvailableForMission( missionType, fragOrderType );
+}
+
+template< class T >
+void DEC_Decision< T >::FillMissionParameters( directia::tools::binders::ScriptRef& initTaskFunction, const directia::tools::binders::ScriptRef& refMission, boost::shared_ptr< MIL_Mission_ABC > mission, bool isMasalife )
+{
+    DEC_DecisionImpl::RegisterMissionParameters( *pBrain_, initTaskFunction, refMission, mission, isMasalife );
 }
 
 // -----------------------------------------------------------------------------

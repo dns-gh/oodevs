@@ -80,6 +80,10 @@ end
 --
 -- Orders
 --
+function DEC_FillMissionParameters( missionRef, mission )
+    _DEC_FillMissionParameters( myself, InitTaskParameter, missionRef, mission )
+end
+
 function DEC_FinMission()
     _DEC_FinMission( myself )
 end
