@@ -514,10 +514,11 @@ func (s *Server) importEvents(session string, data []byte, markersHost string, r
 		}
 		if err != nil {
 			code, text := util.ConvertError(err)
-			event.ErrorCode = &code
-			event.ErrorText = &text
+			it.ErrorCode = &code
+			it.ErrorText = &text
+		} else {
+			*it = *event
 		}
-		*it = *event
 	}
 	// import root events first
 	for _, event := range events {
