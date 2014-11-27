@@ -49,6 +49,8 @@ public:
                          GLView_ABC& parent,
                          kernel::DetectionMap& elevation,
                          EventStrategy_ABC& strategy,
+                         float width,
+                         float height,
                          QGLWidget* shareWidget = 0 );
     virtual ~GL3DWidget();
     //@}
@@ -249,6 +251,7 @@ private:
     float symbolSize_;
     //picking
     QPoint clickedPoint_;
+    const geometry::Rectangle2f extent_;
     geometry::Rectangle2f viewport_;
     //@}
 };

@@ -83,6 +83,8 @@ void GLStackedWidget::Load()
                                                 *proxy_,
                                                 map_,
                                                 strategy_,
+                                                config_.GetTerrainWidth(),
+                                                config_.GetTerrainHeight(),
                                                 shareWidget_ ? shareWidget_ : widget2d_.get() );
 
     widget2d_->Configure( strategy_ );
