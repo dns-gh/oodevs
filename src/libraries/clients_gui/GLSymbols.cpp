@@ -51,11 +51,11 @@ void GLSymbols::PrintApp6( const std::string& symbol, const std::string& style, 
     renderer_.Render( renderNode, style, viewport, vWidth, vHeight, pickingMode );
 }
 
-svg::Node_ABC* GLSymbols::Compile( std::string symbol, float lod, bool first )
+svg::Node_ABC* GLSymbols::Compile( const std::string& symbol, float lod, bool first )
 {
-    while( symbol.size() )
+    for( std::size_t i = symbol.size(); i > 0; --i )
     {
-        auto* node = Compile( symbol, lod );
+        auto* node = Compile( symbol.substr( 0, i ), lod );
         if( node )
             return node;
         if( first )
@@ -63,7 +63,6 @@ svg::Node_ABC* GLSymbols::Compile( std::string symbol, float lod, bool first )
             notFoundSymbols_.push_back( symbol.substr( 8, symbol.size() - 8 ) );
             first = false;
         }
-        symbol.pop_back();
     }
     return 0;
 }

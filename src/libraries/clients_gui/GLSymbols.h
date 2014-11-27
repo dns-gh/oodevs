@@ -50,7 +50,7 @@ public:
     const std::vector< std::string >& GetNotFoundSymbol() const;
 
 private:
-    svg::Node_ABC* Compile( std::string symbol, float lod, bool first );
+    svg::Node_ABC* Compile( const std::string& symbol, float lod, bool first );
     svg::Node_ABC* Compile( const std::string& symbol, float lod ) const;
 
 private:
