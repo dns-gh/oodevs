@@ -9,6 +9,8 @@
 
 #include "gaming_pch.h"
 #include "TeamsModel.h"
+#include "Objects.h"
+#include "Object.h"
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
 #include "clients_kernel/CommunicationHierarchies.h"
@@ -44,6 +46,7 @@ TeamsModel::~TeamsModel()
 // -----------------------------------------------------------------------------
 void TeamsModel::Purge()
 {
+    noSideTeam_->Retrieve< Objects >()->DeleteAll();
     tools::Resolver< Formation_ABC >::DeleteAll();
     tools::Resolver< Team_ABC >::DeleteAll();
 }
