@@ -40,9 +40,12 @@ GL3DWidget::GL3DWidget( QWidget* pParent,
                         GLView_ABC& parent,
                         DetectionMap& elevation,
                         EventStrategy_ABC& strategy,
+                        float width,
+                        float height,
                         QGLWidget* shareWidget /* = 0 */ )
     : GLViewBase( parent )
     , Widget3D( context_, pParent, shareWidget )
+    , extent_( 0, 0, width, height )
     , elevation_( elevation )
     , strategy_( strategy )
     , zRatio_( 5 )
@@ -868,7 +871,7 @@ void GL3DWidget::initializeGL()
         Widget3D::initializeGL();
         glEnableClientState( GL_VERTEX_ARRAY );
         for( auto it = layers_.begin(); it != layers_.end(); ++it )
-            ( *it )->Initialize( viewport_ );
+            ( *it )->Initialize( extent_ );
         isInitialized_ = true;
         if( center_.IsZero() )
             CenterView();
