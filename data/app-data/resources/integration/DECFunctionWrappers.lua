@@ -739,8 +739,12 @@ function DEC_StartTirSurPion( intensity, pion )
     return _DEC_StartTirSurPion( myself, intensity, pion )
 end
 
-function DEC_DetruireBlocUrbain( urbanObject )
-    return _DEC_DetruireBlocUrbain( myself, urbanObject )
+function DEC_DetruireBlocUrbain( urbanObject, category )
+    if not category then
+        return _DEC_Population_DetruireBlocUrbain( myself, urbanObject )
+    else
+        return _DEC_Agent_DetruireBlocUrbain( myself, urbanObject, category )
+    end
 end
 
 function DEC_StartAgresserFoule()
@@ -1511,7 +1515,11 @@ function DEC_ConnaissanceObjet_PeutEtreAnime( knowledge )
 end
 
 function DEC_ConnaissanceObjet_Degrader( knowledge, factor, dotation )
-    return _DEC_ConnaissanceObjet_Degrader( myself, knowledge, factor, dotation )
+    if not dotation then
+        return _DEC_Population_ConnaissanceObjet_Degrader( myself, knowledge, factor )
+    else
+        return _DEC_Agent_ConnaissanceObjet_Degrader( myself, knowledge, factor, dotation )
+    end
 end
 
 function DEC_ConnaissanceObjet_NiveauDePerceptionCourant( knowledge )
@@ -1639,10 +1647,6 @@ end
 
 function DEC_ConnaissanceBlocUrbain_Traficabilite( urbanObject )
     return _DEC_ConnaissanceBlocUrbain_Traficabilite( myself, urbanObject )
-end
-
-function DEC_DetruireBlocUrbain( urbanObject, category )
-    _DEC_DetruireBlocUrbain( myself, urbanObject, category )
 end
 
 function DEC_ConnaissanceBlocUrbain_RapForLocal( urbanObject )
