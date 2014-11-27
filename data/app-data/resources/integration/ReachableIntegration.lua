@@ -729,7 +729,7 @@ integration.updateMoveToIt = function( objective, pathType, waypoints, wantToSto
             for i = 1, #obstacles do
                 allRes[ #allRes + 1 ] = CreateKnowledge( integration.ontology.types.object, obstacles[i] )
             end
-            meKnowledge:sendArrivedOnMines(meKnowledge:getAutomat(),allRes)
+            meKnowledge:sendArrivedOnMines( meKnowledge:getAutomat(), allRes )
         end
     elseif etat == eEtatActionDeplacement_DejaEnDeplacement then
         if etat ~= objective[ myself ].rcDone then
