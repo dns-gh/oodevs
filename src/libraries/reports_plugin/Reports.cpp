@@ -63,7 +63,7 @@ Reports::Reports( const tools::Path& filename )
 
 Reports::~Reports()
 {
-    // NOTHING
+    Commit();
 }
 
 namespace
@@ -121,63 +121,69 @@ namespace
     }
 }
 
-void Reports::Save( int tick )
+void Reports::Commit()
 {
-    if( reports_.empty() )
-        return;
+    if( transaction_ )
+    {
+        try
+        {
+            database_->Commit( *transaction_ );
+            transaction_.reset();
+        }
+        catch( const tools::SqlException& err )
+        {
+            MT_LOG_ERROR_MSG( err.msg );
+        }
+    }
+}
+
+void Reports::AddReport( const sword::Report& report, int tick )
+{
     try
     {
-        auto tr = database_->Begin( true );
-        for( auto it = reports_.begin(); it != reports_.end(); ++it )
+        if( !transaction_ )
+            transaction_ = database_->Begin( true );
+
+        const auto source = TaskerToId( report.source() );
+        if( !source )
+            throw MASA_EXCEPTION( "Invalid tasker" );
+
+        auto st = database_->Prepare( *transaction_,
+            "INSERT INTO reports ("
+            "            id "
+            ",           source "
+            ",           source_type "
+            ",           type "
+            ",           category "
+            ",           time "
+            ",           tick "
+            ",           parameters "
+            ") VALUES  ( ?, ?, ?, ?, ?, ?, ?, ? ) "
+            );
+        st->Bind( report.report().id() );
+        st->Bind( source->first );
+        st->Bind( source->second );
+        st->Bind( report.type().id() );
+        st->Bind( report.category() );
+        st->Bind( report.time().data() );
+        st->Bind( tick );
+        if( report.has_parameters() )
         {
-            const auto source = TaskerToId( it->source() );
-            if( !source )
-                throw MASA_EXCEPTION( "Invalid tasker" );
-
-            auto st = database_->Prepare( *tr,
-                "INSERT INTO reports ("
-                "            id "
-                ",           source "
-                ",           source_type "
-                ",           type "
-                ",           category "
-                ",           time "
-                ",           tick "
-                ",           parameters "
-                ") VALUES  ( ?, ?, ?, ?, ?, ?, ?, ? ) "
-                );
-            st->Bind( static_cast< int64_t >( it->report().id() ) );
-            st->Bind( static_cast< int >( source->first ) );
-            st->Bind( static_cast< int >( source->second ) );
-            st->Bind( static_cast< int >( it->type().id() ) );
-            st->Bind( it->category() );
-            st->Bind( it->time().data() );
-            st->Bind( tick );
-            if( it->has_parameters() )
-            {
-                xml::xostringstream xos;
-                xos << xml::start( "parameters" );
-                protocol::Write( xos, kernel::XmlWriterEmptyAdapter(), it->parameters() );
-                xos << xml::end;
-                st->Bind( xos.str() );
-            }
-            else
-                st->Bind();
-
-            Execute( *st );
+            xml::xostringstream xos;
+            xos << xml::start( "parameters" );
+            protocol::Write( xos, kernel::XmlWriterEmptyAdapter(), report.parameters() );
+            xos << xml::end;
+            st->Bind( xos.str() );
         }
-        database_->Commit( *tr );
+        else
+            st->Bind();
+
+        Execute( *st );
     }
     catch( const tools::SqlException& err )
     {
         MT_LOG_ERROR_MSG( err.msg );
     }
-    reports_.clear();
-}
-
-void Reports::AddReport( const sword::Report& report )
-{
-    reports_.push_back( report );
 }
 
 namespace
@@ -227,7 +233,7 @@ void Reports::ListReports( sword::ListReportsAck& reports, unsigned int count,
         sql += "ORDER BY id ASC "
                "LIMIT  ? ";
 
-        tools::Sql_ABC::T_Transaction tr = database_->Begin( false );
+        tools::Sql_ABC::T_Transaction tr = transaction_ ? transaction_ : database_->Begin( false );
         tools::Sql_ABC::T_Statement st = database_->Prepare( *tr, sql );
 
         st->Bind( fromTick );
@@ -250,6 +256,7 @@ void Reports::Save( const tools::Path& filename )
 {
     try
     {
+        Commit();
         database_->Save( filename );
     }
     catch( const tools::SqlException& err )
