@@ -183,7 +183,6 @@ Menu::Menu( QMainWindow& mainWindow,
     AddSubMenu4( toolBar, subMenu, tr( "Vision cones" )   , MakePixmap( "vision_cones" )   , controllers.options_, "VisionCones" );
     AddSubMenu4( toolBar, subMenu, tr( "Vision surfaces" ), MakePixmap( "vision_surfaces" ), controllers.options_, "VisionSurfaces" );
     subMenu->insertSeparator();
-    AddSubMenu4( toolBar, subMenu, tools::translate( "Menu", "Weapon ranges" ) , MakePixmap( "weapon_ranges" ), controllers.options_, "WeaponRanges" );
     AddSubMenu4( toolBar, subMenu, tr( "Weapon ranges" ) , MakePixmap( "weapon_ranges" ), controllers.options_, "WeaponRanges" );
     {
         CompositeMenu< int > composite( subMenu, toolBar, tools::translate( "Menu", "Fire indicator colors" ), MAKE_PNG_ICON( "fire" ), controllers.options_, GetFireIndicatorsOptionName() );
