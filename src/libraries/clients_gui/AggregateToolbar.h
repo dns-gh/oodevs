@@ -62,20 +62,17 @@ private slots:
     //! @name Slots
     //@{
     void Aggregate();
-    void Disaggregate();
     void AggregateAllAutomat();
+    void AggregateLevel( QAction* action );
+    void Disaggregate();
     void DisaggregateAll();
-    void ToggleAggregationLevel( QAction* action );
     void OnChangeDisplay( int id );
-    void UpdateLevelMenu();
     //@}
 
 private:
     virtual void NotifyContextMenu( const kernel::Automat_ABC&, kernel::ContextMenu& );
     virtual void NotifyContextMenu( const kernel::Formation_ABC&, kernel::ContextMenu& );
     void OnContextMenu( const kernel::Entity_ABC&, kernel::ContextMenu& );
-    void AggregateLevel( const std::string& level );
-    void DisaggregateLevel( const std::string& level );
 
 private:
     //! @name Member data
