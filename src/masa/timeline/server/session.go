@@ -443,6 +443,7 @@ func (s *Session) UpdateEvent(uuid string, msg *sdk.Event) (*sdk.Event, error) {
 	//      if another service than sword is added
 	events, _, err := s.checkers.CheckEvents(events...)
 	if err != nil {
+		s.Log("Error during UpdateEvent ", err, uuid, msg)
 		return nil, err
 	}
 	updates := EventSlice{}
