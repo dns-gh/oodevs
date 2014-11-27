@@ -42,6 +42,7 @@ const (
 	ExGradXYTestEmpty         = "grad-x.y-test-empty"
 	ExLandOfStripesEmpty      = "land-of-stripes-empty"
 	ExParisEstKnowledgeGroups = "Paris_Est-knowledge-groups"
+	ExAngersEmpty             = "angers-empty"
 )
 
 func startSimOnExercise(c *C, cfg *swrun.ClientOpts) *simu.SimProcess {

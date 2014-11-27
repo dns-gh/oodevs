@@ -9,7 +9,7 @@
 
 #include "simulation_terrain_pch.h"
 #include "TER_Pathfinder.h"
-#include "TER_EdgeMatcher.h"
+#include "TER_PreferedEdgesHeuristic.h"
 #include "TER_PathComputer.h"
 #include "TER_Pathfinder.h"
 #include "TER_Pathfinder_ABC.h"
@@ -324,7 +324,7 @@ void TER_Pathfinder::ProcessRequest( TER_PathFinderThread& data, TER_PathfindReq
         MT_Profiler profiler;
         profiler.Start();
         if( rq.IsItinerary() )
-            wrapper = boost::make_shared< TER_EdgeMatcher >( wrapper, rq.GetPathfind() );
+            wrapper = boost::make_shared< TER_PreferedEdgesHeuristic >( wrapper, rq.GetPathfind() );
         const auto res = TER_PathComputer().Execute( rq.GetQueryId(), rq.GetCallerId(),
                 rq.GetSections(), *wrapper, *rq.GetFuture(), deadline, debugPath_ );
         rq.GetFuture()->Set( res );

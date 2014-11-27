@@ -159,8 +159,6 @@ func normalizeModel(model *swapi.ModelData) *swapi.ModelData {
 	n.Profiles = nil
 	n.Replay = nil
 	for _, u := range n.Units {
-		// Pathfinds are not restored?
-		u.PathPoints = 0
 		u.Speed = 0
 	}
 	return n
@@ -341,6 +339,7 @@ func (s *TestSuite) TestCheckpointFormation(c *C) {
 func (s *TestSuite) TestCheckpointLogConvoy(c *C) {
 	opts := NewAdminOpts(ExCrossroadLog)
 	opts.Step = 300
+	opts.RecordUnitPaths()
 	sim, client := connectAndWaitModel(c, opts)
 	defer stopSimAndClient(c, sim, client)
 
@@ -359,7 +358,7 @@ func (s *TestSuite) TestCheckpointLogConvoy(c *C) {
 	c.Assert(err, IsNil)
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
 		for _, u := range data.Units {
-			if strings.Contains(u.Name, "Log Convoy") && u.PathPoints > 0 {
+			if strings.Contains(u.Name, "Log Convoy") && len(u.Path) > 0 {
 				return true
 			}
 		}

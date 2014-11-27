@@ -355,7 +355,7 @@ type Unit struct {
 	Pc                   bool
 	Position             Point
 	Speed                int32
-	PathPoints           uint32
+	Path                 []Point
 	DebugBrain           bool
 	Equipments           map[uint32]*Equipment
 	LentEquipments       []*LentEquipment
@@ -661,7 +661,8 @@ type ModelData struct {
 	// True once the initial state has been received
 	Ready bool
 	// By default, report handler is disabled
-	RecordReports bool
+	RecordReports   bool
+	RecordUnitPaths bool
 	// private model event listeners
 	listeners *ModelListeners
 }
@@ -698,6 +699,7 @@ func NewModelData(listeners *ModelListeners) *ModelData {
 		Units:                map[uint32]*Unit{},
 		listeners:            listeners,
 		RecordReports:        false,
+		RecordUnitPaths:      false,
 	}
 }
 
@@ -707,6 +709,7 @@ func (model *ModelData) Reset() {
 	newModel.Profiles = model.Profiles
 	newModel.KnownScores = model.KnownScores
 	newModel.RecordReports = model.RecordReports
+	newModel.RecordUnitPaths = model.RecordUnitPaths
 	newModel.Scores = model.Scores
 	newModel.Tick = model.Tick
 	newModel.Time = model.Time
