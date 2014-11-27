@@ -68,7 +68,7 @@ local getPositionTranslatedDirFromFriend = function( friendToSupport, firingType
         local mission = DEC_GetRawMission( meKnowledge.source )
         local dir = integration.getDangerousDirection( mission )
         local friendPos = friendToSupport:getPosition()
-        return DEC_Geometrie_PositionTranslateDir( friendPos, dir, - rangeDistance )
+        return CreateKnowledge( integration.ontology.types.point, DEC_Geometrie_PositionTranslateDir( friendPos, dir, - rangeDistance ) )
     end
     return nil
 end
@@ -133,7 +133,7 @@ integration.getPositionInAORToSupportFriend = function( friendToSupport, firingT
             bestDistance = currentDistance
         end
     end
-    return bestPosition
+    return CreateKnowledge( integration.ontology.types.point, bestPosition )
 end
 
 ------------------------------------------------------------------
