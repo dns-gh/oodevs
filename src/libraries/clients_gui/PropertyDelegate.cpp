@@ -48,6 +48,12 @@ QWidget* PropertyDelegate::createEditor( QWidget* parent, const QStyleOptionView
     return 0;
 }
 
+void PropertyDelegate::setEditorData( QWidget*, const QModelIndex& ) const
+{
+    // We need an empty implementation of setEditorData because QItemDelegate's
+    // implementation produces a warning if used with our own QComboBox.
+}
+
 // -----------------------------------------------------------------------------
 // Name: PropertyDelegate::setModelData
 // Created: LGY 2012-08-14
