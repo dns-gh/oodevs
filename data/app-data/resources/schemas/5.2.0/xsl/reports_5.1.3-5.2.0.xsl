@@ -536,6 +536,9 @@
               <xsl:when test="@id=524">eRC_PasTenueNBC</xsl:when>
               <xsl:when test="@id=525">eRC_TenueProtectionNiveauNRBC</xsl:when>
               <xsl:when test="@id=526">eRC_UndergroundNetworkExitActivated</xsl:when>
+              <xsl:when test="@id=527">eRC_UndergroundNetworkExitDeactivated</xsl:when>
+              <xsl:when test="@id=528">eRC_FleeBecauseContamination</xsl:when>
+              <xsl:when test="@id=529">eRC_FleeBecauseSafetyPerimeter</xsl:when>              
               <xsl:when test="@id=750">eRC_UnitsTryingToControl</xsl:when>
               <xsl:when test="@id=751">eRC_CrowdIsUnderControl</xsl:when>
               <xsl:when test="@id=752">eRC_CannotControlTheCrowd</xsl:when>
