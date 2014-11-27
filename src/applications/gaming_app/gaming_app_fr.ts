@@ -661,6 +661,14 @@ Raison: %3
         <source>Merge</source>
         <translation>Fusionner</translation>
     </message>
+    <message>
+        <source>Deactivate</source>
+        <translation>Désactiver</translation>
+    </message>
+    <message>
+        <source>Activate</source>
+        <translation>Activer</translation>
+    </message>
 </context>
 <context>
     <name>EventMagicWidget</name>
@@ -748,6 +756,10 @@ Raison: %3
     <message>
         <source>Description</source>
         <translation>Description</translation>
+    </message>
+    <message>
+        <source>Activation</source>
+        <translation>Activation</translation>
     </message>
 </context>
 <context>

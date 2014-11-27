@@ -135,7 +135,7 @@ void EventTopWidget::Build( const gui::EventViewState& state )
     const E_EventTypes type = ( state.event_ ) ? state.event_->GetType() : eNbrEventTypes;
     const std::string& beginDate = ( state.event_ ) ? state.event_->GetEvent().begin : "";
     const std::string& endDate = ( state.event_ ) ? state.event_->GetEvent().end : "";
-    const auto boundaries = ( state.event_ ) ? gui::event_helpers::GetReplayBoundariesActivation( *state.event_ ) : std::make_pair( true, true );
+    const auto boundaries = ( state.event_ && type == eEventTypes_Replay ) ? gui::event_helpers::ReadReplayPayload( state.event_->GetEvent() ) : gui::event_helpers::ReplayPayload( true, true, true );
     const bool isReplay = type == eEventTypes_Replay;
     title_->setText( QString::fromStdString( ENT_Tr::ConvertFromEventTypes( type ) ) );
 
@@ -149,7 +149,7 @@ void EventTopWidget::Build( const gui::EventViewState& state )
     startDateLabel_->setText( canHaveEndTime ? tr( "Start" ) : "" );
 
     beginDateTimeEdit_->setDateTime( beginDate.empty() ? simulation_.GetDateTime() : QDateTime::fromString( QString::fromStdString( beginDate ), EVENT_DATE_FORMAT ) );
-    beginDateTimeEdit_->setEnabled( boundaries.first );
+    beginDateTimeEdit_->setEnabled( boundaries.begin );
     if( endDate.empty() )
     {
         hasEndDateTimeCheckbox_->setCheckState( Qt::Unchecked );
@@ -159,7 +159,7 @@ void EventTopWidget::Build( const gui::EventViewState& state )
     {
         hasEndDateTimeCheckbox_->setCheckState( Qt::Checked );
         endDateTimeEdit_->setDateTime( QDateTime::fromString( QString::fromStdString( endDate ), EVENT_DATE_FORMAT ) );
-        endDateTimeEdit_->setEnabled( boundaries.second );
+        endDateTimeEdit_->setEnabled( boundaries.end );
     }
     endDateTimeEdit_->setMinimumDateTime( beginDateTimeEdit_->dateTime() );
 }

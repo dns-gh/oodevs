@@ -660,6 +660,14 @@ Motivo: %3</translation>
         <source>Merge</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Deactivate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Activate</source>
+        <translation type="unfinished">Activar</translation>
+    </message>
 </context>
 <context>
     <name>EventMagicWidget</name>
@@ -747,6 +755,10 @@ Motivo: %3</translation>
     <message>
         <source>Description</source>
         <translation type="unfinished">Descripción</translation>
+    </message>
+    <message>
+        <source>Activation</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

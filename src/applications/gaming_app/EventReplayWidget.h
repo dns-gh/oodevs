@@ -18,7 +18,6 @@ namespace gui
     class EventReplayPresenter;
     class RichCheckBox;
     class RichLineEdit;
-    class RichPathWidget;
     class RichTextEdit;
 }
 
@@ -52,6 +51,7 @@ private:
     boost::shared_ptr< gui::EventReplayPresenter > replayPresenter_;
     gui::RichLineEdit* label_;
     gui::RichTextEdit* description_;
+    gui::RichCheckBox* enabled_;
     //@}
 };
 

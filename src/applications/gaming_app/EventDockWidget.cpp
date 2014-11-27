@@ -46,11 +46,6 @@
 
 #include <boost/bind.hpp>
 #include <boost/lexical_cast.hpp>
-#pragma warning( push )
-#pragma warning( disable : 4724 )
-#include <boost/uuid/random_generator.hpp>
-#pragma warning( pop )
-#include <boost/uuid/uuid_io.hpp>
 
 namespace
 {
@@ -273,6 +268,40 @@ void EventDockWidget::OnSplitClicked()
     time_ = boost::none;
 }
 
+namespace
+{
+    void OnActivationClicked( bool enabled, kernel::SafePointer< gui::Event >& selected, kernel::TimelineHandler_ABC& timelineHandler )
+    {
+        if( selected && selected->GetType() == eEventTypes_Replay )
+        {
+            timeline::Event event = selected->GetEvent();
+            auto payload = gui::event_helpers::ReadReplayPayload( event );
+            payload.enabled = enabled;
+            gui::event_helpers::WriteReplayPayload( payload, event );
+            timelineHandler.EditEvent( event );
+        }
+        selected = 0;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: EventDockWidget::OnEnabledClicked
+// Created: SLI 2014-11-27
+// -----------------------------------------------------------------------------
+void EventDockWidget::OnDisabledClicked()
+{
+    OnActivationClicked( false, selected_, *timelineHandler_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: EventDockWidget::OnEnabledClicked
+// Created: SLI 2014-11-27
+// -----------------------------------------------------------------------------
+void EventDockWidget::OnEnabledClicked()
+{
+    OnActivationClicked( true, selected_, *timelineHandler_ );
+}
+
 // -----------------------------------------------------------------------------
 // Name: EventDockWidget::NotifyActivated
 // Created: ABR 2013-07-02
@@ -319,9 +348,13 @@ void EventDockWidget::NotifyContextMenu( const gui::ReplayEvent& replayEvent, ke
     time_ = replayEvent.time_;
     menu.InsertItem( "Command", tr( "Edit" ), this, SLOT( OnEditClicked() ) );
     menu.InsertItem( "Command", tr( "Split" ), this, SLOT( OnSplitClicked() ) );
-    const auto boundaries = gui::event_helpers::GetReplayBoundariesActivation( event );
-    if( boundaries.first || boundaries.second )
+    const auto boundaries = gui::event_helpers::ReadReplayPayload( event.GetEvent() );
+    if( boundaries.begin || boundaries.end )
         menu.InsertItem( "Command", tr( "Merge" ), this, SLOT( OnDeleteClicked() ) );
+    if( boundaries.enabled )
+        menu.InsertItem( "Command", tr( "Deactivate" ), this, SLOT( OnDisabledClicked() ) );
+    else
+        menu.InsertItem( "Command", tr( "Activate" ), this, SLOT( OnEnabledClicked() ) );
 }
 
 // -----------------------------------------------------------------------------
