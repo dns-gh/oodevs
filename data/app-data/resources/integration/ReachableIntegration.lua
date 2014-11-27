@@ -588,7 +588,7 @@ end
 -- <li> eTypeItiCriminal (criminal) </li>
 -- <li> eTypeItiNBC (CBRN) </li> </ul>
 -- @param waypoints List of directIA knowledges
--- @param wantToStopBecauseOfObstacle Boolean
+-- @param wantToStopBecauseOfObstacle Boolean, is true if the unit has to stop if it find an obstacle, false otherwise
 -- @return Boolean, 'true' if the movement is finished, 'false' otherwise.
 integration.updateMoveToIt = function( objective, pathType, waypoints, wantToStopBecauseOfObstacle )
     local etat = objective[ myself ].etat
