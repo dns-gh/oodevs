@@ -3528,6 +3528,10 @@ This data can&apos;t be projected.</source>
         <source>Display events on read-only entities</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Display markers</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>TimelineWebView</name>
@@ -3572,11 +3576,11 @@ This data can&apos;t be projected.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Error</source>
+        <source>Unable to load configuration file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&apos;%1&apos; is not a valid drawing file.</source>
+        <source>Unable to load drawings file</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

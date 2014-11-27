@@ -84,11 +84,11 @@ public:
     virtual void ReadEvent( const std::string& uuid );
     virtual void UpdateEvent( const Event& event );
     virtual void DeleteEvents( const std::vector< std::string >& uuids );
-    virtual void LoadEvents( const std::string& events );
+    virtual void LoadEvents( const timeline::LoadEvents& msg );
     virtual void SaveEvents() const;
     virtual void CloseEvent( const timeline::CloseEvent& msg );
 
-    /// controls::Server_ABC methods
+    /// controls::ServerHandler_ABC methods
     virtual void OnReadyServer();
     virtual void OnCreatedEvents( const Events& events, const Error& error );
     virtual void OnReadEvents( const Events& events, const Error& error );

@@ -43,10 +43,14 @@
             {{#if has_html}}
             <div class="event_box">
                 <div class="event {{color}}">
-                    {{#if has_done}}
-                    <i class="checker icon-{{icon}} icon-white"></i>
+                    {{#if has_checkbox}}
+                        {{#if has_done}}
+                        <i class="checker icon-{{icon}} icon-white"></i>
+                        {{else}}
+                        <i class="checker icon-{{icon}} icon-white"></i>
+                        {{/if}}
                     {{else}}
-                    <i class="checker icon-{{icon}} icon-white"></i>
+                        <i class="icon-bookmark icon-white"></i>
                     {{/if}}
                     {{#if has_error}}
                     <i class="event_error icon-warning-sign"></i>

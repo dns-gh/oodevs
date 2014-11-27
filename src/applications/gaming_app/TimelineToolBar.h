@@ -105,6 +105,7 @@ public slots:
     void OnReadOnlyFilterToggled( bool toggled );
     void OnOrderFilterToggled( bool toggled );
     void OnTaskFilterToggled( bool toggled );
+    void OnMarkerFilterToggled( bool toggled );
     void OnSelectedFilterToggled( bool toggled );
     void OnFilterKeyword( const QString& keyword );
     void OnAddShowOnlyFilter();
@@ -134,6 +135,7 @@ private:
     bool displayReadOnly_;
     bool displayOrders_;
     bool displayTasks_;
+    bool displayMarkers_;
     bool displaySelected_;
     QMenu* filterMenu_;
     QAction* engagedFilter_;

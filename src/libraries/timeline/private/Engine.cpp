@@ -305,6 +305,13 @@ namespace
         SetError( error, event.error );
         SetValue( data, "lock", event.lock );
     }
+
+    void SetLoadEvents( CefRefPtr< CefV8Value >& data, const timeline::LoadEvents& event )
+    {
+        SetValue( data, "data", event.data );
+        SetValue( data, "markers_host", event.markersHost );
+        SetValue( data, "is_replay", event.isReplay );
+    }
 }
 
 void Engine::CenterClient()
@@ -487,7 +494,7 @@ void Engine::DeleteEvents( const std::vector< std::string >& uuids )
         return SendDeletedEvents( uuids, Error( EC_INTERNAL_SERVER_ERROR, "unable to execute gaming.delete_events" ) );
 }
 
-void Engine::LoadEvents( const std::string& events )
+void Engine::LoadEvents( const timeline::LoadEvents& msg )
 {
     Gate gate;
     if( !gate.Acquire( ctx_ ) )
@@ -495,8 +502,10 @@ void Engine::LoadEvents( const std::string& events )
     auto load_events = GetValue( ctx_, "gaming.load_events" );
     if( !load_events )
         return SendLoadedEvents( Error( EC_INTERNAL_SERVER_ERROR, "unable to find gaming.load_events" ) );
+    auto data = CefV8Value::CreateObject( 0 );
+    SetLoadEvents( data, msg );
     CefV8ValueList args;
-    args.push_back( CefV8Value::CreateString( events ) );
+    args.push_back( data );
     if( !gate.Execute( load_events, args ) )
         return SendLoadedEvents( Error( EC_INTERNAL_SERVER_ERROR, "unable to execute gaming.load_events" ) );
 }

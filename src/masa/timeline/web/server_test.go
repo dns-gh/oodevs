@@ -15,11 +15,13 @@ import (
 	"code.google.com/p/goprotobuf/proto"
 	"io/ioutil"
 	. "launchpad.net/gocheck"
+	"masa/sword/sword"
 	"masa/sword/swtest"
 	"masa/timeline/i18n"
 	"masa/timeline/sdk"
 	"masa/timeline/server"
 	"masa/timeline/util"
+	"net/http"
 	"os"
 	"testing"
 	"time"
@@ -116,7 +118,7 @@ func (TestSuite) TestPanicWhenImportingChildrenEvents(c *C) {
     }
 ]
 `
-	events, err := handler.importEvents(id, []byte(input))
+	events, err := handler.importEvents(id, []byte(input), "", false)
 	c.Assert(err, IsNil)
 	swtest.DeepEquals(c, events, []*sdk.Event{
 		{
@@ -138,6 +140,86 @@ func (TestSuite) TestPanicWhenImportingChildrenEvents(c *C) {
 			Info:      proto.String(""),
 			Begin:     proto.String(begin),
 			End:       proto.String(end),
+			Done:      proto.Bool(false),
+			ErrorCode: proto.Int32(0),
+			ErrorText: proto.String(""),
+			ReadOnly:  proto.Bool(false),
+			Parent:    proto.String(""),
+			Metadata:  proto.String(""),
+		},
+	})
+}
+
+func (TestSuite) TestFilterAndModifyEvents(c *C) {
+	log := swtest.MakeGocheckLogger(c)
+	controller := server.MakeController(log)
+	raw, err := NewServer(log, false, 8081, "", "", controller)
+	c.Assert(err, IsNil)
+	handler, ok := raw.Handler.(*Server)
+	c.Assert(ok, DeepEquals, true)
+	id := uuid.New()
+	_, err = handler.controller.CreateSession(id, "some_name", true)
+	c.Assert(err, IsNil)
+	begin := util.FormatTime(time.Now())
+	input := `
+[
+    {
+        "uuid": "A",
+        "begin": "` + begin + `",
+        "action": {
+            "target": "sword://sim",
+            "apply": true,
+            "payload": {
+                "message": {
+                    "control_pause": {}
+                },
+                "context": 4450460
+            }
+        }
+    },
+    {
+        "uuid": "B",
+        "begin": "` + begin + `",
+        "action": {
+            "target": "marker://old_uuid"
+        }
+    }
+]
+`
+	events, err := handler.importEvents(id, []byte(input), "new_uuid", true)
+	c.Assert(err, IsNil)
+	message := sword.ClientToSim{
+		Context: proto.Int32(4450460),
+		Message: &sword.ClientToSim_Content{
+			ControlPause: &sword.ControlPause{},
+		},
+	}
+	payload1, err := proto.Marshal(&message)
+	c.Assert(err, IsNil)
+	payload2 := []byte{}
+	swtest.DeepEquals(c, events, []*sdk.Event{
+		{
+			Uuid:  proto.String("A"),
+			Begin: proto.String(begin),
+			Action: &sdk.Action{
+				Target:  proto.String("sword://sim"),
+				Apply:   proto.Bool(true),
+				Payload: payload1,
+			},
+			ErrorCode: proto.Int32(http.StatusInternalServerError),
+			ErrorText: proto.String("skipped"),
+		},
+		{
+			Uuid:  proto.String("B"),
+			Name:  proto.String(""),
+			Info:  proto.String(""),
+			Begin: proto.String(begin),
+			Action: &sdk.Action{
+				Target:  proto.String("marker://new_uuid"),
+				Apply:   proto.Bool(false),
+				Payload: payload2,
+			},
+			End:       proto.String(""),
 			Done:      proto.Bool(false),
 			ErrorCode: proto.Int32(0),
 			ErrorText: proto.String(""),

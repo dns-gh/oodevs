@@ -94,7 +94,7 @@ public:
                const tools::Path& settingsDirectory );
     void Purge();
 
-    void LoadDisplaySettings( const tools::Path& filename );
+    bool LoadDisplaySettings( const tools::Path& filename, bool displayMessage );
 
     bool IsLoading() const;
     T_GLStackedWidget GetMainWidget() const;

@@ -434,14 +434,14 @@ void GLWidgetManager::OnLoadDisplaySettings()
         tr( "Load configuration" ), settingsDirectory_, tr( "Configuration file (*.ini)" ) );
     if( filename.IsEmpty() )
         return;
-    LoadDisplaySettings( filename );
+    LoadDisplaySettings( filename, true );
 }
 
 // -----------------------------------------------------------------------------
 // Name: GLWidgetManager::LoadDisplaySettings
 // Created: ABR 2014-07-15
 // -----------------------------------------------------------------------------
-void GLWidgetManager::LoadDisplaySettings( const tools::Path& filename )
+bool GLWidgetManager::LoadDisplaySettings( const tools::Path& filename, bool displayMessage )
 {
     kernel::Settings settings( filename );
     settings.beginGroup( "Context" );
@@ -453,14 +453,15 @@ void GLWidgetManager::LoadDisplaySettings( const tools::Path& filename )
         filePhysicalBase != QString::fromStdWString( config_.GetPhysicalBase().ToUnicode() ) ||
         fileExercise != QString::fromStdWString( config_.GetExerciseName().BaseName().ToUnicode() ) )
     {
-        QMessageBox::warning( &mainWindow_,
-                              tr( "Warning" ),
-                              tr( "Unable to load configuration file '%1'.\nThese settings are defined for the application '%2', on the base '%3' and the exercise '%4'." )
-                              .arg( QString::fromStdWString( filename.ToUnicode() ) )
-                              .arg( fileApplication )
-                              .arg( filePhysicalBase )
-                              .arg( fileExercise ) );
-        return;
+        if( displayMessage )
+            QMessageBox::warning( &mainWindow_,
+                                  tr( "Warning" ),
+                                  tr( "Unable to load configuration file '%1'.\nThese settings are defined for the application '%2', on the base '%3' and the exercise '%4'." )
+                                  .arg( QString::fromStdWString( filename.ToUnicode() ) )
+                                  .arg( fileApplication )
+                                  .arg( filePhysicalBase )
+                                  .arg( fileExercise ) );
+        return false;
     }
     loading_ = true;
     PurgeViews();
@@ -483,6 +484,7 @@ void GLWidgetManager::LoadDisplaySettings( const tools::Path& filename )
     controllers_.options_.UpdateViewOptions();
     RestoreGeometryAndState( mainWindow_, settings, "WindowGeometry", "WindowState" );
     loading_ = false;
+    return true;
 }
 
 // -----------------------------------------------------------------------------

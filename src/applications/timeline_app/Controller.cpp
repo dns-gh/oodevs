@@ -282,7 +282,7 @@ void Controller::OnKeyUp( int key )
 
 void Controller::OnLoadEvents()
 {
-    ctx_->LoadEvents( loadEventsText_.toPlainText().toStdString() );
+    ctx_->LoadEvents( timeline::LoadEvents( loadEventsText_.toPlainText().toStdString() ) );
     loadEventsDialog_.hide();
 }
 
@@ -708,7 +708,7 @@ int Controller::SaveLoad( const std::vector< std::string >& args )
         QEventLoop wait;
         CheckSaveLoadEvents loader( wait );
         QObject::connect( ctx_.get(), SIGNAL( LoadedEvents( const timeline::Error& ) ), &loader, SLOT( OnLoadedEvents( const timeline::Error& ) ) );
-        ctx_->LoadEvents( savedEvents );
+        ctx_->LoadEvents( timeline::LoadEvents( savedEvents ) );
         wait.exec();
         Check( loader.error_ );
     }

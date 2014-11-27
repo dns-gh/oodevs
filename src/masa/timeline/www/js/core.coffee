@@ -84,11 +84,14 @@ has_end = (model) ->
     end = model.get "end"
     return end?.length > 0
 
-has_replay = (model) ->
+has_scheme = (model, scheme) ->
     action = model.get "action"
     if !action?
         return false
-    return action.target.indexOf("replay://", 0) == 0
+    return action.target.indexOf(scheme) == 0
+
+has_replay = (model) -> has_scheme model, "replay://"
+has_marker = (model) -> has_scheme model, "marker://"
 
 is_simple_event = (model) ->
     return !has_end model
@@ -208,6 +211,7 @@ render_event = (event, has_html, has_done) ->
         color:      color
         brief:      event.get "name"
         has_error:  is_error_event event
+        has_checkbox: !has_marker event
 
 # a base backbone view for both events and clusters
 class BaseEvent extends Backbone.View
@@ -528,9 +532,10 @@ class EventsView extends Backbone.View
                         text: xhr.statusText
         return
 
-    load_events: (text) =>
+    load_events: (load) =>
         url = @model.url.replace "/events", "/import"
-        post_ajax url, "", text,
+        url += "?" + $.param markers_host: load.markers_host, replay: load.is_replay 
+        post_ajax url, "", load.data,
             -> gaming.loaded_events code: 200,
             (xhr) ->
                 gaming.loaded_events

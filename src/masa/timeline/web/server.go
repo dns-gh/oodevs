@@ -26,6 +26,7 @@ import (
 	"net/url"
 	"os"
 	"path/filepath"
+	"strconv"
 	"strings"
 	"text/template"
 	"time"
@@ -39,6 +40,7 @@ const (
 var (
 	ErrTryTemplate = errors.New("try template")
 	ErrUnknown     = errors.New("unknown")
+	ErrSkipped     = errors.New("skipped")
 )
 
 type VirtualFile struct {
@@ -483,14 +485,33 @@ func (s *Server) exportSession(req *restful.Request) (interface{}, error) {
 	return exportEvents(events)
 }
 
-func (s *Server) importEvents(session string, data []byte) ([]*sdk.Event, error) {
+func filterAndModify(event *sdk.Event, markersHost string, replay bool) (*sdk.Event, error) {
+	target, err := url.Parse(event.GetAction().GetTarget())
+	if err != nil {
+		return event, err
+	}
+	scheme := target.Scheme
+	if replay && scheme == "sword" {
+		return event, ErrSkipped
+	}
+	if len(markersHost) > 0 && scheme == "marker" {
+		target.Host = markersHost
+		*event.Action.Target = target.String()
+	}
+	return event, nil
+}
+
+func (s *Server) importEvents(session string, data []byte, markersHost string, replay bool) ([]*sdk.Event, error) {
 	filter := server.NewSwordFilter()
 	events, err := filter.EncodeEvents(data)
 	if err != nil {
 		return nil, err
 	}
 	apply := func(it *sdk.Event) {
-		event, err := s.controller.UpdateEvent(session, it.GetUuid(), it)
+		event, err := filterAndModify(it, markersHost, replay)
+		if err == nil {
+			event, err = s.controller.UpdateEvent(session, event.GetUuid(), event)
+		}
 		if err != nil {
 			code, text := util.ConvertError(err)
 			event.ErrorCode = &code
@@ -514,11 +535,14 @@ func (s *Server) importEvents(session string, data []byte) ([]*sdk.Event, error)
 
 func (s *Server) importSession(req *restful.Request) (interface{}, error) {
 	uuid := req.PathParameter("uuid")
+	markersHost := req.QueryParameter("markers_host")
+	replay, err := strconv.ParseBool(req.QueryParameter("replay"))
+	replay = replay && err == nil
 	data, err := ioutil.ReadAll(req.Request.Body)
 	if err != nil {
 		return nil, err
 	}
-	return s.importEvents(uuid, data)
+	return s.importEvents(uuid, data, markersHost, replay)
 }
 
 func (s *Server) readServices(req *restful.Request) (interface{}, error) {

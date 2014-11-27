@@ -47,7 +47,7 @@ namespace controls
     T_Msg UpdateEvent    ( const T_Logger& log, const Event& event );
     T_Msg DeleteEvents   ( const T_Logger& log, const std::vector< std::string >& uuids );
     T_Msg CloseEvent     ( const T_Logger& log, const CloseEvent& event );
-    T_Msg LoadEvents     ( const T_Logger& log, const std::string& events );
+    T_Msg LoadEvents     ( const T_Logger& log, const LoadEvents& events );
     T_Msg SaveEvents     ( const T_Logger& log );
 
     // ClientHandler_ABC lists commands that every client must implement
@@ -65,7 +65,7 @@ namespace controls
         virtual void OnUpdateEvent  ( const Event& event ) = 0;
         virtual void OnDeleteEvents ( const std::vector< std::string >& uuids ) = 0;
         virtual void OnCloseEvent   ( const timeline::CloseEvent& msg ) = 0;
-        virtual void OnLoadEvents   ( const std::string& events ) = 0;
+        virtual void OnLoadEvents   ( const timeline::LoadEvents& msg ) = 0;
         virtual void OnSaveEvents   () = 0;
     };
 

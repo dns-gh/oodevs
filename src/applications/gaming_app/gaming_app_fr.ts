@@ -3543,6 +3543,10 @@ Ces données ne peuvent pas être projetées.</translation>
         <source>Display events on read-only entities</source>
         <translation>Afficher les évènements sur les entitées en lecture seule</translation>
     </message>
+    <message>
+        <source>Display markers</source>
+        <translation>Afficher les marqueurs</translation>
+    </message>
 </context>
 <context>
     <name>TimelineWebView</name>
@@ -3587,12 +3591,12 @@ Ces données ne peuvent pas être projetées.</translation>
         <translation>Erreur à la sauvegarde. Certaines actions peuvent ne pas avoir été sauvées correctement. Vérifiez le fichier log pour plus de détails.</translation>
     </message>
     <message>
-        <source>Error</source>
-        <translation>Erreur</translation>
+        <source>Unable to load configuration file</source>
+        <translation>Impossible de charger le fichier de configuration</translation>
     </message>
     <message>
-        <source>&apos;%1&apos; is not a valid drawing file.</source>
-        <translation>&apos;%1&apos; n&apos;est pas un fichier de dessins valide.</translation>
+        <source>Unable to load drawings file</source>
+        <translation>Impossible de charger le fichier de dessins</translation>
     </message>
 </context>
 <context>

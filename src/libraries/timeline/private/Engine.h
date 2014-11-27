@@ -24,6 +24,7 @@ namespace timeline
     struct Event;
     struct Error;
     struct CloseEvent;
+    struct LoadEvents;
     typedef std::vector< Event > Events;
 }
 
@@ -51,7 +52,7 @@ public:
     void UpdateEvent( const Event& event );
     void DeleteEvents( const std::vector< std::string >& uuids );
     void CloseEvent( const CloseEvent& event );
-    void LoadEvents( const std::string& events );
+    void LoadEvents( const LoadEvents& msg );
     void SaveEvents();
 
 private:

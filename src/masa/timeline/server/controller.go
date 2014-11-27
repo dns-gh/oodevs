@@ -273,8 +273,8 @@ func (c *Controller) DeleteEvent(uuid, event string) error {
 func (c *Controller) CloseEvent(uuid, event string, msg *sdk.CloseEvent) (*sdk.Event, error) {
 	value, err := c.apply(uuid, func(session *Session) (interface{}, error) {
 		var err error
-		code, text := msg.GetErrorCode(), msg.GetErrorText()
-		if code != 0 || len(text) > 0 {
+		code, text := msg.GetError().GetCode(), msg.GetError().GetText()
+		if code != 0 && code != 200 || len(text) > 0 {
 			err = util.NewError(code, text)
 		}
 		return session.CloseEvent(event, msg.GetDone(), err, msg.GetLock())

@@ -76,7 +76,7 @@ type Sword struct {
 	events    map[string]swapi.SwordMessage // decoded messages
 	pending   map[string]*Action            // pending actions
 	metadata  map[string]*sdk.Metadata      // decoded metadata
-	autostart bool                          // auto connect when disconnected
+	reconnect bool                          // auto connect when disconnected
 	retry     uint                          // retry count
 	link      *SwordLink                    // current sword link
 	status    SwordStatus                   // current status
@@ -194,7 +194,7 @@ func (s *Sword) PostReplayRangeDates(link *SwordLink, start, end time.Time) {
 }
 
 func (s *Sword) Start() error {
-	s.autostart = true
+	s.reconnect = true
 	return s.start()
 }
 
@@ -208,7 +208,7 @@ func (s *Sword) setStatus(status SwordStatus, restart bool) {
 			}
 			s.pending = map[string]*Action{}
 		}
-		if s.autostart {
+		if s.reconnect {
 			s.start()
 		}
 	} else if status == SwordStatusConnected {
@@ -240,7 +240,7 @@ func (s *Sword) start() error {
 	} else if s.status == SwordStatusConnected {
 		return ErrSkipped
 	}
-	if !s.autostart {
+	if !s.reconnect {
 		return ErrSkipped
 	}
 	timeout := s.getRetryTimeout()
@@ -303,7 +303,7 @@ func (s *Sword) attach(link *SwordLink) {
 }
 
 func (s *Sword) Stop() error {
-	s.autostart = false
+	s.reconnect = false
 	if s.status == SwordStatusDisconnected {
 		return ErrSkipped
 	}

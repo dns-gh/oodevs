@@ -333,6 +333,7 @@ void TimelineWebView::OnTriggeredEvents( const timeline::Events& events )
             } );
         }
         tools::Path drawingsPath = tools::Path::FromUTF8( jsonPayload[ gui::event_helpers::drawingsPathKey ] );
+        QString error;
         if( drawingsPath.Exists() )
             try
             {
@@ -341,16 +342,18 @@ void TimelineWebView::OnTriggeredEvents( const timeline::Events& events )
             }
             catch( const xml::exception& )
             {
-                QMessageBox::critical( this, tr( "Error" ), tr( "'%1' is not a valid drawing file." ).arg( drawingsPath.ToUTF8().c_str() ) );
+                error = tr( "Unable to load drawings file" );
             }
-        tools::Path configurationPath = tools::Path::FromUTF8( jsonPayload[ gui::event_helpers::configurationPathKey ] );
-        if( configurationPath.Exists() )
+        if( error.isEmpty() )
         {
-            configurationPath.MakePreferred();
-            glWidgetManager_.LoadDisplaySettings( configurationPath );
+            tools::Path configurationPath = tools::Path::FromUTF8( jsonPayload[ gui::event_helpers::configurationPathKey ] );
+            if( configurationPath.Exists() )
+            {
+                configurationPath.MakePreferred();
+                if( !glWidgetManager_.LoadDisplaySettings( configurationPath, false ) )
+                    error = tr( "Unable to load configuration file" );
+            }
         }
-        if( server_ )
-            server_->CloseEvent( timeline::CloseEvent( event.uuid ) );
     }
 }
 
@@ -407,7 +410,9 @@ void TimelineWebView::NotifyContextMenu( const QDateTime& /* dateTime */, kernel
 
     kernel::ContextMenu* createMenu = new kernel::ContextMenu( &menu );
     for( int i = 0; i < eNbrEventTypes; ++i )
-        if( i == eEventTypes_Order || i == eEventTypes_Task || i == eEventTypes_Marker )
+        if( i == eEventTypes_Order && controllers_.GetCurrentMode() != eModes_Replay ||
+            i == eEventTypes_Task ||
+            i == eEventTypes_Marker )
             AddToMenu( *createMenu, creationSignalMapper_.get(), QString::fromStdString( ENT_Tr::ConvertFromEventTypes( static_cast< E_EventTypes >( i ) ) ), i );
 
     menu.InsertItem( "Command", tr( "Create an event" ), createMenu );
@@ -597,7 +602,12 @@ void TimelineWebView::OnLoadTimelineSessionFileRequested( const tools::Path& fil
     }
     is.close();
     if( !content.empty() )
-        server_->LoadEvents( content );
+    {
+        timeline::LoadEvents loadEvents( content );
+        loadEvents.markersHost = model_.GetUuid();
+        loadEvents.isReplay = controllers_.GetCurrentMode() == eModes_Replay;
+        server_->LoadEvents( loadEvents );
+    }
 }
 
 // -----------------------------------------------------------------------------
