@@ -253,7 +253,7 @@ Object_ABC* ObjectFactory::CreateObject( const ObjectType& type, const Team_ABC&
     std::unique_ptr< Object > result( new Object( controllers_.controller_, staticModel_.coordinateConverter_, type, name, idManager_ ) );
     result->Attach< Positions >( *new ObjectPositions( controllers_.controller_, staticModel_.coordinateConverter_, result->GetType(), location ) );
     result->Attach< kernel::TacticalHierarchies >( *new ::ObjectHierarchies( *result, &team ) );
-    const_cast< Team_ABC* >( &team )->Get< Objects >().AddObject( *result );
+    const_cast< Team_ABC* >( &team )->Get< Objects >().Add( *result );
     result->Attach< kernel::Color_ABC >( *new ::Color( team ) );
     // Attributes are commited by ObjectPrototype
     result->Polish();
@@ -274,7 +274,7 @@ Object_ABC* ObjectFactory::CreateObject( xml::xistream& xis, const Team_ABC& tea
     xis >> xml::optional >> xml::start( "attributes" )
             >> xml::list( *this, &ObjectFactory::ReadAttributes, *result, dico )
         >> xml::end;
-    const_cast< Team_ABC* >( &team )->Get< Objects >().AddObject( *result );
+    const_cast< Team_ABC* >( &team )->Get< Objects >().Add( *result );
     result->Polish();
     return result.release();
 }

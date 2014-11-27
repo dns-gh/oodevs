@@ -20,8 +20,3 @@ Objects::~Objects()
 {
     DeleteAll();
 }
-
-void Objects::AddObject( const Object& object )
-{
-    Register( object.GetId(), object );
-}

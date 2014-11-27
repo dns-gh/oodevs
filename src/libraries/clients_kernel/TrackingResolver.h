@@ -41,6 +41,11 @@ public:
         controllers_.Unregister( *this );
     }
 
+    void Add( T& t )
+    {
+        Register( t.GetId(), t );
+    }
+
 private:
     virtual void NotifyDeleted( const Base& t )
     {

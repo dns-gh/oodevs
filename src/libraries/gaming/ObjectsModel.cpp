@@ -35,7 +35,7 @@ void ObjectsModel::Purge()
 void ObjectsModel::CreateObject( const sword::ObjectCreation& message )
 {
     if( !Find( message.object().id() ) )
-        Register( message.object().id(), *factory_.Create( message ) );
+        Add( *factory_.Create( message ) );
 }
 
 void ObjectsModel::DeleteObject( const sword::ObjectDestruction& message )

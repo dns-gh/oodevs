@@ -26,8 +26,6 @@ class Objects : public kernel::Extension_ABC
 public:
     explicit Objects( kernel::Controllers& controllers );
     virtual ~Objects();
-
-    void AddObject( const Object& object );
 };
 
 #endif // __Objects_h_

@@ -44,7 +44,7 @@ void ObjectsModel::Purge()
 Object_ABC* ObjectsModel::CreateObject( const Team_ABC& team, const ObjectType& type, const QString& name, const Location_ABC& location )
 {
     Object_ABC* object = factory_.CreateObject( type, team, name, location );
-    Register( object->GetId(), *object );
+    Add( *object );
     return object;
 }
 
@@ -53,12 +53,8 @@ void ObjectsModel::CreateObject( xml::xistream& xis, const kernel::Team_ABC& tea
     try
     {
         const std::string typeName = xis.attribute< std::string >( "type" );
-        const ObjectType* type = resolver_.Find( typeName );
-        if( type )
-        {
-            Object_ABC* object = factory_.CreateObject( xis, team, *type );
-            Register( object->GetId(), *object );
-        }
+        if( const ObjectType* type = resolver_.Find( typeName ) )
+            Add( *factory_.CreateObject( xis, team, *type ) );
         else
             model.AppendLoadingError( eUnknownObjectTypes, typeName );
     }

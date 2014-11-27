@@ -22,11 +22,6 @@ Objects::~Objects()
     DeleteAll();
 }
 
-void Objects::AddObject( const Object& object )
-{
-    Register( object.GetId(), object );
-}
-
 void Objects::SerializeAttributes( xml::xostream& xos ) const
 {
     xos << xml::start( "objects" );

@@ -71,7 +71,7 @@ kernel::Object_ABC* ObjectFactory::Create( const sword::ObjectCreation& message 
     result->Attach< kernel::Positions >( *new ObjectPositions( result->GetType(), static_.coordinateConverter_ ) );
     auto& team = model_.teams_.GetTeam( message.party().id() );
     result->Attach< kernel::TacticalHierarchies >( *new kernel::ObjectHierarchies( *result, &team ) );
-    team.Get< Objects >().AddObject( *result );
+    team.Get< Objects >().Add( *result );
     if( message.has_color() )
         result->Attach< kernel::Color_ABC >( *new Color( message.color() ) );
     result->Update( message );

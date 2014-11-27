@@ -29,8 +29,6 @@ public:
     explicit Objects( kernel::Controllers& controllers );
     virtual ~Objects();
 
-    void AddObject( const Object& object );
-
 private:
     virtual void SerializeAttributes( xml::xostream& ) const;
 };
