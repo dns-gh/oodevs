@@ -10,10 +10,9 @@
 #ifndef __Objects_h_
 #define __Objects_h_
 
+#include "Object.h"
 #include "clients_kernel/Extension_ABC.h"
-#include <tools/Resolver.h>
-
-class Object;
+#include "clients_kernel/TrackingResolver.h"
 
 // =============================================================================
 /** @class  Objects
@@ -22,10 +21,10 @@ class Object;
 // Created: JSR 2014-11-17
 // =============================================================================
 class Objects : public kernel::Extension_ABC
-              , public tools::Resolver< const Object >
+              , public tools::TrackingResolver< const Object, kernel::Object_ABC >
 {
 public:
-             Objects();
+    explicit Objects( kernel::Controllers& controllers );
     virtual ~Objects();
 
     void AddObject( const Object& object );

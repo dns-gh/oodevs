@@ -15,82 +15,37 @@
 
 using namespace kernel;
 
-// -----------------------------------------------------------------------------
-// Name: ObjectsModel constructor
-// Created: AGE 2006-02-10
-// -----------------------------------------------------------------------------
-ObjectsModel::ObjectsModel( ObjectFactory_ABC& objectFactory )
-    : objectFactory_( objectFactory )
+ObjectsModel::ObjectsModel( kernel::Controllers& controllers, ObjectFactory_ABC& factory )
+    : tools::TrackingResolver< kernel::Object_ABC >( controllers )
+    , factory_( factory )
 {
     // NOTHING
 }
 
-// -----------------------------------------------------------------------------
-// Name: ObjectsModel destructor
-// Created: AGE 2006-02-10
-// -----------------------------------------------------------------------------
 ObjectsModel::~ObjectsModel()
 {
     Purge();
 }
 
-// -----------------------------------------------------------------------------
-// Name: ObjectsModel::Purge
-// Created: AGE 2006-04-20
-// -----------------------------------------------------------------------------
 void ObjectsModel::Purge()
 {
     DeleteAll();
 }
 
-// -----------------------------------------------------------------------------
-// Name: ObjectsModel::CreateObject
-// Created: AGE 2006-02-10
-// -----------------------------------------------------------------------------
 void ObjectsModel::CreateObject( const sword::ObjectCreation& message )
 {
-    if( ! Find( message.object().id() ) )
-    {
-        Object_ABC* pObject = objectFactory_.Create( message );
-        Register( message.object().id(), *pObject );
-    }
+    if( !Find( message.object().id() ) )
+        Register( message.object().id(), *factory_.Create( message ) );
 }
 
-// -----------------------------------------------------------------------------
-// Name: ObjectsModel::UpdateObject
-// Created: NLD 2010-11-02
-// -----------------------------------------------------------------------------
+void ObjectsModel::DeleteObject( const sword::ObjectDestruction& message )
+{
+    delete Find( message.object().id() );
+}
+
 void ObjectsModel::UpdateObject( const sword::ObjectUpdate& message )
 {
-    Object_ABC& object = GetObject( message.object().id() );
-    objectFactory_.RegisterAttributes( object, message.attributes() );
+    Object_ABC& object = Get( message.object().id() );
+    factory_.RegisterAttributes( object, message.attributes() );
     object.Update( message );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ObjectsModel::GetObject
-// Created: AGE 2006-02-10
-// -----------------------------------------------------------------------------
-Object_ABC& ObjectsModel::GetObject( unsigned long id )
-{
-    return Get( id );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ObjectsModel::FindObject
-// Created: JSR 2010-04-21
-// -----------------------------------------------------------------------------
-kernel::Object_ABC* ObjectsModel::FindObject( unsigned long id )
-{
-    return Find( id );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ObjectsModel::DeleteObject
-// Created: AGE 2006-02-10
-// -----------------------------------------------------------------------------
-void ObjectsModel::DeleteObject( unsigned long id )
-{
-    delete Find( id );
-    Remove( id );
 }

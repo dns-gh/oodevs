@@ -95,7 +95,7 @@ Model::Model( kernel::Controllers& controllers, const StaticModel& staticModel, 
     , userProfileFactory_      ( *new UserProfileFactory( controllers_.controller_, publisher ) )
     , drawingFactory_          ( *new DrawingFactory( controllers, staticModel.drawings_, publisher, staticModel.coordinateConverter_, *this ) )
     , agents_                  ( *new AgentsModel( agentFactory_ ) )
-    , objects_                 ( *new ObjectsModel( objectFactory_ ) )
+    , objects_                 ( *new ObjectsModel( controllers, objectFactory_ ) )
     , teams_                   ( *new TeamsModel( teamFactory_ ) )
     , knowledgeGroups_         ( *new KnowledgeGroupsModel( knowledgeGroupFactory_ ) )
     , logistics_               ( *new LogisticsModel( logisticFactory_, *this, staticModel.objectTypes_, controllers.controller_ ) )

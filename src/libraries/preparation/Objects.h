@@ -10,12 +10,10 @@
 #ifndef __Objects_h_
 #define __Objects_h_
 
-#include "clients_kernel/Serializable_ABC.h"
+#include "Object.h"
 #include "clients_kernel/Extension_ABC.h"
-#include <tools/Resolver.h>
-#include <boost/noncopyable.hpp>
-
-class Object;
+#include "clients_kernel/TrackingResolver.h"
+#include "clients_kernel/Serializable_ABC.h"
 
 // =============================================================================
 /** @class  Objects
@@ -24,27 +22,17 @@ class Object;
 // Created: JSR 2011-02-22
 // =============================================================================
 class Objects : public kernel::Extension_ABC
+              , public tools::TrackingResolver< const Object, kernel::Object_ABC >
               , public kernel::Serializable_ABC
-              , public tools::Resolver< const Object >
-              , private boost::noncopyable
 {
 public:
-    //! @name Constructors/Destructor
-    //@{
-             Objects();
+    explicit Objects( kernel::Controllers& controllers );
     virtual ~Objects();
-    //@}
 
-    //! @name Operations
-    //@{
     void AddObject( const Object& object );
-    //@}
 
 private:
-    //! @name Helpers
-    //@{
     virtual void SerializeAttributes( xml::xostream& ) const;
-    //@}
 };
 
 #endif // __Objects_h_

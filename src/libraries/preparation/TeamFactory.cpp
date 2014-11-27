@@ -55,7 +55,7 @@ TeamFactory::~TeamFactory()
 kernel::Team_ABC* TeamFactory::CreateTeam()
 {
     Team* result = new Team( controllers_, idManager_ );
-    result->Attach( *new Objects() );
+    result->Attach( *new Objects( controllers_ ) );
     gui::PropertiesDictionary& dico = result->Get< gui::PropertiesDictionary >();
     result->Attach< kernel::Diplomacies_ABC >( *new Diplomacies( controllers_.controller_, model_.GetTeamResolver(), *result, dico, staticModel_.teamKarmas_ ) );
     result->Attach< kernel::TacticalHierarchies >( *new TeamHierarchies( controllers_.controller_, *result, 0 ) );
@@ -75,7 +75,7 @@ kernel::Team_ABC* TeamFactory::CreateTeam()
 kernel::Team_ABC* TeamFactory::CreateTeam( xml::xistream& xis )
 {
     Team* result = new Team( xis, controllers_, idManager_ );
-    result->Attach( *new Objects() );
+    result->Attach( *new Objects( controllers_ ) );
     gui::PropertiesDictionary& dico = result->Get< gui::PropertiesDictionary >();
     result->Attach< kernel::Diplomacies_ABC >( *new Diplomacies( xis, controllers_.controller_, model_.GetTeamResolver(), *result, dico, staticModel_.teamKarmas_ ) );
     result->Attach< kernel::TacticalHierarchies >( *new TeamHierarchies( controllers_.controller_, *result, 0 ) );
@@ -115,7 +115,7 @@ namespace
 kernel::Team_ABC* TeamFactory::CreateNoSideTeam()
 {
     kernel::Team_ABC* result = new gui::EntityImplementation< kernel::Team_ABC >( controllers_.controller_, 0, tools::translate( "TeamFactory", "No side" ) );
-    result->Attach( *new Objects() );
+    result->Attach( *new Objects( controllers_ ) );
     result->Attach< kernel::Color_ABC >( *new Color() );
     result->Attach< kernel::Diplomacies_ABC >( *new NoSideDiplomacy() );
     return result;

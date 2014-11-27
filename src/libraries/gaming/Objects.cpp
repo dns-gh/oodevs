@@ -9,16 +9,16 @@
 
 #include "gaming_pch.h"
 #include "Objects.h"
-#include "Object.h"
 
-Objects::Objects()
+Objects::Objects( kernel::Controllers& controllers )
+    : tools::TrackingResolver< const Object, kernel::Object_ABC >( controllers )
 {
     // NOTHING
 }
 
 Objects::~Objects()
 {
-    // NOTHING
+    DeleteAll();
 }
 
 void Objects::AddObject( const Object& object )
