@@ -47,10 +47,10 @@ public:
                     unsigned vWidth = 640,
                     unsigned vHeight = 480,
                     bool pickingMode = false );
-    const std::vector< std::string >& GetNotFoundSymbol() const;
+    const std::set< std::string >& GetNotFoundSymbol() const;
 
 private:
-    svg::Node_ABC* Compile( const std::string& symbol, float lod, bool first );
+    svg::Node_ABC* Load( const std::string& symbol, float lod ) const;
     svg::Node_ABC* Compile( const std::string& symbol, float lod ) const;
 
 private:
@@ -63,7 +63,7 @@ private:
     const tools::Path symbolPath_;
     std::unique_ptr< tools::zip::InputArchive > archive_;
     T_Symbols symbols_;
-    std::vector< std::string > notFoundSymbols_;
+    std::set< std::string > notFoundSymbols_;
 };
 
 }

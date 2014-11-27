@@ -355,7 +355,7 @@ ADN_Symbols_Data::SymbolsUnit* ADN_Symbols_Data::FindSymbolUnit( const std::stri
 void ADN_Symbols_Data::CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const
 {
     ADN_Data_ABC::CheckDatabaseValidity( checker );
-    const std::vector< std::string >& missingSymbols = glSymbols_->GetNotFoundSymbol();
+    const auto& missingSymbols = glSymbols_->GetNotFoundSymbol();
     if( !missingSymbols.empty() )
     {
         const auto& unitsInfos = ADN_Workspace::GetWorkspace().GetUnits().GetData().GetUnitsInfos();
@@ -366,7 +366,7 @@ void ADN_Symbols_Data::CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) 
                 continue;
             const std::string& unitSymbol = symbolUnit->GetSymbol();
             const std::string symbol = unitSymbol.substr( 8, unitSymbol.size() - 8 );
-            if( std::find( missingSymbols.begin(), missingSymbols.end(), symbol ) != missingSymbols.end() )
+            if( missingSymbols.find( symbol ) != missingSymbols.end() )
                 checker.AddError( eMissingSymbolForUnit, ( *it )->strName_.GetData(), eUnits, -1, symbol );
         }
     }

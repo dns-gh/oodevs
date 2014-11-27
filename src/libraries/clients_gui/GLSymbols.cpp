@@ -42,28 +42,23 @@ void GLSymbols::PrintApp6( const std::string& symbol, const std::string& style, 
     auto& node = symbols_[ key ];
     if( create )
     {
-        node.first.reset( Compile( symbol, 10, true ) );
-        node.second.reset( Compile( symbol, 100, false ) );
+        node.first.reset( Load( symbol, 10 ) );
+        node.second.reset( Load( symbol, 100 ) );
         if( !node.first || !node.second )
+        {
+            notFoundSymbols_.insert( symbol.substr( 8, symbol.size() - 8 ) );
             MT_LOG_ERROR_MSG( "Could not open svg symbol '" << symbol << ".svg', and cannot find the closest symbol." );
+        }
     }
     const auto& renderNode = viewport.Width() > 30000 ? node.second : node.first;  // $$$$ AGE 2006-09-11: hardcoded lod
     renderer_.Render( renderNode, style, viewport, vWidth, vHeight, pickingMode );
 }
 
-svg::Node_ABC* GLSymbols::Compile( const std::string& symbol, float lod, bool first )
+svg::Node_ABC* GLSymbols::Load( const std::string& symbol, float lod ) const
 {
     for( std::size_t i = symbol.size(); i > 0; --i )
-    {
-        auto* node = Compile( symbol.substr( 0, i ), lod );
-        if( node )
+        if( auto* node = Compile( symbol.substr( 0, i ), lod ) )
             return node;
-        if( first )
-        {
-            notFoundSymbols_.push_back( symbol.substr( 8, symbol.size() - 8 ) );
-            first = false;
-        }
-    }
     return 0;
 }
 
@@ -88,7 +83,7 @@ svg::Node_ABC* GLSymbols::Compile( const std::string& symbol, float lod ) const
     return node;
 }
 
-const std::vector< std::string >& GLSymbols::GetNotFoundSymbol() const
+const std::set< std::string >& GLSymbols::GetNotFoundSymbol() const
 {
     return notFoundSymbols_;
 }
