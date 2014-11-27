@@ -17,11 +17,10 @@ using namespace gui;
 // Created: AGE 2006-05-03
 // -----------------------------------------------------------------------------
 GlPlaceHolder::GlPlaceHolder( QWidget* parent )
-    : Q3VBox( parent )
+    : QWidget( parent )
 {
-    setStyleSheet("Q3VBox { background-color: #000000; }");
-    setBackgroundRole( QPalette::Window );
-    setFrameStyle( QFrame::StyledPanel + QFrame::Raised );
+    setStyleSheet( "background-color: #000000" );
+    setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Expanding );
 }
 
 // -----------------------------------------------------------------------------
