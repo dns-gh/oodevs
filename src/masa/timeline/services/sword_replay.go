@@ -39,15 +39,26 @@ func checkBoundaries(event *sdk.Event, replayBegin, replayEnd time.Time) (begin,
 	return
 }
 
-func marshal(begin, end bool) []byte {
-	buffer, _ := json.Marshal(&sdk.ReplayPayload{Begin: proto.Bool(begin), End: proto.Bool(end)})
+func marshal(begin, end, enabled bool) []byte {
+	buffer, _ := json.Marshal(&sdk.ReplayPayload{Begin: proto.Bool(begin), End: proto.Bool(end), Enabled: proto.Bool(enabled)})
 	return buffer
+}
+
+func checkPayload(event *sdk.Event) error {
+	payload := sdk.ReplayPayload{}
+	return json.Unmarshal(event.Action.Payload, &payload)
 }
 
 func updatePayload(index, size int, event *sdk.Event) {
 	begin := size > 1 && index != 0
 	end := size > 1 && index+1 < size
-	event.Action.Payload = marshal(begin, end)
+	payload := sdk.ReplayPayload{}
+	json.Unmarshal(event.Action.Payload, &payload)
+	enabled := true
+	if payload.Enabled != nil {
+		enabled = payload.GetEnabled()
+	}
+	event.Action.Payload = marshal(begin, end, enabled)
 }
 
 func modifyEvent(update *sdk.Event, events []*sdk.Event) {
@@ -148,6 +159,11 @@ func (s *Sword) filterEvents(events ...*sdk.Event) ([]*sdk.Event, error) {
 		if eventBegin == eventEnd || eventBegin.After(eventEnd) {
 			return result, ErrInvalidReplayEventParameter
 		}
+		// Checks payload error
+		err = checkPayload(event)
+		if err != nil {
+			return result, err
+		}
 		// Checks event modification
 		checked, err := s.checkEventModification(event, eventBegin, eventEnd)
 		if err != nil {
@@ -179,6 +195,7 @@ func (s *Sword) modifyEvent(modified *bool, event *sdk.Event, result, replays *[
 	// modifying replay event, filling all gaps
 	for index, replay := range *replays {
 		if event.GetUuid() == replay.GetUuid() {
+			updatePayload(index, len(*replays), event)
 			if event.GetBegin() != replay.GetBegin() && index > 0 {
 				(*replays)[index-1].End = event.Begin
 				*result = append(*result, (*replays)[index-1])
@@ -294,7 +311,7 @@ func (s *Sword) setReplayRangeDates(link *SwordLink, start, end time.Time) {
 			ReadOnly: proto.Bool(false),
 			Action: &sdk.Action{
 				Target:  proto.String("replay://" + s.name),
-				Payload: marshal(false, false),
+				Payload: marshal(false, false, true),
 			},
 		}
 		s.observer.UpdateRangeDates(start, end)

@@ -11,6 +11,7 @@ package server
 import (
 	"code.google.com/p/go-uuid/uuid"
 	"code.google.com/p/goprotobuf/proto"
+	"encoding/json"
 	"errors"
 	"fmt"
 	. "launchpad.net/gocheck"
@@ -710,7 +711,7 @@ func (t *TestSuite) TestObservers(c *C) {
 	c.Assert(len(msg.GetEvents()), Equals, 1)
 	event := msg.GetEvents()[0]
 	checkIsReplayEvent(c, event)
-	c.Assert(string(event.Action.GetPayload()), Equals, `{"begin":false,"end":false}`)
+	c.Assert(string(event.Action.GetPayload()), Equals, `{"begin":false,"end":false,"enabled":true}`)
 	start, err = util.ParseTime(event.GetBegin())
 	c.Assert(err, IsNil)
 	c.Assert(start, Equals, expectedStart)
@@ -1220,6 +1221,13 @@ func (t *TestSuite) TestGarbageOrdersDoesNotAbort(c *C) {
 	f.waitAllDoneOrDead(c, id)
 }
 
+func checkErrorUpdate(c *C, f *Fixture, messages chan interface{}, id string, event *sdk.Event) {
+	_, err := f.controller.UpdateEvent(f.session, id, event)
+	c.Assert(err, NotNil)
+	msg := waitBroadcastTag(messages, sdk.MessageTag_update_events)
+	c.Assert(msg, IsNil)
+}
+
 func (t *TestSuite) TestChangeReplayRangeDates(c *C) {
 	f := t.MakeFixture(c, true)
 	defer f.Close()
@@ -1286,37 +1294,54 @@ func (t *TestSuite) TestChangeReplayRangeDates(c *C) {
 	c.Assert(msg, NotNil)
 	c.Assert(*msg.GetEvents()[0].Name, Equals, *event.Name)
 	c.Assert(*msg.GetEvents()[0].Info, Equals, *event.Info)
+	validEvent = services.CloneEvent(event)
 
 	// Modifying replay range event out of replay boundaries returns error
 	event = services.CloneEvent(validEvent)
 	event.Begin = proto.String(util.FormatTime(replayBegin.Add(-time.Hour)))
-	_, err = f.controller.UpdateEvent(f.session, id, event)
-	c.Assert(err, NotNil)
+	checkErrorUpdate(c, f, messages, id, event)
 	event = services.CloneEvent(validEvent)
 	event.End = proto.String(util.FormatTime(replayEnd.Add(time.Hour)))
-	_, err = f.controller.UpdateEvent(f.session, id, event)
-	c.Assert(err, NotNil)
+	checkErrorUpdate(c, f, messages, id, event)
 
 	// Modifying replay event with erroneous range returns error
 	event = services.CloneEvent(validEvent)
 	event.Begin, event.End = event.End, event.Begin
-	_, err = f.controller.UpdateEvent(f.session, id, event)
-	c.Assert(err, NotNil)
+	checkErrorUpdate(c, f, messages, id, event)
 	event = services.CloneEvent(validEvent)
 	event.Begin = event.End
-	_, err = f.controller.UpdateEvent(f.session, id, event)
-	c.Assert(err, NotNil)
+	checkErrorUpdate(c, f, messages, id, event)
 
 	// Modifying first or last replay event and creating a gap between
 	// replay boundaries and events will return an error
 	event = services.CloneEvent(validEvent)
 	event.Begin = proto.String(util.FormatTime(replayBegin.Add(time.Second)))
-	_, err = f.controller.UpdateEvent(f.session, id, event)
-	c.Assert(err, NotNil)
+	checkErrorUpdate(c, f, messages, id, event)
 	event = services.CloneEvent(validEvent)
 	event.End = proto.String(util.FormatTime(replayEnd.Add(-time.Second)))
+	checkErrorUpdate(c, f, messages, id, event)
+
+	// Modifying payload with garbage returns an error
+	event = services.CloneEvent(validEvent)
+	event.Action.Payload = []byte(`some garbage`)
+	checkErrorUpdate(c, f, messages, id, event)
+
+	// Replay range can be disabled
+	event = services.CloneEvent(validEvent)
+	event.Action.Payload, _ = json.Marshal(&sdk.ReplayPayload{Enabled: proto.Bool(false)})
 	_, err = f.controller.UpdateEvent(f.session, id, event)
-	c.Assert(err, NotNil)
+	c.Assert(err, IsNil)
+	msg = waitBroadcastTag(messages, sdk.MessageTag_update_events)
+	c.Assert(msg, NotNil)
+	c.Assert(string(msg.GetEvents()[0].Action.GetPayload()), Equals, `{"begin":false,"end":false,"enabled":false}`)
+	// And re-enabled
+	event = services.CloneEvent(validEvent)
+	event.Action.Payload, _ = json.Marshal(&sdk.ReplayPayload{Enabled: proto.Bool(true)})
+	_, err = f.controller.UpdateEvent(f.session, id, event)
+	c.Assert(err, IsNil)
+	msg = waitBroadcastTag(messages, sdk.MessageTag_update_events)
+	c.Assert(msg, NotNil)
+	c.Assert(string(msg.GetEvents()[0].Action.GetPayload()), Equals, `{"begin":false,"end":false,"enabled":true}`)
 
 	// Valid replay event creation, split in half the current replay event
 	// The new replay event inherits its informations from the split event
@@ -1336,16 +1361,18 @@ func (t *TestSuite) TestChangeReplayRangeDates(c *C) {
 	begin, _ := util.ParseTime(event.GetBegin())
 	end, _ := util.ParseTime(event.GetEnd())
 	c.Assert(event.GetUuid(), Equals, id)
+	c.Assert(event.GetName(), Equals, "New name")
+	c.Assert(event.GetInfo(), Equals, "New information")
 	c.Assert(begin, Equals, replayBegin)
 	c.Assert(end, Equals, replayBegin.Add(30*time.Second))
-	c.Assert(string(event.Action.GetPayload()), Equals, `{"begin":false,"end":true}`)
+	c.Assert(string(event.Action.GetPayload()), Equals, `{"begin":false,"end":true,"enabled":true}`)
 	validEvent = services.CloneEvent(event)
 	// Checks new event creation
 	event = msg.GetEvents()[0]
 	c.Assert(event.GetUuid(), Equals, splitUuid)
 	c.Assert(event.GetName(), Equals, "New name")
 	c.Assert(event.GetInfo(), Equals, "New information")
-	c.Assert(string(event.Action.GetPayload()), Equals, `{"begin":true,"end":false}`)
+	c.Assert(string(event.Action.GetPayload()), Equals, `{"begin":true,"end":false,"enabled":true}`)
 	begin, _ = util.ParseTime(event.GetBegin())
 	end, _ = util.ParseTime(event.GetEnd())
 	c.Assert(begin, Equals, replayBegin.Add(30*time.Second))
@@ -1358,15 +1385,13 @@ func (t *TestSuite) TestChangeReplayRangeDates(c *C) {
 	event.Uuid = proto.String(uuid.New())
 	event.Begin = proto.String(util.FormatTime(replayBegin))
 	event.End = proto.String(util.FormatTime(replayEnd))
-	_, err = f.controller.UpdateEvent(f.session, id, event)
-	c.Assert(err, NotNil)
+	checkErrorUpdate(c, f, messages, id, event)
 
 	event = services.CloneEvent(splitEvent)
 	event.Uuid = proto.String(uuid.New())
 	event.Begin = proto.String(util.FormatTime(replayBegin.Add(31 * time.Second)))
 	event.End = proto.String(util.FormatTime(replayEnd.Add(-1 * time.Second)))
-	_, err = f.controller.UpdateEvent(f.session, id, event)
-	c.Assert(err, NotNil)
+	checkErrorUpdate(c, f, messages, id, event)
 
 	// Modifying a replay event boundary modifies the previous or the next event too
 	event = services.CloneEvent(splitEvent)
@@ -1398,7 +1423,7 @@ func (t *TestSuite) TestChangeReplayRangeDates(c *C) {
 	end, _ = util.ParseTime(event.GetEnd())
 	c.Assert(event.GetUuid(), Equals, id)
 	c.Assert(end, Equals, replayEnd)
-	c.Assert(string(event.Action.GetPayload()), Equals, `{"begin":false,"end":false}`)
+	c.Assert(string(event.Action.GetPayload()), Equals, `{"begin":false,"end":false,"enabled":true}`)
 
 	// Cannot remove the last event
 	err = f.controller.DeleteEvent(f.session, id)
