@@ -134,7 +134,7 @@ bool Layer::IsConfigurable() const
 
 T_Layer Layer::GetSubLayer( const T_LayerFunctor& ) const
 {
-    return T_Layer();
+    return 0;
 }
 
 // -----------------------------------------------------------------------------

@@ -3,7 +3,7 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2012 MASA Group
+// Copyright (c) 2014 MASA Group
 //
 // *****************************************************************************
 
@@ -59,7 +59,7 @@ private:
     //@{
     ColorStrategy_ABC& strategy_;
     kernel::SafePointer< kernel::Entity_ABC > selected_;
-    T_Layer selectedLayer_;
+    T_Layer layer_;
     //@}
 };
 

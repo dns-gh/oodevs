@@ -99,7 +99,10 @@ void PropertiesPanel::NotifySelected( const kernel::Entity_ABC* element )
     }
     setWidget( treeView_ );
     if( element )
-        if( auto elementLayer = view_.GetLayer( [element]( const T_Layer& layer ){ return layer->IsIn( *element ); } ) )
+        if( auto elementLayer = view_.GetLayer( [&]( const T_Layer& layer )
+            {
+                return layer->IsIn( *element );
+            } ) )
             treeView_->setEnabled( !elementLayer->IsReadOnly() );
 }
 

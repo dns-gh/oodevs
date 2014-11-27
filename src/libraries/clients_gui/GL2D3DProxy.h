@@ -18,7 +18,6 @@
 namespace kernel
 {
     class Controllers;
-    class Entity_ABC;
     class EntityResolver_ABC;
     class Filter_ABC;
     class StaticModel;

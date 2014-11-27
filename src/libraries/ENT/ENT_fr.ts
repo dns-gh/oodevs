@@ -1044,11 +1044,11 @@
     </message>
     <message>
         <source>Rectangle selection</source>
-        <translation>Selection rectangulaire</translation>
+        <translation>Sélection rectangulaire</translation>
     </message>
     <message>
         <source>Selection</source>
-        <translation>Selection</translation>
+        <translation>Sélection</translation>
     </message>
 </context>
 <context>

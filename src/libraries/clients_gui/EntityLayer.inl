@@ -79,7 +79,7 @@ void EntityLayer< ConcreteEntity >::NotifyActivated( const ConcreteEntity& entit
 template< typename ConcreteEntity >
 void EntityLayer< ConcreteEntity >::NotifySelectionChanged( const std::vector< const ConcreteEntity* >& elements )
 {
-    SelectEntity( elements.size() >= 1 ? elements.front() : 0 );
+    SelectEntity( elements.empty() ? 0 : elements.front() );
 }
 
 // -----------------------------------------------------------------------------

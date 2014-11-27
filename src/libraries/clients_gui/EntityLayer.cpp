@@ -80,7 +80,7 @@ void EntityLayerBase::Paint( Viewport_ABC& viewport )
     for( auto it = entities_.begin(); it != entities_.end(); ++it )
         if( *it != selected_ && ( *it )->IsHighlighted() )
             Draw( **it, viewport, pickingMode );
-    // Finaly, selected entity will be drawn by SelectionLayer
+    // Finally, the selected entity will be drawn by SelectionLayer
 
     if( !pickingMode )
         infoTooltip_->Draw();
@@ -263,7 +263,7 @@ void EntityLayerBase::ActivateEntity( const Entity_ABC& entity )
 // -----------------------------------------------------------------------------
 void EntityLayerBase::SelectEntity( const Entity_ABC* entity )
 {
-    selected_ = std::find( entities_.begin(), entities_.end(), entity ) != entities_.end() ? entity : nullptr;
+    selected_ = std::find( entities_.begin(), entities_.end(), entity ) != entities_.end() ? entity : 0;
 }
 
 // -----------------------------------------------------------------------------

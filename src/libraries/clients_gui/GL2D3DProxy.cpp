@@ -20,7 +20,6 @@
 #include "SvglProxy.h"
 #include "TacticalGraphics.h"
 #include "TooltipsLayer_ABC.h"
-#include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/Options.h"
 #include "clients_kernel/OptionVariant.h"
 #include "ENT/ENT_Tr.h"
@@ -208,13 +207,13 @@ T_Layer GL2D3DProxy::GetLayer( const T_LayerFunctor& functor ) const
 {
     for( auto it = layers_.begin(); it != layers_.end(); ++it )
     {
-        auto layer = *it;
+        const auto& layer = *it;
         if( auto subLayer = layer->GetSubLayer( functor ) )
             return subLayer;
-        else if( functor( layer ) )
+        if( functor( layer ) )
             return layer;
     }
-    return T_Layer();
+    return 0;
 }
 
 bool GL2D3DProxy::MoveBelow( const T_Layer& lhs,
