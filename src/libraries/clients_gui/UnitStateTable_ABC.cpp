@@ -98,7 +98,6 @@ void UnitStateTable_ABC::InternalRecursiveLoad( kernel::Entity_ABC& entity, bool
     else
     {
         aggregated_ = true;
-        assert( typeName == kernel::Automat_ABC::typeName_ || typeName == kernel::Formation_ABC::typeName_ || typeName == kernel::Team_ABC::typeName_ );
         const kernel::TacticalHierarchies& hierarchy = entity.Get< kernel::TacticalHierarchies >();
         tools::Iterator< const kernel::Entity_ABC& > it = hierarchy.CreateSubordinateIterator();
         while( it.HasMoreElements() )

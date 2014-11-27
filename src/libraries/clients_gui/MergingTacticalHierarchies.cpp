@@ -10,8 +10,12 @@
 #include "clients_gui_pch.h"
 #include "MergingTacticalHierarchies.h"
 #include "PropertiesDictionary.h"
-#include "clients_kernel/SymbolHierarchy_ABC.h"
+#include "clients_kernel/Agent_ABC.h"
+#include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Diplomacies_ABC.h"
+#include "clients_kernel/Formation_ABC.h"
+#include "clients_kernel/SymbolHierarchy_ABC.h"
+#include "clients_kernel/Team_ABC.h"
 
 using namespace kernel;
 using namespace gui;
@@ -111,7 +115,11 @@ void MergingTacticalHierarchies::UpdateSymbol()
     int max = 0;
     while( it.HasMoreElements() )
     {
-        if( const TacticalHierarchies* hierarchies = it.NextElement().Retrieve< TacticalHierarchies >() )
+        auto& next = it.NextElement();
+        const std::string& typeName = next.GetTypeName();
+        if( typeName != kernel::Agent_ABC::typeName_ && typeName != kernel::Automat_ABC::typeName_ && typeName != kernel::Formation_ABC::typeName_ && typeName != kernel::Team_ABC::typeName_ )
+            continue;
+        if( const TacticalHierarchies* hierarchies = next.Retrieve< TacticalHierarchies >() )
         {
             std::string symbolName = hierarchies->GetSymbol();
             if( symbolCount.find( symbolName ) == symbolCount.end() )
