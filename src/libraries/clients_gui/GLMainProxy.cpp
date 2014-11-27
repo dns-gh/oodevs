@@ -468,6 +468,15 @@ std::unique_ptr< GlTooltip_ABC > GLMainProxy::CreateTooltip() const
 }
 
 // -----------------------------------------------------------------------------
+// Drawing tools -> override
+// -----------------------------------------------------------------------------
+void GLMainProxy::UpdateGL()
+{
+    GLProxyBase::UpdateGL();
+    filter_.SetFilter( GetActiveOptions(), false );
+}
+
+// -----------------------------------------------------------------------------
 // Common drawing -> implementation
 // -----------------------------------------------------------------------------
 ColorStrategy_ABC& GLMainProxy::GetColorStrategy() const

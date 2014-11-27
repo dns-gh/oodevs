@@ -138,6 +138,11 @@ public:
     virtual void RenderPicking( const T_ObjectPicking& object );
     //@}
 
+    //! @name Drawing tools -> override
+    //@{
+    virtual void UpdateGL();
+    //@}
+
     //! @name Common drawing -> implementation
     //@{
     virtual ColorStrategy_ABC& GetColorStrategy() const;
