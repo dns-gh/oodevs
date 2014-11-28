@@ -874,10 +874,6 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <source>Initialize data ...</source>
-        <translation type="unfinished">تهيئة البيانات...</translation>
-    </message>
-    <message>
         <source>Loading complete</source>
         <translation type="unfinished">تحميل كامل</translation>
     </message>
@@ -896,10 +892,6 @@
     <message>
         <source>Loading graphical interface ...</source>
         <translation type="unfinished">تحميل واجهة رسومية...</translation>
-    </message>
-    <message>
-        <source>Loading options ...</source>
-        <translation type="unfinished">خيارات التحميل...</translation>
     </message>
     <message>
         <source>Loading exercise ...</source>
@@ -964,7 +956,37 @@ This data can&apos;t be projected.</source>
         <translation type="unfinished">حدث خطأ أثناء تحميل النقطية المصدر.</translation>
     </message>
     <message>
-        <source>Generate symbols</source>
+        <source>Error closing exercise: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error loading exercise: </source>
+        <translation type="unfinished">خطأ في تحميل التمرين:</translation>
+    </message>
+    <message>
+        <source>Unsaved modification detected.
+Do you want to save the exercise &apos;%1&apos;?</source>
+        <translation type="unfinished">التعديل غير المحفوظة الكشف عنها.
+هل تريد حفظ ممارسة &apos;%1&apos;؟</translation>
+    </message>
+    <message>
+        <source>Loading failed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Generate symbols ...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Loading options ...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Checking consistency ...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error loading: </source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2816,23 +2838,6 @@ This data can&apos;t be projected.</source>
     <message>
         <source>Ghost:</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>tools</name>
-    <message>
-        <source>Error reading xml file: </source>
-        <translation type="unfinished">حدث خطأ أثناء قراءة ملف xml:</translation>
-    </message>
-    <message>
-        <source>Error loading exercise: </source>
-        <translation type="unfinished">خطأ في تحميل التمرين:</translation>
-    </message>
-    <message>
-        <source>Unsaved modification detected.
-Do you want to save the exercise &apos;%1&apos;?</source>
-        <translation type="unfinished">التعديل غير المحفوظة الكشف عنها.
-هل تريد حفظ ممارسة &apos;%1&apos;؟</translation>
     </message>
 </context>
 </TS>

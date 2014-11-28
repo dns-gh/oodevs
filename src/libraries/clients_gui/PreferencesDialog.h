@@ -40,8 +40,6 @@ namespace gui
 // Created: SBO 2006-05-03
 // =============================================================================
 class PreferencesDialog : public ModalDialog
-                        , public tools::Observer_ABC
-                        , public tools::ElementObserver_ABC< kernel::ModelUnLoaded >
 {
     Q_OBJECT
 
@@ -75,7 +73,6 @@ private:
     //! @name Helpers
     //@{
     void Load( const GLView_ABC& );
-    virtual void NotifyUpdated( const kernel::ModelUnLoaded& );
     void UpdateComboVisibility();
     //@}
 

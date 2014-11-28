@@ -41,7 +41,7 @@ LogisticStocksDialog::LogisticStocksDialog( QWidget* parent, kernel::Controllers
     mainLayout->addWidget( cancelButton, 1, 4, 1, 1 );
 
     connect( okButton, SIGNAL( clicked() ), SLOT( Accept() ) );
-    connect( cancelButton, SIGNAL( clicked() ), SLOT( Reject() ) );
+    connect( cancelButton, SIGNAL( clicked() ), SLOT( reject() ) );
 
     hide();
 
@@ -58,15 +58,6 @@ LogisticStocksDialog::~LogisticStocksDialog()
 }
 
 // -----------------------------------------------------------------------------
-// Name: LogisticStocksDialog::NotifyUpdated
-// Created: MMC 2013-10-24
-// -----------------------------------------------------------------------------
-void LogisticStocksDialog::NotifyUpdated( const kernel::ModelUnLoaded& )
-{
-    Reject();
-}
-
-// -----------------------------------------------------------------------------
 // Name: LogisticStocksDialog::Accept
 // Created: MMC 2013-10-24
 // -----------------------------------------------------------------------------
@@ -79,12 +70,12 @@ void LogisticStocksDialog::Accept()
 }
 
 // -----------------------------------------------------------------------------
-// Name: LogisticStocksDialog::Reject
+// Name: LogisticStocksDialog::reject
 // Created: MMC 2013-10-24
 // -----------------------------------------------------------------------------
-void LogisticStocksDialog::Reject()
+void LogisticStocksDialog::reject()
 {
-    reject();
+    QDialog::reject();
     selected_ = 0;
 }
 

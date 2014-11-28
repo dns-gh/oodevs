@@ -82,8 +82,6 @@ PreferencesDialog::PreferencesDialog( QWidget* parent,
     title->setMargin( 10 );
     title->setBackgroundColor( Qt::white );
 
-    
-
     QLabel* icon = new QLabel();
     icon->setPixmap( MAKE_PIXMAP( option_general ) );
     icon->setMaximumWidth( 64 );
@@ -136,8 +134,6 @@ PreferencesDialog::PreferencesDialog( QWidget* parent,
     connect( okButton, SIGNAL( clicked() ), SLOT( accept() ) );
     connect( cancelButton, SIGNAL( clicked() ), SLOT( reject() ) );
     connect( this, SIGNAL( OnAddRaster() ), parent, SLOT( OnAddRaster() ) );
-
-    controllers_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -146,7 +142,7 @@ PreferencesDialog::PreferencesDialog( QWidget* parent,
 // -----------------------------------------------------------------------------
 PreferencesDialog::~PreferencesDialog()
 {
-    controllers_.Unregister( *this );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -225,16 +221,6 @@ void PreferencesDialog::reject()
     optionsController.UpdateViewOptions();
     mainProxy_.UpdateLayerOrder();
     ModalDialog::reject();
-}
-
-// -----------------------------------------------------------------------------
-// Name: PreferencesDialog::NotifyUpdated
-// Created: ABR 2014-08-27
-// -----------------------------------------------------------------------------
-void PreferencesDialog::NotifyUpdated( const kernel::ModelUnLoaded& )
-{
-    if( isVisible() )
-        reject();
 }
 
 // -----------------------------------------------------------------------------

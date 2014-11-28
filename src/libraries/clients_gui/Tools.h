@@ -83,6 +83,7 @@ namespace tools
     geometry::Point3f StringToPoint3f( const QString& point );
     geometry::Vector3f StringToVector3f( const QString& vector );
 
+    void RejectVisibleDialogs( QWidget& parent );
     QMenu* CreateWindowMenu( kernel::Controllers& controllers, QWidget& parent, QObject& glWidgetManager );
 
 }  //! namespace tools

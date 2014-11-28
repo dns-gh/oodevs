@@ -915,20 +915,12 @@
         <translation>Cargando modelo físico ...</translation>
     </message>
     <message>
-        <source>Loading options ...</source>
-        <translation>Cargando opciones ...</translation>
-    </message>
-    <message>
         <source>Loading exercise ...</source>
         <translation>Cargando escenario ...</translation>
     </message>
     <message>
         <source>Loading complete</source>
         <translation>Carga completa</translation>
-    </message>
-    <message>
-        <source>Initialize data ...</source>
-        <translation>Inicializando datos ...</translation>
     </message>
     <message>
         <source>Loading graphical interface ...</source>
@@ -965,7 +957,37 @@ This data can&apos;t be projected.</source>
 Este dato no puede ser proyectado.</translation>
     </message>
     <message>
-        <source>Generate symbols</source>
+        <source>Error closing exercise: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error loading exercise: </source>
+        <translation type="unfinished">Error cargando escenario: </translation>
+    </message>
+    <message>
+        <source>Unsaved modification detected.
+Do you want to save the exercise &apos;%1&apos;?</source>
+        <translation type="unfinished">Modificación detectada
+¿Desea grabar el escenario &apos;%1&apos;?</translation>
+    </message>
+    <message>
+        <source>Loading failed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Generate symbols ...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Loading options ...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Checking consistency ...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error loading: </source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2818,23 +2840,6 @@ Este dato no puede ser proyectado.</translation>
     <message>
         <source>Ghost:</source>
         <translation>Fantasma:</translation>
-    </message>
-</context>
-<context>
-    <name>tools</name>
-    <message>
-        <source>Error reading xml file: </source>
-        <translation>Error leyendo archivo xml: </translation>
-    </message>
-    <message>
-        <source>Error loading exercise: </source>
-        <translation>Error cargando escenario: </translation>
-    </message>
-    <message>
-        <source>Unsaved modification detected.
-Do you want to save the exercise &apos;%1&apos;?</source>
-        <translation>Modificación detectada
-¿Desea grabar el escenario &apos;%1&apos;?</translation>
     </message>
 </context>
 </TS>

@@ -877,10 +877,6 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <source>Initialize data ...</source>
-        <translation>Initialize data ...</translation>
-    </message>
-    <message>
         <source>Loading complete</source>
         <translation>Loading complete</translation>
     </message>
@@ -899,10 +895,6 @@
     <message>
         <source>Loading graphical interface ...</source>
         <translation>Loading graphical interface ...</translation>
-    </message>
-    <message>
-        <source>Loading options ...</source>
-        <translation>Loading options ...</translation>
     </message>
     <message>
         <source>Loading exercise ...</source>
@@ -967,7 +959,37 @@ This data can&apos;t be projected.</translation>
         <translation>Error while loading Raster source.</translation>
     </message>
     <message>
-        <source>Generate symbols</source>
+        <source>Error closing exercise: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error loading exercise: </source>
+        <translation type="unfinished">Error loading exercise: </translation>
+    </message>
+    <message>
+        <source>Unsaved modification detected.
+Do you want to save the exercise &apos;%1&apos;?</source>
+        <translation type="unfinished">Unsaved modification detected.
+Do you want to save the exercise &apos;%1&apos;?</translation>
+    </message>
+    <message>
+        <source>Loading failed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Generate symbols ...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Loading options ...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Checking consistency ...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error loading: </source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2819,23 +2841,6 @@ This data can&apos;t be projected.</translation>
     <message>
         <source>Ghost:</source>
         <translation>Ghost:</translation>
-    </message>
-</context>
-<context>
-    <name>tools</name>
-    <message>
-        <source>Error reading xml file: </source>
-        <translation>Error reading xml file: </translation>
-    </message>
-    <message>
-        <source>Error loading exercise: </source>
-        <translation>Error loading exercise: </translation>
-    </message>
-    <message>
-        <source>Unsaved modification detected.
-Do you want to save the exercise &apos;%1&apos;?</source>
-        <translation>Unsaved modification detected.
-Do you want to save the exercise &apos;%1&apos;?</translation>
     </message>
 </context>
 </TS>

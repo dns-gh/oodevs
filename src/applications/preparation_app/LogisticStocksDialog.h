@@ -32,7 +32,6 @@ namespace kernel
 class LogisticStocksDialog : public QDialog
                            , public tools::Observer_ABC
                            , public kernel::ContextMenuObserver_ABC< kernel::Agent_ABC >
-                           , public tools::ElementObserver_ABC< kernel::ModelUnLoaded >
 {
     Q_OBJECT
     
@@ -45,7 +44,6 @@ public:
 
     //! @name Operations
     //@{
-    virtual void NotifyUpdated( const kernel::ModelUnLoaded& );
     virtual void NotifyContextMenu( const kernel::Agent_ABC& agent, kernel::ContextMenu& menu );
     //@}
 
@@ -53,7 +51,7 @@ private slots:
     //! @name Slots
     //@{
     void Accept();
-    void Reject();
+    void reject();
     void ShowDialog();
     //@}
 
