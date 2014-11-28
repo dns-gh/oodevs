@@ -253,8 +253,7 @@ void ColorStrategy::SelectColor( const Object_ABC& object )
 // -----------------------------------------------------------------------------
 void ColorStrategy::SelectColor( const Population_ABC& population )
 {
-    QColor color = FindSuperiorColor( population, colorController_, FindBaseColor( population ) );
-    Process( population, colorController_.Apply( population, color ) );
+    Process( population );
 }
 
 // -----------------------------------------------------------------------------
