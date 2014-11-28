@@ -11,10 +11,18 @@ package server
 import (
 	"masa/timeline/sdk"
 	"sort"
+	"time"
 )
 
 // EventsSlice maintains a sequence of *Event sorted by ascending dates.
 type EventSlice []*Event
+
+func (e EventSlice) Search(now time.Time) int {
+	return sort.Search(len(e), func(i int) bool {
+		v := e[i].begin
+		return v.Equal(now) || v.After(now)
+	})
+}
 
 func (e *Event) Less(other *Event) bool {
 	diff := e.begin.Sub(other.begin)

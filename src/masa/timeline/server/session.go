@@ -345,11 +345,9 @@ func (s *Session) triggerEvent(event *Event) {
 }
 
 func (s *Session) triggerEvents(begin, end time.Time) {
-	for _, event := range s.events {
+	idx := s.events.Search(begin)
+	for _, event := range s.events[idx:] {
 		if event.done {
-			continue
-		}
-		if event.begin.Before(begin) {
 			continue
 		}
 		if event.begin.After(end) {
