@@ -11,6 +11,10 @@
 #include "ColorEditor.h"
 #include "moc_ColorEditor.cpp"
 #include "gaming/Color.h"
+#include "gaming/Objects.h"
+#include "gaming/Object.h"
+#include "gaming/Populations.h"
+#include "gaming/Population.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/tools.h"
 #include "clients_kernel/Color_ABC.h"
@@ -117,6 +121,18 @@ namespace
         if( auto pTacticalHierarchies =  entity.Retrieve< kernel::TacticalHierarchies >() )
             for( auto it = pTacticalHierarchies->CreateSubordinateIterator(); it.HasMoreElements(); )
                 ApplyDefaultColor( it.NextElement(), strategy, colorController, applyToSubordinates );
+        if( const auto objects = entity.Retrieve< Objects >() )
+        {
+            auto it = objects->CreateIterator();
+            while( it.HasMoreElements() )
+                colorController.Add( it.NextElement(), baseColor, false );
+        }
+        if( const auto populations = entity.Retrieve< Populations >() )
+        {
+            auto it = populations->CreateIterator();
+            while( it.HasMoreElements() )
+                colorController.Add( it.NextElement(), baseColor, false );
+        }
     }
 }
 
