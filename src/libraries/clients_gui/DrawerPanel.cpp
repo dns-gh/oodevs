@@ -117,12 +117,13 @@ DrawerPanel::DrawerPanel( QWidget* parent,
     QToolTip::add( btn, tr( "Add text" ) );
     connect( btn, SIGNAL( clicked() ), SLOT( StartTextEdition() ) );
 
-    btn = new RichWidget< QToolButton >( "startDrawing", box );
-    btn->setAutoRaise( true );
-    btn->setIconSet( MAKE_PIXMAP( pencil ) );
-    btn->setFixedSize( 25, 25 );
-    QToolTip::add( btn, tr( "Start drawing" ) );
-    connect( btn, SIGNAL( clicked() ), SLOT( StartDrawing() ) );
+    drawButton_ = new RichWidget< QToolButton >( "startDrawing", box );
+    drawButton_->setAutoRaise( true );
+    drawButton_->setIconSet( MAKE_PIXMAP( pencil ) );
+    drawButton_->setFixedSize( 25, 25 );
+    QToolTip::add( drawButton_, tr( "Start drawing" ) );
+    connect( drawButton_, SIGNAL( clicked() ), SLOT( StartDrawing() ) );
+    drawButton_->setEnabled( false );
 
     RichWidget< QComboBox >* combo = new RichWidget< QComboBox >( "line", box );;
     combo->setEditable( false );
@@ -249,6 +250,7 @@ void DrawerPanel::AfterSelection()
         parentLabel_->setText( selectedDrawing_->GetDiffusionEntity()->GetName() );
     else
         parentLabel_->setText( "---" );
+    UpdateDrawButton();
 }
 
 // -----------------------------------------------------------------------------
@@ -285,6 +287,7 @@ void DrawerPanel::Select( const kernel::Formation_ABC& element )
 void DrawerPanel::OnSelect( const DrawingTemplate& style )
 {
     selectedStyle_ = &style;
+    UpdateDrawButton();
 }
 
 // -----------------------------------------------------------------------------
@@ -305,14 +308,6 @@ void DrawerPanel::StartDrawing()
 {
     if( !selectedStyle_ )
         return;
-    const kernel::Entity_ABC* entity = 0;
-    if( selectedDrawing_ )
-        entity = selectedDrawing_->GetDiffusionEntity();
-    else
-        entity = selectedEntity_;
-    if( !entity && !profile_.IsSupervision() || entity && !profile_.CanBeOrdered( *entity ) )
-        return;
-
     const QString type = selectedStyle_->GetType();
     if( type == "line" )
         layer_->StartLine( *this );
@@ -339,6 +334,8 @@ void DrawerPanel::StartTextEdition()
 
     selectedStyle_ = &types_.Get( "Internal" ).GetTemplate( "Text" );
     layer_->StartText( *this, color_->GetColor() );
+
+    UpdateDrawButton();
 }
 
 // -----------------------------------------------------------------------------
@@ -431,4 +428,32 @@ void DrawerPanel::NotifyUpdated( const kernel::Entity_ABC& entity )
 {
     if( selectedEntity_ == &entity || selectedDrawing_ && selectedDrawing_->GetDiffusionEntity() == &entity )
         parentLabel_->setText( entity.GetName() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DrawerPanel::NotifyUpdated
+// Created: JSR 2014-11-28
+// -----------------------------------------------------------------------------
+void DrawerPanel::NotifyUpdated( const kernel::Profile_ABC& )
+{
+    UpdateDrawButton();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DrawerPanel::UpdateDrawButton
+// Created: JSR 2014-11-28
+// -----------------------------------------------------------------------------
+void DrawerPanel::UpdateDrawButton()
+{
+    if( !selectedStyle_ || selectedStyle_->GetType() == "text" )
+    {
+        drawButton_->setEnabled( false );
+        return;
+    }
+    const kernel::Entity_ABC* entity = 0;
+    if( selectedDrawing_ )
+        entity = selectedDrawing_->GetDiffusionEntity();
+    else
+        entity = selectedEntity_;
+    drawButton_->setEnabled( entity ? profile_.CanBeOrdered( *entity ) : profile_.IsSupervision() );
 }
