@@ -26,7 +26,6 @@ namespace kernel
 namespace sword
 {
     class Report;
-    class InvalidateReport;
     class Trace;
 }
 
@@ -42,7 +41,6 @@ class ReportFactory;
 // =============================================================================
 class Reports : public kernel::Extension_ABC
               , public kernel::Updatable_ABC< sword::Report >
-              , public kernel::Updatable_ABC< sword::InvalidateReport >
               , public kernel::Updatable_ABC< sword::Trace >
               , public kernel::Displayable_ABC
 {
@@ -82,7 +80,6 @@ private:
     //! @name Helpers
     //@{
     virtual void DoUpdate( const sword::Report& message );
-    virtual void DoUpdate( const sword::InvalidateReport& msg );
     virtual void DoUpdate( const sword::Trace& msg );
     //@}
 

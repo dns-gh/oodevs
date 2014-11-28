@@ -62,16 +62,6 @@ void Reports::DoUpdate( const sword::Report& message )
 
 // -----------------------------------------------------------------------------
 // Name: Reports::DoUpdate
-// Created: AGE 2007-10-22
-// -----------------------------------------------------------------------------
-void Reports::DoUpdate( const sword::InvalidateReport& message )
-{
-    reports_.erase( message.report().id() );
-    controller_.Update( *this );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Reports::DoUpdate
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
 void Reports::DoUpdate( const sword::Trace& message )
