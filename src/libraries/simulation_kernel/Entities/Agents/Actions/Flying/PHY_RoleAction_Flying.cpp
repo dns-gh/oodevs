@@ -184,7 +184,7 @@ bool PHY_RoleAction_Flying::CanMove() const
 // -----------------------------------------------------------------------------
 bool PHY_RoleAction_Flying::IsFlying() const
 {
-    return pActionFly_ != 0;
+    return rHeight_ != 0;
 }
 
 // -----------------------------------------------------------------------------
