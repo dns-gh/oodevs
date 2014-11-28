@@ -111,7 +111,7 @@ namespace
         const QColor baseColor = FindBaseColor( entity, strategy );
         if( auto color = const_cast< kernel::Color_ABC* >( entity.Retrieve< kernel::Color_ABC >() ) )
             color->ChangeColor( baseColor );
-        colorController.Add( entity, baseColor, false, true );
+        colorController.Add( entity, baseColor, false );
         if( !applyToSubordinates )
             return;
         if( auto pTacticalHierarchies =  entity.Retrieve< kernel::TacticalHierarchies >() )
