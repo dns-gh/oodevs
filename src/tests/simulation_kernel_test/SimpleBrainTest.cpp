@@ -124,8 +124,8 @@ protected:
         brain.RegisterFunction( "DEC_GetRawMission", &GetRawMission );
         directia::tools::binders::ScriptRef initFunction = brain.GetScriptRef( "InitTaskParameter" );
         bool isMasalife = false;
-        brain.RegisterFunction( "DEC_FillMissionParameters",
-            std::function< void( const directia::tools::binders::ScriptRef&, boost::shared_ptr< MIL_Mission_ABC > ) >( boost::bind( &DEC_MiscFunctions::FillMissionParameters, boost::ref( brain ), boost::ref( initFunction ), _1 , _2, isMasalife ) ) );
+        brain.RegisterFunction( "_DEC_FillMissionParameters",
+            std::function< void( DEC_Decision_ABC*, const directia::tools::binders::ScriptRef&, const directia::tools::binders::ScriptRef&, boost::shared_ptr< MIL_Mission_ABC > ) >( boost::bind( &DEC_MiscFunctions::FillMissionParameters, _1, _2, _3, _4, isMasalife ) ) );
         if( pOther_ )
             brain.GetScriptRef( "other" ) = pOther_;
     }
