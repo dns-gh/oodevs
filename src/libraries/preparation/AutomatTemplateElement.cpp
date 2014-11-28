@@ -10,7 +10,6 @@
 #include "preparation_pch.h"
 #include "AutomatTemplateElement.h"
 #include "AgentsModel.h"
-
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/AutomatType.h"
@@ -63,7 +62,7 @@ AutomatTemplateElement::~AutomatTemplateElement()
 // -----------------------------------------------------------------------------
 kernel::Entity_ABC* AutomatTemplateElement::Instanciate( kernel::Entity_ABC& superior,
                                                          const geometry::Point2f&,
-                                                         ColorController& colorController )
+                                                         gui::ColorController_ABC& colorController )
 {
     if( superior.GetTypeName() == kernel::Formation_ABC::typeName_ )
     {

@@ -19,8 +19,12 @@ namespace kernel
     class AgentTypes;
 }
 
+namespace gui
+{
+    class ColorController_ABC;
+}
+
 class AgentsModel;
-class ColorController;
 class FormationModel;
 class GhostModel;
 class HierarchyTemplate;
@@ -45,7 +49,7 @@ public:
                                FormationModel& formations,
                                GhostModel& ghosts,
                                const kernel::AgentTypes& types,
-                               ColorController& colorController );
+                               gui::ColorController_ABC& colorController );
     virtual ~TemplateListView();
     //@}
 
@@ -88,7 +92,7 @@ private:
     FormationModel& formations_;
     GhostModel& ghosts_;
     const kernel::AgentTypes& types_;
-    ColorController& colorController_;
+    gui::ColorController_ABC& colorController_;
     T_Templates templates_;
     tools::Path file_;
     //@}

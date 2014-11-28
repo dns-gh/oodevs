@@ -24,8 +24,12 @@ namespace kernel
     class ModelUnLoaded;
 }
 
+namespace gui
+{
+    class ColorController_ABC;
+}
+
 class AgentsModel;
-class ColorController;
 class FormationModel;
 class GhostModel;
 class TemplateListView;
@@ -54,7 +58,7 @@ public:
                              FormationModel& formations,
                              GhostModel& ghosts,
                              const kernel::AgentTypes& types,
-                             ColorController& colorController );
+                             gui::ColorController_ABC& colorController );
     virtual ~TemplatesPanel();
     //@}
 

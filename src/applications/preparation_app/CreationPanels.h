@@ -25,6 +25,7 @@ namespace kernel
 
 namespace gui
 {
+    class ColorController_ABC;
     class ColorStrategy_ABC;
     class GLView_ABC;
     class ParametersLayer;
@@ -32,7 +33,6 @@ namespace gui
     class WeatherLayer;
 }
 
-class ColorController;
 class GhostsPanel;
 class InhabitantCreationPanel;
 class Model;
@@ -61,7 +61,7 @@ public:
                              const std::shared_ptr< gui::ParametersLayer >& paramLayer,
                              const std::shared_ptr< gui::WeatherLayer >& weatherLayer,
                              gui::GLView_ABC& glProxy,
-                             ColorController& colorController,
+                             gui::ColorController_ABC& colorController,
                              const kernel::Profile_ABC& profile );
     virtual ~CreationPanels();
     //@}

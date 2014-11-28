@@ -44,7 +44,7 @@ DockContainer::DockContainer( QMainWindow* parent,
                               gui::SymbolIcons& symbols,
                               gui::ColorStrategy_ABC& colorStrategy,
                               gui::GLMainProxy& glMainProxy,
-                              ColorController& colorController,
+                              gui::ColorController_ABC& colorController,
                               const kernel::Profile_ABC& profile )
     : pCreationPanel_  ( 0 )
     , pLivingAreaPanel_( 0 )

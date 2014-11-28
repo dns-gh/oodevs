@@ -59,7 +59,7 @@ FormationTemplateElement::~FormationTemplateElement()
 // -----------------------------------------------------------------------------
 kernel::Entity_ABC* FormationTemplateElement::Instanciate( kernel::Entity_ABC& superior,
                                                            const geometry::Point2f&,
-                                                           ColorController& colorController )
+                                                           gui::ColorController_ABC& colorController )
 {
     kernel::Formation_ABC* formation = formations_.Create( superior, static_cast< E_NatureLevel >( levelId_ ), name_ );
     if( formation )

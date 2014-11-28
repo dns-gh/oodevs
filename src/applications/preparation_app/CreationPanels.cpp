@@ -37,7 +37,7 @@ CreationPanels::CreationPanels( QWidget* parent,
                                 const std::shared_ptr< gui::ParametersLayer >& paramLayer,
                                 const std::shared_ptr< gui::WeatherLayer >& weatherLayer,
                                 gui::GLView_ABC& view,
-                                ColorController& colorController,
+                                gui::ColorController_ABC& colorController,
                                 const kernel::Profile_ABC& profile )
     : Panels( "CreationPanels", parent )
 {

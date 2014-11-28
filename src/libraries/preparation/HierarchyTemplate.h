@@ -12,6 +12,11 @@
 
 #include <boost/noncopyable.hpp>
 
+namespace gui
+{
+    class ColorController_ABC;
+}
+
 namespace kernel
 {
     class Entity_ABC;
@@ -20,7 +25,6 @@ namespace kernel
 
 class AgentFactory_ABC;
 class AgentsModel;
-class ColorController;
 class FormationFactory_ABC;
 class FormationModel;
 class GhostModel;
@@ -42,13 +46,13 @@ public:
                                 GhostModel& ghosts,
                                 const kernel::Entity_ABC& base,
                                 bool root,
-                                ColorController& colorController );
+                                gui::ColorController_ABC& colorController );
              HierarchyTemplate( AgentsModel& agents,
                                 FormationModel& formations,
                                 GhostModel& ghosts,
                                 const kernel::AgentTypes& types,
                                 xml::xistream& xis,
-                                ColorController& colorController );
+                                gui::ColorController_ABC& colorController );
     virtual ~HierarchyTemplate();
     //@}
 
@@ -79,7 +83,7 @@ private:
     T_Templates subTemplates_;
     std::unique_ptr< TemplateElement > element_;
     geometry::Point2f referencePosition_;
-    ColorController& colorController_;
+    gui::ColorController_ABC& colorController_;
     //@}
 };
 

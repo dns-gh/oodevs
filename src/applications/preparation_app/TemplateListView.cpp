@@ -24,7 +24,7 @@ TemplateListView::TemplateListView( const QString& objectName,
                                     FormationModel& formations,
                                     GhostModel& ghosts,
                                     const kernel::AgentTypes& types,
-                                    ColorController& colorController )
+                                    gui::ColorController_ABC& colorController )
     : gui::RichTreeView( objectName, parent, &controllers )
     , agents_( agents )
     , formations_( formations )

@@ -11,7 +11,6 @@
 #include "GhostTemplateElement.h"
 #include "GhostCommandPostAttributes.h"
 #include "GhostModel.h"
-
 #include "clients_gui/LogisticBase.h"
 #include "clients_gui/LogisticHelpers.h"
 #include "clients_gui/Tools.h"
@@ -108,7 +107,7 @@ GhostTemplateElement::~GhostTemplateElement()
 // -----------------------------------------------------------------------------
 kernel::Entity_ABC* GhostTemplateElement::Instanciate( kernel::Entity_ABC& superior,
                                                        const geometry::Point2f& center,
-                                                       ColorController& colorController )
+                                                       gui::ColorController_ABC& colorController )
 {
     if( fromUnknownType_ )
     {

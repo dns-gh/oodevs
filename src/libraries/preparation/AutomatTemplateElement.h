@@ -44,7 +44,7 @@ private:
     //@{
     virtual kernel::Entity_ABC* Instanciate( kernel::Entity_ABC& superior,
                                              const geometry::Point2f& center,
-                                             ColorController& colorController );
+                                             gui::ColorController_ABC& colorController );
     virtual void Serialize( xml::xostream& xos ) const;
     virtual bool IsCompatible( const kernel::Entity_ABC& superior ) const;
     //@}

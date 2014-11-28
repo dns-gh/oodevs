@@ -105,7 +105,7 @@ HierarchyTemplate::HierarchyTemplate( AgentsModel& agents,
                                       GhostModel& ghosts,
                                       const Entity_ABC& base,
                                       bool root,
-                                      ColorController& colorController )
+                                      gui::ColorController_ABC& colorController )
     : colorController_( colorController )
 {
     element_.reset( CreateElement( agents,
@@ -139,7 +139,7 @@ HierarchyTemplate::HierarchyTemplate( AgentsModel& agents,
                                       GhostModel& ghosts,
                                       const AgentTypes& types,
                                       xml::xistream& xis,
-                                      ColorController& colorController )
+                                      gui::ColorController_ABC& colorController )
     : colorController_( colorController )
 {
     element_.reset( CreateElement( agents,
