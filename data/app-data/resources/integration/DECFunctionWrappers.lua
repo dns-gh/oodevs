@@ -1343,7 +1343,7 @@ function DEC_ReleverUnite( agent )
 end
 
 function DEC_PeutReleverPion( agent )
-    return DEC_PeutReleverPion( myself, agent )
+    return _DEC_PeutReleverPion( myself, agent )
 end
 
 function DEC_Suicide()
