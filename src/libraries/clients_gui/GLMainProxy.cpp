@@ -374,7 +374,7 @@ void GLMainProxy::ApplyOptions()
     } );
     const auto& entities = options.GetAggregatedEntities();
     for( auto entity = entities.begin(); entity != entities.end(); ++entity )
-            ToggleAggregation( **entity, true );
+        ToggleAggregation( **entity, true );
 }
 
 GLOptions& GLMainProxy::GetActiveOptions()
