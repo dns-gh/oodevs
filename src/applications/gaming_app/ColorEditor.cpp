@@ -34,7 +34,6 @@
 #include "clients_gui/RichPushButton.h"
 #include "clients_gui/ColorButton.h"
 #include "clients_gui/SignalAdapter.h"
-#include <boost/optional.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: ColorEditor constructor
@@ -155,17 +154,15 @@ void ColorEditor::Accept()
     if( !selected_ )
         return;
     const bool applyToSubordinates = subordinatesCheckBox_->isChecked();
-    QColor sideColor = colorStrategy_.FindTeamColor( selected_->Get< kernel::TacticalHierarchies >().GetTop() );
-    QColor currentColor = colorStrategy_.FindColor( *selected_ );
-    boost::optional< QColor > newColor;
     if( defaultButton_->isChecked() )
         ApplyDefaultColor( *selected_, colorStrategy_, colorController_, applyToSubordinates );
     else if( sideButton_->isChecked() )
-        newColor = sideColor;
+    {
+        const QColor sideColor = colorStrategy_.FindTeamColor( selected_->Get< kernel::TacticalHierarchies >().GetTop() );
+        colorController_.Add( *selected_, sideColor, applyToSubordinates, true );
+    }
     else if( customButton_->isChecked() )
-        newColor = colorButton_->GetColor();
-    if( newColor )
-        colorController_.Add( *selected_, *newColor, applyToSubordinates, true );
+        colorController_.Add( *selected_, colorButton_->GetColor(), applyToSubordinates, true );
     accept();
 }
 
