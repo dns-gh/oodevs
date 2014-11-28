@@ -25,7 +25,7 @@ integration.isObjectRemoved = function( object )
     return not DEC_IsValidKnowledgeObject( object.source )
 end
 
---- Returns the point nearest a location. If the location is of type point, the returned point will be at a distance from the point as specified when the point was created (for instance the area of effect of the corresponding object)
+--- Returns the point nearest a location (+1 meter). If the location is of type point, the returned point will be at a distance from the point as specified when the point was created (for instance the area of effect of the corresponding object)
 -- @param location Simulation location
 -- @return Simulation position
 integration.getPositionOnBorder = function( location )
