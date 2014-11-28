@@ -3164,7 +3164,7 @@ PNG (*.png)
     </message>
     <message>
         <source>Allowed object knowledge types</source>
-        <translation>Types de connaissances d'objet autorisés</translation>
+        <translation>Types de connaissances d&apos;objet autorisés</translation>
     </message>
 </context>
 <context>
