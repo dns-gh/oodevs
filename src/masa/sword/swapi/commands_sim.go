@@ -2057,8 +2057,8 @@ func (c *Client) RenameKnowledge(id uint32, name string) error {
 	return c.RenameKnowledgeTest(id, MakeParameters(MakeString(name)))
 }
 
-func (c *Client) CreateReport(report, source uint32, reportParams ...*sword.MissionParameter) error {
-	params := MakeParameters(MakeString("create_report"),
+func (c *Client) CreateReport(count, report, source uint32, reportParams ...*sword.MissionParameter) error {
+	params := MakeParameters(MakeString("create_report"), MakeIdentifier(count),
 		MakeIdentifier(report), MakeIdentifier(source), MakeParameter(MakeList(reportParams...)))
 	msg := CreateMagicAction(params, sword.MagicAction_debug_internal)
 	return <-c.postSimRequest(msg, defaultMagicHandler)

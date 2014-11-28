@@ -63,7 +63,7 @@ Reports::Reports( const tools::Path& filename )
 
 Reports::~Reports()
 {
-    // NOTHING
+    Commit();
 }
 
 namespace
@@ -121,16 +121,34 @@ namespace
     }
 }
 
+void Reports::Commit()
+{
+    if( transaction_ )
+    {
+        try
+        {
+            database_->Commit( *transaction_ );
+            transaction_.reset();
+        }
+        catch( const tools::SqlException& err )
+        {
+            MT_LOG_ERROR_MSG( err.msg );
+        }
+    }
+}
+
 void Reports::AddReport( const sword::Report& report, int tick )
 {
     try
     {
+        if( !transaction_ )
+            transaction_ = database_->Begin( true );
+
         const auto source = TaskerToId( report.source() );
         if( !source )
             throw MASA_EXCEPTION( "Invalid tasker" );
 
-        auto tr = database_->Begin( true );
-        auto st = database_->Prepare( *tr,
+        auto st = database_->Prepare( *transaction_,
             "INSERT INTO reports ("
             "            id "
             ",           source "
@@ -161,7 +179,6 @@ void Reports::AddReport( const sword::Report& report, int tick )
             st->Bind();
 
         Execute( *st );
-        database_->Commit( *tr );
     }
     catch( const tools::SqlException& err )
     {
@@ -216,7 +233,7 @@ void Reports::ListReports( sword::ListReportsAck& reports, unsigned int count,
         sql += "ORDER BY id ASC "
                "LIMIT  ? ";
 
-        tools::Sql_ABC::T_Transaction tr = database_->Begin( false );
+        tools::Sql_ABC::T_Transaction tr = transaction_ ? transaction_ : database_->Begin( false );
         tools::Sql_ABC::T_Statement st = database_->Prepare( *tr, sql );
 
         st->Bind( fromTick );
@@ -239,6 +256,7 @@ void Reports::Save( const tools::Path& filename )
 {
     try
     {
+        Commit();
         database_->Save( filename );
     }
     catch( const tools::SqlException& err )

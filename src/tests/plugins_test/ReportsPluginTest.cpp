@@ -70,11 +70,13 @@ namespace
                 "date2", CreateFormationTasker( 12345 ) );
             reports->AddReport( report1, 12 );
             reports->AddReport( report2, 12 );
+            reports->Commit();
 
             FillReport( report3, 540, 2, sword::Report_EnumReportType_exceptional_event,
                 "date3", CreateCrowdTasker( 123456 ) );
             FillParameters( report3 );
             reports->AddReport( report3, 14 );
+            reports->Commit();
         }
     tools::TemporaryDirectory tempDir;
     std::unique_ptr< Reports > reports;
@@ -148,4 +150,16 @@ BOOST_FIXTURE_TEST_CASE( list_reports_with_range_tick, Fixture )
     ack.Clear();
     reports->ListReports( ack, std::numeric_limits< int >::max(), boost::none, 13, 14 );
     CheckReports( ack, boost::assign::list_of< sword::Report >( report3 ) );
+}
+
+BOOST_FIXTURE_TEST_CASE( list_reports_no_committed, Fixture )
+{
+    sword::Report report;
+    FillReport( report, 539, 0, sword::Report_EnumReportType_information,
+        "date6", CreateUnitTasker( 75002 ) );
+     reports->AddReport( report, 165 );
+
+     sword::ListReportsAck ack;
+     reports->ListReports( ack, std::numeric_limits< int >::max(), boost::none, minTick, maxTick );
+     CheckReports( ack, boost::assign::list_of< sword::Report >( report )( report3 )( report2 )( report1 ) );
 }
