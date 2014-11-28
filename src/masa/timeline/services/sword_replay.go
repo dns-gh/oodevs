@@ -15,6 +15,7 @@ import (
 	"masa/sword/swapi"
 	"masa/timeline/sdk"
 	"masa/timeline/util"
+	"net/http"
 	"time"
 )
 
@@ -24,8 +25,11 @@ var (
 
 func checkTime(parameter string, replayBegin, replayEnd time.Time) (eventTime time.Time, err error) {
 	eventTime, err = util.ParseTime(parameter)
-	if err != nil || eventTime.Before(replayBegin) || eventTime.After(replayEnd) {
-		err = ErrInvalidReplayEventParameter
+	if err != nil {
+		return
+	}
+	if eventTime.Before(replayBegin) || eventTime.After(replayEnd) {
+		err = util.NewError(http.StatusBadRequest, "Event time "+parameter+" is out of replay boundaries")
 	}
 	return
 }
@@ -61,30 +65,23 @@ func updatePayload(index, size int, event *sdk.Event) {
 	event.Action.Payload = marshal(begin, end, enabled)
 }
 
-func modifyEvent(update *sdk.Event, events []*sdk.Event) {
-	index := len(events)
+func applyModification(update *sdk.Event, events *[]*sdk.Event) {
+	index := len(*events)
 	updateBegin, _ := util.ParseTime(update.GetBegin())
-	for i, event := range events {
+	for i, event := range *events {
 		// event found and modified
-		if update.Uuid == event.Uuid {
-			events[i] = CloneEvent(update)
+		if update.GetUuid() == event.GetUuid() {
+			(*events)[i] = CloneEvent(update)
 			return
 		}
 		begin, _ := util.ParseTime(event.GetBegin())
-		end, _ := util.ParseTime(event.GetEnd())
-		// find the index to insert the event
-		if updateBegin.After(begin) && updateBegin.Before(end) {
+		if begin.After(updateBegin) {
 			index = i
+			break
 		}
 	}
 	// insert the event
-	events = append(events[:index], append([]*sdk.Event{update}, events[index:]...)...)
-}
-
-func modifyEvents(updates, events []*sdk.Event) {
-	for _, update := range updates {
-		modifyEvent(update, events)
-	}
+	*events = append((*events)[:index], append([]*sdk.Event{update}, (*events)[index:]...)...)
 }
 
 func checkContinuity(start, end time.Time, events []*sdk.Event) bool {
@@ -103,25 +100,22 @@ func checkContinuity(start, end time.Time, events []*sdk.Event) bool {
 func (s *Sword) checkEventModification(event *sdk.Event, eventBegin, eventEnd time.Time) (bool, error) {
 	for index, replay := range s.replays {
 		if event.GetUuid() == replay.GetUuid() {
-			// Cannot modify both begin and end boundaries
 			if replay.GetBegin() != event.GetBegin() && replay.GetEnd() != event.GetEnd() {
-				return false, ErrInvalidReplayEventParameter
+				return false, util.NewError(http.StatusBadRequest, "Cannot modify both boundaries")
 			}
-			// Cannot create gap between events and replay boundaries
 			if index == 0 && eventBegin.After(s.startTime) || index == len(s.replays)-1 && eventEnd.Before(s.endTime) {
-				return false, ErrInvalidReplayEventParameter
+				return false, util.NewError(http.StatusBadRequest, "Cannot create gap between events and replay boundaries")
 			}
-			// Cannot overlap more than one event
 			if index > 0 {
 				previousReplay, _ := util.ParseTime(s.replays[index-1].GetBegin())
 				if previousReplay.After(eventBegin) {
-					return false, ErrInvalidReplayEventParameter
+					return false, util.NewError(http.StatusBadRequest, "Cannot overlap more than one event")
 				}
 			}
 			if index < len(s.replays)-1 {
 				nextEnd, _ := util.ParseTime(s.replays[index+1].GetEnd())
 				if nextEnd.Before(eventEnd) {
-					return false, ErrInvalidReplayEventParameter
+					return false, util.NewError(http.StatusBadRequest, "Cannot overlap more than one event")
 				}
 			}
 			return true, nil
@@ -155,9 +149,9 @@ func (s *Sword) filterEvents(events ...*sdk.Event) ([]*sdk.Event, error) {
 		if err != nil {
 			return result, err
 		}
-		// Cannot modify event with invalid range
+
 		if eventBegin == eventEnd || eventBegin.After(eventEnd) {
-			return result, ErrInvalidReplayEventParameter
+			return result, util.NewError(http.StatusBadRequest, "Invalid replay range modification")
 		}
 		// Checks payload error
 		err = checkPayload(event)
@@ -184,7 +178,7 @@ func (s *Sword) filterEvents(events ...*sdk.Event) ([]*sdk.Event, error) {
 			continue
 		}
 		// If there is no valid modification or no valid creation, it's an error
-		return result, ErrInvalidReplayEventParameter
+		return result, util.NewError(http.StatusBadRequest, "Invalid event update")
 		//return result, nil
 	}
 	// return replay event filtered, with no error
@@ -252,19 +246,33 @@ func (s *Sword) splitEvent(modified *bool, event *sdk.Event, eventBegin, eventEn
 	copy(*replays, replaysCopy)
 }
 
-func (s *Sword) updateReplay(event *sdk.Event) {
-	// check if the event has replay protocol
-	if !isSwordEvent(event, "replay", false) {
-		return
-	}
-	// modifying replay event, filling all gaps
-	for index, replay := range s.replays {
-		if event.GetUuid() == replay.GetUuid() {
-			s.replays[index] = CloneEvent(event)
-			return
+func (s *Sword) isModification(event *sdk.Event) bool {
+	for _, replay := range s.replays {
+		if replay.GetUuid() == event.GetUuid() {
+			return true
 		}
 	}
-	s.replays = append(s.replays, CloneEvent(event))
+	return false
+}
+
+func (s *Sword) updateReplay(events ...*sdk.Event) {
+	eventsToApply := []*sdk.Event{}
+	for _, event := range events {
+		// check if the event has replay protocol
+		if !isSwordEvent(event, "replay", false) {
+			continue
+		}
+		// reorder events, modifications are first, insertions are last
+		if s.isModification(event) {
+			eventsToApply = append(eventsToApply[:0], append([]*sdk.Event{event}, events[0:]...)...)
+		} else {
+			eventsToApply = append(eventsToApply, event)
+		}
+	}
+	// Apply modifications
+	for _, event := range eventsToApply {
+		applyModification(event, &s.replays)
+	}
 	return
 }
 
@@ -323,4 +331,47 @@ func CloneEvent(event *sdk.Event) *sdk.Event {
 	clone := &sdk.Event{}
 	swapi.DeepCopy(clone, event)
 	return clone
+}
+
+func (s *Sword) CheckEvents(events ...*sdk.Event) ([]*sdk.Event, bool, error) {
+	modified := false
+	result := []*sdk.Event{}
+	// Checks
+	filteredEvents, err := s.filterEvents(events...)
+	if err != nil {
+		return result, modified, err
+	}
+	replays := make([]*sdk.Event, len(s.replays))
+	for i := range s.replays {
+		replays[i] = CloneEvent(s.replays[i])
+	}
+	for _, event := range filteredEvents {
+		eventBegin, eventEnd, _ := checkBoundaries(event, s.startTime, s.endTime)
+		// add first replay event
+		if len(replays) == 0 {
+			replays = append(replays, CloneEvent(event))
+			result = append(result, event)
+			continue
+		}
+		if s.modifyEvent(&modified, event, &result, &replays) {
+			continue
+		}
+		s.splitEvent(&modified, event, eventBegin, eventEnd, &result, &replays)
+	}
+	if !checkContinuity(s.startTime, s.endTime, replays) {
+		return result, modified, util.NewError(http.StatusBadRequest, "Replay events are not contiguous")
+	}
+	return result, modified, nil
+}
+
+func (s *Sword) CheckDeleteEvent(uuid string) error {
+	for _, replay := range s.replays {
+		if uuid == replay.GetUuid() {
+			if len(s.replays) < 2 {
+				return util.NewError(http.StatusBadRequest, "Cannot remove the last replay event")
+			}
+			return nil
+		}
+	}
+	return nil
 }

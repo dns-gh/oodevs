@@ -18,13 +18,8 @@ import (
 	"masa/sword/sword"
 	"masa/timeline/sdk"
 	"masa/timeline/util"
-	"net/http"
 	"net/url"
 	"time"
-)
-
-var (
-	ErrInvalidReplayEventParameter = util.NewError(http.StatusBadRequest, "invalid replay parameter")
 )
 
 type SwordStatus int
@@ -425,53 +420,9 @@ func (s *Sword) cacheEvent(event *sdk.Event, overwrite bool) *swapi.SwordMessage
 	return &msg
 }
 
-func (s *Sword) CheckEvents(events ...*sdk.Event) ([]*sdk.Event, bool, error) {
-	modified := false
-	result := []*sdk.Event{}
-	// Checks
-	filteredEvents, err := s.filterEvents(events...)
-	if err != nil {
-		return result, modified, err
-	}
-	replays := make([]*sdk.Event, len(s.replays))
-	for i := range s.replays {
-		replays[i] = CloneEvent(s.replays[i])
-	}
-	for _, event := range filteredEvents {
-		eventBegin, eventEnd, _ := checkBoundaries(event, s.startTime, s.endTime)
-		// add first replay event
-		if len(replays) == 0 {
-			replays = append(replays, CloneEvent(event))
-			result = append(result, event)
-			continue
-		}
-		if s.modifyEvent(&modified, event, &result, &replays) {
-			continue
-		}
-		s.splitEvent(&modified, event, eventBegin, eventEnd, &result, &replays)
-	}
-	if !checkContinuity(s.startTime, s.endTime, replays) {
-		return result, modified, ErrInvalidReplayEventParameter
-	}
-	return result, modified, nil
-}
-
-func (s *Sword) CheckDeleteEvent(uuid string) error {
-	for _, replay := range s.replays {
-		if uuid == replay.GetUuid() {
-			// Cannot remove the last replay event
-			if len(s.replays) < 2 {
-				return ErrInvalidReplayEventParameter
-			}
-			return nil
-		}
-	}
-	return nil
-}
-
 func (s *Sword) UpdateEvents(events ...*sdk.Event) {
+	s.updateReplay(events...)
 	for _, event := range events {
-		s.updateReplay(event)
 		s.cacheEvent(event, true)
 		s.cacheMetadata(event, true)
 	}
