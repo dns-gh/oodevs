@@ -29,7 +29,7 @@ end
 -- @param location Simulation location
 -- @return Simulation position
 integration.getPositionOnBorder = function( location )
-    local polygon = DEC_Geometrie_AgrandirLocalisation( location, 0 )
+    local polygon = DEC_Geometrie_AgrandirLocalisation( location, 1 )
     return DEC_Geometrie_ComputeNearestBorder( integration.getBodyPosition(), polygon )
 end
 
