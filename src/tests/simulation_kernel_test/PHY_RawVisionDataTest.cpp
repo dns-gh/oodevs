@@ -8,8 +8,8 @@
 // *****************************************************************************
 
 #include "simulation_kernel_test_pch.h"
-#include "simulation_kernel/Meteo/RawVisionData/ElevationGrid.h"
 #include "simulation_kernel/Meteo/RawVisionData/PHY_RawVisionData.h"
+#include "simulation_terrain/TER_ElevationGrid.h"
 #include "simulation_terrain/TER_Localisation.h"
 #include "meteo/Meteo.h"
 #include "simulation_terrain/TER_World.h"

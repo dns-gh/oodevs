@@ -10,8 +10,8 @@
 #include "PHY_RawVisionDataIterator.h"
 #include "PHY_RawVisionData.h"
 #include "MIL_AgentServer.h"
-#include "ElevationGrid.h"
 #include "Meteo/PHY_MeteoDataManager.h"
+#include "simulation_terrain/TER_ElevationGrid.h"
 
 static const double rIteratorEpsilon = 1e-10;
 

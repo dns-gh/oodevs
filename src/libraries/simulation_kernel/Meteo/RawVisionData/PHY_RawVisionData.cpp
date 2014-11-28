@@ -11,10 +11,10 @@
 #include "PHY_RawVisionData.h"
 #include "PHY_AmmoEffect.h"
 #include "Meteo/PHY_LocalMeteo.h"
-#include "Meteo/RawVisionData/ElevationGrid.h"
 #include "MT_Tools/MT_Ellipse.h"
 #include "MT_Tools/MT_Logger.h"
 #include "meteo/Meteo.h"
+#include "simulation_terrain/TER_ElevationGrid.h"
 #include "simulation_terrain/TER_Localisation.h"
 #include <boost/assign.hpp>
 #include <tools/Path.h>

@@ -7,18 +7,18 @@
 //
 // *****************************************************************************
 
-#include "simulation_kernel_pch.h"
-#include "ElevationGrid.h"
+#include "simulation_terrain_pch.h"
+#include "TER_ElevationGrid.h"
 #include <tools/InputBinaryStream.h>
 #include <tools/Path.h>
 
-ElevationCell ElevationGrid::emptyCell_;
+ElevationCell TER_ElevationGrid::emptyCell_;
 
 // -----------------------------------------------------------------------------
-// Name: ElevationGrid constructor
+// Name: TER_ElevationGrid constructor
 // Created: LGY 2013-02-04
 // -----------------------------------------------------------------------------
-ElevationGrid::ElevationGrid( double cellSize, unsigned int width, unsigned int height, ElevationCell** ppCells )
+TER_ElevationGrid::TER_ElevationGrid( double cellSize, unsigned int width, unsigned int height, ElevationCell** ppCells )
     : ElevationBaseGrid( cellSize, width, height )
     , ppCells_( ppCells )
 {
@@ -26,10 +26,10 @@ ElevationGrid::ElevationGrid( double cellSize, unsigned int width, unsigned int 
 }
 
 // -----------------------------------------------------------------------------
-// Name: ElevationGrid destructor
+// Name: TER_ElevationGrid destructor
 // Created: LGY 2013-02-04
 // -----------------------------------------------------------------------------
-ElevationGrid::~ElevationGrid()
+TER_ElevationGrid::~TER_ElevationGrid()
 {
     for( unsigned int i = width_; i; )
         delete [] ppCells_[ --i ];
@@ -38,33 +38,33 @@ ElevationGrid::~ElevationGrid()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ElevationGrid::GetCellAltitude
+// Name: TER_ElevationGrid::GetCellAltitude
 // Created: LGY 2013-02-04
 // -----------------------------------------------------------------------------
-short ElevationGrid::GetCellAltitude( unsigned int col, unsigned int row ) const
+short TER_ElevationGrid::GetCellAltitude( unsigned int col, unsigned int row ) const
 {
     return GetCell( col, row ).GetAltitude();
 }
 
 // -----------------------------------------------------------------------------
-// Name: ElevationGrid::GetCell
+// Name: TER_ElevationGrid::GetCell
 // Created: LGY 2013-02-04
 // -----------------------------------------------------------------------------
-ElevationCell& ElevationGrid::GetCell( unsigned int x, unsigned int y ) const
+ElevationCell& TER_ElevationGrid::GetCell( unsigned int x, unsigned int y ) const
 {
     return ( x < width_ && y < height_ ) ? ppCells_[ x ][ y ] : emptyCell_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: ElevationGrid::GetEmptyCell
+// Name: TER_ElevationGrid::GetEmptyCell
 // Created: LGY 2013-02-04
 // -----------------------------------------------------------------------------
-ElevationCell& ElevationGrid::GetEmptyCell() const
+ElevationCell& TER_ElevationGrid::GetEmptyCell() const
 {
     return emptyCell_;
 }
 
-std::unique_ptr< ElevationGrid > LoadElevationGrid( const tools::Path& path )
+std::unique_ptr< TER_ElevationGrid > LoadElevationGrid( const tools::Path& path )
 {
     tools::InputBinaryStream archive( path );
     if( !archive )
@@ -94,6 +94,6 @@ std::unique_ptr< ElevationGrid > LoadElevationGrid( const tools::Path& path )
             cell++;
         }
     }
-    return std::unique_ptr< ElevationGrid >(
-            new ElevationGrid( cellSize, columns, rows, cells ) );
+    return std::unique_ptr< TER_ElevationGrid >(
+            new TER_ElevationGrid( cellSize, columns, rows, cells ) );
 }

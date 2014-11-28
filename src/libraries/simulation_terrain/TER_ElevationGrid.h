@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef ElevationGrid_h
-#define ElevationGrid_h
+#ifndef TER_ELEVATIONGRID_H
+#define TER_ELEVATIONGRID_H
 
 #include <graphics/ElevationBaseGrid.h>
 #include <memory>
@@ -18,11 +18,11 @@ namespace tools
     class Path;
 }
 
-class ElevationGrid;
+class TER_ElevationGrid;
 
 typedef unsigned char envBits;  // bit field
 
-std::unique_ptr< ElevationGrid > LoadElevationGrid( const tools::Path& path );
+std::unique_ptr< TER_ElevationGrid > LoadElevationGrid( const tools::Path& path );
 
 struct ElevationCell
 {
@@ -43,7 +43,7 @@ public:
         return h == rhs.h && dh == rhs.dh && e == rhs.e;
     }
 private:
-    friend std::unique_ptr< ElevationGrid > LoadElevationGrid( const tools::Path& );
+    friend std::unique_ptr< TER_ElevationGrid > LoadElevationGrid( const tools::Path& );
 
     // Take care to pack the following fields to save memory when
     // loading large elevation maps.
@@ -51,21 +51,14 @@ private:
     uint8_t  dh;    // elevation delta caused by environment
     envBits  e;     // static environment bits
 };
-//@}
 
-// =============================================================================
-/** @class  ElevationGrid
-    @brief  ElevationGrid
-*/
-// Created: LGY 2013-02-04
-// =============================================================================
-class ElevationGrid : public ElevationBaseGrid
+class TER_ElevationGrid : public ElevationBaseGrid
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             ElevationGrid( double cellSize, unsigned int width, unsigned int height, ElevationCell** ppCells );
-    virtual ~ElevationGrid();
+             TER_ElevationGrid( double cellSize, unsigned int width, unsigned int height, ElevationCell** ppCells );
+    virtual ~TER_ElevationGrid();
     //@}
 
     //! @name Operations
@@ -83,4 +76,4 @@ private:
     //@}
 };
 
-#endif // ElevationGrid_h
+#endif // TER_ELEVATIONGRID_H

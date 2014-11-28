@@ -16,7 +16,7 @@
 
 typedef unsigned char envBits;
 struct ElevationCell;
-class ElevationGrid;
+class TER_ElevationGrid;
 class MT_Ellipse;
 class MT_Vector2D;
 class PHY_IndirectFireDotationClass;
@@ -126,7 +126,7 @@ private:
 
     double rMinAltitude_;
     double rMaxAltitude_;
-    std::unique_ptr< ElevationGrid > pElevationGrid_;
+    std::unique_ptr< TER_ElevationGrid > pElevationGrid_;
     std::unique_ptr< VisionData > visionData_;
 
     const weather::Meteo& globalMeteo_;
