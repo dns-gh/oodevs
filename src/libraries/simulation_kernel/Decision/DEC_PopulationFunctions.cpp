@@ -45,7 +45,7 @@ void DEC_PopulationFunctions::Register( sword::Brain& brain )
     brain.RegisterFunction( "DEC_GetDomination", &DEC_PopulationFunctions::GetDominationState );
     brain.RegisterFunction( "DEC_ConnaissanceAgent_RoePopulation", &DEC_PopulationFunctions::GetKnowledgeAgentRoePopulation );
     brain.RegisterFunction( "DEC_ConnaissanceObjet_Localisation", &DEC_PopulationFunctions::GetKnowledgeObjectLocalisation );
-    brain.RegisterFunction( "DEC_ConnaissanceObjet_Degrader", &DEC_PopulationFunctions::DamageObject );
+    brain.RegisterFunction( "_DEC_Population_ConnaissanceObjet_Degrader", &DEC_PopulationFunctions::DamageObject );
 
     // Self
     brain.RegisterFunction( "_DEC_GetPosition", &DEC_PopulationFunctions::GetBarycenter );

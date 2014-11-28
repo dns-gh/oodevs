@@ -49,7 +49,7 @@ void DEC_UrbanObjectFunctions::Register( sword::Brain& brain )
     brain.RegisterFunction( "DEC_EtatBlocUrbain",  &DEC_UrbanObjectFunctions::GetStateUrbanBlock );
     brain.RegisterFunction( "_DEC_ConnaissanceUrbanBlock_NiveauDeReconnaissanceCourant", &DEC_UrbanObjectFunctions::GetCurrentRecceProgress );
     brain.RegisterFunction( "_DEC_ConnaissanceBlocUrbain_Traficabilite", &DEC_UrbanObjectFunctions::GetPathfindCost );
-    brain.RegisterFunction( "_DEC_DetruireBlocUrbain", &DEC_UrbanObjectFunctions::DestroyUrbanBlock );
+    brain.RegisterFunction( "_DEC_Agent_DetruireBlocUrbain", &DEC_UrbanObjectFunctions::DestroyUrbanBlock );
     brain.RegisterFunction( "_DEC_ConnaissanceBlocUrbain_RapForLocal", &DEC_UrbanObjectFunctions::GetRapForLocal );
     brain.RegisterFunction( "_DEC_Connaissances_UnitesEnnemiesVivantesDansBlocUrbain", &DEC_UrbanObjectFunctions::GetLivingEnemiesInBU );
 }

@@ -72,9 +72,8 @@ void DEC_MiscFunctions::Register( sword::Brain& brain, bool isMasalife )
     // Time
     brain.RegisterFunction( "DEC_GetTimeInSeconds", &DEC_MiscFunctions::GetTimeInSeconds );
 
-    directia::tools::binders::ScriptRef initParameterFunction = brain.GetScriptRef( "InitTaskParameter" );
-    brain.RegisterFunction( "DEC_FillMissionParameters",
-        std::function< void( const directia::tools::binders::ScriptRef&, boost::shared_ptr< MIL_Mission_ABC > ) >( boost::bind( &DEC_MiscFunctions::FillMissionParameters, boost::ref(brain), initParameterFunction, _1 , _2, isMasalife ) ) );
+    brain.RegisterFunction( "_DEC_FillMissionParameters",
+        std::function< void( DEC_Decision_ABC*, const directia::tools::binders::ScriptRef&, const directia::tools::binders::ScriptRef&, boost::shared_ptr< MIL_Mission_ABC > ) >( boost::bind( &DEC_MiscFunctions::FillMissionParameters, _1, _2, _3, _4, isMasalife ) ) );
 
     // Report
     brain.RegisterFunction( "DEC_RC1", &DEC_MiscFunctions::Report );
@@ -240,19 +239,17 @@ void DEC_MiscFunctions::DeleteOrderRepresentation( const DEC_Decision_ABC* calle
     role.DeleteOrderRepresentation( pOrder );
 }
 
-namespace DEC_DecisionImpl
-{
-    void RegisterMissionParameters( sword::Brain& brain, directia::tools::binders::ScriptRef& knowledgeCreateFunction, const directia::tools::binders::ScriptRef& refMission, const boost::shared_ptr< MIL_Mission_ABC > mission, bool isMasalife );
-}
-
 // -----------------------------------------------------------------------------
 // Name: DEC_MiscFunctions::FillMissionParameters
 // Created: LDC 2009-05-04
 // -----------------------------------------------------------------------------
-void DEC_MiscFunctions::FillMissionParameters( sword::Brain& brain, directia::tools::binders::ScriptRef& initTaskFunction, const directia::tools::binders::ScriptRef& refMission, boost::shared_ptr< MIL_Mission_ABC > pMission, bool isMasalife )
+void DEC_MiscFunctions::FillMissionParameters( DEC_Decision_ABC* actor, const directia::tools::binders::ScriptRef& initTaskFunction, const directia::tools::binders::ScriptRef& refMission, boost::shared_ptr< MIL_Mission_ABC > pMission, bool isMasalife )
 {
     if( pMission )
-        DEC_DecisionImpl::RegisterMissionParameters( brain, initTaskFunction, refMission, pMission, isMasalife );
+    {
+        directia::tools::binders::ScriptRef func( initTaskFunction );
+        actor->FillMissionParameters( func, refMission, pMission, isMasalife );
+    }
 }
 
 // -----------------------------------------------------------------------------

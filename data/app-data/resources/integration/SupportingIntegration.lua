@@ -15,7 +15,7 @@ local defaultPhForMinRange = 0.9 -- used in integration.firingRangeToSupport
 -- <li> The maximum firing range for this entity to support an agent </li>
 -- <li> Whether or not the ranges in this table pertain to indirect fire </li> </ul>
 integration.firingRangeToSupport = function( phForMinRange, phForMaxRange )
-    local tirIndirect = { DEC_Tir_PorteeMaxTirIndirectSansChoisirMunition() / 3, DEC_Tir_PorteeMaxTirIndirectSansChoisirMunition() / 2, true }
+    local tirIndirect = { DEC_Tir_PorteeMaxTirIndirectSansChoisirMunition( myself ) / 3, DEC_Tir_PorteeMaxTirIndirectSansChoisirMunition( myself ) / 2, true }
     local tirDirect = { DEC_Tir_PorteeMaxPourTirer( myself, phForMinRange or defaultPhForMinRange ) / 2,
                         DEC_Tir_PorteeMaxPourTirer( myself, phForMaxRange or defaultPhForMaxRange ) / 2, false }
     if tirIndirect[2] > tirDirect[2] then

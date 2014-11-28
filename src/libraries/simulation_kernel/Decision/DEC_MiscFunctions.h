@@ -104,8 +104,7 @@ public:
     static void RemoveEnemyRepresentation( const boost::shared_ptr< DEC_Knowledge_Agent >& agent );
     static std::vector< boost::shared_ptr< DEC_Knowledge_Agent > > GetEnemyRepresentation( DEC_Decision_ABC* caller );
 
-    //
-    static void FillMissionParameters                         ( sword::Brain& brain, directia::tools::binders::ScriptRef& initTaskFunction, const directia::tools::binders::ScriptRef& refMission, boost::shared_ptr< MIL_Mission_ABC > mission, bool isMasalife );
+    static void FillMissionParameters( DEC_Decision_ABC* actor, const directia::tools::binders::ScriptRef& initTaskFunction, const directia::tools::binders::ScriptRef& refMission, boost::shared_ptr< MIL_Mission_ABC > mission, bool isMasalife );
 
     static std::string  GetName                               ( DEC_Decision_ABC* pEntity );
     static DEC_Decision_ABC* GetAutomate                      ( DEC_Decision_ABC* pAgent );

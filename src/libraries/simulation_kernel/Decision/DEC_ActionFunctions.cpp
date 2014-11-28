@@ -203,7 +203,7 @@ void DEC_ActionFunctions::Register( sword::Brain& brain )
     brain.RegisterFunction( "_DEC__StartTirSurPions", &DEC_ActionFunctions::StartAction< PHY_Population_ActionFireOnPions, float > );
     brain.RegisterFunction( "_DEC__StartTirSurPion", &DEC_ActionFunctions::StartAction< PHY_Population_ActionFireOnPion, float, unsigned int > );
     brain.RegisterFunction( "_DEC_StartTirSurPion", &DEC_ActionFunctions::StartAction< PHY_Population_ActionFireOnPion, float, DEC_Decision_ABC* > );
-    brain.RegisterFunction( "_DEC_DetruireBlocUrbain",  &DEC_ActionFunctions::StartAction< PHY_Population_ActionUrbanDestruction, MIL_UrbanObject_ABC* > );
+    brain.RegisterFunction( "_DEC_Population_DetruireBlocUrbain",  &DEC_ActionFunctions::StartAction< PHY_Population_ActionUrbanDestruction, MIL_UrbanObject_ABC* > );
     brain.RegisterFunction( "_DEC_StartAgresserFoule", &DEC_ActionFunctions::StartAction< PHY_Population_ActionBattle > );
 
     brain.RegisterFunction( "DEC_Agent_AgentPeutTransporterPion", &DEC_ActionFunctions::AgentCanTransportPion );

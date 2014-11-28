@@ -98,7 +98,7 @@ void DEC_KnowledgeObjectFunctions::Register( sword::Brain& brain )
     brain.RegisterFunction( "_DEC_ConnaissanceObjet_Reconnaitre", &DEC_KnowledgeObjectFunctions::Recon );
     brain.RegisterFunction( "_DEC_ConnaissanceObjet_PeutEtreOccupe", &DEC_KnowledgeObjectFunctions::CanBeOccupied );
     brain.RegisterFunction( "_DEC_ConnaissanceObjet_PeutEtreAnime", &DEC_KnowledgeObjectFunctions::CanBeAnimated );
-    brain.RegisterFunction( "_DEC_ConnaissanceObjet_Degrader", &DEC_KnowledgeObjectFunctions::DamageObject );
+    brain.RegisterFunction( "_DEC_Agent_ConnaissanceObjet_Degrader", &DEC_KnowledgeObjectFunctions::DamageObject );
     brain.RegisterFunction( "_DEC_ConnaissanceObjet_NiveauDePerceptionCourant", &DEC_KnowledgeObjectFunctions::GetCurrentPerceptionLevel );
     brain.RegisterFunction( "_DEC_Agent_TempsPourDegagerUnObjet", &DEC_KnowledgeObjectFunctions::EstimatedWorkTime );
     brain.RegisterFunction( "_DEC_DecontaminerZone", &DEC_KnowledgeObjectFunctions::DecontaminateZone );
