@@ -50,10 +50,9 @@ public:
     virtual void ChangeColor( const T_Color& color );
     virtual void ChangeColor( xml::xistream& xis );
     virtual void Clear();
+    virtual const boost::optional< T_Color >& GetBaseColor() const;
 
     virtual void SerializeAttributes( xml::xostream& xos ) const;
-
-    const T_Color& GetBaseColor() const;
 
 private:
     boost::optional< T_Color > color_;

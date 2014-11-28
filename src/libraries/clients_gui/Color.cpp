@@ -106,9 +106,7 @@ void Color::Clear()
     color_ = boost::none;
 }
 
-const kernel::Color_ABC::T_Color& Color::GetBaseColor() const
+const boost::optional< kernel::Color_ABC::T_Color >& Color::GetBaseColor() const
 {
-    if( !base_ )
-        throw MASA_EXCEPTION( "Accessing invalid color" );
-    return *base_;
+    return base_;
 }

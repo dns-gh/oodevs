@@ -96,15 +96,11 @@ ColorEditor::~ColorEditor()
 
 namespace
 {
-    QColor ToColor( const kernel::Color_ABC::T_Color& color )
-    {
-        return QColor( color.get< 0 >(), color.get< 1 >(), color.get< 2 >() );
-    }
-
     QColor FindBaseColor( const kernel::Entity_ABC& entity, gui::ColorStrategy_ABC& strategy )
     {
         if( auto color = entity.Retrieve< kernel::Color_ABC >() )
-            return ToColor( static_cast< const gui::Color& >( *color ).GetBaseColor() );
+            if( const auto& baseColor = color->GetBaseColor() )
+                return QColor( baseColor->get< 0 >(), baseColor->get< 1 >(), baseColor->get< 2 >() );
         return strategy.FindBaseColor( entity );
     }
 
@@ -250,7 +246,7 @@ void ColorEditor::NotifyContextMenu( const kernel::Population_ABC& entity, kerne
 // -----------------------------------------------------------------------------
 void ColorEditor::NotifyUpdated( const kernel::Team_ABC& team )
 {
-    if( const kernel::Color_ABC* pTeamColor = team.Retrieve< kernel::Color_ABC >() )
+    if( const kernel::Color_ABC* pTeamColor = team.Retrieve< kernel::Color_ABC >() ) // $$$$ MCO what's this ?
     {
         const QColor baseColor = colorStrategy_.FindBaseColor( team );
         if( pTeamColor->IsOverriden() && static_cast< QColor >( *pTeamColor ) != baseColor )
