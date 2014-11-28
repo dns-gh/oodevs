@@ -129,13 +129,13 @@ void ColorController::AddSubordinate( const kernel::Entity_ABC& entity, const QC
 // Name: ColorController::Remove
 // Created: LGY 2011-06-23
 // -----------------------------------------------------------------------------
-void ColorController::Remove( const kernel::Entity_ABC& entity, bool applyToSubordinates /*= true*/, bool force /*= false*/ )
+void ColorController::Remove( const kernel::Entity_ABC& entity )
 {
     auto it = colors_.find( entity.GetId() );
     if( it == colors_.end() )
         return;
     const QColor color = it->second;
-    RemoveSubordinate( entity, color, applyToSubordinates, force );
+    RemoveSubordinate( entity, color, true, false );
     if( const auto pHierarchies = entity.Retrieve< kernel::TacticalHierarchies >() )
         if( const auto pSuperior = pHierarchies->GetSuperior() )
             if( const auto pColor = pSuperior->Retrieve< kernel::Color_ABC >() )

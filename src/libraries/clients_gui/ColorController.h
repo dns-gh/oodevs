@@ -48,7 +48,7 @@ public:
     //! @name Operations
     //@{
     virtual void Add( const kernel::Entity_ABC& entity, const QColor& newColor, bool applyToSubordinates = true, bool force = false );
-    virtual void Remove( const kernel::Entity_ABC& entity, bool applyToSubordinates = true, bool force = false );
+    virtual void Remove( const kernel::Entity_ABC& entity );
     virtual void Reset( const kernel::Entity_ABC& entity, const QColor& newColor );
 
     virtual QColor Apply( const kernel::Entity_ABC& entity, const QColor& base ) const;

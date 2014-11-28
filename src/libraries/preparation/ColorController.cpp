@@ -70,11 +70,9 @@ void ColorController::Add( const kernel::Entity_ABC& entity, const QColor& newCo
 // Name: ColorController::Remove
 // Created: LGY 2011-06-23
 // -----------------------------------------------------------------------------
-void ColorController::Remove( const kernel::Entity_ABC& entity, bool applyToSubordinates, bool force )
+void ColorController::Remove( const kernel::Entity_ABC& entity )
 {
-    gui::ColorController::Remove( entity, applyToSubordinates, force );
-    if( !applyToSubordinates )
-        return;
+    gui::ColorController::Remove( entity );
     if( const auto objects = entity.Retrieve< Objects >() )
     {
         auto it = objects->CreateIterator();
