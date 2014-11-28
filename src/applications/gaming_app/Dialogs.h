@@ -20,7 +20,7 @@ namespace kernel
 namespace gui
 {
     class ColorStrategy_ABC;
-    class ColorEditor_ABC;
+    class ColorController_ABC;
 }
 
 namespace actions
@@ -58,7 +58,7 @@ public:
                       CommandHandler& handler,
                       const tools::ExerciseConfig& config,
                       gui::ColorStrategy_ABC& colorStrategy,
-                      gui::ColorEditor_ABC& colorEditor );
+                      gui::ColorController_ABC& colorController );
     virtual ~Dialogs();
     //@}
 };

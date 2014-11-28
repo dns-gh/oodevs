@@ -44,7 +44,7 @@ Dialogs::Dialogs( QWidget* parent,
                   CommandHandler& handler,
                   const tools::ExerciseConfig& config,
                   gui::ColorStrategy_ABC& colorStrategy,
-                  gui::ColorEditor_ABC& colorEditor )
+                  gui::ColorController_ABC& colorController )
     : QObject( parent )
 {
     new ChangeDiplomacyDialog( parent, controllers, actionsModel, profile );
@@ -63,7 +63,7 @@ Dialogs::Dialogs( QWidget* parent,
     new CriticalIntelligenceDialog( parent, controllers, staticModel, actionsModel, simulation, profile );
     new EquipmentTransferDialog( parent, controllers, staticModel, actionsModel, simulation, profile );
     new ObjectStateDialog( parent, controllers, staticModel, actionsModel, simulation, profile );
-    new ColorEditor( parent, controllers, colorStrategy, colorEditor );
+    new ColorEditor( parent, controllers, colorStrategy, colorController );
 }
 
 // -----------------------------------------------------------------------------

@@ -10,7 +10,7 @@
 #ifndef __clients_gui_ColorController_h_
 #define __clients_gui_ColorController_h_
 
-#include "ColorEditor_ABC.h"
+#include "ColorController_ABC.h"
 #include "ColorModifier_ABC.h"
 #include <tools/ElementObserver_ABC.h>
 #include <boost/optional/optional_fwd.hpp>
@@ -36,7 +36,7 @@ namespace gui
 class ColorController : public tools::ElementObserver_ABC< kernel::Entity_ABC >
                       , public tools::Observer_ABC
                       , public ColorModifier_ABC
-                      , public ColorEditor_ABC
+                      , public ColorController_ABC
 {
 public:
     //! @name Constructors/Destructor

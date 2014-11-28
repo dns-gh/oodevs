@@ -23,19 +23,19 @@
 #include "clients_kernel/Population_ABC.h"
 #include "clients_gui/ColorStrategy_ABC.h"
 #include "clients_gui/ColorModifier_ABC.h"
-#include "clients_gui/ColorEditor_ABC.h"
+#include "clients_gui/ColorController_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: ColorEditor constructor
 // Created: LGY 2011-06-23
 // -----------------------------------------------------------------------------
 ColorEditor::ColorEditor( QWidget* parent, kernel::Controllers& controllers,
-                          gui::ColorStrategy_ABC& colorStrategy, gui::ColorEditor_ABC& colorEditor )
+                          gui::ColorStrategy_ABC& colorStrategy, gui::ColorController_ABC& colorController )
     : QObject( parent )
-    , controllers_  ( controllers )
+    , controllers_( controllers )
     , colorStrategy_( colorStrategy )
-    , colorEditor_  ( colorEditor )
-    , selected_     ( controllers )
+    , colorController_( colorController )
+    , selected_( controllers )
 {
     controllers_.Register( *this );
 }
@@ -61,7 +61,7 @@ void ColorEditor::Show()
     {
         if( color == Qt::black )
             color.setRgb( 1, 1, 1 );
-        colorEditor_.Add( *selected_, color );
+        colorController_.Add( *selected_, color );
     }
 }
 
@@ -71,7 +71,7 @@ void ColorEditor::Show()
 // -----------------------------------------------------------------------------
 void ColorEditor::Reset()
 {
-    colorEditor_.Remove( *selected_ );
+    colorController_.Remove( *selected_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -147,7 +147,7 @@ void ColorEditor::NotifyUpdated( const kernel::Team_ABC& team )
     {
         QColor baseColor = colorStrategy_.FindBaseColor( team );
         if( pTeamColor->IsOverriden() && static_cast< QColor >( *pTeamColor ) != baseColor )
-            colorEditor_.Reset( team, baseColor );
+            colorController_.Reset( team, baseColor );
     }
 }
 

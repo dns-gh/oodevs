@@ -29,7 +29,7 @@ namespace kernel
 namespace gui
 {
     class ColorStrategy_ABC;
-    class ColorEditor_ABC;
+    class ColorController_ABC;
     class ColorButton;
 }
 
@@ -56,7 +56,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              ColorEditor( QWidget* parent, kernel::Controllers& controllers,
-                          gui::ColorStrategy_ABC& colorStrategy, gui::ColorEditor_ABC& colorEditor );
+                          gui::ColorStrategy_ABC& colorStrategy, gui::ColorController_ABC& colorController );
     virtual ~ColorEditor();
     //@}
 
@@ -90,7 +90,7 @@ private:
     //@{
     kernel::Controllers& controllers_;
     gui::ColorStrategy_ABC& colorStrategy_;
-    gui::ColorEditor_ABC& colorEditor_;
+    gui::ColorController_ABC& colorController_;
     kernel::SafePointer< kernel::Entity_ABC > selected_;
     QRadioButton* defaultButton_;
     QRadioButton* sideButton_;

@@ -61,7 +61,7 @@ DialogContainer::DialogContainer( QWidget* parent,
                                   const ::StaticModel& staticModel,
                                   const kernel::Profile_ABC& profile,
                                   gui::ColorStrategy_ABC& colorStrategy,
-                                  gui::ColorEditor_ABC& colorEditor,
+                                  gui::ColorController_ABC& colorController,
                                   const gui::EntitySymbols& symbols,
                                   const tools::ExerciseConfig& config,
                                   gui::SymbolIcons& icons,
@@ -76,7 +76,7 @@ DialogContainer::DialogContainer( QWidget* parent,
     new ChangeDiplomacyDialog( parent, controllers, profile );
     new AgentAffinitiesDialog( parent, controllers );
     new PeopleAffinitiesDialog( parent, controllers );
-    new ColorEditor( parent, controllers, colorStrategy, colorEditor );
+    new ColorEditor( parent, controllers, colorStrategy, colorController );
     new SymbolEditor( parent, controllers, symbols, config );
     new SymbolDialog( parent, controllers, model.GetSymbolsFactory(), icons, colorStrategy );
     new LogisticLinksEditor( parent, controllers );

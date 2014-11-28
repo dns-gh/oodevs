@@ -21,7 +21,7 @@ namespace gui
 {
     class AddRasterDialog;
     class ColorStrategy_ABC;
-    class ColorEditor_ABC;
+    class ColorController_ABC;
     class ConsistencyDialog_ABC;
     class EntitySymbols;
     class GLMainProxy;
@@ -67,7 +67,7 @@ public:
                               const StaticModel& staticModel,
                               const kernel::Profile_ABC& profile,
                               gui::ColorStrategy_ABC& colorStrategy,
-                              gui::ColorEditor_ABC& colorEditor,
+                              gui::ColorController_ABC& colorController,
                               const gui::EntitySymbols& symbols,
                               const tools::ExerciseConfig& config,
                               gui::SymbolIcons& icons,

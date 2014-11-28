@@ -25,7 +25,7 @@
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_gui/ColorStrategy_ABC.h"
 #include "clients_gui/ColorModifier_ABC.h"
-#include "clients_gui/ColorEditor_ABC.h"
+#include "clients_gui/ColorController_ABC.h"
 #include "clients_gui/RichRadioButton.h"
 #include "clients_gui/RichCheckBox.h"
 #include "clients_gui/RichPushButton.h"
@@ -38,12 +38,12 @@
 // Created: LGY 2011-06-23
 // -----------------------------------------------------------------------------
 ColorEditor::ColorEditor( QWidget* parent, kernel::Controllers& controllers,
-                          gui::ColorStrategy_ABC& colorStrategy, gui::ColorEditor_ABC& colorEditor )
+                          gui::ColorStrategy_ABC& colorStrategy, gui::ColorController_ABC& colorController )
     : QDialog( parent, "changeColorDialog" )
-    , controllers_  ( controllers )
+    , controllers_( controllers )
     , colorStrategy_( colorStrategy )
-    , colorEditor_  ( colorEditor )
-    , selected_     ( controllers )
+    , colorController_( colorController )
+    , selected_( controllers )
 {
     setWindowTitle( tr( "Change color" ) );
     setModal( true );
@@ -106,17 +106,17 @@ namespace
     }
 
     void ApplyDefaultColor( const kernel::Entity_ABC& entity, gui::ColorStrategy_ABC& strategy,
-                            gui::ColorEditor_ABC& colorEditor, bool applyToSubordinates )
+                            gui::ColorController_ABC& colorController, bool applyToSubordinates )
     {
         const QColor baseColor = FindBaseColor( entity, strategy );
         if( auto color = const_cast< kernel::Color_ABC* >( entity.Retrieve< kernel::Color_ABC >() ) )
             color->ChangeColor( baseColor );
-        colorEditor.Add( entity, baseColor, false, true );
+        colorController.Add( entity, baseColor, false, true );
         if( !applyToSubordinates )
             return;
         if( auto pTacticalHierarchies =  entity.Retrieve< kernel::TacticalHierarchies >() )
             for( auto it = pTacticalHierarchies->CreateSubordinateIterator(); it.HasMoreElements(); )
-                ApplyDefaultColor( it.NextElement(), strategy, colorEditor, applyToSubordinates );
+                ApplyDefaultColor( it.NextElement(), strategy, colorController, applyToSubordinates );
     }
 }
 
@@ -156,13 +156,13 @@ void ColorEditor::Accept()
     QColor currentColor = colorStrategy_.FindColor( *selected_ );
     boost::optional< QColor > newColor;
     if( defaultButton_->isChecked() )
-        ApplyDefaultColor( *selected_, colorStrategy_, colorEditor_, applyToSubordinates );
+        ApplyDefaultColor( *selected_, colorStrategy_, colorController_, applyToSubordinates );
     else if( sideButton_->isChecked() )
         newColor = sideColor;
     else if( customButton_->isChecked() )
         newColor = colorButton_->GetColor();
     if( newColor )
-        colorEditor_.Add( *selected_, *newColor, applyToSubordinates, true );
+        colorController_.Add( *selected_, *newColor, applyToSubordinates, true );
     accept();
 }
 
@@ -239,7 +239,7 @@ void ColorEditor::NotifyUpdated( const kernel::Team_ABC& team )
     {
         const QColor baseColor = colorStrategy_.FindBaseColor( team );
         if( pTeamColor->IsOverriden() && static_cast< QColor >( *pTeamColor ) != baseColor )
-            colorEditor_.Reset( team, baseColor );
+            colorController_.Reset( team, baseColor );
     }
 }
 
