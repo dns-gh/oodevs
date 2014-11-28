@@ -1372,7 +1372,7 @@ function DEC_Agent_EnleverTenueProtectionNBC()
 end
 
 function DEC_Agent_NiveauProtectionNBC()
-    return DEC_Agent_NiveauProtectionNBC( myself )
+    return _DEC_Agent_NiveauProtectionNBC( myself )
 end
 
 function DEC_Agent_ImmuniserNbc()
