@@ -43,7 +43,6 @@ public:
         return h == rhs.h && dh == rhs.dh && e == rhs.e;
     }
 private:
-    friend class PHY_RawVisionData;
     friend std::unique_ptr< ElevationGrid > LoadElevationGrid( const tools::Path& );
 
     // Take care to pack the following fields to save memory when
@@ -62,10 +61,6 @@ private:
 // =============================================================================
 class ElevationGrid : public ElevationBaseGrid
 {
-public:
-    //! @name Types
-    //@{
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -303,7 +303,7 @@ void PHY_RawVisionData::CalcMinMaxAltitude()
     {
         for( unsigned int nY = 0; nY < nNbrRow_; ++nY )
         {
-            short nAltitude = pElevationGrid_->GetCell( nX, nY ).h;
+            short nAltitude = pElevationGrid_->GetCell( nX, nY ).GetAltitude();
             if( nAltitude < nMinAltitude )
                 nMinAltitude = nAltitude;
             if( nAltitude > nMaxAltitude )
