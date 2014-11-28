@@ -10,8 +10,8 @@
 -------------------------------------------------------------------------------
 
 integration.isInFiringRange = function( target, ph )
-    if not ph then
-        ph = 0.7
+    if not ph then -- Scipio compatibility
+        ph = integration.getDefaultPH( target )
     end
-    return integration.distance( meKnowledge, target ) < integration.getMaxRangeToFireOnAgent( target.source,ph )
+    return integration.distance( meKnowledge, target ) < integration.getMaxRangeToFireOnAgent( target.source, ph )
 end
