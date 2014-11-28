@@ -23,6 +23,11 @@ namespace kernel
     class Entity_ABC;
 }
 
+namespace sword
+{
+    class RgbColor;
+}
+
 namespace gui
 {
 // =============================================================================
@@ -35,6 +40,7 @@ class Color : public kernel::Color_ABC
 {
 public:
              Color();
+    explicit Color( const sword::RgbColor& color );
     explicit Color( const kernel::Entity_ABC& parent );
     explicit Color( xml::xistream& xis );
     virtual ~Color();
@@ -47,8 +53,11 @@ public:
 
     virtual void SerializeAttributes( xml::xostream& xos ) const;
 
-protected:
+    const T_Color& GetBaseColor() const;
+
+private:
     boost::optional< T_Color > color_;
+    const boost::optional< T_Color > base_;
 };
 }
 

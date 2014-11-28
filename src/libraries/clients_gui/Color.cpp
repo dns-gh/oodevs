@@ -10,11 +10,19 @@
 #include "clients_gui_pch.h"
 #include "Color.h"
 #include "clients_kernel/Entity_ABC.h"
+#include "protocol/Protocol.h"
 #include <boost/algorithm/string.hpp>
+#include <boost/tuple/tuple_comparison.hpp>
 
 using namespace gui;
 
 Color::Color()
+{
+    // NOTHING
+}
+
+Color::Color( const sword::RgbColor& color )
+    : base_( boost::tuples::make_tuple( color.red(), color.green(), color.blue() ) )
 {
     // NOTHING
 }
@@ -43,14 +51,11 @@ bool Color::IsOverriden() const
 
 const kernel::Color_ABC::T_Color& Color::GetColor() const
 {
+    if( base_ )
+        return color_ ? *color_ : *base_;
     if( !color_ )
         throw MASA_EXCEPTION( "Accessing invalid color" );
     return *color_;
-}
-
-void Color::ChangeColor( const T_Color& color )
-{
-    color_ = color;
 }
 
 namespace
@@ -74,6 +79,14 @@ namespace
     }
 }
 
+void Color::ChangeColor( const T_Color& color )
+{
+    if( base_ == color )
+        color_ = boost::none;
+    else
+        color_ = color;
+}
+
 void Color::ChangeColor( xml::xistream& xis )
 {
     const std::string color = xis.attribute< std::string >( "color", "" );
@@ -85,10 +98,17 @@ void Color::SerializeAttributes( xml::xostream& xos ) const
 {
     if( color_ )
         xos << xml::attribute( "color",
-        RgbToHex( color_->get< 0 >(), color_->get< 1 >(), color_->get< 2 >() ) );
+            RgbToHex( color_->get< 0 >(), color_->get< 1 >(), color_->get< 2 >() ) );
 }
 
 void Color::Clear()
 {
     color_ = boost::none;
+}
+
+const kernel::Color_ABC::T_Color& Color::GetBaseColor() const
+{
+    if( !base_ )
+        throw MASA_EXCEPTION( "Accessing invalid color" );
+    return *base_;
 }

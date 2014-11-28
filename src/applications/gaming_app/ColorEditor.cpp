@@ -10,14 +10,12 @@
 #include "gaming_app_pch.h"
 #include "ColorEditor.h"
 #include "moc_ColorEditor.cpp"
-#include "gaming/Color.h"
 #include "gaming/Objects.h"
 #include "gaming/Object.h"
 #include "gaming/Populations.h"
 #include "gaming/Population.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/tools.h"
-#include "clients_kernel/Color_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Ghost_ABC.h"
 #include "clients_kernel/Team_ABC.h"
@@ -27,6 +25,7 @@
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Population_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
+#include "clients_gui/Color.h"
 #include "clients_gui/ColorStrategy_ABC.h"
 #include "clients_gui/ColorModifier_ABC.h"
 #include "clients_gui/ColorController_ABC.h"
@@ -105,7 +104,7 @@ namespace
     QColor FindBaseColor( const kernel::Entity_ABC& entity, gui::ColorStrategy_ABC& strategy )
     {
         if( auto color = entity.Retrieve< kernel::Color_ABC >() )
-            return ToColor( static_cast< const Color& >( *color ).GetBaseColor() );
+            return ToColor( static_cast< const gui::Color& >( *color ).GetBaseColor() );
         return strategy.FindBaseColor( entity );
     }
 
