@@ -216,9 +216,9 @@ LogisticMaintenanceSelectionDialog::LogisticMaintenanceSelectionDialog( const QS
     timeout_.setSingleShot( true );
     connect( &timeout_, SIGNAL( timeout() ), this, SLOT( OnTimeout() ) );
 
-    actionsModel_.RegisterHandler( [&]( const sword::SimToClient& message )
+    actionsModel_.RegisterHandler( [&]( const sword::SimToClient& message, bool ack )
     {
-        if( lastContext_ == 0 || !isVisible() ||
+        if( !ack || lastContext_ == 0 || !isVisible() ||
             !message.message().has_magic_action_ack() || lastContext_ != message.context() )
             return;
         Purge();

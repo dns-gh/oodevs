@@ -125,7 +125,9 @@ EventOrderWidget::EventOrderWidget( gui::EventPresenter& presenter,
     connect( missionCombo_, SIGNAL( currentIndexChanged( const QString& ) ),
              &presenter_, SLOT( OnEventContentChanged() ) );
 
-    model.actions_.RegisterHandler( [&]( const sword::SimToClient& message ) {
+    model.actions_.RegisterHandler( [&]( const sword::SimToClient& message, bool ack ) {
+        if( !ack )
+            return;
         if( message.message().has_order_ack() )
             NotifyOrderReceived( message.message().order_ack(), message.context() );
         if( message.message().has_frag_order_ack() )
