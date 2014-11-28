@@ -19,11 +19,10 @@
 #include "TeamCommunications.h"
 #include "Inhabitants.h"
 #include "Objects.h"
-#include "Color.h"
 #include "Populations.h"
+#include "clients_gui/Color.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/DictionaryExtensions.h"
-#include "clients_kernel/Color_ABC.h"
 #include "clients_kernel/Karma.h"
 
 // -----------------------------------------------------------------------------
@@ -60,7 +59,7 @@ kernel::Team_ABC* TeamFactory::CreateTeam()
     result->Attach< kernel::Diplomacies_ABC >( *new Diplomacies( controllers_.controller_, model_.GetTeamResolver(), *result, dico, staticModel_.teamKarmas_ ) );
     result->Attach< kernel::TacticalHierarchies >( *new TeamHierarchies( controllers_.controller_, *result, 0 ) );
     result->Attach< kernel::CommunicationHierarchies >( *new TeamCommunications( controllers_.controller_, *result, 0 ) );
-    result->Attach< kernel::Color_ABC >( *new Color() );
+    result->Attach< kernel::Color_ABC >( *new gui::Color() );
     result->Attach( *new Populations() );
     result->Attach( *new Inhabitants() );
     result->Attach( *new kernel::DictionaryExtensions( controllers_, "orbat-attributes", staticModel_.extensions_ ) );
@@ -80,7 +79,7 @@ kernel::Team_ABC* TeamFactory::CreateTeam( xml::xistream& xis )
     result->Attach< kernel::Diplomacies_ABC >( *new Diplomacies( xis, controllers_.controller_, model_.GetTeamResolver(), *result, dico, staticModel_.teamKarmas_ ) );
     result->Attach< kernel::TacticalHierarchies >( *new TeamHierarchies( controllers_.controller_, *result, 0 ) );
     result->Attach< kernel::CommunicationHierarchies >( *new TeamCommunications( controllers_.controller_, *result, 0 ) );
-    result->Attach< kernel::Color_ABC >( *new Color( xis ) );
+    result->Attach< kernel::Color_ABC >( *new gui::Color( xis ) );
     result->Attach( *new Populations() );
     result->Attach( *new Inhabitants() );
     result->Attach( *new kernel::DictionaryExtensions( controllers_, "orbat-attributes", xis, staticModel_.extensions_ ) );
@@ -116,7 +115,7 @@ kernel::Team_ABC* TeamFactory::CreateNoSideTeam()
 {
     kernel::Team_ABC* result = new gui::EntityImplementation< kernel::Team_ABC >( controllers_.controller_, 0, tools::translate( "TeamFactory", "No side" ) );
     result->Attach( *new Objects( controllers_ ) );
-    result->Attach< kernel::Color_ABC >( *new Color() );
+    result->Attach< kernel::Color_ABC >( *new gui::Color() );
     result->Attach< kernel::Diplomacies_ABC >( *new NoSideDiplomacy() );
     return result;
 }

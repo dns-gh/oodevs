@@ -13,6 +13,16 @@
 #include "clients_kernel/Color_ABC.h"
 #include <boost/optional.hpp>
 
+namespace xml
+{
+    class xistream;
+}
+
+namespace kernel
+{
+    class Entity_ABC;
+}
+
 namespace gui
 {
 // =============================================================================
@@ -25,12 +35,17 @@ class Color : public kernel::Color_ABC
 {
 public:
              Color();
+    explicit Color( const kernel::Entity_ABC& parent );
+    explicit Color( xml::xistream& xis );
     virtual ~Color();
 
     virtual bool IsOverriden() const;
     virtual const T_Color& GetColor() const;
     virtual void ChangeColor( const T_Color& color );
+    virtual void ChangeColor( xml::xistream& xis );
     virtual void Clear();
+
+    virtual void SerializeAttributes( xml::xostream& xos ) const;
 
 protected:
     boost::optional< T_Color > color_;

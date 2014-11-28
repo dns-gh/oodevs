@@ -38,15 +38,14 @@
 #include "SupplyRouteAttribute.h"
 #include "StockAttribute.h"
 #include "DisasterAttribute.h"
-#include "Color.h"
 #include "UndergroundAttribute.h"
 #include "AltitudeModifierAttribute.h"
+#include "clients_gui/Color.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_gui/PropertiesDictionary.h"
-#include "clients_kernel/Color_ABC.h"
 #include <xeumeuleu/xml.hpp>
 #include <boost/bind.hpp>
 
@@ -254,7 +253,7 @@ Object_ABC* ObjectFactory::CreateObject( const ObjectType& type, const Team_ABC&
     result->Attach< Positions >( *new ObjectPositions( controllers_.controller_, staticModel_.coordinateConverter_, result->GetType(), location ) );
     result->Attach< kernel::TacticalHierarchies >( *new ::ObjectHierarchies( *result, &team ) );
     const_cast< Team_ABC* >( &team )->Get< Objects >().Add( *result );
-    result->Attach< kernel::Color_ABC >( *new ::Color( team ) );
+    result->Attach< kernel::Color_ABC >( *new gui::Color( team ) );
     // Attributes are commited by ObjectPrototype
     result->Polish();
     return result.release();
@@ -270,7 +269,7 @@ Object_ABC* ObjectFactory::CreateObject( xml::xistream& xis, const Team_ABC& tea
     gui::PropertiesDictionary& dico = result->Get< gui::PropertiesDictionary >();
     result->Attach< Positions >( *new ObjectPositions( xis, controllers_.controller_, staticModel_.coordinateConverter_, result->GetType() ) );
     result->Attach< kernel::TacticalHierarchies >( *new ::ObjectHierarchies( *result, &team ) );
-    result->Attach< kernel::Color_ABC >( *new ::Color( xis ) );
+    result->Attach< kernel::Color_ABC >( *new gui::Color( xis ) );
     xis >> xml::optional >> xml::start( "attributes" )
             >> xml::list( *this, &ObjectFactory::ReadAttributes, *result, dico )
         >> xml::end;

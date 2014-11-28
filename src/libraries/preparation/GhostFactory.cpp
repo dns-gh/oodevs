@@ -14,7 +14,6 @@
 #include "AgentHierarchies.h"
 #include "AutomatHierarchies.h"
 #include "AutomatCommunications.h"
-#include "Color.h"
 #include "GhostCommandPostAttributes.h"
 #include "Ghost.h"
 #include "GhostHierarchies.h"
@@ -24,6 +23,7 @@
 #include "Model.h"
 #include "StaticModel.h"
 #include "Symbol.h"
+#include "clients_gui/Color.h"
 #include "clients_gui/LogisticBase.h"
 #include "clients_gui/PropertiesDictionary.h"
 #include "clients_kernel/Color_ABC.h"
@@ -68,7 +68,7 @@ kernel::Ghost_ABC* GhostFactory::Create( kernel::Entity_ABC& parent, const kerne
     Ghost* result = new Ghost( controllers_.controller_, model_, idManager_, staticModel_.coordinateConverter_, prototype );
     gui::PropertiesDictionary& dictionary = result->Get< gui::PropertiesDictionary >();
     result->Attach< kernel::Positions >( *new GhostPositions( *result, staticModel_.coordinateConverter_, controllers_.controller_, position, dictionary, parent ) );
-    result->Attach< kernel::Color_ABC >( *new Color( parent ) );
+    result->Attach< kernel::Color_ABC >( *new gui::Color( parent ) );
     result->Attach< kernel::TacticalHierarchies >( *new GhostHierarchies( controllers_.controller_, *result, result->GetLevelSymbol(), result->GetSymbol(), &parent ) );
 
     if( prototype.ghostType_ == eGhostType_Agent )
@@ -94,7 +94,7 @@ kernel::Ghost_ABC* GhostFactory::Create( kernel::Entity_ABC& parent, xml::xistre
     Ghost* result = new Ghost( controllers_.controller_, model_, idManager_, staticModel_.coordinateConverter_, xis, symbolsFactory_ );
     gui::PropertiesDictionary& dictionary = result->Get< gui::PropertiesDictionary >();
     result->Attach< kernel::Positions >( *new GhostPositions( xis, *result, staticModel_.coordinateConverter_, controllers_.controller_, dictionary, parent ) );
-    result->Attach< kernel::Color_ABC >( *new Color( xis ) );
+    result->Attach< kernel::Color_ABC >( *new gui::Color( xis ) );
     result->Attach< kernel::TacticalHierarchies >( *new GhostHierarchies( controllers_.controller_, *result, result->GetLevelSymbol(), result->GetSymbol(), &parent ) );
 
     if( result->GetGhostType() == eGhostType_Agent )
@@ -119,7 +119,7 @@ kernel::Ghost_ABC* GhostFactory::Create( kernel::Entity_ABC& parent, xml::xistre
     Ghost* result = new Ghost( controllers_.controller_, model_, idManager_, staticModel_.coordinateConverter_, xis, parent, ghostType );
     gui::PropertiesDictionary& dictionary = result->Get< gui::PropertiesDictionary >();
 
-    result->Attach< kernel::Color_ABC >( *new Color( xis ) );
+    result->Attach< kernel::Color_ABC >( *new gui::Color( xis ) );
     result->Attach< kernel::TacticalHierarchies >( *new GhostHierarchies( controllers_.controller_, *result, result->GetLevelSymbol(), result->GetSymbol(), &parent ) );
 
     if( result->GetGhostType() == eGhostType_Agent )
