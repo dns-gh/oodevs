@@ -116,15 +116,6 @@ void ColorStrategy::Process( const Entity_ABC& entity )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ColorStrategy::Process
-// Created: LGY 2011-06-29
-// -----------------------------------------------------------------------------
-void ColorStrategy::Process( const kernel::Entity_ABC& entity, QColor color )
-{
-    ApplyColor( ApplyModifiers( entity, color ) );
-}
-
-// -----------------------------------------------------------------------------
 // Name: ColorStrategy::SelectColor
 // Created: AGE 2006-03-17
 // -----------------------------------------------------------------------------
@@ -262,8 +253,8 @@ void ColorStrategy::SelectColor( const Population_ABC& population )
 // -----------------------------------------------------------------------------
 void ColorStrategy::SelectColor( const Inhabitant_ABC& inhabitant )
 {
-    QColor base = FindSuperiorColor( inhabitant, colorController_, FindBaseColor( inhabitant ) );
-    QColor color = ApplyModifiers( inhabitant, base );
+    const QColor base = FindSuperiorColor( inhabitant, colorController_, FindBaseColor( inhabitant ) );
+    const QColor color = ApplyModifiers( inhabitant, base );
     if( base == color )
         ApplyColor( color, 0 );
     else
