@@ -3162,6 +3162,10 @@ PNG (*.png)</translation>
         <source>Owned equipment only</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Allowed object knowledge types</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Models_Data</name>
