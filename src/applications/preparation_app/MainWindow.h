@@ -108,12 +108,8 @@ private:
                        const std::shared_ptr< gui::Layer_ABC >& weather,
                        const std::shared_ptr< gui::Layer_ABC >& profilerLayer,
                        gui::TerrainPicker& picker );
-    // Load exercise and generate score if needed
     void LoadExercise();
-    // Initialize config with filename if needed, Load static model, LoadExercise, then load gui
-    void FullLoad( const tools::Path& filename = tools::Path() );
-    // Close if needed, then FullLoad
-    void Reload( const tools::Path& filename );
+    void Load( const tools::Path& filename );
 
     void GenerateScores();
     void MigrateExercises();
@@ -121,7 +117,7 @@ private:
     void SetWindowTitle( bool needsSaving );
     void SetNeedsSaving( bool status );
     void SetProgression( int value, const QString& text );
-    void CatchException( const QString& msg, const std::exception& e );
+    void HandleError( const QString& msg, const std::exception& e );
 
     virtual void closeEvent( QCloseEvent* event );
 

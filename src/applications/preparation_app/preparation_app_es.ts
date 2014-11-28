@@ -923,10 +923,6 @@
         <translation>Carga completa</translation>
     </message>
     <message>
-        <source>Initialize data ...</source>
-        <translation>Inicializando datos ...</translation>
-    </message>
-    <message>
         <source>Loading graphical interface ...</source>
         <translation>Cargando interfaz gráfica ...</translation>
     </message>
@@ -988,6 +984,10 @@ Do you want to save the exercise &apos;%1&apos;?</source>
     </message>
     <message>
         <source>Checking consistency ...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error loading: </source>
         <translation type="unfinished"></translation>
     </message>
 </context>

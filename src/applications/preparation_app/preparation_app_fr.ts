@@ -922,10 +922,6 @@
         <translation>Chargement terminé</translation>
     </message>
     <message>
-        <source>Initialize data ...</source>
-        <translation>Initialisation des données ...</translation>
-    </message>
-    <message>
         <source>Loading graphical interface ...</source>
         <translation>Chargement de l&apos;interface graphique ...</translation>
     </message>
@@ -970,7 +966,7 @@ Ces données ne peuvent pas être projetées.</translation>
     <message>
         <source>Unsaved modification detected.
 Do you want to save the exercise &apos;%1&apos;?</source>
-        <translation type="unfinished">Modifications détectées.
+        <translation>Modifications détectées.
 Voulez-vous sauvegarder l&apos;exercice &apos;%1&apos; ?</translation>
     </message>
     <message>
@@ -988,6 +984,10 @@ Voulez-vous sauvegarder l&apos;exercice &apos;%1&apos; ?</translation>
     <message>
         <source>Checking consistency ...</source>
         <translation>Contrôle de cohérence ...</translation>
+    </message>
+    <message>
+        <source>Error loading: </source>
+        <translation>Erreur lors du chargement: </translation>
     </message>
 </context>
 <context>

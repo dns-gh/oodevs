@@ -874,10 +874,6 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <source>Initialize data ...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Loading complete</source>
         <translation type="unfinished"></translation>
     </message>
@@ -985,6 +981,10 @@ Do you want to save the exercise &apos;%1&apos;?</source>
     </message>
     <message>
         <source>Checking consistency ...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error loading: </source>
         <translation type="unfinished"></translation>
     </message>
 </context>

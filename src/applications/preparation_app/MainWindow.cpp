@@ -320,15 +320,14 @@ void MainWindow::CreateLayers( const std::shared_ptr< gui::ParametersLayer >& pa
 }
 
 // -----------------------------------------------------------------------------
-// First load, last close
+// Initialization at application start up, and closeEvent at application closure
 // -----------------------------------------------------------------------------
 void MainWindow::Initialize()
 {
     controllers_.modes_.LoadOptions( eModes_Prepare );
     controllers_.modes_.LoadGeometry( eModes_Prepare );
     controllers_.ChangeMode( eModes_Default );
-    if( config_.GetExerciseFile().Exists() )
-        FullLoad(); // config already initialized in ExerciseConfig::Parse
+    Load( config_.GetExerciseFile() );
 }
 
 void MainWindow::closeEvent( QCloseEvent* event )
@@ -372,21 +371,37 @@ bool MainWindow::Close( bool askForSaving /* = true */ )
     }
     catch( const std::exception& e )
     {
-        CatchException( tr( "Error closing exercise: " ), e );
+        HandleError( tr( "Error closing exercise: " ), e );
     }
     return true;
 }
 
-void MainWindow::FullLoad( const tools::Path& filename /* = tools::Path() */ )
+void MainWindow::LoadExercise()
 {
     try
     {
-        SetProgression( 0, tr( "Initialize data ..." ) );
-        if( !filename.IsEmpty() )
-        {
-            SetProgression( 10, tr( "Loading configuration ..." ) );
-            config_.LoadExercise( filename );
-        }
+        loadingExercise_ = true;
+        model_.Load( config_ );
+        if( config_.HasGenerateScores() )
+            GenerateScores();
+        loadingExercise_ = false;
+    }
+    catch( const std::exception& e )
+    {
+        loadingExercise_ = false;
+        HandleError( tr( "Error loading exercise: " ), e );
+        throw;
+    }
+}
+
+void MainWindow::Load( const tools::Path& filename )
+{
+    try
+    {
+        if( filename.IsEmpty() || !filename.Exists() || !Close() )
+            return;
+        SetProgression( 0, tr( "Loading configuration ..." ) );
+        config_.LoadExercise( filename );
         SetProgression( 20, tr( "Loading physical model ..." ) );
         staticModel_.Load( config_ );
         SetProgression( 50, tr( "Loading exercise ..." ) );
@@ -394,8 +409,7 @@ void MainWindow::FullLoad( const tools::Path& filename /* = tools::Path() */ )
         SetProgression( 80, tr( "Loading graphical interface ..." ) );
         dialogContainer_->Load();
         dockContainer_->Load();
-        glWidgetManager_->Load( staticModel_.drawings_,
-                                config_.GetExerciseDir( config_.GetExerciseName() ) );
+        glWidgetManager_->Load( staticModel_.drawings_, config_.GetExerciseDir( config_.GetExerciseName() ) );
         SetProgression( 85, tr( "Generate symbols ..." ) );
         symbolIcons_->Initialize( glWidgetManager_->GetMainWidget()->GetWidget2d().get() );
         icons_->GenerateSymbols( *model_.teams_ );
@@ -413,40 +427,14 @@ void MainWindow::FullLoad( const tools::Path& filename /* = tools::Path() */ )
     catch( const std::exception& e )
     {
         SetProgression( 100, tr( "Loading failed" ) );
-        CatchException( tr( "Error loading exercise: " ), e );
+        HandleError( tr( "Error loading: " ), e );
     }
 }
 
-void MainWindow::LoadExercise()
-{
-    try
-    {
-        loadingExercise_ = true;
-        model_.Load( config_ );
-        if( config_.HasGenerateScores() )
-            GenerateScores();
-        loadingExercise_ = false;
-    }
-    catch( const std::exception& e )
-    {
-        loadingExercise_ = false;
-        CatchException( tr( "Error loading exercise: " ), e );
-        throw;
-    }
-}
-
-void MainWindow::Reload( const tools::Path& filename )
-{
-    if( filename.IsEmpty() || !Close() )
-        return;
-    FullLoad( filename );
-}
-
-void MainWindow::CatchException( const QString& msg, const std::exception& e )
+void MainWindow::HandleError( const QString& msg, const std::exception& e )
 {
     Close( false );
-    QMessageBox::critical( this,
-                           tools::translate( "Application", "SWORD" ),
+    QMessageBox::critical( this, tools::translate( "Application", "SWORD" ),
                            msg + QString::fromStdString( tools::GetExceptionMsg( e ) ) );
 }
 
@@ -457,18 +445,18 @@ void MainWindow::New()
 {
     ExerciseCreationDialog exerciseCreationDialog( this, config_ );
     if( exerciseCreationDialog.exec() == QDialog::Accepted )
-        Reload( exerciseCreationDialog.GetFileName() );
+        Load( exerciseCreationDialog.GetFileName() );
 }
 
 void MainWindow::Open()
 {
-    Reload( gui::FileDialog::getOpenFileName( this, tr( "Load exercise definition file (exercise.xml)" ),
-                                                      config_.GetExerciseFile(), "Exercise (exercise.xml)" ) );
+    Load( gui::FileDialog::getOpenFileName( this, tr( "Load exercise definition file (exercise.xml)" ),
+                                            config_.GetExerciseFile(), "Exercise (exercise.xml)" ) );
 }
 
 void MainWindow::ReloadExercise()
 {
-    Reload( config_.GetExerciseFile() );
+    Load( config_.GetExerciseFile() );
 }
 
 // -----------------------------------------------------------------------------
@@ -541,7 +529,7 @@ void MainWindow::GenerateScores()
 // -----------------------------------------------------------------------------
 bool MainWindow::MigrateExercise( const tools::Path& path )
 {
-    tools::Path child = path / "exercise.xml";
+    const auto child = path / "exercise.xml";
     if( child.Exists() )
     {
         try
