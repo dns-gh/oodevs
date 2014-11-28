@@ -332,27 +332,48 @@ void TimelineWebView::OnTriggeredEvents( const timeline::Events& events )
                     drawing.NotifyDestruction();
             } );
         }
-        tools::Path drawingsPath = tools::Path::FromUTF8( jsonPayload[ gui::event_helpers::drawingsPathKey ] );
         QString error;
-        if( drawingsPath.Exists() )
-            try
-            {
-                drawingsPath.MakePreferred();
-                model_.drawings_.Load( config_.GetLoader(), drawingsPath );
-            }
-            catch( const xml::exception& )
-            {
+        bool ok = true;
+        tools::Path drawingsPath = tools::Path::FromUTF8( jsonPayload[ gui::event_helpers::drawingsPathKey ] );
+        if( !drawingsPath.IsEmpty() )
+        {
+            ok = drawingsPath.Exists();
+            if( ok )
+                try
+                {
+                    drawingsPath.MakePreferred();
+                    model_.drawings_.Load( config_.GetLoader(), drawingsPath );
+                }
+                catch( const xml::exception& )
+                {
+                    ok = false;
+                }
+            if( !ok )
                 error = tr( "Unable to load drawings file" );
-            }
-        if( error.isEmpty() )
+        }
+        if( ok )
         {
             tools::Path configurationPath = tools::Path::FromUTF8( jsonPayload[ gui::event_helpers::configurationPathKey ] );
-            if( configurationPath.Exists() )
+            if( !configurationPath.IsEmpty() )
             {
-                configurationPath.MakePreferred();
-                if( !glWidgetManager_.LoadDisplaySettings( configurationPath, false ) )
+                ok = configurationPath.Exists();
+                if( ok )
+                {
+                    configurationPath.MakePreferred();
+                    if( !glWidgetManager_.LoadDisplaySettings( configurationPath, false ) )
+                        ok = false;
+                }
+                if( !ok )
                     error = tr( "Unable to load configuration file" );
             }
+        }
+        if( server_ && !error.isEmpty() )
+        {
+            timeline::CloseEvent closeEvent( event.uuid );
+            closeEvent.done = false;
+            closeEvent.error.code = timeline::EC_INTERNAL_SERVER_ERROR;
+            closeEvent.error.text = error.toStdString();
+            server_->CloseEvent( closeEvent );
         }
     }
 }
