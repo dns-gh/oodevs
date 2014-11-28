@@ -230,7 +230,7 @@ void ColorEditor::NotifyContextMenu( const kernel::Population_ABC& entity, kerne
 }
 
 // -----------------------------------------------------------------------------
-// Name: ColorEditor::NotifyContextMenu
+// Name: ColorEditor::NotifyUpdated
 // Created: MMC 2012-01-10
 // -----------------------------------------------------------------------------
 void ColorEditor::NotifyUpdated( const kernel::Team_ABC& team )

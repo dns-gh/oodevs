@@ -59,12 +59,13 @@ public:
     //@}
 
 protected:
+    void AddColor( const kernel::Entity_ABC& entity, const QColor& color );
+    void ClearColor( const kernel::Entity_ABC& entity );
+
+private:
     //! @name Helpers
     //@{
     void AddSubordinate( const kernel::Entity_ABC& entity, const QColor& newColor, const boost::optional< QColor >& oldColor, bool applyToSubordinates, bool force );
-    void AddObjects( const kernel::Entity_ABC& entity, const QColor& newColor );
-    void AddColor( const kernel::Entity_ABC& entity, const QColor& color );
-    void ClearColor( const kernel::Entity_ABC& entity );
     void RemoveSubordinate( const kernel::Entity_ABC& entity, const QColor& color, bool applyToSubordinates, bool force );
     void UpdateHierarchies( const kernel::Entity_ABC& entity );
     void UpdateLogisticBaseStates( const kernel::TacticalHierarchies& tactical );
@@ -75,13 +76,10 @@ private:
     virtual bool ApplyColor( const kernel::Color_ABC& color ) = 0;
 
 private:
-    typedef std::map< unsigned long, QColor > T_Colors;
-
-protected:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    T_Colors colors_;
+    std::map< unsigned long, QColor > colors_;
     //@}
 };
 }

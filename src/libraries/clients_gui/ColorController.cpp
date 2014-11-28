@@ -13,8 +13,6 @@
 #include "clients_kernel/Color_ABC.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/LogisticHierarchies.h"
-#include "clients_kernel/Color_ABC.h"
-#include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/Population_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
