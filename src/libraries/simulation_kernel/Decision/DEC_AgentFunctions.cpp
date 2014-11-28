@@ -144,6 +144,7 @@ void DEC_AgentFunctions::Register( sword::Brain& brain )
 
     brain.RegisterFunction( "_DEC_Agent_IlluminateRange", &DEC_AgentFunctions::GetIlluminatingRange );
     brain.RegisterFunction( "_DEC_Agent_CanExtinguish", &DEC_AgentFunctions::AgentCanExtinguish );
+    brain.RegisterFunction( "DEC_Pion_CanFly", &DEC_AgentFunctions::AgentCanFly );
     brain.RegisterFunction( "DEC_Agent_GetFuelDotationNumber", &DEC_AgentFunctions::GetFuelDotationNumber );
     brain.RegisterFunction( "DEC_Agent_GetFuelDotationCapacity", &DEC_AgentFunctions::GetFuelDotationCapacity );
     brain.RegisterFunction( "DEC_Agent_ResupplyFuel", &DEC_AgentFunctions::ResupplyFuel );
