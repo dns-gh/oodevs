@@ -96,18 +96,10 @@ ColorEditor::~ColorEditor()
 
 namespace
 {
-    QColor FindBaseColor( const kernel::Entity_ABC& entity, gui::ColorStrategy_ABC& strategy )
-    {
-        if( auto color = entity.Retrieve< kernel::Color_ABC >() )
-            if( const auto& baseColor = color->GetBaseColor() )
-                return QColor( baseColor->get< 0 >(), baseColor->get< 1 >(), baseColor->get< 2 >() );
-        return strategy.FindBaseColor( entity );
-    }
-
     void ApplyDefaultColor( const kernel::Entity_ABC& entity, gui::ColorStrategy_ABC& strategy,
                             gui::ColorController_ABC& colorController, bool applyToSubordinates )
     {
-        const QColor baseColor = FindBaseColor( entity, strategy );
+        const QColor baseColor = strategy.FindBaseColor( entity );
         if( auto color = const_cast< kernel::Color_ABC* >( entity.Retrieve< kernel::Color_ABC >() ) )
             color->ChangeColor( baseColor );
         colorController.Add( entity, baseColor, false );
@@ -139,7 +131,7 @@ void ColorEditor::Show()
 {
     if( !selected_ )
         return;
-    const QColor baseColor = FindBaseColor( *selected_, colorStrategy_ );
+    const QColor baseColor = colorStrategy_.FindBaseColor( *selected_ );
     const QColor sideColor = colorStrategy_.FindTeamColor( selected_->Get< kernel::TacticalHierarchies >().GetTop() );
     const QColor currentColor = colorStrategy_.FindColor( *selected_ );
     if( currentColor == baseColor )

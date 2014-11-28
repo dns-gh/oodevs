@@ -9,14 +9,13 @@
 
 #include "clients_gui_pch.h"
 #include "ColorStrategy.h"
-
 #include "ColorModifier_ABC.h"
 #include "GLOptions.h"
 #include "GLView_ABC.h"
-
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/CommunicationHierarchies.h"
+#include "clients_kernel/Color_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Diplomacies_ABC.h"
 #include "clients_kernel/Drawing_ABC.h"
@@ -162,6 +161,9 @@ void ColorStrategy::SelectColor( const kernel::Pathfind_ABC& pathfind )
 // -----------------------------------------------------------------------------
 QColor ColorStrategy::FindBaseColor( const kernel::Entity_ABC& entity )
 {
+    if( auto color = entity.Retrieve< kernel::Color_ABC >() )
+        if( const auto& baseColor = color->GetBaseColor() )
+            return QColor( baseColor->get< 0 >(), baseColor->get< 1 >(), baseColor->get< 2 >() );
     const Hierarchies* hierarchies = entity.Retrieve< TacticalHierarchies >();
     if( ! hierarchies )
         hierarchies = entity.Retrieve< CommunicationHierarchies >();
