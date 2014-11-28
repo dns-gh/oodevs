@@ -58,7 +58,7 @@ void Automat::Draw( const geometry::Point2f& where,
     if( !IsAnAggregatedSubordinate() &&
         view.GetCurrentOptions().IsAggregated( *this ) &&
         viewport.IsHotpointVisible() )
-        drawable_.Draw( *this, where, viewport, view, -1.5f );
+        drawable_.Draw( *this, where, viewport, view, -1.f );
 }
 
 // -----------------------------------------------------------------------------
