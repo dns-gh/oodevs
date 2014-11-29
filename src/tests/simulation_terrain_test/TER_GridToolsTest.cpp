@@ -16,7 +16,8 @@ namespace
 {
 
 std::string CheckSplit( int32_t cellSize, double x1, double y1, double x2, double y2,
-        const std::function< bool( MT_Vector2D, MT_Vector2D)>& f, std::string expected )
+        const std::function< bool( MT_Vector2D, MT_Vector2D)>& f, std::string expected,
+        bool outlier )
 {
     std::stringstream output;
     auto callback = [&]( MT_Vector2D p1, MT_Vector2D p2 ) -> bool
@@ -29,7 +30,9 @@ std::string CheckSplit( int32_t cellSize, double x1, double y1, double x2, doubl
     };
     const auto from = MT_Vector2D( x1, y1 );
     const auto to = MT_Vector2D( x2, y2 );
-    const bool res = SplitOnMajorGridLines( cellSize, from, to, callback );
+    const bool res = outlier
+        ? SplitOnMajorGridLines( cellSize, from, to, callback )
+        : SplitOnMajorGridLinesNoOutlier( cellSize, from, to, callback );
     if( res )
         output << "STOP\n";
     return tools::CheckOutput( output.str(), expected );
@@ -40,11 +43,18 @@ bool DummyCallback( MT_Vector2D, MT_Vector2D )
     return false;
 }
 
-#define CHECK_SPLIT( x1, y1, x2, y2, expected )                                \
-    {                                                                                    \
-        auto err = CheckSplit( 100, x1, y1, x2, y2, DummyCallback, expected ); \
-        if( !err.empty() )                                                               \
-            BOOST_ERROR( err );                                                          \
+#define CHECK_SPLIT( x1, y1, x2, y2, expected )                                       \
+    {                                                                                 \
+        auto err = CheckSplit( 100, x1, y1, x2, y2, DummyCallback, expected, true );  \
+        if( !err.empty() )                                                            \
+            BOOST_ERROR( err );                                                       \
+    }
+
+#define CHECK_SPLIT_NO_OUTLIER( x1, y1, x2, y2, expected )                            \
+    {                                                                                 \
+        auto err = CheckSplit( 100, x1, y1, x2, y2, DummyCallback, expected, false ); \
+        if( !err.empty() )                                                            \
+            BOOST_ERROR( err );                                                       \
     }
 
 }  // namespace
@@ -131,12 +141,45 @@ BOOST_AUTO_TEST_CASE( path_split_on_major_grid_lines_with_stop )
         "(273, 500) -> (216, 400)\n"
         "(216, 400) -> (159, 300)\n"
         "(159, 300) -> (103, 200)\n"
-        "STOP\n"
-    );
+        "STOP\n", true );
     if( !err.empty() )
         BOOST_ERROR( err );
 }
 
+BOOST_AUTO_TEST_CASE( path_split_on_major_grid_lines_no_outlier )
+{
+    // from == to
+    CHECK_SPLIT_NO_OUTLIER( 40, 40, 40, 40, "" );
+
+    // from and to in the same cell
+    CHECK_SPLIT_NO_OUTLIER( 40, 40, 60, 40,
+        "(40, 40) -> (60, 40)\n"
+    );
+
+    // from and to next to each other
+    CHECK_SPLIT_NO_OUTLIER( 40, 40, 160, 40,
+        "(40, 40) -> (160, 40)\n"
+    );
+
+    // from and to separated by one cell
+    CHECK_SPLIT_NO_OUTLIER( 40, 40, 260, 40,
+        "(40, 40) -> (150, 40)\n"
+        "(150, 40) -> (260, 40)\n"
+    );
+
+    // from and to separated by 2 cells
+    CHECK_SPLIT_NO_OUTLIER( 40, 40, 360, 40,
+        "(40, 40) -> (200, 40)\n"
+        "(200, 40) -> (360, 40)\n"
+    );
+
+    // from and to separated by 3 cells
+    CHECK_SPLIT_NO_OUTLIER( 40, 40, 460, 40,
+        "(40, 40) -> (200, 40)\n"
+        "(200, 40) -> (300, 40)\n"
+        "(300, 40) -> (460, 40)\n"
+    );
+}
 
 /*
 BOOST_AUTO_TEST_CASE( path_split_on_major_grid_lines_benchmark )

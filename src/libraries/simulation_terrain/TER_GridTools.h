@@ -35,4 +35,17 @@ class MT_Vector2D;
 bool SplitOnMajorGridLines( int32_t cellSize, MT_Vector2D from, MT_Vector2D to,
         const std::function< bool( MT_Vector2D, MT_Vector2D )>& f );
 
+// This function is mostly used to sample points along pathfind segments and
+// evaluate slopes, using elevation delta at start and end points and segment
+// length.  The problem with small segments is the error made when snapping
+// them on the grid in SplitOnMajorGridLines can heavily impact the slope
+// computation. One solution would be to increase the grid resolution but this
+// has a direct impact on Bresenham performance. Instead, we note that small
+// segments only appear at the start and end of the original one, so we merge
+// them with their immediate successor or predecessor. For segments longer
+// than L=sqrt(pow(cellSize)) this ensures the subsegments are at most 2L and
+// at least 0.5*L long.
+bool SplitOnMajorGridLinesNoOutlier( int32_t cellSize, MT_Vector2D from,
+        MT_Vector2D to, const std::function< bool( MT_Vector2D, MT_Vector2D )>& f );
+
 #endif // TER_GRIDTOOLS_H

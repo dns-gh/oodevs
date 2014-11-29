@@ -67,3 +67,55 @@ bool SplitOnMajorGridLines( int32_t cellSize, MT_Vector2D from, MT_Vector2D to,
     }
     return false;
 }
+
+bool SplitOnMajorGridLinesNoOutlier( int32_t cellSize, MT_Vector2D from,
+        MT_Vector2D to, const std::function< bool( MT_Vector2D, MT_Vector2D )>& f )
+{
+    MT_Vector2D p0;
+    int seen = 0;
+    return SplitOnMajorGridLines( cellSize, from, to,
+        [&]( MT_Vector2D p1, MT_Vector2D p2 ) -> bool
+        {
+            bool result = false;
+            if( p1 == from )
+            {
+                if( p1 == from && p2 == to )
+                    // No split, just forward the call
+                    return f( p1, p2 );
+                // Skip first segment
+                p0 = p1;
+            }
+            else
+            {
+                if( p2 == to )
+                {
+                    if( p0 == from && seen > 1 )
+                    {
+                        // Special case, from and to are separated by one cell:
+                        // coalesce the 3 segments and split them in 2 again.
+                        p1 = MT_Vector2D( ( p0.rX_ + p2.rX_ ) / 2,
+                                          ( p0.rY_ + p2.rY_ ) / 2 );
+                        if( f( p0, p1 ) )
+                            return true;
+                        result = f( p1, p2 );
+                    }
+                    else
+                    {
+                        result = f( p0, p2 );
+                    }
+                }
+                else
+                {
+                    if( seen > 1 )
+                    {
+                        // Emit the previous segment, unless it was merged with
+                        // the first one.
+                        result = f( p0, p1 ); 
+                        p0 = p1;
+                    }
+                }
+            }
+            ++seen;
+            return result;
+        });
+}

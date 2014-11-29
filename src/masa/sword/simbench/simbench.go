@@ -143,8 +143,8 @@ func benchmarkPathfind(from, to swapi.Point, quick bool) ([]float64, error) {
 		if err != nil {
 			return nil, err
 		}
-		if len(points) < 10 {
-			return nil, fmt.Errorf("not enough points in pathfind")
+		if len(points) < 9 {
+			return nil, fmt.Errorf("not enough points in pathfind: %d", len(points))
 		}
 		end := time.Now()
 		durations = append(durations, float64(end.Sub(start)/time.Millisecond))

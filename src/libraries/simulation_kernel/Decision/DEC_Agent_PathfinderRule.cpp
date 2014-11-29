@@ -265,7 +265,8 @@ double DEC_Agent_PathfinderRule::GetCost( const MT_Vector2D& from, const MT_Vect
         return -1;
     }
 
-    if( SplitOnMajorGridLines( static_cast< int32_t >( altitudeData_.GetCellSize() ), from, to,
+    if( SplitOnMajorGridLinesNoOutlier(
+        static_cast< int32_t >( altitudeData_.GetCellSize() ), from, to,
         [&]( MT_Vector2D from, MT_Vector2D to ) -> bool
         {
             const double delta = altitudeData_.GetAltitude( to ) - altitudeData_.GetAltitude( from );
@@ -281,7 +282,8 @@ double DEC_Agent_PathfinderRule::GetCost( const MT_Vector2D& from, const MT_Vect
     if( rSlopeDeceleration_ != 0 )
     {
         SlopeSpeedModifier modifier;
-        SplitOnMajorGridLines( static_cast< int32_t >( altitudeData_.GetCellSize() ), from, to,
+        SplitOnMajorGridLinesNoOutlier(
+            static_cast< int32_t >( altitudeData_.GetCellSize() ), from, to,
             [&]( MT_Vector2D from, MT_Vector2D to )
             {
                 return modifier.ComputeLocalSlope( altitudeData_, from, to );

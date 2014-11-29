@@ -527,7 +527,7 @@ func (s *TestSuite) TestMoveAlongItineraryNoBacktrack(c *C) {
 		}
 	}
 	ratios := getMatchedRatio(points, itinerary)
-	c.Assert(ratios, DeepEquals, []int{-32, 40, -23})
+	c.Assert(ratios, DeepEquals, []int{-32, 39, -23})
 }
 
 func testMoveAlongHorseshoe(c *C, from, to swapi.Point, expectedRatios []int) {
@@ -560,8 +560,8 @@ func (s *TestSuite) TestMoveAlongItineraryAboveHorseshoe(c *C) {
 	// The path is big U and we move on a line slightly above it. The unit
 	// should avoid the itinerary and reach the destination directly.
 	testMoveAlongHorseshoe(c,
-		swapi.Point{X: -0.5291, Y: 47.2444},
-		swapi.Point{X: -0.1303, Y: 47.1966},
+		swapi.Point{X: -0.4539, Y: 47.2720},
+		swapi.Point{X: -0.1441, Y: 47.2920},
 		[]int{-100})
 }
 
@@ -574,11 +574,12 @@ func (s *TestSuite) TestMoveAlongItineraryOnHorseshoe(c *C) {
 	testMoveAlongHorseshoe(c,
 		swapi.Point{X: -0.5126, Y: 47.2098},
 		swapi.Point{X: -0.2476, Y: 47.1829},
-		[]int{-24, 1, -1, 32, -3, 25, -4})
+		[]int{-24, 1, -1, 32, -4, 25, -4})
 }
 
 func testPathEdgeSplit(c *C, client *swapi.Client, unit *swapi.Unit,
-	from, to swapi.Point, split bool, points int, minDegrees, maxDegrees int) []swapi.PathPoint {
+	from, to swapi.Point, split bool, points int,
+	minDegrees, maxDegrees float64) []swapi.PathPoint {
 
 	rq := sword.PathfindRequest{
 		Unit: swapi.MakeId(unit.Id),
@@ -600,8 +601,8 @@ func testPathEdgeSplit(c *C, client *swapi.Client, unit *swapi.Unit,
 			// or when a sequence of points have the same slope.
 			continue
 		}
-		c.Assert(degrees, GreaterOrEquals, float64(minDegrees))
-		c.Assert(degrees, LesserOrEquals, float64(maxDegrees))
+		c.Assert(degrees, GreaterOrEquals, minDegrees)
+		c.Assert(degrees, LesserOrEquals, maxDegrees)
 	}
 	return path
 }
@@ -621,10 +622,10 @@ func (s *TestSuite) TestPathEdgesSplitOnElevationGrid(c *C) {
 
 	// https://masagroup.atlassian.net/browse/SWBUG-13524
 	// Minimum slope
-	testPathEdgeSplit(c, client, unit, from, to, true, 18, 0, 8)
+	testPathEdgeSplit(c, client, unit, from, to, true, 15, 0, 0.2)
 
 	// Slope around 16 degrees
 	from.Y = 28.2603
 	to.Y = 28.2603
-	testPathEdgeSplit(c, client, unit, from, to, true, 23, 15, 28)
+	testPathEdgeSplit(c, client, unit, from, to, true, 19, 16.7, 17.6)
 }
