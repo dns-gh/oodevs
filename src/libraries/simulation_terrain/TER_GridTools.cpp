@@ -7,7 +7,8 @@
 //
 // *****************************************************************************
 
-#include "Elevation.h"
+#include "simulation_terrain_pch.h"
+#include "TER_GridTools.h"
 #include "MT_Tools/MT_Vector2D.h"
 
 bool SplitOnMajorGridLines( int32_t cellSize, MT_Vector2D from, MT_Vector2D to,

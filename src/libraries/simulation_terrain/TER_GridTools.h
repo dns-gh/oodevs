@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef Elevation_h
-#define Elevation_h
+#ifndef TER_GRIDTOOLS_H
+#define TER_GRIDTOOLS_H
 
 #include <functional>
 
@@ -35,4 +35,4 @@ class MT_Vector2D;
 bool SplitOnMajorGridLines( int32_t cellSize, MT_Vector2D from, MT_Vector2D to,
         const std::function< bool( MT_Vector2D, MT_Vector2D )>& f );
 
-#endif // Elevation_h
+#endif // TER_GRIDTOOLS_H

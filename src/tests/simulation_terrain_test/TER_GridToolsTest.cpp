@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#include "simulation_kernel_test_pch.h"
-#include "simulation_kernel/Meteo/RawVisionData/Elevation.h"
+#include "simulation_terrain_test_pch.h"
+#include "simulation_terrain/TER_GridTools.h"
 #include "MT_Tools/MT_Vector2D.h"
 #include <tools/BoostTest.h>
 
