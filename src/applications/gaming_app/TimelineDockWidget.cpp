@@ -13,8 +13,6 @@
 #include "GamingConfig.h"
 #include "TimelineToolBar.h"
 #include "TimelineWebView.h"
-#include "actions/Action_ABC.h"
-#include "actions/ActionTasker.h"
 #include "clients_gui/Event.h"
 #include "clients_gui/VisibilityFilter_ABC.h"
 #include "clients_kernel/Controllers.h"
@@ -352,7 +350,7 @@ void TimelineDockWidget::NotifyUpdated( const gui::Event& event )
 // -----------------------------------------------------------------------------
 void TimelineDockWidget::BeforeSelection()
 {
-    selectedEntity_ = 0;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -368,10 +366,9 @@ void TimelineDockWidget::Select( const kernel::Entity_ABC& element )
 // Name: TimelineDockWidget::Select
 // Created: JSR 2014-11-17
 // -----------------------------------------------------------------------------
-void TimelineDockWidget::Select( const actions::Action_ABC& action )
+void TimelineDockWidget::Select( const actions::Action_ABC& )
 {
-    if( const auto* tasker = action.Retrieve< actions::ActionTasker >() )
-        selectedEntity_ = tasker->GetTasker();
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
