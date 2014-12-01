@@ -11,6 +11,7 @@
 #include "LimitsLayer.h"
 #include "gaming/TacticalLine_ABC.h"
 #include "gaming/TacticalLineFactory.h"
+#include "clients_gui/GLOptions.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/CommunicationHierarchies.h"
@@ -81,7 +82,8 @@ namespace
 // -----------------------------------------------------------------------------
 bool LimitsLayer::ShouldDisplay( const kernel::Entity_ABC& entity )
 {
-    if( ! drawLines_.IsSet( true, true, true ) )
+    const auto drawLines = view_.GetCurrentOptions().Get( "TacticalLines" ).To< FourStateOption >();
+    if( !drawLines.IsSet( true, true, true ) )
         return false;
     if( const kernel::Hierarchies* hierarchies = entity.Retrieve< kernel::TacticalHierarchies >() )
     {
@@ -99,7 +101,7 @@ bool LimitsLayer::ShouldDisplay( const kernel::Entity_ABC& entity )
                     superiorSelected = IsSubordinate< kernel::TacticalHierarchies >( *selectedEntity_, *superior )
                                     || IsSubordinate< kernel::CommunicationHierarchies >( *selectedEntity_, *superior );
             }
-            if( !drawLines_.IsSet( selected, superiorSelected || selected, profile_.IsVisible( *lineController ) ) )
+            if( !drawLines.IsSet( selected, superiorSelected || selected, profile_.IsVisible( *lineController ) ) )
                 return false;
             return gui::EntityLayer< kernel::TacticalLine_ABC >::ShouldDisplay( *lineController );
         }
@@ -186,14 +188,4 @@ void LimitsLayer::Select( const kernel::TacticalLine_ABC& element )
 void LimitsLayer::AfterSelection()
 {
     // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: LimitsLayer::OptionChanged
-// Created: LGY 2012-01-04
-// -----------------------------------------------------------------------------
-void LimitsLayer::OptionChanged( const std::string& name, const kernel::OptionVariant& value )
-{
-    if( name == "TacticalLines" )
-        drawLines_ = value.To< FourStateOption >();
 }
