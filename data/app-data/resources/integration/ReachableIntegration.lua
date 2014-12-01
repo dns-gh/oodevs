@@ -447,7 +447,7 @@ end
 -- <li> eTypeItiCriminal (criminal) </li>
 -- <li> eTypeItiNBC (CBRN) </li> </ul>
 -- @param waypoints List of directIA knowledges
--- @param wantToStopBecauseOfObstacle Boolean
+-- @param wantToStopBecauseOfObstacle Boolean True if the unit has to stop if it finds an obstacle, false otherwise
 -- @return Boolean
 integration.moveToItGeneric = masalife.brain.integration.startStopAction( 
 { 
@@ -588,7 +588,7 @@ end
 -- <li> eTypeItiCriminal (criminal) </li>
 -- <li> eTypeItiNBC (CBRN) </li> </ul>
 -- @param waypoints List of directIA knowledges
--- @param wantToStopBecauseOfObstacle Boolean, is true if the unit has to stop if it find an obstacle, false otherwise
+-- @param wantToStopBecauseOfObstacle Boolean True if the unit has to stop if it finds an obstacle, false otherwise
 -- @return Boolean, 'true' if the movement is finished, 'false' otherwise.
 integration.updateMoveToIt = function( objective, pathType, waypoints, wantToStopBecauseOfObstacle )
     local etat = objective[ myself ].etat
@@ -720,16 +720,11 @@ integration.updateMoveToIt = function( objective, pathType, waypoints, wantToSto
         myself.canBeBlocked = true
         if wantToStopBecauseOfObstacle then -- Scipio compatibility
             DEC_PauseAction( objective[ myself ].moveAction )
-            local allRes = {}
-            local obstacles = {}
-            obstacles = integration.getKnowledgesObjectsInCircle( meKnowledge:getPosition(), 1000,
-                { eTypeObjectAbatis, eTypeObjectAntiTankObstacle, eTypeObjectBarricade, eTypeObjectBridgeDestruction, 
-                  eTypeObjectMines, eTypeObjectLinearMinedArea, eTypeObjectScatteredMinedArea, 
-                 eTypeObjectRoadDestruction, eTypeObjectLandslide } )
-            for i = 1, #obstacles do
-                allRes[ #allRes + 1 ] = CreateKnowledge( integration.ontology.types.object, obstacles[i] )
+            local obstacle = DEC_GetCurrentObjectCollision( myself )
+            if obstacle then
+                allRes = { CreateKnowledge( integration.ontology.types.object, obstacle ) }
+                meKnowledge:sendArrivedOnMines( meKnowledge:getAutomat(), allRes )
             end
-            meKnowledge:sendArrivedOnMines( meKnowledge:getAutomat(), allRes )
         end
     elseif etat == eEtatActionDeplacement_DejaEnDeplacement then
         if etat ~= objective[ myself ].rcDone then
