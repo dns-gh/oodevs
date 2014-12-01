@@ -23,15 +23,19 @@ ADN_MissionParameter_GroupBox::ADN_MissionParameter_GroupBox( int strips, Qt::Or
     : Q3GroupBox( strips, orientation, title )
     , authorized_( 1, authorized )
     , typeVisible_( false )
+    , filterMissionType_( eNbrMissionParameterType )
+    , isFilterMissionType_( false )
     , objectVisible_( true )
 {
     hide();
 }
 
 ADN_MissionParameter_GroupBox::ADN_MissionParameter_GroupBox( int strips, Qt::Orientation orientation, const QString& title,
-                                                              const std::vector< E_MissionParameterType >& authorized )
+                                                              const std::vector< E_MissionParameterType >& authorized, E_MissionParameterType filterMissionType )
     : Q3GroupBox( strips, orientation, title )
     , authorized_( authorized )
+    , filterMissionType_( filterMissionType )
+    , isFilterMissionType_( false )
     , typeVisible_( false )
     , objectVisible_( true )
 {
@@ -54,7 +58,8 @@ ADN_MissionParameter_GroupBox::~ADN_MissionParameter_GroupBox()
 void ADN_MissionParameter_GroupBox::OnTypeChanged( E_MissionParameterType type )
 {
     typeVisible_ = std::find( authorized_.begin(), authorized_.end(), type ) != authorized_.end();
-    setVisible( typeVisible_ && objectVisible_ );
+    isFilterMissionType_ = type == filterMissionType_;
+    setVisible( typeVisible_ && ( !isFilterMissionType_ || objectVisible_ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -69,6 +74,6 @@ void ADN_MissionParameter_GroupBox::OnMissionTypeChanged( const QStandardItem& i
     if( pInfos->GetItemName() == "ObjectKnowledge" )
     {
         objectVisible_ = pInfos->isAllowed_.GetData();
-        setVisible( typeVisible_ && objectVisible_ );
+        setVisible( typeVisible_ && ( !isFilterMissionType_ || objectVisible_ ) );
     }
 }

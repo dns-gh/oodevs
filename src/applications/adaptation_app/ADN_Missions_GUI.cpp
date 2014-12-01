@@ -176,7 +176,8 @@ QWidget* ADN_Missions_GUI::BuildMissions( E_MissionType eMissionType )
         std::vector< E_MissionParameterType >( boost::assign::list_of( eMissionParameterTypeObjectKnowledge )
                                                                      ( eMissionParameterTypeGenObject )
                                                                      ( eMissionParameterTypePhaseLine )
-                                                                     ( eMissionParameterTypeLocationComposite ) ) );
+                                                                     ( eMissionParameterTypeLocationComposite ) ),
+        eMissionParameterTypeLocationComposite );
     connect( &typesTable->GetDelegate(), SIGNAL( CheckedStateChanged( const QStandardItem& ) ), pKnowledgeObject, SLOT( OnMissionTypeChanged( const QStandardItem& ) ) );
     {
         QCheckBox* all = new QCheckBox( pKnowledgeObject );
