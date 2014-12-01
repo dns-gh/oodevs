@@ -217,13 +217,13 @@ void SymbolEditor::NotifyUpdated( const kernel::Team_ABC& team )
 // -----------------------------------------------------------------------------
 void SymbolEditor::UpdateHierarchies()
 {
-    if( kernel::TacticalHierarchies* pTactical = selected_.ConstCast()->Retrieve< kernel::TacticalHierarchies >() )
+    if( auto* pTactical = selected_.ConstCast()->Retrieve< kernel::TacticalHierarchies >() )
     {
         pTactical->UpdateSymbolUpward();
         controllers_.controller_.Update( *pTactical );
-        if( const kernel::CommunicationHierarchies* pCommunication = selected_->Retrieve< kernel::CommunicationHierarchies >() )
+        if( const auto* pCommunication = selected_->Retrieve< kernel::CommunicationHierarchies >() )
             controllers_.controller_.Update( *pCommunication );
-        else if( const kernel::CommunicationHierarchies* pCommunication = pTactical->GetTop().Retrieve< kernel::CommunicationHierarchies >() )
+        else if( const auto* pCommunication = pTactical->GetTop().Retrieve< kernel::CommunicationHierarchies >() )
             controllers_.controller_.Update( *pCommunication );
     }
 }

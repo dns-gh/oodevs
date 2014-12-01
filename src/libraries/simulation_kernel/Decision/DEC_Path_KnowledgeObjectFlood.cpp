@@ -12,8 +12,6 @@
 #include "Entities/Objects/FloodAttribute.h"
 #include "MT_Tools/MT_Scipio_enum.h"
 
-using namespace geometry;
-
 // -----------------------------------------------------------------------------
 // Name: DEC_Path_KnowledgeObjectFlood constructor
 // Created: JSR 2010-12-20

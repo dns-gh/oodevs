@@ -14,37 +14,13 @@
 
 namespace kernel
 {
-
-// =============================================================================
-/** @class  Symbol_ABC
-    @brief  Symbol definition
-*/
-// Created: AGE 2006-10-04
-// =============================================================================
-class Symbol_ABC
-{
-public:
-    //! @name Constructors/Destructor
-    //@{
-             Symbol_ABC() {}
-    virtual ~Symbol_ABC() {}
-    //@}
-
-    virtual const Entity_ABC& GetEntity() const = 0;
-    virtual std::string GetSymbol() const = 0;
-    virtual std::string GetStaticSymbol() const = 0;
-    virtual std::string GetLevel() const = 0;
-    virtual void UpdateSymbolUpward() = 0;
-    virtual void UpdateSymbolDownward() = 0;
-};
-
 // =============================================================================
 /** @class  TacticalHierarchies
     @brief  Tactical hierarchies
 */
 // Created: AGE 2006-10-04
 // =============================================================================
-class TacticalHierarchies : public Hierarchies, public Symbol_ABC
+class TacticalHierarchies : public Hierarchies
 {
 public:
     //! @name Constructors/Destructor
