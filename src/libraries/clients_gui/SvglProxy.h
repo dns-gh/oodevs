@@ -10,6 +10,8 @@
 #ifndef __SvglProxy_h_
 #define __SvglProxy_h_
 
+#include <boost/noncopyable.hpp>
+
 namespace svg
 {
     class Node_ABC;
@@ -25,40 +27,22 @@ namespace gui
 */
 // Created: AGE 2007-05-31
 // =============================================================================
-class SvglProxy
+class SvglProxy : boost::noncopyable
 {
 public:
-    //! @name Constructors/Destructor
-    //@{
     explicit SvglProxy( SvglRenderer& renderer );
     virtual ~SvglProxy();
-    //@}
 
-    //! @name Operations
-    //@{
-    void Draw( const std::string& name, const geometry::Rectangle2f& viewport, unsigned vWidth = 640,
-               unsigned vHeight = 480, bool pickingMode = false );
-    //@}
+    void Draw( const std::string& name, const geometry::Rectangle2f& viewport,
+               unsigned vWidth = 640, unsigned vHeight = 480,
+               bool pickingMode = false );
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    SvglProxy( const SvglProxy& );            //!< Copy constructor
-    SvglProxy& operator=( const SvglProxy& ); //!< Assignment operator
-    //@}
-
-    //! @name Types
-    //@{
     typedef std::map< std::string, std::shared_ptr< svg::Node_ABC > > T_Symbols;
-    typedef T_Symbols::const_iterator             CIT_Symbols;
-    //@}
 
 private:
-    //! @name Member data
-    //@{
     SvglRenderer& renderer_;
     T_Symbols symbols_;
-    //@}
 };
 
 }
