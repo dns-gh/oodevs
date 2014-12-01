@@ -46,7 +46,8 @@ void GLSymbols::PrintApp6( const std::string& symbol, const std::string& style, 
         node.second.reset( Load( symbol, 100 ) );
         if( !node.first || !node.second )
         {
-            notFoundSymbols_.insert( symbol.substr( 8, symbol.size() - 8 ) );
+            if( symbol.find( "symbols/" ) == 0 )
+                notFoundSymbols_.insert( symbol.substr( 8, symbol.size() - 8 ) );
             MT_LOG_ERROR_MSG( "Could not open svg symbol '" << symbol << ".svg', and cannot find the closest symbol." );
         }
     }
