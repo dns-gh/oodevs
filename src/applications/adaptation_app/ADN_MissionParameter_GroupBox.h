@@ -30,7 +30,7 @@ public:
              ADN_MissionParameter_GroupBox( int strips, Qt::Orientation orientation, const QString& title,
                                             E_MissionParameterType authorized );
              ADN_MissionParameter_GroupBox( int strips, Qt::Orientation orientation, const QString& title,
-                                            const std::vector< E_MissionParameterType >& authorized );
+                                            const std::vector< E_MissionParameterType >& authorized, E_MissionParameterType filterMissionType );
     virtual ~ADN_MissionParameter_GroupBox();
     //@}
 
@@ -45,6 +45,8 @@ private:
     //! @name Member Data
     //@{
     const std::vector< E_MissionParameterType > authorized_;
+    E_MissionParameterType filterMissionType_;
+    bool isFilterMissionType_;
     bool typeVisible_;
     bool objectVisible_;
     //@}
