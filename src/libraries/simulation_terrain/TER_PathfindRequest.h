@@ -16,11 +16,8 @@
 
 class TER_PathSection;
 
-// TER_PathfindRequest insulates TER_Path_ABC cleanup logic from
-// TER_PathFinderThread. While the cleanup code itself belongs to TER_Path_ABC,
-// the deferred cleanup logic is only required by the threaded implementation
-// of the path finder and has nothing to do in TER_Path_ABC. We need both a
-// request and an executor class.
+// TER_PathfindRequest defines possible path finding arguments. Fill it and
+// pass it to TER_Pathfinder to compute a path.
 class TER_PathfindRequest: private boost::noncopyable
 {
 public:

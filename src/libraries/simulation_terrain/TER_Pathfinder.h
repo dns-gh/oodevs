@@ -83,9 +83,7 @@ public:
     // when the computation terminates, successfully and on error. Note the
     // result never contains TER_Path_ABC::eComputing.
     boost::shared_ptr< TER_PathFuture > StartCompute(
-            std::size_t callerId,
-            const std::vector< boost::shared_ptr< TER_PathSection > > sections,
-            const sword::Pathfind& pathfind );
+            const boost::shared_ptr< TER_PathfindRequest >& request );
 
     void AddDynamicData   ( const DynamicDataPtr& data );
     void RemoveDynamicData( const DynamicDataPtr& data );

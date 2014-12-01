@@ -26,6 +26,7 @@
 #include "Network/NET_Publisher_ABC.h"
 #include "simulation_terrain/TER_PathSection.h"
 #include "simulation_terrain/TER_Pathfinder.h"
+#include "simulation_terrain/TER_PathfindRequest.h"
 #include "simulation_terrain/TER_World.h"
 #include "protocol/ClientSenders.h"
 #include "protocol/MessageParameters.h"
@@ -158,7 +159,9 @@ void PathfindComputer::Compute( unsigned int callerId,
 {
     sword::Pathfind pathfind;
     *pathfind.mutable_request() = message;
-    const auto future = manager_.StartCompute( callerId, sections, pathfind );
+    const auto rq = boost::make_shared< TER_PathfindRequest >(
+            callerId, sections, pathfind );
+    const auto future = manager_.StartCompute( rq );
     const uint32_t id = ++ids_;
     results_[ id ] = boost::make_shared< PathRequest >(
             future, ctx, clientId, id, message, magic );

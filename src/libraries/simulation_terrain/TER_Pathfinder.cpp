@@ -212,16 +212,18 @@ TER_Pathfinder::~TER_Pathfinder()
 // Created: NLD 2003-08-14
 // -----------------------------------------------------------------------------
 boost::shared_ptr< TER_PathFuture > TER_Pathfinder::StartCompute(
-        std::size_t callerId,
-        const std::vector< boost::shared_ptr< TER_PathSection > > sections,
-        const sword::Pathfind& pathfind )
+        const boost::shared_ptr< TER_PathfindRequest >& request )
 {
     const auto future = boost::make_shared< TER_PathFuture >();
+    if( !request )
+    {
+        future->Cancel();
+        return future;
+    }
     const auto rq = boost::make_shared< Request >();
     rq->id = queryId_++;
     rq->future = future;
-    rq->request = boost::make_shared< TER_PathfindRequest >(
-            callerId, sections, pathfind );
+    rq->request = request;
 
     boost::mutex::scoped_lock locker( mutex_ );
     if( rq->request->GetLength() > rDistanceThreshold_ )

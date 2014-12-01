@@ -23,6 +23,7 @@
 #include "simulation_terrain/TER_PathPoint.h"
 #include "simulation_terrain/TER_Pathfinder.h"
 #include "simulation_terrain/TER_Pathfinder_ABC.h"
+#include "simulation_terrain/TER_PathfindRequest.h"
 #include "simulation_terrain/TER_World.h"
 #include <boost/make_shared.hpp>
 
@@ -362,7 +363,9 @@ const DEC_PathType& DEC_PathResult::GetPathType() const
 void DEC_PathResult::StartCompute( const sword::Pathfind& pathfind )
 {
     auto& pathfinder = MIL_AgentServer::GetWorkspace().GetPathFindManager();
-    future_ = pathfinder.StartCompute( callerId_, sections_, pathfind );
+    const auto rq = boost::make_shared< TER_PathfindRequest >(
+            callerId_, sections_, pathfind );
+    future_ = pathfinder.StartCompute( rq );
 }
 
 void DEC_PathResult::Cancel()
