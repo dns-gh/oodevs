@@ -54,6 +54,7 @@ class DrawerPanel : public InfoPanel_ABC
                   , public tools::ElementObserver_ABC< kernel::Entity_ABC >
                   , public tools::ElementObserver_ABC< DrawingCategory >
                   , public tools::ElementObserver_ABC< kernel::ModelLoaded >
+                  , public tools::ElementObserver_ABC< kernel::Profile_ABC >
                   , public tools::SelectionObserver_Base< kernel::Drawing_ABC >
                   , public tools::SelectionObserver_Base< kernel::Automat_ABC >
                   , public tools::SelectionObserver_Base< kernel::Formation_ABC >
@@ -97,6 +98,7 @@ private:
     virtual void NotifyDeleted( const DrawingCategory& category );
     virtual void NotifyUpdated( const kernel::ModelLoaded& model );
     virtual void NotifyUpdated( const kernel::Entity_ABC& entity );
+    virtual void NotifyUpdated( const kernel::Profile_ABC& profile );
     virtual void BeforeSelection();
     virtual void AfterSelection();
     virtual void Select( const kernel::Drawing_ABC& element );
@@ -105,6 +107,8 @@ private:
 
     virtual void Handle( kernel::Location_ABC& location );
     virtual void Draw( const kernel::Location_ABC& location, const geometry::Rectangle2f& viewport, const GLView_ABC& tools ) const;
+
+    void UpdateDrawButton();
     //@}
 
     //! @name Types
@@ -129,6 +133,7 @@ private:
     ColorButton* color_;
     QLabel* parentLabel_;
     QToolBox* toolBox_;
+    QToolButton* drawButton_;
     const DrawingTemplate* selectedStyle_;
     kernel::SafePointer< kernel::Drawing_ABC > selectedDrawing_;
     T_CategoryItems categories_;
