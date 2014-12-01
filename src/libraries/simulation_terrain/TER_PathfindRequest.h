@@ -14,7 +14,6 @@
 #include <boost/noncopyable.hpp>
 #include <boost/shared_ptr.hpp>
 
-class TER_PathFuture;
 class TER_PathSection;
 
 // TER_PathfindRequest insulates TER_Path_ABC cleanup logic from
@@ -30,8 +29,7 @@ public:
              TER_PathfindRequest(
                 std::size_t queryId, std::size_t callerId,
                 const std::vector< boost::shared_ptr< TER_PathSection > > sections,
-                const sword::Pathfind& pathfind,
-                const boost::shared_ptr< TER_PathFuture >& future );
+                const sword::Pathfind& pathfind );
     virtual ~TER_PathfindRequest();
     //@}
 
@@ -41,7 +39,6 @@ public:
     std::size_t GetQueryId() const;
     std::size_t GetCallerId() const;
     const sword::Pathfind& GetPathfind() const;
-    boost::shared_ptr< TER_PathFuture > GetFuture();
     const std::vector< boost::shared_ptr< TER_PathSection > >& GetSections();
     double GetLength() const;
 
@@ -52,7 +49,6 @@ private:
     const size_t callerId_;
     const std::vector< boost::shared_ptr< TER_PathSection > > sections_;
     const sword::Pathfind pathfind_;
-    boost::shared_ptr< TER_PathFuture > future_;
     //@}
 };
 

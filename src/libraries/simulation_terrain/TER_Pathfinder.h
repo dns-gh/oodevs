@@ -100,15 +100,13 @@ public:
     //@}
 
 private:
-    //! @name Types
-    //@{
-    typedef std::deque< boost::shared_ptr< TER_PathfindRequest > > T_Requests;
-    //@}
+    struct Request;
+    typedef std::deque< boost::shared_ptr< Request > > T_Requests;
 
 private:
-    boost::shared_ptr< TER_PathfindRequest > GetMessage( unsigned int nThread );
+    boost::shared_ptr< Request > GetMessage( unsigned int nThread );
     T_Requests& GetRequests();
-    void ProcessRequest( TER_PathFinderThread& data, TER_PathfindRequest& rq );
+    void ProcessRequest( TER_PathFinderThread& data, Request& rq );
 
 private:
     const boost::shared_ptr< TER_StaticData > staticData_;
