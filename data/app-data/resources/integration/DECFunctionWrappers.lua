@@ -812,7 +812,7 @@ function DEC_StartTirIndirectSurPosition( category, nbInterventionType, targetPo
 end
 
 function DEC_StartTirIndirectSurPositionAvecDemandeur( category, nbInterventionType, targetPosition, requester )
-    return _DEC_StartTirIndirectSurPositionAvecDemandeur( myself, catgeory, nbInterventionType, targetPosition, requester )
+    return _DEC_StartTirIndirectSurPositionAvecDemandeur( myself, category, nbInterventionType, targetPosition, requester )
 end
 
 function DEC_StartTirIndirectSurConnaissance( category, nbInterventionType, targetKnowledgeID )
