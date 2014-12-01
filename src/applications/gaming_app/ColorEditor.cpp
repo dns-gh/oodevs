@@ -10,10 +10,6 @@
 #include "gaming_app_pch.h"
 #include "ColorEditor.h"
 #include "moc_ColorEditor.cpp"
-#include "gaming/Objects.h"
-#include "gaming/Object.h"
-#include "gaming/Populations.h"
-#include "gaming/Population.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/tools.h"
 #include "clients_kernel/Controllers.h"
@@ -93,35 +89,6 @@ ColorEditor::~ColorEditor()
     controllers_.Unregister( *this );
 }
 
-namespace
-{
-    void ApplyDefaultColor( const kernel::Entity_ABC& entity, gui::ColorStrategy_ABC& strategy,
-                            gui::ColorController_ABC& colorController, bool applyToSubordinates )
-    {
-        const QColor baseColor = strategy.FindBaseColor( entity );
-        if( auto color = const_cast< kernel::Color_ABC* >( entity.Retrieve< kernel::Color_ABC >() ) )
-            color->ChangeColor( baseColor );
-        colorController.Add( entity, baseColor, false );
-        if( !applyToSubordinates )
-            return;
-        if( auto pTacticalHierarchies =  entity.Retrieve< kernel::TacticalHierarchies >() )
-            for( auto it = pTacticalHierarchies->CreateSubordinateIterator(); it.HasMoreElements(); )
-                ApplyDefaultColor( it.NextElement(), strategy, colorController, applyToSubordinates );
-        if( const auto objects = entity.Retrieve< Objects >() )
-        {
-            auto it = objects->CreateIterator();
-            while( it.HasMoreElements() )
-                colorController.Add( it.NextElement(), baseColor, false );
-        }
-        if( const auto populations = entity.Retrieve< Populations >() )
-        {
-            auto it = populations->CreateIterator();
-            while( it.HasMoreElements() )
-                colorController.Add( it.NextElement(), baseColor, false );
-        }
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: ColorEditor::Show
 // Created: LGY 2011-06-23
@@ -155,7 +122,7 @@ void ColorEditor::Accept()
         return;
     const bool applyToSubordinates = subordinatesCheckBox_->isChecked();
     if( defaultButton_->isChecked() )
-        ApplyDefaultColor( *selected_, colorStrategy_, colorController_, applyToSubordinates );
+        colorController_.ApplyDefaultColor( *selected_, colorStrategy_, applyToSubordinates );
     else if( sideButton_->isChecked() )
     {
         const QColor sideColor = colorStrategy_.FindTeamColor( selected_->Get< kernel::TacticalHierarchies >().GetTop() );

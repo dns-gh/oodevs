@@ -10,6 +10,7 @@
 #include "clients_gui_pch.h"
 #include "ColorController.h"
 #include "LogisticHierarchiesBase.h"
+#include "ColorStrategy_ABC.h"
 #include "clients_kernel/Color_ABC.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/LogisticHierarchies.h"
@@ -87,6 +88,19 @@ void ColorController::NotifyCreated( const kernel::Entity_ABC& entity )
 void ColorController::NotifyDeleted( const kernel::Entity_ABC& entity )
 {
     colors_.erase( entity.GetId() );
+}
+
+void ColorController::ApplyDefaultColor( const kernel::Entity_ABC& entity, gui::ColorStrategy_ABC& strategy, bool applyToSubordinates )
+{
+    const QColor baseColor = strategy.FindBaseColor( entity );
+    if( auto color = const_cast< kernel::Color_ABC* >( entity.Retrieve< kernel::Color_ABC >() ) )
+        color->ChangeColor( baseColor );
+    Add( entity, baseColor, false );
+    if( !applyToSubordinates )
+        return;
+    if( auto pTacticalHierarchies = entity.Retrieve< kernel::TacticalHierarchies >() )
+        for( auto it = pTacticalHierarchies->CreateSubordinateIterator(); it.HasMoreElements(); )
+            ApplyDefaultColor( it.NextElement(), strategy, applyToSubordinates );
 }
 
 // -----------------------------------------------------------------------------

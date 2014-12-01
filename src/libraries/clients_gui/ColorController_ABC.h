@@ -19,6 +19,8 @@ namespace kernel
 
 namespace gui
 {
+    class ColorStrategy_ABC;
+
 // =============================================================================
 /** @class  ColorController_ABC
     @brief  Color controller declaration
@@ -36,6 +38,7 @@ public:
 
     //! @name Operations
     //@{
+    virtual void ApplyDefaultColor( const kernel::Entity_ABC& entity, ColorStrategy_ABC& strategy, bool applyToSubordinates ) = 0;
     virtual void Add( const kernel::Entity_ABC& entity, const QColor& color, bool applyToSubordinates = true, bool force = false ) = 0;
     virtual void Remove( const kernel::Entity_ABC& entity ) = 0;
     virtual void Reset( const kernel::Entity_ABC& entity, const QColor& color ) = 0;

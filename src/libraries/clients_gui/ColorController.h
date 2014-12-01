@@ -47,6 +47,7 @@ public:
 
     //! @name Operations
     //@{
+    virtual void ApplyDefaultColor( const kernel::Entity_ABC& entity, gui::ColorStrategy_ABC& strategy, bool applyToSubordinates );
     virtual void Add( const kernel::Entity_ABC& entity, const QColor& newColor, bool applyToSubordinates = true, bool force = false );
     virtual void Remove( const kernel::Entity_ABC& entity );
     virtual void Reset( const kernel::Entity_ABC& entity, const QColor& newColor );
