@@ -75,6 +75,7 @@ public:
     bool ComputeFutureObjectCollision( const MT_Vector2D& vStartPos, const T_KnowledgeObjectVector& objectsToTest,
         double& rDistance, boost::shared_ptr< DEC_Knowledge_Object >& pObject,
         const MIL_Agent_ABC& agent, bool blockedByObject, bool applyScale ) const;
+    const boost::shared_ptr< DEC_Knowledge_Object >& GetCurrentObjectCollision() const;
     MT_Vector2D ExtrapolatePosition( const MT_Vector2D& position, const double rSpeed, const double rTime, const bool bBoundOnPath ) const;
     bool IsMovingOn( const TER_Path_ABC& path ) const;
     //@}
@@ -142,6 +143,7 @@ private:
     void SetCurrentPathPoint( DEC_PathResult& path );
     void CheckPathNotification();
     bool HandleObject( const MT_Vector2D& startPosition, const MT_Vector2D& endPosition, MIL_Object_ABC& object, double& rMaxSpeedForStep, bool ponctual );
+    void SetBlockedByObject( bool outside, const MT_Vector2D& startPosition, const MT_Vector2D& endPosition, MIL_Object_ABC& object );
     MT_Vector2D ComputePositionBeforeObject( const MT_Vector2D& startPosition, const MT_Vector2D& currentStepPos, const MIL_Object_ABC& object ) const;
     boost::shared_ptr< DEC_Knowledge_Object > FindBlockingObject( const MT_Vector2D& endPosition, const MIL_Object_ABC& object ) const;
      //@}
@@ -165,7 +167,7 @@ private:
     bool bFuelReportSent_;
     bool bImpossibleReportSent_;
     boost::shared_ptr< DEC_PathResult > pCurrentPath_;
-    boost::weak_ptr< DEC_Knowledge_Object > collision_;
+    boost::shared_ptr< DEC_Knowledge_Object > collision_;
     E_ReturnCode pathSet_;
     //@}
 };

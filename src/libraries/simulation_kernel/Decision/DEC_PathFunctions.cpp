@@ -50,6 +50,7 @@ void DEC_PathFunctions::Register( sword::Brain& brain )
     brain.RegisterFunction( "_DEC_GetNextObjectOnPath", &DEC_PathFunctions::GetNextObjectOnPath );
     brain.RegisterFunction( "_DEC_GetNextObjectOnPathWithBypassed", &DEC_PathFunctions::GetNextObjectOnPathWithBypassed );
     brain.RegisterFunction( "DEC_Itineraire_DernierPoint", &DEC_PathFunctions::GetLastPointOfPath );
+    brain.RegisterFunction( "DEC_GetCurrentObjectCollision", &DEC_PathFunctions::GetCurrentObjectCollision );
 
     // Rep_Points
     brain.RegisterFunction( "DEC_GetRepPoint", &DEC_PathFunctions::GetRepPoint );
@@ -409,4 +410,13 @@ std::vector< boost::shared_ptr< MT_Vector2D > > DEC_PathFunctions::GetClosestPat
             result = itinerary->AddClosestWaypoints( begin, end );
     } );
     return result;
+}
+
+// -----------------------------------------------------------------------------
+// Name: boost::shared_ptr< DEC_Knowledge_Object >& DEC_PathFunctions::GetCurrentObjectCollision
+// Created: LDC 2014-12-01
+// -----------------------------------------------------------------------------
+boost::shared_ptr< DEC_Knowledge_Object > DEC_PathFunctions::GetCurrentObjectCollision( DEC_Decision_ABC* callerAgent )
+{
+    return callerAgent->GetPion().GetRole< moving::PHY_RoleAction_Moving >().GetCurrentObjectCollision();
 }

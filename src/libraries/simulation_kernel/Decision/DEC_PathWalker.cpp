@@ -419,6 +419,18 @@ namespace
     }
 }
 
+void DEC_PathWalker::SetBlockedByObject( bool outside, const MT_Vector2D& startPosition, const MT_Vector2D& endPosition, MIL_Object_ABC& object )
+{
+    auto k = movingEntity_.GetKnowledgeObject( object );
+    if( k != collision_ )
+        movingEntity_.SendRC( report::eRC_BlockedByObject, k );
+    collision_ = k;
+    if( outside )
+        vNewPos_ = ComputePositionBeforeObject( startPosition, endPosition, object );
+    rCurrentSpeed_ = 0;
+    pathSet_ = eBlockedByObject;
+}
+
 bool DEC_PathWalker::HandleObject( const MT_Vector2D& startPosition, const MT_Vector2D& endPosition,
     MIL_Object_ABC& object, double& rMaxSpeedForStep, bool ponctual )
 {
@@ -426,23 +438,14 @@ bool DEC_PathWalker::HandleObject( const MT_Vector2D& startPosition, const MT_Ve
         return false;
     if( auto k = FindBlockingObject( endPosition, object ) )
     {
-        if( k != collision_.lock() )
-            movingEntity_.SendRC( report::eRC_BlockedByObject, k );
-        collision_ = k;
-        if( IsOutside( vNewPos_, object ) )
-            vNewPos_ = ComputePositionBeforeObject( startPosition, endPosition, object );
-        rCurrentSpeed_ = 0;
-        pathSet_ = eBlockedByObject;
+        SetBlockedByObject( IsOutside( vNewPos_, object ), startPosition, endPosition, object );
         return true;
     }
     movingEntity_.NotifyMovingInsideObject( object, startPosition, endPosition );
     const double rSpeedWithinObject = movingEntity_.GetSpeed( environment_, object );
     if( rSpeedWithinObject == 0 && IsOutside( vNewPos_, object ) && IsOutside( startPosition, object ) )
     {
-        vNewPos_ = ComputePositionBeforeObject( startPosition, endPosition, object );
-        rCurrentSpeed_ = 0;
-        pathSet_ = eBlockedByObject;
-        movingEntity_.NotifyMovingOutsideObject( object );
+        SetBlockedByObject( true, startPosition, endPosition, object );
         return true;
     }
     if( ponctual )
@@ -624,6 +627,15 @@ int DEC_PathWalker::Move( const boost::shared_ptr< DEC_PathResult >& pPath )
             vNewDir_ = ( ( *itNextPathPoint_ )->GetPos() - vNewPos_ ).Normalize();
     }
     return pathSet_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: boost::shared_ptr< DEC_Knowledge_Object >& DEC_PathWalker::GetCurrentObjectCollision
+// Created: LDC 2014-11-28
+// -----------------------------------------------------------------------------
+const boost::shared_ptr< DEC_Knowledge_Object >& DEC_PathWalker::GetCurrentObjectCollision() const
+{
+    return collision_;
 }
 
 // -----------------------------------------------------------------------------

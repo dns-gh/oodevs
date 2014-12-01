@@ -94,6 +94,7 @@ public:
     //@{
     bool IsMovingOn                  ( const TER_Path_ABC& path ) const;
     bool ComputeFutureObjectCollision( const T_KnowledgeObjectVector& objectsToTest, double& rDistance, boost::shared_ptr< DEC_Knowledge_Object >& pObject, const MIL_Agent_ABC& agent, bool blockedByObject, bool applyScale ) const;
+    const boost::shared_ptr< DEC_Knowledge_Object >& GetCurrentObjectCollision() const;
     //@}
 
     //! @name Serialization
