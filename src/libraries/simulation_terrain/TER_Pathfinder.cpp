@@ -142,6 +142,7 @@ struct TER_Pathfinder::Request
 {
     boost::shared_ptr< TER_PathfindRequest > request;
     boost::shared_ptr< TER_PathFuture > future;
+    size_t id;
 };
 
 // -----------------------------------------------------------------------------
@@ -217,9 +218,10 @@ boost::shared_ptr< TER_PathFuture > TER_Pathfinder::StartCompute(
 {
     const auto future = boost::make_shared< TER_PathFuture >();
     const auto rq = boost::make_shared< Request >();
+    rq->id = queryId_++;
     rq->future = future;
     rq->request = boost::make_shared< TER_PathfindRequest >(
-            queryId_++, callerId, sections, pathfind );
+            callerId, sections, pathfind );
 
     boost::mutex::scoped_lock locker( mutex_ );
     if( rq->request->GetLength() > rDistanceThreshold_ )
@@ -333,7 +335,7 @@ void TER_Pathfinder::ProcessRequest( TER_PathFinderThread& data, Request& reques
         profiler.Start();
         if( rq->IsItinerary() )
             wrapper = boost::make_shared< TER_PreferedEdgesHeuristic >( wrapper, rq->GetPathfind() );
-        const auto res = TER_PathComputer().Execute( rq->GetQueryId(), rq->GetCallerId(),
+        const auto res = TER_PathComputer().Execute( request.id, rq->GetCallerId(),
                 rq->GetSections(), *wrapper, *future, deadline, debugPath_ );
         future->Set( res );
         duration = profiler.Stop();
