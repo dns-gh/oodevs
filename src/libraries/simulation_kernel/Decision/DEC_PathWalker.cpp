@@ -446,6 +446,7 @@ bool DEC_PathWalker::HandleObject( const MT_Vector2D& startPosition, const MT_Ve
     if( rSpeedWithinObject == 0 && IsOutside( vNewPos_, object ) && IsOutside( startPosition, object ) )
     {
         SetBlockedByObject( true, startPosition, endPosition, object );
+        movingEntity_.NotifyMovingOutsideObject( object );
         return true;
     }
     if( ponctual )
