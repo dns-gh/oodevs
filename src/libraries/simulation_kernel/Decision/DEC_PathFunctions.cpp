@@ -37,6 +37,7 @@
 #include "Tools/MIL_Tools.h"
 #include "OnComponentComputer_ABC.h"
 #include "simulation_terrain/TER_Pathfinder.h"
+#include "simulation_terrain/TER_World.h"
 #include <geometry/Types.h>
 #include <boost/smart_ptr/make_shared.hpp>
 
@@ -113,21 +114,39 @@ namespace
     {
         const auto path = boost::make_shared< DEC_Agent_Path >( agent, points, pathType );
         if( !IsDestinationTrafficable( agent, points ) )
-            path->Cancel();
-        else
         {
-            sword::Pathfind pathfind;
-            const PHY_RoleInterface_Supply* role = agent.RetrieveRole< PHY_RoleInterface_Supply >();
-            if( role && role->IsConvoy() )
-                role->ToItinerary( pathfind );
-            else
-                FindItinerary( agent.GetRole< DEC_Decision_ABC >(),
-                    [&]( MIL_MissionParameter_ABC& element )
-                    { 
-                        element.ToItinerary( pathfind );
-                    } );
-            path->StartCompute( pathfind );
+            path->Cancel();
+            return path;
         }
+
+        sword::Pathfind pathfind;
+        const PHY_RoleInterface_Supply* role = agent.RetrieveRole< PHY_RoleInterface_Supply >();
+        if( role && role->IsConvoy() )
+            role->ToItinerary( pathfind );
+        else
+            FindItinerary( agent.GetRole< DEC_Decision_ABC >(),
+                [&]( MIL_MissionParameter_ABC& element )
+                { 
+                    element.ToItinerary( pathfind );
+                } );
+
+        std::vector< geometry::Point2f > itinerary;
+        if( pathfind.has_result() )
+        {
+            const auto& positions = pathfind.result().points();
+            for( auto i = 0; i < positions.size(); ++i )
+            {
+                MT_Vector2D point;
+                const auto& position = positions.Get( i ).coordinate();
+                TER_World::GetWorld().MosToSimMgrsCoord(
+                        position.latitude(), position.longitude(), point );
+                itinerary.push_back( geometry::Point2f( static_cast< float >( point.rX_ ),
+                                                        static_cast< float >( point.rY_ ) ) );
+            }
+        }
+        // $$$ forwarding ignored_dynamic_objects is debatable, but left for
+        // compatibility with the previous code for now.
+        path->StartCompute( itinerary, pathfind.request().ignore_dynamic_objects() );
         return path;
     }
 }

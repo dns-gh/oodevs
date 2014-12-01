@@ -360,11 +360,18 @@ const DEC_PathType& DEC_PathResult::GetPathType() const
     return pathType_;
 }
 
-void DEC_PathResult::StartCompute( const sword::Pathfind& pathfind )
+void DEC_PathResult::StartCompute()
+{
+    StartCompute( std::vector< geometry::Point2f >(), false );
+}
+
+void DEC_PathResult::StartCompute( const std::vector< geometry::Point2f >& itinerary,
+                                   bool ignoreDynamicObjects )
 {
     auto& pathfinder = MIL_AgentServer::GetWorkspace().GetPathFindManager();
-    const auto rq = boost::make_shared< TER_PathfindRequest >(
-            callerId_, sections_, pathfind );
+    const auto rq = boost::make_shared< TER_PathfindRequest >( callerId_, sections_ );
+    rq->SetItinerary( itinerary );
+    rq->SetIgnoreDynamicObjects( ignoreDynamicObjects );
     future_ = pathfinder.StartCompute( rq );
 }
 

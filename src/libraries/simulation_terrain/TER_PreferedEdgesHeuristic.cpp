@@ -13,7 +13,6 @@
 #include "TER_PathFinder_ABC.h"
 #include "TER_World.h"
 #include "MT_Tools/MT_Vector2d.h"
-#include "protocol/Simulation.h"
 #include <pathfind/TerrainRule_ABC.h>
 #include <boost/make_shared.hpp>
 #include "MT_Tools/MT_Logger.h"
@@ -81,23 +80,10 @@ private:
 
 TER_PreferedEdgesHeuristic::TER_PreferedEdgesHeuristic(
         const boost::shared_ptr< TER_Pathfinder_ABC >& pathfinder,
-        const sword::Pathfind& pathfind )
+        const std::vector< geometry::Point2f >& itinerary )
     : pathfinder_( pathfinder )
+    , points_( itinerary )
 {
-    if( !pathfind.has_result() )
-        return;
-    const auto& points = pathfind.result().points();
-    for( int i = 0; i < points.size(); ++i )
-    {
-        MT_Vector2D current;
-        TER_World::GetWorld().MosToSimMgrsCoord(
-                points.Get( i ).coordinate().latitude(),
-                points.Get( i ).coordinate().longitude(),
-                current );
-        geometry::Point2f p( static_cast< float >( current.rX_ ),
-                             static_cast< float >( current.rY_ ) );
-        points_.push_back( p );
-    }
 }
 
 void TER_PreferedEdgesHeuristic::SetChoiceRatio( float ratio )

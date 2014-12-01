@@ -30,7 +30,7 @@ class TER_PreferedEdgesHeuristic : public TER_Pathfinder_ABC
 {
 public:
     TER_PreferedEdgesHeuristic( const boost::shared_ptr< TER_Pathfinder_ABC >& pathfinder,
-                                const sword::Pathfind& pathfind );
+                                const std::vector< geometry::Point2f >& itinerary );
     
     virtual void SetChoiceRatio( float ratio );
     virtual void SetConfiguration( unsigned refine, unsigned int subdivisions );

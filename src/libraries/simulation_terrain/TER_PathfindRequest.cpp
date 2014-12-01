@@ -13,11 +13,10 @@
 
 TER_PathfindRequest::TER_PathfindRequest(
         std::size_t callerId,
-        const std::vector< boost::shared_ptr< TER_PathSection > > sections,
-        const sword::Pathfind& pathfind )
+        const std::vector< boost::shared_ptr< TER_PathSection > > sections )
     : callerId_( callerId )
     , sections_( sections )
-    , pathfind_( pathfind )
+    , ignoreDynamicObjects_( false )
 {
     // NOTHING
 }
@@ -27,19 +26,24 @@ TER_PathfindRequest::~TER_PathfindRequest()
     // NOTHING
 }
 
+void TER_PathfindRequest::SetIgnoreDynamicObjects( bool ignore )
+{
+    ignoreDynamicObjects_ = ignore;
+}
+
 bool TER_PathfindRequest::IgnoreDynamicObjects() const
 {
-    return pathfind_.request().ignore_dynamic_objects();
+    return ignoreDynamicObjects_;
 }
 
-const sword::Pathfind& TER_PathfindRequest::GetPathfind() const
+void TER_PathfindRequest::SetItinerary( const TER_PathfindRequest::Itinerary& itinerary )
 {
-    return pathfind_;
+    itinerary_ = itinerary;
 }
 
-bool TER_PathfindRequest::IsItinerary() const
+const TER_PathfindRequest::Itinerary& TER_PathfindRequest::GetItinerary() const
 {
-    return pathfind_.has_result();
+    return itinerary_;
 }
 
 const std::vector< boost::shared_ptr< TER_PathSection > >& TER_PathfindRequest::GetSections()

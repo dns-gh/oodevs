@@ -159,8 +159,8 @@ void PathfindComputer::Compute( unsigned int callerId,
 {
     sword::Pathfind pathfind;
     *pathfind.mutable_request() = message;
-    const auto rq = boost::make_shared< TER_PathfindRequest >(
-            callerId, sections, pathfind );
+    const auto rq = boost::make_shared< TER_PathfindRequest >( callerId, sections );
+    rq->SetIgnoreDynamicObjects( message.ignore_dynamic_objects() );
     const auto future = manager_.StartCompute( rq );
     const uint32_t id = ++ids_;
     results_[ id ] = boost::make_shared< PathRequest >(
