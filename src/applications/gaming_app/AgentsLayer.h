@@ -31,7 +31,6 @@ namespace kernel
 // Created: SBO 2006-08-18
 // =============================================================================
 class AgentsLayer : public gui::EntityLayer< kernel::Agent_ABC >
-                  , public kernel::OptionsObserver_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -57,11 +56,6 @@ private:
     //@{
     virtual void NotifySelectionChanged( const std::vector< const kernel::Agent_ABC* >& elements );
     void RequestCreation( const geometry::Point2f& point, const kernel::AgentType& type );
-    //@}
-
-    //! @name Operations
-    //@{
-    virtual void OptionChanged( const std::string& name, const kernel::OptionVariant& value );
     //@}
 
 private:

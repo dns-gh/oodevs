@@ -14,6 +14,7 @@
 #include "actions/ActionTasker.h"
 #include "actions/ActionTiming.h"
 #include "clients_gui/DragAndDropHelpers.h"
+#include "clients_gui/GLOptions.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/OptionsController.h"
 #include "clients_kernel/OptionVariant.h"
@@ -33,7 +34,6 @@ AgentsLayer::AgentsLayer( kernel::Controllers& controllers,
     , selected_( controllers )
     , actionsModel_( actionsModel )
     , simulation_( simulation )
-    , displayDestroyedUnits_( true )
 {
     controllers_.options_.Register( *this );
 }
@@ -100,7 +100,7 @@ void AgentsLayer::RequestCreation( const geometry::Point2f& point, const kernel:
 // -----------------------------------------------------------------------------
 void AgentsLayer::Draw( const kernel::Entity_ABC& entity, gui::Viewport_ABC& viewport, bool pickingMode )
 {
-    if( displayDestroyedUnits_ )
+    if( view_.GetCurrentOptions().Get( "DisplayDestroyedUnits" ).To< bool >() )
         gui::EntityLayer< kernel::Agent_ABC >::Draw( entity, viewport, pickingMode );
     else
     {
@@ -108,14 +108,4 @@ void AgentsLayer::Draw( const kernel::Entity_ABC& entity, gui::Viewport_ABC& vie
         if( attributes && !attributes->bDead_ )
             gui::EntityLayer< kernel::Agent_ABC >::Draw( entity, viewport, pickingMode );
     }
-}
-
-// -----------------------------------------------------------------------------
-// Name: AgentsLayer::OptionChanged
-// Created: SLI 2014-07-31
-// -----------------------------------------------------------------------------
-void AgentsLayer::OptionChanged( const std::string& name, const kernel::OptionVariant& value )
-{
-    if( name == "DisplayDestroyedUnits" )
-        displayDestroyedUnits_ = value.To< bool >();
 }

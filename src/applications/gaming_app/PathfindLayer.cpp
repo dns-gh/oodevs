@@ -14,6 +14,7 @@
 #include "actions/ActionsModel.h"
 #include "actions/Helpers.h"
 #include "clients_gui/DragAndDropHelpers.h"
+#include "clients_gui/GLOptions.h"
 #include "clients_gui/GLView_ABC.h"
 #include "clients_gui/ModelObserver_ABC.h"
 #include "clients_gui/RichDockWidget.h"
@@ -561,14 +562,8 @@ uint32_t PathfindLayer::GetUnitId() const
     return target_ == selectedPathfind_ ? selectedPathfind_->GetUnit().GetId() : target_->GetId();
 }
 
-void PathfindLayer::OptionChanged( const std::string& name, const kernel::OptionVariant& value )
+namespace
 {
-    if( name == "TacticalLines" )
-        filter_ = value.To< kernel::FourStateOption >();
-}
-
- namespace
- {
     template< typename T >
     bool IsSubordinate( const kernel::Entity_ABC& entity, const kernel::Entity_ABC& candidate )
     {
@@ -585,14 +580,16 @@ void PathfindLayer::OptionChanged( const std::string& name, const kernel::Option
             ( IsSubordinate< kernel::TacticalHierarchies >( unit, *superior ) ||
               IsSubordinate< kernel::CommunicationHierarchies >( unit, *superior ) );
     }
- }
+}
 
 bool PathfindLayer::ShouldDisplay( const kernel::Entity_ABC& entity )
 {
     if( controllers_.GetCurrentMode() == eModes_Itinerary )
         if( edited_.get() == &entity )
             return true;
-    if( !filter_.IsSet( true, true, true ) )
+    // current tactical lines filter
+    const auto filter = view_.GetCurrentOptions().Get( "TacticalLines" ).To< kernel::FourStateOption >();
+    if( !filter.IsSet( true, true, true ) )
         return false;
     const auto& pathfind = static_cast< const kernel::Pathfind_ABC& >( entity );
     auto hierarchy = pathfind.Retrieve< kernel::TacticalHierarchies >();
@@ -604,7 +601,7 @@ bool PathfindLayer::ShouldDisplay( const kernel::Entity_ABC& entity )
     const auto* selection = selectedPathfind_ ? &selectedPathfind_->GetUnit() : selectedEntity_;
     const bool selected = selection && IsSuperior( element, *selection );
     const bool superior = IsSuperior( selection, *element );
-    if( !filter_.IsSet( selected, selected || superior, profile_.CanBeOrdered( *element ) ) )
+    if( !filter.IsSet( selected, selected || superior, profile_.CanBeOrdered( *element ) ) )
         return false;
     return gui::EntityLayer< kernel::Pathfind_ABC >::ShouldDisplay( *element );
 }

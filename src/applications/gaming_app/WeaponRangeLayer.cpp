@@ -113,7 +113,6 @@ WeaponRangeLayer::WeaponRangeLayer( kernel::Controllers& controllers,
     : gui::EntityLayerBase( controllers, view, strategy, profile, eLayerTypes_WeaponRanges )
     , controllers_( controllers )
     , strategy_( strategy )
-    , useColor_( false )
 {
     controllers_.Update( *this );
 }
@@ -180,7 +179,8 @@ void WeaponRangeLayer::Draw( const kernel::Entity_ABC& entity,
         return;
     // SelectColor actually controls the result of ShouldDisplay
     strategy_.SelectColor( static_cast< const kernel::Agent_ABC& >( entity ) );
-    if( !view_.GetCurrentOptions().ShouldDisplay( "WeaponRanges" ) )
+    const auto options = view_.GetCurrentOptions();
+    if( !options.ShouldDisplay( "WeaponRanges" ) )
         return;
     if( const Weapons* weapons = entity.Retrieve< Weapons >() )
     {
@@ -188,24 +188,11 @@ void WeaponRangeLayer::Draw( const kernel::Entity_ABC& entity,
         weapons->DrawEfficientRange( position, view_ );
         if( weapons->GetMaxRange() <= 0 )
             return;
-        const auto color = useColor_ ? color_ : strategy_.FindColor( entity );
+        const auto color = options.Get( "EfficientRange/FilterIndirectWeapon" ).To< bool >()
+            ? QColor( options.Get( "EfficientRange/CustomColor" ).To< QString >() )
+            : strategy_.FindColor( entity );
         ranges_[ color.name() ].push_back(
                 std::make_pair( weapons->GetMinRange(), weapons->GetMaxRange() ) );
         positions_[ color.name() ].push_back( position );
-    }
-}
-
-void WeaponRangeLayer::OptionChanged( const std::string& name, const kernel::OptionVariant& value )
-{
-    if( name == "EfficientRange/FilterIndirectWeapon" )
-        useColor_ = value.To< bool >();
-    else if( name == "EfficientRange/CustomColor" )
-    {
-        color_.setNamedColor( value.To< QString >() );
-        if( useColor_ )
-        {
-            ranges_.clear();
-            positions_.clear();
-        }
     }
 }
