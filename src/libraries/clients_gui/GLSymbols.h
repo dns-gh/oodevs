@@ -19,6 +19,8 @@ namespace svg
 
 namespace tools
 {
+    class ExerciseConfig;
+
 namespace zip
 {
     class InputArchive;
@@ -38,32 +40,47 @@ namespace gui
 class GLSymbols : private boost::noncopyable
 {
 public:
-             GLSymbols( SvglRenderer& renderer, const tools::Path& symbolPath );
+    //! @name Constructors/Destructor
+    //@{
+    explicit GLSymbols( SvglRenderer& renderer );
     virtual ~GLSymbols();
+    //@}
 
+    //! @name Operations
+    //@{
     void PrintApp6( const std::string& symbol,
                     const std::string& style,
                     const geometry::Rectangle2f& viewport,
                     unsigned vWidth = 640,
                     unsigned vHeight = 480,
                     bool pickingMode = false );
-    const std::set< std::string >& GetNotFoundSymbol() const;
+    void Load( const tools::ExerciseConfig& config );
+    void SetSymbolsPath( const tools::Path& symbolPath );
+    const std::vector< std::string >& GetNotFoundSymbol() const;
+    //@}
 
 private:
-    svg::Node_ABC* Load( const std::string& symbol, float lod ) const;
-    svg::Node_ABC* Compile( const std::string& symbol, float lod ) const;
+    //! @name Helpers
+    //@{
+    svg::Node_ABC* Compile( std::string symbol, float lod, bool firstNode );
+    //@}
 
-private:
+    //! @name Types
+    //@{
     typedef std::pair< std::string, std::string > T_SymbolKey;
     typedef std::pair< std::shared_ptr< svg::Node_ABC >, std::shared_ptr< svg::Node_ABC > > T_LodSymbol;
     typedef std::map< T_SymbolKey, T_LodSymbol > T_Symbols;
+    //@}
 
 private:
+    //! @name Member data
+    //@{
     SvglRenderer& renderer_;
-    const tools::Path symbolPath_;
+    tools::Path symbolsPath_;
     std::unique_ptr< tools::zip::InputArchive > archive_;
     T_Symbols symbols_;
-    std::set< std::string > notFoundSymbols_;
+    std::vector< std::string > notFoundSymbols_;
+    //@}
 };
 
 }

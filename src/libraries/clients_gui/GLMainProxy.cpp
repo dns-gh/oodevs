@@ -31,7 +31,6 @@
 #include "clients_kernel/Positions.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "ENT/ENT_Tr.h"
-#include "tools/ExerciseConfig.h"
 
 using namespace gui;
 
@@ -66,11 +65,11 @@ GLMainProxy::~GLMainProxy()
 // -----------------------------------------------------------------------------
 // MainProxy operations
 // -----------------------------------------------------------------------------
-void GLMainProxy::Load( const DrawingTypes& drawingTypes, const tools::ExerciseConfig& config )
+void GLMainProxy::Load( const DrawingTypes& drawingTypes )
 {
     renderer_.reset( new SvglRenderer() );
     svgl_.reset( new SvglProxy( *renderer_ ) );
-    symbols_.reset( new GLSymbols( *renderer_, config.GetPhysicalChildPath( "symbols-directory" ) ) );
+    symbols_.reset( new GLSymbols( *renderer_ ) );
     graphics_.reset( new TacticalGraphics( drawingTypes  ) );
     pickingSelector_.reset( new PickingSelector() );
     contourLinesObserver_.reset( new ContourLinesObserver() );

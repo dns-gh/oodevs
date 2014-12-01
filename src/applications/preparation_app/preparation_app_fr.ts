@@ -974,7 +974,7 @@ Voulez-vous sauvegarder l&apos;exercice &apos;%1&apos; ?</translation>
         <translation>Echec de chargement</translation>
     </message>
     <message>
-        <source>Generating symbols ...</source>
+        <source>Generate symbols ...</source>
         <translation>Génération des symboles ...</translation>
     </message>
     <message>

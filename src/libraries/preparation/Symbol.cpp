@@ -45,7 +45,7 @@ Symbol::Symbol( xml::xistream& xis, const std::string& defaultSymbol, const kern
         {
             ResetSymbol( nature );
             SetOverriden( false );
-        }
+    }
     }
 }
 
@@ -64,7 +64,7 @@ Symbol::~Symbol()
 // -----------------------------------------------------------------------------
 void Symbol::SerializeAttributes( xml::xostream& xos ) const
 {
-    xos << xml::attribute( "symbol", GetValue() );
+    xos << xml::attribute( "symbol", GetValue() );;
     if( IsOverriden() )
         xos << xml::attribute( "overridden-symbol", true );
 }

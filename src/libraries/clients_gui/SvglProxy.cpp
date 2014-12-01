@@ -16,20 +16,31 @@
 
 using namespace gui;
 
+// -----------------------------------------------------------------------------
+// Name: SvglProxy constructor
+// Created: AGE 2007-05-31
+// -----------------------------------------------------------------------------
 SvglProxy::SvglProxy( SvglRenderer& renderer )
     : renderer_( renderer )
 {
     // NOTHING
 }
 
+// -----------------------------------------------------------------------------
+// Name: SvglProxy destructor
+// Created: AGE 2007-05-31
+// -----------------------------------------------------------------------------
 SvglProxy::~SvglProxy()
 {
     // NOTHING
 }
 
-void SvglProxy::Draw( const std::string& name, const geometry::Rectangle2f& viewport,
-                      unsigned vWidth /* = 640*/, unsigned vHeight /* = 480*/,
-                      bool pickingMode /* = false*/ )
+// -----------------------------------------------------------------------------
+// Name: SvglProxy::Draw
+// Created: AGE 2007-05-31
+// -----------------------------------------------------------------------------
+void SvglProxy::Draw( const std::string& name, const geometry::Rectangle2f& viewport, unsigned vWidth /* = 640*/,
+                      unsigned vHeight /* = 480*/, bool pickingMode /* = false*/ )
 {
     auto& node = symbols_[ name ];
     if( !node )

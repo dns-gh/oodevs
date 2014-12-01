@@ -20,6 +20,7 @@ namespace xml
 
 namespace kernel
 {
+    class Controller;
     class Entity_ABC;
 }
 
@@ -41,8 +42,8 @@ class GhostCommandPostAttributes : public kernel::CommandPostAttributes_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             GhostCommandPostAttributes( const kernel::Entity_ABC& entity, bool isCommandPost, gui::PropertiesDictionary& dictionary );
-             GhostCommandPostAttributes( const kernel::Entity_ABC& entity, xml::xistream& xis, gui::PropertiesDictionary& dictionary );
+             GhostCommandPostAttributes( const kernel::Entity_ABC& entity, bool isCommandPost, kernel::Controller& controller, gui::PropertiesDictionary& dictionary );
+             GhostCommandPostAttributes( const kernel::Entity_ABC& entity, xml::xistream& xis, kernel::Controller& controller, gui::PropertiesDictionary& dictionary );
     virtual ~GhostCommandPostAttributes();
     //@}
 
@@ -71,7 +72,8 @@ private:
     //! @name Member data
     //@{
     const kernel::Entity_ABC& entity_;
-    bool isPc_;
+    kernel::Controller&       controller_;
+    bool                      isPc_;
     //@}
 };
 

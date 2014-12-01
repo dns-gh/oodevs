@@ -17,8 +17,9 @@
 // -----------------------------------------------------------------------------
 MainWindow::MainWindow( const std::string& filename )
 {
-    setMinimumSize( 900, 600 );
+    setMinimumSize( 640, 480 );
     setWindowTitle( "SVG" );
+
     try
     {
         setCentralWidget( new GLWidget( this, filename ) );

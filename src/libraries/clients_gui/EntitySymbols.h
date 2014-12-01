@@ -61,7 +61,7 @@ public:
 private:
     //! @name Helper
     //@{
-    void GenerateSymbols( const kernel::Entity_ABC& entity ) const;
+    void RecGenerateSymbols( const kernel::Entity_ABC& entity ) const;
     //@}
 
 private:

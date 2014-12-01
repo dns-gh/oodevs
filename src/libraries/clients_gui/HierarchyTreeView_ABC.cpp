@@ -224,10 +224,10 @@ void HierarchyTreeView_ABC::drawRow( QPainter* painter, const QStyleOptionViewIt
 // -----------------------------------------------------------------------------
 const QPixmap* HierarchyTreeView_ABC::GetDecoration( const QModelIndex &index )
 {
-    const auto* entity = dataModel_.GetDataFromIndex< kernel::Entity_ABC >( index );
+    const kernel::Entity_ABC* entity = dataModel_.GetDataFromIndex< kernel::Entity_ABC >( index );
     if( entity )
     {
-        const auto* symbol = entity->Retrieve< kernel::TacticalHierarchies >();
+        const kernel::Symbol_ABC* symbol = entity->Retrieve< kernel::TacticalHierarchies >();
         if( symbol )
         {
             const std::string symbolName = symbol->GetSymbol();

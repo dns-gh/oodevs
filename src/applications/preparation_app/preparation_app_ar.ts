@@ -974,7 +974,7 @@ Do you want to save the exercise &apos;%1&apos;?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Generating symbols ...</source>
+        <source>Generate symbols ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

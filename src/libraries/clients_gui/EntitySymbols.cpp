@@ -41,7 +41,7 @@ EntitySymbols::~EntitySymbols()
 
 const QPixmap& EntitySymbols::GetSymbol( const kernel::Entity_ABC& entity, ColorMode colorMode ) const
 {
-    const auto* symbol = entity.Retrieve< kernel::TacticalHierarchies >();
+    const kernel::Symbol_ABC* symbol = entity.Retrieve< kernel::TacticalHierarchies >();
     if( !symbol )
         return icons_.GetDefaultSymbol();
     const std::string symbolName = symbol->GetSymbol();
@@ -79,20 +79,20 @@ const QPixmap& EntitySymbols::GetSymbol(
 }
 
 // -----------------------------------------------------------------------------
-// Name: EntitySymbols::GenerateSymbols
+// Name: EntitySymbols::RecGenerateSymbols
 // Created: ABR 2013-02-18
 // -----------------------------------------------------------------------------
-void EntitySymbols::GenerateSymbols( const kernel::Entity_ABC& entity ) const
+void EntitySymbols::RecGenerateSymbols( const kernel::Entity_ABC& entity ) const
 {
-    if( const auto* hierarchy = entity.Retrieve< kernel::TacticalHierarchies >() )
+    if( const kernel::Hierarchies* hierarchy = entity.Retrieve< kernel::TacticalHierarchies >() )
     {
-        auto it = hierarchy->CreateSubordinateIterator();
+        tools::Iterator< const kernel::Entity_ABC& > it = hierarchy->CreateSubordinateIterator();
         while( it.HasMoreElements() )
         {
-            const auto& child = it.NextElement();
-            GenerateSymbols( child );
+            const kernel::Entity_ABC& child = it.NextElement();
+            RecGenerateSymbols( child );
 
-            const auto* symbol = child.Retrieve< kernel::TacticalHierarchies >();
+            const kernel::Symbol_ABC* symbol = child.Retrieve< kernel::TacticalHierarchies >();
             if( !symbol )
                 continue;
             const std::string symbolName = symbol->GetSymbol();
@@ -113,7 +113,7 @@ void EntitySymbols::GenerateSymbols( const kernel::Entity_ABC& entity ) const
 // -----------------------------------------------------------------------------
 void EntitySymbols::GenerateSymbols( const tools::Resolver< kernel::Team_ABC >& teamResolver ) const
 {
-    auto it = teamResolver.CreateIterator();
+    tools::Iterator< const kernel::Team_ABC& > it = teamResolver.CreateIterator();
     while( it.HasMoreElements() )
-        GenerateSymbols( it.NextElement() );
+        RecGenerateSymbols( it.NextElement() );
 }

@@ -109,8 +109,15 @@ void GLWidget::keyPressEvent( QKeyEvent* event )
 // -----------------------------------------------------------------------------
 void GLWidget::initializeGL()
 {
+    glEnable( GL_TEXTURE_2D );
+    glEnable( GL_BLEND );
+    glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
     glClearColor( 1.0f, 1.0f, 1.0f, 0.0f );
+    glClearDepth( 1.0f );
+    glEnable( GL_DEPTH_TEST );
+    glDepthFunc( GL_LEQUAL );
     renderText( 0, 0, "" );
+    glEnable( GL_LINE_SMOOTH );
     glEnableClientState( GL_VERTEX_ARRAY );
 }
 
@@ -143,9 +150,11 @@ namespace
 // -----------------------------------------------------------------------------
 void GLWidget::paintGL()
 {
-    glClear( GL_COLOR_BUFFER_BIT );
+    glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
     glLineWidth( 1.f );
     glColor3f( 1, 1, 1 );
+    glDisable( GL_DEPTH_TEST );
+    glBindTexture( GL_TEXTURE_2D, 0 );
     glMatrixMode( GL_MODELVIEW );
     glLoadIdentity();
     glMultMatrixf( (const float*)symetryMatrix );

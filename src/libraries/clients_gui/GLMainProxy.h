@@ -13,11 +13,6 @@
 #include "GLProxyBase.h"
 #include <tools/Resolver.h>
 
-namespace tools
-{
-    class ExerciseConfig;
-}
-
 namespace kernel
 {
     class Controllers;
@@ -67,7 +62,7 @@ public:
 
     //! @name Operations
     //@{
-    void Load( const DrawingTypes& drawingTypes, const tools::ExerciseConfig& config );
+    void Load( const DrawingTypes& drawingTypes );
     void Purge();
 
     void AddActiveChangeObserver( QObject* parent, const T_GLObserver& observer );
@@ -193,19 +188,24 @@ private:
     const tools::Resolver< kernel::Formation_ABC >& formationResolver_;
     std::shared_ptr< ContourLinesObserver > contourLinesObserver_;
     ColorStrategy_ABC* colorStrategy_;
+
     T_GLObservers activeChangeObservers_;
     T_GLObservers creationObservers_;
     T_GLObservers deletionObservers_;
     T_GLObservers hoveredChangeObservers_;
+
     std::unique_ptr< SvglRenderer > renderer_;
     std::unique_ptr< SvglProxy > svgl_;
     std::unique_ptr< GLSymbols > symbols_;
     std::unique_ptr< TacticalGraphics > graphics_;
     std::unique_ptr< PickingSelector > pickingSelector_;
+
     std::shared_ptr< TooltipsLayer_ABC > tooltipLayer_;
+
     std::shared_ptr< GLView_ABC > activeView_;   // the view where the mouse was clicked last
     std::shared_ptr< GLView_ABC > currentView_;  // the view currently updating
     std::shared_ptr< GLView_ABC > hoveredView_;  // the view with mouse over it
+
     T_Icons icons_;
     unsigned int billboard_;
     float alpha_;

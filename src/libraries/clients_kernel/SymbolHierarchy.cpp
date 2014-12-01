@@ -85,6 +85,14 @@ void SymbolHierarchy::ResetSymbol( const std::string& symbol )
 }
 
 // -----------------------------------------------------------------------------
+// Name: SymbolHierarchy::PrepareForMerge
+// Created: JSR 2011-08-03
+// -----------------------------------------------------------------------------
+void SymbolHierarchy::PrepareForMerge()
+{
+}
+
+// -----------------------------------------------------------------------------
 // Name: SymbolHierarchy::OverrideValue
 // Created: JSR 2011-08-02
 // -----------------------------------------------------------------------------
