@@ -69,7 +69,7 @@ class ObjectsModel;
 class PathfindModel;
 class Publisher_ABC;
 class ResourceNetworkModel;
-class ReportsFactory;
+class ReportsModel;
 class ScoreDefinitions;
 class ScoreModel;
 class Simulation;
@@ -182,7 +182,7 @@ public:
     gui::EventsModel& events_;
     gui::TimelinePublisher& timelinePublisher_;
     PathfindModel& pathfinds_;
-    ReportsFactory& reportsFactory_;
+    ReportsModel& reportsModel_;
     //@}
 };
 

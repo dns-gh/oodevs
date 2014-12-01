@@ -151,11 +151,11 @@ std::string ReportFactory::FormatReport( const kernel::Entity_ABC* entity, const
 // Name: ReportFactory::CreateTrace
 // Created: SBO 2006-12-07
 // -----------------------------------------------------------------------------
-Report* ReportFactory::CreateTrace( const kernel::Entity_ABC& entity, const sword::Trace& message ) const
+boost::shared_ptr< Report > ReportFactory::CreateTrace( const kernel::Entity_ABC& entity, const sword::Trace& message ) const
 {
     if( !time_ )
         throw MASA_EXCEPTION( "No time, can't generate trace" );
-    return new Trace( entity, *time_, message );
+    return boost::make_shared< Trace >( entity, *time_, message );
 }
 
 namespace

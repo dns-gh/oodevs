@@ -14,7 +14,6 @@
 #include "gaming/AgentSelectionObserver.h"
 #include "reports/Report.h"
 #include <tools/Observer_ABC.h>
-#include <tools/ElementObserver_ABC.h>
 
 namespace gui
 {
@@ -27,7 +26,10 @@ namespace kernel
     class Controllers;
 }
 
-class Reports;
+class AgentsModel;
+class Publisher_ABC;
+class ReportFactory;
+class ReportsModel;
 
 // =============================================================================
 /** @class  ReportListView
@@ -38,14 +40,14 @@ class Reports;
 class ReportListView : public QTreeView
                      , public tools::Observer_ABC
                      , public AgentSelectionObserver
-                     , public tools::ElementObserver_ABC< Reports >
-                     , public tools::ElementObserver_ABC< Report >
 {
     Q_OBJECT
 public:
     //! @name Constructors/Destructor
     //@{
-             ReportListView( QWidget* pParent, kernel::Controllers& controllers, gui::DisplayExtractor& extractor );
+             ReportListView( QWidget* pParent, kernel::Controllers& controllers, gui::DisplayExtractor& extractor,
+                             const ReportFactory& factory, Publisher_ABC& publisher, ReportsModel& model,
+                             const AgentsModel& agents );
     virtual ~ReportListView();
     //@}
 
@@ -69,15 +71,20 @@ public slots:
     //@}
 
 private:
+
     //! @name Helpers
     //@{
     virtual void NotifySelected( const kernel::Entity_ABC* element );
-    virtual void NotifyUpdated( const Reports& reports );
-    virtual void NotifyCreated( const Report& report );
-    bool ShouldUpdate( const Reports& reports );
-    void MarkReportsAsRead();
+
+    template< typename T >
+    void CreateItem( const T& message, const kernel::Entity_ABC& entity,
+        const std::function< boost::shared_ptr< Report >( const kernel::Entity_ABC&, const T& fun ) >& func,
+        bool unreadMessages );
+    void CreateReport( const sword::Report& report );
+    void CreateTrace( const sword::Trace& trace );
+    void FillReports();
+    void AddReports();
     void SetFilterRegexp();
-    QList< QStandardItem* > GetItems( const Report& report ) const;
     void AddMenuItem( QMenu* menu, const QString& name, Report::E_Type type ) const;
     //@}
 
@@ -87,12 +94,15 @@ private:
     static unsigned int sortOrder_;
     kernel::Controllers& controllers_;
     gui::DisplayExtractor& extractor_;
-    kernel::SafePointer< kernel::Entity_ABC > selected_;
+    unsigned int selected_;
     QTimer* readTimer_;
     QStandardItemModel reportModel_;
     QSortFilterProxyModel* proxyFilter_;
     gui::LinkItemDelegate* delegate_;
     std::set< Report::E_Type > toDisplay_;
+    const ReportFactory& factory_;
+    ReportsModel& model_;
+    const AgentsModel& agents_;
     //@}
 };
 

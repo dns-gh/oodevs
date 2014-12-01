@@ -73,7 +73,7 @@ public:
     void Purge();
 
     boost::shared_ptr< Report > CreateReport( const kernel::Entity_ABC& entity, const sword::Report& message ) const;
-    Report* CreateTrace( const kernel::Entity_ABC& entity, const sword::Trace& message ) const;
+    boost::shared_ptr< Report > CreateTrace( const kernel::Entity_ABC& entity, const sword::Trace& message ) const;
     std::string FormatReport( const kernel::Entity_ABC* entity, const sword::Report& message ) const;
     QDateTime GetTime( const sword::DateTime& d ) const;
     //@}

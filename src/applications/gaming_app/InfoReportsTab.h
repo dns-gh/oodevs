@@ -21,7 +21,11 @@ namespace kernel
     class Entity_ABC;
 }
 
+class AgentsModel;
+class Publisher_ABC;
+class ReportFactory;
 class ReportListView;
+class ReportsModel;
 
 // =============================================================================
 /** @class  InfoReportsTab
@@ -34,7 +38,9 @@ class InfoReportsTab : public Q3VBox
 public:
     //! @name Constructors/Destructor
     //@{
-             InfoReportsTab( QTabWidget* parent, kernel::Controllers& controllers, gui::DisplayExtractor& extractor );
+             InfoReportsTab( QTabWidget* parent, kernel::Controllers& controllers, gui::DisplayExtractor& extractor,
+                             const ReportFactory& factory, Publisher_ABC& publisher, ReportsModel& model,
+                             const AgentsModel& agents );
     virtual ~InfoReportsTab();
     //@}
 

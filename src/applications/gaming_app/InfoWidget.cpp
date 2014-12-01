@@ -10,17 +10,19 @@
 #include "gaming_app_pch.h"
 #include "InfoWidget.h"
 #include "moc_InfoWidget.cpp"
+#include "InfoButtonsWidget.h"
+#include "InfoConflictsTab.h"
+#include "InfoEventsWidget.h"
+#include "InfoMissionsTab.h"
+#include "InfoReportsTab.h"
+#include "InfoStancesWidget.h"
 #include "InfoStatusWidget.h"
 #include "InfoSubordinatesWidget.h"
-#include "InfoStancesWidget.h"
 #include "InfoSummariesWidget.h"
-#include "InfoEventsWidget.h"
-#include "InfoButtonsWidget.h"
-#include "InfoReportsTab.h"
-#include "InfoConflictsTab.h"
-#include "InfoMissionsTab.h"
-#include "icons.h"
 #include "clients_gui/DisplayExtractor.h"
+#include "gaming/Model.h"
+#include "gaming/StaticModel.h"
+#include "icons.h"
 
 // -----------------------------------------------------------------------------
 // Name: InfoWidget constructor
@@ -54,7 +56,8 @@ InfoWidget::InfoWidget( QWidget* parent,
 
     QTabWidget* tabs = new QTabWidget( this );
     tabs->setTabShape( QTabWidget::Triangular );
-    reports_ = new InfoReportsTab( tabs, controllers, extractor );
+    reports_ = new InfoReportsTab( tabs, controllers, extractor, model.static_.reportFactory_, model.publisher_,
+        model.reportsModel_, model.agents_ );
     tabs->addTab( reports_, MAKE_PIXMAP( msg ), tr( "Reports" ) );
     conflicts_ = new InfoConflictsTab( tabs, controllers, extractor, converter );
     tabs->addTab( conflicts_, MAKE_PIXMAP( conflict ), tr( "Conflicts" ) );

@@ -9,7 +9,6 @@
 
 #include "gaming_app_pch.h"
 #include "PopulationsLayer.h"
-#include "gaming/Reports.h"
 #include "gaming/Population.h"
 
 using namespace kernel;

@@ -291,7 +291,7 @@ MainWindow::MainWindow( Controllers& controllers,
     // Tool bars
     AddToolBar( *this, new SIMControlToolbar( this, controllers, simulationController, network, dockContainer_->GetLoggerPanel() ), eModes_None, eModes_Default );
     AddToolBar( *this, new gui::DisplayToolbar( this, controllers ), eModes_Default );
-    AddToolBar( *this, new EventToolbar( this, controllers, profile_ ), eModes_Default );
+    AddToolBar( *this, new EventToolbar( this, controllers, model_.reportsModel_, model_.agents_, model_.publisher_ ), eModes_Default );
     AddToolBar( *this, new gui::GisToolbar( this, controllers, *glProxy_, staticModel_.detection_, dockContainer_->GetTerrainProfiler() ), eModes_Default );
     AddToolBar( *this, new gui::LocationEditorToolbar( this, controllers_, staticModel.coordinateConverter_, *glProxy_, locationsLayer ), eModes_Default );
     addToolBarBreak();

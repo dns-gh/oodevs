@@ -11,19 +11,18 @@
 #define __EventToolbar_h_
 
 #include "clients_gui/RichToolBar.h"
+#include "gaming/AgentSelectionObserver.h"
 #include <tools/ElementObserver_ABC.h>
-
-#include <deque>
 
 namespace kernel
 {
     class Controllers;
-    class Entity_ABC;
     class Profile_ABC;
 }
 
-class Report;
-class Simulation;
+class AgentsModel;
+class Publisher_ABC;
+class ReportsModel;
 
 // =============================================================================
 /** @class  EventToolbar
@@ -32,17 +31,16 @@ class Simulation;
 // Created: SBO 2006-06-20
 // =============================================================================
 class EventToolbar : public gui::RichToolBar
-                   , public tools::ElementObserver_ABC< Report >
                    , public tools::ElementObserver_ABC< kernel::Profile_ABC >
-                   , public tools::ElementObserver_ABC< Simulation >
-                   , public tools::ElementObserver_ABC< kernel::Entity_ABC >
+                   , public AgentSelectionObserver
 {
     Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor
     //@{
-             EventToolbar( QMainWindow* pParent, kernel::Controllers& controllers, const kernel::Profile_ABC& profile );
+              EventToolbar( QMainWindow* pParent, kernel::Controllers& controllers,
+                            ReportsModel& model, const AgentsModel& agents, Publisher_ABC& publisher );
     virtual ~EventToolbar();
     //@}
 
@@ -53,17 +51,10 @@ private slots:
     //@}
 
 private:
-    //! @name Types
-    //@{
-    typedef std::deque< const kernel::Entity_ABC* > T_Agents;
-    //@}
-
     //! @name Helpers
     //@{
-    virtual void NotifyCreated( const Report& report );
     virtual void NotifyUpdated( const kernel::Profile_ABC& profile );
-    virtual void NotifyUpdated( const Simulation& simulation );
-    virtual void NotifyDeleted( const kernel::Entity_ABC& entity );
+    virtual void NotifySelected( const kernel::Entity_ABC* element );
     void UpdateMessageButton();
     //@}
 
@@ -71,8 +62,8 @@ private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    T_Agents messageAgents_;
-    const kernel::Profile_ABC& profile_;
+    ReportsModel& model_;
+    const AgentsModel& agents_;
     QToolButton* messageButton_;
     //@}
 };
