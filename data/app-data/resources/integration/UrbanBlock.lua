@@ -237,6 +237,14 @@ integration.getUrbanBlockInsideOrIntersectArea = function( area )
     return DEC_Connaissances_BlocUrbainDansOuIntersectentZone( area )
 end
 
+--- Returns the urban block at the given position.
+-- If there is no urban block at the given position, this method returns nil.
+-- @param pos Simulation position
+-- @return Urban block knowledge (or nil)
+integration.getUrbanBlockFromPosition = function( pos )
+    return DEC_Connaissances_BlocUrbainPourPosition( pos )
+end
+
 ------------------------------------------------------------------
 -- CROWD METHODS ON URBAN BLOCK
 ------------------------------------------------------------------
