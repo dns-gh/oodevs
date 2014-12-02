@@ -298,7 +298,7 @@ integration.getMaxRangeToFireForPH = function( pH )
     if not pH then -- Scipio compatibility
         pH = integration.getDefaultPH()
     end
-    return DEC_Tir_PorteeMaxPourTirer( myself, pH )
+    return _DEC_Tir_PorteeMaxPourTirer( myself, pH )
 end
 
 --- Returns the maximum range of the agent weapon systems allowing to hit the given target with a certain probability.
@@ -313,7 +313,7 @@ integration.getMaxRangeToFireAgentForPH = function( agent, pH )
         local unit = CreateKnowledge(integration.ontology.types.agent, agent)
         pH = integration.getDefaultPH( unit )
     end
-    return DEC_Tir_PorteeMaxPourTirer( agent, pH )
+    return _DEC_Tir_PorteeMaxPourTirer( agent, pH )
 end
 
 --- Returns the list of agent knowledges that are currently firing at the agent.

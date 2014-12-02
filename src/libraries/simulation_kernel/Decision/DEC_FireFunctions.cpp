@@ -34,7 +34,7 @@ void DEC_FireFunctions::Register( sword::Brain& brain )
     brain.RegisterFunction( "_DEC_Tir_PorteeMinPourTirerSurUnitePosturesReelles", &DEC_FireFunctions::GetMinRangeToFireOnEnemyActualPosture );
     brain.RegisterFunction( "_DEC_Tir_PorteeMaxPourTirerDebarqueSurUnite", &DEC_FireFunctions::GetMaxRangeToFireOnEnemyWhenUnloaded );
     brain.RegisterFunction( "_DEC_Tir_PorteeMaxPourEtreTireParUnite", &DEC_FireFunctions::GetMaxRangeToBeFiredByEnemy );
-    brain.RegisterFunction( "DEC_Tir_PorteeMaxPourTirer", &DEC_FireFunctions::GetMaxRangeToFire );
+    brain.RegisterFunction( "_DEC_Tir_PorteeMaxPourTirer", &DEC_FireFunctions::GetMaxRangeToFire );
     brain.RegisterFunction( "_DEC_Tir_PorteeMaxTirIndirect", static_cast< float(*)( const DEC_Decision_ABC*, const PHY_DotationCategory*) >( &DEC_FireFunctions::GetMaxRangeToIndirectFire ) );
     brain.RegisterFunction( "DEC_Tir_PorteeMaxTirIndirectSansChoisirMunition", static_cast< float(*)( const DEC_Decision_ABC* ) >( &DEC_FireFunctions::GetMaxRangeToIndirectFire ) );
     brain.RegisterFunction( "_DEC_Tir_PorteeMinTirIndirect", &DEC_FireFunctions::GetMinRangeToIndirectFire );

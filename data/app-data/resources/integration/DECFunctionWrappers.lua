@@ -2105,6 +2105,10 @@ function DEC_Perception_DesactiverSurveillance( id )
 end
 
 -- Fire
+function DEC_Tir_PorteeMaxPourTirer( ph )
+    return _DEC_Tir_PorteeMaxPourTirer( myself, ph )
+end
+
 function DEC_Tir_PorteeMaxPourTirerSurUnite( knowledge, ph )
     return _DEC_Tir_PorteeMaxPourTirerSurUnite( myself, knowledge, ph )
 end
