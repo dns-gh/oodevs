@@ -46,7 +46,6 @@ public:
 private:
     //! @name Helpers
     //@{
-    virtual void OptionChanged( const std::string& name, const kernel::OptionVariant& value );
     virtual bool CanCreateLine();
     virtual bool ShouldDisplay( const kernel::Entity_ABC& );
     virtual void CreateLimit( const T_PointVector& points );
@@ -66,7 +65,6 @@ private:
     //@{
     TacticalLineFactory& factory_;
     kernel::SafePointer< kernel::Entity_ABC > selectedEntity_;
-    kernel::FourStateOption drawLines_;
     bool lineSelected_;
     //@}
 };

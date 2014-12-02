@@ -52,7 +52,6 @@ private:
     virtual void CreateLimit( const T_PointVector& points );
     virtual void CreateLima( const T_PointVector& points );
     virtual bool ShouldDisplay( const kernel::Entity_ABC& );
-    virtual void OptionChanged( const std::string& name, const kernel::OptionVariant& value );
     virtual bool CanDrop( QDragMoveEvent* event, const geometry::Point2f& point ) const;
     virtual bool HandleDropEvent( QDropEvent* event, const geometry::Point2f& point );
     virtual bool HandleMoveDragEvent( QDragMoveEvent* event, const geometry::Point2f& point );
@@ -74,7 +73,6 @@ private:
     ModelBuilder& modelBuilder_;
     geometry::Point2f dragPoint_;
     geometry::Point2f oldPosition_;
-    kernel::FourStateOption drawLines_;
     std::unique_ptr< QWidget > dummy_;
     //@}
 };

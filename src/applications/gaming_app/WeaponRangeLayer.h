@@ -25,7 +25,6 @@ typedef boost::shared_ptr< TesselatedShape > TesselatedShapePtr;
 // =============================================================================
 class WeaponRangeLayer : public gui::EntityLayerBase
                        , public tools::ElementObserver_ABC< kernel::Agent_ABC >
-                       , public kernel::OptionsObserver_ABC
 {
 public:
              WeaponRangeLayer( kernel::Controllers& controllers,
@@ -40,7 +39,6 @@ private:
 
     virtual void NotifyCreated( const kernel::Agent_ABC& entity );
     virtual void NotifyDeleted( const kernel::Agent_ABC& entity );
-    virtual void OptionChanged( const std::string& name, const kernel::OptionVariant& value );
 
     void Reset();
 
@@ -55,7 +53,6 @@ private:
     std::map< QString, T_Positions > positions_;
     std::map< QString, T_Ranges > ranges_;
     std::map< QString, T_TesselatedShapes > tesselated_;
-    bool useColor_;
     QColor color_;
 };
 

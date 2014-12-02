@@ -65,7 +65,6 @@ class PathfindLayer : public gui::EntityLayer< kernel::Pathfind_ABC >
                     , public tools::SelectionObserver_Base< kernel::TacticalLine_ABC >
                     , public kernel::ContextMenuObserver_ABC< geometry::Point2f >
                     , public kernel::ContextMenuObserver_ABC< kernel::Pathfind_ABC >
-                    , public kernel::OptionsObserver_ABC
 {
     Q_OBJECT;
 
@@ -133,7 +132,6 @@ private:
     void ProcessEvents();
     bool HasValidPathfind() const;
     uint32_t GetUnitId() const;
-    virtual void OptionChanged( const std::string& name, const kernel::OptionVariant& value );
     void StopEdition() const;
 
 private:
@@ -169,8 +167,6 @@ private:
     // whether a request has been sent to the server and a reply is expected
     // before letting the user make more changes to the displayed path
     bool lock_;
-    // current tactical lines filter
-    kernel::FourStateOption filter_;
     //@}
 };
 

@@ -74,7 +74,6 @@ AggregateToolbar::AggregateToolbar( kernel::Controllers& controllers,
         if( auto action = levelMenu_->addAction( tools::translate( "ENT_Tr", LEVELS[ i ].c_str() ) ) )
             action->setData( QString::fromStdString( LEVELS[ i ] ) );
     btn->setPopup( levelMenu_ );
-    connect( levelMenu_, SIGNAL( aboutToShow() ), SLOT( UpdateLevelMenu() ) );
     connect( levelMenu_, SIGNAL( triggered( QAction* ) ), SLOT( AggregateLevel( QAction* ) ) );
 
     btn = new RichWidget< QToolButton >( "disaggregateAll" );

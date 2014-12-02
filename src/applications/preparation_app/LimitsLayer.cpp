@@ -11,10 +11,11 @@
 #include "LimitsLayer.h"
 #include "moc_LimitsLayer.cpp"
 #include "ModelBuilder.h"
-#include "preparation/TacticalLinePositions.h"
+#include "clients_gui/GLOptions.h"
 #include "clients_gui/DragAndDropHelpers.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/OptionVariant.h"
+#include "preparation/TacticalLinePositions.h"
 
 using namespace kernel;
 using namespace gui;
@@ -91,17 +92,7 @@ bool LimitsLayer::ShouldDisplay( const kernel::Entity_ABC& entity )
 {
     if( !TacticalLinesLayer::ShouldDisplay( entity ) )
         return false;
-    return drawLines_.IsSet( true, true, true );
-}
-
-// -----------------------------------------------------------------------------
-// Name: LimitsLayer::OptionChanged
-// Created: LGY 2012-01-04
-// -----------------------------------------------------------------------------
-void LimitsLayer::OptionChanged( const std::string& name, const kernel::OptionVariant& value )
-{
-    if( name == "TacticalLines" )
-        drawLines_ = value.To< FourStateOption >();
+    return view_.GetCurrentOptions().Get( "TacticalLines" ).To< FourStateOption >().IsSet( true, true, true );
 }
 
 // -----------------------------------------------------------------------------
