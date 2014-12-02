@@ -190,6 +190,7 @@ Menu::Menu( QMainWindow& mainWindow,
         composite.AddItem( tools::translate( "Menu", "Sides" ), FIRE_INDICATORS_SIDE );
         composite.AddItem( tools::translate( "Menu", "Units" ), FIRE_INDICATORS_UNIT );
         composite.AddItem( tools::translate( "Menu", "Rules" ), FIRE_INDICATORS_RULE );
+        composite.menu_->OnSelected( 0 );
     }
     subMenu->insertSeparator();
     AddSubMenu4( toolBar, subMenu, tr( "Routes" )        , MakePixmap( "path_ahead" ) , controllers.options_, "Paths", kernel::FourStateOption::Selected() );
