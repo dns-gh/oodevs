@@ -345,8 +345,7 @@ void Model::SaveExercise( const tools::ExerciseConfig& config )
         teams_->Serialize( xos );
         xos << xml::end;
     }
-    if( urban_->Count() > 0 )
-        urban_->Serialize( config.GetUrbanFile(), schemaWriter );
+    urban_->Serialize( config.GetUrbanFile(), schemaWriter );
     drawings_->Serialize( config.GetDrawingsFile(), schemaWriter );
     weather_->Serialize( config.GetWeatherFile(), schemaWriter );
     profiles_->Serialize( config.GetProfilesFile(), schemaWriter );
