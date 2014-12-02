@@ -14,7 +14,6 @@
 #include "OrbatConfigPanel.h"
 #include "ExerciseContainer.h"
 #include "ExerciseList.h"
-#include "ProcessDialogs.h"
 #include "ProgressPage.h"
 #include "frontend/AdvancedConfigPanel.h"
 #include "frontend/CheckpointConfigPanel.h"
@@ -244,7 +243,7 @@ void ScenarioLauncherPage::Update()
 // -----------------------------------------------------------------------------
 void ScenarioLauncherPage::OnStart()
 {
-    if( !CanBeStarted() || ! dialogs::KillRunningProcesses( parentWidget()->parentWidget() ) )
+    if( !CanBeStarted() )
         return;
     const tools::Path exerciseName = exercise_->GetName();
     const auto session = BuildSessionName();

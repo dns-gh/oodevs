@@ -16,7 +16,6 @@
 #include "ExerciseContainer.h"
 #include "ExerciseList.h"
 #include "MainWindow.h"
-#include "ProcessDialogs.h"
 #include "ProgressPage.h"
 #include "SessionList.h"
 
@@ -114,7 +113,7 @@ void ReplayPage::Update()
 // -----------------------------------------------------------------------------
 void ReplayPage::StartExercise()
 {
-    if( !exercise_ || session_.IsEmpty() || !profile_.IsValid() || ! dialogs::KillRunningProcesses( parentWidget()->parentWidget() ) )
+    if( !exercise_ || session_.IsEmpty() || !profile_.IsValid() )
         return;
     const tools::Path exerciseName = exercise_->GetName();
     const auto sessionDir = ConfigureSession( exerciseName, session_ );
