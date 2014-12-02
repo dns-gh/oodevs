@@ -14,7 +14,6 @@
 
 #include "clients_gui/FileDialog.h"
 
-#include "frontend/CommandLineTools.h"
 #include "frontend/CreateSession.h"
 #include "frontend/DebugConfig.h"
 

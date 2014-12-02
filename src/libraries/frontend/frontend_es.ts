@@ -207,12 +207,24 @@
         <translation>Comentarios:</translation>
     </message>
     <message>
-        <source>Exercise number:</source>
-        <translation>Número de ejercicio:</translation>
-    </message>
-    <message>
         <source>Session</source>
         <translation>Sesión</translation>
+    </message>
+    <message>
+        <source>Ports</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Simulation:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dispatcher:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Timeline:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

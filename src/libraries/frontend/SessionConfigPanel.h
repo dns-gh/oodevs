@@ -31,7 +31,7 @@ namespace frontend
 // =============================================================================
 class SessionConfigPanel : public PluginConfig_ABC
 {
-    Q_OBJECT;
+    Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
@@ -47,16 +47,27 @@ public:
     virtual void Commit( const tools::Path& exercise, const tools::Path& session );
     //@}
 
+private slots:
+    //! @name Slots
+    //@{
+    void OnSimulationPortChanged( int value );
+    //@}
+
 private:
     //! @name Member data
     //@{
     const tools::GeneralConfig& config_;
-    QLineEdit*                  sessionName_;
-    QTextEdit*                  sessionComment_;
-    QSpinBox*                   exerciseNumber_;
     QLabel*                     nameLabel_;
+    QLineEdit*                  sessionName_;
     QLabel*                     commentLabel_;
-    QLabel*                     exerciseLabel_;
+    QTextEdit*                  sessionComment_;
+    QGroupBox*                  portsGroup_;
+    QLabel*                     simulationPortLabel_;
+    QSpinBox*                   simulationPort_;
+    QLabel*                     dispatcherPortLabel_;
+    QSpinBox*                   dispatcherPort_;
+    QLabel*                     timelinePortLabel_;
+    QSpinBox*                   timelinePort_;
     //@}
 };
 }

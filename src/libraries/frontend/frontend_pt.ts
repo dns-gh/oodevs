@@ -207,11 +207,23 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Exercise number:</source>
+        <source>Session</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Session</source>
+        <source>Ports</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Simulation:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dispatcher:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Timeline:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

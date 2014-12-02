@@ -3,14 +3,22 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2008 Mathématiques Appliquées SA (MASA)
+// Copyright (c) 2014 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
 
-#include "frontend_pch.h"
-#include "CommandLineTools.h"
+#ifndef __Ports_h_
+#define __Ports_h_
 
-uint16_t frontend::GetPort( unsigned idx, Ports port )
+namespace frontend
 {
-    return static_cast< uint16_t >( 10000 + (idx-1) * NUM_PORTS + port );
+    enum Ports
+    {
+        SIMULATION_PORT,
+        DISPATCHER_PORT,
+        TIMELINE_PORT,
+        NUM_PORTS,
+    };
 }
+
+#endif // __Ports_h_
