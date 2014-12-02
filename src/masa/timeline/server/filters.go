@@ -97,6 +97,7 @@ func parseServiceFilter(dst services.EventFilterConfig, req Getter) error {
 		"sword":  "*",
 		"none":   "*",
 		"marker": "*",
+		"replay": "*",
 	}
 	dst["filter_service"] = filters
 	filter := req.FormValue("filter_service")
