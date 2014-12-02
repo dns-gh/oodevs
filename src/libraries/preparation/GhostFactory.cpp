@@ -24,7 +24,6 @@
 #include "Model.h"
 #include "StaticModel.h"
 #include "Symbol.h"
-
 #include "clients_gui/LogisticBase.h"
 #include "clients_gui/PropertiesDictionary.h"
 #include "clients_kernel/Color_ABC.h"
@@ -73,9 +72,7 @@ kernel::Ghost_ABC* GhostFactory::Create( kernel::Entity_ABC& parent, const kerne
     result->Attach< kernel::TacticalHierarchies >( *new GhostHierarchies( controllers_.controller_, *result, result->GetLevelSymbol(), result->GetSymbol(), &parent ) );
 
     if( prototype.ghostType_ == eGhostType_Agent )
-    {
-        result->Attach< kernel::CommandPostAttributes_ABC >( *new GhostCommandPostAttributes( *result, false, controllers_.controller_, dictionary ) );
-    }
+        result->Attach< kernel::CommandPostAttributes_ABC >( *new GhostCommandPostAttributes( *result, false, dictionary ) );
     else
     {
         assert( prototype.ghostType_ == eGhostType_Automat );
@@ -101,9 +98,7 @@ kernel::Ghost_ABC* GhostFactory::Create( kernel::Entity_ABC& parent, xml::xistre
     result->Attach< kernel::TacticalHierarchies >( *new GhostHierarchies( controllers_.controller_, *result, result->GetLevelSymbol(), result->GetSymbol(), &parent ) );
 
     if( result->GetGhostType() == eGhostType_Agent )
-    {
-        result->Attach< kernel::CommandPostAttributes_ABC >( *new GhostCommandPostAttributes( *result, xis, controllers_.controller_, dictionary ) );
-    }
+        result->Attach< kernel::CommandPostAttributes_ABC >( *new GhostCommandPostAttributes( *result, xis, dictionary ) );
     else
     {
         assert( result->GetGhostType() == eGhostType_Automat );
@@ -130,7 +125,7 @@ kernel::Ghost_ABC* GhostFactory::Create( kernel::Entity_ABC& parent, xml::xistre
     if( result->GetGhostType() == eGhostType_Agent )
     {
         result->Attach< kernel::Positions >( *new GhostPositions( xis, *result, staticModel_.coordinateConverter_, controllers_.controller_, dictionary, parent ) );
-        result->Attach< kernel::CommandPostAttributes_ABC >( *new GhostCommandPostAttributes( *result, xis, controllers_.controller_, dictionary ) );
+        result->Attach< kernel::CommandPostAttributes_ABC >( *new GhostCommandPostAttributes( *result, xis, dictionary ) );
     }
     else
     {

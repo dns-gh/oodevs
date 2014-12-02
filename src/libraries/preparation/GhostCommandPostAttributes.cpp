@@ -10,19 +10,16 @@
 #include "preparation_pch.h"
 #include "GhostCommandPostAttributes.h"
 #include "clients_kernel/Tools.h"
-#include "clients_kernel/Controller.h"
 #include "clients_gui/PropertiesDictionary.h"
-#include "clients_kernel/TacticalHierarchies.h"
 #include <xeumeuleu/xml.h>
 
 // -----------------------------------------------------------------------------
 // Name: GhostCommandPostAttributes constructor
 // Created: ABR 2012-07-09
 // -----------------------------------------------------------------------------
-GhostCommandPostAttributes::GhostCommandPostAttributes( const kernel::Entity_ABC& entity, bool isCommandPost, kernel::Controller& controller, gui::PropertiesDictionary& dictionary )
-    : entity_    ( entity )
-    , controller_( controller )
-    , isPc_      ( isCommandPost )
+GhostCommandPostAttributes::GhostCommandPostAttributes( const kernel::Entity_ABC& entity, bool isCommandPost, gui::PropertiesDictionary& dictionary )
+    : entity_( entity )
+    , isPc_( isCommandPost )
 {
     CreateDictionary( dictionary );
 }
@@ -31,10 +28,9 @@ GhostCommandPostAttributes::GhostCommandPostAttributes( const kernel::Entity_ABC
 // Name: GhostCommandPostAttributes constructor
 // Created: ABR 2012-07-09
 // -----------------------------------------------------------------------------
-GhostCommandPostAttributes::GhostCommandPostAttributes( const kernel::Entity_ABC& entity, xml::xistream& xis, kernel::Controller& controller, gui::PropertiesDictionary& dictionary )
-    : entity_    ( entity )
-    , controller_( controller )
-    , isPc_      ( xis.attribute< bool >( "command-post", false ) )
+GhostCommandPostAttributes::GhostCommandPostAttributes( const kernel::Entity_ABC& entity, xml::xistream& xis, gui::PropertiesDictionary& dictionary )
+    : entity_( entity )
+    , isPc_( xis.attribute< bool >( "command-post", false ) )
 {
     CreateDictionary( dictionary );
 }
@@ -73,8 +69,6 @@ void GhostCommandPostAttributes::CreateDictionary( gui::PropertiesDictionary& di
 void GhostCommandPostAttributes::Update( const bool& commandPost )
 {
     isPc_ = commandPost;
-    if( const kernel::Symbol_ABC* symbol = entity_.Retrieve< kernel::TacticalHierarchies >() )
-        controller_.Update( *symbol );
 }
 
 // -----------------------------------------------------------------------------

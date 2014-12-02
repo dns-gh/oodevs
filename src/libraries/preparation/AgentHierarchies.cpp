@@ -98,8 +98,8 @@ void AgentHierarchies::UpdateKarma( const kernel::Entity_ABC& superior )
 // -----------------------------------------------------------------------------
 void AgentHierarchies::UpdateSymbolUpward()
 {
-    if( GetSuperior() )
-        UpdateKarma( *GetSuperior() );
+    if( const auto* superior = GetSuperior() )
+        UpdateKarma( *superior );
     TacticalHierarchies::UpdateSymbolUpward();
 }
 
@@ -109,11 +109,8 @@ void AgentHierarchies::UpdateSymbolUpward()
 // -----------------------------------------------------------------------------
 void AgentHierarchies::UpdateSymbolDownward()
 {
-    const std::string oldSymbol = GetSymbol();
-    if( const kernel::Entity_ABC* superior = GetSuperior() )
+    if( const auto* superior = GetSuperior() )
         UpdateKarma( *superior );
-    if( GetSymbol() != oldSymbol )
-        controller_.Update( *static_cast< kernel::Symbol_ABC* >( this ) );
 }
 
 // -----------------------------------------------------------------------------

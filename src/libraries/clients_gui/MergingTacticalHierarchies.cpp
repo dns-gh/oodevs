@@ -77,7 +77,6 @@ void MergingTacticalHierarchies::UpdateSymbolUpward()
 {
     if( !symbolCanBeUpdated_ )
         return;
-    entity_.Get< SymbolHierarchy_ABC >().PrepareForMerge();
     UpdateSymbol();
     if( TacticalHierarchies* superior = SuperiorHierarchy() )
         superior->UpdateSymbolUpward();
@@ -109,21 +108,19 @@ void MergingTacticalHierarchies::UpdateSymbol()
 {
     const std::string oldSymbol = GetSymbol();
     const std::string oldLevel = GetLevel();
-    tools::Iterator< const Entity_ABC& > it = CreateSubordinateIterator();
     std::map< std::string, int > symbolCount;
     std::string highestCount;
     int max = 0;
+    auto it = CreateSubordinateIterator();
     while( it.HasMoreElements() )
     {
         auto& next = it.NextElement();
         const std::string& typeName = next.GetTypeName();
         if( typeName != kernel::Agent_ABC::typeName_ && typeName != kernel::Automat_ABC::typeName_ && typeName != kernel::Formation_ABC::typeName_ && typeName != kernel::Team_ABC::typeName_ )
             continue;
-        if( const TacticalHierarchies* hierarchies = next.Retrieve< TacticalHierarchies >() )
+        if( const auto hierarchies = next.Retrieve< TacticalHierarchies >() )
         {
             std::string symbolName = hierarchies->GetSymbol();
-            if( symbolCount.find( symbolName ) == symbolCount.end() )
-                symbolCount[ symbolName ] = 0;
             int& count = symbolCount[ symbolName ];
             ++count;
             if( max < count )
@@ -135,13 +132,9 @@ void MergingTacticalHierarchies::UpdateSymbol()
     }
     UpdateLevel();
     entity_.Get< SymbolHierarchy_ABC >().ResetSymbol( highestCount );
-    if( TacticalHierarchies* superior = SuperiorHierarchy() )
-    {
-        if( const kernel::Diplomacies_ABC* diplomacy = superior->GetTop().Retrieve< kernel::Diplomacies_ABC >() )
+    if( const auto* superior = SuperiorHierarchy() )
+        if( const auto* diplomacy = superior->GetTop().Retrieve< kernel::Diplomacies_ABC >() )
             entity_.Get< SymbolHierarchy_ABC >().UpdateKarma( diplomacy->GetKarma() );
-    }
-    if( GetSymbol() != oldSymbol || GetLevel() != oldLevel )
-        controller_.Update( *static_cast< Symbol_ABC* >( this ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -163,9 +156,8 @@ void MergingTacticalHierarchies::RegisterSubordinate( kernel::Entity_ABC& entity
     std::string currentSymbol = GetSymbol();
     std::string currentLevel = GetLevel();
     UpdateSymbol();
-    controller_.Update( *static_cast< Symbol_ABC* >( this ) );
     if( currentSymbol != GetSymbol() || currentLevel != GetLevel() )
-        if( TacticalHierarchies* superior = SuperiorHierarchy() )
+        if( auto* superior = SuperiorHierarchy() )
             superior->UpdateSymbolUpward();
 }
 

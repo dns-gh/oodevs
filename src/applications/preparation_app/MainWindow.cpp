@@ -412,7 +412,7 @@ void MainWindow::Load( const tools::Path& filename )
         dialogContainer_->Load();
         dockContainer_->Load();
         glWidgetManager_->Load( staticModel_.drawings_, config_.GetExerciseDir( config_.GetExerciseName() ) );
-        SetProgression( 85, tr( "Generate symbols ..." ) );
+        SetProgression( 85, tr( "Generating symbols ..." ) );
         symbolIcons_->Initialize( glWidgetManager_->GetMainWidget()->GetWidget2d().get() );
         icons_->GenerateSymbols( *model_.teams_ );
         SetProgression( 90, tr( "Loading options ..." ) );

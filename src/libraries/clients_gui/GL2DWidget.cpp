@@ -9,7 +9,6 @@
 
 #include "clients_gui_pch.h"
 #include "GL2DWidget.h"
-
 #include "FrustumInfos.h"
 #include "GLOptions.h"
 #include "GlRenderPass_ABC.h"
@@ -27,7 +26,6 @@
 #include <iterator>
 #include <ctime>
 
-using namespace geometry;
 using namespace kernel;
 using namespace gui;
 
@@ -137,7 +135,7 @@ void GL2DWidget::LoadFrustum( const FrustumInfos& infos )
     CenterOn( infos.infos2D_->center_ );
 }
 
-void GL2DWidget::CenterOn( const Point2f& point )
+void GL2DWidget::CenterOn( const geometry::Point2f& point )
 {
     Center( point );
 }
@@ -182,7 +180,7 @@ void GL2DWidget::SetZoom( float zoom )
 // -----------------------------------------------------------------------------
 // Picking -> implementation
 // -----------------------------------------------------------------------------
-void GL2DWidget::FillSelection( const Point2f& point,
+void GL2DWidget::FillSelection( const geometry::Point2f& point,
                                 T_ObjectsPicking& selection,
                                 const boost::optional< E_LayerTypes >& type )
 {
@@ -207,7 +205,7 @@ void GL2DWidget::WheelEvent( QWheelEvent* event )
 // -----------------------------------------------------------------------------
 // Tooltip helpers -> implementation
 // -----------------------------------------------------------------------------
-Point2f GL2DWidget::MapToterrainCoordinates( int x, int y )
+geometry::Point2f GL2DWidget::MapToterrainCoordinates( int x, int y )
 {
     return RetrieveCoordinates( mapFromGlobal( QPoint( x, y ) ).x(),
                                 mapFromGlobal( QPoint( x, y ) ).y() );
@@ -239,7 +237,7 @@ uint16_t GL2DWidget::StipplePattern( int factor /* = 1*/ ) const
     return pattern[ ( factor * frame_ ) % 16 ];
 }
 
-float GL2DWidget::Pixels( const Point2f& ) const
+float GL2DWidget::Pixels( const geometry::Point2f& ) const
 {
     return pixels_;
 }
@@ -249,7 +247,7 @@ void GL2DWidget::SetCurrentCursor( const QCursor& cursor )
     setCursor( cursor );
 }
 
-void GL2DWidget::DrawCross( const Point2f& at,
+void GL2DWidget::DrawCross( const geometry::Point2f& at,
                             float size /* = -1.f*/,
                             E_Unit unit /* = meters*/ ) const
 {
@@ -276,8 +274,8 @@ void GL2DWidget::DrawCross( const Point2f& at,
     glPopAttrib();
 }
 
-void GL2DWidget::DrawLine( const Point2f& from,
-                           const Point2f& to,
+void GL2DWidget::DrawLine( const geometry::Point2f& from,
+                           const geometry::Point2f& to,
                            float width ) const
 {
     glPushAttrib( GL_LINE_BIT );
@@ -290,8 +288,8 @@ void GL2DWidget::DrawLine( const Point2f& from,
     glPopAttrib();
 }
 
-void GL2DWidget::DrawStippledLine( const Point2f& from,
-                                   const Point2f& to ) const
+void GL2DWidget::DrawStippledLine( const geometry::Point2f& from,
+                                   const geometry::Point2f& to ) const
 {
     float color[ 4 ] = { 1.f, 1.f, 1.f, 0.75f };
     glColor4fv( color );
@@ -378,7 +376,7 @@ void GL2DWidget::DrawSelectedPolygon( const T_PointVector& points ) const
 
 void GL2DWidget::DrawDecoratedPolygon( const T_TessellatedPolygon& polygon,
                                        const T_PointVector& vertices,
-                                       const Point2f& center,
+                                       const geometry::Point2f& center,
                                        const std::string& name,
                                        unsigned int fontHeight )
 {
@@ -402,12 +400,12 @@ void GL2DWidget::DrawDecoratedPolygon( const T_TessellatedPolygon& polygon,
         DrawTextLabel( name, center, fontHeight );
 }
 
-void GL2DWidget::DrawArrow( const Point2f& from,
-                            const Point2f& to,
+void GL2DWidget::DrawArrow( const geometry::Point2f& from,
+                            const geometry::Point2f& to,
                             float size /* = -1.f*/,
                             E_Unit unit /* = meters*/ ) const
 {
-    Point2f end = to;
+    geometry::Point2f end = to;
     float tipFactor = 1.f;
     if( unit == GLView_ABC::pixels )
     {
@@ -417,12 +415,12 @@ void GL2DWidget::DrawArrow( const Point2f& from,
     else if( size < 0.f )
         size = 15.f * Pixels();
 
-    const Vector2f u = Vector2f( from, to ).Normalize() * size;
-    const Vector2f v = 0.5f * u.Normal();
+    const geometry::Vector2f u = geometry::Vector2f( from, to ).Normalize() * size;
+    const geometry::Vector2f v = 0.5f * u.Normal();
     if( unit == pixels )
         end = from + u;
-    const Point2f left  = end + ( - u + v ) * tipFactor;
-    const Point2f right = end + ( - u - v ) * tipFactor;
+    const geometry::Point2f left  = end + ( - u + v ) * tipFactor;
+    const geometry::Point2f right = end + ( - u - v ) * tipFactor;
 
     glPushAttrib( GL_LINE_BIT );
     glBegin( GL_LINES );
@@ -436,18 +434,18 @@ void GL2DWidget::DrawArrow( const Point2f& from,
     glPopAttrib();
 }
 
-void GL2DWidget::DrawArc( const Point2f& center,
-                          const Point2f& from,
-                          const Point2f& to,
+void GL2DWidget::DrawArc( const geometry::Point2f& center,
+                          const geometry::Point2f& from,
+                          const geometry::Point2f& to,
                           float width ) const
 {
     const float radius = center.Distance( from );
     if( radius == 0 )
         return;
 
-    Vector2f v1( center, from ); v1.Normalize();
+    geometry::Vector2f v1( center, from ); v1.Normalize();
     float minAngle = std::acos( v1.X() ) * ( v1.Y() > 0 ? 1.f : -1.f );
-    Vector2f v2( center, to ); v2.Normalize();
+    geometry::Vector2f v2( center, to ); v2.Normalize();
     float maxAngle = std::acos( v2.X() ) * ( v2.Y() > 0 ? 1.f : -1.f );
     if( minAngle > maxAngle )
     {
@@ -470,8 +468,8 @@ void GL2DWidget::DrawArc( const Point2f& center,
     glPopAttrib();
 }
 
-void GL2DWidget::DrawCurvedArrow( const Point2f& from,
-                                  const Point2f& to,
+void GL2DWidget::DrawCurvedArrow( const geometry::Point2f& from,
+                                  const geometry::Point2f& to,
                                   float curveRatio /* = 0.2f*/,
                                   float size /* = -1.f*/,
                                   E_Unit unit /* = meters*/ ) const
@@ -481,13 +479,13 @@ void GL2DWidget::DrawCurvedArrow( const Point2f& from,
         DrawArrow( from, to, size, unit );
         return;
     }
-    const Vector2f u( from, to );
-    const Vector2f v( u.Normal() );
-    const Point2f middle = from + 0.5f * u;
-    const Point2f center = middle + v * ( 1.f / curveRatio - 1.f );
+    const geometry::Vector2f u( from, to );
+    const geometry::Vector2f v( u.Normal() );
+    const geometry::Point2f middle = from + 0.5f * u;
+    const geometry::Point2f center = middle + v * ( 1.f / curveRatio - 1.f );
 
     DrawArc( center, from, to, 3.f );
-    Vector2f endSegment = Vector2f( center, to ).Normal();
+    geometry::Vector2f endSegment = geometry::Vector2f( center, to ).Normal();
     endSegment.Normalize();
     DrawArrow( to - endSegment * 10.f * Pixels(), to, 15.f * Pixels() );
 }
@@ -504,7 +502,7 @@ namespace
             return radius * pixels;
         return radius;
     }
-    void DrawDiscPart( const Point2f& center,
+    void DrawDiscPart( const geometry::Point2f& center,
                        int glList,
                        float angleDegrees,
                        float radius,
@@ -527,7 +525,7 @@ namespace
     }
 }
 
-void GL2DWidget::DrawCircle( const Point2f& center,
+void GL2DWidget::DrawCircle( const geometry::Point2f& center,
                              float radius /* = -1.f*/,
                              E_Unit unit /* = meters*/ ) const
 {
@@ -544,14 +542,14 @@ void GL2DWidget::DrawCircle( const Point2f& center,
 }
 
 
-void GL2DWidget::DrawDisc( const Point2f& center,
+void GL2DWidget::DrawDisc( const geometry::Point2f& center,
                            float radius /* = -1.f*/,
                            E_Unit unit /* = meters*/ ) const
 {
     DrawDiscPart( center, circle_, 0, radius, unit, Pixels() );
 }
 
-void GL2DWidget::DrawHalfDisc( const Point2f& center,
+void GL2DWidget::DrawHalfDisc( const geometry::Point2f& center,
                                float angleDegrees,
                                float radius /*= -1.f*/,
                                E_Unit unit /*= meters*/ ) const
@@ -559,7 +557,7 @@ void GL2DWidget::DrawHalfDisc( const Point2f& center,
     DrawDiscPart( center, halfCircle_, angleDegrees, radius, unit, Pixels() );
 }
 
-void GL2DWidget::DrawLife( const Point2f& where,
+void GL2DWidget::DrawLife( const geometry::Point2f& where,
                            float h,
                            float factor /* = 1.f*/,
                            bool fixedSize /*= true*/ ) const
@@ -602,13 +600,13 @@ void GL2DWidget::DrawLife( const Point2f& where,
     glPopAttrib();
 }
 
-void GL2DWidget::Print( const std::string& message, const Point2f& where ) const
+void GL2DWidget::Print( const std::string& message, const geometry::Point2f& where ) const
 {
    Print( message, where, QFont() );
 }
 
 void GL2DWidget::Print( const std::string& message,
-                        const Point2f& where,
+                        const geometry::Point2f& where,
                         const QFont& /*font*/ ) const
 {
    const_cast< GL2DWidget*>( this )->renderText( where.X(), where.Y(), 2, message.c_str(), QFont() );
@@ -620,7 +618,7 @@ namespace
 }
 
 void GL2DWidget::DrawApp6Symbol( const std::string& symbol,
-                                 const Point2f& where,
+                                 const geometry::Point2f& where,
                                  float factor /* = 1.f*/,
                                  float thickness /* = 1.f*/,
                                  unsigned int direction /*= 0*/ ) const
@@ -632,7 +630,7 @@ void GL2DWidget::DrawApp6Symbol( const std::string& symbol,
 }
 
 void GL2DWidget::DrawInfrastructureSymbol( const std::string& symbol,
-                                           const Point2f& where,
+                                           const geometry::Point2f& where,
                                            float factor,
                                            float thickness ) const
 {
@@ -650,16 +648,16 @@ void GL2DWidget::DrawApp6SymbolFixedSize( const std::string& symbol,
                                           const geometry::Point2f& where,
                                           float factor ) const
 {
-    const Rectangle2f viewport( 0, 0, 600, 600 );
+    const geometry::Rectangle2f viewport( 0, 0, 600, 600 );
     DrawApp6( symbol, where, baseWidth * factor, viewport, 900, 900, 0 );
 }
 
 void GL2DWidget::DrawApp6SymbolFixedSize( const std::string& symbol,
-                                          const Point2f& where,
+                                          const geometry::Point2f& where,
                                           float factor,
                                           unsigned int direction ) const
 {
-    const Rectangle2f viewport( 0, 0, 256, 256 );
+    const geometry::Rectangle2f viewport( 0, 0, 256, 256 );
     ComputeZoomFactor( factor, false );
     DrawApp6( symbol, where, baseWidth * factor, viewport, 4, 4, direction );
 }
@@ -675,7 +673,7 @@ void GL2DWidget::DrawUnitSymbol( const std::string& symbol,
                                  const std::string& staticSymbol,
                                  const std::string& level,
                                  bool isMoving,
-                                 const Point2f& where,
+                                 const geometry::Point2f& where,
                                  float factor,
                                  unsigned int direction,
                                  float width,
@@ -726,20 +724,20 @@ void GL2DWidget::DrawUnitSymbolAndTail( const std::string& symbol,
                                         const std::string& level,
                                         const T_PointVector& points ) const
 {
-    Point2f penultimatePoint = points.at( points.size() -2 );
-    Point2f lastPoint = points.back();
-    float symbolDepth = 240;
-    Vector2f directionVector( penultimatePoint, lastPoint );
+    const geometry::Point2f penultimatePoint = points.at( points.size() - 2 );
+    const geometry::Point2f lastPoint = points.back();
+    static const float symbolDepth = 240;
+    geometry::Vector2f directionVector( penultimatePoint, lastPoint );
     directionVector.Normalize();
-    Vector2f vertical( 0.f, 1.f );
-    float radians = Angle( vertical, directionVector );
+    const geometry::Vector2f vertical( 0.f, 1.f );
+    const float radians = Angle( vertical, directionVector );
     int direction = static_cast< int >( radians * 180 / 3.14f );
     if( direction < 0 )
         direction = 360 + direction;
-    bool mirror = direction > 180;
-    float xFactor = mirror ? -1.f : 1.f;
+    const bool mirror = direction > 180;
+    const float xFactor = mirror ? -1.f : 1.f;
     unsigned int udirection = 360 - static_cast< unsigned int >( direction );
-    Point2f symbolTail = lastPoint + directionVector * (-symbolDepth/2);
+    const geometry::Point2f symbolTail = lastPoint + directionVector * ( -symbolDepth / 2 );
     DrawApp6SymbolScaledSize( symbol, lastPoint, -1.f, udirection, xFactor, 1 );
     DrawApp6SymbolScaledSize( level, lastPoint, -1.f, udirection, xFactor, 1 );
     T_PointVector arrowPoints( points );
@@ -763,7 +761,7 @@ void GL2DWidget::DrawTacticalGraphics( const std::string& symbol,
 }
 
 void GL2DWidget::DrawIcon( const char** xpm,
-                           const Point2f& where,
+                           const geometry::Point2f& where,
                            float size /* = -1.f */,
                            float factor /* = 1.f */, 
                            E_Unit unit /* = meters */ ) const
@@ -772,7 +770,6 @@ void GL2DWidget::DrawIcon( const char** xpm,
         return;
     if( size < 0 )
         size = 32 * Pixels();
-
     factor *= GetAdaptiveZoomFactor( unit != GLView_ABC::pixels );
     size *= 0.7f * factor;
     glPushMatrix();
@@ -781,15 +778,15 @@ void GL2DWidget::DrawIcon( const char** xpm,
         glDisable( GL_TEXTURE_GEN_S );
         glDisable( GL_TEXTURE_GEN_T );
         BindIcon( xpm );
-        const Point2f iconTranslation = iconLayout_->IconLocation( xpm );
-        glTranslatef( where.X() + iconTranslation.X()*factor, where.Y() + iconTranslation.Y()*factor, 0.f );
+        const geometry::Point2f iconTranslation = iconLayout_->IconLocation( xpm );
+        glTranslatef( where.X() + iconTranslation.X() * factor, where.Y() + iconTranslation.Y() * factor, 0.f );
         glScalef( size, size, size );
         DrawBillboardRect();
         glPopMatrix();
     glPopAttrib();
 }
 
-void GL2DWidget::DrawImage( const QImage& image, const Point2f& where ) const
+void GL2DWidget::DrawImage( const QImage& image, const geometry::Point2f& where ) const
 {
     if( image.bits() )
     {
@@ -798,13 +795,13 @@ void GL2DWidget::DrawImage( const QImage& image, const Point2f& where ) const
     }
 }
 
-void GL2DWidget::DrawCell( const Point2f& center ) const
+void GL2DWidget::DrawCell( const geometry::Point2f& center ) const
 {
     glVertex2fv( (const float*)&center );
 }
 
 void GL2DWidget::DrawSvg( const std::string& svg,
-                          const Point2f& center,
+                          const geometry::Point2f& center,
                           float ratio /* = 1.f*/,
                           bool fixedSize /*= true*/ ) const
 {
@@ -813,14 +810,14 @@ void GL2DWidget::DrawSvg( const std::string& svg,
     if( ratio != 1 )
         glScalef( ratio, ratio, ratio );
     DrawSvgInViewport( svg,
-                       fixedSize ? Rectangle2f( Point2f( 0.f, 0.f ), Point2f( 5000, 5000 ) ) : viewport_,
+                       fixedSize ? geometry::Rectangle2f( geometry::Point2f( 0.f, 0.f ), geometry::Point2f( 5000, 5000 ) ) : viewport_,
                        static_cast< unsigned >( GetWidth() ),
                        static_cast< unsigned >( GetHeight() ) );
     glPopMatrix();
 }
 
 void GL2DWidget::DrawShapeText( const QImage& image,
-                                const Point2f& where ) const
+                                const geometry::Point2f& where ) const
 {
     if( image.bits() )
     {
@@ -841,7 +838,7 @@ void GL2DWidget::DrawShapeText( const QImage& image,
         glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
 
         glTranslatef( where.X(), where.Y(), 300.f );
-        glScalef( ( float ) image.width() *  Pixels(), ( float ) image.height() * Pixels(), 1.f );
+        glScalef( image.width() * Pixels(), image.height() * Pixels(), 1.f );
         glBegin( GL_QUADS );
             glTexCoord2f( 0.f, 1.f );
             glVertex2f( 0.f, -1.f );
@@ -907,7 +904,7 @@ namespace
 }
 
 void GL2DWidget::DrawApp6SymbolScaledSize( const std::string& symbol,
-                                           const Point2f& where,
+                                           const geometry::Point2f& where,
                                            float factor,
                                            unsigned int direction,
                                            float width,
@@ -915,7 +912,7 @@ void GL2DWidget::DrawApp6SymbolScaledSize( const std::string& symbol,
 {
     const float svgDeltaX = -20; // Offset of 20 in our svg files...
     const float svgDeltaY = -80 + 120; // Offset of 80 in our svg files + half of 240 which is the default height...
-    const Rectangle2f viewport( 0, 0, 256, 256 );
+    const geometry::Rectangle2f viewport( 0, 0, 256, 256 );
     factor = fabs( factor ) * zoomFactor * symbolSize_ / defaultSymbolSize;
     DrawApp6( symbol, where, baseWidth * factor, viewport, 4, 4, direction, width, depth, svgDeltaX, svgDeltaY );
 }
@@ -928,7 +925,7 @@ void GL2DWidget::DrawTail( const T_PointVector& points, float width ) const
     glPopAttrib();
 }
 
-void GL2DWidget::DrawTextLabel( const std::string& content, const Point2f& where, int /*baseSize = 12*/ )
+void GL2DWidget::DrawTextLabel( const std::string& content, const geometry::Point2f& where, int /*baseSize = 12*/ )
 {
     if( !drawUrbanLabel_ )
         return;
@@ -936,8 +933,8 @@ void GL2DWidget::DrawTextLabel( const std::string& content, const Point2f& where
     QRect rc = fm.boundingRect( content.c_str() );
 
     QPoint point = CoordinatesToClient( where );
-    Point2f leftBottom = RetrieveCoordinates( point.x() - 4, int( point.y() + rc.height() * 0.25f ) );
-    Point2f rightTop = RetrieveCoordinates( point.x() + rc.width() + 4, int( point.y() - rc.height() * 0.75f ) );
+    geometry::Point2f leftBottom = RetrieveCoordinates( point.x() - 4, int( point.y() + rc.height() * 0.25f ) );
+    geometry::Point2f rightTop = RetrieveCoordinates( point.x() + rc.width() + 4, int( point.y() - rc.height() * 0.75f ) );
 
     float color[ 4 ];
     color[ 0 ] = 1.f;
@@ -967,7 +964,7 @@ void GL2DWidget::DrawTextLabel( const std::string& content, const Point2f& where
     renderText( where.X(), where.Y(), 2, content.c_str(), currentFont_ );
 }
 
-bool GL2DWidget::IsInSelectionViewport( const Point2f& point ) const
+bool GL2DWidget::IsInSelectionViewport( const geometry::Point2f& point ) const
 {
     // Is in the scene && Is in the terrain
     return rect().contains( mapFromGlobal( QCursor::pos() ) ) && extent_.IsInside( point );
