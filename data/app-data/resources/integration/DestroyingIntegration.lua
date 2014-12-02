@@ -16,7 +16,7 @@
 -- @return Boolean, whether or not the target is on firing range
 integration.isInFiringRange = function( target, ph )
     if not ph then -- Scipio compatibility
-        ph = integration.getDefaultPH( target )
+        ph = integration.getDefaultPH( integration.getAgentFromKnowledge( target ) )
     end
     return integration.distance( meKnowledge, target ) < integration.getMaxRangeToFireOnAgent( target.source, ph )
 end
