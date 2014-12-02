@@ -10,6 +10,7 @@
 #ifndef __GhostCommandPostAttributes_h_
 #define __GhostCommandPostAttributes_h_
 
+#include "clients_gui/Drawable_ABC.h"
 #include "clients_kernel/CommandPostAttributes_ABC.h"
 #include "clients_kernel/Serializable_ABC.h"
 
@@ -36,13 +37,13 @@ namespace gui
 // =============================================================================
 class GhostCommandPostAttributes : public kernel::CommandPostAttributes_ABC
                                  , public kernel::Serializable_ABC
+                                 , public gui::Drawable_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
-             GhostCommandPostAttributes( const kernel::Entity_ABC& entity, bool isCommandPost, gui::PropertiesDictionary& dictionary );
-             GhostCommandPostAttributes( const kernel::Entity_ABC& entity, xml::xistream& xis, gui::PropertiesDictionary& dictionary );
+             GhostCommandPostAttributes( const kernel::Entity_ABC& entity, bool isCommandPost, gui::PropertiesDictionary& dictionary, const std::string& symbol );
+             GhostCommandPostAttributes( const kernel::Entity_ABC& entity, xml::xistream& xis, gui::PropertiesDictionary& dictionary, const std::string& symbol );
     virtual ~GhostCommandPostAttributes();
     //@}
 
@@ -54,6 +55,11 @@ public:
     //! @name Serializable_ABC operations
     //@{
     virtual void SerializeAttributes( xml::xostream& xos ) const;
+    //@}
+
+    //! @name Drawable_ABC operations
+    //@{
+    virtual void Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GLView_ABC& tools ) const;
     //@}
 
     //! @name Operations
@@ -71,6 +77,7 @@ private:
     //! @name Member data
     //@{
     const kernel::Entity_ABC& entity_;
+    const std::string symbol_;
     bool isPc_;
     //@}
 };
