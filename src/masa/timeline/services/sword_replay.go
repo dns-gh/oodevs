@@ -13,9 +13,11 @@ import (
 	"code.google.com/p/goprotobuf/proto"
 	"encoding/json"
 	"masa/sword/swapi"
+	"masa/sword/sword"
 	"masa/timeline/sdk"
 	"masa/timeline/util"
 	"net/http"
+	"net/url"
 	"time"
 )
 
@@ -48,9 +50,10 @@ func marshal(begin, end, enabled bool) []byte {
 	return buffer
 }
 
-func checkPayload(event *sdk.Event) error {
+func readPayload(event *sdk.Event) (sdk.ReplayPayload, error) {
 	payload := sdk.ReplayPayload{}
-	return json.Unmarshal(event.Action.Payload, &payload)
+	err := json.Unmarshal(event.Action.Payload, &payload)
+	return payload, err
 }
 
 func updatePayload(index, size int, event *sdk.Event) {
@@ -154,7 +157,7 @@ func (s *Sword) filterEvents(events ...*sdk.Event) ([]*sdk.Event, error) {
 			return result, util.NewError(http.StatusBadRequest, "Invalid replay range modification")
 		}
 		// Checks payload error
-		err = checkPayload(event)
+		_, err = readPayload(event)
 		if err != nil {
 			return result, err
 		}
@@ -297,7 +300,7 @@ func (s *Sword) deleteReplay(uuid string) {
 }
 
 func (s *Sword) setReplayRangeDates(link *SwordLink, start, end time.Time) {
-	if link == s.link {
+	if link == s.link && (s.startTime != start || s.endTime != end) {
 		s.startTime = start
 		s.endTime = end
 		// remove all replay events except the first
@@ -374,4 +377,45 @@ func (s *Sword) CheckDeleteEvent(uuid string) error {
 		}
 	}
 	return nil
+}
+
+func isActivated(event *sdk.Event) bool {
+	payload, _ := readPayload(event)
+	return payload.GetEnabled()
+}
+
+func (s *Sword) updateReplayTick(current time.Time) {
+	skipping := false
+	timeToSkip := current
+	for _, event := range s.replays {
+		begin, end, _ := checkBoundaries(event, s.startTime, s.endTime)
+		if !skipping && current.After(begin) && current.Before(end) && !isActivated(event) {
+			skipping = true
+			timeToSkip = end
+		} else if skipping {
+			// skip to the last contiguous deactivated replay range
+			if !isActivated(event) {
+				timeToSkip = end
+			} else {
+				break
+			}
+		}
+	}
+	if skipping {
+		msg := swapi.SwordMessage{
+			ClientToReplay: &sword.ClientToReplay{
+				Message: &sword.ClientToReplay_Content{
+					ControlSkipToDate: &sword.ControlSkipToDate{
+						DateTime: swapi.MakeDateTime(timeToSkip),
+					},
+				},
+			},
+		}
+		s.Log("-> replay deactivated in this section, skipping to %v", timeToSkip)
+		action := NewAction(gouuid.New(), url.URL{}, []byte{}, msg, false)
+		s.pending[action.id] = action
+		if s.status == SwordStatusConnected {
+			s.link.PostAction(action)
+		}
+	}
 }

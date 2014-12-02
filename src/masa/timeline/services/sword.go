@@ -486,3 +486,7 @@ func (s *Sword) WaitForStatus(status SwordStatus) {
 		return s.status == status
 	})
 }
+
+func (s *Sword) UpdateTick(current time.Time) {
+	s.updateReplayTick(current)
+}

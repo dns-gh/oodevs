@@ -214,6 +214,15 @@ func (s *SwordServer) writeContent(slink *SwordLink, ctx int32, message proto.Me
 				Message:  field,
 			},
 		}
+	case *sword.ReplayToClient_Content:
+		output = SwordOutput{
+			swapi.ReplayToClientTag,
+			&sword.ReplayToClient{
+				Context:  proto.Int32(ctx),
+				ClientId: proto.Int32(slink.id),
+				Message:  field,
+			},
+		}
 	case *sword.AuthenticationToClient_Content:
 		output = SwordOutput{
 			swapi.AuthenticationToClientTag,
@@ -470,6 +479,20 @@ func (s *SwordServer) clientToSimulation(slink *SwordLink, msg *sword.ClientToSi
 	}
 }
 
+func (s *SwordServer) clientToReplay(slink *SwordLink, msg *sword.ClientToReplay) {
+	ctx := msg.GetContext()
+	if skip := msg.GetMessage().GetControlSkipToDate(); skip != nil {
+		s.writeContent(slink, ctx, &sword.ReplayToClient_Content{
+			ControlSkipToTickAck: &sword.ControlSkipToTickAck{
+				Tick:      proto.Int32(30), // Hardcoded
+				ErrorCode: sword.ControlAck_no_error.Enum(),
+			},
+		})
+	} else {
+		slink.Fatal(fmt.Errorf("unable to reply to %v", msg))
+	}
+}
+
 func (s *SwordServer) readMessages(slink *SwordLink) {
 	defer slink.pending.Done()
 	idx := 0
@@ -489,6 +512,8 @@ func (s *SwordServer) readMessages(slink *SwordLink) {
 			s.clientToAuthentication(slink, msg.ClientToAuthentication)
 		} else if msg.ClientToSimulation != nil {
 			s.clientToSimulation(slink, msg.ClientToSimulation)
+		} else if msg.ClientToReplay != nil {
+			s.clientToReplay(slink, msg.ClientToReplay)
 		}
 	}
 }

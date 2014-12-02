@@ -35,24 +35,27 @@ type SwordReaderObserver interface {
 }
 
 type SwordReader struct {
-	id      int32
-	name    string
-	poster  SwordReaderObserver
-	client  *swapi.Client
-	last    time.Time   // last known time
-	orders  Ids         // known orders
-	actions Ids         // known actions
-	async   *SwapiAsync // async swapi events
+	id       int32
+	name     string
+	poster   SwordReaderObserver
+	client   *swapi.Client
+	last     time.Time   // last known time
+	orders   Ids         // known orders
+	actions  Ids         // known actions
+	async    *SwapiAsync // async swapi events
+	skipping bool
+	target   int32 // skipping target tick
 }
 
 func NewSwordReader(name string, client *swapi.Client) *SwordReader {
 	async := NewSwapiAsync()
 	id := client.Register(async.Write)
 	return &SwordReader{
-		id:     id,
-		name:   name,
-		client: client,
-		async:  async,
+		id:       id,
+		name:     name,
+		client:   client,
+		async:    async,
+		skipping: false,
 	}
 }
 
@@ -70,9 +73,9 @@ func (s *SwordReader) Close() {
 func (s *SwordReader) readSimToClient(msg *swapi.SwordMessage, clientId, ctx int32, err error) bool {
 	content := msg.SimulationToClient.GetMessage()
 	if info := content.ControlInformation; info != nil {
-		s.last = s.tick(s.last, info.GetDateTime().GetData())
+		s.last = s.tick(s.last, info.GetDateTime().GetData(), info.GetCurrentTick())
 	} else if tick := content.ControlBeginTick; tick != nil {
-		s.last = s.tick(s.last, tick.GetDateTime().GetData())
+		s.last = s.tick(s.last, tick.GetDateTime().GetData(), tick.GetCurrentTick())
 	} else if order := content.Action; order != nil {
 		event := s.readAction(s.name, s.last, order)
 		if event != nil {
@@ -146,6 +149,13 @@ func (s *SwordReader) readReplayToClient(msg *swapi.SwordMessage, clientId, ctx 
 			s.poster.Log("replay end time %v", err)
 		}
 		s.poster.SetReplayRangeDates(startDate, endDate)
+	} else if ack := content.ControlSkipToTickAck; ack != nil {
+		if ack.GetErrorCode() != sword.ControlAck_no_error {
+			s.poster.Log("error while skipping date %v", err)
+		} else {
+			s.skipping = true
+			s.target = ack.GetTick()
+		}
 	}
 	return false
 }
@@ -167,13 +177,17 @@ func (s *SwordReader) readMessage(msg *swapi.SwordMessage, clientId, ctx int32, 
 	return false
 }
 
-func (s *SwordReader) tick(last time.Time, value string) time.Time {
+func (s *SwordReader) tick(last time.Time, value string, currentTick int32) time.Time {
 	tick, err := time.Parse(SwordTimeLayout, value)
 	if err != nil {
 		s.poster.Log("invalid time layout: %v", value)
 		return last
 	}
-	s.poster.Tick(tick)
+	if !s.skipping || currentTick >= s.target {
+		s.poster.Tick(tick)
+	} else {
+		s.skipping = currentTick < s.target
+	}
 	return tick
 }
 

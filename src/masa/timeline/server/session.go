@@ -320,6 +320,9 @@ func (s *Session) UpdateTick(tick time.Time) {
 	for _, observer := range s.observers {
 		observer.UpdateTick(tick)
 	}
+	for _, service := range s.services {
+		service.UpdateTick(tick)
+	}
 }
 
 func (s *Session) setTick(tick time.Time) {
