@@ -120,3 +120,12 @@ bool PHY_MovingEntity_ABC::HasCurrentPath() const
 {
     return pathWalker_->HasCurrentPath();
 }
+
+// -----------------------------------------------------------------------------
+// Name: boost::shared_ptr< DEC_Knowledge_Object >& PHY_MovingEntity_ABC::GetCurrentObjectCollision
+// Created: LDC 2014-11-28
+// -----------------------------------------------------------------------------
+const boost::shared_ptr< DEC_Knowledge_Object >& PHY_MovingEntity_ABC::GetCurrentObjectCollision() const
+{
+    return pathWalker_->GetCurrentObjectCollision();
+}

@@ -58,6 +58,7 @@ public:
     static std::vector< boost::shared_ptr< MT_Vector2D > > GetClosestPath( DEC_Decision_ABC* callerAgent,
                                                                            const boost::shared_ptr< MT_Vector2D >& begin,
                                                                            const boost::shared_ptr< MT_Vector2D >& end );
+    static boost::shared_ptr< DEC_Knowledge_Object > GetCurrentObjectCollision( DEC_Decision_ABC* callerAgent );
      //@}
 };
 

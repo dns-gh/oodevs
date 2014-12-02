@@ -447,14 +447,15 @@ end
 -- <li> eTypeItiCriminal (criminal) </li>
 -- <li> eTypeItiNBC (CBRN) </li> </ul>
 -- @param waypoints List of directIA knowledges
+-- @param wantToStopBecauseOfObstacle Boolean True if the unit has to stop if it finds an obstacle, false otherwise
 -- @return Boolean
 integration.moveToItGeneric = masalife.brain.integration.startStopAction( 
 { 
     start = function( entity, pathType, waypoints )
         return integration.startMoveToIt( entity, pathType, waypoints ) 
     end,
-    started = function( entity, pathType, waypoints )
-        return integration.updateMoveToIt( entity, pathType, waypoints )
+    started = function( entity, pathType, waypoints, wantToStopBecauseOfObstacle )
+        return integration.updateMoveToIt( entity, pathType, waypoints, wantToStopBecauseOfObstacle )
     end, 
     stop = function( entity, pathType, waypoints )
         if waypoints and #waypoints > 0 then
@@ -587,8 +588,9 @@ end
 -- <li> eTypeItiCriminal (criminal) </li>
 -- <li> eTypeItiNBC (CBRN) </li> </ul>
 -- @param waypoints List of directIA knowledges
+-- @param wantToStopBecauseOfObstacle Boolean True if the unit has to stop if it finds an obstacle, false otherwise
 -- @return Boolean, 'true' if the movement is finished, 'false' otherwise.
-integration.updateMoveToIt = function( objective, pathType, waypoints )
+integration.updateMoveToIt = function( objective, pathType, waypoints, wantToStopBecauseOfObstacle )
     local etat = objective[ myself ].etat
     local integration = integration
     local myself = myself
@@ -716,6 +718,14 @@ integration.updateMoveToIt = function( objective, pathType, waypoints )
             reportFunction( eRC_Bloquee )
         end
         myself.canBeBlocked = true
+        if wantToStopBecauseOfObstacle then -- Scipio compatibility
+            DEC_PauseAction( objective[ myself ].moveAction )
+            local obstacle = DEC_GetCurrentObjectCollision( myself )
+            if obstacle then
+                allRes = { CreateKnowledge( integration.ontology.types.object, obstacle ) }
+                meKnowledge:sendArrivedOnMines( meKnowledge:getAutomat(), allRes )
+            end
+        end
     elseif etat == eEtatActionDeplacement_DejaEnDeplacement then
         if etat ~= objective[ myself ].rcDone then
             DEC_Trace( "Already moving" )
