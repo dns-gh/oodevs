@@ -166,7 +166,7 @@ void PopulationFlowKnowledge::Draw( const geometry::Point2f&, const gui::Viewpor
             tools.DrawLines( part.flowPart_ );
             if( !tools.GetPickingSelector().IsPickingMode() )
             {
-                glColor4f( color[0], color[1], color[2], 0.5f * ( 1.f + part.relevance_ * 0.01f ) );
+                glColor4f( color[0], color[1], color[2], color[3] * 0.5f * ( 1.f + part.relevance_ * 0.01f ) );
                 glLineWidth( 8.f );
                 tools.DrawLines( part.flowPart_ );
             }
