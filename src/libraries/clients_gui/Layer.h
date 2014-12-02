@@ -59,12 +59,14 @@ public:
     virtual void Paint( const ViewFrustum& frustum );
     virtual void Paint( const geometry::Rectangle2f& viewport );
     virtual void Paint( Viewport_ABC& viewport );
+    virtual void Draw( const kernel::Entity_ABC& entity, Viewport_ABC& viewport, bool pickingMode );
 
     virtual void SetAlpha( float alpha );
     virtual float GetAlpha() const;
 
     virtual bool IsEnabled() const;
     virtual bool IsConfigurable() const;
+    virtual T_Layer GetSubLayer( const T_LayerFunctor& entity ) const;
     virtual void Reset();
 
     virtual bool IsIn( const kernel::GraphicalEntity_ABC& ) const { return false; }

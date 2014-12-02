@@ -54,14 +54,12 @@ private:
     //! @name Helpers
     //@{
     virtual void Draw( const kernel::Entity_ABC& entity, gui::Viewport_ABC& viewport, bool pickingMode );
-    virtual void NotifySelectionChanged( const std::vector< const kernel::Automat_ABC* >& elements );
     //@}
 
 private:
     //! @name Member data
     //@{
     actions::ActionsModel& actionsModel_;
-    kernel::SafePointer< kernel::Automat_ABC > selected_;
     //@}
 };
 

@@ -40,7 +40,6 @@ ObjectsLayer::ObjectsLayer( kernel::Controllers& controllers,
     , actionsModel_( actionsModel )
     , static_      ( staticModel )
     , simulation_  ( simulation )
-    , selected_    ( controllers )
 {
     // NOTHING
 }
@@ -63,14 +62,4 @@ bool ObjectsLayer::HandleKeyPress( QKeyEvent* key )
     if( selected_ && profile_.CanDoMagic( *selected_ ) && key->key() == Qt::Key_Delete )
         actionsModel_.PublishObjectDestroyMagicAction( *selected_ );
     return false;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ObjectsLayer::NotifySelectionChanged
-// Created: JSR 2012-05-31
-// -----------------------------------------------------------------------------
-void ObjectsLayer::NotifySelectionChanged( const std::vector< const kernel::Object_ABC* >& elements )
-{
-    selected_ = elements.size() == 1 ? elements.front() : 0;
-    gui::ObjectsLayer::NotifySelectionChanged( elements );
 }

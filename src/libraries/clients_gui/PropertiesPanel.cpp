@@ -15,8 +15,9 @@
 #include "PropertyModel.h"
 #include "PropertyDelegate.h"
 #include "PropertyDisplayer.h"
-#include "clients_gui/PropertiesDictionary.h"
 #include "clients_gui/DictionaryUpdated.h"
+#include "clients_gui/Layer_ABC.h"
+#include "clients_gui/PropertiesDictionary.h"
 #include "clients_gui/PropertiesGroupDictionary.h"
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Entity_ABC.h"
@@ -98,7 +99,11 @@ void PropertiesPanel::NotifySelected( const kernel::Entity_ABC* element )
     }
     setWidget( treeView_ );
     if( element )
-        treeView_->setEnabled( !view_.IsInAReadOnlyLayer( *element ) );
+        if( auto elementLayer = view_.GetLayer( [&]( const T_Layer& layer )
+            {
+                return layer->IsIn( *element );
+            } ) )
+            treeView_->setEnabled( !elementLayer->IsReadOnly() );
 }
 
 // -----------------------------------------------------------------------------

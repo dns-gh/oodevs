@@ -228,7 +228,7 @@ public:
     //!       GLXWidget   -> throw not implemented
     //@{
     virtual const T_LayersVector& GetLayers() const = 0;
-    virtual bool IsInAReadOnlyLayer( const kernel::GraphicalEntity_ABC& selectable ) const = 0;
+    virtual T_Layer GetLayer( const T_LayerFunctor& functor ) const = 0;
     virtual void UpdateLayerOrder() = 0;
     //@}
 

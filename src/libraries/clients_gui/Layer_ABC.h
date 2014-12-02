@@ -11,6 +11,7 @@
 #define __Layer_ABC_h_
 
 #include "ENT/ENT_Enums.h"
+#include "LayersHelpers.h"
 #include "clients_kernel/GraphicalEntity_ABC.h"
 #include "clients_kernel/DisplayableModesObserver_ABC.h"
 #include "clients_kernel/ContextMenu.h"
@@ -19,6 +20,11 @@
 #include <boost/noncopyable.hpp>
 
 class ViewFrustum;
+
+namespace kernel
+{
+    class Entity_ABC;
+}
 
 namespace gui
 {
@@ -55,6 +61,7 @@ public:
     virtual void Paint( const ViewFrustum& frustum ) = 0;
     virtual void Paint( Viewport_ABC& viewport ) = 0;
     using MapLayer_ABC::Paint;
+    virtual void Draw( const kernel::Entity_ABC& entity, Viewport_ABC& viewport, bool pickingMode ) = 0;
 
     virtual E_LayerTypes GetType() const = 0;
     virtual void SetAlpha( float ) = 0;
@@ -73,6 +80,7 @@ public:
     virtual bool IsIn( const kernel::GraphicalEntity_ABC& ) const = 0;
     virtual bool IsEnabled() const = 0;
     virtual bool IsConfigurable() const = 0;
+    virtual T_Layer GetSubLayer( const T_LayerFunctor& functor ) const = 0;
     //@}
 };
 

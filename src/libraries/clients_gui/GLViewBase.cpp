@@ -139,7 +139,7 @@ const T_LayersVector& GLViewBase::GetLayers() const
     throw MASA_EXCEPTION_NOT_IMPLEMENTED;
 }
 
-bool GLViewBase::IsInAReadOnlyLayer( const kernel::GraphicalEntity_ABC& ) const
+T_Layer GLViewBase::GetLayer( const T_LayerFunctor& ) const
 {
     throw MASA_EXCEPTION_NOT_IMPLEMENTED;
 }

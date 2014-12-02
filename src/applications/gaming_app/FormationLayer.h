@@ -56,7 +56,6 @@ public:
 private:
     //! @name Helpers
     //@{
-    virtual void NotifySelectionChanged( const std::vector< const kernel::Formation_ABC* >& elements );
     void RequestCreation( const geometry::Point2f& point, const kernel::AutomatType& type );
     void RequestCreation( const geometry::Point2f& point, const kernel::PopulationPrototype& type );
     //@}
@@ -64,7 +63,6 @@ private:
 private:
     //! @name Member data
     //@{
-    kernel::SafePointer< kernel::Formation_ABC > selected_;
     actions::ActionsModel& actionsModel_;
     const StaticModel& static_;
     //@}

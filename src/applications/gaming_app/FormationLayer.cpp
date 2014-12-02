@@ -25,7 +25,6 @@ FormationLayer::FormationLayer( kernel::Controllers& controllers,
                                 actions::ActionsModel& actionsModel,
                                 const StaticModel& staticModel )
     : gui::FormationLayer( controllers, view, strategy, profile )
-    , selected_( controllers )
     , actionsModel_( actionsModel )
     , static_( staticModel )
 {
@@ -70,16 +69,6 @@ bool FormationLayer::HandleDropEvent( QDropEvent* event, const geometry::Point2f
         }
     }
     return false;
-}
-
-// -----------------------------------------------------------------------------
-// Name: FormationLayer::NotifySelectionChanged
-// Created: JSR 2012-05-31
-// -----------------------------------------------------------------------------
-void FormationLayer::NotifySelectionChanged( const std::vector< const kernel::Formation_ABC* >& elements )
-{
-    selected_ = elements.size() == 1 ? elements.front() : 0;
-    gui::FormationLayer::NotifySelectionChanged( elements );
 }
 
 // -----------------------------------------------------------------------------

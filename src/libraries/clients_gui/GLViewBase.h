@@ -68,7 +68,7 @@ public:
     //! @name Layers -> throw not implemented
     //@{
     virtual const T_LayersVector& GetLayers() const;
-    virtual bool IsInAReadOnlyLayer( const kernel::GraphicalEntity_ABC& selectable ) const;
+    virtual T_Layer GetLayer( const T_LayerFunctor& functor ) const;
     virtual void UpdateLayerOrder();
     //@}
 

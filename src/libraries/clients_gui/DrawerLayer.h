@@ -66,10 +66,8 @@ private:
     virtual void Paint( const geometry::Rectangle2f& viewport );
     virtual bool ShouldDisplay( const kernel::Entity_ABC& );
     virtual void Draw( const kernel::Entity_ABC& entity, Viewport_ABC& viewport, bool pickingMode );
-    virtual void NotifySelectionChanged( const std::vector< const kernel::Drawing_ABC* >& elements );
     virtual void ContextMenu( const kernel::GraphicalEntity_ABC&, const geometry::Point2f&, const QPoint& );
     virtual bool HandleKeyPress( QKeyEvent* key );
-    virtual void NotifyDeleted( const kernel::Drawing_ABC& drawing );
     //@}
 
 private:
@@ -78,7 +76,6 @@ private:
     std::shared_ptr< ParametersLayer > parameters_;
     ModelObserver_ABC& model_;
     geometry::Rectangle2f viewport_;
-    const kernel::Drawing_ABC* selected_;
     //@}
 };
 

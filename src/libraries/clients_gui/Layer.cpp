@@ -77,6 +77,11 @@ void Layer::Paint( Viewport_ABC& )
     // NOTHING
 }
 
+void Layer::Draw( const kernel::Entity_ABC&, Viewport_ABC&, bool )
+{
+    throw MASA_EXCEPTION_NOT_IMPLEMENTED;
+}
+
 // -----------------------------------------------------------------------------
 // Name: Layer::SetAlpha
 // Created: AGE 2007-02-23
@@ -125,6 +130,11 @@ bool Layer::IsPickable() const
 bool Layer::IsConfigurable() const
 {
     return descriptor_.configurable_;
+}
+
+T_Layer Layer::GetSubLayer( const T_LayerFunctor& ) const
+{
+    return 0;
 }
 
 // -----------------------------------------------------------------------------

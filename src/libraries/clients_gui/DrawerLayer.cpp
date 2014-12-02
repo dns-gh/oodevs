@@ -31,7 +31,6 @@ DrawerLayer::DrawerLayer( kernel::Controllers& controllers,
     : EntityLayer< kernel::Drawing_ABC >( controllers, view, strategy, profile, eLayerTypes_Drawings )
     , parameters_( parameters )
     , model_     ( model )
-    , selected_  ( 0 )
 {
     controllers.Update( *this );
 }
@@ -79,18 +78,7 @@ void DrawerLayer::NotifyContextMenu( const kernel::Drawing_ABC& drawing, kernel:
 void DrawerLayer::OnEditDrawing()
 {
     if( selected_ )
-        static_cast< Drawing* >( const_cast< kernel::Drawing_ABC* >( selected_ ) )->Edit( *parameters_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: DrawerLayer::NotifyDeleted
-// Created: MMC 2013-04-18
-// -----------------------------------------------------------------------------
-void DrawerLayer::NotifyDeleted( const kernel::Drawing_ABC& drawing )
-{
-    if( selected_ == &drawing )
-        selected_ = 0;
-    EntityLayer< kernel::Drawing_ABC >::NotifyDeleted( drawing );
+        static_cast< Drawing* >( selected_.ConstCast() )->Edit( *parameters_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -113,16 +101,6 @@ bool DrawerLayer::ShouldDisplay( const kernel::Entity_ABC& entity )
     if( diffusion )
         return EntityLayer< kernel::Drawing_ABC >::ShouldDisplay( *diffusion );
     return true;
-}
-
-// -----------------------------------------------------------------------------
-// Name: DrawerLayer::NotifySelectionChanged
-// Created: JSR 2012-05-31
-// -----------------------------------------------------------------------------
-void DrawerLayer::NotifySelectionChanged( const std::vector< const kernel::Drawing_ABC* >& elements )
-{
-    EntityLayer< kernel::Drawing_ABC >::NotifySelectionChanged( elements );
-    selected_ =  elements.size() == 1 ? elements.front() : 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -154,7 +132,7 @@ bool DrawerLayer::HandleKeyPress( QKeyEvent* k )
     const int key = k->key();
     if( key == Qt::Key_Backspace || key == Qt::Key_Delete )
     {
-        if( selected_ && selected_->IsControlledBy( profile_ ) )
+        if( selected_ && static_cast< const kernel::Drawing_ABC& >( *selected_ ).IsControlledBy( profile_ ) )
             model_.DeleteEntity( *selected_ );
         return true;
     }

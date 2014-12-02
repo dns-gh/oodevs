@@ -46,6 +46,7 @@ enum E_LayerTypes
     eLayerTypes_Pathfinds,
     eLayerTypes_Raster,
     eLayerTypes_RasterDynamic,
+    eLayerTypes_RectangleSelection,
     eLayerTypes_ResourceNetworks,
     eLayerTypes_Selection,
     eLayerTypes_TacticalLines,

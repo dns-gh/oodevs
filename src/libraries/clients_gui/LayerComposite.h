@@ -35,6 +35,8 @@ public:
     virtual ~LayerComposite();
     //@}
 
+    T_Layer GetLayer( kernel::Entity_ABC& entity ) const;
+
     //! @name Forwarded operations
     //@{
     virtual void SetAlpha( float alpha );
@@ -46,6 +48,7 @@ public:
     virtual void ContextMenu( const kernel::GraphicalEntity_ABC&, const geometry::Point2f&, const QPoint& );
     virtual void ExtractElements( T_LayerElements& extractedElement, const T_ObjectsPicking& selection );
     virtual bool IsIn( const kernel::GraphicalEntity_ABC& ) const;
+    virtual T_Layer GetSubLayer( const T_LayerFunctor& ) const;
 
     virtual void Initialize( const geometry::Rectangle2f& extent );
 

@@ -55,7 +55,6 @@ public:
 private:
     //! @name Helpers
     //@{
-    virtual void NotifySelectionChanged( const std::vector< const kernel::Agent_ABC* >& elements );
     void RequestCreation( const geometry::Point2f& point, const kernel::AgentType& type );
     //@}
 
@@ -69,7 +68,6 @@ private:
     //@{
     actions::ActionsModel& actionsModel_;
     const kernel::Time_ABC& simulation_;
-    kernel::SafePointer< kernel::Agent_ABC > selected_;
     bool displayDestroyedUnits_;
     //@}
 };

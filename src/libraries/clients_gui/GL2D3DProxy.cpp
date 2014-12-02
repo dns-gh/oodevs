@@ -10,6 +10,7 @@
 #include "clients_gui_pch.h"
 #include "GL2D3DProxy.h"
 
+#include "EntityLayer.h"
 #include "GL3DWidget.h"
 #include "GLOptions.h"
 #include "GL2D3DProxy.h"
@@ -202,12 +203,17 @@ const T_LayersVector& GL2D3DProxy::GetLayers() const
     return layers_;
 }
 
-bool GL2D3DProxy::IsInAReadOnlyLayer( const kernel::GraphicalEntity_ABC& selectable ) const
+T_Layer GL2D3DProxy::GetLayer( const T_LayerFunctor& functor ) const
 {
     for( auto it = layers_.begin(); it != layers_.end(); ++it )
-        if( ( *it )->IsIn( selectable ) )
-            return ( *it )->IsReadOnly();
-    return false;
+    {
+        const auto& layer = *it;
+        if( auto subLayer = layer->GetSubLayer( functor ) )
+            return subLayer;
+        if( functor( layer ) )
+            return layer;
+    }
+    return 0;
 }
 
 bool GL2D3DProxy::MoveBelow( const T_Layer& lhs,

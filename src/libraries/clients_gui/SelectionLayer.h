@@ -3,7 +3,7 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2012 MASA Group
+// Copyright (c) 2014 MASA Group
 //
 // *****************************************************************************
 
@@ -11,53 +11,58 @@
 #define __gui_SelectionLayer_h_
 
 #include "Layer.h"
+#include "clients_kernel/SafePointer.h"
+#include <tools/SelectionObserver_ABC.h>
 
 namespace kernel
 {
     class Controllers;
+    class Entity_ABC;
 }
 
 namespace gui
 {
+    class ColorStrategy_ABC;
+
 // =============================================================================
 /** @class  SelectionLayer
     @brief  SelectionLayer
 */
 // Created: JSR 2012-05-23
 // =============================================================================
-class SelectionLayer : public Layer2D
+class SelectionLayer : public Layer
+                     , public tools::SelectionObserver< kernel::Entity_ABC >
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             SelectionLayer( kernel::Controllers& controllers, GLView_ABC& tools );
+             SelectionLayer( kernel::Controllers& controllers,
+                             GLView_ABC& tools,
+                             ColorStrategy_ABC& strategy );
     virtual ~SelectionLayer();
     //@}
 
-    //! @name Operations
+    //! @name Layer
     //@{
-    virtual void Paint( const geometry::Rectangle2f& viewport );
+    virtual void Paint( Viewport_ABC& viewport );
     virtual void Reset();
     //@}
 
 private:
-    //! @name Helpers
+    //! @name SelectionObserver
     //@{
-    virtual bool HandleMousePress( QMouseEvent* event, const geometry::Point2f& point );
-    virtual bool HandleMouseRelease( QMouseEvent* event, const geometry::Point2f& point );
-    virtual bool HandleMouseMove ( QMouseEvent* event, const geometry::Point2f& point );
+    virtual void NotifySelected( const kernel::Entity_ABC* element );
     //@}
 
 private:
     //! @name Member data
     //@{
-    bool displaying_;
-    bool firstPointSet_;
-    geometry::Point2f topLeft_;
-    geometry::Point2f bottomRight_;
+    ColorStrategy_ABC& strategy_;
+    kernel::SafePointer< kernel::Entity_ABC > selected_;
+    T_Layer layer_;
     //@}
 };
 
-}
+} //! namespace gui
 
 #endif // __gui_SelectionLayer_h_
