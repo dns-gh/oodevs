@@ -40,7 +40,7 @@ LoggerPlugin::LoggerPlugin( const dispatcher::Model_ABC& model, const kernel::St
     : sessionConfig_( config )
     , filename_    ( config.BuildSessionChildFile( "Messages.log" ) )
     , resolver_    ( model )
-    , factory_     ( resolver_, objectTypes_, objectTypes_, 0 )
+    , factory_     ( resolver_, objectTypes_, objectTypes_ )
     , model_       ( model )
     , staticModel_ ( staticModel )
     , services_    ( services )

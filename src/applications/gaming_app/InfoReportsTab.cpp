@@ -17,11 +17,11 @@
 // -----------------------------------------------------------------------------
 InfoReportsTab::InfoReportsTab( QTabWidget* parent, kernel::Controllers& controllers, gui::DisplayExtractor& extractor,
                                 const ReportFactory& factory, Publisher_ABC& publisher, ReportsModel& model,
-                                const AgentsModel& agents )
+                                const AgentsModel& agents, const kernel::Time_ABC& time )
     : Q3VBox( parent, "InfoReportsTab" )
 {
     setMargin( 0 );
-    reports_ = new ReportListView( this, controllers, extractor, factory, publisher, model, agents );
+    reports_ = new ReportListView( this, controllers, extractor, factory, publisher, model, agents, time );
     reports_->setHeaderHidden( true );
 }
 

@@ -24,13 +24,13 @@
 // Name: StaticModel constructor
 // Created: AGE 2006-08-01
 // -----------------------------------------------------------------------------
-StaticModel::StaticModel( kernel::Controllers& controllers, const RcEntityResolver_ABC& rcResolver, const kernel::Time_ABC& simulation )
+StaticModel::StaticModel( kernel::Controllers& controllers, const RcEntityResolver_ABC& rcResolver )
     : kernel::StaticModel()
     , controllers_  ( controllers )
     , indicators_   ( *new indicators::Primitives() )
     , gaugeTypes_   ( *new indicators::GaugeTypes() )
     , drawings_     ( *new gui::DrawingTypes( controllers_.controller_ ) )
-    , reportFactory_( *new ReportFactory( rcResolver, objectTypes_, objectTypes_, &simulation ) )
+    , reportFactory_( *new ReportFactory( rcResolver, objectTypes_, objectTypes_ ) )
 {
     // NOTHING
 }

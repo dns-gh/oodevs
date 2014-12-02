@@ -15,7 +15,6 @@
 namespace kernel
 {
     class Entity_ABC;
-    class Time_ABC;
 }
 
 namespace sword
@@ -34,7 +33,7 @@ class Trace : public Report
 public:
     //! @name Constructor/Destructor
     //@{
-             Trace( const kernel::Entity_ABC& agent, const kernel::Time_ABC& simulation, const sword::Trace& input );
+             Trace( const kernel::Entity_ABC& agent, const QDateTime& time, const sword::Trace& input );
     virtual ~Trace();
     //@}
 

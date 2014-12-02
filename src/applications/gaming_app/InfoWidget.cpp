@@ -21,6 +21,7 @@
 #include "InfoSummariesWidget.h"
 #include "clients_gui/DisplayExtractor.h"
 #include "gaming/Model.h"
+#include "gaming/Simulation.h"
 #include "gaming/StaticModel.h"
 #include "icons.h"
 
@@ -57,7 +58,7 @@ InfoWidget::InfoWidget( QWidget* parent,
     QTabWidget* tabs = new QTabWidget( this );
     tabs->setTabShape( QTabWidget::Triangular );
     reports_ = new InfoReportsTab( tabs, controllers, extractor, model.static_.reportFactory_, model.publisher_,
-        model.reportsModel_, model.agents_ );
+        model.reportsModel_, model.agents_, simulation );
     tabs->addTab( reports_, MAKE_PIXMAP( msg ), tr( "Reports" ) );
     conflicts_ = new InfoConflictsTab( tabs, controllers, extractor, converter );
     tabs->addTab( conflicts_, MAKE_PIXMAP( conflict ), tr( "Conflicts" ) );

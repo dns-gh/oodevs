@@ -8,15 +8,10 @@
 // *****************************************************************************
 
 #include "Trace.h"
-#include "clients_kernel/Time_ABC.h"
 #include "protocol/Simulation.h"
 
-//-----------------------------------------------------------------------------
-// Name: Trace constructor
-// Created: NLD 2002-07-16
-//-----------------------------------------------------------------------------
-Trace::Trace( const kernel::Entity_ABC& agent, const kernel::Time_ABC& simulation, const sword::Trace& input )
-    : Report( agent, 0, Report::eTrace, QString( input.message().c_str() ), simulation.GetDateTime() )
+Trace::Trace( const kernel::Entity_ABC& agent, const QDateTime& time, const sword::Trace& input )
+    : Report( agent, 0, Report::eTrace, QString( input.message().c_str() ), time )
 {
     // NOTHING
 }

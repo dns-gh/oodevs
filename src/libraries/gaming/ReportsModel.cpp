@@ -14,6 +14,7 @@
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Population_ABC.h"
 #include "clients_kernel/Profile_ABC.h"
+#include "clients_kernel/Time_ABC.h"
 #include "protocol/ServerPublisher_ABC.h"
 #include "protocol/Protocol.h"
 
@@ -32,10 +33,11 @@ namespace
 }
 
 ReportsModel::ReportsModel( Publisher_ABC& publisher, AgentsModel& agents,
-                            const kernel::Profile_ABC& profile )
+                            const kernel::Profile_ABC& profile, const kernel::Time_ABC& time )
     : publisher_ ( publisher )
     , agents_    ( agents )
     , profile_   ( profile )
+    , time_      ( time )
     , tick_      ( 0 )
     , context_   ( 0 )
 {
@@ -58,12 +60,16 @@ ReportsModel::ReportsModel( Publisher_ABC& publisher, AgentsModel& agents,
     publisher.Register( Publisher_ABC::T_SimHandler( [&]( const sword::SimToClient& message, bool /*ack*/ )
     {
         if( message.message().has_report() )
-            AddReport( message.message().report() );
+        {
+            const auto& report = message.message().report();
+            const Message msg( GetId( report.source() ), report, time_.GetDateTime() );
+            AddMessage( msg );
+        }
         else if( message.message().has_trace() )
         {
             const auto& trace = message.message().trace();
-            if( const auto id = GetId( trace.source() ) )
-                traces_[ id ].push_back( trace );
+            const Message msg( GetId( trace.source() ), trace, time_.GetDateTime() );
+            AddMessage( msg );
         }
     } ) );
 }
@@ -76,8 +82,7 @@ ReportsModel::~ReportsModel()
 namespace
 {
     const unsigned int maxCount = 50u;
-    const std::vector< sword::Report > emptyReports;
-    const std::vector< sword::Trace > emptyTraces;
+    const std::vector< ReportsModel::Message > emptyMessages;
 }
 
 void ReportsModel::SendRequest( int context, unsigned int report )
@@ -95,25 +100,26 @@ void ReportsModel::SendRequest( int context, unsigned int report )
 void ReportsModel::FillReports( const sword::ListReportsAck& ack )
 {
     for( int i = 0; i < ack.reports_size(); ++i )
-        AddReport( ack.reports( i ) );
+    {
+        const auto& report = ack.reports( i );
+        if( const auto id = GetId( report.source() ) )
+        {
+            auto& container = messages_[ id ];
+            const Message msg( GetId( report.source() ), report, time_.GetDateTime() );
+            container.insert( container.begin(), msg );
+            AddUnreadReports( id );
+        }
+    }
     if( ack.has_next_report() )
         SendRequest( context_, ack.next_report() );
 }
 
-const ReportsModel::T_Reports& ReportsModel::GetReports( unsigned int entity ) const
+const ReportsModel::T_Messages& ReportsModel::GetReports( unsigned int entity ) const
 {
-    auto it = reports_.find( entity );
-    if( it != reports_.end() )
+    auto it = messages_.find( entity );
+    if( it != messages_.end() )
         return it->second;
-    return emptyReports;
-}
-
-const ReportsModel::T_Traces& ReportsModel::GetTraces( unsigned int entity ) const
-{
-    auto it = traces_.find( entity );
-    if( it != traces_.end() )
-        return it->second;
-    return emptyTraces;
+    return emptyMessages;
 }
 
 bool ReportsModel::HaveUnreadReports( unsigned int entity ) const
@@ -128,25 +134,31 @@ size_t ReportsModel::UnreadReports() const
 
 void ReportsModel::Clear( unsigned int entity )
 {
-    reports_.erase( entity );
-    ClearTraces( entity );
+    messages_.erase( entity );
 }
 
 void ReportsModel::ClearTraces( unsigned int entity )
 {
-    traces_.erase( entity );
+    auto it = messages_.find( entity );
+    if( it != messages_.end() )
+    {
+        auto& list = it->second;
+        for( auto msg = list.begin(); msg != list.end(); )
+        {
+            if( msg->trace_.IsInitialized() )
+                msg = list.erase( msg );
+            else
+                ++msg;
+        }
+    }
 }
 
-void ReportsModel::AddReport( const sword::Report& report )
+void ReportsModel::AddUnreadReports( unsigned int id )
 {
-    if( const auto id = GetId( report.source() ) )
-    {
-        reports_[ id ].push_back( report );
-        if( !HaveUnreadReports( id ) )
-            if( const auto* entity = agents_.FindAllAgent( id ) )
-                if( profile_.IsVisible( *entity ) )
-                    entities_.push_back( id );
-    }
+    if( !HaveUnreadReports( id ) )
+        if( const auto* entity = agents_.FindAllAgent( id ) )
+            if( profile_.IsVisible( *entity ) )
+                entities_.push_back( id );
 }
 
 void ReportsModel::ReadReports()
@@ -178,7 +190,14 @@ void ReportsModel::UpdateUnreadReports()
 
 void ReportsModel::Purge()
 {
-    reports_.clear();
-    traces_.clear();
+    messages_.clear();
     entities_.clear();
+}
+
+void ReportsModel::AddMessage( const Message& message )
+{
+    if( !message.entity_ )
+        return;
+    messages_[ message.entity_ ].push_back( message );
+    AddUnreadReports( message.entity_ );
 }

@@ -122,7 +122,7 @@ Model::Model( kernel::Controllers& controllers, const StaticModel& staticModel, 
     , events_                  ( *new gui::EventsModel( eventFactory_, controllers.controller_ ) )
     , timelinePublisher_       ( *new gui::TimelinePublisher() )
     , pathfinds_               ( *new PathfindModel( controllers.controller_, actions_, agents_, agents_, agents_, teams_, staticModel.coordinateConverter_, profile ) )
-    , reportsModel_            ( *new ReportsModel( publisher, agents_, profile ) )
+    , reportsModel_            ( *new ReportsModel( publisher, agents_, profile, simulation ) )
 {
     symbolsFactory_.Load( config );
     controllers_.Register( *this );

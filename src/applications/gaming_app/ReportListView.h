@@ -12,6 +12,7 @@
 
 #include "clients_kernel/SafePointer.h"
 #include "gaming/AgentSelectionObserver.h"
+#include "gaming/ReportsModel.h"
 #include "reports/Report.h"
 #include <tools/Observer_ABC.h>
 
@@ -24,6 +25,7 @@ namespace gui
 namespace kernel
 {
     class Controllers;
+    class Time_ABC;
 }
 
 class AgentsModel;
@@ -47,7 +49,7 @@ public:
     //@{
              ReportListView( QWidget* pParent, kernel::Controllers& controllers, gui::DisplayExtractor& extractor,
                              const ReportFactory& factory, Publisher_ABC& publisher, ReportsModel& model,
-                             const AgentsModel& agents );
+                             const AgentsModel& agents, const kernel::Time_ABC& time );
     virtual ~ReportListView();
     //@}
 
@@ -75,34 +77,28 @@ private:
     //! @name Helpers
     //@{
     virtual void NotifySelected( const kernel::Entity_ABC* element );
-
+    void CreateItem( const ReportsModel::Message& message, const kernel::Entity_ABC& entity, bool unreadMessages );
     template< typename T >
-    void CreateItem( const T& message, const kernel::Entity_ABC& entity,
-        const std::function< boost::shared_ptr< Report >( const kernel::Entity_ABC&, const T& fun ) >& func,
-        bool unreadMessages );
-    void CreateReport( const sword::Report& report );
-    void CreateTrace( const sword::Trace& trace );
+    void Create( const T& report );
     void FillReports();
     void AddReports();
-    void SetFilterRegexp();
     void AddMenuItem( QMenu* menu, const QString& name, Report::E_Type type ) const;
     //@}
 
 private:
     //! @name Member data
     //@{
-    static unsigned int sortOrder_;
     kernel::Controllers& controllers_;
     gui::DisplayExtractor& extractor_;
     unsigned int selected_;
     QTimer* readTimer_;
     QStandardItemModel reportModel_;
-    QSortFilterProxyModel* proxyFilter_;
     gui::LinkItemDelegate* delegate_;
     std::set< Report::E_Type > toDisplay_;
     const ReportFactory& factory_;
     ReportsModel& model_;
     const AgentsModel& agents_;
+    const kernel::Time_ABC& time_;
     //@}
 };
 

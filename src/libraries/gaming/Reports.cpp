@@ -44,9 +44,11 @@ void Reports::DisplayInTooltip( Displayer_ABC& displayer ) const
 {
     unsigned int displayed = 0;
     const auto& reports = reportsModel_.GetReports( entity_.GetId() );
-    for( auto it = reports.begin(); it != reports.end() && displayed++ < 5; ++it )
-    {
-        const auto report = reportFactory_.CreateReport( entity_, *it );
-        report->DisplayInTooltip( displayer );
-    }
+    for( auto it = reports.rbegin(); it != reports.rend() && displayed < 5; ++it )
+        if( it->report_.IsInitialized() )
+        {
+            auto report = reportFactory_.CreateReport( entity_, it->report_ );
+            report->DisplayInTooltip( displayer );
+            ++displayed;
+        }
 }
