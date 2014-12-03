@@ -691,17 +691,15 @@ func (s *TestSuite) TestReplayListReports(c *C) {
 	// Create reports
 	CreateReports(c, client)
 
-	// Pause sim after 4 tick
-	tick, delay, err := client.Resume(4)
-	c.Assert(err, IsNil)
+	// Wait 2 ticks
+	tick := client.Model.GetData().Tick
+	client.Model.WaitTicks(2)
 
 	// Create reports
 	CreateReports(c, client)
 
-	tickBis := tick + delay
-	c.Assert(tickBis, Greater, tick)
-
-	client.Model.WaitUntilTickEnds(tickBis)
+	_, err := client.Pause()
+	c.Assert(err, IsNil)
 
 	// Get all reports
 	allReports, _, err := client.ListReports(math.MaxInt32, 0)
