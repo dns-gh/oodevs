@@ -1108,6 +1108,7 @@ void GL2DWidget::PickGL()
     makeCurrent();
     SetCurrentView( this );
     ApplyOptions();
+    ComputeData();
     glDisable( GL_POLYGON_SMOOTH );
     glDisable( GL_LINE_SMOOTH );
     for( auto it = passes_.begin(); it != passes_.end(); ++it )
