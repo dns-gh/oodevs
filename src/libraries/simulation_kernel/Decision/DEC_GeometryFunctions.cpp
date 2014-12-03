@@ -1453,7 +1453,7 @@ bool DEC_GeometryFunctions::IsPointInCity( const MT_Vector2D& point )
 // Name: DEC_GeometryFunctions::IsPointInObject
 // Created: GGE 2013-01-29
 // -----------------------------------------------------------------------------
-bool DEC_GeometryFunctions::IsPointInObject( DEC_Decision_ABC& callerAgent, const MT_Vector2D& point, const std::string& capacity, int isFriend )
+bool DEC_GeometryFunctions::IsPointInObject( DEC_Decision_ABC& callerAgent, const MT_Vector2D& point, const std::string& capacity, int isFriend, const std::string& expectedType )
 { 
     TER_Object_ABC::T_ObjectVector objectsColliding;
     TER_World::GetWorld().GetObjectManager().GetListAt( point, objectsColliding );
@@ -1462,8 +1462,14 @@ bool DEC_GeometryFunctions::IsPointInObject( DEC_Decision_ABC& callerAgent, cons
         const MIL_Object_ABC& object =  static_cast< MIL_Object_ABC& >( **itObject );
         const MIL_ObjectType_ABC& type = object.GetType();
         const MIL_Army_ABC* army = object.GetArmy();
-        if( CapacityRetriever::RetrieveCapacity( type, capacity ) != 0 && army && army->IsAnEnemy( callerAgent.GetPion().GetArmy() ) == isFriend )
-             return true;
+        bool friendMatch = army && army->IsAnEnemy( callerAgent.GetPion().GetArmy() ) == isFriend;
+        if( !friendMatch )
+            return false;
+        if( !capacity.empty() && !CapacityRetriever::RetrieveCapacity( type, capacity ) )
+            return false;
+        if( !expectedType.empty() && type.GetName() != expectedType )
+            return false;
+        return true;
     }
     return false;
 }
