@@ -31,8 +31,9 @@ InfoDock::InfoDock( QWidget* parent,
     : gui::RichDockWidget( controllers, parent, "info" )
 {
     setObjectName( "info" );
-    setWidget( new InfoWidget( this, controllers_, profile, icons, itemFactory, extractor,
-        converter, model, simulation, simulationController, unitStateDialog ) );
+    widget_ = new InfoWidget( this, controllers_, profile, icons, itemFactory, extractor,
+        converter, model, simulation, simulationController, unitStateDialog );
+    setWidget( widget_ );
     setCaption( tools::translate( "InfoDock", "Info" ) );
     hide();
 }
@@ -44,4 +45,9 @@ InfoDock::InfoDock( QWidget* parent,
 InfoDock::~InfoDock()
 {
     // NOTHING
+}
+
+void InfoDock::Purge()
+{
+    widget_->Purge();
 }

@@ -10,7 +10,6 @@
 #include "gaming_app_pch.h"
 #include "InfoConflictsTab.h"
 #include "FireResultListView.h"
-#include "gaming/Fires.h"
 
 // -----------------------------------------------------------------------------
 // Name: InfoConflictsTab constructor
@@ -19,12 +18,9 @@
 InfoConflictsTab::InfoConflictsTab( QTabWidget* parent, kernel::Controllers& controllers,
     gui::DisplayExtractor& extractor, const kernel::KnowledgeConverter_ABC& converter )
     : Q3VBox( parent, "InfoConflictsTab" )
-    , controllers_( controllers )
-    , parent_( parent )
 {
     setMargin( 0 );
-    new FireResultListView( this, controllers, extractor, converter );
-    controllers_.Register( *this );
+    list_ = new FireResultListView( this, controllers, extractor, converter );
 }
 
 // -----------------------------------------------------------------------------
@@ -33,14 +29,10 @@ InfoConflictsTab::InfoConflictsTab( QTabWidget* parent, kernel::Controllers& con
 // -----------------------------------------------------------------------------
 InfoConflictsTab::~InfoConflictsTab()
 {
-    controllers_.Unregister( *this );
+    // NOTHING
 }
 
-// -----------------------------------------------------------------------------
-// Name: InfoConflictsTab::NotifySelected
-// Created: SBO 2007-05-14
-// -----------------------------------------------------------------------------
-void InfoConflictsTab::NotifySelected( const kernel::Entity_ABC* /*entity*/ )
+void InfoConflictsTab::Purge()
 {
-    // NOTHING
+    list_->Purge();
 }

@@ -351,3 +351,10 @@ void FireResultListView::NotifyUpdated( const kernel::Entity_ABC& entity )
                         targetItem->setData( extractor_.GetDisplayName( static_cast< const kernel::Population_ABC& >( entity ) ), Qt::DisplayRole );
     }
 }
+
+void FireResultListView::Purge()
+{
+    model_[ 0 ]->removeRows( 0, model_[ 0 ]->rowCount() );
+    model_[ 1 ]->removeRows( 0, model_[ 1 ]->rowCount() );
+    explosions_.clear();
+}

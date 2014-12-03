@@ -243,10 +243,10 @@ DockContainer::DockContainer( QMainWindow* parent,
     }
     // Info
     {
-        gui::RichDockWidget* infoWnd = new InfoDock( parent, controllers, profile, entitySymbols, factory, extractor, converter,
-                                                     model, simulation, simulationController, unitStateDialog );
-        infoWnd->SetModes( eModes_Default, eModes_None, true );
-        parent->addDockWidget( Qt::BottomDockWidgetArea, infoWnd );
+        infoWnd_ = new InfoDock( parent, controllers, profile, entitySymbols, factory, extractor, converter,
+                                 model, simulation, simulationController, unitStateDialog );
+        infoWnd_->SetModes( eModes_Default, eModes_None, true );
+        parent->addDockWidget( Qt::BottomDockWidgetArea, infoWnd_ );
     }
 }
 
@@ -267,6 +267,7 @@ DockContainer::~DockContainer()
 void DockContainer::Purge()
 {
     orbatDockWidget_->Purge();
+    infoWnd_->Purge();
 }
 
 // -----------------------------------------------------------------------------
