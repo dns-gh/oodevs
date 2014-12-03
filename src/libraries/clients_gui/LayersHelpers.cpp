@@ -123,7 +123,7 @@ const layers::Descriptor descriptors_[] = {
     { eLayerTypes_Formations,             "main",                             true,   false,
       eModes_All,                         eModes_Terrain | eModes_Itinerary,  eModes_None,
       T_LayerTypesVector() },                                        
-    { eLayerTypes_Ghosts,                 "main",                             false,  false,
+    { eLayerTypes_Ghosts,                 "main",                             true,   false,
       eModes_AllPrepare,                  eModes_Terrain | eModes_Itinerary,  eModes_LivingArea,
       T_LayerTypesVector() },
     { eLayerTypes_Grid,                   "main",                             false,  true,
