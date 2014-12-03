@@ -179,7 +179,7 @@ void WeaponRangeLayer::Draw( const kernel::Entity_ABC& entity,
         return;
     // SelectColor actually controls the result of ShouldDisplay
     strategy_.SelectColor( static_cast< const kernel::Agent_ABC& >( entity ) );
-    const auto options = view_.GetCurrentOptions();
+    const auto& options = view_.GetCurrentOptions();
     if( !options.ShouldDisplay( "WeaponRanges" ) )
         return;
     if( const Weapons* weapons = entity.Retrieve< Weapons >() )
