@@ -42,17 +42,18 @@ void GLSymbols::PrintApp6( const std::string& symbol, const std::string& style, 
     auto& node = symbols_[ key ];
     if( create )
     {
-        node.first.reset( Load( symbol, 10 ) );
-        node.second.reset( Load( symbol, 100 ) );
-        if( !node.first || !node.second )
+        // Hard coded LOD. This value could be linked to the zoom value but not to the
+        // viewport's width, since we use "DrawApp6SymbolFixedSize" for entities, with
+        // a fixed viewport.
+        node.reset( Load( symbol, 100 ) );
+        if( !node )
         {
             if( symbol.find( "symbols/" ) == 0 )
                 notFoundSymbols_.insert( symbol.substr( 8, symbol.size() - 8 ) );
             MT_LOG_ERROR_MSG( "Could not open svg symbol '" << symbol << ".svg', and cannot find the closest symbol." );
         }
     }
-    const auto& renderNode = viewport.Width() > 30000 ? node.second : node.first;  // $$$$ AGE 2006-09-11: hardcoded lod
-    renderer_.Render( renderNode, style, viewport, vWidth, vHeight, pickingMode );
+    renderer_.Render( node, style, viewport, vWidth, vHeight, pickingMode );
 }
 
 svg::Node_ABC* GLSymbols::Load( const std::string& symbol, float lod ) const

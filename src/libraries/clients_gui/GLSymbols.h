@@ -55,8 +55,7 @@ private:
 
 private:
     typedef std::pair< std::string, std::string > T_SymbolKey;
-    typedef std::pair< std::shared_ptr< svg::Node_ABC >, std::shared_ptr< svg::Node_ABC > > T_LodSymbol;
-    typedef std::map< T_SymbolKey, T_LodSymbol > T_Symbols;
+    typedef std::map< T_SymbolKey, std::shared_ptr< svg::Node_ABC > > T_Symbols;
 
 private:
     SvglRenderer& renderer_;
