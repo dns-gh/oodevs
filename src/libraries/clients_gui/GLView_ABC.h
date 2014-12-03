@@ -398,7 +398,7 @@ public:
     virtual void DrawLines( const T_PointVector& points ) const = 0;
 
     virtual void DrawPolygon( const T_PointVector& points ) const = 0;
-    virtual void DrawRectangle( const T_PointVector& points ) const = 0;
+    virtual void DrawRectangle( const T_PointVector& points, bool fill ) const = 0;
     virtual void DrawSelectedPolygon( const T_PointVector& points ) const = 0;
     virtual void DrawShapeText( const QImage& image,
                                 const geometry::Point2f& where ) const = 0;

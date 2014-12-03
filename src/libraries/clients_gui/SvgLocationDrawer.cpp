@@ -221,7 +221,13 @@ void SvgLocationDrawer::VisitCurve( const T_PointVector& points )
 void SvgLocationDrawer::VisitText( const QString& text, const QFont& font, const geometry::Point2f& point )
 {
     if( tools_->GetPickingSelector().IsPickingMode() )
+    {
+        glColor4f( static_cast< GLfloat >( color_.redF() ),
+                   static_cast< GLfloat >( color_.greenF() ),
+                   static_cast< GLfloat >( color_.blueF() ),
+                   static_cast< GLfloat >( color_.alphaF() ) );
         tools::DrawPickingText( text, font, point, *tools_ );
+    }
     else
     {
         if( imageText_.isNull() || text_ != text || font_ != font || colorChanged_ )

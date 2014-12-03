@@ -62,7 +62,7 @@ void SimpleLocationDrawer::VisitLines( const T_PointVector& points )
 void SimpleLocationDrawer::VisitRectangle( const T_PointVector& points )
 {
     if( !points.empty() )
-        tools_.DrawRectangle( points );
+        tools_.DrawRectangle( points, false );
 }
 
 // -----------------------------------------------------------------------------

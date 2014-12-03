@@ -320,12 +320,12 @@ void GL2DWidget::DrawLines( const T_PointVector& points ) const
     }
 }
 
-void GL2DWidget::DrawRectangle( const T_PointVector& points ) const
+void GL2DWidget::DrawRectangle( const T_PointVector& points, bool fill ) const
 {
     if( points.size() > 1 )
     {
         glPushAttrib( GL_LINE_BIT );
-        glBegin( GL_LINE_LOOP );
+        glBegin( fill ? GL_QUADS : GL_LINE_LOOP );
             glVertex2f( points.front().X(), points.front().Y() );
             glVertex2f( points.front().X(), points.back().Y() );
             glVertex2f( points.back().X(), points.back().Y() );
@@ -346,11 +346,13 @@ void GL2DWidget::DrawPolygon( const T_PointVector& points ) const
     glStencilOp( GL_KEEP, GL_INVERT, GL_INVERT );
     glClear( GL_STENCIL_BUFFER_BIT );
     glVertexPointer( 2, GL_FLOAT, 0, (const void*)(&points.front()) );
-    float color[4];
-    glGetFloatv( GL_CURRENT_COLOR, color );
     if( !GetPickingSelector().IsPickingMode() )
-        color[3] *= 0.5;
-    glColor4fv( color );
+    {
+        float color[ 4 ];
+        glGetFloatv( GL_CURRENT_COLOR, color );
+        color[ 3 ] *= 0.5;
+        glColor4fv( color );
+    }
     glDrawArrays( GL_TRIANGLE_FAN, 0, static_cast< GLsizei >( points.size() ) );
     glPopAttrib();
 }

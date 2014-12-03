@@ -131,14 +131,9 @@ void tools::DrawPickingText( const QString& text, const QFont& font, const geome
     QStringList list = QStringList::split( '\n', text, true );
     const auto height = metrics.height() * list.size();
     const auto width = metrics.boundingRect( text ).width();
-    const geometry::Rectangle2f box( geometry::Point2f( point.X(), point.Y() - height * tools.Pixels() ),
-                                     geometry::Point2f( point.X() + width * tools.Pixels(), point.Y() ) );
-    const T_PointVector polygon = boost::assign::list_of( geometry::Point2f( box.Left(), box.Top() ) )
-                                                     ( geometry::Point2f( box.Right(), box.Top() ) )
-                                                     ( geometry::Point2f( box.Right(), box.Bottom() ) )
-                                                     ( geometry::Point2f( box.Left(), box.Bottom() ) )
-                                                     ( geometry::Point2f( box.Left(), box.Top() ) );
-    tools.DrawPolygon( polygon );
+    const T_PointVector polygon = boost::assign::list_of( geometry::Point2f( point.X(), point.Y() - height * tools.Pixels() ) )
+                                                        ( geometry::Point2f( point.X() + width * tools.Pixels(), point.Y() ) );
+    tools.DrawRectangle( polygon, true );
 }
 
 QWidget* tools::AddGroupBoxWidget( const QString& title,

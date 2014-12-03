@@ -272,7 +272,7 @@ void GL3DWidget::DrawLines( const T_PointVector& points ) const
         DrawLine( *it, *(it+1) );
 }
 
-void GL3DWidget::DrawRectangle( const T_PointVector& /*points*/ ) const
+void GL3DWidget::DrawRectangle( const T_PointVector& /*points*/, bool /*fill*/ ) const
 {
     //SLG TODO
 }

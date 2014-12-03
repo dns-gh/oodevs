@@ -226,9 +226,9 @@ void GLProxyBase::DrawLines( const T_PointVector& points ) const
     GetCurrentView().DrawLines( points );
 }
 
-void GLProxyBase::DrawRectangle( const T_PointVector& points ) const
+void GLProxyBase::DrawRectangle( const T_PointVector& points, bool fill ) const
 {
-    GetCurrentView().DrawRectangle( points );
+    GetCurrentView().DrawRectangle( points, fill );
 }
 
 void GLProxyBase::DrawPolygon( const T_PointVector& points ) const
