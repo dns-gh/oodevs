@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" version="4.8.2">
+	<xs:include schemaLocation="tools.xsd"/>
+	<xs:element name="fires">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="cell-size">
+					<xs:complexType>
+						<xs:attribute name="value" type="xs:positiveInteger" use="required"/>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="fire" minOccurs="0" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="extinguisher-agents">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="extinguisher-agent" minOccurs="0" maxOccurs="unbounded">
+											<xs:complexType>
+												<xs:attribute name="heat-decrease-rate" type="xs:nonNegativeInteger" use="required"/>
+												<xs:attribute name="agent" type="xs:string" use="required"/>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="weather-effects">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="weather-effect" minOccurs="0" maxOccurs="unbounded">
+											<xs:complexType>
+												<xs:attribute name="heat-decrease-rate" use="required"/>
+												<xs:attribute name="weather" type="xs:string" use="required"/>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="injuries">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="injury" minOccurs="0" maxOccurs="unbounded">
+											<xs:complexType>
+												<xs:attribute name="type" type="T_WoundType" use="required"/>
+												<xs:attribute name="percentage" type="T_ZeroToOneDouble" use="required"/>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="urban-modifiers">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="urban-modifier" minOccurs="0" maxOccurs="unbounded">
+											<xs:complexType>
+												<xs:attribute name="material-type" type="xs:string" use="required"/>
+												<xs:attribute name="value" type="xs:double" use="required"/>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="surfaces" minOccurs="0">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="surface" minOccurs="0" maxOccurs="unbounded">
+											<xs:complexType>
+												<xs:attribute name="type" type="xs:string" use="required"/>
+												<xs:attribute name="ignition-threshold" type="xs:nonNegativeInteger" use="required"/>
+												<xs:attribute name="max-combustion-energy" type="xs:nonNegativeInteger" use="required"/>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+						<xs:attribute name="name" type="xs:string" use="required"/>
+						<xs:attribute name="initial-heat" type="xs:nonNegativeInteger" use="required"/>
+						<xs:attribute name="max-heat" type="xs:nonNegativeInteger" use="required"/>
+						<xs:attribute name="increase-rate" type="xs:nonNegativeInteger" use="required"/>
+						<xs:attribute name="decrease-rate" type="xs:nonNegativeInteger" use="required"/>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="model-version" type="T_Version"/>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

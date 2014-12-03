@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" version="4.8.2">
+	<xs:include schemaLocation="./tools.xsd"/>
+	<xs:element name="resource-networks">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Defines resource networks types.</xs:documentation>
+			<xs:documentation xml:lang="fr">Definit les types de réseaux de ressources.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence minOccurs="0" maxOccurs="unbounded">
+				<xs:element name="resource-network">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Defines a particular resource network. Name must be unique.</xs:documentation>
+						<xs:documentation xml:lang="fr">Définit un type particulier de réseau de ressource. Le nom doit être unique.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="resource">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">Resource identifier for this network.</xs:documentation>
+									<xs:documentation xml:lang="fr">identifiant pour ce réseau.</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:attribute name="id" type="xs:nonNegativeInteger" use="required"/>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="color">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">Display color for this network.</xs:documentation>
+									<xs:documentation xml:lang="fr">Couleur d'affichage pour ce réseau.</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:attribute name="rgb" type="T_ColorRGB" use="required"/>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="defaults">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">Default values for this network.</xs:documentation>
+									<xs:documentation xml:lang="fr">Valeurs par défaut pour ce réseau.</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:attribute name="production" type="xs:nonNegativeInteger" use="required"/>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+						<xs:attribute name="name" type="xs:string" use="required"/>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="model-version" type="T_Version"/>			
+		</xs:complexType>
+		<xs:unique name="NetworkIdUnicity">
+			<xs:selector xpath="resource-network"/>
+			<xs:field xpath="@id"/>
+		</xs:unique>
+	</xs:element>
+</xs:schema>

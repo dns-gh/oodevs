@@ -219,4 +219,5 @@
   <migration from="5.5.2" to="6.0.0">
     <upgrade schema="schemas/5.5.2/physical/Decisional.xsd" apply="schemas/6.0.0/xsl/decisional_5.5.1-6.0.0.xsl"/>
   </migration>
+  <migration from="6.0.0" to="6.0.1"/>
 </migrations>

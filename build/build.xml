@@ -23,7 +23,7 @@
     <property name="www.dir" value="${src.dir}/masa/timeline/www"/>
 
     <property name="version.project" value="6.0"/>
-    <property name="version.major" value="6.0.0"/>
+    <property name="version.major" value="6.0.1"/>
     <property name="version.version" value="${version.major}.${git.revision}.${git.hash}"/>
     <property name="unicode.extension" value=" ゑ"/>
 
@@ -977,7 +977,8 @@
             <arg value="--exclude=SimToClient.Content.UnitMagicActionAck.UnitActionAck.ErrorCode"/>
         </compare-proto>
         <compare-proto olddir="${proto.dir}/5.5.1" newdir="${proto.dir}/5.5.2"/>
-        <compare-proto olddir="${proto.dir}/5.5.2" newdir="${src.dir}/libraries/protocol/proto/"/>
+        <compare-proto olddir="${proto.dir}/5.5.2" newdir="6.0.1"/>
+        <compare-proto olddir="${proto.dir}/6.0.1" newdir="${src.dir}/libraries/protocol/proto/"/>
     </target>
 
     <target name="checkmigrations" description="check migrations.xml consistency">

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" version="4.8.2">
+    <xs:include schemaLocation="tools.xsd"/>
+	<xs:element name="natures">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">TODO</xs:documentation>
+			<xs:documentation xml:lang="fr">Chaque type de dotation doit être caractérisé par sa nature (liquide / solide / …). Ces natures sont définies dynamiquement.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence minOccurs="0" maxOccurs="unbounded">
+				<xs:element name="nature">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">TODO</xs:documentation>
+						<xs:documentation xml:lang="fr">Définit une nature de dotation</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:attribute name="id" type="xs:nonNegativeInteger" use="required"/>
+						<xs:attribute name="type" type="xs:string" use="required">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">TODO</xs:documentation>
+								<xs:documentation xml:lang="fr">Nom de la nature de dotation</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="model-version" type="T_Version"/>			
+		</xs:complexType>
+		<xs:unique name="NatureIdUnicity">
+			<xs:selector xpath="nature"/>
+			<xs:field xpath="@id"/>
+		</xs:unique>
+	</xs:element>
+</xs:schema>
