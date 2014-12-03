@@ -263,9 +263,9 @@ Menu::Menu( QMainWindow& mainWindow,
     }
 
     menu->insertSeparator();
-    QAction* action = menu->addAction( tr( "Save configuration" ), &glWidgetManager_, SLOT( OnSaveDisplaySettings() ), Qt::CTRL + Qt::Key_S );
+    QAction* action = menu->addAction( tr( "Save configuration" ), &glWidgetManager_, SLOT( OnSaveDisplaySettings() ) );
     AddModdedAction( action, eModes_Default, eModes_All ^ eModes_Default );
-    action = menu->addAction( tr( "Load configuration" ), &glWidgetManager_, SLOT( OnLoadDisplaySettings() ), Qt::CTRL + Qt::Key_O );
+    action = menu->addAction( tr( "Load configuration" ), &glWidgetManager_, SLOT( OnLoadDisplaySettings() ) );
     AddModdedAction( action, eModes_Default, eModes_All ^ eModes_Default );
     menu->insertSeparator();
     action = menu->addAction( tr( "&Preferences..." ), &prefDialog, SLOT( show() ), QKeySequence( Qt::CTRL + Qt::Key_P ) );
