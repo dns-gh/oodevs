@@ -11,6 +11,7 @@
 #define __TaskerWidget_h_
 
 #include "clients_kernel/SafePointer.h"
+#include "tools/SelectionObserver_ABC.h"
 
 namespace kernel
 {
@@ -34,6 +35,7 @@ namespace gui
 class TaskerWidget : public QWidget
                    , public tools::Observer_ABC
                    , public tools::ElementObserver_ABC< kernel::Entity_ABC >
+                   , public tools::SelectionObserver< kernel::Entity_ABC >
 {
     Q_OBJECT
 
@@ -83,10 +85,20 @@ private slots:
     //@}
 
 private:
+    //! @name Helpers
+    //@{
+    void UpdateSymbol() const;
+    //@}
+
     //! @name tools::ElementObserver_ABC< kernel::Entity_ABC > implementation
     //@{
     virtual void NotifyUpdated( const kernel::Entity_ABC& );
     virtual void NotifyDeleted( const kernel::Entity_ABC& );
+    //@}
+
+    //! @name tools::SelectionObserver< kernel::Entity_ABC > implementation
+    //@{
+    virtual void NotifySelected( const kernel::Entity_ABC* element );
     //@}
 
 private:
@@ -95,6 +107,7 @@ private:
     kernel::Controllers& controllers_;
     const gui::EntitySymbols& symbols_;
     const kernel::Entity_ABC* tasker_;
+    const kernel::Entity_ABC* selected_;
 
     gui::RichGroupBox* groupBox_;
     gui::RichLabel* nameLabel_;

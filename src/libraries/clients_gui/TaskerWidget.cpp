@@ -40,6 +40,7 @@ TaskerWidget::TaskerWidget( const QString& objectName,
     : controllers_( controllers )
     , symbols_( symbols )
     , tasker_( 0 )
+    , selected_( 0 )
     , activateButton_( 0 )
     , clearButton_( 0 )
 {
@@ -78,7 +79,7 @@ TaskerWidget::TaskerWidget( const QString& objectName,
     mainLayout->setMargin( 0 );
     mainLayout->addWidget( groupBox_ );
 
-    controllers_.controller_.Register( *this );
+    controllers_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -111,6 +112,22 @@ void TaskerWidget::BlockSignals( bool blocked )
 }
 
 // -----------------------------------------------------------------------------
+// Name: TaskerWidget::UpdateSymbol
+// Created: JSR 2014-12-03
+// -----------------------------------------------------------------------------
+void TaskerWidget::UpdateSymbol() const
+{
+    QPixmap pixmap;
+    if( tasker_ )
+        if( auto symbol = tasker_->Retrieve< kernel::TacticalHierarchies >() )
+        {
+            pixmap = symbols_.GetSymbol( *tasker_, symbol->GetSymbol(), symbol->GetLevel(), gui::EntitySymbols::eColorWithModifier );
+            pixmap = pixmap.scaled( QSize( 48, 48 ), Qt::KeepAspectRatio, Qt::SmoothTransformation );
+        }
+    symbolLabel_->setPixmap( pixmap );
+}
+
+// -----------------------------------------------------------------------------
 // Name: TaskerWidget::SetTasker
 // Created: ABR 2013-12-17
 // -----------------------------------------------------------------------------
@@ -123,14 +140,7 @@ void TaskerWidget::SetTasker( const kernel::Entity_ABC* entity )
     nameLabel_->setText( hasTasker ? Qt::escape( tasker_->GetName() ) : "---" );
     activateButton_->setEnabled( hasTasker );
     clearButton_->setEnabled( hasTasker );
-    QPixmap pixmap;
-    if( hasTasker )
-        if( auto symbol = tasker_->Retrieve< kernel::TacticalHierarchies >() )
-        {
-            pixmap = symbols_.GetSymbol( *tasker_, symbol->GetSymbol(), symbol->GetLevel(), gui::EntitySymbols::eColorWithModifier );
-            pixmap = pixmap.scaled( QSize( 48, 48 ), Qt::KeepAspectRatio, Qt::SmoothTransformation );
-        }
-    symbolLabel_->setPixmap( pixmap );
+    UpdateSymbol();
     emit TaskerChanged( tasker_ );
 }
 
@@ -175,6 +185,19 @@ void TaskerWidget::NotifyUpdated( const kernel::Entity_ABC& entity )
         return;
     tasker_ = 0;
     SetTasker( &entity );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TaskerWidget::NotifySelected
+// Created: JSR 2014-12-03
+// -----------------------------------------------------------------------------
+void TaskerWidget::NotifySelected( const kernel::Entity_ABC* element )
+{
+    if( !tasker_ )
+        return;
+    if( selected_ == tasker_ || element == tasker_ )
+        UpdateSymbol();
+    selected_ = element;
 }
 
 // -----------------------------------------------------------------------------
