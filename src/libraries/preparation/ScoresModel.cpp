@@ -66,7 +66,14 @@ void ScoresModel::Purge()
 // -----------------------------------------------------------------------------
 void ScoresModel::Load( const tools::Loader_ABC& fileLoader, const tools::Path& file )
 {
-    fileLoader.LoadFile( file, boost::bind( &ScoresModel::Read, this, _1 ) );
+    try
+    {
+        fileLoader.LoadFile( file, boost::bind( &ScoresModel::Read, this, _1 ) );
+    }
+    catch( const xml::exception& e )
+    {
+        throw xml::exception( std::string( "\n\n" ) + file.FileName().ToUTF8() + ": " + e.what() );
+    }
 }
 
 // -----------------------------------------------------------------------------
