@@ -1462,8 +1462,7 @@ bool DEC_GeometryFunctions::IsPointInObject( DEC_Decision_ABC& callerAgent, cons
         const MIL_Object_ABC& object =  static_cast< MIL_Object_ABC& >( **itObject );
         const MIL_ObjectType_ABC& type = object.GetType();
         const MIL_Army_ABC* army = object.GetArmy();
-        bool friendMatch = army && army->IsAnEnemy( callerAgent.GetPion().GetArmy() ) == isFriend;
-        if( !friendMatch )
+        if( !army || army->IsAnEnemy( callerAgent.GetPion().GetArmy() ) != isFriend )
             return false;
         if( !capacity.empty() && !CapacityRetriever::RetrieveCapacity( type, capacity ) )
             return false;
