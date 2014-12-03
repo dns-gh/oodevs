@@ -13,7 +13,6 @@
 #include "Config.h"
 #include "CreateTerrainPage.h"
 #include "MenuButton.h"
-#include "ProcessDialogs.h"
 #include "ProgressPage.h"
 #include "clients_kernel/Tools.h"
 #include "clients_kernel/Controllers.h"

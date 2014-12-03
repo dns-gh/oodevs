@@ -13,7 +13,7 @@
 
 #include "clients_kernel/Tools.h"
 
-#include "frontend/CommandLineTools.h"
+#include "frontend/Ports.h"
 #include "frontend/CreateSession.h"
 
 #pragma warning( push, 0 )
@@ -57,24 +57,46 @@ SessionConfigPanel::SessionConfigPanel( QWidget* parent, const tools::GeneralCon
     commentBoxLayout->setStretchFactor( commentLabel_, 1 );
     commentBoxLayout->setStretchFactor( sessionComment_, 2 );
 
-    exerciseLabel_ = new QLabel();
-    exerciseNumber_ = new QSpinBox();
-    exerciseNumber_->setRange( 1, 10 );
-    exerciseNumber_->setSingleStep( 1 );
-    exerciseNumber_->setValue( 1 );
+    portsGroup_ = new QGroupBox();
+
+    simulationPortLabel_ = new QLabel();
+    simulationPort_ = new QSpinBox();
+    simulationPort_->setRange( 5000, 65535 - NUM_PORTS );
+    simulationPort_->setSingleStep( NUM_PORTS );
+    simulationPort_->setValue( 10000 );
+
+    dispatcherPortLabel_ = new QLabel();
+    dispatcherPort_ = new QSpinBox();
+    dispatcherPort_->setRange( 5000, 65535 );
+    dispatcherPort_->setValue( 10000 + DISPATCHER_PORT );
+    dispatcherPort_->setEnabled( false );
+    dispatcherPort_->setButtonSymbols( QAbstractSpinBox::NoButtons );
+
+    timelinePortLabel_ = new QLabel();
+    timelinePort_ = new QSpinBox();
+    timelinePort_->setRange( 5000, 65535 );
+    timelinePort_->setValue( 10000 + TIMELINE_PORT );
+    timelinePort_->setEnabled( false );
+    timelinePort_->setButtonSymbols( QAbstractSpinBox::NoButtons );
 
     //Exercise box
-    QWidget* exerciseNumberBox = new QWidget();
-    QHBoxLayout* exerciseNumberBoxLayout = new QHBoxLayout( exerciseNumberBox );
-    exerciseNumberBoxLayout->addWidget( exerciseLabel_ );
-    exerciseNumberBoxLayout->addWidget( exerciseNumber_ );
-    exerciseNumberBoxLayout->setStretchFactor( exerciseLabel_, 1 );
-    exerciseNumberBoxLayout->setStretchFactor( exerciseNumber_, 2 );
+    QGridLayout* grid = new QGridLayout();
+    portsGroup_->setLayout( grid );
+    grid->setColumnStretch( 0, 1 );
+    grid->setColumnStretch( 1, 2 );
+    grid->addWidget( simulationPortLabel_, 0, 0 );
+    grid->addWidget( simulationPort_, 0, 1 );
+    grid->addWidget( dispatcherPortLabel_, 1, 0 );
+    grid->addWidget( dispatcherPort_, 1, 1 );
+    grid->addWidget( timelinePortLabel_, 2, 0 );
+    grid->addWidget( timelinePort_, 2, 1 );
 
     QVBoxLayout* exerciseBoxLayout = new QVBoxLayout( this );
     exerciseBoxLayout->addWidget( sessionBox );
     exerciseBoxLayout->addWidget( commentBox );
-    exerciseBoxLayout->addWidget( exerciseNumberBox );
+    exerciseBoxLayout->addWidget( portsGroup_ );
+
+    connect( simulationPort_, SIGNAL( valueChanged( int ) ), SLOT( OnSimulationPortChanged( int ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -94,7 +116,10 @@ void SessionConfigPanel::OnLanguageChanged()
 {
     nameLabel_->setText( tools::translate( "SessionConfigPanel", "Session name:" ) );
     commentLabel_->setText( tools::translate( "SessionConfigPanel", "Session comments:" ) );
-    exerciseLabel_->setText( tools::translate( "SessionConfigPanel", "Exercise number:" ) );
+    portsGroup_->setTitle( tools::translate( "SessionConfigPanel", "Ports" ) );
+    simulationPortLabel_->setText( tools::translate( "SessionConfigPanel", "Simulation:" ) );
+    dispatcherPortLabel_->setText( tools::translate( "SessionConfigPanel", "Dispatcher:" ) );
+    timelinePortLabel_->setText( tools::translate( "SessionConfigPanel", "Timeline:" ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -120,21 +145,31 @@ void SessionConfigPanel::Commit( const tools::Path& exercise, const tools::Path&
     }
     {
         action.SetOption( "session/config/simulation/network/@port", "localhost:" +  // $$$$ AGE 2007-10-09:
-                            boost::lexical_cast< std::string >( frontend::GetPort( exerciseNumber_->value(), SIMULATION_PORT ) ) );
+                            boost::lexical_cast< std::string >( simulationPort_->value() + SIMULATION_PORT ) );
     }
     {
         action.SetOption( "session/config/dispatcher/network/@client", "localhost:" +  // $$$$ AGE 2007-10-09:
-                            boost::lexical_cast< std::string >( frontend::GetPort( exerciseNumber_->value(), SIMULATION_PORT ) ) );
+                            boost::lexical_cast< std::string >( simulationPort_->value() + SIMULATION_PORT ) );
         action.SetOption( "session/config/dispatcher/network/@server", "0.0.0.0:" +  // $$$$ AGE 2007-10-09:
-                            boost::lexical_cast< std::string >( frontend::GetPort( exerciseNumber_->value(), DISPATCHER_PORT ) ) );
+                            boost::lexical_cast< std::string >( simulationPort_->value() + DISPATCHER_PORT ) );
     }
     {
         action.SetOption( "session/config/gaming/network/@server", "localhost:" +  // $$$$ AGE 2007-10-09:
-                                    boost::lexical_cast< std::string >( frontend::GetPort( exerciseNumber_->value(), DISPATCHER_PORT ) ) );
+                                    boost::lexical_cast< std::string >( simulationPort_->value() + DISPATCHER_PORT ) );
     }
     {
         action.SetOption( "session/config/timeline/@url", "localhost:" +
-                                    boost::lexical_cast< std::string >( frontend::GetPort( exerciseNumber_->value(), frontend::TIMELINE_PORT ) ) );
+                                    boost::lexical_cast< std::string >( simulationPort_->value() + TIMELINE_PORT ) );
     }
     action.Commit();
+}
+
+// -----------------------------------------------------------------------------
+// Name: SessionConfigPanel::OnSimulationPortChanged
+// Created: JSR 2014-12-02
+// -----------------------------------------------------------------------------
+void SessionConfigPanel::OnSimulationPortChanged( int value )
+{
+    dispatcherPort_->setValue( value + DISPATCHER_PORT );
+    timelinePort_->setValue( value + TIMELINE_PORT );
 }

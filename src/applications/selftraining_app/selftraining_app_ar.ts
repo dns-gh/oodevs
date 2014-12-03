@@ -534,17 +534,6 @@ Do you want to replace it?</source>
     </message>
 </context>
 <context>
-    <name>ProcessDialogs</name>
-    <message>
-        <source>Running training sessions</source>
-        <translation type="unfinished">تشغيل دورات تدريبية</translation>
-    </message>
-    <message>
-        <source>Running training session detected. Close ?</source>
-        <translation type="unfinished">تشغيل الكشف عن دورة تدريبية. إغلاق؟</translation>
-    </message>
-</context>
-<context>
     <name>QuitPage</name>
     <message>
         <source>Please confirm</source>

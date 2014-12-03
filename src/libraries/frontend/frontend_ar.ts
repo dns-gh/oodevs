@@ -207,12 +207,24 @@
         <translation type="unfinished">تعليقات دورة:</translation>
     </message>
     <message>
-        <source>Exercise number:</source>
-        <translation type="unfinished">رقم العملية:</translation>
-    </message>
-    <message>
         <source>Session</source>
         <translation type="unfinished">الدورة</translation>
+    </message>
+    <message>
+        <source>Ports</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Simulation:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dispatcher:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Timeline:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

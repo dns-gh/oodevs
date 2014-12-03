@@ -11,7 +11,6 @@
 #include "CreateTerrainPage.h"
 #include "moc_CreateTerrainPage.cpp"
 #include "Config.h"
-#include "ProcessDialogs.h"
 #include "ProgressPage.h"
 #include "clients_kernel/Tools.h"
 #include "clients_kernel/Controllers.h"

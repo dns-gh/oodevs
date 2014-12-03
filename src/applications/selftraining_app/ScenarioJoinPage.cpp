@@ -15,7 +15,6 @@
 #include "ExerciseContainer.h"
 #include "ExerciseList.h"
 #include "ProgressPage.h"
-#include "ProcessDialogs.h"
 #include "frontend/CreateSession.h"
 #include "frontend/Exercise_ABC.h"
 #include "frontend/JoinExercise.h"

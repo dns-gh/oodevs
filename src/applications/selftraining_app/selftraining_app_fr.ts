@@ -538,17 +538,6 @@ Do you want to replace it?</source>
     </message>
 </context>
 <context>
-    <name>ProcessDialogs</name>
-    <message>
-        <source>Running training sessions</source>
-        <translation>Sessions d&apos;entraînement en cours</translation>
-    </message>
-    <message>
-        <source>Running training session detected. Close ?</source>
-        <translation>Des sessions d&apos;entraînement sont en cours. Voulez-vous les arrêter ?</translation>
-    </message>
-</context>
-<context>
     <name>QuitPage</name>
     <message>
         <source>Please confirm</source>

@@ -207,12 +207,24 @@
         <translation>Session comments:</translation>
     </message>
     <message>
-        <source>Exercise number:</source>
-        <translation>Exercise number:</translation>
-    </message>
-    <message>
         <source>Session</source>
         <translation>Session</translation>
+    </message>
+    <message>
+        <source>Ports</source>
+        <translation>Ports</translation>
+    </message>
+    <message>
+        <source>Simulation:</source>
+        <translation>Simulation:</translation>
+    </message>
+    <message>
+        <source>Dispatcher:</source>
+        <translation>Dispatcher:</translation>
+    </message>
+    <message>
+        <source>Timeline:</source>
+        <translation>Timeline:</translation>
     </message>
 </context>
 <context>
