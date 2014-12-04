@@ -79,7 +79,7 @@ bool SplitOnMajorGridLinesNoOutlier( int32_t cellSize, MT_Vector2D from,
             bool result = false;
             if( p1 == from )
             {
-                if( p1 == from && p2 == to )
+                if( p2 == to )
                     // No split, just forward the call
                     return f( p1, p2 );
                 // Skip first segment
