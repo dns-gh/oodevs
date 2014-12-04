@@ -289,7 +289,8 @@ bool MIL_Fuseau::IsPointInsidePolygon( T_PointVector& leftPoints, T_PointVector&
 
     TER_Polygon polygon;
     polygon.Reset( pointsVector );
-    return polygon.IsInside( vPoint, 0.1 ); ///$$$$
+    // if polygon is degenerate, must return FALSE, not TRUE
+    return !polygon.IsNull() && polygon.IsInside( vPoint, 0.1 ); 
 }
 
 // -----------------------------------------------------------------------------
