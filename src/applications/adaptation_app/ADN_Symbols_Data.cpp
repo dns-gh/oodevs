@@ -175,10 +175,9 @@ QPixmap ADN_Symbols_Data::SymbolsUnit::GenerateSymbol( std::string& symbol, gui:
         glPopMatrix();
     glPopAttrib();
     // Create pixmap
-    glFlush();
     QImage image( SYMBOL_ICON_SIZE, SYMBOL_ICON_SIZE, 32 );
+    glFinish();
     glReadPixels( 0, 0, SYMBOL_ICON_SIZE, SYMBOL_ICON_SIZE, GL_BGRA_EXT, GL_UNSIGNED_BYTE, image.bits() );
-    glFlush();
     return QPixmap( image.smoothScale( QSize( 128, 128 ) ) );
 }
 
