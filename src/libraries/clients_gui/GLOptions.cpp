@@ -102,7 +102,7 @@ GLOptions::GLOptions( const GLOptions& other )
     , mapnikThread_( other.mapnikThread_ )
     , profilesModel_( other.profilesModel_ )
 {
-    *this = other;
+    Copy( other, false );
     controllers_.Register( *this );
 }
 
@@ -116,26 +116,28 @@ GLOptions::~GLOptions()
 }
 
 // -----------------------------------------------------------------------------
-// Name: GLOptions::operator=
+// Name: GLOptions::Copy
 // Created: ABR 2014-07-24
 // -----------------------------------------------------------------------------
-GLOptions& GLOptions::operator=( const GLOptions& other )
+void GLOptions::Copy( const GLOptions& other, bool onlyPreferences )
 {
     if( !options_ || !other.options_ )
         throw MASA_EXCEPTION( "GLOptions operator= failed, no kernel::Options set." );
+    options_->Copy( *other.options_, onlyPreferences );
     fires_ = other.fires_;
-    *options_ = *other.options_;
     selected_ = other.selected_;
     superiorSelected_ = other.superiorSelected_;
     controlled_ = other.controlled_;
-    filterEntity_ = other.filterEntity_;
-    filterProfile_ = other.filterProfile_;
-    lockedEntity_ = other.lockedEntity_;
-    aggregatedEntities_ = other.aggregatedEntities_;
     contourLinesComputer_ = other.contourLinesComputer_;
     lighting_ = other.lighting_->Clone();
+    if( !onlyPreferences )
+    {
+        filterEntity_ = other.filterEntity_;
+        filterProfile_ = other.filterProfile_;
+        lockedEntity_ = other.lockedEntity_;
+        aggregatedEntities_ = other.aggregatedEntities_;
+    }
     Load();
-    return *this;
 }
 
 // -----------------------------------------------------------------------------
