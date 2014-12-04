@@ -391,8 +391,7 @@ void MainWindow::LoadExercise()
     catch( const std::exception& e )
     {
         loadingExercise_ = false;
-        HandleError( tr( "Error loading exercise: " ), e );
-        throw;
+        throw e;
     }
 }
 
@@ -429,7 +428,7 @@ void MainWindow::Load( const tools::Path& filename )
     catch( const std::exception& e )
     {
         SetProgression( 100, tr( "Loading failed" ) );
-        HandleError( tr( "Error loading: " ), e );
+        HandleError( tr( "Error loading exercise: " ), e );
     }
 }
 

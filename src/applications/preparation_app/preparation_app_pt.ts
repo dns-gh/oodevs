@@ -983,10 +983,6 @@ Do you want to save the exercise &apos;%1&apos;?</source>
         <source>Checking consistency ...</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Error loading: </source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>MaxStockNaturesTable</name>

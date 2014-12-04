@@ -985,10 +985,6 @@ Voulez-vous sauvegarder l&apos;exercice &apos;%1&apos; ?</translation>
         <source>Checking consistency ...</source>
         <translation>Contrôle de cohérence ...</translation>
     </message>
-    <message>
-        <source>Error loading: </source>
-        <translation>Erreur lors du chargement: </translation>
-    </message>
 </context>
 <context>
     <name>MaxStockNaturesTable</name>
