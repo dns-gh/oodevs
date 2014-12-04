@@ -2217,7 +2217,7 @@ void MIL_EntityManager::OnReceiveReportCreation( const sword::MissionParameters&
     sword::MissionParameters reportParams;
     if( params.elem_size() > 4 )
     {
-        const auto& param = params.elem( 3 ).value( 0 );
+        const auto& param = params.elem( 4 ).value( 0 );
         for( int i = 0; i < param.list_size(); ++i )
             *reportParams.add_elem()->add_value() = param.list( i );
     }
