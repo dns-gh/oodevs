@@ -10,6 +10,8 @@
 #include "gaming_app_pch.h"
 #include "RcEntityResolver.h"
 #include "gaming/AgentKnowledges.h"
+#include "clients_gui/InternalLinks.h"
+#include "clients_gui/LongNameHelper.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/AgentKnowledge_ABC.h"
 #include "clients_kernel/KnowledgeConverter_ABC.h"
@@ -18,7 +20,6 @@
 #include "clients_kernel/Population_ABC.h"
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/UrbanObject_ABC.h"
-#include "clients_gui/InternalLinks.h"
 #include "clients_kernel/Tools.h"
 
 using namespace kernel;
@@ -169,6 +170,6 @@ QString RcEntityResolver::CreateLink( unsigned long id ) const
 {
     const T* element = tools::Resolver< T >::Find( id );
     if( element )
-        return InternalLinks::CreateLink( *element, element->GetName() );
+        return InternalLinks::CreateLink( *element, longname::GetEntityDisplayName( *element ) );
     return tools::translate( "RcEntityResolver", "[Unknown]" ); // can now happen with the replayer
 }

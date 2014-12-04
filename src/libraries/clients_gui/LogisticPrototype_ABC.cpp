@@ -68,15 +68,6 @@ bool LogisticPrototype_ABC::CheckValidity( const kernel::Team_ABC& team ) const
     return result;
 }
 
-namespace
-{
-    QString GetDisplayName( const Entity_ABC& entity )
-    {
-        std::string longName = longname::GetEntityLongName( entity );
-        return longName.empty() ? entity.GetName() : longName.c_str();
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: LogisticPrototype_ABC::NotifyCreated
 // Created: SBO 2006-04-19
@@ -86,7 +77,7 @@ void LogisticPrototype_ABC::NotifyCreated( const Automat_ABC& automat )
     if( logSuperiors_->GetItemIndex( &automat ) != -1 ||
         !automat.Get< LogisticBase >().IsBase() )
         return;
-    logSuperiors_->AddItem( GetDisplayName( automat ), &automat );
+    logSuperiors_->AddItem( longname::GetEntityDisplayName( automat ), &automat );
     if( !selected_ )
         selected_ = &automat;
 }
@@ -100,7 +91,7 @@ void LogisticPrototype_ABC::NotifyCreated( const Formation_ABC& formation )
     if( logSuperiors_->GetItemIndex( &formation ) != -1 ||
         !formation.Get< LogisticBase >().IsBase() )
         return;
-    logSuperiors_->AddItem( GetDisplayName( formation ), &formation );
+    logSuperiors_->AddItem( longname::GetEntityDisplayName( formation ), &formation );
     if( !selected_ )
         selected_ = &formation;
 }
@@ -142,7 +133,7 @@ void LogisticPrototype_ABC::UpdateDisplayName( const kernel::Entity_ABC& entity 
     int pos = logSuperiors_->GetItemIndex( &entity );
     if( pos != -1 )
     {
-        QString toDisplay = GetDisplayName( entity );
+        QString toDisplay = longname::GetEntityDisplayName( entity );
         if( logSuperiors_->text( pos ) != toDisplay )
             logSuperiors_->ChangeItem( toDisplay, &entity );
     }

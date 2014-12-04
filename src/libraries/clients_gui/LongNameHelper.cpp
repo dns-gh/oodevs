@@ -32,6 +32,14 @@ std::string GetEntityLongName( const kernel::Entity_ABC& entity )
     return std::string();
 }
 
+QString GetEntityDisplayName( const kernel::Entity_ABC& entity )
+{
+    const kernel::DictionaryExtensions* dico = entity.Retrieve< kernel::DictionaryExtensions >();
+    if( dico && dico->IsEnabled() )
+        return dico->GetValue( "NomLong" ).c_str();
+    return entity.GetName();
+}
+
 bool SetItemLongName( const kernel::Entity_ABC& entity, QStandardItem& item )
 {
     std::string longName = longname::GetEntityLongName( entity );

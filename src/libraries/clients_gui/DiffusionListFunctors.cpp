@@ -125,8 +125,7 @@ void DiffusionListReceiversExtractor::operator()( const kernel::Entity_ABC& agen
 
     if( !dico->GetValue( "TypePC" ).empty() && dico->GetValue( "TypePC" ) != "PasCorresp" )
     {
-        QString longName = longname::GetEntityLongName( agent ).c_str();
-        longName = ( longName.isEmpty() ? agent.GetName() : longName );
+        QString longName = longname::GetEntityDisplayName( agent );
         assert( targets_.find( longName ) == targets_.end() );
         targets_[ longName ] = &agent;
     }
@@ -176,8 +175,7 @@ void DiffusionListEmittersExtractor::operator()( const kernel::Entity_ABC& agent
         return;
     if( attribute->IsActive( dico->GetExtensions() ) )
     {
-        QString longName = longname::GetEntityLongName( agent ).c_str();
-        longName = ( longName.isEmpty() ? agent.GetName() : longName );
+        QString longName = longname::GetEntityDisplayName( agent );
         assert( targets_.find( longName ) == targets_.end() );
         targets_[ longName ] = &agent;
     }
