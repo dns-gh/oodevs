@@ -2209,10 +2209,6 @@ This data can&apos;t be projected.</source>
         <translation type="unfinished">السيف</translation>
     </message>
     <message>
-        <source> - Planning mode on</source>
-        <translation type="unfinished">-وضع التخطيط في</translation>
-    </message>
-    <message>
         <source>Sound</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2929,13 +2925,6 @@ This data can&apos;t be projected.</source>
     <message>
         <source>Change superior</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>PlanificationModePanel</name>
-    <message>
-        <source>Planification mode</source>
-        <translation type="unfinished">وضع التخطيط</translation>
     </message>
 </context>
 <context>

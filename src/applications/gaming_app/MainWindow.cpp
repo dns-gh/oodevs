@@ -485,7 +485,6 @@ namespace
 void MainWindow::NotifyModeChanged( E_Modes newMode )
 {
     ModesObserver_ABC::NotifyModeChanged( newMode );
-    setCaption( ( newMode == eModes_Planning ) ? planifName_ + tr( " - Planning mode on" ) : planifName_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -495,7 +494,6 @@ void MainWindow::NotifyModeChanged( E_Modes newMode )
 void MainWindow::NotifyUpdated( const Simulation& simulation )
 {
     const QString appName = tr( "SWORD" );
-    const QString modePlanif =  tr( " - Planning mode on" );
     if( simulation.IsConnected() )
     {
         if( !connected_ && simulation.IsInitialized() )
@@ -518,7 +516,7 @@ void MainWindow::NotifyUpdated( const Simulation& simulation )
         login_ = "";
         Close();
     }
-    setCaption( GetCurrentMode() == eModes_Planning ? planifName_ + modePlanif : planifName_ );
+    setCaption( planifName_ );
 }
 
 // -----------------------------------------------------------------------------

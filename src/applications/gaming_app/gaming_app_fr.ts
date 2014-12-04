@@ -2212,10 +2212,6 @@ Ces données ne peuvent pas être projetées.</translation>
         <translation>SWORD</translation>
     </message>
     <message>
-        <source> - Planning mode on</source>
-        <translation> - Mode Planification</translation>
-    </message>
-    <message>
         <source>Sound</source>
         <translation>Son</translation>
     </message>
@@ -2943,13 +2939,6 @@ Ces données ne peuvent pas être projetées.</translation>
     <message>
         <source>Change superior</source>
         <translation>Changer de supérieur</translation>
-    </message>
-</context>
-<context>
-    <name>PlanificationModePanel</name>
-    <message>
-        <source>Planification mode</source>
-        <translation>Mode planification</translation>
     </message>
 </context>
 <context>

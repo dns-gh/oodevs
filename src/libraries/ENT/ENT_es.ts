@@ -651,10 +651,6 @@
         <translation>Juego</translation>
     </message>
     <message>
-        <source>Planning</source>
-        <translation>Planeamiento</translation>
-    </message>
-    <message>
         <source>Replay</source>
         <translation>Revisar</translation>
     </message>
