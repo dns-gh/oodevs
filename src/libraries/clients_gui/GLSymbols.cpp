@@ -45,7 +45,8 @@ void GLSymbols::PrintApp6( const std::string& symbol, const std::string& style, 
         // Hard coded LOD. This value could be linked to the zoom value but not to the
         // viewport's width, since we use "DrawApp6SymbolFixedSize" for entities, with
         // a fixed viewport.
-        node.reset( Load( symbol, 100 ) );
+        // Warning: LOD 10 is nicer than LOD 100, this is an inverse LOD...
+        node.reset( Load( symbol, 10 ) );
         if( !node )
         {
             if( symbol.find( "symbols/" ) == 0 )
