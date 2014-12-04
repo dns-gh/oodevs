@@ -382,6 +382,9 @@ message PathPoint {
     optional TerrainData  current    = 4;
     //! The terrain data picked at next point
     optional TerrainData  next       = 5;
+    //! The slope to reach this point, as the ratio of elevation delta
+    //! over covered distance, between 0 and 1.
+    optional float        slope      = 6;
 }
 
 /** @struct PathResult
@@ -2763,16 +2766,22 @@ message ListLogisticRequestsAck {
 //! Defines a pathfind request.
 message PathfindRequest {
     //! The unit identifier.
-    required Id           unit                   = 1;
+    required Id           unit                            = 1;
     //! The waypoints.
-    repeated CoordLatLong positions              = 2;
+    repeated CoordLatLong positions                       = 2;
     //! The equipment types composing the unit.
-    repeated Id           equipment_types        = 3;
+    repeated Id           equipment_types                 = 3;
     //! Indicate whether or not the request
     //! should ignore the dynamic objects.
-    optional bool         ignore_dynamic_objects = 4;
+    optional bool         ignore_dynamic_objects          = 4;
     //! The pathfind name
-    optional string       name                   = 5;
+    optional string       name                            = 5;
+    //! By default, edges are split on terrain elevation grid lines to
+    //! help detecting slope thresholds. Disable it, for debugging
+    //! purpose.
+    optional bool         disable_split_on_elevation_grid = 6;
+    //! Fill returned path points slope field when relevant.
+    optional bool         return_slopes                   = 7;
 }
 
 /** @struct Pathfind

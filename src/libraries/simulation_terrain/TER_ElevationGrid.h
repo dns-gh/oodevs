@@ -7,14 +7,22 @@
 //
 // *****************************************************************************
 
-#ifndef ElevationGrid_h
-#define ElevationGrid_h
+#ifndef TER_ELEVATIONGRID_H
+#define TER_ELEVATIONGRID_H
 
 #include <graphics/ElevationBaseGrid.h>
+#include <memory>
 
-class PHY_AmmoEffect;
+namespace tools
+{
+    class Path;
+}
+
+class TER_ElevationGrid;
 
 typedef unsigned char envBits;  // bit field
+
+std::unique_ptr< TER_ElevationGrid > LoadElevationGrid( const tools::Path& path );
 
 struct ElevationCell
 {
@@ -23,8 +31,6 @@ public:
         : h       ( 0 )
         , dh      ( 0 )
         , e       ( 0 )
-        , weatherId( 0 )
-        , pEffects( 0 )
     {
         // NOTHING
     }
@@ -37,35 +43,22 @@ public:
         return h == rhs.h && dh == rhs.dh && e == rhs.e;
     }
 private:
-    friend class PHY_RawVisionData;
+    friend std::unique_ptr< TER_ElevationGrid > LoadElevationGrid( const tools::Path& );
 
     // Take care to pack the following fields to save memory when
     // loading large elevation maps.
-    PHY_AmmoEffect* pEffects;       // ammunitions effects
     uint16_t h;     // elevation
     uint8_t  dh;    // elevation delta caused by environment
     envBits  e;     // static environment bits
-    uint32_t weatherId; // local weather identifier, 0 if unset
 };
-//@}
 
-// =============================================================================
-/** @class  ElevationGrid
-    @brief  ElevationGrid
-*/
-// Created: LGY 2013-02-04
-// =============================================================================
-class ElevationGrid : public ElevationBaseGrid
+class TER_ElevationGrid : public ElevationBaseGrid
 {
-public:
-    //! @name Types
-    //@{
-
 public:
     //! @name Constructors/Destructor
     //@{
-             ElevationGrid( double cellSize, unsigned int width, unsigned int height, ElevationCell** ppCells );
-    virtual ~ElevationGrid();
+             TER_ElevationGrid( double cellSize, unsigned int width, unsigned int height, ElevationCell** ppCells );
+    virtual ~TER_ElevationGrid();
     //@}
 
     //! @name Operations
@@ -83,4 +76,4 @@ private:
     //@}
 };
 
-#endif // ElevationGrid_h
+#endif // TER_ELEVATIONGRID_H

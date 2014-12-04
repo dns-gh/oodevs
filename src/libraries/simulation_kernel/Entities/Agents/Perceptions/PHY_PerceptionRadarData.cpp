@@ -90,7 +90,8 @@ namespace
 
         PHY_RawVisionDataIterator it( vSource3D, vTarget3D );
         double rVisionNRJ = type.GetRadius();
-        rVisionNRJ *= type.GetLightingFactor( data.GetLighting( data( targetPosition ) ) );
+        rVisionNRJ *= type.GetLightingFactor(
+            data.GetLighting( data.GetVisionCell( targetPosition.rX_, targetPosition.rY_ ) ) );
         const bool isAroundUrbanBlock = distance_modifiers::ComputeUrbanExtinction( sourcePosition, targetPosition, rVisionNRJ, type.GetUrbanFactors(), posted );
 
         if( rVisionNRJ > 0 )

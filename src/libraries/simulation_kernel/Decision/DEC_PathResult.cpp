@@ -18,8 +18,8 @@
 #include "MT_Tools/MT_Logger.h"
 #include "SlopeSpeedModifier.h"
 #include "meteo/PHY_MeteoDataManager.h"
-#include "meteo/RawVisionData/Elevation.h"
 #include "meteo/RawVisionData/PHY_RawVisionData.h"
+#include "simulation_terrain/TER_GridTools.h"
 #include "simulation_terrain/TER_PathPoint.h"
 #include "simulation_terrain/TER_Pathfinder.h"
 #include "simulation_terrain/TER_Pathfinder_ABC.h"
@@ -45,7 +45,7 @@ std::list< boost::shared_ptr< TER_PathPoint > > SplitEdgesOnElevationGrid(
         const auto p1 = *std::prev( it );
         const auto p2 = *it;
         SlopeSpeedModifier slopeSpeedModifier;
-        SplitOnMajorGridLines( static_cast< int32_t >( elevation.GetCellSize() ),
+        SplitOnMajorGridLinesNoOutlier( static_cast< int32_t >( elevation.GetCellSize() ),
             p1->GetPos(), p2->GetPos(), [&]( MT_Vector2D from, MT_Vector2D to )
             {
                 return slopeSpeedModifier.ComputeLocalSlope( elevation, from, to );

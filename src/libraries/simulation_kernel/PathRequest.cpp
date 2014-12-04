@@ -19,7 +19,6 @@
 #include "protocol/Serialization.h"
 #include "simulation_terrain/TER_Path_ABC.h"
 #include "simulation_terrain/TER_Pathfinder.h"
-
 #include <boost/serialization/optional.hpp>
 
 BOOST_SERIALIZATION_SPLIT_FREE( sword::PathResult );
@@ -100,7 +99,8 @@ sword::TerrainData SerializeTerrainData( const TerrainData& point )
     return data;
 }
 
-void SerializePathResult( const TER_PathResult& result, sword::PathResult& msg )
+void SerializePathResult( const TER_PathResult& result, sword::PathResult& msg,
+       bool slopes )
 {
     unsigned int index = 0;
     for( auto it = result.points.begin(); it != result.points.end(); ++it )
@@ -113,6 +113,8 @@ void SerializePathResult( const TER_PathResult& result, sword::PathResult& msg )
             point->set_waypoint( index++ );
             point->set_reached( !partial );
         }
+        if( slopes && (*it)->IsSlopeValid() && (*it)->GetSlope() != 0 )
+            point->set_slope( static_cast< float >( (*it)->GetSlope() ) );
         *point->mutable_current() = SerializeTerrainData( (*it)->GetObjectTypes() );
         *point->mutable_next() = SerializeTerrainData( (*it)->GetObjectTypesToNextPoint() );
         NET_ASN_Tools::WritePoint( position, *point->mutable_coordinate() );
@@ -132,12 +134,13 @@ bool PathRequest::Update( ActionManager& actions )
     const auto result = future_->Get();
     if( !result )
         return false;
-    result->points = SplitEdgesOnElevationGrid( result->points );
+    if( !request_.disable_split_on_elevation_grid() )
+        result->points = SplitEdgesOnElevationGrid( result->points );
     const bool ok = result->state != TER_Path_ABC::eInvalid &&
         result->state != TER_Path_ABC::eImpossible;
     path_ = sword::PathResult();
     if( ok )
-        SerializePathResult( *result, *path_ );
+        SerializePathResult( *result, *path_, request_.return_slopes() );
     if( magic_ )
         SendPathfindCreation( actions, ok );
     else

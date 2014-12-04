@@ -10,8 +10,8 @@
 #include "PHY_RawVisionDataIterator.h"
 #include "PHY_RawVisionData.h"
 #include "MIL_AgentServer.h"
-#include "ElevationGrid.h"
 #include "Meteo/PHY_MeteoDataManager.h"
+#include "simulation_terrain/TER_ElevationGrid.h"
 
 static const double rIteratorEpsilon = 1e-10;
 
@@ -112,6 +112,7 @@ PHY_RawVisionDataIterator::PHY_RawVisionDataIterator( const MT_Vector3D& vBeginP
     , vOutPoint_     ( vBeginPos )
     , originalEndAltitude_( vEndPos.rZ_ )
     , pCurrentCell_  ( 0 )
+    , visionCell_    ( 0 )
 {
     double rDx = vEndPos.rX_ - vOutPoint_.rX_;
     double rDy = vEndPos.rY_ - vOutPoint_.rY_;
@@ -162,6 +163,7 @@ PHY_RawVisionDataIterator::PHY_RawVisionDataIterator( const MT_Vector3D& vBeginP
     rDx = vBeginPos.rZ_ - data_.GetAltitude( vBeginPos.rX_, vBeginPos.rY_ );
 
     pCurrentCell_ = &data_( vBeginPos.rX_, vBeginPos.rY_ );
+    visionCell_ = &data_.GetVisionCell( vBeginPos.rX_, vBeginPos.rY_ );
     // rDy est utilisé ici pour stocker le rEnvCoeff initial
     rDy = rDx - pCurrentCell_->GetEnvHeight();
 
@@ -281,6 +283,8 @@ PHY_RawVisionDataIterator& PHY_RawVisionDataIterator::operator ++()
     ToRealSpace      ( nRealCellCol, nRealCellRow );
 
     pCurrentCell_ = &data_( static_cast< unsigned int >( nRealCellCol ), static_cast< unsigned int >( nRealCellRow ) );
+    visionCell_ = &data_.GetVisionCell( static_cast< unsigned int >( nRealCellCol ),
+                                        static_cast< unsigned int >( nRealCellRow ) );
 
     double realX = ( nRealCellCol + rNextY * nCellXOffset ) * data_.GetCellSize();
     double realY = ( nRealCellRow + nCellYOffset * rNextY ) * data_.GetCellSize();
@@ -319,7 +323,7 @@ envBits PHY_RawVisionDataIterator::GetCurrentEnv() const
 //-----------------------------------------------------------------------------
 const weather::PHY_Lighting& PHY_RawVisionDataIterator::GetLighting() const
 {
-    return data_.GetLighting( *pCurrentCell_ );
+    return data_.GetLighting( *visionCell_ );
 }
 
 //-----------------------------------------------------------------------------
@@ -328,7 +332,7 @@ const weather::PHY_Lighting& PHY_RawVisionDataIterator::GetLighting() const
 //-----------------------------------------------------------------------------
 const weather::PHY_Precipitation& PHY_RawVisionDataIterator::GetPrecipitation() const
 {
-    return data_.GetPrecipitation( *pCurrentCell_ );
+    return data_.GetPrecipitation( *visionCell_ );
 }
 
 //-----------------------------------------------------------------------------

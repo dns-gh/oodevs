@@ -10,18 +10,20 @@
 #ifndef __PHY_RawVisionData_h_
 #define __PHY_RawVisionData_h_
 
+#include <memory>
 #include <set>
 #include <unordered_map>
 
 typedef unsigned char envBits;
 struct ElevationCell;
-class ElevationGrid;
+class TER_ElevationGrid;
 class MT_Ellipse;
 class MT_Vector2D;
 class PHY_IndirectFireDotationClass;
 class PHY_LocalMeteo;
 class TER_Localisation;
 class TER_Localisation_ABC;
+struct VisionCell;
 
 namespace tools
 {
@@ -66,15 +68,15 @@ public:
     //@{
     const ElevationCell& operator () ( const MT_Vector2D& ) const;
     const ElevationCell& operator () ( double, double ) const;
+    const VisionCell& GetVisionCell( double x, double y ) const;
 
     double GetCellSize() const;
 
-    const weather::Meteo& GetWeather( const ElevationCell& cell ) const;
     const weather::Meteo& GetWeather( const MT_Vector2D& pos ) const;
     bool IsWeatherPatched( const boost::shared_ptr< const PHY_LocalMeteo >& weather ) const;
     const weather::PHY_Precipitation& GetPrecipitation( const MT_Vector2D& ) const;
-    const weather::PHY_Precipitation& GetPrecipitation( const ElevationCell& ) const;
-    const weather::PHY_Lighting& GetLighting( const ElevationCell& ) const;
+    const weather::PHY_Precipitation& GetPrecipitation( const VisionCell& ) const;
+    const weather::PHY_Lighting& GetLighting( const VisionCell& ) const;
 
     double GetAltitude( const MT_Vector2D& pos, bool applyOnCell = false ) const;
     double GetAltitude( double rX_, double rY_, bool applyOnCell = false ) const;
@@ -100,8 +102,12 @@ public:
     void RegisterWeatherEffect  ( const MT_Ellipse& surface, const PHY_IndirectFireDotationClass& weaponCategory );
     void UnregisterWeatherEffect( const MT_Ellipse& surface, const PHY_IndirectFireDotationClass& weaponCategory );
 
-    bool Read( const tools::Path& file );
     //@}
+
+private:
+    struct VisionData;
+
+    const weather::Meteo& GetWeather( const VisionCell& cell ) const;
 
 private:
     friend class PHY_RawVisionDataIterator;
@@ -110,6 +116,7 @@ private:
     unsigned int GetCol( double ) const;
     unsigned int GetRow( double ) const;
     const ElevationCell& operator () ( unsigned int col, unsigned int row ) const;
+    const VisionCell& GetVisionCell( unsigned int col, unsigned int row ) const;
     ElevationCell& operator () ( double, double );
 
     double rCellSize_; // taille (en metre) du côté de la cellule
@@ -119,7 +126,8 @@ private:
 
     double rMinAltitude_;
     double rMaxAltitude_;
-    std::auto_ptr< ElevationGrid > pElevationGrid_;
+    std::unique_ptr< TER_ElevationGrid > pElevationGrid_;
+    std::unique_ptr< VisionData > visionData_;
 
     const weather::Meteo& globalMeteo_;
     // Patched weather instances. It also ensures that weather pointers

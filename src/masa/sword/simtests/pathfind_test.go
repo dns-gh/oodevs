@@ -9,9 +9,11 @@
 package simtests
 
 import (
+	"code.google.com/p/goprotobuf/proto"
 	. "launchpad.net/gocheck"
 	"masa/sword/swapi"
 	"masa/sword/swapi/phy"
+	"masa/sword/sword"
 	"masa/sword/swrun"
 	"masa/sword/swtest"
 	"math"
@@ -525,7 +527,7 @@ func (s *TestSuite) TestMoveAlongItineraryNoBacktrack(c *C) {
 		}
 	}
 	ratios := getMatchedRatio(points, itinerary)
-	c.Assert(ratios, DeepEquals, []int{-32, 40, -23})
+	c.Assert(ratios, DeepEquals, []int{-32, 39, -23})
 }
 
 func testMoveAlongHorseshoe(c *C, from, to swapi.Point, expectedRatios []int) {
@@ -558,8 +560,8 @@ func (s *TestSuite) TestMoveAlongItineraryAboveHorseshoe(c *C) {
 	// The path is big U and we move on a line slightly above it. The unit
 	// should avoid the itinerary and reach the destination directly.
 	testMoveAlongHorseshoe(c,
-		swapi.Point{X: -0.5291, Y: 47.2444},
-		swapi.Point{X: -0.1303, Y: 47.1966},
+		swapi.Point{X: -0.4539, Y: 47.2720},
+		swapi.Point{X: -0.1441, Y: 47.2920},
 		[]int{-100})
 }
 
@@ -572,21 +574,19 @@ func (s *TestSuite) TestMoveAlongItineraryOnHorseshoe(c *C) {
 	testMoveAlongHorseshoe(c,
 		swapi.Point{X: -0.5126, Y: 47.2098},
 		swapi.Point{X: -0.2476, Y: 47.1829},
-		[]int{-24, 1, -1, 32, -3, 25, -4})
+		[]int{-24, 1, -1, 32, -4, 25, -4})
 }
 
-func testPathEdgeSplit(c *C, phydb *phy.PhysicalData, exercise string,
-	points int) []swapi.PathPoint {
+func testPathEdgeSplit(c *C, client *swapi.Client, unit *swapi.Unit,
+	from, to swapi.Point, split bool, points int,
+	minDegrees, maxDegrees float64) []swapi.PathPoint {
 
-	opts := NewAdminOpts(exercise)
-	sim, client := connectAndWaitModel(c, opts)
-	defer stopSimAndClient(c, sim, client)
-
-	from := swapi.Point{X: -15.9384, Y: 28.220}
-	to := swapi.Point{X: -15.71, Y: from.Y}
-	unit := CreateCombiVW(c, phydb, client, from)
-
-	path, err := client.UnitPathfindRequest(unit.Id, from, to)
+	rq := sword.PathfindRequest{
+		Unit: swapi.MakeId(unit.Id),
+		DisableSplitOnElevationGrid: proto.Bool(!split),
+		ReturnSlopes:                proto.Bool(true),
+	}
+	path, err := client.PathfindRequest(&rq, from, to)
 	c.Assert(err, IsNil)
 	c.Assert(len(path), Equals, points)
 
@@ -594,17 +594,38 @@ func testPathEdgeSplit(c *C, phydb *phy.PhysicalData, exercise string,
 	for i := 1; i < len(path); i++ {
 		c.Assert(path[i-1].Point.X, Lesser, path[i].Point.X)
 	}
+	for _, p := range path {
+		degrees := math.Atan(float64(p.Slope)) * 180. / math.Pi
+		if degrees == 0 {
+			// Ignore zero entries which appear when slopes are not returned
+			// or when a sequence of points have the same slope.
+			continue
+		}
+		c.Assert(degrees, GreaterOrEquals, minDegrees)
+		c.Assert(degrees, LesserOrEquals, maxDegrees)
+	}
 	return path
 }
 
 func (s *TestSuite) TestPathEdgesSplitOnElevationGrid(c *C) {
+	opts := NewAdminOpts(ExGradXYTestEmpty)
+	sim, client := connectAndWaitModel(c, opts)
+	defer stopSimAndClient(c, sim, client)
+
 	phydb := loadPhysicalData(c, "test")
-	// Two simulations have to be started because edge splitting cannot be
-	// disabled and elevation interpolation or another effect creates slopes
-	// in grad.xy terrain where there should be none. Instead, we use two
-	// exercises, one without elevation and one with and compare the same
-	// itinerary. Additional points should appear on the one where edges
-	// splitting occurs.
-	testPathEdgeSplit(c, phydb, ExCrossroadSmallTest, 15)
-	testPathEdgeSplit(c, phydb, ExGradXYTestEmpty, 18)
+	from := swapi.Point{X: -15.9384, Y: 28.220}
+	to := swapi.Point{X: -15.71, Y: from.Y}
+	unit := CreateTestUnit(c, phydb, client, "VW Combi 4x4", from)
+
+	// Minimum slope with disabled slope computation
+	testPathEdgeSplit(c, client, unit, from, to, false, 14, 0, 0)
+
+	// https://masagroup.atlassian.net/browse/SWBUG-13524
+	// Minimum slope
+	testPathEdgeSplit(c, client, unit, from, to, true, 15, 0, 0.2)
+
+	// Slope around 16 degrees
+	from.Y = 28.2603
+	to.Y = 28.2603
+	testPathEdgeSplit(c, client, unit, from, to, true, 19, 16.7, 17.6)
 }

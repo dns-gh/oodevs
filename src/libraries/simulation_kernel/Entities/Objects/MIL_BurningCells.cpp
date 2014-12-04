@@ -15,8 +15,6 @@
 #include "FireAttribute.h"
 #include "BurnSurfaceAttribute.h"
 #include "FirePropagationModifierCapacity.h"
-#include "simulation_terrain/TER_Analyzer.h"
-#include "simulation_terrain/TER_World.h"
 #include "meteo/Meteo.h"
 #include "Tools/MIL_Tools.h"
 #include "protocol/Protocol.h"
@@ -29,8 +27,10 @@
 #include "Entities/Populations/MIL_PopulationElement_ABC.h"
 #include "Entities/MIL_EntityManager.h"
 #include "Meteo/PHY_MeteoDataManager.h"
-#include "Meteo/RawVisionData/ElevationGrid.h"
 #include "Meteo/RawVisionData/PHY_RawVisionData.h"
+#include "simulation_terrain/TER_Analyzer.h"
+#include "simulation_terrain/TER_ElevationGrid.h"
+#include "simulation_terrain/TER_World.h"
 #include <spatialcontainer/TerrainData.h>
 #pragma warning( push, 0 )
 #pragma warning( disable: 4702 )
