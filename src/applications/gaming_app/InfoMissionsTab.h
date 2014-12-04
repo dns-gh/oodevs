@@ -53,6 +53,8 @@ public:
     virtual ~InfoMissionsTab();
     //@}
 
+    void Purge();
+
 public slots:
     //! @name Slots
     //@{

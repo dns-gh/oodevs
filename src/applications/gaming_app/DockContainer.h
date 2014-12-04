@@ -48,15 +48,16 @@ class EventDockWidget;
 class GamingConfig;
 class IndicatorExportDialog;
 class IndicatorPlotFactory;
+class InfoDock;
 class ItineraryEditionDockWidget;
 class Model;
 class Network;
 class OrbatDockWidget;
-class ProfilingPanel;
 class ProfileFilter;
+class ProfilingPanel;
 class Simulation;
-class StaticModel;
 class SimulationController;
+class StaticModel;
 class UnitStateDialog;
 class WeatherLayer;
 
@@ -119,6 +120,7 @@ private:
     //@{
     CreationPanels* creationPanel_;
     OrbatDockWidget* orbatDockWidget_;
+    InfoDock* infoWnd_;
     gui::Logger* loggerPanel_;
     AfterAction* afterAction_;
     ProfilingPanel* profilingPanel_;

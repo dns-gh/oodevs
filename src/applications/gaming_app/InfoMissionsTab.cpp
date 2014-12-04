@@ -243,3 +243,8 @@ void InfoMissionsTab::showEvent( QShowEvent* event )
     NotifySelected( selected );
     QTreeView::showEvent( event );
 }
+
+void InfoMissionsTab::Purge()
+{
+    missionModel_.removeRows( 0, missionModel_.rowCount() );
+}

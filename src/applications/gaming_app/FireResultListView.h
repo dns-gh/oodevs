@@ -56,6 +56,8 @@ public:
     virtual ~FireResultListView();
     //@}
 
+    void Purge();
+
 public slots:
     //! @name Slots
     //@{

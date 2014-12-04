@@ -33,6 +33,7 @@ namespace tools
     class ExerciseConfig;
 }
 
+class InfoWidget;
 class Model;
 class Simulation;
 class SimulationController;
@@ -62,6 +63,11 @@ public:
                        UnitStateDialog& unitStateDialog );
     virtual ~InfoDock();
     //@}
+
+    void Purge();
+
+private:
+    InfoWidget* widget_;
 };
 
 #endif // __InfoDock_h_

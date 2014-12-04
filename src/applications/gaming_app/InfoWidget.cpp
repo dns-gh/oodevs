@@ -54,9 +54,12 @@ InfoWidget::InfoWidget( QWidget* parent,
 
     QTabWidget* tabs = new QTabWidget( this );
     tabs->setTabShape( QTabWidget::Triangular );
-    tabs->addTab( new InfoReportsTab( tabs, controllers, extractor ), MAKE_PIXMAP( msg ), tr( "Reports" ) );
-    tabs->addTab( new InfoConflictsTab( tabs, controllers, extractor, converter ), MAKE_PIXMAP( conflict ), tr( "Conflicts" ) );
-    tabs->addTab( new InfoMissionsTab( tabs, controllers, extractor ), MAKE_PIXMAP( mission ), tr( "Missions" ) );
+    reports_ = new InfoReportsTab( tabs, controllers, extractor );
+    tabs->addTab( reports_, MAKE_PIXMAP( msg ), tr( "Reports" ) );
+    conflicts_ = new InfoConflictsTab( tabs, controllers, extractor, converter );
+    tabs->addTab( conflicts_, MAKE_PIXMAP( conflict ), tr( "Conflicts" ) );
+    missions_ = new InfoMissionsTab( tabs, controllers, extractor );
+    tabs->addTab( missions_, MAKE_PIXMAP( mission ), tr( "Missions" ) );
     tabs->setCurrentPage( 0 );
 }
 
@@ -67,4 +70,11 @@ InfoWidget::InfoWidget( QWidget* parent,
 InfoWidget::~InfoWidget()
 {
     // NOTHING
+}
+
+void InfoWidget::Purge()
+{
+    reports_->Purge();
+    conflicts_->Purge();
+    missions_->Purge();
 }

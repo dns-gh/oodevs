@@ -10,8 +10,6 @@
 #ifndef __InfoReportsTab_h_
 #define __InfoReportsTab_h_
 
-#include <tools/SelectionObserver_ABC.h>
-
 namespace gui
 {
     class DisplayExtractor;
@@ -23,6 +21,8 @@ namespace kernel
     class Entity_ABC;
 }
 
+class ReportListView;
+
 // =============================================================================
 /** @class  InfoReportsTab
     @brief  InfoReportsTab
@@ -30,8 +30,6 @@ namespace kernel
 // Created: SBO 2007-02-06
 // =============================================================================
 class InfoReportsTab : public Q3VBox
-                     , public tools::Observer_ABC
-                     , public tools::SelectionObserver< kernel::Entity_ABC >
 {
 public:
     //! @name Constructors/Destructor
@@ -40,17 +38,12 @@ public:
     virtual ~InfoReportsTab();
     //@}
 
-private:
-    //! @name Helpers
-    //@{
-    virtual void NotifySelected( const kernel::Entity_ABC* entity );
-    //@}
+    void Purge();
 
 private:
     //! @name Member data
     //@{
-    kernel::Controllers& controllers_;
-    QTabWidget* parent_;
+    ReportListView* reports_;
     //@}
 };
 

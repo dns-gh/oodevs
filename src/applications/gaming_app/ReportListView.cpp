@@ -405,3 +405,8 @@ void ReportListView::AddMenuItem( QMenu* menu, const QString& name, Report::E_Ty
     action->setCheckable( true );
     action ->setChecked( toDisplay_.find( type ) != toDisplay_.end() );
 }
+
+void ReportListView::Purge()
+{
+    reportModel_.removeRows( 0, reportModel_.rowCount() );
+}

@@ -29,6 +29,9 @@ namespace tools
     class ExerciseConfig;
 }
 
+class InfoConflictsTab;
+class InfoMissionsTab;
+class InfoReportsTab;
 class Model;
 class Simulation;
 class SimulationController;
@@ -60,6 +63,13 @@ public:
                          UnitStateDialog& unitStateDialog );
     virtual ~InfoWidget();
     //@}
+
+    void Purge();
+
+private:
+    InfoReportsTab* reports_;
+    InfoConflictsTab* conflicts_;
+    InfoMissionsTab* missions_;
 };
 
 #endif // __InfoWidget_h_

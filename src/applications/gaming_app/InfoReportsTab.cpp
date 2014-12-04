@@ -10,8 +10,6 @@
 #include "gaming_app_pch.h"
 #include "InfoReportsTab.h"
 #include "ReportListView.h"
-#include "clients_gui/ItemFactory_ABC.h"
-#include "gaming/Reports.h"
 
 // -----------------------------------------------------------------------------
 // Name: InfoReportsTab constructor
@@ -19,13 +17,10 @@
 // -----------------------------------------------------------------------------
 InfoReportsTab::InfoReportsTab( QTabWidget* parent, kernel::Controllers& controllers, gui::DisplayExtractor& extractor )
     : Q3VBox( parent, "InfoReportsTab" )
-    , controllers_( controllers )
-    , parent_( parent )
 {
     setMargin( 0 );
-    ReportListView* reports = new ReportListView( this, controllers, extractor );
-    reports->setHeaderHidden( true );
-    controllers_.Register( *this );
+    reports_ = new ReportListView( this, controllers, extractor );
+    reports_->setHeaderHidden( true );
 }
 
 // -----------------------------------------------------------------------------
@@ -34,14 +29,10 @@ InfoReportsTab::InfoReportsTab( QTabWidget* parent, kernel::Controllers& control
 // -----------------------------------------------------------------------------
 InfoReportsTab::~InfoReportsTab()
 {
-    controllers_.Unregister( *this );
+    // NOTHING
 }
 
-// -----------------------------------------------------------------------------
-// Name: InfoReportsTab::NotifySelected
-// Created: SBO 2007-05-14
-// -----------------------------------------------------------------------------
-void InfoReportsTab::NotifySelected( const kernel::Entity_ABC* /*entity*/ )
+void InfoReportsTab::Purge()
 {
-    // NOTHING
+    reports_->Purge();
 }

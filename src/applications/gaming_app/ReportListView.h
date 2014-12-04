@@ -53,6 +53,8 @@ public:
     //@{
     virtual void showEvent( QShowEvent* );
     virtual void contextMenuEvent ( QContextMenuEvent * e );
+    void Purge();
+    //@}
 
 public slots:
     //! @name Slots
