@@ -558,7 +558,7 @@ func (s *Server) createEvent(req *restful.Request) (interface{}, error) {
 	if err != nil {
 		return nil, err
 	}
-	return s.controller.CreateEvent(uuid, body)
+	return s.controller.UpdateEvent(uuid, body.GetUuid(), body)
 }
 
 func (s *Server) createEvents(req *restful.Request) (interface{}, error) {
@@ -569,7 +569,7 @@ func (s *Server) createEvents(req *restful.Request) (interface{}, error) {
 		return nil, err
 	}
 	for i, src := range body {
-		dst, err := s.controller.CreateEvent(uuid, src)
+		dst, err := s.controller.UpdateEvent(uuid, src.GetUuid(), src)
 		code, text := util.ConvertError(err)
 		dst.ErrorCode = &code
 		dst.ErrorText = &text

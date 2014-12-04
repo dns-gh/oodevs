@@ -127,12 +127,24 @@ class Events extends Backbone.Collection
         @on "remove", @on_remove
         @on "change:parent", @on_parent_changed
         @on "add remove change:begin change:end", => @ranges = null
+        @on "add change:action", @on_action
 
     # compare two event models
     compare: (a, b) ->
         diff = a.timestamp - b.timestamp
         return diff if diff != 0
         return a.id.localeCompare b.id
+
+    #update event activation when payload is modified
+    on_action: (model) =>
+        return unless is_replay_event model
+        action = model.get "action"
+        if !action?
+            return
+        decoded = window.atob action.payload
+        payload = $.parseJSON decoded
+        model.activation = payload.enabled
+        @trigger "render"
 
     # update event timestamps when modified
     on_timestamp: (model) =>
@@ -155,7 +167,7 @@ class Events extends Backbone.Collection
     resync: ->
         @models.sort @compare unless @sorted
         @sorted = true
-        @build_ranges() unless @ranges? and @replays?
+        @build_ranges() unless @ranges?
 
     # compute ranges coordinates
     build_ranges: ->
@@ -417,7 +429,8 @@ class EventsView extends Backbone.View
 
     initialize: (options) ->
         @model = options.model
-        @listenTo @model, "resync", @on_resync
+        @listenTo @model, "resync", @on_render
+        @listenTo @model, "render", @on_render
         @timeline = options.timeline
         if gaming?
             gaming.create_events = @create_events
@@ -440,7 +453,7 @@ class EventsView extends Backbone.View
             @listenTo     @model, "change",      @on_update
             @listenTo     @model, "add",         @on_create
 
-    on_resync: =>
+    on_render: =>
         @timeline.render()
 
     on_select: (model) =>

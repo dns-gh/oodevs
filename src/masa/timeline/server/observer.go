@@ -132,6 +132,7 @@ func (*ObserverService) IsLocked() bool                   { return false }
 func (*ObserverService) Start() error                     { return nil }
 func (*ObserverService) Stop() error                      { return nil }
 func (*ObserverService) AttachObserver(services.Observer) {}
+func (*ObserverService) UpdateTick(time.Time)             {}
 
 func (os *ObserverService) Trigger(url url.URL, event *sdk.Event) error {
 	os.log.Printf("external[%v] -> action %v\n", os.uuid, event.GetUuid())

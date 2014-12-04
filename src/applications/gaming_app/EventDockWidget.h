@@ -144,6 +144,8 @@ private slots:
     void OnEditClicked();
     void OnDeleteClicked();
     void OnSplitClicked();
+    void OnEnabledClicked();
+    void OnDisabledClicked();
     //@}
 
 private:

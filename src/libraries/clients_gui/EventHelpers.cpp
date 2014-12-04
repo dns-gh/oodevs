@@ -62,13 +62,32 @@ void gui::event_helpers::WriteJsonPayload( const std::map< std::string, std::str
     event.action.payload = output.str();
 }
 
-std::pair< bool, bool > gui::event_helpers::GetReplayBoundariesActivation( const gui::Event& event )
+gui::event_helpers::ReplayPayload::ReplayPayload( bool begin, bool end, bool enabled )
+    : begin( begin )
+    , end( end )
+    , enabled( enabled )
+{
+    // NOTHING
+}
+
+gui::event_helpers::ReplayPayload gui::event_helpers::ReadReplayPayload( const timeline::Event& event )
 {
     std::map< std::string, std::string > jsonPayload = boost::assign::map_list_of
         ( replayBeginKey, gui::event_helpers::BoolToString( true ) )
-        ( replayEndKey, gui::event_helpers::BoolToString( true ) );
-    if( event.GetType() == eEventTypes_Replay )
-        gui::event_helpers::ReadJsonPayload( event.GetEvent(), jsonPayload );
-    return std::make_pair( gui::event_helpers::StringToBool( jsonPayload[ replayBeginKey ] ),
-                           gui::event_helpers::StringToBool( jsonPayload[ replayEndKey ] ) );
+        ( replayEndKey, gui::event_helpers::BoolToString( true ) )
+        ( replayActivationKey, gui::event_helpers::BoolToString( true ) );
+    gui::event_helpers::ReadJsonPayload( event, jsonPayload );
+    return ReplayPayload( gui::event_helpers::StringToBool( jsonPayload[ replayBeginKey ] ),
+                          gui::event_helpers::StringToBool( jsonPayload[ replayEndKey ] ),
+                          gui::event_helpers::StringToBool( jsonPayload[ replayActivationKey ] ) );
+}
+
+void gui::event_helpers::WriteReplayPayload( const gui::event_helpers::ReplayPayload& payload, timeline::Event& event )
+{
+    event.action.payload =
+        "{"
+        "\"" + replayBeginKey + "\":" + BoolToString( payload.begin ) + ","
+        "\"" + replayEndKey + "\":" + BoolToString( payload.end ) + ","
+        "\"" + replayActivationKey + "\":" + BoolToString( payload.enabled ) +
+        "}";
 }

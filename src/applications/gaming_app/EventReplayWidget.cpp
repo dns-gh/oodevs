@@ -34,6 +34,7 @@ EventReplayWidget::EventReplayWidget( gui::EventPresenter& presenter )
 
     label_ = new gui::RichLineEdit( "replay-label" );
     description_ = new gui::RichTextEdit( "replay-description" );
+    enabled_ = new gui::RichCheckBox( "replay-enabled" );
 
     // Layout
     QGridLayout* gridLayout = new QGridLayout;
@@ -42,6 +43,8 @@ EventReplayWidget::EventReplayWidget( gui::EventPresenter& presenter )
     gridLayout->addWidget( label_, 0, 1 );
     gridLayout->addWidget( new QLabel( tr( "Description" ) ), 1, 0 );
     gridLayout->addWidget( description_, 1, 1 );
+    gridLayout->addWidget( new QLabel( tr( "Activation" ) ), 2, 0 );
+    gridLayout->addWidget( enabled_, 2, 1 );
 
     QScrollArea* scrollArea = new QScrollArea;
     scrollArea->setWidgetResizable( true );
@@ -59,8 +62,12 @@ EventReplayWidget::EventReplayWidget( gui::EventPresenter& presenter )
     gui::connect( description_, SIGNAL( TextChanged( const QString& ) ), [&](){
         replayPresenter_->OnDescriptionChanged( description_->text() );
     } );
+    gui::connect( enabled_, SIGNAL( stateChanged( int ) ), [&](){
+        replayPresenter_->OnEnabledChanged( enabled_->isChecked() );
+    } );
     connect( label_, SIGNAL( textChanged( const QString& ) ), &presenter_, SLOT( OnEventContentChanged() ) );
     connect( description_, SIGNAL( TextChanged( const QString& ) ), &presenter_, SLOT( OnEventContentChanged() ) );
+    connect( enabled_, SIGNAL( stateChanged( int ) ), &presenter_, SLOT( OnEventContentChanged() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -80,6 +87,7 @@ void EventReplayWidget::BlockSignals( bool blocked )
 {
     label_->blockSignals( blocked );
     description_->blockSignals( blocked );
+    enabled_->blockSignals( blocked );
 }
 
 // -----------------------------------------------------------------------------
@@ -90,4 +98,5 @@ void EventReplayWidget::Build( const gui::EventReplayViewState& state )
 {
     label_->SetText( state.label_ );
     description_->SetText( state.description_ );
+    enabled_->setChecked( state.enabled_ );
 }

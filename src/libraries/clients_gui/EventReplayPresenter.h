@@ -43,7 +43,8 @@ public:
     //! @name Slots
     //@{
     void OnLabelChanged( const QString& label );
-    void OnDescriptionChanged( const QString& description );
+    void OnDescriptionChanged(const QString& description);
+    void OnEnabledChanged( bool enabled );
     //@}
 
 private:

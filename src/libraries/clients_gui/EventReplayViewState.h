@@ -26,13 +26,6 @@ struct EventReplayViewState
     {
         // NOTHING
     }
-
-    EventReplayViewState( const QString& label, const QString& description )
-        : label_( label )
-        , description_( description )
-    {
-        // NOTHING
-    }
     //@}
 
     //! @name Operations
@@ -47,6 +40,7 @@ struct EventReplayViewState
     //@{
     QString label_;
     QString description_;
+    bool enabled_;
     //@}
 };
 

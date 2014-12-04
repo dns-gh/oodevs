@@ -769,7 +769,7 @@ class Replay
             event.set begin: format(d.min)
         else
             d.min = old.min
-        if d.idx != @model.replays.length-1 and (@timeline.range_zone == "bottom" or @timeline.range_zone == "right")            
+        if d.idx != @model.replays.length-1 and (@timeline.range_zone == "bottom" or @timeline.range_zone == "right")
             event.set end: format(d.max)
         else
             d.max = old.max
@@ -809,7 +809,7 @@ class Replay
                 triggers.trigger "replay_contextmenu", model, d3.event
             )
             .attr
-                class:  "replay_range"
+                class: "replay_range"
             .on("mousemove", (d) -> that.on_range_hover this, d )
             .on("mouseout",  -> that.timeline.on_range_hover_out this)
             .call d3.behavior.drag()
@@ -817,6 +817,10 @@ class Replay
             .on("drag",      (d) -> that.range_drag_move  this, d)
             .on("dragend",   (d) -> that.timeline.range_drag_end   this, d)
         replays.attr(@layout.replay_range_attributes())
+               .attr
+                    class: (d) ->
+                        model = that.model.get d.id
+                        "replay_range " + if model.activation then "activated" else "deactivated"
         replays.exit()
             .remove()
             .each((d) -> $(this).popover "destroy")

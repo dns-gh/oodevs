@@ -69,6 +69,7 @@ func (Fixture) UpdateEvent(uuid string, event *sdk.Event)    {}
 func (Fixture) InvalidateFilters()                           {}
 func (Fixture) UpdateServices()                              {}
 func (Fixture) UpdateRangeDates(start, end time.Time)        {}
+func (Fixture) DeleteEvent(uuid string)                      {}
 
 func (f *Fixture) Tick(tick time.Time) {
 	if f.tick != nil {

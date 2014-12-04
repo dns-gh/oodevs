@@ -61,6 +61,16 @@ void EventReplayPresenter::OnDescriptionChanged( const QString& description )
 }
 
 // -----------------------------------------------------------------------------
+// Name: EventReplayPresenter::OnDescriptionChanged
+// Created: SLI 2014-11-27
+// -----------------------------------------------------------------------------
+void EventReplayPresenter::OnEnabledChanged( bool enabled )
+{
+    state_->enabled_ = enabled;
+    BuildView();
+}
+
+// -----------------------------------------------------------------------------
 // Name: EventReplayPresenter::Trigger
 // Created: JSR 2014-10-24
 // -----------------------------------------------------------------------------
@@ -88,6 +98,7 @@ void EventReplayPresenter::FillFrom( const Event& event )
     state_->Purge();
     state_->label_ = QString::fromStdString( timelineEvent.name );
     state_->description_ = QString::fromStdString( timelineEvent.info );
+    state_->enabled_ = gui::event_helpers::ReadReplayPayload( event.GetEvent() ).enabled;
 }
 
 // -----------------------------------------------------------------------------
@@ -98,6 +109,8 @@ void EventReplayPresenter::CommitTo( timeline::Event& event ) const
 {
     event.name = state_->label_.toStdString();
     event.info = state_->description_.toStdString();
-    event.action.apply = false;
+    auto payload = event_helpers::ReadReplayPayload( event );
+    payload.enabled = state_->enabled_;
+    event_helpers::WriteReplayPayload( payload, event );
     event.action.target = timeline_helpers::CreateEventTarget( EVENT_REPLAY_PROTOCOL, EVENT_SIMULATION_SERVICE );
 }

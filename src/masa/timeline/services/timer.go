@@ -90,3 +90,7 @@ func (t *Timer) Stop() error {
 func (t *Timer) Trigger(url.URL, *sdk.Event) error {
 	return ErrInvalidTrigger
 }
+
+func (t *Timer) UpdateTick(current time.Time) {
+	// NOTHING
+}

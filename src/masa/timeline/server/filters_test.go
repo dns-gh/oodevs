@@ -242,7 +242,7 @@ func (t *TestSuite) TestFilters(c *C) {
 	f.addSwordEvent(c, "af11", "some_name", f.getSomeFragOrder(c, swapi.MakeAutomatTasker(11)))
 	f.addSwordEvent(c, "cf41", "some_name", f.getSomeFragOrder(c, swapi.MakeCrowdTasker(41)))
 	id := uuid.New()
-	_, err := f.controller.CreateEvent(f.session, &sdk.Event{
+	_, err := f.controller.UpdateEvent(f.session, id, &sdk.Event{
 		Uuid:  proto.String(id),
 		Name:  proto.String("some_event"),
 		Begin: proto.String(util.FormatTime(f.begin)),
@@ -357,7 +357,7 @@ func (t *TestSuite) TestServiceFilters(c *C) {
 	defer f.Close()
 
 	id := uuid.New()
-	_, err := f.controller.CreateEvent(f.session, &sdk.Event{
+	_, err := f.controller.UpdateEvent(f.session, id, &sdk.Event{
 		Uuid:  proto.String(id),
 		Name:  proto.String("some_event"),
 		Begin: proto.String(util.FormatTime(f.begin)),
