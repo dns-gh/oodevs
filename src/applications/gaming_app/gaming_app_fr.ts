@@ -2828,13 +2828,6 @@ Ces données ne peuvent pas être projetées.</translation>
     </message>
 </context>
 <context>
-    <name>ObjectReportPanel</name>
-    <message>
-        <source>Reports</source>
-        <translation>Comptes-rendus</translation>
-    </message>
-</context>
-<context>
     <name>ObjectStateDialog</name>
     <message>
         <source>Change object state</source>

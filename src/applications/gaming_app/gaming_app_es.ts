@@ -2823,13 +2823,6 @@ Los datos no pueden ser proyectados.</translation>
     </message>
 </context>
 <context>
-    <name>ObjectReportPanel</name>
-    <message>
-        <source>Reports</source>
-        <translation>Reportes</translation>
-    </message>
-</context>
-<context>
     <name>ObjectStateDialog</name>
     <message>
         <source>Change object state</source>

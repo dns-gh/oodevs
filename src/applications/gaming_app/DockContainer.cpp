@@ -193,7 +193,7 @@ DockContainer::DockContainer( QMainWindow* parent,
     }
     // Info panel
     {
-        InfoPanels* pInfoPanel = new InfoPanels( parent, controllers, factory, extractor, converter );
+        InfoPanels* pInfoPanel = new InfoPanels( parent, controllers, factory );
         pInfoPanel->SetModes( eModes_Default );
         parent->addDockWidget( Qt::RightDockWidgetArea, pInfoPanel );
     }
