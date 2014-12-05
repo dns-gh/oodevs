@@ -86,13 +86,13 @@ func checkDec() error {
 checkdec DECLIST SRCPATH
 
 Checks that every DEC function registered in C++ files within SRCPATH are
-listed in DECLIST, but for those prefixed by DEC_.
+listed in DECLIST, but for those prefixed by DEC_ or _DEC_
 `))
 		flag.PrintDefaults()
 	}
 	flag.Parse()
 	if flag.NArg() < 1 {
-		return fmt.Errorf("DEC file file expected")
+		return fmt.Errorf("DEC file expected")
 	}
 	if flag.NArg() < 2 {
 		return fmt.Errorf("source files directory expected")

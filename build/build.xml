@@ -842,7 +842,7 @@
     </target>
 
     <target name="checkdec" description="check models are in sync with DEC functions">
-        <exec executable="${bin.dir}/checkdec.exe" failonerror="true">
+        <exec taskname="checkdec" executable="${bin.dir}/checkdec.exe" failonerror="true">
             <arg value="${data.dir}/data/models/decfunctions.txt"/>
             <arg value="${src.dir}/libraries/simulation_kernel"/>
         </exec>
