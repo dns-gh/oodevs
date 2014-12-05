@@ -23,7 +23,8 @@ end
 -- @see integration.getOrderConduiteChangerReglesEngagementParameter
 -- @param fragOrder a DirectIA fragmentary order knowledge
 integration.updateROE = function( fragOrder )
-    DEC_Agent_ChangeEtatROE( integration.getOrderConduiteChangerReglesEngagementParameter( fragOrder ) )
+    myself.ROEGivenByFragOrder = integration.getOrderConduiteChangerReglesEngagementParameter( fragOrder )
+    DEC_Agent_ChangeEtatROE( myself.ROEGivenByFragOrder )
     integration.CR_ROE ( integration.getROE() )
     integration.cleanFragOrder( fragOrder )
 end
@@ -37,8 +38,10 @@ end
 -- This method can only be called by an agent.
 -- @param etatROE the rule of engagement to be set.
 integration.setROE = function( etatROE )
-    DEC_Agent_ChangeEtatROE( etatROE )
-    integration.CR_ROE ( etatROE )
+    if not myself.ROEGivenByFragOrder or etatROE > myself.ROEGivenByFragOrder  then -- We verify that the new ROE respect the ROE given by fragorder
+        DEC_Agent_ChangeEtatROE( etatROE )
+        integration.CR_ROE ( etatROE )
+    end
 end
 
 --- Returns the current rule of engagement.
