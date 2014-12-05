@@ -138,8 +138,8 @@ namespace
                 const kernel::SafePointer< T >* childEntity = static_cast< const kernel::SafePointer< T >* >( childItem->data( Roles::DataRole ).value< kernel::VariantPointer >().ptr_ );
                 if( childEntity && *childEntity == 0 )
                 {
-                    delete childEntity;
                     root->removeRow( row );
+                    delete childEntity;
                 }
                 else
                     ++row;
