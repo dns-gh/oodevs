@@ -141,6 +141,26 @@ func (TestSuite) TestEventUpdate(c *C) {
 	child.begin = child.begin.Add(2 * time.Minute)
 	swtest.DeepEquals(c, parent.children, map[*Event]struct{}{child: {}})
 
+	// remove parent
+	childProto = child.Proto()
+	childProto.Parent = proto.String("")
+	modified, triggered, updateChildren, err = child.Update(childProto, end, slice)
+	c.Assert(err, IsNil)
+	c.Assert(modified, Equals, true)
+	c.Assert(triggered, Equals, false)
+	c.Assert(updateChildren, Equals, false)
+	swtest.DeepEquals(c, parent.children, map[*Event]struct{}{})
+
+	// add parent
+	childProto = child.Proto()
+	childProto.Parent = proto.String(parent.uuid)
+	modified, triggered, updateChildren, err = child.Update(childProto, end, slice)
+	c.Assert(err, IsNil)
+	c.Assert(modified, Equals, true)
+	c.Assert(triggered, Equals, false)
+	c.Assert(updateChildren, Equals, false)
+	swtest.DeepEquals(c, parent.children, map[*Event]struct{}{child: {}})
+
 	// invalid parent update
 	child.begin = begin
 	parent.begin = begin
