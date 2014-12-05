@@ -10,11 +10,10 @@
 #include "clients_gui_pch.h"
 #include "ColorController.h"
 #include "LogisticHierarchiesBase.h"
+#include "ColorStrategy_ABC.h"
 #include "clients_kernel/Color_ABC.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/LogisticHierarchies.h"
-#include "clients_kernel/Color_ABC.h"
-#include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/Population_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
@@ -73,7 +72,7 @@ void ColorController::NotifyCreated( const kernel::Entity_ABC& entity )
             UpdateHierarchies( entity );
             return;
         }
-    if( const auto hierarchy =  entity.Retrieve< kernel::TacticalHierarchies >() )
+    if( const auto hierarchy = entity.Retrieve< kernel::TacticalHierarchies >() )
         if( const auto superior = hierarchy->GetSuperior() )
         {
             auto it = colors_.find( superior->GetId() );
@@ -89,6 +88,19 @@ void ColorController::NotifyCreated( const kernel::Entity_ABC& entity )
 void ColorController::NotifyDeleted( const kernel::Entity_ABC& entity )
 {
     colors_.erase( entity.GetId() );
+}
+
+void ColorController::ApplyDefaultColor( const kernel::Entity_ABC& entity, gui::ColorStrategy_ABC& strategy, bool applyToSubordinates )
+{
+    const QColor baseColor = strategy.FindBaseColor( entity );
+    if( auto color = const_cast< kernel::Color_ABC* >( entity.Retrieve< kernel::Color_ABC >() ) )
+        color->ChangeColor( baseColor );
+    Add( entity, baseColor, false );
+    if( !applyToSubordinates )
+        return;
+    if( auto pTacticalHierarchies = entity.Retrieve< kernel::TacticalHierarchies >() )
+        for( auto it = pTacticalHierarchies->CreateSubordinateIterator(); it.HasMoreElements(); )
+            ApplyDefaultColor( it.NextElement(), strategy, applyToSubordinates );
 }
 
 // -----------------------------------------------------------------------------
@@ -131,13 +143,13 @@ void ColorController::AddSubordinate( const kernel::Entity_ABC& entity, const QC
 // Name: ColorController::Remove
 // Created: LGY 2011-06-23
 // -----------------------------------------------------------------------------
-void ColorController::Remove( const kernel::Entity_ABC& entity, bool applyToSubordinates /*= true*/, bool force /*= false*/ )
+void ColorController::Remove( const kernel::Entity_ABC& entity )
 {
     auto it = colors_.find( entity.GetId() );
     if( it == colors_.end() )
         return;
     const QColor color = it->second;
-    RemoveSubordinate( entity, color, applyToSubordinates, force );
+    RemoveSubordinate( entity, color, true, false );
     if( const auto pHierarchies = entity.Retrieve< kernel::TacticalHierarchies >() )
         if( const auto pSuperior = pHierarchies->GetSuperior() )
             if( const auto pColor = pSuperior->Retrieve< kernel::Color_ABC >() )
@@ -175,19 +187,20 @@ void ColorController::RemoveSubordinate( const kernel::Entity_ABC& entity, const
 void ColorController::UpdateHierarchies( const kernel::Entity_ABC& entity )
 {
     controllers_.controller_.Update( entity );
-    auto type = entity.GetTypeName();
-    if( type != kernel::Object_ABC::typeName_ && type != kernel::Population_ABC::typeName_)
-        if( const auto pTactical = entity.Retrieve< kernel::TacticalHierarchies >() )
-        {
-            controllers_.controller_.Update( *pTactical );
-            if( const auto pCommunication = entity.Retrieve< kernel::CommunicationHierarchies >() )
-                controllers_.controller_.Update( *pCommunication );
-            else if( const auto pCommunication = pTactical->GetTop().Retrieve< kernel::CommunicationHierarchies >() )
-                controllers_.controller_.Update( *pCommunication );
-            if( const auto pLogistic = static_cast< const kernel::LogisticHierarchies* >( entity.Retrieve< gui::LogisticHierarchiesBase >() ) )
-                controllers_.controller_.Update( *pLogistic );
-            UpdateLogisticBaseStates( *pTactical );
-        }
+    const auto& type = entity.GetTypeName();
+    if( type == kernel::Object_ABC::typeName_ || type == kernel::Population_ABC::typeName_ )
+        return;
+    if( const auto pTactical = entity.Retrieve< kernel::TacticalHierarchies >() )
+    {
+        controllers_.controller_.Update( *pTactical );
+        if( const auto pCommunication = entity.Retrieve< kernel::CommunicationHierarchies >() )
+            controllers_.controller_.Update( *pCommunication );
+        else if( const auto pCommunication = pTactical->GetTop().Retrieve< kernel::CommunicationHierarchies >() )
+            controllers_.controller_.Update( *pCommunication );
+        if( const auto pLogistic = static_cast< const kernel::LogisticHierarchies* >( entity.Retrieve< gui::LogisticHierarchiesBase >() ) )
+            controllers_.controller_.Update( *pLogistic );
+        UpdateLogisticBaseStates( *pTactical );
+    }
 }
 
 // -----------------------------------------------------------------------------

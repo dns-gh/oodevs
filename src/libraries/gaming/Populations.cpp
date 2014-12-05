@@ -8,15 +8,20 @@
 // *****************************************************************************
 
 #include "gaming_pch.h"
-#include "Objects.h"
+#include "Populations.h"
+#include "Population.h"
 
-Objects::Objects( kernel::Controllers& controllers )
-    : tools::TrackingResolver< const Object, kernel::Object_ABC >( controllers )
+Populations::Populations()
 {
     // NOTHING
 }
 
-Objects::~Objects()
+Populations::~Populations()
 {
-    DeleteAll();
+    // NOTHING
+}
+
+void Populations::AddPopulation( const Population& population )
+{
+    Register( population.GetId(), population );
 }

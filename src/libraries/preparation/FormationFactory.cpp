@@ -9,15 +9,14 @@
 
 #include "preparation_pch.h"
 #include "FormationFactory.h"
-#include "Color.h"
 #include "Formation.h"
 #include "FormationHierarchies.h"
 #include "LogisticBaseStates.h"
 #include "StaticModel.h"
 #include "Symbol.h"
 #include "TacticalLines.h"
-
 #include "clients_gui/AggregatedPositions.h"
+#include "clients_gui/Color.h"
 #include "clients_gui/LogisticBase.h"
 #include "clients_kernel/Color_ABC.h"
 #include "clients_kernel/Controllers.h"
@@ -66,7 +65,7 @@ kernel::Formation_ABC* FormationFactory::Create( kernel::Entity_ABC& parent, E_N
     formation->Attach( *new TacticalLines( *hierarchies ) );
     formation->Attach< kernel::Positions >( *new gui::AggregatedPositions( *formation ) );
     formation->Attach< gui::LogisticHierarchiesBase>( *new LogisticBaseStates( controllers_.controller_, *formation, staticModel_.objectTypes_, dico ) );
-    formation->Attach< kernel::Color_ABC >( *new Color( parent ) );
+    formation->Attach< kernel::Color_ABC >( *new gui::Color( parent ) );
     formation->Attach( *new kernel::DictionaryExtensions( controllers_, "orbat-attributes", staticModel_.extensions_ ) );
     formation->Attach( *new gui::LogisticBase( controllers_, *formation, dico, true, false, false ) );
     formation->Polish();
@@ -88,7 +87,7 @@ kernel::Formation_ABC* FormationFactory::Create( xml::xistream& xis, kernel::Ent
     formation->Attach( *new TacticalLines( *hierarchies ) );
     formation->Attach< kernel::Positions >( *new gui::AggregatedPositions( *formation ) );
     formation->Attach< gui::LogisticHierarchiesBase >( *new LogisticBaseStates( controllers_.controller_, *formation, staticModel_.objectTypes_, dico ) );
-    formation->Attach< kernel::Color_ABC >( *new Color( xis ) );
+    formation->Attach< kernel::Color_ABC >( *new gui::Color( xis ) );
     formation->Attach( *new kernel::DictionaryExtensions( controllers_, "orbat-attributes", xis, staticModel_.extensions_ ) );
     formation->Attach( *new gui::LogisticBase( controllers_, *formation, dico, true, xis, false ) );
     formation->Polish();

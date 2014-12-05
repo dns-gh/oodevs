@@ -11,14 +11,13 @@
 #include "Object.h"
 #include "tools/IdManager.h"
 #include "ObjectPositions.h"
-#include "Color.h"
+#include "clients_gui/Color.h"
+#include "clients_gui/PropertiesDictionary.h"
 #include "clients_kernel/Tools.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/ObjectType.h"
-#include "clients_gui/PropertiesDictionary.h"
 #include "clients_kernel/Styles.h"
-#include "clients_kernel/Color_ABC.h"
 #include <xeumeuleu/xml.hpp>
 
 using namespace kernel;
@@ -115,7 +114,7 @@ void Object::SerializeAttributes( xml::xostream& xos ) const
 {
     gui::EntityImplementation< kernel::Object_ABC >::SerializeAttributes( xos );
     xos << xml::attribute( "type", type_.GetType() );
-    if( const ::Color* color = static_cast< const ::Color* >( Retrieve< kernel::Color_ABC >() ) )
+    if( const auto color = Retrieve< kernel::Color_ABC >() )
         color->SerializeAttributes( xos );
     if( const ObjectPositions* positions = static_cast< const ObjectPositions* >( Retrieve< Positions >() ) )
         positions->Serialize( xos );

@@ -55,6 +55,7 @@
 #include "PopulationHierarchies.h"
 #include "PopulationHierarchiesCommunication.h"
 #include "PopulationPositions.h"
+#include "Populations.h"
 #include "Reinforcements.h"
 #include "Reports.h"
 #include "Services.h"
@@ -68,19 +69,17 @@
 #include "UrbanPerceptions.h"
 #include "VisionCones.h"
 #include "Weapons.h"
-#include "Color.h"
 #include "CommandPostAttributes.h"
-
 #include "actions/ActionsModel.h"
 #include "clients_gui/AggregatedPositions.h"
 #include "clients_gui/AutomatDecisions.h"
+#include "clients_gui/Color.h"
 #include "clients_gui/CriticalIntelligence.h"
 #include "clients_gui/EntityType.h"
 #include "clients_gui/LogisticBase.h"
 #include "clients_gui/Paths.h"
 #include "clients_gui/PropertiesDictionary.h"
 #include "clients_kernel/AgentTypes.h"
-#include "clients_kernel/Color_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/LogisticHierarchies.h"
@@ -171,7 +170,7 @@ kernel::Automat_ABC* AgentFactory::Create( const sword::AutomatCreation& message
     result->Attach< kernel::DictionaryExtensions >( *new DictionaryExtensions( controllers_, "orbat-attributes", static_.extensions_ ) );
     result->Attach< gui::LogisticHierarchiesBase >( *new kernel::LogisticHierarchies( controllers_.controller_, *result, model_.GetAutomatResolver(), model_.GetFormationResolver() ) );
     if( message.has_color() )
-        result->Attach< kernel::Color_ABC >( *new Color( message.color() ) );
+        result->Attach< kernel::Color_ABC >( *new gui::Color( message.color() ) );
     result->Update( message );
     result->Polish();
     return result;
@@ -223,7 +222,7 @@ kernel::Agent_ABC* AgentFactory::Create( const sword::UnitCreation& message )
     result->Attach( *new Weapons( controllers_, static_.objectTypes_, static_.objectTypes_ ) );
     result->Attach( *new Affinities( *result, controllers_.controller_, model_.teams_, dictionary ) );
     if( message.has_color() )
-        result->Attach< kernel::Color_ABC >( *new Color( message.color() ) );
+        result->Attach< kernel::Color_ABC >( *new gui::Color( message.color() ) );
     result->Attach< kernel::DictionaryExtensions >( *new DictionaryExtensions( controllers_, "orbat-attributes", static_.extensions_ ) );
     result->Attach( *new PointingKnowledges() );
     AttachExtensions( *result );
@@ -241,7 +240,7 @@ kernel::Population_ABC* AgentFactory::Create( const sword::CrowdCreation& messag
     const kernel::PopulationType* type = static_.types_.tools::Resolver< kernel::PopulationType >::Find( message.type().id() );
     if( !type )
         return 0;
-    const kernel::Team_ABC& team = model_.teams_.GetTeam( message.party().id() );
+    kernel::Team_ABC& team = model_.teams_.GetTeam( message.party().id() );
     Population* result = new Population( message, controllers_, static_.coordinateConverter_, *type, actionsModel_, profile_ );
     gui::PropertiesDictionary& dictionary = result->Get< gui::PropertiesDictionary >();
     result->Attach< kernel::CommunicationHierarchies >( *new PopulationHierarchiesCommunication( controllers_.controller_, *result, model_.knowledgeGroups_.FindCrowdKnowledgeGroup( team ) ) );
@@ -252,8 +251,9 @@ kernel::Population_ABC* AgentFactory::Create( const sword::CrowdCreation& messag
     result->Attach< gui::Decisions_ABC >( *new PopulationDecisions( controllers_.controller_, *result, *type ) );
     result->Attach( *new DecisionalStates( *result ) );
     result->Attach( *new Affinities( *result, controllers_.controller_, model_.teams_, dictionary ) );
+    team.Get< Populations >().AddPopulation( *result );
     if( message.has_color() )
-        result->Attach< kernel::Color_ABC >( *new Color( message.color() ) );
+        result->Attach< kernel::Color_ABC >( *new gui::Color( message.color() ) );
     result->Attach< kernel::DictionaryExtensions >( *new DictionaryExtensions( controllers_, "orbat-attributes", static_.extensions_ ) );
     AttachExtensions( *result );
     result->Polish();

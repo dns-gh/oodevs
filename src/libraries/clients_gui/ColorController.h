@@ -10,7 +10,7 @@
 #ifndef __clients_gui_ColorController_h_
 #define __clients_gui_ColorController_h_
 
-#include "ColorEditor_ABC.h"
+#include "ColorController_ABC.h"
 #include "ColorModifier_ABC.h"
 #include <tools/ElementObserver_ABC.h>
 #include <boost/optional/optional_fwd.hpp>
@@ -36,7 +36,7 @@ namespace gui
 class ColorController : public tools::ElementObserver_ABC< kernel::Entity_ABC >
                       , public tools::Observer_ABC
                       , public ColorModifier_ABC
-                      , public ColorEditor_ABC
+                      , public ColorController_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -47,8 +47,9 @@ public:
 
     //! @name Operations
     //@{
+    virtual void ApplyDefaultColor( const kernel::Entity_ABC& entity, gui::ColorStrategy_ABC& strategy, bool applyToSubordinates );
     virtual void Add( const kernel::Entity_ABC& entity, const QColor& newColor, bool applyToSubordinates = true, bool force = false );
-    virtual void Remove( const kernel::Entity_ABC& entity, bool applyToSubordinates = true, bool force = false );
+    virtual void Remove( const kernel::Entity_ABC& entity );
     virtual void Reset( const kernel::Entity_ABC& entity, const QColor& newColor );
 
     virtual QColor Apply( const kernel::Entity_ABC& entity, const QColor& base ) const;
@@ -59,12 +60,13 @@ public:
     //@}
 
 protected:
+    void AddColor( const kernel::Entity_ABC& entity, const QColor& color );
+    void ClearColor( const kernel::Entity_ABC& entity );
+
+private:
     //! @name Helpers
     //@{
     void AddSubordinate( const kernel::Entity_ABC& entity, const QColor& newColor, const boost::optional< QColor >& oldColor, bool applyToSubordinates, bool force );
-    void AddObjects( const kernel::Entity_ABC& entity, const QColor& newColor );
-    void AddColor( const kernel::Entity_ABC& entity, const QColor& color );
-    void ClearColor( const kernel::Entity_ABC& entity );
     void RemoveSubordinate( const kernel::Entity_ABC& entity, const QColor& color, bool applyToSubordinates, bool force );
     void UpdateHierarchies( const kernel::Entity_ABC& entity );
     void UpdateLogisticBaseStates( const kernel::TacticalHierarchies& tactical );
@@ -75,13 +77,10 @@ private:
     virtual bool ApplyColor( const kernel::Color_ABC& color ) = 0;
 
 private:
-    typedef std::map< unsigned long, QColor > T_Colors;
-
-protected:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    T_Colors colors_;
+    std::map< unsigned long, QColor > colors_;
     //@}
 };
 }

@@ -10,7 +10,6 @@
 #include "preparation_pch.h"
 #include "AgentTemplateElement.h"
 #include "AgentsModel.h"
-
 #include "clients_gui/Tools.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/AgentType.h"
@@ -66,7 +65,7 @@ AgentTemplateElement::~AgentTemplateElement()
 // -----------------------------------------------------------------------------
 kernel::Entity_ABC* AgentTemplateElement::Instanciate( kernel::Entity_ABC& superior,
                                                        const geometry::Point2f& center,
-                                                       ColorController& colorController )
+                                                       gui::ColorController_ABC& colorController )
 {
     kernel::Automat_ABC* parent = dynamic_cast< kernel::Automat_ABC* >( &superior );
     if( !parent )

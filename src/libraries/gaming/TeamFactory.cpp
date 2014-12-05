@@ -10,7 +10,6 @@
 #include "gaming_pch.h"
 #include "TeamFactory.h"
 #include "AgentsModel.h"
-#include "Color.h"
 #include "ConvexHulls.h"
 #include "DictionaryExtensions.h"
 #include "Diplomacies.h"
@@ -24,6 +23,7 @@
 #include "LogisticLinks.h"
 #include "Model.h"
 #include "Objects.h"
+#include "Populations.h"
 #include "StaticModel.h"
 #include "StaticModel.h"
 #include "Team.h"
@@ -36,9 +36,9 @@
 #include "UrbanKnowledges.h"
 #include "actions/ActionsModel.h"
 #include "clients_gui/AggregatedPositions.h"
+#include "clients_gui/Color.h"
 #include "clients_gui/LogisticBase.h"
 #include "clients_kernel/AgentTypes.h"
-#include "clients_kernel/Color_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/LogisticHierarchies.h"
 #include "clients_kernel/ObjectTypes.h"
@@ -80,7 +80,8 @@ TeamFactory::~TeamFactory()
 kernel::Team_ABC* TeamFactory::CreateTeam( const sword::PartyCreation& message )
 {
     Team* result = new Team( message, controllers_, actionsModel_, profile_ );
-    result->Attach( *new Objects() );
+    result->Attach( *new Objects( controllers_ ) );
+    result->Attach( *new Populations() );
     gui::PropertiesDictionary& dico = result->Get< gui::PropertiesDictionary >();
     result->Attach( *new UrbanKnowledges( *result, controllers_.controller_, model_.urbanKnowledgeFactory_ ) );
     result->Attach< kernel::Diplomacies_ABC >( *new Diplomacies( controllers_.controller_, model_.teams_ ) );
@@ -92,7 +93,7 @@ kernel::Team_ABC* TeamFactory::CreateTeam( const sword::PartyCreation& message )
     result->Attach< kernel::Dotations_ABC >( *new Dotations( *result,controllers_.controller_, model_.static_.objectTypes_, dico, model_.agents_, model_.teams_, model_.teams_ ) );
     result->Attach< kernel::DictionaryExtensions >( *new ::DictionaryExtensions( controllers_, "orbat-attributes", static_.extensions_ ) );
     if( message.has_color() )
-        result->Attach< kernel::Color_ABC >( *new Color( message.color() ) );
+        result->Attach< kernel::Color_ABC >( *new gui::Color( message.color() ) );
     result->Update( message );
     result->Polish();
     return result;
@@ -125,7 +126,8 @@ namespace
 kernel::Team_ABC* TeamFactory::CreateNoSideTeam()
 {
     auto* result = new gui::EntityImplementation< kernel::Team_ABC >( controllers_.controller_, 0, tools::translate( "TeamFactory", "No side" ), &actionsModel_ );
-    result->Attach( *new Objects() );
+    result->Attach( *new Objects( controllers_ ) );
+    result->Attach( *new Populations() );
     result->Attach< kernel::Diplomacies_ABC >( *new NoSideDiplomacy() );
     result->Attach< kernel::TacticalHierarchies >( *new TeamTacticalHierarchies( controllers_.controller_, *result ) );
     result->Update( kernel::InstanciationComplete() );
@@ -165,7 +167,7 @@ kernel::Formation_ABC* TeamFactory::CreateFormation( const sword::FormationCreat
     result->Attach< kernel::DictionaryExtensions >( *new ::DictionaryExtensions( controllers_, "orbat-attributes", static_.extensions_ ) );
     result->Attach< gui::LogisticHierarchiesBase >( *new kernel::LogisticHierarchies( controllers_.controller_, *result, model_.GetAutomatResolver(), model_.GetFormationResolver() ) );
     if( message.has_color() )
-        result->Attach< kernel::Color_ABC >( *new Color( message.color() ) );
+        result->Attach< kernel::Color_ABC >( *new gui::Color( message.color() ) );
     result->Update( message );
     result->Polish();
     return result;

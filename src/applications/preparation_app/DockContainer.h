@@ -20,6 +20,7 @@ namespace kernel
 
 namespace gui
 {
+    class ColorController_ABC;
     class ColorStrategy_ABC;
     class EntitySymbols;
     class GLMainProxy;
@@ -36,7 +37,6 @@ namespace tools
     class ExerciseConfig;
 }
 
-class ColorController;
 class ModelBuilder;
 class Model;
 class StaticModel;
@@ -71,7 +71,7 @@ public:
                             gui::SymbolIcons& symbols,
                             gui::ColorStrategy_ABC& colorStrategy,
                             gui::GLMainProxy& glMainProxy,
-                            ColorController& colorController,
+                            gui::ColorController_ABC& colorController,
                             const kernel::Profile_ABC& profile );
     virtual ~DockContainer();
     //@}

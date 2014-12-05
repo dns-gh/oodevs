@@ -9,14 +9,13 @@
 
 #include "clients_gui_pch.h"
 #include "ColorStrategy.h"
-
 #include "ColorModifier_ABC.h"
 #include "GLOptions.h"
 #include "GLView_ABC.h"
-
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/CommunicationHierarchies.h"
+#include "clients_kernel/Color_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Diplomacies_ABC.h"
 #include "clients_kernel/Drawing_ABC.h"
@@ -116,15 +115,6 @@ void ColorStrategy::Process( const Entity_ABC& entity )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ColorStrategy::Process
-// Created: LGY 2011-06-29
-// -----------------------------------------------------------------------------
-void ColorStrategy::Process( const kernel::Entity_ABC& entity, QColor color )
-{
-    ApplyColor( ApplyModifiers( entity, color ) );
-}
-
-// -----------------------------------------------------------------------------
 // Name: ColorStrategy::SelectColor
 // Created: AGE 2006-03-17
 // -----------------------------------------------------------------------------
@@ -171,6 +161,9 @@ void ColorStrategy::SelectColor( const kernel::Pathfind_ABC& pathfind )
 // -----------------------------------------------------------------------------
 QColor ColorStrategy::FindBaseColor( const kernel::Entity_ABC& entity )
 {
+    if( auto color = entity.Retrieve< kernel::Color_ABC >() )
+        if( const auto& baseColor = color->GetBaseColor() )
+            return QColor( baseColor->get< 0 >(), baseColor->get< 1 >(), baseColor->get< 2 >() );
     const Hierarchies* hierarchies = entity.Retrieve< TacticalHierarchies >();
     if( ! hierarchies )
         hierarchies = entity.Retrieve< CommunicationHierarchies >();
@@ -253,8 +246,7 @@ void ColorStrategy::SelectColor( const Object_ABC& object )
 // -----------------------------------------------------------------------------
 void ColorStrategy::SelectColor( const Population_ABC& population )
 {
-    QColor color = FindSuperiorColor( population, colorController_, FindBaseColor( population ) );
-    Process( population, colorController_.Apply( population, color ) );
+    Process( population );
 }
 
 // -----------------------------------------------------------------------------
@@ -263,8 +255,8 @@ void ColorStrategy::SelectColor( const Population_ABC& population )
 // -----------------------------------------------------------------------------
 void ColorStrategy::SelectColor( const Inhabitant_ABC& inhabitant )
 {
-    QColor base = FindSuperiorColor( inhabitant, colorController_, FindBaseColor( inhabitant ) );
-    QColor color = ApplyModifiers( inhabitant, base );
+    const QColor base = FindSuperiorColor( inhabitant, colorController_, FindBaseColor( inhabitant ) );
+    const QColor color = ApplyModifiers( inhabitant, base );
     if( base == color )
         ApplyColor( color, 0 );
     else

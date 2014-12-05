@@ -10,9 +10,8 @@
 #ifndef __ObjectsModel_h_
 #define __ObjectsModel_h_
 
-#include <tools/Resolver.h>
-#include <tools/ElementObserver_ABC.h>
-#include <boost/noncopyable.hpp>
+#include "clients_kernel/Object_ABC.h"
+#include "clients_kernel/TrackingResolver.h"
 
 namespace xml
 {
@@ -23,11 +22,9 @@ namespace xml
 namespace kernel
 {
     class Team_ABC;
-    class Controllers;
     class Entity_ABC;
     class ObjectType;
     class Location_ABC;
-    class Object_ABC;
 }
 
 class Model;
@@ -39,39 +36,21 @@ class ObjectFactory_ABC;
 */
 // Created: JSR 2011-02-22
 // =============================================================================
-class ObjectsModel : public tools::Resolver< kernel::Object_ABC >
-                   , public tools::Observer_ABC
-                   , public tools::ElementObserver_ABC< kernel::Object_ABC >
-                   , private boost::noncopyable
+class ObjectsModel : public tools::TrackingResolver< kernel::Object_ABC >
 {
 public:
-    //! @name Constructors/Destructor
-    //@{
              ObjectsModel( kernel::Controllers& controllers, ObjectFactory_ABC& factory, const tools::StringResolver< kernel::ObjectType >& resolver );
     virtual ~ObjectsModel();
-    //@}
 
-    //! @name Operations
-    //@{
     void Finalize();
     void Purge();
+
     kernel::Object_ABC* CreateObject( const kernel::Team_ABC& team, const kernel::ObjectType& type, const QString& name, const kernel::Location_ABC& location );
     void CreateObject( xml::xistream& xis, const kernel::Team_ABC& team, Model& model );
-    //@}
 
 private:
-    //! @name Helpers
-    //@{
-    virtual void NotifyDeleted( const kernel::Object_ABC& team );
-    //@}
-
-private:
-    //! @name Member data
-    //@{
-    kernel::Controllers& controllers_;
     ObjectFactory_ABC& factory_;
     const tools::StringResolver< kernel::ObjectType >& resolver_;
-    //@}
 };
 
 #endif // __ObjectsModel_h_

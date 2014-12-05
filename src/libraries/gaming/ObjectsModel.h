@@ -10,20 +10,17 @@
 #ifndef __ObjectsModel_h_
 #define __ObjectsModel_h_
 
-#include <tools/Resolver.h>
+#include "clients_kernel/Object_ABC.h"
+#include "clients_kernel/TrackingResolver.h"
 
 namespace sword
 {
     class ObjectCreation;
+    class ObjectDestruction;
     class ObjectUpdate;
 }
 
 class ObjectFactory_ABC;
-
-namespace kernel
-{
-    class Object_ABC;
-}
 
 // =============================================================================
 /** @class  ObjectsModel
@@ -31,38 +28,20 @@ namespace kernel
 */
 // Created: AGE 2006-02-10
 // =============================================================================
-class ObjectsModel : public tools::Resolver< kernel::Object_ABC >
+class ObjectsModel : public tools::TrackingResolver< kernel::Object_ABC >
 {
 public:
-    //! @name Constructors/Destructor
-    //@{
-    explicit ObjectsModel( ObjectFactory_ABC& objectFactory );
+             ObjectsModel( kernel::Controllers& controllers, ObjectFactory_ABC& factory );
     virtual ~ObjectsModel();
-    //@}
 
-    //! @name Operations
-    //@{
     void Purge();
 
     void CreateObject( const sword::ObjectCreation& message );
+    void DeleteObject( const sword::ObjectDestruction& message );
     void UpdateObject( const sword::ObjectUpdate& message );
-    kernel::Object_ABC& GetObject( unsigned long id );
-    kernel::Object_ABC* FindObject( unsigned long id );
-    void DeleteObject( unsigned long id );
-    //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    ObjectsModel( const ObjectsModel& );            //!< Copy constructor
-    ObjectsModel& operator=( const ObjectsModel& ); //!< Assignment operator
-    //@}
-
-private:
-    //! @name Member data
-    //@{
-    ObjectFactory_ABC& objectFactory_;
-    //@}
+    ObjectFactory_ABC& factory_;
 };
 
 #endif // __ObjectsModel_h_

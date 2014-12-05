@@ -30,7 +30,7 @@ TemplatesPanel::TemplatesPanel( QWidget* parent,
                                 FormationModel& formations,
                                 GhostModel& ghosts,
                                 const kernel::AgentTypes& types,
-                                ColorController& colorController )
+                                gui::ColorController_ABC& colorController )
     : InfoPanel_ABC( parent, panel, tr( "Templates" ) )
     , controllers_ ( controllers )
     , menuEntity_  ( controllers )

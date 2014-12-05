@@ -7,25 +7,28 @@
 //
 // *****************************************************************************
 
-#ifndef __Objects_h_
-#define __Objects_h_
+#ifndef __Populations_h_
+#define __Populations_h_
 
-#include "Object.h"
 #include "clients_kernel/Extension_ABC.h"
-#include "clients_kernel/TrackingResolver.h"
+#include <tools/Resolver.h>
+
+class Population;
 
 // =============================================================================
-/** @class  Objects
-    @brief  Objects
+/** @class  Populations
+    @brief  Populations
 */
-// Created: JSR 2014-11-17
+// Created: MCO 2014-11-21
 // =============================================================================
-class Objects : public kernel::Extension_ABC
-              , public tools::TrackingResolver< const Object, kernel::Object_ABC >
+class Populations : public kernel::Extension_ABC
+                  , public tools::Resolver< const Population >
 {
 public:
-    explicit Objects( kernel::Controllers& controllers );
-    virtual ~Objects();
+             Populations();
+    virtual ~Populations();
+
+    void AddPopulation( const Population& population );
 };
 
-#endif // __Objects_h_
+#endif // __Populations_h_

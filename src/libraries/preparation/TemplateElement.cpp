@@ -9,12 +9,10 @@
 
 #include "preparation_pch.h"
 #include "TemplateElement.h"
-#include "ColorController.h"
-
+#include "clients_gui/ColorController_ABC.h"
 #include "clients_kernel/Color_ABC.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/DictionaryExtensions.h"
-
 #pragma warning( push, 0 )
 #include <boost/algorithm/string.hpp>
 #pragma warning( pop )
@@ -128,7 +126,7 @@ void TemplateElement::Rename( const QString& name )
 // Created: ABR 2014-02-25
 // -----------------------------------------------------------------------------
 void TemplateElement::SetColor( kernel::Entity_ABC& entity,
-                                    ColorController& colorController )
+                                gui::ColorController_ABC& colorController )
 {
     if( color_ )
     {

@@ -38,11 +38,10 @@
 #include "StaticModel.h"
 #include "Stocks.h"
 #include "TacticalLines.h"
-#include "Color.h"
 #include "Symbol.h"
 #include "AgentAffinities.h"
-
 #include "clients_gui/AggregatedPositions.h"
+#include "clients_gui/Color.h"
 #include "clients_gui/LogisticBase.h"
 #include "clients_kernel/AgentType.h"
 #include "clients_kernel/AgentTypes.h"
@@ -112,7 +111,7 @@ kernel::Agent_ABC* AgentFactory::Create( kernel::Automat_ABC& parent, const kern
         result->Attach( *new Stocks( controllers_.controller_ ) );
     result->Attach( *new kernel::DictionaryExtensions( controllers_, "orbat-attributes", static_.extensions_ ) );
     result->Attach< kernel::CommandPostAttributes_ABC >( *new CommandPostAttributes( *result, type, dictionary, commandPost ) );
-    result->Attach< kernel::Color_ABC >( *new Color( parent ) );
+    result->Attach< kernel::Color_ABC >( *new gui::Color( parent ) );
     result->Polish();
     return result;
 }
@@ -140,7 +139,7 @@ kernel::Automat_ABC* AgentFactory::Create( kernel::Entity_ABC& parent, const ker
     result->Attach( *new gui::LogisticBase( controllers_, *result, dictionary, isTC2, isTC2, true ) );
     result->Attach< gui::LogisticHierarchiesBase >( *new LogisticBaseStates( controllers_.controller_, *result, static_.objectTypes_, dictionary, isTC2 ) );
 
-    result->Attach< kernel::Color_ABC >( *new Color( parent ) );
+    result->Attach< kernel::Color_ABC >( *new gui::Color( parent ) );
     result->Attach( *new kernel::DictionaryExtensions( controllers_, "orbat-attributes", static_.extensions_ ) );
     result->Polish();
     return result;
@@ -164,7 +163,7 @@ kernel::Population_ABC* AgentFactory::Create( kernel::Entity_ABC& parent, const 
     result->Attach< kernel::Positions >( *new PopulationPositions( *result, controllers_.controller_, static_.coordinateConverter_, position, dictionary ) );
     result->Attach< kernel::TacticalHierarchies >( *new PopulationHierarchies( *result, top ) );
     result->Attach< Affinities >( *new PeopleAffinities( controllers_, model_, dictionary, *result ) );
-    result->Attach< kernel::Color_ABC >( *new Color( parent ) );
+    result->Attach< kernel::Color_ABC >( *new gui::Color( parent ) );
     result->Attach( *new kernel::DictionaryExtensions( controllers_, "orbat-attributes", static_.extensions_ ) );
     if( Populations* popus = top->Retrieve< Populations >() )
         popus->AddPopulation( *result );
@@ -246,7 +245,7 @@ kernel::Agent_ABC* AgentFactory::Create( xml::xistream& xis, kernel::Automat_ABC
     if( result->GetType().IsLogisticSupply() )
         result->Attach( *new Stocks( xis, controllers_.controller_, static_.objectTypes_ ) );
     result->Attach( *new kernel::DictionaryExtensions( controllers_, "orbat-attributes", xis, static_.extensions_ ) );
-    result->Attach< kernel::Color_ABC >( *new Color( xis ) );
+    result->Attach< kernel::Color_ABC >( *new gui::Color( xis ) );
     result->Polish();
     return result;
 }
@@ -276,7 +275,7 @@ kernel::Automat_ABC* AgentFactory::Create( xml::xistream& xis, kernel::Entity_AB
     result->Attach< gui::LogisticHierarchiesBase >( *new LogisticBaseStates( controllers_.controller_, *result, static_.objectTypes_, dictionary, isTC2 ) );
 
     result->Attach( *new kernel::DictionaryExtensions( controllers_, "orbat-attributes", xis, static_.extensions_ ) );
-    result->Attach< kernel::Color_ABC >( *new Color( xis ) );
+    result->Attach< kernel::Color_ABC >( *new gui::Color( xis ) );
     result->Polish();
     return result;
 }
@@ -298,7 +297,7 @@ kernel::Population_ABC* AgentFactory::Create( xml::xistream& xis, kernel::Team_A
     result->Attach( *new kernel::DictionaryExtensions( controllers_, "orbat-attributes", xis, static_.extensions_ ) );
     if( Populations* popus = parent.Retrieve< Populations >() )
         popus->AddPopulation( *result );
-    result->Attach< kernel::Color_ABC >( *new Color( xis ) );
+    result->Attach< kernel::Color_ABC >( *new gui::Color( xis ) );
     result->Polish();
     return result;
 }
@@ -351,7 +350,7 @@ kernel::Agent_ABC* AgentFactory::Create( kernel::Ghost_ABC& ghost, const kernel:
         result->Attach( *new Stocks( controllers_.controller_ ) );
     result->Attach( *new kernel::DictionaryExtensions( controllers_, "orbat-attributes", static_.extensions_ ) );
     result->Attach< kernel::CommandPostAttributes_ABC >( *new CommandPostAttributes( *result, type, dictionary, ghost.Get< kernel::CommandPostAttributes_ABC >().IsCommandPost() ) );
-    result->Attach< kernel::Color_ABC >( *new Color( ghost ) );
+    result->Attach< kernel::Color_ABC >( *new gui::Color( ghost ) );
     result->Polish();
     return result;
 }
@@ -421,7 +420,7 @@ kernel::Automat_ABC* AgentFactory::Create( kernel::Ghost_ABC& ghost, const kerne
                 logBaseStates->SetDotation( dotation.type_, dotation.quantity_ );
         }
     }
-    result->Attach< kernel::Color_ABC >( *new Color( ghost ) );
+    result->Attach< kernel::Color_ABC >( *new gui::Color( ghost ) );
     result->Attach( *new kernel::DictionaryExtensions( controllers_, "orbat-attributes", static_.extensions_ ) );
     result->Polish();
     return result;

@@ -13,6 +13,7 @@
 #include "Extension_ABC.h"
 #include "Serializable_ABC.h"
 #include <boost/noncopyable.hpp>
+#include <boost/optional/optional_fwd.hpp>
 #include <boost/tuple/tuple.hpp>
 
 namespace kernel
@@ -28,28 +29,26 @@ namespace kernel
                  , private boost::noncopyable
 {
 public:
-    //! @name Constructors/Destructor
-    //@{
              Color_ABC() {}
     virtual ~Color_ABC() {}
-    //@}
 
-    //! @name Types
-    //@{
     typedef boost::tuple< unsigned int, unsigned int, unsigned int > T_Color;
-    //@}
 
-    //! @name Operations
-    //@{
     virtual bool IsOverriden() const = 0;
     virtual const T_Color& GetColor() const = 0;
     virtual void ChangeColor( const T_Color& color ) = 0;
-    virtual void ChangeColor( xml::xistream& /*xis*/ ) {}
+    virtual void ChangeColor( xml::xistream& xis ) = 0;
     virtual void Clear() = 0;
+    virtual const boost::optional< T_Color >& GetBaseColor() const = 0;
 
-    inline void ChangeColor( const QColor& color ) { ChangeColor( T_Color( color.red(), color.green(), color.blue() ) ); }
-    inline operator QColor() const { return QColor( GetColor().get< 0 >(), GetColor().get< 1 >(), GetColor().get< 2 >() ); }
-    //@}
+    void ChangeColor( const QColor& color )
+    {
+        ChangeColor( T_Color( color.red(), color.green(), color.blue() ) );
+    }
+    operator QColor() const
+    {
+        return QColor( GetColor().get< 0 >(), GetColor().get< 1 >(), GetColor().get< 2 >() );
+    }
 };
 
 }

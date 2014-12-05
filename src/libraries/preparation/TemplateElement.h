@@ -19,7 +19,10 @@ namespace kernel
     class Entity_ABC;
 }
 
-class ColorController;
+namespace gui
+{
+    class ColorController_ABC;
+}
 
 // =============================================================================
 /** @class  TemplateElement
@@ -43,14 +46,13 @@ public:
     virtual bool IsCompatible( const kernel::Entity_ABC& superior ) const = 0;
     virtual kernel::Entity_ABC* Instanciate( kernel::Entity_ABC& superior,
                                              const geometry::Point2f& center,
-                                             ColorController& colorController ) = 0;
+                                             gui::ColorController_ABC& colorController ) = 0;
     //@}
 
     //! @name Operations
     //@{
     virtual void Serialize( xml::xostream& output ) const;
-    void SetColor( kernel::Entity_ABC& entity,
-                   ColorController& colorController );
+    void SetColor( kernel::Entity_ABC& entity, gui::ColorController_ABC& colorController );
     void SetExtensions( kernel::Entity_ABC& entity );
     QString GetName() const;
     void Rename( const QString& name );

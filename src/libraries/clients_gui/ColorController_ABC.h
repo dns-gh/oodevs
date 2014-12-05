@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef gui_ColorEditor_ABC_h
-#define gui_ColorEditor_ABC_h
+#ifndef gui_ColorController_ABC_h
+#define gui_ColorController_ABC_h
 
 #include <boost/noncopyable.hpp>
 
@@ -19,29 +19,32 @@ namespace kernel
 
 namespace gui
 {
+    class ColorStrategy_ABC;
+
 // =============================================================================
-/** @class  ColorEditor_ABC
-    @brief  Color editor declaration
+/** @class  ColorController_ABC
+    @brief  Color controller declaration
 */
 // Created: LGY 2011-06-23
 // =============================================================================
-class ColorEditor_ABC : private boost::noncopyable
+class ColorController_ABC : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             ColorEditor_ABC() {}
-    virtual ~ColorEditor_ABC() {}
+             ColorController_ABC() {}
+    virtual ~ColorController_ABC() {}
     //@}
 
     //! @name Operations
     //@{
+    virtual void ApplyDefaultColor( const kernel::Entity_ABC& entity, ColorStrategy_ABC& strategy, bool applyToSubordinates ) = 0;
     virtual void Add( const kernel::Entity_ABC& entity, const QColor& color, bool applyToSubordinates = true, bool force = false ) = 0;
-    virtual void Remove( const kernel::Entity_ABC& entity, bool applyToSubordinates = true, bool force = false ) = 0;
+    virtual void Remove( const kernel::Entity_ABC& entity ) = 0;
     virtual void Reset( const kernel::Entity_ABC& entity, const QColor& color ) = 0;
     //@}
 };
 
 }
 
-#endif // gui_ColorEditor_ABC_h
+#endif // gui_ColorController_ABC_h

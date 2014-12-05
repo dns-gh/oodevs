@@ -95,7 +95,6 @@ private:
     void ApplyColor( const QColor& color ) const;
     void ApplyColor( const QColor& color, float alpha ) const;
     void Process( const kernel::Entity_ABC& entity );
-    void Process( const kernel::Entity_ABC& entity, QColor color );
     QColor ApplyModifiers( const kernel::Entity_ABC& entity, const QColor& color );
     float  ApplyModifiers( const kernel::Entity_ABC& entity, float alpha );
     //@}

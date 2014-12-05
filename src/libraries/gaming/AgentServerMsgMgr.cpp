@@ -1327,7 +1327,7 @@ void AgentServerMsgMgr::OnReceiveObjectCreation( const sword::SimToClient& msg )
 void AgentServerMsgMgr::OnReceiveObjectUpdate( const sword::SimToClient& msg )
 {
     const auto& message = msg.message().object_update();
-    if( GetModel().objects_.FindObject( message.object().id() ) )
+    if( GetModel().objects_.Find( message.object().id() ) )
         GetModel().objects_.UpdateObject( message );
     else if( GetModel().urbanObjects_.FindObject( message.object().id() ) )
         GetModel().urbanObjects_.Update( message );
@@ -1339,7 +1339,7 @@ void AgentServerMsgMgr::OnReceiveObjectUpdate( const sword::SimToClient& msg )
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveObjectDestruction( const sword::SimToClient& msg )
 {
-    GetModel().objects_.DeleteObject( msg.message().object_destruction().object().id() );
+    GetModel().objects_.DeleteObject( msg.message().object_destruction() );
 }
 
 //-----------------------------------------------------------------------------
@@ -1419,7 +1419,7 @@ void AgentServerMsgMgr::OnReceiveIndirectFirePerception( const sword::SimToClien
 void AgentServerMsgMgr::OnReceiveExplosion( const sword::SimToClient& msg )
 {
     const auto& message = msg.message().explosion();
-    GetModel().objects_.GetObject( message.object().id() ).Update( message );
+    GetModel().objects_.Get( message.object().id() ).Update( message );
 }
 
 // -----------------------------------------------------------------------------

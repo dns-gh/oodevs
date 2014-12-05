@@ -9,40 +9,19 @@
 
 #include "preparation_pch.h"
 #include "Objects.h"
-#include "Object.h"
 #include <xeumeuleu/xml.hpp>
 
-// -----------------------------------------------------------------------------
-// Name: Objects constructor
-// Created: JSR 2011-02-22
-// -----------------------------------------------------------------------------
-Objects::Objects()
+Objects::Objects( kernel::Controllers& controllers )
+    : tools::TrackingResolver< const Object, kernel::Object_ABC >( controllers )
 {
     // NOTHING
 }
 
-// -----------------------------------------------------------------------------
-// Name: Objects destructor
-// Created: JSR 2011-02-22
-// -----------------------------------------------------------------------------
 Objects::~Objects()
 {
     DeleteAll();
 }
 
-// -----------------------------------------------------------------------------
-// Name: Objects::AddObject
-// Created: JSR 2011-02-22
-// -----------------------------------------------------------------------------
-void Objects::AddObject( const Object& object )
-{
-    Register( object.GetId(), object );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Objects::SerializeAttributes
-// Created: JSR 2011-02-22
-// -----------------------------------------------------------------------------
 void Objects::SerializeAttributes( xml::xostream& xos ) const
 {
     xos << xml::start( "objects" );
