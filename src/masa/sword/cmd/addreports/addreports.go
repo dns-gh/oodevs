@@ -15,6 +15,7 @@ import (
 	"masa/sword/swapi"
 	"os"
 	"sync"
+	"sync/atomic"
 	"time"
 )
 
@@ -70,14 +71,21 @@ func main() {
 	reports := int32(0)
 	go func() {
 		prevNow := time.Now()
+		prevCount := reports
 		logger.Model.WaitCondition(func(data *swapi.ModelData) bool {
+			count := atomic.LoadInt32(&reports)
 			if tick < data.Tick {
 				tick = data.Tick
 				now := time.Now()
 				dtime := now.Sub(prevNow)
-				log.Printf("Tick %d, %.2f sec, reports %d\n", tick,
-					float64(dtime)/float64(time.Second), reports)
+				created := float64(0)
+				if dtime > 0 {
+					created = float64(count-prevCount) / (float64(dtime) / float64(time.Second))
+				}
+				log.Printf("Tick %d, %.2f sec, reports %d, %.1f reports/s\n", tick,
+					float64(dtime)/float64(time.Second), reports, created)
 				prevNow = now
+				prevCount = count
 			}
 			return false
 		})
@@ -97,7 +105,7 @@ func main() {
 			if report == nil {
 				return false
 			}
-			reports++
+			atomic.AddInt32(&reports, 1)
 			return false
 		})
 
