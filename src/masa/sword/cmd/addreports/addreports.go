@@ -13,7 +13,9 @@ import (
 	"fmt"
 	"log"
 	"masa/sword/swapi"
+	"math/rand"
 	"os"
+	"strings"
 	"sync"
 	"sync/atomic"
 	"time"
@@ -34,11 +36,13 @@ func createClient(addr, user, password string) *swapi.Client {
 
 func main() {
 	flag.Usage = func() {
-		fmt.Fprintf(os.Stderr, ""+
-			`addreports creates a swapi.Client, connects it to a simulation and 
- sends debug_internal magic actions to create reports. Simulation must be run with
- the testCommands flag.
-`)
+		fmt.Fprintf(os.Stderr, strings.TrimSpace(`
+addreports creates a swapi.Client, connects it to a simulation and sends
+debug_internal magic actions to create reports. Simulation must be run with the
+testCommands flag.
+
+With -unit=0, the reports will be spread over all readable model units.
+`)+"\n")
 		flag.PrintDefaults()
 	}
 	clientCount := flag.Int("clients", 1, "connections count")
@@ -64,6 +68,16 @@ func main() {
 	ok := logger.Model.WaitReady(10 * time.Second)
 	if !ok {
 		log.Fatalf("local model took too long to initialize")
+	}
+
+	entities := []uint32{uint32(*unit)}
+	if *unit == 0 {
+		// List all exercise units, pick randomly when emitting reports
+		model := logger.Model.GetData()
+		for id := range model.Units {
+			entities = append(entities, id)
+		}
+		fmt.Printf("spreading reports over %d entities\n", len(entities))
 	}
 
 	// Get tick information
@@ -119,7 +133,8 @@ func main() {
 			go func() {
 				defer wg.Done()
 				for n := range blocks {
-					err := client.CreateReport(uint32(n), uint32(*report), uint32(*unit))
+					id := entities[rand.Intn(len(entities))]
+					err := client.CreateReport(uint32(n), uint32(*report), uint32(id))
 					if err != nil {
 						fmt.Errorf("could not create report: %s", err)
 					}
