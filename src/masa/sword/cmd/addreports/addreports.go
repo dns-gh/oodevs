@@ -48,7 +48,8 @@ func main() {
 	password := flag.String("password", "", "user password")
 
 	report := flag.Uint("report", 0, "report identifier, 'NTR' report by default")
-	number := flag.Uint("number", 10, "report number to send per client")
+	number := flag.Uint("number", 100, "total number of reports to emit")
+	block := flag.Uint("block", 100, "number of reports per client call")
 	unit := flag.Uint("unit", 0, "recipient of reports")
 	flag.Parse()
 
@@ -101,6 +102,7 @@ func main() {
 		})
 
 	// Send reports
+	blocks := make(chan uint, *jobs)
 	wg := sync.WaitGroup{}
 	for i := 0; i != *clientCount; i++ {
 		client := createClient(addr, *user, *password)
@@ -108,14 +110,24 @@ func main() {
 			wg.Add(1)
 			go func() {
 				defer wg.Done()
-				err := client.CreateReport(uint32(*number), uint32(*report),
-					uint32(*unit))
-				if err != nil {
-					fmt.Errorf("could not create report: %s", err)
+				for n := range blocks {
+					err := client.CreateReport(uint32(n), uint32(*report), uint32(*unit))
+					if err != nil {
+						fmt.Errorf("could not create report: %s", err)
+					}
 				}
 			}()
 		}
 	}
+
+	for i := uint(0); i < *number; i += *block {
+		n := *number - *block
+		if n > *block {
+			n = *block
+		}
+		blocks <- n
+	}
+	close(blocks)
 	wg.Wait()
 
 	logger.Model.WaitTicks(1)
