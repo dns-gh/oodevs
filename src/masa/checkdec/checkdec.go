@@ -115,7 +115,7 @@ listed in DECLIST, but for those prefixed by DEC_.
 	delete(decs, "LoadResourcesFile")
 	// Filter out well known DEC functions
 	for k := range decs {
-		if strings.HasPrefix(k, "DEC_") {
+		if strings.HasPrefix(k, "DEC_") || strings.HasPrefix(k, "_DEC_") {
 			delete(decs, k)
 		}
 	}
