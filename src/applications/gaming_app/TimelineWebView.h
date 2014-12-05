@@ -155,6 +155,8 @@ private slots:
     void OnServicesFilterChanged( const std::string& services );
     void OnKeywordFilterChanged( const std::string& keyword );
     void OnHideHierarchiesFilterChanged( const std::string& hierarchies );
+
+    void OnParentChanged( const std::string& uuid, const std::string& parent );
     //@}
 
 private:

@@ -3538,6 +3538,14 @@ This data can&apos;t be projected.</source>
         <source>Display markers</source>
         <translation>Display markers</translation>
     </message>
+    <message>
+        <source>Add to selected task</source>
+        <translation>Add to selected task</translation>
+    </message>
+    <message>
+        <source>Remove from task</source>
+        <translation>Remove from task</translation>
+    </message>
 </context>
 <context>
     <name>TimelineWebView</name>

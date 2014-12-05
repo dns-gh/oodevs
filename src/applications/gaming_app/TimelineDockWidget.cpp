@@ -137,6 +137,7 @@ TimelineToolBar* TimelineDockWidget::AddView( bool main /* = false */,
     connect( toolBar, SIGNAL( KeywordFilterChanged( const std::string& ) ), webView_.get(), SLOT( OnKeywordFilterChanged( const std::string& ) ) );
     connect( toolBar, SIGNAL( HideHierarchiesFilterChanged( const std::string& ) ), webView_.get(), SLOT( OnHideHierarchiesFilterChanged( const std::string& ) ) );
     connect( toolBar, SIGNAL( SelectedFilterChanged() ), this, SLOT( OnSelectedFilterChanged() ) );
+    connect( toolBar, SIGNAL( ParentChanged( const std::string&, const std::string& ) ), webView_.get(), SLOT( OnParentChanged( const std::string&, const std::string& ) ) );
     const int index = tabWidget_->addTab( toolBar, "" );
     tabWidget_->setTabText( index, main ? tr( "Main" ) : name.empty() ? tr( "View %1" ).arg( ++maxTabNumber_ ) : QString::fromStdString( name ) );
     tabWidget_->setCurrentIndex( index );
