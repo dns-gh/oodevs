@@ -79,6 +79,13 @@ Server::Server( const Configuration& cfg )
 
 Server::~Server()
 {
+    SignalWaiter stopWaiter;
+    connect( this, SIGNAL( Stopped() ), &stopWaiter, SLOT( Signal() ) );
+    Stop();
+    // wait the response of the timeline(webSocket disconnection).
+    while( !stopWaiter.IsSignaled() )
+        QCoreApplication::processEvents( QEventLoop::WaitForMoreEvents );
+
     SignalWaiter waiter;
     connect( this, SIGNAL( Done() ), &waiter, SLOT( Signal() ) );
     browser_ = nullptr;
@@ -125,6 +132,11 @@ void Server::Quit()
 void Server::Center()
 {
     browser_->Post( controls::CenterClient( logger_ ) );
+}
+
+void Server::Stop()
+{
+    browser_->Post( controls::StopClient( logger_ ) );
 }
 
 void Server::UpdateQuery( const std::map< std::string, std::string >& parameters )
@@ -180,6 +192,11 @@ void Server::SaveEvents() const
 void Server::OnReadyServer()
 {
     emit Ready();
+}
+
+void Server::OnStoppedServer()
+{
+    emit Stopped();
 }
 
 void Server::OnCreatedEvents( const Events& events, const Error& error )

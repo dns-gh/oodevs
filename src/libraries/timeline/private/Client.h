@@ -47,6 +47,7 @@ public:
 
     /// controls::ClientHandler_ABC methods
     virtual void OnCenterClient();
+    virtual void OnStopClient();
     virtual void OnUpdateQuery( const std::map< std::string, std::string >& query );
     virtual void OnCreateEvents( const Events& events );
     virtual void OnSelectEvent( const std::string& uuid );

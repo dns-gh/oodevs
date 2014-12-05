@@ -94,6 +94,11 @@ void Client::OnCenterClient()
     PostTask( TID_RENDERER, NewCefRunnableMethod( engine_.get(), &Engine::CenterClient ) );
 }
 
+void Client::OnStopClient()
+{
+    PostTask( TID_RENDERER, NewCefRunnableMethod( engine_.get(), &Engine::StopClient ) );
+}
+
 void Client::OnUpdateQuery( const std::map< std::string, std::string >& query )
 {
     PostTask( TID_RENDERER, NewCefRunnableMethod( engine_.get(), &Engine::UpdateQuery, query ) );

@@ -151,6 +151,7 @@ void Engine::Register( CefRefPtr< CefBrowser > browser, CefRefPtr< CefV8Context 
     auto gaming = SetValue( window, "gaming" );
     SetValue( gaming, "enabled", true );
     SetValue( gaming, "ready",                  0, boost::bind( &Engine::OnReady,                 this, _1 ) );
+    SetValue( gaming, "stopped",                0, boost::bind( &Engine::OnStopped,               this, _1 ) );
     SetValue( gaming, "created_event",          2, boost::bind( &Engine::OnCreatedEvent,          this, _1 ) );
     SetValue( gaming, "created_events",         2, boost::bind( &Engine::OnCreatedEvents,         this, _1 ) );
     SetValue( gaming, "get_read_events",        2, boost::bind( &Engine::OnReadEvents,            this, _1 ) );
@@ -322,6 +323,14 @@ void Engine::CenterClient()
             gate.Execute( center, CefV8ValueList() );
 }
 
+void Engine::StopClient()
+{
+    Gate gate;
+    if( gate.Acquire( ctx_ ) )
+        if( auto stop = GetValue( ctx_, "gaming.stop_link" ) )
+            gate.Execute( stop, CefV8ValueList() );
+}
+
 void Engine::UpdateQuery( const std::map< std::string, std::string >& parameters )
 {
     Gate gate;
@@ -401,6 +410,12 @@ void Engine::SendCreatedEvents( const timeline::Events& events, const timeline::
 CefRefPtr< CefV8Value > Engine::OnReady( const CefV8ValueList& /*args*/ )
 {
     Post( browser_, controls::ReadyServer( log_ ) );
+    return 0;
+}
+
+CefRefPtr< CefV8Value > Engine::OnStopped( const CefV8ValueList& /*args*/ )
+{
+    Post( browser_, controls::StoppedServer( log_ ) );
     return 0;
 }
 
