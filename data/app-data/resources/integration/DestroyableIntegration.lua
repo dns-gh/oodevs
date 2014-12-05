@@ -298,7 +298,7 @@ integration.getMaxRangeToFireForPH = function( pH )
     if not pH then -- Scipio compatibility
         pH = integration.getDefaultPH()
     end
-    return _DEC_Tir_PorteeMaxPourTirer( myself, pH )
+    return DEC_Tir_PorteeMaxPourTirer( pH )
 end
 
 --- Returns the maximum range of the agent weapon systems allowing to hit the given target with a certain probability.
