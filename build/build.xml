@@ -842,12 +842,10 @@
     </target>
 
     <target name="checkdec" description="check models are in sync with DEC functions">
-        <python>
-            <arg value="${root.dir}/build/listdec.py"/>
-            <arg value="check"/>
+        <exec taskname="checkdec" executable="${bin.dir}/checkdec.exe" failonerror="true">
             <arg value="${data.dir}/data/models/decfunctions.txt"/>
             <arg value="${src.dir}/libraries/simulation_kernel"/>
-        </python>
+        </exec>
     </target>
 
     <macrodef name="compare-proto">
