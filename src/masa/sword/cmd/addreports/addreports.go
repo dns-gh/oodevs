@@ -48,7 +48,7 @@ func main() {
 	password := flag.String("password", "", "user password")
 
 	report := flag.Uint("report", 0, "report identifier, 'NTR' report by default")
-	number := flag.Uint("number", 100, "total number of reports to emit")
+	number := flag.Uint("number", 100, "total number of reports to emit, 0 means infinity")
 	block := flag.Uint("block", 100, "number of reports per client call")
 	unit := flag.Uint("unit", 0, "recipient of reports")
 	flag.Parse()
@@ -120,10 +120,10 @@ func main() {
 		}
 	}
 
-	for i := uint(0); i < *number; i += *block {
-		n := *number - *block
-		if n > *block {
-			n = *block
+	for i := uint(0); *number == 0 || i < *number; i += *block {
+		n := *block
+		if *number > 0 && (*number-*block) < *block {
+			n = *number - *block
 		}
 		blocks <- n
 	}
