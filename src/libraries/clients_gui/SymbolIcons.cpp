@@ -16,8 +16,8 @@ using namespace gui;
 
 SymbolIcons::SymbolIcons()
     : defaultSymbol_( 1, 1 )
-    , context_( 0 )
     , widget_( 0 )
+    , main2DView_( 0 )
 {
     // NOTHING
 }
@@ -33,15 +33,27 @@ namespace
     const float viewSize = 600;
 }
 
-void SymbolIcons::Initialize( GL2DWidget* widget )
+void SymbolIcons::Initialize( GL2DWidget* main2DWidget )
 {
-    if( !widget )
+    if( !main2DWidget )
         throw MASA_EXCEPTION( "cannot initialize symbols icons with a null 2D widget" );
-    if( widget == widget_ )
+    if( main2DWidget == main2DView_ )
         return;
-    context_ = new QGLWidget( 0, widget );
-    context_->resize( iconSize, iconSize );
-    context_->makeCurrent();
+    // Since we use the main 2d view as shared widget for widget_, and for draw
+    // operations, we need to call updateGL on this view to ensure everything is
+    // initialized. It fixes the big icons bug.
+    main2DWidget->updateGL();
+    widget_ = new QGLWidget( 0, main2DWidget );
+    widget_->resize( iconSize, iconSize );
+    widget_->makeCurrent();
+    gui::connect( main2DWidget, SIGNAL( destroyed( QObject* ) ),
+                  [ &]() {
+        delete widget_;
+        main2DView_ = 0;
+        widget_ = 0;
+    } );
+    main2DView_ = main2DWidget;
+    icons_.clear();
     glClearColor( 1, 1, 1, 0 );
     glViewport( 0, 0, iconSize, iconSize );
     glMatrixMode( GL_PROJECTION );
@@ -50,15 +62,6 @@ void SymbolIcons::Initialize( GL2DWidget* widget )
     glLoadIdentity();
     glOrtho( 0, viewSize, 0, viewSize, -300, 300 );
     glEnableClientState( GL_VERTEX_ARRAY );
-    widget_ = widget;
-    gui::connect( widget, SIGNAL( destroyed( QObject* ) ),
-        [&]()
-        {
-            delete context_;
-            widget_ = 0;
-            context_ = 0;
-        } );
-    icons_.clear();
 }
 
 void SymbolIcons::Draw( std::string symbol, const geometry::Point2f& center, float factor ) const
@@ -66,14 +69,14 @@ void SymbolIcons::Draw( std::string symbol, const geometry::Point2f& center, flo
     if( symbol.empty() )
         return;
     std::replace( symbol.begin(), symbol.end(), '*', 'f' );
-    widget_->DrawApp6SymbolFixedSize( symbol, center, factor );
+    main2DView_->DrawApp6SymbolFixedSize( symbol, center, factor );
 }
 
 QPixmap SymbolIcons::GenerateSymbol( const SymbolIcon& symbol )
 {
-    context_->makeCurrent();
+    widget_->makeCurrent();
     glClear( GL_COLOR_BUFFER_BIT );
-    widget_->SetCurrentColor( symbol.color_.red() / 255.f, symbol.color_.green() / 255.f, symbol.color_.blue() / 255.f );
+    main2DView_->SetCurrentColor( symbol.color_.red() / 255.f, symbol.color_.green() / 255.f, symbol.color_.blue() / 255.f );
     if( symbol.symbol_.find( "infrastructures" ) == std::string::npos )
     {
         const geometry::Point2f center( 300, 100 );
@@ -94,7 +97,7 @@ QPixmap SymbolIcons::GenerateSymbol( const SymbolIcon& symbol )
 
 const QPixmap& SymbolIcons::GetSymbol( const SymbolIcon& symbol )
 {
-    if( !context_ || !widget_ )
+    if( !widget_ || !main2DView_ )
         return GetDefaultSymbol();
     QPixmap& result = icons_[ symbol ];
     if( result.isNull() )

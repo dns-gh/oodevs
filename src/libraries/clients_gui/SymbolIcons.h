@@ -43,8 +43,8 @@ private:
 private:
     QPixmap defaultSymbol_;
     std::map< SymbolIcon, QPixmap > icons_;
-    QGLWidget* context_;
-    GLView_ABC* widget_;
+    QGLWidget* widget_;
+    GLView_ABC* main2DView_;
 };
 
 }
