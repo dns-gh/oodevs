@@ -809,6 +809,20 @@ void TimelineWebView::OnShowOnlyFilterChanged( const std::string& uuid )
 }
 
 // -----------------------------------------------------------------------------
+// Name: TimelineWebView::OnParentChanged
+// Created: JSR 2014-12-04
+// -----------------------------------------------------------------------------
+void TimelineWebView::OnParentChanged( const std::string& uuid, const std::string& parent )
+{
+    gui::Event* gamingEvent = model_.events_.Find( uuid );
+    if( !gamingEvent )
+        throw MASA_EXCEPTION( "Can't find event for the uuid: " + uuid );
+    auto& event = gamingEvent->GetEvent();
+    event.parent = parent;
+    EditEvent( event );
+}
+
+// -----------------------------------------------------------------------------
 // Name: TimelineWebView::GetCurrentParent
 // Created: ABR 2014-04-17
 // -----------------------------------------------------------------------------

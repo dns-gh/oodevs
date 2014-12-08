@@ -158,10 +158,14 @@ class Events extends Backbone.Collection
         return if !d.parent?
         delete d.parent.children[d.id]
 
+    find_id: (id) =>
+        if id.length > 0
+            for it in @models
+                return it if it.id == id
+
     on_parent_changed: (d) =>
         previous = d.previous "parent"
-        return if !previous?
-        delete previous.children[d.id]
+        delete @find_id(previous)?.children[d.id]
 
     # sort model & build ranges after each server synchronisation
     resync: ->

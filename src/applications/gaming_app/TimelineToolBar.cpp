@@ -43,6 +43,7 @@ TimelineToolBar::TimelineToolBar( kernel::Controllers& controllers,
     , contextMenuEvent_( controllers )
     , filteredEntity_( controllers )
     , main_( true )
+    , selected_( controllers )
 {
     Initialize();
     eventActionsController_.Register( *this );
@@ -69,6 +70,7 @@ TimelineToolBar::TimelineToolBar( const TimelineToolBar& other )
     , showOnlyFilter_( other.showOnlyFilter_ )
     , hideHierarchiesFilter_( other.hideHierarchiesFilter_ )
     , main_( false )
+    , selected_( other.selected_ )
 {
     Initialize();
 }
@@ -354,6 +356,14 @@ const std::string& TimelineToolBar::GetShowOnlyFilter() const
     return showOnlyFilter_;
 }
 
+namespace
+{
+    bool IsTaskWithEnd( const gui::Event& event )
+    {
+        return event.GetType() == eEventTypes_Task && !event.GetEvent().end.empty();
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: TimelineToolBar::NotifyContextMenu
 // Created: ABR 2014-04-15
@@ -362,7 +372,7 @@ void TimelineToolBar::NotifyContextMenu( const gui::Event& event, kernel::Contex
 {
     if( !isVisible() )
         return;
-    if( event.GetType() == eEventTypes_Task && !event.GetEvent().end.empty() )
+    if( IsTaskWithEnd( event ) )
     {
         contextMenuEvent_ = &event;
         menu.addSeparator();
@@ -374,6 +384,27 @@ void TimelineToolBar::NotifyContextMenu( const gui::Event& event, kernel::Contex
         else
             menu.InsertItem( "Command", tr( "Show children" ), this, SLOT( OnShowChildren() ) );
     }
+    else if( selected_ && IsTaskWithEnd( *selected_ ) && event.GetEvent().parent != selected_->GetEvent().uuid )
+    {
+        contextMenuEvent_ = &event;
+        menu.addSeparator();
+        menu.InsertItem( "Command", tr( "Add to selected task" ), this, SLOT( OnAddToTask() ) );
+    }
+    if( !event.GetEvent().parent.empty() )
+    {
+        contextMenuEvent_ = &event;
+        menu.addSeparator();
+        menu.InsertItem( "Command", tr( "Remove from task" ), this, SLOT( OnRemoveFromTask() ) );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: TimelineToolBar::NotifySelected
+// Created: JSR 2014-12-04
+// -----------------------------------------------------------------------------
+void TimelineToolBar::NotifySelected( const gui::Event* event )
+{
+    selected_ = event;
 }
 
 // -----------------------------------------------------------------------------
@@ -431,4 +462,28 @@ void TimelineToolBar::OnShowChildren()
 std::string TimelineToolBar::GetHideHierarchiesFilter() const
 {
     return boost::algorithm::join( hideHierarchiesFilter_, "," );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TimelineToolBar::OnAddToTask
+// Created: JSR 2014-12-04
+// -----------------------------------------------------------------------------
+void TimelineToolBar::OnAddToTask()
+{
+    if( !contextMenuEvent_ || !selected_ )
+        return;
+    emit ParentChanged( contextMenuEvent_->GetEvent().uuid, selected_->GetEvent().uuid );
+    contextMenuEvent_ = 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: TimelineToolBar::OnRemoveFromTask
+// Created: JSR 2014-12-04
+// -----------------------------------------------------------------------------
+void TimelineToolBar::OnRemoveFromTask()
+{
+    if( !contextMenuEvent_ )
+        return;
+    emit ParentChanged( contextMenuEvent_->GetEvent().uuid, "" );
+    contextMenuEvent_ = 0;
 }

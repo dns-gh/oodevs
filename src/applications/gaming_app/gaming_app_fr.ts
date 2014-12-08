@@ -3552,6 +3552,14 @@ Ces données ne peuvent pas être projetées.</translation>
         <source>Display markers</source>
         <translation>Afficher les marqueurs</translation>
     </message>
+    <message>
+        <source>Add to selected task</source>
+        <translation>Ajouter à la tâche sélectionnée</translation>
+    </message>
+    <message>
+        <source>Remove from task</source>
+        <translation>Supprimer de la tâche</translation>
+    </message>
 </context>
 <context>
     <name>TimelineWebView</name>

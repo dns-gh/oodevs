@@ -13,6 +13,7 @@
 #include "tools/Observer_ABC.h"
 #include "clients_kernel/ContextMenuObserver_ABC.h"
 #include "clients_kernel/SafePointer.h"
+#include "tools/SelectionObserver_ABC.h"
 
 namespace kernel
 {
@@ -31,6 +32,11 @@ namespace tools
     class ExerciseConfig;
 }
 
+namespace timeline
+{
+    struct Event;
+}
+
 // =============================================================================
 /** @class  TimelineToolBar
     @brief  TimelineToolBar
@@ -40,6 +46,7 @@ namespace tools
 class TimelineToolBar : public QToolBar
                       , public tools::Observer_ABC
                       , public kernel::ContextMenuObserver_ABC< gui::Event >
+                      , public tools::SelectionObserver< gui::Event >
 {
     Q_OBJECT
 
@@ -94,6 +101,8 @@ signals:
     void HideHierarchiesFilterChanged( const std::string& hierarchies );
     void ShowOnlyFilterChanged( const std::string& uuid, const std::string& name );
     void SelectedFilterChanged();
+
+    void ParentChanged( const std::string& uuid, const std::string& parent );
     //@}
 
 public slots:
@@ -111,6 +120,8 @@ public slots:
     void OnAddShowOnlyFilter();
     void OnHideChildren();
     void OnShowChildren();
+    void OnAddToTask();
+    void OnRemoveFromTask();
     //@}
 
 private:
@@ -118,6 +129,7 @@ private:
     //@{
     void Initialize();
     virtual void NotifyContextMenu( const gui::Event& event, kernel::ContextMenu& menu );
+    virtual void NotifySelected( const gui::Event* event );
     //@}
 
 private:
@@ -141,6 +153,7 @@ private:
     QAction* engagedFilter_;
     kernel::SafePointer< gui::Event > contextMenuEvent_;
     kernel::SafePointer< kernel::Entity_ABC > filteredEntity_;
+    kernel::SafePointer< gui::Event > selected_;
     std::string showOnlyFilter_;
     std::set< std::string > hideHierarchiesFilter_;
     //@}

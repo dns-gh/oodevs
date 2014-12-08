@@ -216,6 +216,8 @@ func (e *Event) Update(msg *sdk.Event, tick time.Time, events EventSlice) (bool,
 	if next.parent != nil {
 		delete(next.parent.children, next)
 		next.parent.children[e] = struct{}{}
+	} else if e.parent != nil {
+		delete(e.parent.children, e)
 	}
 	*e = *next
 	return modified, triggered, offset != nil, nil
