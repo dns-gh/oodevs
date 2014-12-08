@@ -1998,7 +1998,7 @@ Voulez-vous le remplacer ?</translation>
     <name>LogisticSupplyRecompletionDialog</name>
     <message>
         <source>Recompletion</source>
-        <translation>Recomplétement</translation>
+        <translation>Recomplètement</translation>
     </message>
     <message>
         <source>Equipment - Crew</source>
@@ -2058,7 +2058,7 @@ Voulez-vous le remplacer ?</translation>
     </message>
     <message>
         <source>Partial recompletion</source>
-        <translation>Recomplétement partiel</translation>
+        <translation>Recomplètement partiel</translation>
     </message>
     <message>
         <source>Quantity %</source>
