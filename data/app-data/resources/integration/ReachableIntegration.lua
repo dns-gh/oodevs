@@ -820,11 +820,12 @@ integration.updateMoveToItArea = function( objective, pathType )
                 integration.stopMoveToIt( objective )
                 return integration.startMoveToItArea( objective, pathType )
            end
-        else
+        elseif not myself.mount and not myself.dismount then
             -- If the agent has not reached its objective yet, and the followed unit has covered a distance greater
             -- than the distance that the agent can cover in a fixed short amount of time (defined by the
             -- delayInSeconds constant), then a new objective should be computed. This is done to ensure
             -- a better following behaviour.
+            -- Make sure that the unit doesn't have a mount or dismount action because integration.stopMoveToIt will kill it
             
             local distance = DEC_Geometrie_DistanceBetweenPoints( objective.initialeDestination, objective:getPosition() )
             local delayInSeconds = 40
