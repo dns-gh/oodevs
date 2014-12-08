@@ -132,7 +132,7 @@ int PHY_RoleAction_DirectFiring::FirePion( PHY_DirectFireData& firerWeapons, MIL
         }
         firerWeapons.ReleaseWeapon( *pUnusedFirer, *pUnusedFirerWeapon );
     }
-    return !nNbrWeaponsUsed ? eNoCapacity : eRunning;
+    return nNbrWeaponsUsed > 0 || firerWeapons.HasWeaponsNotReady() ? eRunning : eNoCapacity;
 }
 
 // -----------------------------------------------------------------------------
