@@ -142,7 +142,6 @@ namespace
 // -----------------------------------------------------------------------------
 void CompositionPass::Initialize()
 {
-    gl::Initialize();
     try
     {
         fragment_.reset( new gl::FragmentShader( shagger ) );

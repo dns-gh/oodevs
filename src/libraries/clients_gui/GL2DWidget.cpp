@@ -886,7 +886,6 @@ void GL2DWidget::DrawApp6( const std::string& symbol,
     const float svgWidth = 360;
     const float expectedHeight = expectedWidth * 0.660f;
     const float scaleRatio = ( expectedWidth / svgWidth );
-    gl::Initialize();
     glPushAttrib( GL_CURRENT_BIT | GL_LINE_BIT );
         glPushMatrix();
             glTranslatef( where.X(), where.Y(), 0.0f );

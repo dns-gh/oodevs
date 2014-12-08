@@ -144,7 +144,6 @@ namespace
 // -----------------------------------------------------------------------------
 void Elevation3dLayer::CreateShaders()
 {
-    gl::Initialize();
     try
     {
         fragment_.reset( new gl::FragmentShader( shagger ) );
