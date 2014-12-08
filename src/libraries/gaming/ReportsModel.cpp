@@ -16,21 +16,9 @@
 #include "clients_kernel/Profile_ABC.h"
 #include "clients_kernel/Time_ABC.h"
 #include "protocol/ServerPublisher_ABC.h"
+#include "protocol/MessageParameters.h"
 #include "protocol/Protocol.h"
-
-namespace
-{
-    unsigned int GetId( const sword::Tasker& id )
-    {
-        if( id.has_unit() )
-            return id.unit().id();
-        else if( id.has_automat() )
-            return id.automat().id();
-        else if( id.has_crowd() )
-            return id.crowd().id();
-        return 0u;
-    }
-}
+#include <boost/optional.hpp>
 
 ReportsModel::ReportsModel( Publisher_ABC& publisher, AgentsModel& agents,
                             const kernel::Profile_ABC& profile, const kernel::Time_ABC& time )
@@ -60,17 +48,9 @@ ReportsModel::ReportsModel( Publisher_ABC& publisher, AgentsModel& agents,
     publisher.Register( Publisher_ABC::T_SimHandler( [&]( const sword::SimToClient& message, bool /*ack*/ )
     {
         if( message.message().has_report() )
-        {
-            const auto& report = message.message().report();
-            const Message msg( GetId( report.source() ), report, time_.GetDateTime() );
-            AddMessage( msg );
-        }
+            AddMessage( message.message().report() );
         else if( message.message().has_trace() )
-        {
-            const auto& trace = message.message().trace();
-            const Message msg( GetId( trace.source() ), trace, time_.GetDateTime() );
-            AddMessage( msg );
-        }
+            AddMessage( message.message().trace() );
     } ) );
 }
 
@@ -81,8 +61,7 @@ ReportsModel::~ReportsModel()
 
 namespace
 {
-    const unsigned int maxCount = 50u;
-    const std::vector< ReportsModel::Message > emptyMessages;
+    const unsigned int maxCount = 500u;
 }
 
 void ReportsModel::SendRequest( int context, unsigned int report )
@@ -102,29 +81,30 @@ void ReportsModel::FillReports( const sword::ListReportsAck& ack )
     for( int i = 0; i < ack.reports_size(); ++i )
     {
         const auto& report = ack.reports( i );
-        if( const auto id = GetId( report.source() ) )
-        {
-            auto& container = messages_[ id ];
-            const Message msg( GetId( report.source() ), report, time_.GetDateTime() );
-            container.insert( container.begin(), msg );
-            AddUnreadReports( id );
-        }
+        const auto id = protocol::TryGetTasker( report.source() );
+        if( !id )
+            continue;
+        auto& container = messages_[ *id ];
+        const Message msg( *id, report, time_.GetDateTime() );
+        container.push_front( msg );
+        AddUnreadReports( *id );
     }
     if( ack.has_next_report() )
         SendRequest( context_, ack.next_report() );
 }
 
-const ReportsModel::T_Messages& ReportsModel::GetReports( unsigned int entity ) const
+const std::deque< ReportsModel::Message >& ReportsModel::GetReports( unsigned int entity ) const
 {
+    const static std::deque< ReportsModel::Message > emptyMessages;
     auto it = messages_.find( entity );
     if( it != messages_.end() )
         return it->second;
     return emptyMessages;
 }
 
-bool ReportsModel::HaveUnreadReports( unsigned int entity ) const
+bool ReportsModel::HasUnreadReports( unsigned int entity ) const
 {
-    return std::find( entities_.begin(), entities_.end(), entity ) != entities_.end();
+    return entitiesMap_.find( entity ) != entitiesMap_.end();
 }
 
 size_t ReportsModel::UnreadReports() const
@@ -134,6 +114,7 @@ size_t ReportsModel::UnreadReports() const
 
 void ReportsModel::Clear( unsigned int entity )
 {
+    ReadReports( entity );
     messages_.erase( entity );
 }
 
@@ -155,14 +136,18 @@ void ReportsModel::ClearTraces( unsigned int entity )
 
 void ReportsModel::AddUnreadReports( unsigned int id )
 {
-    if( !HaveUnreadReports( id ) )
+    if( !HasUnreadReports( id ) )
         if( const auto* entity = agents_.FindAllAgent( id ) )
             if( profile_.IsVisible( *entity ) )
+            {
                 entities_.push_back( id );
+                entitiesMap_[ id ] = id;
+            }
 }
 
 void ReportsModel::ReadReports()
 {
+    entitiesMap_.erase( entities_.front() );
     entities_.pop_front();
 }
 
@@ -171,6 +156,7 @@ void ReportsModel::ReadReports( unsigned int entity )
     auto it = std::find( entities_.begin(), entities_.end(), entity );
     if( it != entities_.end() )
         entities_.erase( it );
+    entitiesMap_.erase( entity );
 }
 
 unsigned int ReportsModel::NextUnreadReports() const
@@ -181,23 +167,33 @@ unsigned int ReportsModel::NextUnreadReports() const
 void ReportsModel::UpdateUnreadReports()
 {
     std::deque< unsigned int > filtered;
+    std::unordered_map< unsigned int, unsigned int > filteredMap;
+
     for( auto it = entities_.begin(); it != entities_.end(); ++it )
         if( const auto* entity = agents_.FindAllAgent( *it ) )
             if( profile_.IsVisible( *entity ) )
+            {
                 filtered.push_back( *it );
+                filteredMap[ *it ] = *it;
+            }
     std::swap( filtered, entities_ );
+    std::swap( filteredMap, entitiesMap_ );
 }
 
 void ReportsModel::Purge()
 {
     messages_.clear();
     entities_.clear();
+    entitiesMap_.clear();
 }
 
-void ReportsModel::AddMessage( const Message& message )
+template< typename T >
+void ReportsModel::AddMessage( const T& message )
 {
-    if( !message.entity_ )
+    const auto id = protocol::TryGetTasker( message.source() );
+    if( !id )
         return;
-    messages_[ message.entity_ ].push_back( message );
-    AddUnreadReports( message.entity_ );
+    const Message msg( *id , message, time_.GetDateTime() );
+    messages_[ msg.entity_ ].push_back( msg );
+    AddUnreadReports( msg.entity_ );
 }

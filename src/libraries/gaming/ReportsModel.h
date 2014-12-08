@@ -10,6 +10,8 @@
 #ifndef __ReportsFactory_h_
 #define __ReportsFactory_h_
 
+#include <unordered_map>
+
 class AgentsModel;
 class Publisher_ABC;
 
@@ -51,13 +53,12 @@ public:
         sword::Report report_;
         sword::Trace trace_;
     };
-    typedef std::vector< Message > T_Messages;
     //@}
 
     //! @name Accessors
     //@{
-    const T_Messages& GetReports( unsigned int entity ) const;
-    bool HaveUnreadReports( unsigned int entity ) const;
+    const std::deque< Message >& GetReports( unsigned int entity ) const;
+    bool HasUnreadReports( unsigned int entity ) const;
     size_t UnreadReports() const;
     unsigned int NextUnreadReports() const;
     //@}
@@ -77,7 +78,8 @@ private:
     //@{
     void SendRequest( int context, unsigned int report = 0 );
     void FillReports( const sword::ListReportsAck& ack );
-    void AddMessage( const Message& message );
+    template< typename T >
+    void AddMessage( const T& message );
     void AddUnreadReports( unsigned int entity );
     //@}
 
@@ -90,9 +92,10 @@ private:
     const kernel::Time_ABC& time_;
     int tick_;
     int context_;
-    std::map< unsigned int, T_Messages > messages_;
+    std::map< unsigned int, std::deque< Message > > messages_;
     // Entity with unread reports
     std::deque< unsigned int > entities_;
+    std::unordered_map< unsigned int, unsigned int > entitiesMap_;
     //@}
 };
 

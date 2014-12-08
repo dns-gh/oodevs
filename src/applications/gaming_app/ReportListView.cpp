@@ -21,26 +21,13 @@
 #include "clients_kernel/Time_ABC.h"
 #include "gaming/AgentsModel.h"
 #include "gaming/ReportsModel.h"
+#include "protocol/MessageParameters.h"
 #include "protocol/Protocol.h"
 #include "protocol/ServerPublisher_ABC.h"
 #include "reports/ReportFactory.h"
-#include <boost/bind.hpp>
+#include <boost/optional.hpp>
 
 #pragma warning( disable : 4355 )
-
-namespace
-{
-    unsigned int GetId( const sword::Tasker& id )
-    {
-        if( id.has_unit() )
-            return id.unit().id();
-        else if( id.has_automat() )
-            return id.automat().id();
-        else if( id.has_crowd() )
-            return id.crowd().id();
-        return 0u;
-    }
-}
 
 // -----------------------------------------------------------------------------
 // Name: ReportListView constructor
@@ -108,9 +95,6 @@ ReportListView::ReportListView( QWidget* pParent, kernel::Controllers& controlle
     publisher.Register( Publisher_ABC::T_ReplayHandler( [&]( const sword::ReplayToClient& message )
     {
         if( !message.message().has_list_reports_ack() )
-            return;
-        const auto& msg = message.message().list_reports_ack();
-        if( msg.has_next_report() )
             return;
         FillReports();
     } ) );
@@ -187,7 +171,7 @@ void ReportListView::AddReports()
     if( !entity )
         return;
 
-    const auto unreadMessages = model_.HaveUnreadReports( selected_ );
+    const auto unreadMessages = model_.HasUnreadReports( selected_ );
     const auto& reports = model_.GetReports( selected_ );
     for( auto it = reports.begin(); it != reports.end(); ++it )
         CreateItem( *it, *entity, unreadMessages );
@@ -196,7 +180,10 @@ void ReportListView::AddReports()
 template< typename T >
 void ReportListView::Create( const T& report )
 {
-    if( selected_ != GetId( report.source() ) )
+    const auto id = protocol::TryGetTasker( report.source() );
+    if( !id )
+        return;
+    if( selected_ != *id )
         return;
     const auto* entity = agents_.FindAllAgent( selected_ );
     if( !entity )
