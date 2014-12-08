@@ -60,7 +60,7 @@ kernel::Team_ABC* TeamFactory::CreateTeam()
     result->Attach< kernel::TacticalHierarchies >( *new TeamHierarchies( controllers_.controller_, *result, 0 ) );
     result->Attach< kernel::CommunicationHierarchies >( *new TeamCommunications( controllers_.controller_, *result, 0 ) );
     result->Attach< kernel::Color_ABC >( *new gui::Color() );
-    result->Attach( *new Populations() );
+    result->Attach( *new Populations( controllers_ ) );
     result->Attach( *new Inhabitants() );
     result->Attach( *new kernel::DictionaryExtensions( controllers_, "orbat-attributes", staticModel_.extensions_ ) );
     result->Polish();
@@ -80,7 +80,7 @@ kernel::Team_ABC* TeamFactory::CreateTeam( xml::xistream& xis )
     result->Attach< kernel::TacticalHierarchies >( *new TeamHierarchies( controllers_.controller_, *result, 0 ) );
     result->Attach< kernel::CommunicationHierarchies >( *new TeamCommunications( controllers_.controller_, *result, 0 ) );
     result->Attach< kernel::Color_ABC >( *new gui::Color( xis ) );
-    result->Attach( *new Populations() );
+    result->Attach( *new Populations( controllers_ ) );
     result->Attach( *new Inhabitants() );
     result->Attach( *new kernel::DictionaryExtensions( controllers_, "orbat-attributes", xis, staticModel_.extensions_ ) );
     result->Polish();

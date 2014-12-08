@@ -29,8 +29,8 @@ PopulationHierarchies::PopulationHierarchies( kernel::Entity_ABC& holder, kernel
 PopulationHierarchies::~PopulationHierarchies()
 {
     if( GetSuperior() )
-        if( const Populations* popus = GetSuperior()->Retrieve< Populations >() )
-            const_cast< Populations* >( popus )->Remove( GetEntity().GetId() );
+        if( const Populations* populations = GetSuperior()->Retrieve< Populations >() )
+            const_cast< Populations* >( populations )->Remove( GetEntity().GetId() );
 }
 
 // -----------------------------------------------------------------------------
@@ -40,12 +40,12 @@ PopulationHierarchies::~PopulationHierarchies()
 void PopulationHierarchies::ChangeSuperior( kernel::Entity_ABC& superior )
 {
     if( kernel::Entity_ABC* oldsuperior = const_cast< kernel::Entity_ABC* >( GetSuperior() ) )
-        if( Populations* pop = oldsuperior->Retrieve< Populations >() )
-            pop->Remove( GetEntity().GetId() );
+        if( Populations* populations = oldsuperior->Retrieve< Populations >() )
+            populations->Remove( GetEntity().GetId() );
     SetSuperior( &superior );
-    if( Populations* pops = superior.Retrieve< Populations >() )
+    if( Populations* populations = superior.Retrieve< Populations >() )
     {
         const Population& pop = static_cast< const Population& >( GetEntity() );
-        pops->AddPopulation( const_cast< Population& >( pop ) );
+        populations->Add( const_cast< Population& >( pop ) );
     }
 }

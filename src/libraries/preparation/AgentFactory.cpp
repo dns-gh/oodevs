@@ -165,8 +165,8 @@ kernel::Population_ABC* AgentFactory::Create( kernel::Entity_ABC& parent, const 
     result->Attach< Affinities >( *new PeopleAffinities( controllers_, model_, dictionary, *result ) );
     result->Attach< kernel::Color_ABC >( *new gui::Color( parent ) );
     result->Attach( *new kernel::DictionaryExtensions( controllers_, "orbat-attributes", static_.extensions_ ) );
-    if( Populations* popus = top->Retrieve< Populations >() )
-        popus->AddPopulation( *result );
+    if( Populations* populations = top->Retrieve< Populations >() )
+        populations->Add( *result );
     result->Polish();
     return result;
 }
@@ -295,8 +295,8 @@ kernel::Population_ABC* AgentFactory::Create( xml::xistream& xis, kernel::Team_A
     result->Attach< kernel::TacticalHierarchies >( *new PopulationHierarchies( *result, &parent ) );
     result->Attach< Affinities >( *new PeopleAffinities( xis, controllers_, model_, dictionary, *result ) );
     result->Attach( *new kernel::DictionaryExtensions( controllers_, "orbat-attributes", xis, static_.extensions_ ) );
-    if( Populations* popus = parent.Retrieve< Populations >() )
-        popus->AddPopulation( *result );
+    if( Populations* populations = parent.Retrieve< Populations >() )
+        populations->Add( *result );
     result->Attach< kernel::Color_ABC >( *new gui::Color( xis ) );
     result->Polish();
     return result;
