@@ -18,7 +18,7 @@
 #include "protocol/ServerPublisher_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Object_ABC.h"
-#include "clients_kernel/Team_ABC.h"
+#include "clients_kernel/Drawing_ABC.h"
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/Population_ABC.h"
@@ -234,6 +234,7 @@ bool Profile::IsVisible( const Entity_ABC& entity ) const
     if( const kernel::TacticalHierarchies* tacticalHierarchies = entity.Retrieve< kernel::TacticalHierarchies >() )
         if( supervision_ &&
             ( entity.GetTypeName() == Object_ABC::typeName_ && tacticalHierarchies->GetTop().GetId() == 0 ||
+                entity.GetTypeName() == Drawing_ABC::typeName_ && !tacticalHierarchies->GetSuperior() ||
                 entity.GetTypeName() == Team_ABC::typeName_ && entity.GetId() == 0 ) )
             return true;
     return RightsResolver::IsVisible( entity );
