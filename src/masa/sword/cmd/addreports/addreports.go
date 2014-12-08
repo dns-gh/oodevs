@@ -143,11 +143,13 @@ With -unit=0, the reports will be spread over all readable model units.
 		}
 	}
 
-	for i := uint(0); *number == 0 || i < *number; i += *block {
+	remaining := *number
+	for *number == 0 || remaining > 0 {
 		n := *block
-		if *number > 0 && (*number-*block) < *block {
-			n = *number - *block
+		if *number > 0 && n > remaining {
+			n = remaining
 		}
+		remaining -= n
 		blocks <- n
 	}
 	close(blocks)
