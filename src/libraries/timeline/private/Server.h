@@ -90,6 +90,7 @@ public:
 
     /// controls::ServerHandler_ABC methods
     virtual void OnReadyServer();
+    virtual void OnStoppedServer();
     virtual void OnCreatedEvents( const Events& events, const Error& error );
     virtual void OnReadEvents( const Events& events, const Error& error );
     virtual void OnReadEvent( const Event& event, const Error& error );
@@ -115,6 +116,7 @@ public:
 
 private:
     void Log( const std::string& msg );
+    void Stop();
 
 private:
     const Configuration cfg_;
