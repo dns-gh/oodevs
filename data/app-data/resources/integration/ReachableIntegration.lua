@@ -825,7 +825,7 @@ integration.updateMoveToItArea = function( objective, pathType )
             -- than the distance that the agent can cover in a fixed short amount of time (defined by the
             -- delayInSeconds constant), then a new objective should be computed. This is done to ensure
             -- a better following behaviour.
-            -- Be sure than the unit doesn't have a mount or dismount action because integration.stopMoveToIt will kill it
+            -- Make sure that the unit doesn't have a mount or dismount action because integration.stopMoveToIt will kill it
             
             local distance = DEC_Geometrie_DistanceBetweenPoints( objective.initialeDestination, objective:getPosition() )
             local delayInSeconds = 40
