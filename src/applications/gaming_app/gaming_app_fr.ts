@@ -538,7 +538,7 @@ Raison: %3
     <name>EquipmentTransferDialog</name>
     <message>
         <source>Equipment transfer</source>
-        <translation>Transfert de composantes</translation>
+        <translation>Transfert d'équipements</translation>
     </message>
     <message>
         <source>Ok</source>
@@ -628,11 +628,11 @@ Raison: %3
     </message>
     <message>
         <source>Automat is engaged</source>
-        <translation>L&apos;automate est engagé</translation>
+        <translation>L&apos;automate est embrayé</translation>
     </message>
     <message>
         <source>Automat is disengaged</source>
-        <translation>L&apos;automate est désengagé</translation>
+        <translation>L&apos;automate est débrayé</translation>
     </message>
 </context>
 <context>
@@ -1998,7 +1998,7 @@ Voulez-vous le remplacer ?</translation>
     <name>LogisticSupplyRecompletionDialog</name>
     <message>
         <source>Recompletion</source>
-        <translation>Recomplétion</translation>
+        <translation>Recomplétement</translation>
     </message>
     <message>
         <source>Equipment - Crew</source>
@@ -2058,7 +2058,7 @@ Voulez-vous le remplacer ?</translation>
     </message>
     <message>
         <source>Partial recompletion</source>
-        <translation>Recomplétion partielle</translation>
+        <translation>Recomplétement partiel</translation>
     </message>
     <message>
         <source>Quantity %</source>
@@ -3031,11 +3031,11 @@ Ces données ne peuvent pas être projetées.</translation>
     </message>
     <message>
         <source>Deactivate brain debug</source>
-        <translation>Désactiver le decisionnel</translation>
+        <translation>Désactiver le debug du decisionnel</translation>
     </message>
     <message>
         <source>Activate brain debug</source>
-        <translation>Activer le decisionnel</translation>
+        <translation>Activer le debug du decisionnel</translation>
     </message>
 </context>
 <context>
@@ -3616,7 +3616,7 @@ Ces données ne peuvent pas être projetées.</translation>
     </message>
     <message>
         <source>Destroy - Component</source>
-        <translation>Détruire - Composante</translation>
+        <translation>Détruire - Equipement</translation>
     </message>
     <message>
         <source>Recover - All</source>
@@ -3624,11 +3624,11 @@ Ces données ne peuvent pas être projetées.</translation>
     </message>
     <message>
         <source>Recover - Troops</source>
-        <translation>Recompléter - Troupes</translation>
+        <translation>Recompléter - Personnel</translation>
     </message>
     <message>
         <source>Recover - Equipments</source>
-        <translation>Recompléter - Composantes</translation>
+        <translation>Recompléter - Equipements</translation>
     </message>
     <message>
         <source>Recover - Basic load</source>
@@ -3676,11 +3676,11 @@ Ces données ne peuvent pas être projetées.</translation>
     </message>
     <message>
         <source>Activate brain debug</source>
-        <translation></translation>
+        <translation>Activer le debug du decisionnel</translation>
     </message>
     <message>
         <source>Deactivate brain debug</source>
-        <translation></translation>
+        <translation>Désactiver le debug du decisionnel</translation>
     </message>
     <message>
         <source>Engage</source>
