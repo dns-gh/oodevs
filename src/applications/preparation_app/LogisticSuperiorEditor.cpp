@@ -24,17 +24,6 @@
 
 using namespace kernel;
 
-namespace
-{
-    QString GetDisplayName( const Entity_ABC& entity )
-    {
-        std::string longName = gui::longname::GetEntityLongName( entity );
-        if( longName.empty() )
-            return entity.GetName();
-        return longName.c_str();
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: LogisticSuperiorEditor constructor
 // Created: SBO 2006-10-25
@@ -58,7 +47,7 @@ LogisticSuperiorEditor::LogisticSuperiorEditor( QWidget* parent, Controllers& co
             const Automat_ABC& automat = it.NextElement();
             if( ( bObject && automat.Get< gui::LogisticBase >().IsBase() )
                 ||  ( !bObject && IsValidSuperior( automat ) ) )
-                AddItem( GetDisplayName( automat ), &automat );
+                AddItem( gui::longname::GetEntityDisplayName( automat ), &automat );
         }
     }
 
@@ -69,7 +58,7 @@ LogisticSuperiorEditor::LogisticSuperiorEditor( QWidget* parent, Controllers& co
             const Formation_ABC& formation = it.NextElement();
             if( ( bObject && formation.Get< gui::LogisticBase >().IsBase() )
                 ||  ( !bObject && IsValidSuperior( formation ) ) )
-                AddItem( GetDisplayName( formation ), &formation );
+                AddItem( gui::longname::GetEntityDisplayName( formation ), &formation );
         }
     }
 
@@ -80,7 +69,7 @@ LogisticSuperiorEditor::LogisticSuperiorEditor( QWidget* parent, Controllers& co
             const Ghost_ABC& ghost = it.NextElement();
             if( ( bObject && ghost.Get< gui::LogisticBase >().IsBase() )
                 ||  ( !bObject && IsValidSuperior( ghost ) ) )
-                AddItem( GetDisplayName( ghost ), &ghost );
+                AddItem( gui::longname::GetEntityDisplayName( ghost ), &ghost );
         }
     }
 
@@ -105,7 +94,7 @@ void LogisticSuperiorEditor::NotifyCreated( const Automat_ABC& automat )
     if( GetItemIndex( &automat ) != -1 )
         return;
     if( IsValidSuperior( automat ) )
-        AddItem( GetDisplayName( automat ), &automat );
+        AddItem( gui::longname::GetEntityDisplayName( automat ), &automat );
 }
 
 // -----------------------------------------------------------------------------
@@ -126,7 +115,7 @@ void LogisticSuperiorEditor::NotifyCreated( const Formation_ABC& formation )
     if( GetItemIndex( &formation ) != -1 )
         return;
     if( IsValidSuperior( formation ) )
-        AddItem( GetDisplayName( formation ), &formation );
+        AddItem( gui::longname::GetEntityDisplayName( formation ), &formation );
 }
 
 // -----------------------------------------------------------------------------
@@ -147,7 +136,7 @@ void LogisticSuperiorEditor::NotifyCreated( const Ghost_ABC& ghost )
     if( GetItemIndex( &ghost ) != -1 )
         return;
     if( IsValidSuperior( ghost ) )
-        AddItem( GetDisplayName( ghost ), &ghost );
+        AddItem( gui::longname::GetEntityDisplayName( ghost ), &ghost );
 }
 
 // -----------------------------------------------------------------------------

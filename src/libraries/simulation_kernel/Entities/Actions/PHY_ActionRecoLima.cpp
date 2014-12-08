@@ -68,9 +68,9 @@ void PHY_ActionRecoLima::Execute()
         for( auto it = lineCrossedAgents_.begin(); it != lineCrossedAgents_.end(); ++it )
         {
             if( automat.IsEngaged() && !caller_.IsJammed() && automat.GetPionPC() && !automat.GetPionPC()->IsJammed() )
-                MIL_Report::PostEvent( automat, report::eRC_CrossedLima, limaType_, (*it)->GetName() );
+                MIL_Report::PostEvent( automat, report::eRC_CrossedLima, limaType_, static_cast< const MIL_AgentPion& >( **it ) );
             else
-                MIL_Report::PostEvent( caller_, report::eRC_CrossedLima, limaType_, (*it)->GetName() );
+                MIL_Report::PostEvent( caller_, report::eRC_CrossedLima, limaType_, static_cast< const MIL_AgentPion& >( **it ) );
         }
     }
     lineCrossedAgents_.clear();

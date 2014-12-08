@@ -87,7 +87,7 @@ public:
     template< typename T > static void PostEvent( const T& receiver, const MIL_DecisionalReport& nReport, const std::string& nParam );
     template< typename T > static void PostEvent( const T& receiver, const MIL_DecisionalReport& nReport, int nParam1, int nParam2, int nParam3 );
     template< typename T > static void PostEvent( const T& receiver, const MIL_DecisionalReport& nReport, const MIL_Effect_IndirectFire& flyingShell );
-    template< typename T > static void PostEvent( const T& receiver, const MIL_DecisionalReport& nReport, const MIL_LimaFunction& limaFunction, const std::string& nParam );
+    template< typename T > static void PostEvent( const T& receiver, const MIL_DecisionalReport& nReport, const MIL_LimaFunction& limaFunction, const MIL_AgentPion& pion );
     template< typename T > static void PostEvent( const T& receiver, const MIL_DecisionalReport& nReport, boost::shared_ptr< DEC_Knowledge_Agent > agentKnowledge );
     template< typename T > static void PostEvent( const T& receiver, const MIL_DecisionalReport& nReport, boost::shared_ptr< DEC_Knowledge_Object > objectKnowledge );
     template< typename T > static void PostEvent( const T& receiver, const MIL_DecisionalReport& nReport, boost::shared_ptr< DEC_Knowledge_Population >& populationKnowledge, int nParam2 );
@@ -308,11 +308,11 @@ void MIL_Report::PostEvent( const T& receiver, const MIL_DecisionalReport& nRepo
 // Created: MMC 2013-10-14
 // -----------------------------------------------------------------------------
 template< typename T >
-void MIL_Report::PostEvent( const T& receiver, const MIL_DecisionalReport& nReport, const MIL_LimaFunction& limaFunction, const std::string& nParam )
+void MIL_Report::PostEvent( const T& receiver, const MIL_DecisionalReport& nReport, const MIL_LimaFunction& limaFunction, const MIL_AgentPion& pion )
 {
     std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > > parameters;
     auto pParameter1 = MIL_MissionParameterFactory::CreateLimaFunction( limaFunction.GetID() );
-    auto pParameter2 = MIL_MissionParameterFactory::Create( nParam );
+    auto pParameter2 = MIL_MissionParameterFactory::CreateAgent( pion );
     parameters.push_back( pParameter1 );
     parameters.push_back( pParameter2 );
     PostEvent( receiver, nReport, parameters );
