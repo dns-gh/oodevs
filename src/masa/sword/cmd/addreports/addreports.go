@@ -13,8 +13,11 @@ import (
 	"fmt"
 	"log"
 	"masa/sword/swapi"
+	"math/rand"
 	"os"
+	"strings"
 	"sync"
+	"sync/atomic"
 	"time"
 )
 
@@ -33,11 +36,13 @@ func createClient(addr, user, password string) *swapi.Client {
 
 func main() {
 	flag.Usage = func() {
-		fmt.Fprintf(os.Stderr, ""+
-			`addreports creates a swapi.Client, connects it to a simulation and 
- sends debug_internal magic actions to create reports. Simulation must be run with
- the testCommands flag.
-`)
+		fmt.Fprintf(os.Stderr, strings.TrimSpace(`
+addreports creates a swapi.Client, connects it to a simulation and sends
+debug_internal magic actions to create reports. Simulation must be run with the
+testCommands flag.
+
+With -unit=0, the reports will be spread over all readable model units.
+`)+"\n")
 		flag.PrintDefaults()
 	}
 	clientCount := flag.Int("clients", 1, "connections count")
@@ -48,7 +53,8 @@ func main() {
 	password := flag.String("password", "", "user password")
 
 	report := flag.Uint("report", 0, "report identifier, 'NTR' report by default")
-	number := flag.Uint("number", 10, "report number to send per client")
+	number := flag.Uint("number", 100, "total number of reports to emit, 0 means infinity")
+	block := flag.Uint("block", 100, "number of reports per client call")
 	unit := flag.Uint("unit", 0, "recipient of reports")
 	flag.Parse()
 
@@ -64,19 +70,36 @@ func main() {
 		log.Fatalf("local model took too long to initialize")
 	}
 
+	entities := []uint32{uint32(*unit)}
+	if *unit == 0 {
+		// List all exercise units, pick randomly when emitting reports
+		model := logger.Model.GetData()
+		for id := range model.Units {
+			entities = append(entities, id)
+		}
+		fmt.Printf("spreading reports over %d entities\n", len(entities))
+	}
+
 	// Get tick information
 	tick := int32(0)
 	reports := int32(0)
 	go func() {
 		prevNow := time.Now()
+		prevCount := reports
 		logger.Model.WaitCondition(func(data *swapi.ModelData) bool {
+			count := atomic.LoadInt32(&reports)
 			if tick < data.Tick {
 				tick = data.Tick
 				now := time.Now()
 				dtime := now.Sub(prevNow)
-				log.Printf("Tick %d, %.2f sec, reports %d\n", tick,
-					float64(dtime)/float64(time.Second), reports)
+				created := float64(0)
+				if dtime > 0 {
+					created = float64(count-prevCount) / (float64(dtime) / float64(time.Second))
+				}
+				log.Printf("Tick %d, %.2f sec, reports %d, %.1f reports/s\n", tick,
+					float64(dtime)/float64(time.Second), reports, created)
 				prevNow = now
+				prevCount = count
 			}
 			return false
 		})
@@ -96,11 +119,12 @@ func main() {
 			if report == nil {
 				return false
 			}
-			reports++
+			atomic.AddInt32(&reports, 1)
 			return false
 		})
 
 	// Send reports
+	blocks := make(chan uint, *jobs)
 	wg := sync.WaitGroup{}
 	for i := 0; i != *clientCount; i++ {
 		client := createClient(addr, *user, *password)
@@ -108,14 +132,27 @@ func main() {
 			wg.Add(1)
 			go func() {
 				defer wg.Done()
-				err := client.CreateReport(uint32(*number), uint32(*report),
-					uint32(*unit))
-				if err != nil {
-					fmt.Errorf("could not create report: %s", err)
+				for n := range blocks {
+					id := entities[rand.Intn(len(entities))]
+					err := client.CreateReport(uint32(n), uint32(*report), uint32(id))
+					if err != nil {
+						fmt.Errorf("could not create report: %s", err)
+					}
 				}
 			}()
 		}
 	}
+
+	remaining := *number
+	for *number == 0 || remaining > 0 {
+		n := *block
+		if *number > 0 && n > remaining {
+			n = remaining
+		}
+		remaining -= n
+		blocks <- n
+	}
+	close(blocks)
 	wg.Wait()
 
 	logger.Model.WaitTicks(1)
