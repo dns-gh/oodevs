@@ -3,14 +3,13 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2006 Mathématiques Appliquées SA (MASA)
+// Copyright (c) 2006 MASA Group
 //
 // *****************************************************************************
 
 #include "gaming_pch.h"
 #include "ObjectsModel.h"
 #include "ObjectFactory_ABC.h"
-#include "clients_kernel/Object_ABC.h"
 #include "protocol/Protocol.h"
 
 using namespace kernel;
