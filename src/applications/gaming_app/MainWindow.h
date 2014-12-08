@@ -109,13 +109,11 @@ public:
 
     //! @name Operations
     //@{
-    void Load();
     //@}
 
 public slots:
     //! @name Slots
     //@{
-    void Close();
     void ToggleFullScreen();
     void ToggleDocks();
     void OnAddRaster();
@@ -131,7 +129,11 @@ signals:
 private:
     //! @name Helpers
     //@{
-    void closeEvent( QCloseEvent* pEvent );
+    virtual void closeEvent( QCloseEvent* pEvent );
+
+    void Close();
+    void LoadPhysical();
+    void LoadGUI();
 
     virtual void NotifyModeChanged( E_Modes newMode );
     virtual void NotifyUpdated( const Simulation& simulation );
@@ -162,9 +164,11 @@ private:
 
     QByteArray states_;
     bool connected_;
+    bool staticModelLoaded_;
     bool onPlanif_;
     QString planifName_;
     QString savedState_;
+    E_Modes currentMode_;
 
     std::unique_ptr< gui::TextEditor > textEditor_; // should move in parameter layer
     boost::shared_ptr< QProcess > process_; // should move in layers panel

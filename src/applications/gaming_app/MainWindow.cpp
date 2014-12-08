@@ -184,8 +184,10 @@ MainWindow::MainWindow( Controllers& controllers,
     , pColorController_( new ColorController( controllers_ ) )
     , connected_( false )
     , onPlanif_( false )
+    , staticModelLoaded_( false )
     , drawingsBuilder_( new DrawingsBuilder( controllers_, profile_ ) )
     , glProxy_( std::make_shared< gui::GLMainProxy >( controllers_, filter, model.teams_ ) )
+    , currentMode_( eModes_Gaming )
 {
     controllers_.modes_.SetMainWindow( this );
     controllers_.actions_.AddSelectionner( new Selectionner< actions::Action_ABC >() );
@@ -318,8 +320,8 @@ MainWindow::MainWindow( Controllers& controllers,
     setCaption( planifName_ );
     resize( 800, 600 );
     // Read settings
-    controllers_.modes_.LoadOptions( eModes_Gaming );
-    controllers_.modes_.LoadGeometry( eModes_Gaming );
+    controllers_.modes_.LoadOptions( currentMode_ );
+    controllers_.modes_.LoadGeometry( currentMode_ );
     controllers_.ChangeMode( eModes_Default );
     controllers_.Register( *this );
 }
@@ -411,33 +413,49 @@ void MainWindow::CreateLayers( const std::shared_ptr< gui::ParametersLayer >& pa
 }
 
 // -----------------------------------------------------------------------------
-// Name: MainWindow::Load
+// Name: MainWindow::LoadPhysical
 // Created: AGE 2006-05-03
 // -----------------------------------------------------------------------------
-void MainWindow::Load()
+void MainWindow::LoadPhysical()
 {
     try
     {
-        controllers_.modes_.SaveOptions( eModes_Gaming );
-        glWidgetManager_->Purge();
-        unitStateDialog_->Purge();
-        dockContainer_->Purge();
-        workers_.Terminate();
-        model_.Purge();
-        workers_.Initialize();
         staticModel_.Load( config_ );
-        dockContainer_->Load();
-        controllers_.modes_.LoadOptions( eModes_Gaming );
-        unitStateDialog_->Load();
-        glWidgetManager_->Load( staticModel_.drawings_,
-                                config_.GetSessionDir() );
-        symbolIcons_->Initialize( glWidgetManager_->GetMainWidget()->GetWidget2d().get() );
+        staticModelLoaded_ = true;
     }
     catch( const xml::exception& e )
     {
         Close();
-        QMessageBox::critical( this, tr( "SWORD" ), tr( "Error loading exercise: " ) + tools::GetExceptionMsg( e ).c_str() );
+        QMessageBox::critical( this, tr( "SWORD" ), tr( "Error loading physical data: " ) + tools::GetExceptionMsg( e ).c_str() );
     }
+}
+
+void MainWindow::LoadGUI()
+{
+    try
+    {
+        // load gui
+        workers_.Initialize();
+        dockContainer_->Load();
+        unitStateDialog_->Load();
+        glWidgetManager_->Load( staticModel_.drawings_, config_.GetSessionDir() );
+        // generate symbol
+        symbolIcons_->Initialize( glWidgetManager_->GetMainWidget()->GetWidget2d().get() );
+        icons_->GenerateSymbols( model_.teams_ );
+        // load options
+        controllers_.modes_.LoadOptions( currentMode_ );
+        controllers_.ChangeMode( currentMode_ );
+    }
+    catch( const xml::exception& e )
+    {
+        Close();
+        QMessageBox::critical( this, tr( "SWORD" ), tr( "Error loading graphical interface: " ) + tools::GetExceptionMsg( e ).c_str() );
+    }
+}
+
+namespace
+{
+    struct SelectionStub {};
 }
 
 // -----------------------------------------------------------------------------
@@ -446,14 +464,33 @@ void MainWindow::Load()
 // -----------------------------------------------------------------------------
 void MainWindow::Close()
 {
-    glWidgetManager_->Purge();
-    controllers_.ChangeMode( eModes_Default );
-    network_.Disconnect();
-    unitStateDialog_->Purge();
-    dockContainer_->Purge();
-    workers_.Terminate();
-    model_.Purge();
-    staticModel_.Purge();
+    try
+    {
+        // reset data
+        connected_ = false;
+        staticModelLoaded_ = false;
+        controllers_.actions_.Select( SelectionStub() );
+        login_ = "";
+        // save options
+        controllers_.modes_.SaveGeometry( currentMode_ );
+        controllers_.modes_.SaveOptions( currentMode_ );
+        controllers_.ChangeMode( eModes_Default );
+        // close gui
+        workers_.Terminate();
+        glWidgetManager_->Purge();
+        dockContainer_->Purge();
+        unitStateDialog_->Purge();
+        repaint();
+        // disconnect
+        network_.Disconnect();
+        // close data
+        model_.Purge();
+        staticModel_.Purge();
+    }
+    catch( const xml::exception& e )
+    {
+        QMessageBox::critical( this, tr( "SWORD" ), tr( "Error closing exercise: " ) + tools::GetExceptionMsg( e ).c_str() );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -463,19 +500,7 @@ void MainWindow::Close()
 void MainWindow::closeEvent( QCloseEvent* pEvent )
 {
     Close();
-    controllers_.modes_.SaveGeometry( eModes_Gaming );
-    controllers_.modes_.SaveOptions( eModes_Gaming );
     QMainWindow::closeEvent( pEvent );
-}
-
-namespace
-{
-    struct SelectionStub{};
-
-    QString ExtractExerciceName( const tools::Path& filename )
-    {
-        return QString::fromStdString( filename.Parent().FileName().ToUTF8() );
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -487,6 +512,14 @@ void MainWindow::NotifyModeChanged( E_Modes newMode )
     ModesObserver_ABC::NotifyModeChanged( newMode );
 }
 
+namespace
+{
+    QString ExtractExerciceName( const tools::Path& filename )
+    {
+        return QString::fromStdString( filename.Parent().FileName().ToUTF8() );
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: MainWindow::NotifyUpdated
 // Created: SBO 2007-03-20
@@ -496,12 +529,12 @@ void MainWindow::NotifyUpdated( const Simulation& simulation )
     const QString appName = tr( "SWORD" );
     if( simulation.IsConnected() )
     {
-        if( !connected_ && simulation.IsInitialized() )
+        if( !connected_ && simulation.IsInitialized() && staticModelLoaded_ )
         {
             connected_ = true; // we update the caption until Model is totally loaded
-            icons_->GenerateSymbols( model_.teams_ );
             if( login_.isEmpty() )
                 login_ = tools::translate( "LoginDialog", "Anonymous" );
+            LoadGUI();
         }
         planifName_ = appName + QString( " - [%1@%2][%3]" )
                                 .arg( login_ )
@@ -511,9 +544,6 @@ void MainWindow::NotifyUpdated( const Simulation& simulation )
     else
     {
         planifName_ = appName + tr( " - Not connected" ) ;
-        controllers_.actions_.Select( SelectionStub() );
-        connected_ = false;
-        login_ = "";
         Close();
     }
     setCaption( planifName_ );
@@ -525,10 +555,7 @@ void MainWindow::NotifyUpdated( const Simulation& simulation )
 // -----------------------------------------------------------------------------
 void MainWindow::NotifyUpdated( const Simulation::Reconnection& reconnection )
 {
-    // we need to reset connected_ here to ensure dockContainer_->Load is called when reconnecting
-    connected_ = false;
     network_.Reconnect();
-    Load();
     network_.GetMessageMgr().Reconnect( reconnection.login_, reconnection.password_ );
 }
 
@@ -538,15 +565,12 @@ void MainWindow::NotifyUpdated( const Simulation::Reconnection& reconnection )
 // -----------------------------------------------------------------------------
 void MainWindow::NotifyUpdated( const ::Services& services )
 {
-    boost::optional< E_Modes > mode;
-    if( services.HasService( sword::service_simulation ) )
-        mode = eModes_Gaming;
-    else if( services.HasService( sword::service_replay ) )
-        mode = eModes_Replay;
-    if( !mode )
+    const auto hasSim = services.HasService( sword::service_simulation );
+    const auto hasReplay = services.HasService( sword::service_replay );
+    if( !hasSim && !hasReplay )
         return;
-    Load();
-    controllers_.ChangeMode( *mode );
+    currentMode_ = hasSim ? eModes_Gaming : eModes_Replay;
+    LoadPhysical();
 }
 
 // -----------------------------------------------------------------------------

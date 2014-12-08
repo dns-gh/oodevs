@@ -2184,10 +2184,6 @@ Do you want to replace it?</translation>
 <context>
     <name>MainWindow</name>
     <message>
-        <source>Error loading exercise: </source>
-        <translation>Error loading exercise: </translation>
-    </message>
-    <message>
         <source> - Not connected</source>
         <translation> - Not connected</translation>
     </message>
@@ -2250,6 +2246,18 @@ This data can&apos;t be projected.</source>
     </message>
     <message>
         <source>Fire colors</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error loading graphical interface: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error closing exercise: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error loading physical data: </source>
         <translation type="unfinished"></translation>
     </message>
 </context>

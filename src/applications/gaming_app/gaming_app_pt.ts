@@ -2251,6 +2251,18 @@ This data can&apos;t be projected.</source>
         <source>Fire colors</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Error loading graphical interface: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error closing exercise: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error loading physical data: </source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MaintenanceHaulersListView</name>
