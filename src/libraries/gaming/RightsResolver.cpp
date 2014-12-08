@@ -234,26 +234,25 @@ bool RightsResolver::IsChildOfCommunicationHierarchy( const CommunicationHierarc
 // Name: RightsResolver::IsInHierarchy
 // Created: LGY 2011-11-25
 // -----------------------------------------------------------------------------
-bool RightsResolver::IsInHierarchy( const Entity_ABC& entityToTest, const T_Entities& entities, bool childOnly )
+bool RightsResolver::IsInHierarchy( const Entity_ABC& entity, const T_Entities& entities, bool childOnly )
 {
-    //$$$$ NLD - 2010-11-10 - hum, compliqué :)
-    if( entities.find( &entityToTest ) != entities.end() )
+    if( entities.find( &entity ) != entities.end() )
         return true;
-    const TacticalHierarchies* tactical = entityToTest.Retrieve< TacticalHierarchies >();
-    const CommunicationHierarchies* communication = entityToTest.Retrieve< CommunicationHierarchies >();
+    const TacticalHierarchies* tactical = entity.Retrieve< TacticalHierarchies >();
+    const CommunicationHierarchies* communication = entity.Retrieve< CommunicationHierarchies >();
     if( !tactical && !communication )
         return true;
-    if( ( IsInSpecificHierarchy( entityToTest, tactical, entities, childOnly ) && !( communication && communication->IsJammed() ) ) )
+    if( IsInSpecificHierarchy( entity, tactical, entities, childOnly ) && !( communication && communication->IsJammed() ) )
         return true;
     if( childOnly )
-        return IsInSpecificHierarchy( entityToTest, communication, entities, childOnly );
+        return IsInSpecificHierarchy( entity, communication, entities, childOnly );
 
     // Knowledges specific case
-    if( entityToTest.GetTypeName() == KnowledgeGroup_ABC::typeName_ )
+    if( entity.GetTypeName() == KnowledgeGroup_ABC::typeName_ )
     {
         if( !communication )
             return false;
-        if( IsInSpecificHierarchy( entityToTest, communication, entities, childOnly ) )
+        if( IsInSpecificHierarchy( entity, communication, entities, childOnly ) )
             return true;
         for( auto it = entities.begin(); it != entities.end(); ++it )
         {
@@ -268,8 +267,8 @@ bool RightsResolver::IsInHierarchy( const Entity_ABC& entityToTest, const T_Enti
         const CommunicationHierarchies* hierarchy = ( *it )->Retrieve< CommunicationHierarchies >();
         if( hierarchy && tactical && hierarchy->GetSuperior() == 0 && tactical->IsSubordinateOf( **it ) )
             return true;
-        bool isObject = ( entityToTest.GetTypeName() == Object_ABC::typeName_ );
-        if( AreInSameKnowledgeGroup( entityToTest, **it, isObject ) )
+        bool isObject = ( entity.GetTypeName() == Object_ABC::typeName_ );
+        if( AreInSameKnowledgeGroup( entity, **it, isObject ) )
             return true;
     }
     return false;
