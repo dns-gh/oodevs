@@ -3,46 +3,25 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2006 Mathématiques Appliquées SA (MASA)
+// Copyright (c) 2006 MASA Group
 //
 // *****************************************************************************
 
 #include "preparation_pch.h"
 #include "Populations.h"
-#include "Population.h"
 #include <xeumeuleu/xml.hpp>
 
-// -----------------------------------------------------------------------------
-// Name: Populations constructor
-// Created: SBO 2006-11-09
-// -----------------------------------------------------------------------------
-Populations::Populations()
+Populations::Populations( kernel::Controllers& controllers )
+    : tools::TrackingResolver< Population, kernel::Population_ABC >( controllers )
 {
     // NOTHING
 }
 
-// -----------------------------------------------------------------------------
-// Name: Populations destructor
-// Created: SBO 2006-11-09
-// -----------------------------------------------------------------------------
 Populations::~Populations()
 {
     DeleteAll();
 }
 
-// -----------------------------------------------------------------------------
-// Name: Populations::AddPopulation
-// Created: SBO 2006-11-09
-// -----------------------------------------------------------------------------
-void Populations::AddPopulation( Population& population )
-{
-    Register( population.GetId(), population );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Populations::SerializeAttributes
-// Created: SBO 2006-11-09
-// -----------------------------------------------------------------------------
 void Populations::SerializeAttributes( xml::xostream& xos ) const
 {
     xos << xml::start( "populations" );

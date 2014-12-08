@@ -10,10 +10,9 @@
 #ifndef __Populations_h_
 #define __Populations_h_
 
+#include "Population.h"
 #include "clients_kernel/Extension_ABC.h"
-#include <tools/Resolver.h>
-
-class Population;
+#include "clients_kernel/TrackingResolver.h"
 
 // =============================================================================
 /** @class  Populations
@@ -22,13 +21,11 @@ class Population;
 // Created: MCO 2014-11-21
 // =============================================================================
 class Populations : public kernel::Extension_ABC
-                  , public tools::Resolver< const Population >
+                  , public tools::TrackingResolver< const Population, kernel::Population_ABC >
 {
 public:
-             Populations();
+    explicit Populations( kernel::Controllers& controllers );
     virtual ~Populations();
-
-    void AddPopulation( const Population& population );
 };
 
 #endif // __Populations_h_
