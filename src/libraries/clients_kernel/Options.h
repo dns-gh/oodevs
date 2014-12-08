@@ -29,13 +29,13 @@ public:
     //! @name Constructors/Destructor
     //@{
              Options();
+             Options( const Options& other );
     virtual ~Options();
     //@}
 
-    //! @name Copy/Assignment
+    //! @name Copy
     //@{
-    explicit Options( const Options& other );   //!< Copy constructor
-    Options& operator=( const Options& );       //!< Assignment operator
+    void Copy( const Options& other, bool onlyPreferences );
     //@}
 
     //! @name Operations
@@ -47,7 +47,7 @@ public:
     bool Has( const std::string& name ) const;
 
     // throw if name is already initialized
-    void Create( const std::string& name, const OptionVariant& value, bool isInPreferencePanel );
+    void Create( const std::string& name, const OptionVariant& value, bool isPreference );
     // throw if name is not already initialized
     void Set( const std::string& name, const OptionVariant& value );
     // throw if name is not already initialized
@@ -61,6 +61,11 @@ public:
     //@}
 
 private:
+    //! @name Assignment operator
+    //@{
+    Options& operator=( const Options& );
+    //@}
+
     //! @name Helpers
     //@{
     OptionVariant CreateVariant( Settings_ABC& settings, const std::string& name, char type );

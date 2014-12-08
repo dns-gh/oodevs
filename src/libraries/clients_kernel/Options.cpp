@@ -37,7 +37,7 @@ Options::Options()
 // -----------------------------------------------------------------------------
 Options::Options( const Options& other )
 {
-    *this = other;
+    Copy( other, false );
 }
 
 // -----------------------------------------------------------------------------
@@ -50,20 +50,26 @@ Options::~Options()
 }
 
 // -----------------------------------------------------------------------------
-// Name: Options::operator=
+// Name: Options::Copy
 // Created: ABR 2014-07-25
 // -----------------------------------------------------------------------------
-Options& Options::operator=( const Options& other )
+void Options::Copy( const Options& other, bool onlyPreferences )
 {
-    options_ = other.options_;
-    return *this;
+    if( onlyPreferences )
+        other.Apply( [&]( const std::string& name, const OptionVariant& value, bool isPreference )
+        {
+            if( isPreference )
+                Set( name, value );
+        } );
+    else
+        options_ = other.options_;
 }
 
 namespace
 {
     // Temporary solution to ignore old registry entries: we list the keys where
     // the user can create options dynamically, so we can ignore others.
-    // The boolean value below is the 'isInPreferencePanel' parameter.
+    // The boolean value below is the 'isPreference' parameter.
     const std::map< std::string, bool > allowedDynamicKeys = boost::assign::map_list_of( "/Elevation/Gradients/", true );
 }
 
@@ -106,12 +112,12 @@ void Options::Set( const std::string& name, const OptionVariant& value )
 // Name: Options::Create
 // Created: ABR 2014-10-10
 // -----------------------------------------------------------------------------
-void Options::Create( const std::string& name, const OptionVariant& value, bool isInPreferencePanel )
+void Options::Create( const std::string& name, const OptionVariant& value, bool isPreference )
 {
     auto it = options_.find( name );
     if( it != options_.end() )
         throw MASA_EXCEPTION( "Option already initialized: " + name );
-    options_[ name ] = std::make_pair( value, isInPreferencePanel );
+    options_[ name ] = std::make_pair( value, isPreference );
 }
 
 // -----------------------------------------------------------------------------

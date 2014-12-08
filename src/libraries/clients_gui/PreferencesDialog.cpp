@@ -174,19 +174,6 @@ void PreferencesDialog::showEvent( QShowEvent * event )
     QDialog::showEvent( event );
 }
 
-namespace
-{
-    void RestoreOptions( kernel::Options& previousOptions,
-                         const kernel::Options& currentOptions )
-    {
-        // Update our previous values with changes done outside the preferences panel
-        currentOptions.Apply( [ &]( const std::string& name, const OptionVariant& value, bool isInPreferencePanel ) {
-            if( !isInPreferencePanel )
-                previousOptions.Set( name, value );
-        } );
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: PreferencesDialog::reject
 // Created: RPD 2008-08-22
@@ -196,8 +183,7 @@ void PreferencesDialog::reject()
     auto& optionsController = controllers_.options_;
     auto& generalOptions = *optionsController.GetGeneralOptions();
     // restore general options
-    RestoreOptions( *previousGeneralOptions_, generalOptions );
-    generalOptions = *previousGeneralOptions_;
+    generalOptions.Copy( *previousGeneralOptions_, true );
     optionsController.UpdateGeneralOptions();
     previousGeneralOptions_.reset();
     // restore views options
@@ -206,17 +192,7 @@ void PreferencesDialog::reject()
         auto view = mainProxy_.GetView( it->first );
         if( !view )
             throw MASA_EXCEPTION( "Unable to restore previous options." );
-        auto& previousOptions = *it->second;
-        auto& options = view->GetActiveOptions();
-        RestoreOptions( *previousOptions.GetOptions(), *options.GetOptions() );
-        previousOptions.SetFilterEntity( options.GetFilterEntity() );
-        previousOptions.SetFilterProfile( options.GetFilterProfile() );
-        previousOptions.SetLockedEntity( options.GetLockedEntity() );
-        previousOptions.Disaggregate();
-        const auto& entities = options.GetAggregatedEntities();
-        for( auto entity = entities.begin(); entity != entities.end(); ++entity )
-            previousOptions.Aggregate( **entity );
-        options = previousOptions;
+        view->GetActiveOptions().Copy( *it->second, true );
     }
     optionsController.UpdateViewOptions();
     mainProxy_.UpdateLayerOrder();

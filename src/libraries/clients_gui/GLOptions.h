@@ -13,7 +13,6 @@
 #include "clients_kernel/FourStateOption.h"
 #include "clients_kernel/SafePointer.h"
 #include "clients_gui/FireOption.h"
-#include <boost/noncopyable.hpp>
 #include <boost/optional.hpp>
 
 namespace graphics
@@ -61,8 +60,7 @@ namespace gui
 */
 // Created: ABR 2014-06-20
 // =============================================================================
-class GLOptions : private boost::noncopyable
-                , public tools::Observer_ABC
+class GLOptions : public tools::Observer_ABC
                 , public tools::ElementObserver_ABC< kernel::Entity_ABC >
 {
 public:
@@ -76,14 +74,13 @@ public:
                         const std::shared_ptr< Lighting_ABC >& lighting,
                         uint32_t mapnikThread,
                         const kernel::ProfilesModel_ABC& profilesModel );
-             // create a GLOptions by copy
              GLOptions( const GLOptions& other );
     virtual ~GLOptions();
     //@}
 
-    //! @name Copy/Assignment
+    //! @name Copy
     //@{
-    GLOptions& operator=( const GLOptions& other ); //!< Assignment operator
+    void Copy( const GLOptions& other, bool onlyPreferences );
     //@}
 
     //! @name Serialization
@@ -152,6 +149,12 @@ private:
     //@{
     bool ShouldDisplay( const std::string& name, bool b1, bool b2, bool b3 ) const;
     virtual void NotifyDeleted( const kernel::Entity_ABC& entity );
+    //@}
+
+private:
+    //! @name Assignment operator
+    //@{
+    GLOptions& operator=( const GLOptions& );
     //@}
 
 private:
