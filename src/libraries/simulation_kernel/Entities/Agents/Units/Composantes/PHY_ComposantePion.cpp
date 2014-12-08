@@ -974,7 +974,7 @@ bool PHY_ComposantePion::CanSortHumans() const
 bool PHY_ComposantePion::CanBePartOfConvoy() const
 {
     assert( pType_ );
-    return pState_->IsUsable() && CanBeUsed() && CanMove() && bCanBePartOfConvoy_;
+    return pState_->IsUsable() && CanBeUsed() && CanMove( false ) && bCanBePartOfConvoy_;
 }
 
 // -----------------------------------------------------------------------------
@@ -1147,10 +1147,10 @@ bool PHY_ComposantePion::CanPerceive( const transport::PHY_RoleAction_Loading* r
 // Name: PHY_ComposantePion::CanMove
 // Created: NLD 2004-09-23
 // -----------------------------------------------------------------------------
-bool PHY_ComposantePion::CanMove() const
+bool PHY_ComposantePion::CanMove( bool theoretical ) const
 {
     assert( pState_ );
-    return pState_->IsUsable() && !pState_->IsDamaged() && CanBeUsedForMove();
+    return pState_->IsUsable() && !pState_->IsDamaged() && ( theoretical || CanBeUsedForMove() );
 }
 
 // -----------------------------------------------------------------------------

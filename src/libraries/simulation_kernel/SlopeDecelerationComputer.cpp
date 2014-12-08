@@ -39,7 +39,7 @@ SlopeDecelerationComputer::~SlopeDecelerationComputer()
 // -----------------------------------------------------------------------------
 void SlopeDecelerationComputer::ApplyOnComponent( PHY_ComposantePion& component )
 {
-    if( component.CanMove() )
+    if( component.CanMove( false ) )
         deceleration_ = std::max( deceleration_, component.GetType().GetSlopeDeceleration() );
 }
 
