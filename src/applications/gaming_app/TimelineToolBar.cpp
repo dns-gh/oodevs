@@ -484,7 +484,6 @@ void TimelineToolBar::OnRemoveFromTask()
 {
     if( !contextMenuEvent_ )
         return;
-    //contextMenuEvent_->GetEvent().parent.clear();
     emit ParentChanged( contextMenuEvent_->GetEvent().uuid, "" );
     contextMenuEvent_ = 0;
 }
