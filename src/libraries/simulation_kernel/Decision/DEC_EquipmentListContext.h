@@ -41,6 +41,7 @@ public:
     virtual const T_PathKnowledgeAgentVector& GetPathKnowledgeAgents() const;
     virtual const T_PathKnowledgeObjectByTypesVector& GetPathKnowledgeObjects() const;
     virtual const T_PathKnowledgePopulationVector& GetPathKnowledgePopulations() const;
+    virtual double GetStructuralState( const MIL_UrbanObject_ABC& ) const;
 
 private:
     const PHY_Speeds speeds_;
