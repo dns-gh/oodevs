@@ -538,7 +538,7 @@ Raison: %3
     <name>EquipmentTransferDialog</name>
     <message>
         <source>Equipment transfer</source>
-        <translation>Transfert d'équipements</translation>
+        <translation>Transfert d&apos;équipements</translation>
     </message>
     <message>
         <source>Ok</source>
@@ -2186,10 +2186,6 @@ Voulez-vous le remplacer ?</translation>
 <context>
     <name>MainWindow</name>
     <message>
-        <source>Error loading exercise: </source>
-        <translation>Erreur lors du chargement de l&apos;exercice: </translation>
-    </message>
-    <message>
         <source> - Not connected</source>
         <translation> - Non connecté</translation>
     </message>
@@ -2254,6 +2250,18 @@ Ces données ne peuvent pas être projetées.</translation>
     <message>
         <source>Fire colors</source>
         <translation>Couleurs des tirs</translation>
+    </message>
+    <message>
+        <source>Error loading graphical interface: </source>
+        <translation>Erreur au chargement de l&apos;interface graphique: </translation>
+    </message>
+    <message>
+        <source>Error closing exercise: </source>
+        <translation>Erreur à la fermeture de l&apos;exercice: </translation>
+    </message>
+    <message>
+        <source>Error loading physical data: </source>
+        <translation>Erreur au chargement de la base physique: </translation>
     </message>
 </context>
 <context>

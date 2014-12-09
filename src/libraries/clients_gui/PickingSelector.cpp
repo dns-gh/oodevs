@@ -58,6 +58,7 @@ void PickingSelector::FillSelection( GLView_ABC::T_ObjectsPicking& selection,
 void PickingSelector::Picking( QPoint point, unsigned int windowHeight )
 {
     unsigned char pixel[ 3 ];
+    glFinish();
     glReadPixels( point.x(), windowHeight - point.y(), 1, 1, GL_RGB, GL_UNSIGNED_BYTE, pixel );
     if( !renderObjects_.empty() )
     {

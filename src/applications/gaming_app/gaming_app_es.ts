@@ -2185,10 +2185,6 @@ Do you want to replace it?</source>
 <context>
     <name>MainWindow</name>
     <message>
-        <source>Error loading exercise: </source>
-        <translation>Error cargando ejercicio: </translation>
-    </message>
-    <message>
         <source> - Not connected</source>
         <translation> - No conectado</translation>
     </message>
@@ -2252,6 +2248,18 @@ Los datos no pueden ser proyectados.</translation>
     </message>
     <message>
         <source>Fire colors</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error loading graphical interface: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error closing exercise: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error loading physical data: </source>
         <translation type="unfinished"></translation>
     </message>
 </context>

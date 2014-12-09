@@ -430,10 +430,9 @@ void DrawingTemplate::GenerateSamplePixmap( float r /*= -1*/, float g /*= -1*/, 
 
     // Draw sample
     DrawSample();
-    glFlush();
     QImage image( SYMBOL_ICON_SIZE, SYMBOL_ICON_SIZE, 32 );
+    glFinish();
     glReadPixels( 0, 0, SYMBOL_ICON_SIZE, SYMBOL_ICON_SIZE, GL_BGRA_EXT, GL_UNSIGNED_BYTE, image.bits() );
-    glFlush();
 
     // Create sample pixmap
     samplePixmap_ = QPixmap( image.mirror().smoothScale( QSize( SYMBOL_PIXMAP_SIZE, SYMBOL_PIXMAP_SIZE ) ) );
