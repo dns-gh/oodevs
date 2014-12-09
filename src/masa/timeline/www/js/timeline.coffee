@@ -128,9 +128,9 @@ lane_move = (min_zone, max_zone, zone, d, scale, pos, offsets, children) ->
         d.max = imax d.min + visible, d.max
     return if _.isEmpty(children)
     if zone == min_zone
-        d.min = imin d.min, _.min(children, (v) -> v.min).min
+        d.min = imin d.min, _.min(children, (v) -> v.timestamp).timestamp
     if zone == max_zone
-        d.max = imax d.max, _.max(children, (v) -> v.min).min
+        d.max = imax d.max, _.max(children, (v) -> v.timestamp).timestamp
 
 is_major_date = (d) -> !d.getUTCSeconds() && !d.getUTCMinutes() && !d.getUTCHours()
 
@@ -1055,7 +1055,7 @@ class Timeline
             @range_offsets = (first - @scale x for x in [d.min, d.max])
             @range_children = {}
             for k, v of event.children
-                @range_children[k] = v.min - d.min
+                @range_children[k] = v.timestamp - d.min
             @lock()
             if @range_zone == "middle"
                 make_transparent (d) ->
@@ -1065,8 +1065,8 @@ class Timeline
         event.set begin: format(d.min), end: format(d.max)
         if @range_zone == "middle"
             for k, v of event.children
-                v.min = d.min + @range_children[k]
-                v.set begin: format(v.min)
+                v.timestamp = d.min + @range_children[k]
+                v.set begin: format(v.timestamp)
         @model.resync()
 
     range_drag_end: (dom, d) ->
