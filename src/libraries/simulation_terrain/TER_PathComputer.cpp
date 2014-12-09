@@ -124,10 +124,10 @@ boost::shared_ptr< TER_PathResult > TER_PathComputer::Execute(
 {
     if( debugPath )
     {
-        MT_LOG_MESSAGE_MSG( "TER_PathComputer::Execute: " << this << " computation begin" <<
-                            ", Request: " << requestId <<
-                            ", Entity: " << callerId );
-        MT_LOG_MESSAGE_MSG( GetPathAsString( sections ) );
+        MT_LOG_MESSAGE_MSG( "TER_PathComputer[" << requestId << "] begin entity: "
+                << callerId );
+        MT_LOG_MESSAGE_MSG( "TER_PathComputer[" << requestId << "] section: "
+                << GetPathAsString( sections ) );
         profiler_.Start();
     }
     try
@@ -136,7 +136,7 @@ boost::shared_ptr< TER_PathResult > TER_PathComputer::Execute(
     }
     catch( const std::exception& e )
     {
-        MT_LOG_ERROR_MSG( "TER_PathComputer::Execute failed: " << e.what() );
+        MT_LOG_ERROR_MSG( "TER_PathComputer[" << requestId << "] failed: " << e.what() );
         nState_ = TER_Path_ABC::eCanceled;
         return GetPathResult();
     }
@@ -146,11 +146,10 @@ boost::shared_ptr< TER_PathResult > TER_PathComputer::Execute(
         std::stringstream stream;
         if( ! resultList_.empty() )
             stream << "[" << resultList_.front()->GetPos() << "] -> [" << resultList_.back()->GetPos() << "]";
-        MT_LOG_MESSAGE_MSG( "TER_PathComputer::Execute: " << this <<
-                            ", Request: " << requestId <<
-                            ", Time: " << rComputationTime <<
-                            ", State: " << GetStateAsString( nState_ ) <<
-                            ", Result: " << stream.str() );
+        MT_LOG_MESSAGE_MSG( "TER_PathComputer[" << requestId << "] duration: "
+                            << rComputationTime
+                            << ", state: " << GetStateAsString( nState_ )
+                            << ", result: " << stream.str() );
     }
     return GetPathResult();
 }
