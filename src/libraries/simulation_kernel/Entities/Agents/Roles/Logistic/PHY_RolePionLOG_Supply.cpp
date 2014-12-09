@@ -283,7 +283,7 @@ public:
             PHY_Composante_ABC::T_ComposanteUse& data = composanteUse_[ &composante.GetType() ];
             ++ data.nNbrTotal_;
 
-            if( composante.GetState().IsUsable() && composante.CanMove() )
+            if( composante.GetState().IsUsable() && composante.CanMove( false ) )
             {
                 ++ data.nNbrAvailable_;
                 if( !composante.CanBePartOfConvoy() )
