@@ -118,7 +118,7 @@ void ChangeSuperiorDialog::Show( kernel::Entity_ABC& entity,
     logisticWidget_->SetCurrentVisible( logisticCurrentExtractor_ );
     // initialisation
     tacticalSuperior_->SetTasker( 0 );
-    knowledgeGroup_->SetTasker( 0 );   
+    knowledgeGroup_->SetTasker( 0 );
     logisticWidget_->RemoveItem( entity );
     if( logisticNominalFunctors_ )
         logisticWidget_->SetNominalSuperior( logisticNominalFunctors_->extract_( entity ) );

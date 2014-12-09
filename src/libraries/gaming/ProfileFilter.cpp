@@ -49,8 +49,8 @@ const QString& ProfileFilter::GetLogin() const
 // -----------------------------------------------------------------------------
 bool ProfileFilter::IsVisible( const kernel::Entity_ABC& entity ) const
 {
-    if( profile_ )
-        return profile_->IsVisible( entity ) && pUnitFilter_->IsVisible( entity );
+    if( profile_ && !profile_->IsVisible( entity ) )
+        return false;
     return pUnitFilter_->IsVisible( entity );
 }
 
@@ -63,8 +63,8 @@ bool ProfileFilter::IsKnowledgeVisible( const kernel::Knowledge_ABC& knowledge )
     bool isVisibleForUnitFilter = pUnitFilter_->IsFiltered() ?
                                   pUnitFilter_->IsKnowledgeVisibleNoSupervision( knowledge ) : pUnitFilter_->IsKnowledgeVisible( knowledge );
     if( profile_ )
-        return ( profile_->IsSupervision() ? profile_->IsKnowledgeVisible( knowledge ) : profile_->IsKnowledgeVisibleNoSupervision( knowledge ) )
-            && isVisibleForUnitFilter;
+        return isVisibleForUnitFilter &&
+            profile_->IsSupervision() ? profile_->IsKnowledgeVisible( knowledge ) : profile_->IsKnowledgeVisibleNoSupervision( knowledge );
     return isVisibleForUnitFilter;
 }
 
