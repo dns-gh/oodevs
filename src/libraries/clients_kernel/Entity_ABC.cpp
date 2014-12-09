@@ -120,3 +120,8 @@ void Entity_ABC::Rename( const QString& )
 {
     // NOTHING
 }
+
+void Entity_ABC::Touch() const
+{
+    // NOTHING
+}
