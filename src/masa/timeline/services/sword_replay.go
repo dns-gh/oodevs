@@ -22,7 +22,7 @@ import (
 )
 
 var (
-	ReplayRangeUuid = gouuid.New()
+	ReplayRangeUuid = "90523a68-0df7-4e1f-baf9-d3ef25a3c4e4"
 )
 
 func checkTime(parameter string, replayBegin, replayEnd time.Time) (eventTime time.Time, err error) {
