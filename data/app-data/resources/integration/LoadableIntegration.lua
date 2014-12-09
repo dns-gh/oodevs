@@ -733,7 +733,7 @@ end
 -- account components that are defined as 'loadable' in the physical database.
 -- @return Boolean
 integration.agentPeutTransporterPion( transporter, wouldBeTransported, onlyLoadable )
-    DEC_Agent_AgentPeutTransporterPion( transporter, wouldBeTransported, onlyLoadable )
+    return DEC_Agent_AgentPeutTransporterPion( transporter, wouldBeTransported, onlyLoadable )
 end
 
 ------------------------------------------------------------------
