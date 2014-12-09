@@ -112,6 +112,7 @@ private:
     virtual void NotifyUpdated( const kernel::Ghost_ABC& ghost );
     virtual void NotifyDeleted( const kernel::Ghost_ABC& ghost );
     virtual void NotifyUpdated( const kernel::TacticalHierarchies& hierarchy );
+    virtual void NotifyUpdated( const kernel::Entity_ABC& entity );
 
     virtual void NotifyContextMenu( const kernel::Automat_ABC& agent, kernel::ContextMenu& menu );
     virtual void NotifyContextMenu( const kernel::Formation_ABC& agent, kernel::ContextMenu& menu );

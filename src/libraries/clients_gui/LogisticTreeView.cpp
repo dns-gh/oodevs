@@ -591,3 +591,8 @@ void LogisticTreeView::OnChangeLogisticLinks()
                                     tr( "Change logistic links" ),
                                     gui::ChangeSuperiorDialog::eLogisticSuperior );
 }
+
+void LogisticTreeView::NotifyUpdated( const kernel::Entity_ABC& /* entity */ )
+{
+    // NOTHING, here to ignore EntityTreeView_ABC default implementation
+}
