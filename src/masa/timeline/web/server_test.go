@@ -122,19 +122,6 @@ func (TestSuite) TestPanicWhenImportingChildrenEvents(c *C) {
 	c.Assert(err, IsNil)
 	swtest.DeepEquals(c, events, []*sdk.Event{
 		{
-			Uuid:      proto.String("A"),
-			Name:      proto.String(""),
-			Info:      proto.String(""),
-			Begin:     proto.String(begin),
-			End:       proto.String(""),
-			Done:      proto.Bool(false),
-			ErrorCode: proto.Int32(0),
-			ErrorText: proto.String(""),
-			ReadOnly:  proto.Bool(false),
-			Parent:    proto.String("B"),
-			Metadata:  proto.String(""),
-		},
-		{
 			Uuid:      proto.String("B"),
 			Name:      proto.String(""),
 			Info:      proto.String(""),
@@ -145,6 +132,19 @@ func (TestSuite) TestPanicWhenImportingChildrenEvents(c *C) {
 			ErrorText: proto.String(""),
 			ReadOnly:  proto.Bool(false),
 			Parent:    proto.String(""),
+			Metadata:  proto.String(""),
+		},
+		{
+			Uuid:      proto.String("A"),
+			Name:      proto.String(""),
+			Info:      proto.String(""),
+			Begin:     proto.String(begin),
+			End:       proto.String(""),
+			Done:      proto.Bool(false),
+			ErrorCode: proto.Int32(0),
+			ErrorText: proto.String(""),
+			ReadOnly:  proto.Bool(false),
+			Parent:    proto.String("B"),
 			Metadata:  proto.String(""),
 		},
 	})

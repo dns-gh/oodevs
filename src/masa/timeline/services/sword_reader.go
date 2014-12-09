@@ -27,7 +27,7 @@ type SwordServices map[sword.EnumService]none
 // and MUST pay attention to synchronisation
 type SwordReaderObserver interface {
 	Tick(tick time.Time)
-	UpdateEvent(uuid string, event *sdk.Event)
+	UpdateEvents(events ...*sdk.Event)
 	Restart(err error)
 	Log(format string, args ...interface{})
 	SetServices(services SwordServices)
@@ -350,7 +350,7 @@ func (s *SwordReader) saveMagic(msg *swapi.SwordMessage, clientId int32, id IdGe
 }
 
 func (s *SwordReader) postEvent(event *sdk.Event) {
-	s.poster.UpdateEvent(event.GetUuid(), event)
+	s.poster.UpdateEvents(event)
 }
 
 func (s *SwordReader) saveAction(ids Ids, msg *swapi.SwordMessage, clientId int32, id IdGetter) {

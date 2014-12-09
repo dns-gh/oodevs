@@ -111,9 +111,9 @@ func (f *FakeHandler) ReadEvents(uuid string, config services.EventFilterConfig)
 	return DummyEvents, DummyError
 }
 
-func (f *FakeHandler) UpdateEvent(session, event string, msg *sdk.Event) (*sdk.Event, error) {
-	f.event = msg
-	return DummyEvent, DummyError
+func (f *FakeHandler) UpdateEvents(session string, events ...*sdk.Event) ([]*sdk.Event, error) {
+	f.event = events[0]
+	return []*sdk.Event{DummyEvent}, DummyError
 }
 
 func (f *FakeHandler) DeleteEvent(session, event string) error {

@@ -243,14 +243,14 @@ func (c *Controller) ReadEvents(uuid string, config services.EventFilterConfig) 
 	return value.([]*sdk.Event), nil
 }
 
-func (c *Controller) UpdateEvent(uuid, event string, msg *sdk.Event) (*sdk.Event, error) {
-	value, err := c.apply(uuid, func(session *Session) (interface{}, error) {
-		return session.UpdateEvent(event, msg)
+func (c *Controller) UpdateEvents(uuid string, events ...*sdk.Event) ([]*sdk.Event, error) {
+	values, err := c.apply(uuid, func(session *Session) (interface{}, error) {
+		return session.UpdateEvents(events...)
 	})
 	if err != nil {
 		return nil, err
 	}
-	return value.(*sdk.Event), nil
+	return values.([]*sdk.Event), nil
 }
 
 func (c *Controller) DeleteEvent(uuid, event string) error {
@@ -273,7 +273,6 @@ func (c *Controller) CloseEvent(uuid, event string, msg *sdk.CloseEvent) (*sdk.E
 		return nil, err
 	}
 	return value.(*sdk.Event), nil
-
 }
 
 func (c *Controller) RegisterObserver(uuid string, config services.EventFilterConfig) (SdkObserver, error) {
@@ -321,9 +320,9 @@ func (c *ControllerObserver) CloseEvent(uuid string, err error, lock bool) {
 	})
 }
 
-func (c *ControllerObserver) UpdateEvent(uuid string, event *sdk.Event) {
+func (c *ControllerObserver) UpdateEvents(events ...*sdk.Event) {
 	c.controller.post(c.session, func(session *Session) {
-		session.UpdateEvent(uuid, event)
+		session.UpdateEvents(events...)
 	})
 }
 

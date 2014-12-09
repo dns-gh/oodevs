@@ -440,13 +440,12 @@ func makeUpdate(event *Event) (EventSlice, []*sdk.Event) {
 	return updates, encoded
 }
 
-func (s *Session) UpdateEvent(uuid string, msg *sdk.Event) (*sdk.Event, error) {
-	events := []*sdk.Event{msg}
+func (s *Session) UpdateEvents(events ...*sdk.Event) ([]*sdk.Event, error) {
 	// FIX: We should recheck new events if modification occurs
 	//      if another service than sword is added
 	events, _, err := s.checkers.CheckEvents(events...)
 	if err != nil {
-		s.Log("Error during UpdateEvent ", err, uuid, msg)
+		s.Log("Error while updating events", err)
 		return nil, err
 	}
 	updates := EventSlice{}
@@ -482,10 +481,7 @@ func (s *Session) UpdateEvent(uuid string, msg *sdk.Event) (*sdk.Event, error) {
 		encoded = append(encoded[:0], append(eventEncoded, encoded[0:]...)...) // push_front
 	}
 	s.listeners.UpdateEncodedEvents(updates, encoded)
-	if len(encoded) == 0 {
-		return msg, nil
-	}
-	return encoded[0], nil
+	return encoded, nil
 }
 
 func (s *Session) DeleteEvent(uuid string) error {

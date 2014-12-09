@@ -507,31 +507,35 @@ func (s *Server) importEvents(session string, data []byte, markersHost string, r
 	if err != nil {
 		return nil, err
 	}
-	apply := func(it *sdk.Event) {
+	// import root events first
+	errors := []*sdk.Event{}
+	roots := []*sdk.Event{}
+	children := []*sdk.Event{}
+	for _, it := range events {
 		event, err := filterAndModify(it, markersHost, replay)
-		if err == nil {
-			event, err = s.controller.UpdateEvent(session, event.GetUuid(), event)
-		}
 		if err != nil {
 			code, text := util.ConvertError(err)
-			it.ErrorCode = &code
-			it.ErrorText = &text
+			event.ErrorCode = &code
+			event.ErrorText = &text
+			errors = append(errors, event)
 		} else {
-			*it = *event
+			if len(event.GetParent()) == 0 {
+				roots = append(roots, event)
+			} else {
+				children = append(children, event)
+			}
 		}
+		*it = *event
 	}
-	// import root events first
-	for _, event := range events {
-		if len(event.GetParent()) == 0 {
-			apply(event)
-		}
+	roots, err = s.controller.UpdateEvents(session, roots...)
+	if err != nil {
+		return events, err
 	}
-	for _, event := range events {
-		if len(event.GetParent()) > 0 {
-			apply(event)
-		}
+	children, err = s.controller.UpdateEvents(session, children...)
+	if err != nil {
+		return events, err
 	}
-	return events, nil
+	return append(errors, append(roots, children...)...), nil
 }
 
 func (s *Server) importSession(req *restful.Request) (interface{}, error) {
@@ -558,24 +562,18 @@ func (s *Server) createEvent(req *restful.Request) (interface{}, error) {
 	if err != nil {
 		return nil, err
 	}
-	return s.controller.UpdateEvent(uuid, body.GetUuid(), body)
+	return s.controller.UpdateEvents(uuid, body)
 }
 
 func (s *Server) createEvents(req *restful.Request) (interface{}, error) {
 	uuid := req.PathParameter("uuid")
-	body := []*sdk.Event{}
-	err := req.ReadEntity(&body)
+	events := []*sdk.Event{}
+	err := req.ReadEntity(&events)
 	if err != nil {
 		return nil, err
 	}
-	for i, src := range body {
-		dst, err := s.controller.UpdateEvent(uuid, src.GetUuid(), src)
-		code, text := util.ConvertError(err)
-		dst.ErrorCode = &code
-		dst.ErrorText = &text
-		body[i] = dst
-	}
-	return body, nil
+	s.controller.UpdateEvents(uuid, events...)
+	return events, nil
 }
 
 func (s *Server) readEvents(req *restful.Request) (interface{}, error) {
@@ -589,13 +587,12 @@ func (s *Server) readEvents(req *restful.Request) (interface{}, error) {
 
 func (s *Server) updateEvent(req *restful.Request) (interface{}, error) {
 	session := req.PathParameter("session")
-	uuid := req.PathParameter("uuid")
 	body := &sdk.Event{}
 	err := req.ReadEntity(body)
 	if err != nil {
 		return nil, err
 	}
-	return s.controller.UpdateEvent(session, uuid, body)
+	return s.controller.UpdateEvents(session, body)
 }
 
 func (s *Server) deleteEvent(req *restful.Request) (interface{}, error) {

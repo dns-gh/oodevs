@@ -287,12 +287,12 @@ func (s *Sword) deleteReplay(uuid string) {
 				// Removing the first replay event fills the gap with the next one
 				s.replays[1].Begin = replay.Begin
 				updatePayload(0, size, s.replays[1])
-				s.observer.UpdateEvent(s.replays[1].GetUuid(), s.replays[1])
+				s.observer.UpdateEvents(s.replays[1])
 			} else {
 				// Removing a replay event fills the gap with the previous one
 				s.replays[index-1].End = replay.End
 				updatePayload(index-1, size, s.replays[index-1])
-				s.observer.UpdateEvent(s.replays[index-1].GetUuid(), s.replays[index-1])
+				s.observer.UpdateEvents(s.replays[index-1])
 			}
 			s.replays = append(s.replays[:index], s.replays[index+1:]...)
 		}
@@ -326,7 +326,7 @@ func (s *Sword) setReplayRangeDates(link *SwordLink, start, end time.Time) {
 			},
 		}
 		s.observer.UpdateRangeDates(start, end)
-		s.observer.UpdateEvent(ReplayRangeUuid, event)
+		s.observer.UpdateEvents(event)
 	}
 }
 

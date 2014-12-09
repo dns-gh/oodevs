@@ -111,7 +111,8 @@ func (f *Fixture) createFullEvent(uuid, name, protocol, target, parent, metadata
 	if !end.IsZero() {
 		msg.End = proto.String(util.FormatTime(end))
 	}
-	return f.controller.UpdateEvent(f.session, uuid, &msg)
+	events, err := f.controller.UpdateEvents(f.session, &msg)
+	return events[0], err
 }
 
 func (f *Fixture) createEvent(uuid, name, protocol, target string, payload []byte) (*sdk.Event, error) {
@@ -469,7 +470,7 @@ func (t *TestSuite) TestTriggerEvent(c *C) {
 	}()
 
 	event.Done = proto.Bool(true)
-	_, err = f.controller.UpdateEvent(f.session, uuid, event)
+	_, err = f.controller.UpdateEvents(f.session, event)
 	c.Assert(err, IsNil)
 
 	f.waitAllDone(c, uuid)
@@ -606,9 +607,9 @@ func (t *TestSuite) TestListeners(c *C) {
 	// test update event
 	event.Name = proto.String("new_name")
 	uuid := event.GetUuid()
-	updated, err := f.controller.UpdateEvent(f.session, uuid, event)
+	updated, err := f.controller.UpdateEvents(f.session, event)
 	c.Assert(err, IsNil)
-	swtest.DeepEquals(c, updated, event)
+	swtest.DeepEquals(c, updated, []*sdk.Event{event})
 	msg := waitBroadcastTag(messages, sdk.MessageTag_update_events)
 	fakerEvents, _ = faker.GetAndClear()
 	c.Assert(msg, NotNil)
@@ -866,7 +867,7 @@ func (f *Fixture) resetEvents(c *C, valid bool) {
 			evt.ErrorCode = nil
 			evt.ErrorText = nil
 		}
-		_, err := f.controller.UpdateEvent(f.session, evt.GetUuid(), evt)
+		_, err := f.controller.UpdateEvents(f.session, evt)
 		c.Assert(err, IsNil)
 	}
 }
@@ -1013,9 +1014,10 @@ func (t *TestSuite) TestUpdateEventUpdatesParent(c *C) {
 
 	// test update child updates parent
 	child.Begin = proto.String(util.FormatTime(f.begin.Add(2 * time.Hour)))
-	newChild, err := f.controller.UpdateEvent(f.session, "child", child)
+	newChild, err := f.controller.UpdateEvents(f.session, child)
 	c.Assert(err, IsNil)
-	swtest.DeepEquals(c, newChild, child)
+	c.Assert(len(newChild) >= 1, Equals, true)
+	swtest.DeepEquals(c, newChild[0], child)
 
 	msg := waitBroadcastTag(messages, sdk.MessageTag_update_events)
 	parent.End = proto.String(util.FormatTime(f.begin.Add(2 * time.Hour)))
@@ -1047,9 +1049,10 @@ func (t *TestSuite) TestUpdateEventUpdatesChildren(c *C) {
 	// test update parent updates children
 	parent.Begin = proto.String(util.FormatTime(f.begin.Add(5 * time.Minute)))
 	parent.End = proto.String(util.FormatTime(f.begin.Add(1*time.Hour + 5*time.Minute)))
-	newParent, err := f.controller.UpdateEvent(f.session, "parent", parent)
+	newParent, err := f.controller.UpdateEvents(f.session, parent)
 	c.Assert(err, IsNil)
-	swtest.DeepEquals(c, newParent, parent)
+	c.Assert(len(newParent) >= 1, Equals, true)
+	swtest.DeepEquals(c, newParent[0], parent)
 	msg := waitBroadcastTag(messages, sdk.MessageTag_update_events)
 	child1.Begin = proto.String(util.FormatTime(f.begin.Add(1*time.Minute + 5*time.Minute)))
 	child2.Begin = proto.String(util.FormatTime(f.begin.Add(2*time.Minute + 5*time.Minute)))
@@ -1140,7 +1143,7 @@ func (t *TestSuite) TestKnownEventsAreDeletedWhenBeingFiltered(c *C) {
 	})
 	faker.filter = true
 	event.Name = proto.String("another_name")
-	_, err = f.controller.UpdateEvent(f.session, event.GetUuid(), event)
+	_, err = f.controller.UpdateEvents(f.session, event)
 	c.Assert(err, IsNil)
 	swtest.DeepEquals(c, <-input, &sdk.Message{
 		Tag:   sdk.MessageTag_delete_events.Enum(),
@@ -1223,7 +1226,7 @@ func (t *TestSuite) TestGarbageOrdersDoesNotAbort(c *C) {
 }
 
 func checkErrorUpdate(c *C, f *Fixture, messages chan interface{}, id string, event *sdk.Event) {
-	_, err := f.controller.UpdateEvent(f.session, id, event)
+	_, err := f.controller.UpdateEvents(f.session, event)
 	c.Assert(err, NotNil)
 	msg := waitBroadcastTag(messages, sdk.MessageTag_update_events)
 	c.Assert(msg, IsNil)
@@ -1289,7 +1292,7 @@ func (t *TestSuite) TestChangeReplayRangeDates(c *C) {
 	event = services.CloneEvent(validEvent)
 	event.Name = proto.String("New name")
 	event.Info = proto.String("New information")
-	_, err = f.controller.UpdateEvent(f.session, id, event)
+	_, err = f.controller.UpdateEvents(f.session, event)
 	c.Assert(err, IsNil)
 	msg = waitBroadcastTag(messages, sdk.MessageTag_update_events)
 	c.Assert(msg, NotNil)
@@ -1330,7 +1333,7 @@ func (t *TestSuite) TestChangeReplayRangeDates(c *C) {
 	// Replay range can be disabled
 	event = services.CloneEvent(validEvent)
 	event.Action.Payload, _ = json.Marshal(&sdk.ReplayPayload{Enabled: proto.Bool(false)})
-	_, err = f.controller.UpdateEvent(f.session, id, event)
+	_, err = f.controller.UpdateEvents(f.session, event)
 	c.Assert(err, IsNil)
 	msg = waitBroadcastTag(messages, sdk.MessageTag_update_events)
 	c.Assert(msg, NotNil)
@@ -1339,7 +1342,7 @@ func (t *TestSuite) TestChangeReplayRangeDates(c *C) {
 	// And re-enabled
 	event = services.CloneEvent(validEvent)
 	event.Action.Payload, _ = json.Marshal(&sdk.ReplayPayload{Enabled: proto.Bool(true)})
-	_, err = f.controller.UpdateEvent(f.session, id, event)
+	_, err = f.controller.UpdateEvents(f.session, event)
 	c.Assert(err, IsNil)
 	msg = waitBroadcastTag(messages, sdk.MessageTag_update_events)
 	c.Assert(msg, NotNil)
@@ -1353,7 +1356,7 @@ func (t *TestSuite) TestChangeReplayRangeDates(c *C) {
 	event.Begin = proto.String(util.FormatTime(replayBegin.Add(30 * time.Second)))
 	event.Name = proto.String("")
 	event.Info = proto.String("")
-	_, err = f.controller.UpdateEvent(f.session, id, event)
+	_, err = f.controller.UpdateEvents(f.session, event)
 	c.Assert(err, IsNil)
 	msg = waitBroadcastTag(messages, sdk.MessageTag_update_events)
 	c.Assert(msg, NotNil)
@@ -1398,7 +1401,7 @@ func (t *TestSuite) TestChangeReplayRangeDates(c *C) {
 	// Modifying a replay event boundary modifies the previous or the next event too
 	event = services.CloneEvent(splitEvent)
 	event.Begin = proto.String(util.FormatTime(replayBegin.Add(31 * time.Second)))
-	_, err = f.controller.UpdateEvent(f.session, id, event)
+	_, err = f.controller.UpdateEvents(f.session, event)
 	c.Assert(err, IsNil)
 	msg = waitBroadcastTag(messages, sdk.MessageTag_update_events)
 	c.Assert(msg, NotNil)
@@ -1485,7 +1488,6 @@ func (t *TestSuite) TestReplayRangeSendSkipToDate(c *C) {
 	checkIsReplayEvent(c, event)
 	c.Assert(event.GetName(), Equals, "Replay range")
 	c.Assert(event.GetInfo(), Equals, "")
-	id := event.GetUuid()
 	validEvent := services.CloneEvent(event)
 
 	// Split and disable first display range
@@ -1493,14 +1495,14 @@ func (t *TestSuite) TestReplayRangeSendSkipToDate(c *C) {
 	splitUuid := uuid.New()
 	event.Uuid = proto.String(splitUuid)
 	event.Begin = proto.String(util.FormatTime(replayBegin.Add(30 * time.Second)))
-	f.controller.UpdateEvent(f.session, id, event)
+	f.controller.UpdateEvents(f.session, event)
 	msg = waitBroadcastTag(messages, sdk.MessageTag_update_events)
 	c.Assert(msg, NotNil)
 	c.Assert(len(msg.GetEvents()), Equals, 2)
 	event = services.CloneEvent(validEvent)
 	event.End = proto.String(util.FormatTime(replayBegin.Add(30 * time.Second)))
 	event.Action.Payload, _ = json.Marshal(&sdk.ReplayPayload{Enabled: proto.Bool(false)})
-	_, err = f.controller.UpdateEvent(f.session, id, event)
+	_, err = f.controller.UpdateEvents(f.session, event)
 	c.Assert(err, IsNil)
 	msg = waitBroadcastTag(messages, sdk.MessageTag_update_events)
 	c.Assert(msg, NotNil)

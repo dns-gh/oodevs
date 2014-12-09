@@ -22,7 +22,7 @@ type Observer interface {
 	// close action <uuid> with error <err> and set as read-only if <lock>
 	CloseEvent(uuid string, err error, lock bool)
 	// update event <uuid> with <event> data
-	UpdateEvent(uuid string, event *sdk.Event)
+	UpdateEvents(events ...*sdk.Event)
 	UpdateServices()
 	UpdateRangeDates(start, end time.Time)
 	DeleteEvent(uuid string)
