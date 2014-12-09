@@ -10,84 +10,42 @@
 #include "gaming_app_pch.h"
 #include "ReportListView.h"
 #include "moc_ReportListView.cpp"
-#include "gaming/Reports.h"
 #include "clients_gui/DisplayExtractor.h"
 #include "clients_gui/LinkItemDelegate.h"
-#include "clients_kernel/Entity_ABC.h"
+#include "clients_kernel/Agent_ABC.h"
+#include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/ContextMenu.h"
 #include "clients_kernel/Controllers.h"
+#include "clients_kernel/Entity_ABC.h"
+#include "clients_kernel/Population_ABC.h"
+#include "clients_kernel/Time_ABC.h"
+#include "gaming/AgentsModel.h"
+#include "gaming/ReportsModel.h"
+#include "protocol/MessageParameters.h"
+#include "protocol/Protocol.h"
+#include "protocol/ServerPublisher_ABC.h"
+#include "reports/ReportFactory.h"
+#include <boost/optional.hpp>
 
 #pragma warning( disable : 4355 )
-
-Q_DECLARE_METATYPE( const Report* )
-
-namespace
-{
-    enum E_Roles
-    {
-        ReportRole =     Qt::UserRole,
-        TypeFilterRole = Qt::UserRole + 1,
-        OrderRole =      Qt::UserRole + 2,
-        IdRole =         Qt::UserRole + 3
-    };
-}
-
-unsigned int ReportListView::sortOrder_ = 0;
-
-namespace
-{
-    class CustomSortFilterProxyModel : public QSortFilterProxyModel
-    {
-    public:
-        CustomSortFilterProxyModel( QObject* parent )
-            : QSortFilterProxyModel( parent )
-        {
-            // NOTHING
-        }
-        ~CustomSortFilterProxyModel()
-        {
-            // NOTHING
-        }
-    protected:
-        virtual bool lessThan( const QModelIndex& left, const QModelIndex& right ) const
-        {
-            QStandardItemModel* model = static_cast< QStandardItemModel* >( sourceModel() );
-            if( left.isValid() && right.isValid() )
-            {
-                //getting second column modelIndex for each
-                QModelIndex leftIndex = model->index( model->itemFromIndex( left )->row(), 1 );
-                QModelIndex rightIndex = model->index( model->itemFromIndex( right )->row(), 1 );
-
-                //getting report pointer and time value
-                const auto* lhs = model->data( leftIndex, ReportRole ).value< const Report* >();
-                const auto* rhs = model->data( rightIndex, ReportRole ).value< const Report* >();
-                const QDateTime& timeLeft  = lhs->GetDateTime();
-                const QDateTime& timeRight = rhs->GetDateTime();
-                if( timeLeft == timeRight )
-                {
-                    if( lhs->GetType() != Report::eTrace && rhs->GetType() != Report::eTrace )
-                        return model->data( leftIndex, IdRole ).toUInt() > model->data( rightIndex, IdRole ).toUInt();
-                    return model->data( leftIndex, OrderRole ).toUInt() < model->data( rightIndex, OrderRole ).toUInt();
-                }
-                return timeLeft < timeRight;
-            }
-            return false;
-        }
-    };
-}
 
 // -----------------------------------------------------------------------------
 // Name: ReportListView constructor
 // Created: AGE 2006-03-09
 // -----------------------------------------------------------------------------
-ReportListView::ReportListView( QWidget* pParent, kernel::Controllers& controllers, gui::DisplayExtractor& extractor )
+ReportListView::ReportListView( QWidget* pParent, kernel::Controllers& controllers, gui::DisplayExtractor& extractor,
+                                const ReportFactory& factory, Publisher_ABC& publisher, ReportsModel& model,
+                                const AgentsModel& agents, const kernel::Time_ABC& time )
     : QTreeView( pParent )
     , controllers_( controllers )
-    , extractor_( extractor )
-    , selected_( controllers )
-    , readTimer_( new QTimer( this ) )
-    , proxyFilter_ ( new CustomSortFilterProxyModel( this ) )
-    , delegate_( new gui::LinkItemDelegate( this ) )
+    , extractor_  ( extractor )
+    , factory_    ( factory )
+    , readTimer_  ( new QTimer( this ) )
+    , delegate_   ( new gui::LinkItemDelegate( this ) )
+    , model_      ( model )
+    , agents_     ( agents )
+    , time_       ( time )
+    , selected_   ( 0 )
 {
     setItemDelegateForColumn( 1, delegate_ );
     //filter regexp
@@ -97,18 +55,14 @@ ReportListView::ReportListView( QWidget* pParent, kernel::Controllers& controlle
     toDisplay_.insert( Report::eWarning );
 
     //configure treeview
-    setModel( proxyFilter_ );
+    setModel( &reportModel_ );
     setRootIsDecorated( false );
     setEditTriggers( 0 );
     setAlternatingRowColors( true );
     setMouseTracking( true );
     setAllColumnsShowFocus( true );
-    proxyFilter_->setFilterKeyColumn( 1 );
-    proxyFilter_->setSourceModel( &reportModel_ );
-    proxyFilter_->setFilterRole( TypeFilterRole );
-    SetFilterRegexp();
-    proxyFilter_->setDynamicSortFilter( true );
-    setSortingEnabled( true );
+    setUniformRowHeights(true);
+    setSortingEnabled( false );
 
     //Add alternative palette
     QPalette p( palette() );
@@ -129,6 +83,21 @@ ReportListView::ReportListView( QWidget* pParent, kernel::Controllers& controlle
     connect( delegate_, SIGNAL( LinkClicked( const QString&, const QModelIndex& ) ), SLOT( OnLinkClicked( const QString&, const QModelIndex& ) ) );
 
     controllers_.Register( *this );
+
+    publisher.Register( Publisher_ABC::T_SimHandler( [&]( const sword::SimToClient& message, bool /*ack*/ ) {
+        if( !selected_ || !isVisible() )
+            return;
+        if( message.message().has_report() )
+            Create( message.message().report() );
+        else if( message.message().has_trace() )
+            Create( message.message().trace() );
+    } ) );
+    publisher.Register( Publisher_ABC::T_ReplayHandler( [&]( const sword::ReplayToClient& message )
+    {
+        if( !message.message().has_list_reports_ack() )
+            return;
+        FillReports();
+    } ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -146,9 +115,7 @@ ReportListView::~ReportListView()
 // -----------------------------------------------------------------------------
 void ReportListView::showEvent( QShowEvent* )
 {
-    const kernel::Entity_ABC* selected = selected_;
-    selected_ = 0;
-    NotifySelected( selected );
+    FillReports();
 }
 
 // -----------------------------------------------------------------------------
@@ -179,47 +146,71 @@ void ReportListView::contextMenuEvent( QContextMenuEvent * e )
 // -----------------------------------------------------------------------------
 void ReportListView::NotifySelected( const kernel::Entity_ABC* element )
 {
-    if( element != selected_ )
-    {
-        MarkReportsAsRead();
-        selected_ = element;
-        const Reports* reports = selected_ ? selected_->Retrieve< Reports >() : 0;
-        if( reports )
-            NotifyUpdated( *reports );
-        else
-            reportModel_.removeRows( 0, reportModel_.rowCount() );
-    }
+    if( !isVisible() )
+        return;
+
+    model_.ReadReports( selected_ );
+    const auto id = element ? element->GetId() : 0u;
+    if( selected_ == id )
+        return;
+
+    selected_ = id;
+    FillReports();
 }
 
-// -----------------------------------------------------------------------------
-// Name: ReportListView::ShouldUpdate
-// Created: AGE 2006-03-09
-// -----------------------------------------------------------------------------
-bool ReportListView::ShouldUpdate( const Reports& reports )
+void ReportListView::FillReports()
 {
-    return isVisible() && selected_ && selected_->Retrieve< Reports >() == &reports;
+    reportModel_.removeRows( 0, reportModel_.rowCount() );
+    if( selected_ != 0 )
+        AddReports();
 }
 
-// -----------------------------------------------------------------------------
-// Name: ReportListView::GetItems
-// Created: JSR 2012-10-19
-// -----------------------------------------------------------------------------
-QList< QStandardItem* > ReportListView::GetItems( const Report& report ) const
+void ReportListView::AddReports()
 {
-    if( sortOrder_ >= std::numeric_limits< unsigned int >::max() -1 )
-        sortOrder_ = 0;
+    const auto* entity =  agents_.FindAllAgent( selected_ );
+    if( !entity )
+        return;
+
+    const auto unreadMessages = model_.HasUnreadReports( selected_ );
+    const auto& reports = model_.GetReports( selected_ );
+    for( auto it = reports.begin(); it != reports.end(); ++it )
+        CreateItem( *it, *entity, unreadMessages );
+}
+
+template< typename T >
+void ReportListView::Create( const T& report )
+{
+    const auto id = protocol::TryGetTasker( report.source() );
+    if( !id )
+        return;
+    if( selected_ != *id )
+        return;
+    const auto* entity = agents_.FindAllAgent( selected_ );
+    if( !entity )
+        return;
+    ReportsModel::Message message( selected_, report, time_.GetDateTime() );
+    CreateItem( message, *entity, true );
+}
+
+void ReportListView::CreateItem( const ReportsModel::Message& message, const kernel::Entity_ABC& entity, bool unreadMessages )
+{
+    boost::shared_ptr< Report > report;
+    if( message.report_.IsInitialized() )
+        report = factory_.CreateReport( entity, message.report_ );
+    else if( message.trace_.IsInitialized() )
+        report = factory_.CreateTrace( entity, message.trace_, message.date_ );
+
+    if( !report || toDisplay_.find( report->GetType() ) == toDisplay_.end() )
+        return;
+
     QList< QStandardItem* > list;
-    QStandardItem* dateItem = new QStandardItem( report.GetDateTime().toString( Qt::LocalDate ) );
-    dateItem->setForeground( report.GetColor() );
+    QStandardItem* dateItem = new QStandardItem( report->GetDateTime().toString( Qt::LocalDate ) );
+    dateItem->setForeground( report->GetColor() );
 
-    QStandardItem* reportItem = new QStandardItem( report.GetMessage() ) ;
-    reportItem->setForeground( report.GetColor() );
-    reportItem->setData( QString::number( report.GetType() ), TypeFilterRole );
-    reportItem->setData( QVariant::fromValue( &report ), ReportRole );
-    reportItem->setData( sortOrder_, OrderRole );
-    reportItem->setData( report.GetId(), IdRole );
+    QStandardItem* reportItem = new QStandardItem( report->GetMessage() ) ;
+    reportItem->setForeground( report->GetColor() );
 
-    if( report.IsNew() )
+    if( unreadMessages )
     {
         QFont font = dateItem->font();
         font.setBold( true );
@@ -227,44 +218,10 @@ QList< QStandardItem* > ReportListView::GetItems( const Report& report ) const
         reportItem->setFont( font );
     }
 
-    ++sortOrder_;
     list.append( dateItem );
     list.append( reportItem );
 
-    return list;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ReportListView::NotifyUpdated
-// Created: AGE 2006-03-09
-// -----------------------------------------------------------------------------
-void ReportListView::NotifyUpdated( const Reports& reports )
-{
-    if( ! ShouldUpdate( reports ) )
-        return;
-
-    reportModel_.removeRows( 0, reportModel_.rowCount() );
-
-    const Reports::T_TextReports& textReports = reports.GetReports();
-    for( auto it = textReports.begin(); it != textReports.end(); ++it )
-        reportModel_.appendRow( GetItems( *it->second ) );
-
-    const Reports::T_Reports& traces = reports.GetTraces();
-    for( size_t i = 0; i < traces.size(); ++i )
-        reportModel_.appendRow(  GetItems( *traces[ i ] ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ReportListView::NotifyCreated
-// Created: AGE 2006-03-09
-// -----------------------------------------------------------------------------
-void ReportListView::NotifyCreated( const Report& report )
-{
-    if( !isVisible() || & report.GetOwner() != selected_ )
-        return;
-    if( toDisplay_.find( report.GetType() ) == toDisplay_.end() )
-        return;
-    reportModel_.appendRow( GetItems( report ) );
+    reportModel_.insertRow( 0, list );
 }
 
 // -----------------------------------------------------------------------------
@@ -277,6 +234,19 @@ void ReportListView::OnSelectionChanged()
     readTimer_->setSingleShot( true );
 }
 
+namespace
+{
+    void SetBold( QStandardItem* item, bool bold )
+    {
+        if( item )
+        {
+            QFont font = item->font();
+            font.setBold( bold );
+            item->setFont( font );
+        }
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: ReportListView::OnReadTimerOut
 // Created: AGE 2006-10-17
@@ -286,46 +256,8 @@ void ReportListView::OnReadTimerOut()
     const QModelIndex index = selectionModel()->currentIndex();
     if( !index.isValid() )
         return;
-    QStandardItem* item1 = reportModel_.itemFromIndex( proxyFilter_->mapToSource( index ) );
-    QStandardItem* item2 = reportModel_.item( item1->row(), item1->column() == 0 ? 1 : 0 );
-    if( item1 && item2 )
-    {
-        const_cast< Report* >( reportModel_.item( item1->row(), 1 )->data( ReportRole ).value< const Report* >() )->Read();
-        QFont font = item1->font();
-        font.setBold( false );
-        item1->setFont( font );
-        item2->setFont( font );
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: ReportListView::MarkReportsAsRead
-// Created: AGE 2006-09-21
-// -----------------------------------------------------------------------------
-void ReportListView::MarkReportsAsRead()
-{
-    const Reports* reports = 0;
-    if( selected_ && ( reports = selected_->Retrieve< Reports >() ) != 0 )
-        const_cast< Reports* >( reports )->MarkAsRead(); // $$$$ AGE 2006-09-18:
-}
-
-// -----------------------------------------------------------------------------
-// Name: ReportListView::SetFilterRegexp
-// Created: NPT 2012-10-08
-// -----------------------------------------------------------------------------
-void ReportListView::SetFilterRegexp()
-{
-    QString regexp( "\\b(" );
-    if( toDisplay_.empty() )
-        regexp += "noSelection";
-    for( std::set< Report::E_Type >::const_iterator it = toDisplay_.begin(); it != toDisplay_.end(); ++it )
-    {
-        if( it != toDisplay_.begin() )
-            regexp += '|';
-        regexp += QString::number( *it );
-    }
-    regexp += ")\\b";
-    proxyFilter_->setFilterRegExp( regexp );
+    SetBold( reportModel_.item( index.row(), index.column() ), false );
+    SetBold( reportModel_.item( index.row(), index.column() == 0 ? 1 : 0 ), false );
 }
 
 // -----------------------------------------------------------------------------
@@ -334,9 +266,8 @@ void ReportListView::SetFilterRegexp()
 // -----------------------------------------------------------------------------
 void ReportListView::OnClearAll()
 {
-    const Reports* reports = 0;
-    if( selected_ && ( reports = selected_->Retrieve< Reports >() ) != 0 )
-        const_cast< Reports* >( reports )->Clear(); // $$$$ AGE 2006-09-18:
+    model_.Clear( selected_ );
+    FillReports();
 }
 
 // -----------------------------------------------------------------------------
@@ -345,9 +276,8 @@ void ReportListView::OnClearAll()
 // -----------------------------------------------------------------------------
 void ReportListView::OnClearTrace()
 {
-    const Reports* reports = 0;
-    if( selected_ && ( reports = selected_->Retrieve< Reports >() ) != 0 )
-        const_cast< Reports* >( reports )->ClearTraces(); // $$$$ AGE 2006-09-18:
+    model_.ClearTraces( selected_ );
+    FillReports();
 }
 
 // -----------------------------------------------------------------------------
@@ -356,12 +286,10 @@ void ReportListView::OnClearTrace()
 // -----------------------------------------------------------------------------
 void ReportListView::OnRequestCenter()
 {
-    const QModelIndex index = selectionModel()->currentIndex();
-    if( !index.isValid() )
+    const auto* entity = agents_.FindAllAgent( selected_ );
+    if( !entity )
         return;
-    QStandardItem* item = reportModel_.itemFromIndex( proxyFilter_->mapToSource( index ) );
-    if( item && item->data( ReportRole ).isValid() )
-        item->data( ReportRole ).value< const Report* >()->GetOwner().Activate( controllers_.actions_ );
+    entity->Activate( controllers_.actions_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -377,11 +305,7 @@ void ReportListView::OnToggle( QAction* action )
         toDisplay_.insert( type );
     else
         toDisplay_.erase( type );
-    SetFilterRegexp();
-
-    const kernel::Entity_ABC* selected = selected_;
-    selected_ = 0;
-    NotifySelected( selected );
+    FillReports();
 }
 
 // -----------------------------------------------------------------------------

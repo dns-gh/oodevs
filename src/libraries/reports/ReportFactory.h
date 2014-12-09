@@ -32,7 +32,6 @@ namespace kernel
     class DotationType;
     class Entity_ABC;
     class EquipmentType;
-    class Time_ABC;
 }
 
 namespace sword
@@ -62,8 +61,7 @@ public:
     //@{
              ReportFactory( const RcEntityResolver_ABC& rcResolver,
                             const tools::Resolver_ABC< kernel::DotationType >& dotationResolver,
-                            const tools::Resolver_ABC< kernel::EquipmentType >& equipmentResolver,
-                            const kernel::Time_ABC* time );
+                            const tools::Resolver_ABC< kernel::EquipmentType >& equipmentResolver );
     virtual ~ReportFactory();
     //@}
 
@@ -73,7 +71,7 @@ public:
     void Purge();
 
     boost::shared_ptr< Report > CreateReport( const kernel::Entity_ABC& entity, const sword::Report& message ) const;
-    Report* CreateTrace( const kernel::Entity_ABC& entity, const sword::Trace& message ) const;
+    boost::shared_ptr< Report > CreateTrace( const kernel::Entity_ABC& entity, const sword::Trace& message, const QDateTime& date ) const;
     std::string FormatReport( const kernel::Entity_ABC* entity, const sword::Report& message ) const;
     QDateTime GetTime( const sword::DateTime& d ) const;
     //@}
@@ -98,7 +96,6 @@ private:
     const RcEntityResolver_ABC& rcResolver_;
     const tools::Resolver_ABC< kernel::DotationType >& dotationResolver_;
     const tools::Resolver_ABC< kernel::EquipmentType >& equipmentResolver_;
-    const kernel::Time_ABC* time_;
     std::unique_ptr< Stages > stages_;
     //@}
 };

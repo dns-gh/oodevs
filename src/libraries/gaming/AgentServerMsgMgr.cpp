@@ -2389,10 +2389,10 @@ void AgentServerMsgMgr::OnReceiveFormationChangeSuperior( const sword::SimToClie
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::UpdateHandlers( const sword::SimToClient& message )
 {
-    unsigned int clientId = message.has_client_id() ? message.client_id() : 0u;
-    if( profile_ && profile_->DisplayMessage( clientId ) )
-        for( auto it = simHandlers_.begin(); it != simHandlers_.end(); ++it )
-            (*it)( message );
+    const auto clientId = message.has_client_id() ? message.client_id() : 0u;
+    const auto ack = profile_ && profile_->DisplayMessage( clientId );
+    for( auto it = simHandlers_.begin(); it != simHandlers_.end(); ++it )
+        (*it)( message, ack );
 }
 
 // -----------------------------------------------------------------------------

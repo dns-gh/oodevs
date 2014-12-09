@@ -70,9 +70,9 @@ LogisticSupplyPullFlowDialog::LogisticSupplyPullFlowDialog( QWidget* parent,
     QVBoxLayout* resourcesLayout = new QVBoxLayout( resourcesTab_ );
     resourcesLayout->addWidget( supplierCombo_ );
     resourcesLayout->addWidget( resourcesTable_ );
-    actionsModel.RegisterHandler( [&]( const sword::SimToClient& message )
+    actionsModel.RegisterHandler( [&]( const sword::SimToClient& message, bool ack )
     {
-        if( !lastContext_ || !isVisible() ||
+        if( !ack || !lastContext_ || !isVisible() ||
             !message.message().has_unit_magic_action_ack() || lastContext_ != message.context() )
             return;
         if( message.message().unit_magic_action_ack().error_code() != sword::UnitActionAck_ErrorCode_no_error )

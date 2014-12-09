@@ -75,7 +75,7 @@ Application::Application( gui::ApplicationMonitor& monitor, int& argc, char** ar
     simulationController_.reset( new SimulationController( *simulation_, *controllers_, network_->GetMessageMgr() ) );
     knowledgeConverter_.reset( new KnowledgeConverter( *controllers_ ) );
     rcResolver_.reset( new RcEntityResolver( *controllers_, *knowledgeConverter_ ) );
-    staticModel_.reset( new ::StaticModel( *controllers_, *rcResolver_, *simulation_ ) );
+    staticModel_.reset( new ::StaticModel( *controllers_, *rcResolver_ ) );
     const std::string& login = config_->GetLogin();
     const std::string& pwd = config_->GetPassword();
     profile_.reset( new Profile( *controllers_, network_->GetMessageMgr(), login, config_->IsLoginInCommandLine() ) );

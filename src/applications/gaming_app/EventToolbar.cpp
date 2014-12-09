@@ -10,23 +10,26 @@
 #include "gaming_app_pch.h"
 #include "EventToolbar.h"
 #include "moc_EventToolbar.cpp"
-#include "clients_kernel/Controllers.h"
+#include "clients_gui/resources.h"
 #include "clients_kernel/ActionController.h"
+#include "clients_kernel/Controllers.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/Profile_ABC.h"
-#include "reports/Report.h"
+#include "gaming/AgentsModel.h"
+#include "gaming/ReportsModel.h"
 #include "gaming/statusicons.h"
-#include "gaming/Simulation.h"
-#include "clients_gui/resources.h"
+#include "protocol/ServerPublisher_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: EventToolbar constructor
 // Created: SBO 2006-06-20
 // -----------------------------------------------------------------------------
-EventToolbar::EventToolbar( QMainWindow* pParent, kernel::Controllers& controllers, const kernel::Profile_ABC& profile )
+EventToolbar::EventToolbar( QMainWindow* pParent, kernel::Controllers& controllers, ReportsModel& model,
+                            const AgentsModel& agents, Publisher_ABC& publisher )
     : gui::RichToolBar( controllers, pParent, "event toolbar" )
     , controllers_( controllers )
-    , profile_( profile )
+    , model_      ( model )
+    , agents_     ( agents )
 {
     setObjectName( "eventToolBar" );
     setWindowTitle( tr( "Notifications" ) );
@@ -37,6 +40,19 @@ EventToolbar::EventToolbar( QMainWindow* pParent, kernel::Controllers& controlle
     messageButton_->setUsesTextLabel( true );
     messageButton_->setTextPosition( QToolButton::BesideIcon );
     controllers_.Update( *this );
+
+    publisher.Register( Publisher_ABC::T_SimHandler( [&]( const sword::SimToClient& message, bool /*ack*/ )
+    {
+        if( !message.message().has_report() )
+            return;
+        UpdateMessageButton();
+    } ) );
+    publisher.Register( Publisher_ABC::T_ReplayHandler( [&]( const sword::ReplayToClient& message )
+    {
+        if( !message.message().has_list_reports_ack() )
+            return;
+        UpdateMessageButton();
+    } ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -55,31 +71,16 @@ EventToolbar::~EventToolbar()
 // -----------------------------------------------------------------------------
 void EventToolbar::MessageClicked()
 {
-    if( messageAgents_.empty() )
+    if( !model_.UnreadReports() )
         return;
-    const kernel::Entity_ABC* entity = messageAgents_.front();
+    const auto id = model_.NextUnreadReports();
+    const auto* entity = agents_.FindAllAgent( id );
+    if( !entity )
+        return;
     entity->Select( controllers_.actions_ );
     entity->Activate( controllers_.actions_ );
-    messageAgents_.pop_front();
+    model_.ReadReports();
     UpdateMessageButton();
-}
-
-// -----------------------------------------------------------------------------
-// Name: EventToolbar::NotifyCreated
-// Created: SBO 2006-06-26
-// -----------------------------------------------------------------------------
-void EventToolbar::NotifyCreated( const Report& report )
-{
-    const kernel::Entity_ABC& entity = report.GetOwner();
-    if( profile_.IsVisible( entity ) )
-    {
-        auto it = std::find( messageAgents_.begin(), messageAgents_.end(), &entity );
-        if( it == messageAgents_.end() )
-        {
-            messageAgents_.push_back( &entity );
-            UpdateMessageButton();
-        }
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -88,33 +89,13 @@ void EventToolbar::NotifyCreated( const Report& report )
 // -----------------------------------------------------------------------------
 void EventToolbar::NotifyUpdated( const kernel::Profile_ABC& )
 {
-    T_Agents filtered;
-    for( auto it = messageAgents_.begin(); it != messageAgents_.end(); ++it )
-        if( profile_.IsVisible( **it ) )
-            filtered.push_back( *it );
-    std::swap( filtered, messageAgents_ );
+    model_.UpdateUnreadReports();
     UpdateMessageButton();
 }
 
-// -----------------------------------------------------------------------------
-// Name: EventToolbar::NotifyUpdated
-// Created: SBO 2006-11-07
-// -----------------------------------------------------------------------------
-void EventToolbar::NotifyUpdated( const Simulation& simulation )
+void EventToolbar::NotifySelected( const kernel::Entity_ABC* /*element*/ )
 {
-    if( !simulation.IsConnected() )
-        messageAgents_.clear();
-}
-
-// -----------------------------------------------------------------------------
-// Name: EventToolbar::NotifyDeleted
-// Created: SBO 2007-05-14
-// -----------------------------------------------------------------------------
-void EventToolbar::NotifyDeleted( const kernel::Entity_ABC& entity )
-{
-    auto it = std::find( messageAgents_.begin(), messageAgents_.end(), &entity );
-    if( it != messageAgents_.end() )
-        messageAgents_.erase( it );
+    UpdateMessageButton();
 }
 
 // -----------------------------------------------------------------------------
@@ -123,6 +104,7 @@ void EventToolbar::NotifyDeleted( const kernel::Entity_ABC& entity )
 // -----------------------------------------------------------------------------
 void EventToolbar::UpdateMessageButton()
 {
-    messageButton_->setTextLabel( locale().toString( messageAgents_.size() ) );
-    QToolTip::add( messageButton_, tr( "%L1 pending messages" ).arg( messageAgents_.size() ) );
+    const auto size = model_.UnreadReports();
+    messageButton_->setTextLabel( locale().toString( size) );
+    QToolTip::add( messageButton_, tr( "%L1 pending messages" ).arg( size ) );
 }

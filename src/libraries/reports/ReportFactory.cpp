@@ -44,12 +44,10 @@ using namespace kernel;
 // -----------------------------------------------------------------------------
 ReportFactory::ReportFactory( const RcEntityResolver_ABC& rcResolver,
                               const tools::Resolver_ABC< DotationType >& dotationResolver,
-                              const tools::Resolver_ABC< EquipmentType >& equipmentResolver,
-                              const kernel::Time_ABC* time )
+                              const tools::Resolver_ABC< EquipmentType >& equipmentResolver )
     : rcResolver_       ( rcResolver )
     , dotationResolver_ ( dotationResolver )
     , equipmentResolver_( equipmentResolver )
-    , time_             ( time )
     , stages_           ( new Stages() )
 {
     // NOTHING
@@ -147,15 +145,9 @@ std::string ReportFactory::FormatReport( const kernel::Entity_ABC* entity, const
     return "";
 }
 
-// -----------------------------------------------------------------------------
-// Name: ReportFactory::CreateTrace
-// Created: SBO 2006-12-07
-// -----------------------------------------------------------------------------
-Report* ReportFactory::CreateTrace( const kernel::Entity_ABC& entity, const sword::Trace& message ) const
+boost::shared_ptr< Report > ReportFactory::CreateTrace( const kernel::Entity_ABC& entity, const sword::Trace& message, const QDateTime& date ) const
 {
-    if( !time_ )
-        throw MASA_EXCEPTION( "No time, can't generate trace" );
-    return new Trace( entity, *time_, message );
+    return boost::make_shared< Trace >( entity, date, message );
 }
 
 namespace

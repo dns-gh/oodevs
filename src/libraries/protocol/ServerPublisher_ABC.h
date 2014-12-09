@@ -32,8 +32,8 @@ class Publisher_ABC
 public:
     //! @name Types
     //@{
-    typedef std::function< void( const sword::SimToClient& ) >    T_SimHandler;
-    typedef std::function< void( const sword::ReplayToClient& ) > T_ReplayHandler;
+    typedef std::function< void( const sword::SimToClient&, bool ) > T_SimHandler;
+    typedef std::function< void( const sword::ReplayToClient& ) >    T_ReplayHandler;
     //@}
 
 public:

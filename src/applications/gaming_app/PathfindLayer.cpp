@@ -66,18 +66,18 @@ PathfindLayer::PathfindLayer( kernel::Controllers& controllers,
     , replaceable_( false )
     , lock_( false )
 {
-    publisher_.Register( Publisher_ABC::T_SimHandler( [&]( const sword::SimToClient& message )
+    publisher_.Register( Publisher_ABC::T_SimHandler( [&]( const sword::SimToClient& message, bool ack )
         {
-            if( !message.message().has_compute_pathfind_ack() || !edited_ )
+            if( !ack || !message.message().has_compute_pathfind_ack() || !edited_ )
                 return;
             const auto& request = message.message().compute_pathfind_ack();
             if( request.error_code() == sword::ComputePathfindAck_ErrorCode_no_error )
                 edited_->LoadPoints( request.path() );
             ProcessEvents();
         } ) );
-    publisher_.Register( Publisher_ABC::T_SimHandler( [&]( const sword::SimToClient& message )
+    publisher_.Register( Publisher_ABC::T_SimHandler( [&]( const sword::SimToClient& message, bool ack )
         {
-            if( !message.message().has_segment_request_ack() || !hovered_ )
+            if( !ack || !message.message().has_segment_request_ack() || !hovered_ )
                 return;
             const auto& request = message.message().segment_request_ack();
             if( request.error_code() == sword::SegmentRequestAck_ErrorCode_no_error )

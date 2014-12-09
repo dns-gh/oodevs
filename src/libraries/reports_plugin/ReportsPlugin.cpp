@@ -108,7 +108,9 @@ void ReportsPlugin::SendState( dispatcher::ClientPublisher_ABC& publisher )
         std::max< int >( 0, currentTick_ - frequency_ ),
         currentTick_ );
 
-    for( int i = 0; i < list.reports_size(); ++i )
+    // Return reports from oldest to newest.
+    // To simulate sending reports by the dispatcher.
+    for( int i = list.reports_size() -1 ; i >= 0; --i )
     {
         client::Report message;
         message() = list.reports( i );

@@ -15,7 +15,6 @@
 namespace kernel
 {
     class Controllers;
-    class Time_ABC;
 }
 
 namespace indicators
@@ -48,7 +47,7 @@ class StaticModel : public kernel::StaticModel
 public:
     //! @name Constructors/Destructor
     //@{
-             StaticModel( kernel::Controllers& controllers, const RcEntityResolver_ABC& rcResolver, const kernel::Time_ABC& simulation );
+             StaticModel( kernel::Controllers& controllers, const RcEntityResolver_ABC& rcResolver );
     virtual ~StaticModel();
     //@}
 

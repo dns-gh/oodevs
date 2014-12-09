@@ -54,16 +54,16 @@ LogisticTreeView::LogisticTreeView( const QString& objectName,
         [&] ( kernel::Entity_ABC& entity, const kernel::Entity_ABC* nominalSuperior, const kernel::Entity_ABC* currentSuperior ) {
             SetSuperior( entity, nominalSuperior, currentSuperior );
         } );
-    controllers_.Update( *this );  
-    actionsModel_.RegisterHandler( [&]( const sword::SimToClient& message )
+    controllers_.Update( *this );
+    actionsModel_.RegisterHandler( [&]( const sword::SimToClient& message, bool ack )
     {
-        if( contexts_.empty() || 
+        if( !ack || contexts_.empty() ||
             !message.message().has_unit_magic_action_ack() || !PopContext( message.context() ) )
             return;
-        auto ack = message.message().unit_magic_action_ack();
-        auto errorCode = ack.error_code();
+        auto magic = message.message().unit_magic_action_ack();
+        auto errorCode = magic.error_code();
         if( errorCode != sword::UnitActionAck_ErrorCode_no_error )
-            QMessageBox::warning( this, tr( "SWORD" ), GetErrorText( ack ) );
+            QMessageBox::warning( this, tr( "SWORD" ), GetErrorText( magic ) );
     } );
 }
 

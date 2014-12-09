@@ -87,7 +87,9 @@ InfoButtonsWidget::InfoButtonsWidget( QWidget* widget,
     AddLogisticButton< InfoSupplyDialog >     ( MakePixmap( "supply"      ), controllers, factory, extractor, profile, model );
     AddLogisticButton< InfoFuneralDialog >    ( MakePixmap( "mortuary"    ), controllers, extractor, profile, model );
 
-    simulationController_.RegisterSimHandler( [&]( const sword::SimToClient& message ) {
+    simulationController_.RegisterSimHandler( [&]( const sword::SimToClient& message, bool ack ) {
+        if( !ack )
+            return;
         if( message.message().has_list_logistic_requests_ack() )
             FillRequests( message.message().list_logistic_requests_ack() ); }
     );
