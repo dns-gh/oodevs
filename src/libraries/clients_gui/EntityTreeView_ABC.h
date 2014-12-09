@@ -59,7 +59,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual bool Exist( const kernel::Entity_ABC& entity );
+    virtual QStandardItem* Find( const kernel::Entity_ABC& entity );
     virtual void Rename( kernel::Entity_ABC& entity );
     virtual bool IsActivated() const;
     //@}

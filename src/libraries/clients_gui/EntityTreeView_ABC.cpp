@@ -400,12 +400,12 @@ void EntityTreeView_ABC::SetLessThanEntityFunctor( const T_LessThanEntityFunctor
 }
 
 // -----------------------------------------------------------------------------
-// Name: EntityTreeView_ABC::Exist
+// Name: EntityTreeView_ABC::Find
 // Created: LGY 2014-05-22
 // -----------------------------------------------------------------------------
-bool EntityTreeView_ABC::Exist( const kernel::Entity_ABC& entity )
+QStandardItem* EntityTreeView_ABC::Find( const kernel::Entity_ABC& entity )
 {
-    return dataModel_.FindDataItem( entity ) ? true : false;
+    return dataModel_.FindDataItem( entity );
 }
 
 // -----------------------------------------------------------------------------
