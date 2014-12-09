@@ -22,6 +22,7 @@
 #include "Entities/Agents/Units/PHY_UnitType.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
 #include "Entities/Agents/Roles/Reinforcement/PHY_RoleInterface_Reinforcement.h"
+#include "Entities/Agents/Roles/Urban/PHY_RoleInterface_UrbanLocation.h"
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Objects/BurnSurfaceCapacity.h"
 #include "Entities/Objects/DisasterCapacity.h"
@@ -162,6 +163,8 @@ void DEC_AgentContext::InitializeUrbanKnowledges( const MIL_Agent_ABC& agent )
     agent.GetArmy().GetKnowledge().GetUrbanObjects( urbanObjects );
     for( auto it = urbanObjects.begin(); it != urbanObjects.end(); ++it )
         urbanObjectStates_[ (*it) ] = (*it)->GetStructuralState();
+    if( auto urbanBlock = agent.GetRole< PHY_RoleInterface_UrbanLocation >().GetCurrentUrbanBlock() )
+        urbanObjectStates_[ urbanBlock ] = 1;
 }
 
 const MIL_Fuseau& DEC_AgentContext::GetFuseau() const
