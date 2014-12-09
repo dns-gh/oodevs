@@ -38,6 +38,7 @@
 #include "clients_gui/AggregatedPositions.h"
 #include "clients_gui/Color.h"
 #include "clients_gui/LogisticBase.h"
+#include "clients_gui/NoSideHelpers.h"
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/LogisticHierarchies.h"
@@ -99,36 +100,16 @@ kernel::Team_ABC* TeamFactory::CreateTeam( const sword::PartyCreation& message )
     return result;
 }
 
-namespace
-{
-    class NoSideDiplomacy : public kernel::Diplomacies_ABC
-    {
-    public:
-        //! @name Constructors/Destructor
-        //@{
-         NoSideDiplomacy() {}
-        ~NoSideDiplomacy() {}
-        //@}
-
-    public:
-        //! @name Operations
-        //@{
-        virtual const kernel::Karma& GetDiplomacy( const kernel::Entity_ABC& ) const { return kernel::Karma::unknown_; } // neutral?
-        virtual const kernel::Karma& GetKarma() const { return kernel::Karma::unknown_; }
-        //@}
-    };
-}
-
 // -----------------------------------------------------------------------------
 // Name: TeamFactory::CreateNoSideTeam
 // Created: JSR 2011-11-10
 // -----------------------------------------------------------------------------
 kernel::Team_ABC* TeamFactory::CreateNoSideTeam()
 {
-    auto* result = new gui::EntityImplementation< kernel::Team_ABC >( controllers_.controller_, 0, tools::translate( "TeamFactory", "No side" ), &actionsModel_ );
+    auto* result = new gui::NoSideTeam( controllers_.controller_, 0, tools::translate( "TeamFactory", "No side" ), &actionsModel_ );
     result->Attach( *new Objects( controllers_ ) );
     result->Attach( *new Populations( controllers_ ) );
-    result->Attach< kernel::Diplomacies_ABC >( *new NoSideDiplomacy() );
+    result->Attach< kernel::Diplomacies_ABC >( *new gui::NoSideDiplomacy() );
     result->Attach< kernel::TacticalHierarchies >( *new TeamTacticalHierarchies( controllers_.controller_, *result ) );
     result->Update( kernel::InstanciationComplete() );
     return result;
