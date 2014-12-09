@@ -396,14 +396,13 @@ enum E_Modes
     eModes_AllPrepare   = 0x000F << 4,
 
     eModes_Gaming       = 0x0001 << 8,
-    eModes_Planning     = 0x0002 << 8,
-    eModes_Replay       = 0x0004 << 8,
-    eModes_Itinerary    = 0x0008 << 8,
+    eModes_Replay       = 0x0002 << 8,
+    eModes_Itinerary    = 0x0004 << 8,
     eModes_AllGaming    = 0x000F << 8,
 
     eModes_All          = 0xFFFF,       // Filter
 
-    eNbrModes = 11 // hardcoded
+    eNbrModes = 10 // hardcoded
 };
 
 enum E_AgentNbcSuit

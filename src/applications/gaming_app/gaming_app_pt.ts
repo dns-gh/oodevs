@@ -2195,10 +2195,6 @@ Do you want to replace it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source> - Planning mode on</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Warning</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2932,13 +2928,6 @@ This data can&apos;t be projected.</source>
     </message>
     <message>
         <source>Change superior</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>PlanificationModePanel</name>
-    <message>
-        <source>Planification mode</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

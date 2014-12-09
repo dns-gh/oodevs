@@ -27,7 +27,6 @@
 #include "LinkInterpreter.h"
 #include "NotesPanel.h"
 #include "OrbatDockWidget.h"
-#include "PlanificationModePanel.h"
 #include "ProfilesPanel.h"
 #include "ProfilingPanel.h"
 #include "Properties.h"
@@ -208,13 +207,6 @@ DockContainer::DockContainer( QMainWindow* parent,
     // -----------------------------------------------------------------------------
     // Top
     // -----------------------------------------------------------------------------
-    // Planification mode panel
-    {
-        PlanificationModePanel* pPlanificationModePanel = new PlanificationModePanel( parent, controllers );
-        pPlanificationModePanel->SetModes( eModes_Gaming | eModes_Replay | eModes_Default, eModes_Planning );
-        parent->addDockWidget( Qt::TopDockWidgetArea, pPlanificationModePanel );
-    }
-
     // Timelines
     {
         // New Timeline

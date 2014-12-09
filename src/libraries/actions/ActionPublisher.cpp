@@ -107,5 +107,5 @@ void ActionPublisher::Send( const sword::ClientToMessenger& /*message*/ )
 // -----------------------------------------------------------------------------
 void ActionPublisher::NotifyModeChanged( E_Modes newMode )
 {
-    design_ = newMode == eModes_Planning || newMode == eModes_Replay;
+    design_ = newMode == eModes_Replay;
 }

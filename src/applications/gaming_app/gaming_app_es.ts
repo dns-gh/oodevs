@@ -2223,10 +2223,6 @@ Los datos no pueden ser proyectados.</translation>
         <translation>SWORD</translation>
     </message>
     <message>
-        <source> - Planning mode on</source>
-        <translation> - En Modo de planificación</translation>
-    </message>
-    <message>
         <source>Sound</source>
         <translation>Sonido</translation>
     </message>
@@ -2943,13 +2939,6 @@ Los datos no pueden ser proyectados.</translation>
     <message>
         <source>Change superior</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>PlanificationModePanel</name>
-    <message>
-        <source>Planification mode</source>
-        <translation>Modo de planificación</translation>
     </message>
 </context>
 <context>

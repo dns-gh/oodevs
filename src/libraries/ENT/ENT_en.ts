@@ -651,10 +651,6 @@
         <translation>Play</translation>
     </message>
     <message>
-        <source>Planning</source>
-        <translation>Planning</translation>
-    </message>
-    <message>
         <source>Replay</source>
         <translation>Replay</translation>
     </message>

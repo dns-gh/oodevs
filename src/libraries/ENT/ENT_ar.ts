@@ -651,10 +651,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Planning</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Replay</source>
         <translation type="unfinished"></translation>
     </message>

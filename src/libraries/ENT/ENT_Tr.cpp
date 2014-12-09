@@ -422,7 +422,6 @@ T_ConverterModes ModesConverter_ [] =
     T_ConverterModes( "Terrain",     QT_TRANSLATE_NOOP( "ENT_Tr", "Terrain" ),     eModes_Terrain     ),
     T_ConverterModes( "Living_area", QT_TRANSLATE_NOOP( "ENT_Tr", "Living Area" ), eModes_LivingArea  ),
     T_ConverterModes( "Gaming",      QT_TRANSLATE_NOOP( "ENT_Tr", "Game" ),        eModes_Gaming      ),
-    T_ConverterModes( "Planning",    QT_TRANSLATE_NOOP( "ENT_Tr", "Planning" ),    eModes_Planning    ),
     T_ConverterModes( "Replay",      QT_TRANSLATE_NOOP( "ENT_Tr", "Replay" ),      eModes_Replay      ),
     T_ConverterModes( "Itinerary",   QT_TRANSLATE_NOOP( "ENT_Tr", "Itinerary" ),   eModes_Itinerary   ),
     T_ConverterModes( "All_gaming",  QT_TRANSLATE_NOOP( "ENT_Tr", "All Gaming" ),  eModes_AllGaming   ),
