@@ -70,11 +70,14 @@ void Stages::ReadStage( xml::xistream& xis )
 {
     const std::string key = xis.attribute( "key", "" );
     const std::string translation = xis.attribute( "value", "" );
-    if( !key.empty() && !translation.empty() )
+    if( !key.empty() )
     {
         if( stages_.find( key ) != stages_.end() )
             MT_LOG_ERROR_MSG( "Warning: Stage " << key << " translation is already registered. '" << stages_[ key ] << "' will become '" << translation << "'." );
-        stages_[ key ] = translation;
+        if( !translation.empty() )
+            stages_[ key ] = translation;
+        else
+            stages_[ key ] = key;
     }
 }
 
