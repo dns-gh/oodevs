@@ -10,7 +10,7 @@ integration.getUrbanBlockCoverAndConcealmentLevelFor = function( urbanBlock, ent
     local protectionLevel = DEC_NiveauDeProtectionMaterielComposantes( enemy.source, urbanBlock.source )
     -- If the urban block does not have much attrition, then it may give cover to the entity
     if protectionLevel ~= -1 then
-        res = res + ( protectionLevel * DEC_ConnaissanceBlocUrbain_RapForLocal( urbanBlock.source ) * 50 ) -- $$$ MIA sortir DEC_ConnaissanceBlocUrbain_RapForLocal dans la notion de dangerosité d'un BU.
+        res = res + ( protectionLevel * _DEC_ConnaissanceBlocUrbain_RapForLocal( myself, urbanBlock.source ) * 50 ) -- $$$ MIA sortir DEC_ConnaissanceBlocUrbain_RapForLocal dans la notion de dangerosité d'un BU.
         -- If the entity has a favorable local force ratio (inside the urban block), then the urban block gives
         -- cover to the entity.
         if res < 0 then
@@ -33,7 +33,7 @@ end
 -- @param distance Float
 -- @return Point knowledge, or nil if the given crowd is not known by this entity.
 integration.getSafetyPositionFromCrowd = function( crowd, distance )
-    local position = DEC_Geometrie_CalculerPositionSureteAvecPopulation( crowd.source, distance )
+    local position = _DEC_Geometrie_CalculerPositionSureteAvecPopulation( myself, crowd.source, distance )
     if position then
         return CreateKnowledge( integration.ontology.types.point, position )
     end

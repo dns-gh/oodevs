@@ -11,8 +11,8 @@ integration.cleanFragOrder = function( fragOrder )
     if myself.fragOrders then
         myself.fragOrders[ fragOrder ] = nil
     end
-    DEC_RemoveFromOrdersCategory( fragOrder.source )
-    DEC_DeleteRepresentation( fragOrder.source )
+    _DEC_RemoveFromOrdersCategory( myself, fragOrder.source )
+    _DEC_DeleteRepresentation( myself, fragOrder.source )
 end
 
 --- Sets the rule of engagement corresponding to the one issued as the given 'fragOrder' parameter.
@@ -24,7 +24,7 @@ end
 -- @param fragOrder a DirectIA fragmentary order knowledge
 integration.updateROE = function( fragOrder )
     myself.ROEGivenByFragOrder = integration.getOrderConduiteChangerReglesEngagementParameter( fragOrder )
-    DEC_Agent_ChangeEtatROE( myself.ROEGivenByFragOrder )
+    _DEC_Agent_ChangeEtatROE( myself, myself.ROEGivenByFragOrder )
     integration.CR_ROE ( integration.getROE() )
     integration.cleanFragOrder( fragOrder )
 end
@@ -39,7 +39,7 @@ end
 -- @param etatROE the rule of engagement to be set.
 integration.setROE = function( etatROE )
     if not myself.ROEGivenByFragOrder or etatROE > myself.ROEGivenByFragOrder  then -- We verify that the new ROE respect the ROE given by fragorder
-        DEC_Agent_ChangeEtatROE( etatROE )
+        _DEC_Agent_ChangeEtatROE( myself, etatROE )
         integration.CR_ROE ( etatROE )
     end
 end
@@ -54,7 +54,7 @@ end
 -- This method can only be called by an agent.
 -- @return Integer the current rule of engagement.
 integration.getROE = function()
-    return DEC_Agent_GetEtatROE()
+    return _DEC_Agent_GetEtatROE( myself )
 end
 
 --- Sets the rule of engagement (ROE) for an automat.
@@ -67,7 +67,7 @@ end
 -- This method can only be called by an automat.
 -- @param etatROE the rule of engagement to be set.
 integration.setCompanyROE = function( etatROE )
-   DEC_Automate_ChangeEtatROE( etatROE )
+   _DEC_Automate_ChangeEtatROE( myself, etatROE )
    integration.CR_ROE ( etatROE )
 end
 
@@ -133,7 +133,7 @@ end
 -- This method can only be called by an automat.
 -- @param roe the rule of engagement to be set.
 integration.changeCrowdROEForAutomat = function( roe )
-    DEC_Automate_ChangeEtatROEPopulation( roe )
+    _DEC_Automate_ChangeEtatROEPopulation( myself, roe )
 end
 
 --- Set the given rule of engagement(ROE) toward crowds.
@@ -145,7 +145,7 @@ end
 -- This method can only be called by an agent.
 -- @param roe the rule of engagement to be set.
 integration.changeCrowdROEForAgent = function( roe )
-    DEC_Agent_ChangeEtatROEPopulation( roe )
+    _DEC_Agent_ChangeEtatROEPopulation( myself, roe )
 end
 
 --- Returns the current rule of engagement towards crowds.
@@ -155,7 +155,7 @@ end
 -- <li> eEtatROEPopulation_MaintienADistanceParMoyensNonLetaux (maintaining distances with non-lethal fire) </li>
 -- <li> eEtatROEPopulation_ArmesLetalesAutorisees (lethal fire authorized) </li> </ul>
 integration.getCrowdROEForAgent = function()
-    return DEC_Agent_RoePopulation()
+    return _DEC_Agent_RoePopulation( myself )
 end
 
 --- Sets the given fragmentary order "attitude" (speed or safety) parameter (orderConduiteChangerAmbiance_).
@@ -498,7 +498,7 @@ end
 -- @see integration.cleanFragOrder
 -- @return a list of simulation fragmentary orders
 integration.getOrdersCategory = function( )
-    return DEC_GetOrdersCategory()
+    return _DEC_GetOrdersCategory( myself )
 end
 
 --- Returns a table containing all parameters to be used to apply the 'Fire' fragmentary order.

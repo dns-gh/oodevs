@@ -14,7 +14,7 @@ end
 -- @param fire Object knowledge
 -- @return Boolean, false
 integration.startExtinguish = function( fire )
-    fire.actionExtinguish = DEC_StartExtinguishObject( fire.source )
+    fire.actionExtinguish = _DEC_StartExtinguishObject( myself, fire.source )
     actionCallbacks[ fire.actionExtinguish ] = function( arg ) 
         fire.actionExtinguishState = arg 
     end
@@ -32,15 +32,15 @@ end
 -- the extinguishing action is over; false otherwise.
 integration.updateExtinguish = function( fire )
     if fire.actionExtinguishState == eActionObjetImpossible then
-        DEC_Trace( "Fire is already extinguished" )
+        _DEC_Trace( myself, "Fire is already extinguished" )
         reportFunction(eRC_ImpossibleToExtinguishFire )
         return true -- $$$ MIA: TEMP should return false
     elseif fire.actionExtinguishState == eActionObjetManqueDotation then
-        DEC_Trace( "not enough dotation" )
+        _DEC_Trace( myself, "not enough dotation" )
         reportFunction(eRC_ImpossibleToExtinguishFire )
         return true  -- $$$ MIA: TEMP should return false
     elseif fire.actionExtinguishState == eActionObjetPasDeCapacite then
-        DEC_Trace( "no capacity" ) 
+        _DEC_Trace( myself, "no capacity" ) 
         reportFunction(eRC_ImpossibleToExtinguishFire )
         return true  -- $$$ MIA: TEMP should return false
     elseif( fire.actionExtinguishState == eActionObjetTerminee ) then
@@ -57,7 +57,7 @@ end
 -- @see integration.updateExtinguish
 -- @param fire Object knowledge
 integration.stopExtinguish = function( fire )
-    fire.actionExtinguish = DEC__StopAction( fire.actionExtinguish )
+    fire.actionExtinguish = _DEC__StopAction( myself, fire.actionExtinguish )
     fire.actionExtinguishState = nil
 end
 

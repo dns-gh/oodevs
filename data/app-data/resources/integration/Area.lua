@@ -6,7 +6,7 @@
 -- @param area an Area knowledge
 -- @return Boolean, always return true
 integration.decontaminateArea = function( area )            
-    DEC_DecontaminerZone( area.source )
+    _DEC_DecontaminerZone( myself, area.source )
     reportFunction(eRC_DecontaminationDone )        
     return true
 end

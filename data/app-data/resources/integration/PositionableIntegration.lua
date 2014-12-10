@@ -17,12 +17,12 @@ end
 -- @param object Object knowledge
 -- @return Boolean
 integration.takeUpPositionObject = function( object )
-    if( DEC_ConnaissanceObjet_PeutEtreOccupe( object.source ) ) then
-        myself.actionOccupy = DEC__StartOccuperObjet( object.source )
+    if _DEC_ConnaissanceObjet_PeutEtreOccupe( myself, object.source ) then
+        myself.actionOccupy = _DEC__StartOccuperObjet( myself, object.source )
         return true
     else
         -- reportFunction(eRC_ObjetDejaOccupe, object.source ) @TODO MGD : Use takeUpPosition feedback failed after refactor of MoveAndTakePosition with MIA
-        DEC_Trace( "eRC_ObjetDejaOccupe" )
+        _DEC_Trace( myself, "eRC_ObjetDejaOccupe" )
         return false
     end
 end
@@ -31,14 +31,14 @@ end
 -- This method can only be called by an agent or a crowd.
 -- @return Boolean
 integration.isPosted = function()
-    return DEC_Agent_NiveauInstallation() >= eNiveauInstallation_Poste
+    return _DEC_Agent_NiveauInstallation( myself ) >= eNiveauInstallation_Poste
 end
 
 --- Returns true if this entity is parked or better, false otherwise.
 -- This method can only be called by an agent or a crowd.
 -- @return Boolean
 integration.isParked = function()
-    return DEC_Agent_NiveauInstallation() >= eNiveauInstallation_PosteAmenage
+    return _DEC_Agent_NiveauInstallation( myself ) >= eNiveauInstallation_PosteAmenage
 end
 
 --- Returns the installation level of this entity.
@@ -52,7 +52,7 @@ end
 -- <li> eNiveauInstallation_PosteAmenage (parked) </li>
 -- <li> eNiveauInstallation_PostePrepareGenie (parked and ready to build) </li> </ul>
 integration.getInstallationLevel = function()
-    return DEC_Agent_NiveauInstallation()
+    return _DEC_Agent_NiveauInstallation( myself )
 end
 
 --- Returns true if the given position is inside a contaminating object, false otherwise.

@@ -7,7 +7,7 @@
 -- This file is part of a MASA library or program.
 -- Refer to the included end-user license agreement for restrictions.
 --
--- Copyright (c) 2010 Mathématiques Appliquées SA (MASA)
+-- Copyright (c) 2010 MathÃ©matiques AppliquÃ©es SA (MASA)
 -------------------------------------------------------------------------------
 
 --- ReinforcementLevel : In first approximation the level is on top when one reinforcer is present
@@ -29,14 +29,14 @@ end
 -- @author MGD
 -- @created 2010-08-27
 integration.beginReinforcementPlatoon = function( platoonAlly )
-    DEC_Renforce( platoonAlly.source )
+    _DEC_Renforce( myself, platoonAlly.source )
     reportFunction(eRC_ReussiteRenforcementPion, meKnowledge.source, platoonAlly.source )
     return true
 end
 
 integration.beginReinforcementAgentKnowledge = function( agentKnowledge )
     local agent = DEC_ConnaissanceAgent_EnAgent( agentKnowledge.source )
-    DEC_Renforce( agent )
+    _DEC_Renforce( myself, agent )
     reportFunction(eRC_ReussiteRenforcementPion, meKnowledge.source, agent )
     return true
 end
@@ -46,7 +46,7 @@ end
 -- @author MGD
 -- @created 2010-08-27
 integration.cancelReinforcement = function( platoonAlly )
-    DEC_AnnuleRenforcement()
+    _DEC_AnnuleRenforcement( myself )
     return false
 end
 
@@ -56,7 +56,7 @@ end
 -- @author MGD
 -- @created 2010-08-27
 integration.beginReinforcementCompany = function( companyAlly ) 
-    if DEC_Pion_ChangeAutomate( companyAlly.source ) then
+    if _DEC_Pion_ChangeAutomate( myself, companyAlly.source ) then
         reportFunction(eRC_ReussiteRenforcement, meKnowledge.source, companyAlly.source )
         return true
     else
@@ -71,12 +71,12 @@ integration.setNeedReinforcement = function( unit, action, obstacle, needDotatio
             local result = 0
             if action == "build" then
                 if masalife.brain.core.class.isOfType( obstacle, integration.ontology.types.genObject) then
-                    result = DEC_GetAgentDotationManquantePourConstruireObjet(unit.source, obstacle.source)
+                    result = DEC_GetAgentDotationManquantePourConstruireObjet( unit.source, obstacle.source )
                 else
-                    result = DEC_GetAgentDotationManquantePourConstruireObjetExistant(unit.source, obstacle.source)
+                    result = DEC_GetAgentDotationManquantePourConstruireObjetExistant( unit.source, obstacle.source )
                 end
             elseif action == "mine" then
-                result = DEC_GetAgentDotationManquantePourValoriserObjet(unit.source, obstacle.source)
+                result = DEC_GetAgentDotationManquantePourValoriserObjet( unit.source, obstacle.source )
             end
             local dotation = result.first
             local number = result.second

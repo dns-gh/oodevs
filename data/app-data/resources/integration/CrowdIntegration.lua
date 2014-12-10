@@ -7,7 +7,7 @@
 -- <li> eAttitudeExcitee (excited) </li>
 -- <li> eAttitudeAgressive (aggressive) </li> </ul>
 integration.getAttitudeCrowd = function( crowd )
-    return DEC_GetAttitudePopulation( crowd.source )
+    return _DEC_GetAttitudePopulation( myself, crowd.source )
 end
 
 --- Gives this agent additional informations about the given crowd
@@ -15,14 +15,14 @@ end
 -- This method can only be called by an agent.
 -- @param crowd Crowd knowledge
 integration.getCrowdInformations = function( crowd )
-    DEC_ConnaissancePopulation_Reconnaitre( crowd.source )
+    _DEC_ConnaissancePopulation_Reconnaitre( myself, crowd.source )
 end
 
 --- Makes this agent control the given crowd.
 -- This method can only be called by an agent.
 -- @param crowd Crowd knowledge
 integration.controlItCrowd = function( crowd )
-    DEC_ConnaissancePopulation_Securiser( crowd.source )
+    _DEC_ConnaissancePopulation_Securiser( myself, crowd.source )
 end
 
 --- Returns true if the current rule of engagement towards crowds for this entity
@@ -69,10 +69,10 @@ ammoClass[ eEtatROEPopulation_ArmesLetalesAutorisees ] = "mitraille"
 integration.startShootingOnCrowd = function( crowd )
     crowd[myself] = crowd[myself] or {}
     if crowd[myself].actionTir then
-        DEC_ReprendAction( crowd[myself].actionTir )
+        _DEC_ReprendAction( myself, crowd[myself].actionTir )
         return false
     end
-    crowd[myself].actionTir = DEC__StartTirSurPopulation( crowd.source, ammoClass[ integration.getCrowdROEForAgent() ] )
+    crowd[myself].actionTir = _DEC__StartTirSurPopulation( myself, crowd.source, ammoClass[ integration.getCrowdROEForAgent() ] )
     actionCallbacks[ crowd[myself].actionTir ] = function( arg ) crowd[myself].eTir = arg end
     return true
 end
@@ -85,7 +85,7 @@ end
 integration.stopShootingOnCrowd = function( crowd )
      crowd[myself] = crowd[myself] or {}
      if  crowd[myself].actionTir then
-         crowd[myself].actionTir = DEC__StopAction( crowd[myself].actionTir )
+         crowd[myself].actionTir = _DEC__StopAction( myself, crowd[myself].actionTir )
          crowd[myself].actionTir = nil
      end
 end
@@ -94,7 +94,7 @@ end
 -- This method can only be called by an agent.
 -- @return Boolean
 integration.isInCrowd = function()
-    return DEC_Agent_EstDansFoule()
+    return _DEC_Agent_EstDansFoule( myself )
 end
 
 --- Returns true if the given agent knowledge is inside a crowd, false otherwise.
@@ -109,7 +109,7 @@ end
 -- This method can only be called by an agent or a company.
 -- @return List of simulation crowds
 integration.getCrowds = function()
-    return DEC_Connaissances_Populations()
+    return _DEC_Connaissances_Populations( myself )
 end
 
 --- Makes this entity start controlling the given crowd.
@@ -238,7 +238,7 @@ end
 -- is not a crowd.
 integration.getDomination = function( entity )
     if masalife.brain.core.class.isOfType( entity, integration.ontology.types.population ) then
-        return DEC_KnowledgePopulation_Domination( entity.source ).first
+        return _DEC_KnowledgePopulation_Domination( myself, entity.source ).first
     end
     return nil
 end
@@ -248,7 +248,7 @@ end
 -- @param crowd Crowd knowledge
 -- @return Float, the dangerosity level of the given crowd between 0 and 100
 integration.getDangerosityLevel = function( crowd )
-    return DEC_ConnaissancePopulation_Dangerosite( crowd.source )*100
+    return _DEC_ConnaissancePopulation_Dangerosite( myself, crowd.source )*100
 end
 
 --- Returns the affinity level of the given crowd towards this entity's side.
@@ -256,7 +256,7 @@ end
 -- @param crowd Crowd knowledge
 -- @return Float, the affinity level of the given crowd between 0 and 100.
 integration.affinityLevel = function( crowd )
-    return ( DEC_GetAdhesionPopulation( crowd.source ) + 1 ) * 50
+    return ( _DEC_GetAdhesionPopulation( myself, crowd.source ) + 1 ) * 50
 end
 
 --- Returns true if the given crowd has a flow, false otherwise.
@@ -269,13 +269,13 @@ end
 
 --- Start attacking crowd
 integration.startAgressCrowd = function()
-    meKnowledge.actionOnCrowd = DEC_StartAgresserFoule()
+    meKnowledge.actionOnCrowd = _DEC_StartAgresserFoule( myself )
 end
 
 --- Stop attacking crowd
 integration.stopAgressCrowd = function()
     if meKnowledge.actionOnCrowd then
-        meKnowledge.actionOnCrowd = DEC__StopAction(meKnowledge.actionOnCrowd)
+        meKnowledge.actionOnCrowd = _DEC__StopAction( myself, meKnowledge.actionOnCrowd )
         meKnowledge.actionOnCrowd = nil
     end
 end
@@ -284,14 +284,14 @@ end
 integration.startAgress = function()
     integration.startAgressCrowd()
     meKnowledge.manifIntensity = S_IntensiteManifestationSurPions()
-    meKnowledge.actionSurPions = DEC__StartTirSurPions( meKnowledge.manifIntensity )
+    meKnowledge.actionSurPions = _DEC__StartTirSurPions( myself, meKnowledge.manifIntensity )
 end
 
 --- Stop aggressing crowds and units
 integration.stopAgress = function()
     integration.stopAgressCrowd()
     if meKnowledge.actionSurPions then
-        meKnowledge.actionSurPions = DEC__StopAction( meKnowledge.actionSurPions )
+        meKnowledge.actionSurPions = _DEC__StopAction( myself, meKnowledge.actionSurPions )
         meKnowledge.actionSurPions = nil
     end
 end
@@ -339,7 +339,7 @@ end
 -- @param crowd Crowd knowledge
 -- @return Simulation point
 integration.getCrowdBarycenter = function( crowd )
-    return DEC_KnowledgePopulation_GetBarycenter( crowd.source )
+    return _DEC_KnowledgePopulation_GetBarycenter( myself, crowd.source )
 end
 
 --- Returns the number of humans in the given concentration.
@@ -367,12 +367,12 @@ end
 -- <li> Simulation position, the extraction position. </li>
 -- <li> Simulation crowd, the id of the newly extracted crowd </li> </ul>
 integration.extractVictimsFromCrowd = function( crowd, center, distance )
-    local position = center or DEC_Geometrie_CalculerPositionSureteAvecPopulation( crowd.source, 0 ) -- /!\ can returns a nil value!
+    local position = center or _DEC_Geometrie_CalculerPositionSureteAvecPopulation( myself, crowd.source, 0 ) -- /!\ can returns a nil value!
     if not position then
-        position = DEC_Agent_Position() -- extract wounded creating a new crowd on my own position
+        position = _DEC_Agent_Position( myself ) -- extract wounded creating a new crowd on my own position
     end
-    position = DEC_Geometrie_PositionAleatoireDansFuseauDansCercle( myself, position, distance or 50 ) or center or DEC_Agent_Position()
-    local newCrowd = DEC_Crowd_ExtractWoundedFromCrowd( crowd.source, position )
+    position = DEC_Geometrie_PositionAleatoireDansFuseauDansCercle( myself, position, distance or 50 ) or center or _DEC_Agent_Position( myself )
+    local newCrowd = DEC_Crowd_ExtractWoundedFromCrowd( myself, crowd.source, position )
     return ( newCrowd ~= 0 ), position, newCrowd
 end
 
@@ -393,12 +393,12 @@ end
 -- <li> Simulation position, the extraction position. </li>
 -- <li> Simulation crowd, the id of the newly extracted crowd </li> </ul>
 integration.extractDeadFromCrowd = function( crowd, center, distance )
-    local position = center or DEC_Geometrie_CalculerPositionSureteAvecPopulation( crowd.source, 0 ) -- /!\ can returns a nil value!
+    local position = center or _DEC_Geometrie_CalculerPositionSureteAvecPopulation( myself, crowd.source, 0 ) -- /!\ can returns a nil value!
     if not position then
-        position = DEC_Agent_Position() -- extract dead creating a new crowd on my own position
+        position = _DEC_Agent_Position( myself ) -- extract dead creating a new crowd on my own position
     end
-    position = DEC_Geometrie_PositionAleatoireDansFuseauDansCercle( myself, position, distance or 50 ) or center or DEC_Agent_Position()
-    local newCrowd = DEC_Crowd_ExtractDeadFromCrowd( crowd.source, position )
+    position = DEC_Geometrie_PositionAleatoireDansFuseauDansCercle( myself, position, distance or 50 ) or center or _DEC_Agent_Position( myself )
+    local newCrowd = _DEC_Crowd_ExtractDeadFromCrowd( myself, crowd.source, position )
     return ( newCrowd ~= 0 ), position, newCrowd
 end
 
@@ -455,7 +455,7 @@ end
 -- <li> 3 : number of contaminated humans </li>
 -- <li> 4 : number of dead humans </li> </ul>
 integration.crowdGetHumansFromAllTypes = function( crowd )
-    return DEC_Crowd_GetHumansFromAllTypes( crowd.source )
+    return _DEC_Crowd_GetHumansFromAllTypes( myself, crowd.source )
 end
 
 --- Instantaneously heals all the wounded humans in the crowd (making them healthy).
@@ -463,7 +463,7 @@ end
 -- @param crowd Crowd knowledge
 -- @return Boolean, whether or not the healing was successful
 integration.healWoundedInCrowd = function( crowd )
-    return DEC_Crowd_HealWoundedHumans( crowd.source )
+    return _DEC_Crowd_HealWoundedHumans( myself, crowd.source )
 end
 
 --- Returns the number of wounded humans in the given crowd.
@@ -487,7 +487,7 @@ end
 -- This method can only be called by an agent.
 -- @return List of simulation crowds
 integration.getKnowledgesCrowdsEngaging = function()
-    return DEC_Connaissances_PopulationsPrenantAPartie()
+    return _DEC_Connaissances_PopulationsPrenantAPartie( myself )
 end
 
 --- Returns all the crowds in the given area.
@@ -515,7 +515,7 @@ end
 -- @param area Simulation area
 -- @preturn Boolean
 integration.isKnowledgeCrowdInsideArea = function( crowd, area )
-    return DEC_ConnaissancePopulation_EstDansZone( crowd, area )
+    return _DEC_ConnaissancePopulation_EstDansZone( myself, crowd, area )
 end
 
 --- Locks the given crowd knowledge in order to guarantee that
@@ -528,7 +528,7 @@ end
 -- @see integration.unlockCrowdKnowledge
 -- @param crowd Crowd knowledge
 integration.lockCrowdKnowledge = function( crowd )
-    DEC_ConnaissancePopulation_Verrouiller( crowd.source )
+    _DEC_ConnaissancePopulation_Verrouiller( myself, crowd.source )
 end
 
 --- Unlocks the given crowd knowledge in order to allow again its
@@ -539,7 +539,7 @@ end
 -- @see integration.lockCrowdKnowledge
 -- @param crowd Crowd knowledge
 integration.unlockCrowdKnowledge = function( crowd )
-    DEC_ConnaissancePopulation_Deverrouiller( crowd.source )
+    _DEC_ConnaissancePopulation_Deverrouiller( myself, crowd.source )
 end
 
 --- Returns true if the given crowd knowledge is valid, false otherwise.
@@ -560,7 +560,7 @@ end
 -- @see integration.getAgentsHiddenInCrowd
 -- @param crowd Crowd knowledge
 integration.startHidingInCrowd = function( crowd )
-    DEC_StartHidingInCrowd( crowd.source )
+    _DEC_StartHidingInCrowd( myself, crowd.source )
 end
 
 --- Makes this entity stop hiding in the given crowd.
@@ -568,7 +568,7 @@ end
 -- @see integration.startHidingInCrowd
 -- @param crowd Crowd knowledge
 integration.stopHidingInCrowd = function( crowd )
-    DEC_StopHidingInCrowd( crowd.source )
+    _DEC_StopHidingInCrowd( myself, crowd.source )
 end
 
 --- Returns a list of all the agents hidden in the given crowd.
@@ -577,7 +577,7 @@ end
 -- @return List of directia agents
 integration.getAgentsHiddenInCrowd = function( crowd )
     local hiddenAgents = {}
-    local simAgents = DEC_GetAgentsHiddenInCrowd( crowd.source ) 
+    local simAgents = _DEC_GetAgentsHiddenInCrowd( myself, crowd.source ) 
     for i = 1, #simAgents do
         hiddenAgents[ #hiddenAgents + 1 ] = CreateKnowledge( integration.ontology.types.agent, simAgents[i] )
     end
@@ -624,10 +624,10 @@ end
 -- @return Simulation position
 integration.getCrowdPosition = function( crowd, refreshDistance )
     if crowd == meKnowledge then
-        return DEC_GetPosition()
+        return _DEC_GetPosition( myself )
     else
         refreshDistance = refreshDistance or 30
-        local pointLePlusProche = DEC_ConnaissancePopulation_PointPlusProche( crowd.source )
+        local pointLePlusProche = _DEC_ConnaissancePopulation_PointPlusProche( myself, crowd.source )
         crowd.getCrowdPositionResult =  crowd.getCrowdPositionResult or pointLePlusProche
         if DEC_Geometrie_DistanceBetweenPoints( pointLePlusProche, crowd.getCrowdPositionResult ) > refreshDistance then
             crowd.getCrowdPositionResult = pointLePlusProche
@@ -654,7 +654,7 @@ integration.isKwoledgeInCrowd = integration.isKnowledgeInCrowd
 
 --- Deprecated
 integration.hasReachedDestination = function( point )
-    return DEC_Population_HasReachedDestination( point.source )
+    return _DEC_Population_HasReachedDestination( myself, point.source )
 end
 
 --- Deprecated
@@ -664,7 +664,7 @@ end
 
 --- Deprecated
 integration.setNombreIndividuArmeDansFoule = function( crowd, percentageToDesarm )
-    DEC_Agent_ChangerNombreIndividuArmeDansFoule( crowd, (100 - percentageToDesarm) / 100 )
+    _DEC_Agent_ChangerNombreIndividuArmeDansFoule( myself, crowd, (100 - percentageToDesarm) / 100 )
 end
 
 --- Deprecated
@@ -672,7 +672,7 @@ integration.uptateDemonstrate = integration.updateDemonstrate
 
 --- Deprecated, use integration.setAttitude instead
 integration.changeAttitude = function( attitude )
-    DEC_Population_ChangerAttitude( attitude )
+    _DEC_Population_ChangerAttitude( myself, attitude )
 end
 
 --- Deprecated

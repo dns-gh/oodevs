@@ -21,8 +21,8 @@ end
 integration.startRecceUrbanBlock = function( urbanBlock, recceSpeed )
     urbanBlock.area = urbanBlock.area or DEC_PolygoneBlocUrbain( urbanBlock.source )
     urbanBlock.recceAction = 
-        DEC_Perception_ActiverReconnaissanceDansBlocUrbain( urbanBlock.source )
-    urbanBlock.recceObj = DEC_Perception_ActiverDetectionObjetLocalisation( urbanBlock.area, urbanBlock:getPosition(), recceSpeed or DEC_GetUrbanRecoSpeed( urbanBlock.source ) )
+        _DEC_Perception_ActiverReconnaissanceDansBlocUrbain( myself, urbanBlock.source )
+    urbanBlock.recceObj = _DEC_Perception_ActiverDetectionObjetLocalisation( myself, urbanBlock.area, urbanBlock:getPosition(), recceSpeed or DEC_GetUrbanRecoSpeed( urbanBlock.source ) )
     reportFunction(eRC_DebutReconnaissanceBlocUrbain )
     return true
 end
@@ -31,8 +31,8 @@ end
 -- @param noReport Boolean - if set to 'true', no report will be displayed.
 -- @return true
 integration.stopRecceUrbanBlock = function( urbanBlock, noReport )
-    DEC_Perception_DesactiverReconnaissanceDansBlocUrbain( urbanBlock.recceAction )
-    DEC_Perception_DesactiverDetectionObjetLocalisation( urbanBlock.recceObj )
+    _DEC_Perception_DesactiverReconnaissanceDansBlocUrbain( myself, urbanBlock.recceAction )
+    _DEC_Perception_DesactiverDetectionObjetLocalisation( myself, urbanBlock.recceObj )
     if not noReport then
         reportFunction( eRC_FinReconnaissanceBlocUrbain )
     end
@@ -57,8 +57,8 @@ integration.startSearchUrbanBlock = function( urbanBlock, recceSpeed )
     urbanBlock.area = urbanBlock.area or DEC_PolygoneBlocUrbain( urbanBlock.source )
     local buSearchSpeed = recceSpeed or DEC_GetUrbanSearchSpeed( urbanBlock.source )
     urbanBlock.actionSearch = 
-        DEC_Perception_ActivateLocationProgressiveRecce( urbanBlock.area, buSearchSpeed )
-    urbanBlock.recceObj = DEC_Perception_ActiverDetectionObjetLocalisation( urbanBlock.area, urbanBlock:getPosition(), buSearchSpeed )
+        _DEC_Perception_ActivateLocationProgressiveRecce( myself, urbanBlock.area, buSearchSpeed )
+    urbanBlock.recceObj = _DEC_Perception_ActiverDetectionObjetLocalisation( myself, urbanBlock.area, urbanBlock:getPosition(), buSearchSpeed )
     urbanBlock.bActionSearchFinished = false
     urbanBlock.recoFinished = false
     perceptionReconnaissanceCallbacks[ urbanBlock.actionSearch ] = function( arg )
@@ -74,7 +74,7 @@ end
 -- @return Boolean, whether the searching action is finished or not
 integration.startedSearchUrbanBlock = function( urbanBlock, doNotCaptureTerrorists )
     if  urbanBlock.recoFinished then
-        DEC_Connaissances_IdentifierToutesUnitesDansZone( urbanBlock.area )     
+        _DEC_Connaissances_IdentifierToutesUnitesDansZone( myself, urbanBlock.area )     
         if not doNotCaptureTerrorists then
             integration.capture( integration.getTerroristsInObjective( urbanBlock ), eRC_TerroristCaptured ) 
         end
@@ -93,8 +93,8 @@ integration.stopSearchUrbanBlock = function( urbanBlock, noReport, captureTerror
     if captureTerrorists then
         integration.capture( integration.getTerroristsInObjective( urbanBlock ), eRC_TerroristCaptured ) 
     end
-    DEC_Perception_DesactiverReconnaissanceLocalisation( urbanBlock.actionSearch )
-    DEC_Perception_DesactiverDetectionObjetLocalisation( urbanBlock.recceObj )
+    _DEC_Perception_DesactiverReconnaissanceLocalisation( myself, urbanBlock.actionSearch )
+    _DEC_Perception_DesactiverDetectionObjetLocalisation( myself, urbanBlock.recceObj )
     if not noReport then
         reportFunction( eRC_FinFouilleBlocUrbain )
     end
@@ -120,14 +120,14 @@ end
 integration.startNBCUrbanBlock = function( urbanBlock, recceSpeed )
     urbanBlock.area = urbanBlock.area or DEC_PolygoneBlocUrbain( urbanBlock.source )
     local lstObjects = {}
-    urbanBlock.actionNBC = DEC_Perception_ActivateLocationProgressiveRecce( urbanBlock.area, recceSpeed or urbanBlockNBCSpeed )
-    urbanBlock.recceObjNBC = DEC_Perception_ActiverDetectionObjetLocalisation( urbanBlock.area, urbanBlock:getPosition(), recceSpeed or urbanBlockNBCSpeed )
+    urbanBlock.actionNBC = _DEC_Perception_ActivateLocationProgressiveRecce( myself, urbanBlock.area, recceSpeed or urbanBlockNBCSpeed )
+    urbanBlock.recceObjNBC = _DEC_Perception_ActiverDetectionObjetLocalisation( myself, urbanBlock.area, urbanBlock:getPosition(), recceSpeed or urbanBlockNBCSpeed )
     urbanBlock.bActionNBCFinished = false
     perceptionReconnaissanceCallbacks[ urbanBlock.actionNBC ] = function( arg )
         urbanBlock.bActionNBCFinished = true
-        lstObjects = DEC_ObjectKnowledgesIntersectingInZone( urbanBlock.area, { eTypeObjectNBCZone, eTypeObjectNBCCloud, eTypeObjectRota } )
+        lstObjects = _DEC_ObjectKnowledgesIntersectingInZone( myself, urbanBlock.area, { eTypeObjectNBCZone, eTypeObjectNBCCloud, eTypeObjectRota } )
         for _, object in pairs ( lstObjects ) do
-            DEC_ConnaissanceObjet_Reconnaitre( object )
+            _DEC_ConnaissanceObjet_Reconnaitre( myself, object )
         end
     end
     reportFunction(eRC_DebutMesure )
@@ -138,8 +138,8 @@ end
 -- @param urbanBlock Urban block knowledge
 -- @return true
 integration.stopNBCUrbanBlock = function( urbanBlock )
-    DEC_Perception_DesactiverReconnaissanceLocalisation( urbanBlock.actionNBC )
-    DEC_Perception_DesactiverDetectionObjetLocalisation( urbanBlock.recceObjNBC )
+    _DEC_Perception_DesactiverReconnaissanceLocalisation( myself, urbanBlock.actionNBC )
+    _DEC_Perception_DesactiverDetectionObjetLocalisation( myself, urbanBlock.recceObjNBC )
     reportFunction(eRC_FinMesure )
     perceptionReconnaissanceCallbacks[ urbanBlock.actionNBC ] = nil
     urbanBlock.area = nil
@@ -168,9 +168,9 @@ integration.startReccePoint = function( point, partially, radius, recceSpeed )
         pointCircleRadius = 30
     end
     local actualRecceSpeed = recceSpeed or DEC_GetOpenRecoSpeed()
-    point.reconnaissanceAction = DEC_Perception_ActiverReconnaissancePoint( 
+    point.reconnaissanceAction = _DEC_Perception_ActiverReconnaissancePoint( myself,
                                  point.source, pointCircleRadius, actualRecceSpeed )
-    point.recceObj = DEC_Perception_ActiverDetectionObjetLocalisation( DEC_Geometrie_ConvertirPointEnLocalisation( point.source ), point.source, actualRecceSpeed )
+    point.recceObj = _DEC_Perception_ActiverDetectionObjetLocalisation( myself, DEC_Geometrie_ConvertirPointEnLocalisation( point.source ), point.source, actualRecceSpeed )
     point.bActionRecceFinished = false
     perceptionReconnaissanceCallbacks[ point.reconnaissanceAction ] = function( arg )
         point.bActionRecceFinished = true
@@ -191,8 +191,8 @@ end
 -- @param noReport Boolean - if set to 'true', no report will be displayed.
 -- @return true
 integration.stopReccePoint = function( point, noReport )
-    DEC_Perception_DesactiverReconnaissancePoint( point.reconnaissanceAction )
-    DEC_Perception_DesactiverDetectionObjetLocalisation( point.recceObj )
+    _DEC_Perception_DesactiverReconnaissancePoint( myself, point.reconnaissanceAction )
+    _DEC_Perception_DesactiverDetectionObjetLocalisation( myself, point.recceObj )
     if not noReport then
         reportFunction( eRC_FinReconnaissancePoint )
     end
@@ -218,14 +218,14 @@ end
 integration.startSearchPoint = function( point, radius, searchSpeed )
     local pointCircleRadius = radius or 30
     local actualSearchSpeed = searchSpeed or DEC_GetOpenSearchSpeed()
-    point.actionSearch = DEC_Perception_ActiverReconnaissancePoint( 
+    point.actionSearch = _DEC_Perception_ActiverReconnaissancePoint( myself,
                                         point.source, pointCircleRadius, actualSearchSpeed )
-    point.recceObj = DEC_Perception_ActiverDetectionObjetLocalisation( DEC_Geometrie_ConvertirPointEnLocalisation( point.source ), point.source, actualSearchSpeed )
+    point.recceObj = _DEC_Perception_ActiverDetectionObjetLocalisation( myself, DEC_Geometrie_ConvertirPointEnLocalisation( point.source ), point.source, actualSearchSpeed )
     point.bActionSearchFinished = false
     perceptionReconnaissanceCallbacks[ point.actionSearch ] = function( arg )
         point.bActionSearchFinished = true
         local pointArea = DEC_Geometrie_CreerLocalisationCercle( point.source, pointCircleRadius )
-        DEC_Connaissances_IdentifierToutesUnitesDansZone( pointArea )
+        _DEC_Connaissances_IdentifierToutesUnitesDansZone( myself, pointArea )
     end
     reportFunction( eRC_DebutFouillePoint )
     return true
@@ -236,8 +236,8 @@ end
 -- @param noReport Boolean - if set to 'true', no report will be displayed.
 -- @return true
 integration.stopSearchPoint = function( point, noReport )
-    DEC_Perception_DesactiverReconnaissancePoint( point.actionSearch )
-    DEC_Perception_DesactiverDetectionObjetLocalisation( point.recceObj )
+    _DEC_Perception_DesactiverReconnaissancePoint( myself, point.actionSearch )
+    _DEC_Perception_DesactiverDetectionObjetLocalisation( myself, point.recceObj )
     if not noReport then
         reportFunction( eRC_FinFouillePoint )
     end
@@ -264,16 +264,16 @@ end
 integration.startNBCPoint = function( point, circleRadius, recceSpeed )
     local  lstObjects = {}
     local pointCircleRadius = circleRadius or 100
-    point.actionNBC = DEC_Perception_ActiverReconnaissancePoint( 
+    point.actionNBC = _DEC_Perception_ActiverReconnaissancePoint( myself,
                                         point.source, pointCircleRadius, recceSpeed or pointNBCSpeed )
-    point.recceObjNBC = DEC_Perception_ActiverDetectionObjetLocalisation( DEC_Geometrie_ConvertirPointEnLocalisation( point.source ), point.source, recceSpeed or pointNBCSpeed )
+    point.recceObjNBC = _DEC_Perception_ActiverDetectionObjetLocalisation( myself, DEC_Geometrie_ConvertirPointEnLocalisation( point.source ), point.source, recceSpeed or pointNBCSpeed )
     point.bActionNBCFinished = false
     perceptionReconnaissanceCallbacks[ point.actionNBC ] = function( arg )
         point.bActionNBCFinished = true
         local pointArea = DEC_Geometrie_CreerLocalisationCercle( point.source, pointCircleRadius )
-        lstObjects = DEC_ObjectKnowledgesIntersectingInZone( pointArea, { eTypeObjectNBCZone, eTypeObjectNBCCloud, eTypeObjectRota } )
+        lstObjects = _DEC_ObjectKnowledgesIntersectingInZone( myself, pointArea, { eTypeObjectNBCZone, eTypeObjectNBCCloud, eTypeObjectRota } )
         for _, object in pairs ( lstObjects ) do
-            DEC_ConnaissanceObjet_Reconnaitre( object )
+            _DEC_ConnaissanceObjet_Reconnaitre( myself, object )
         end
     end
     reportFunction(eRC_DebutMesure )
@@ -284,8 +284,8 @@ end
 -- @param point Point knowledge
 -- @return true
 integration.stopNBCPoint = function( point )
-    DEC_Perception_DesactiverReconnaissancePoint( point.actionNBC )
-    DEC_Perception_DesactiverDetectionObjetLocalisation( point.recceObjNBC )
+    _DEC_Perception_DesactiverReconnaissancePoint( myself, point.actionNBC )
+    _DEC_Perception_DesactiverDetectionObjetLocalisation( myself, point.recceObjNBC )
     reportFunction(eRC_FinMesure )
     perceptionReconnaissanceCallbacks[ point.actionNBC ] = nil
     return true
@@ -308,8 +308,8 @@ end
 integration.startRecceArea = function( area, recceSpeed )
     local areaRecceSpeed = recceSpeed or DEC_GetOpenRecoSpeed()
     area.reconnaissanceAction = 
-        DEC_Perception_ActivateLocationProgressiveRecce( area.source, areaRecceSpeed )
-    area.recceObj = DEC_Perception_ActiverDetectionObjetLocalisation( area.source, area:getPosition(), areaRecceSpeed )
+        _DEC_Perception_ActivateLocationProgressiveRecce( myself, area.source, areaRecceSpeed )
+    area.recceObj = _DEC_Perception_ActiverDetectionObjetLocalisation( myself, area.source, area:getPosition(), areaRecceSpeed )
     area.bActionRecceFinished = false
     perceptionReconnaissanceCallbacks[ area.reconnaissanceAction ] = function( arg )
         area.bActionRecceFinished = true
@@ -327,8 +327,8 @@ end
 -- @param noReport Boolean - if set to 'true', no report will be displayed.
 -- @return true
 integration.stopRecceArea  = function( area, noReport )
-    DEC_Perception_DesactiverReconnaissanceLocalisation( area.reconnaissanceAction )
-    DEC_Perception_DesactiverDetectionObjetLocalisation( area.recceObj )
+    _DEC_Perception_DesactiverReconnaissanceLocalisation( myself, area.reconnaissanceAction )
+    _DEC_Perception_DesactiverDetectionObjetLocalisation( myself, area.recceObj )
     if not noReport then
         reportFunction( eRC_FinReconnaissanceZone )
     end
@@ -353,12 +353,12 @@ end
 integration.startSearchArea = function( area, recceSpeed )
     local areaSearchSpeed = recceSpeed or DEC_GetOpenSearchSpeed()
     area.actionSearch = 
-        DEC_Perception_ActivateLocationProgressiveRecce( area.source, areaSearchSpeed )
-    area.recceObj = DEC_Perception_ActiverDetectionObjetLocalisation( area.source, area:getPosition(), areaSearchSpeed )
+        _DEC_Perception_ActivateLocationProgressiveRecce( myself, area.source, areaSearchSpeed )
+    area.recceObj = _DEC_Perception_ActiverDetectionObjetLocalisation( myself, area.source, area:getPosition(), areaSearchSpeed )
     area.bActionSearchFinished = false
     perceptionReconnaissanceCallbacks[ area.actionSearch ] = function( arg )
         area.bActionSearchFinished = true
-        DEC_Connaissances_IdentifierToutesUnitesDansZone( area.source )
+        _DEC_Connaissances_IdentifierToutesUnitesDansZone( myself, area.source )
     end
     reportFunction(eRC_DebutFouilleZone )
     return true
@@ -369,8 +369,8 @@ end
 -- @param noReport Boolean - if set to 'true', no report will be displayed.
 -- @return true
 integration.stopSearchArea = function( area, noReport )
-    DEC_Perception_DesactiverReconnaissanceLocalisation( area.actionSearch )
-    DEC_Perception_DesactiverDetectionObjetLocalisation( area.recceObj )
+    _DEC_Perception_DesactiverReconnaissanceLocalisation( myself, area.actionSearch )
+    _DEC_Perception_DesactiverDetectionObjetLocalisation( myself, area.recceObj )
     if not noReport then
         reportFunction( eRC_FinFouilleZone )
     end
@@ -384,7 +384,7 @@ end
 -- @return true
 integration.startRensRecceArea = function( area )
     area.recoAction = 
-        DEC_Perception_ActiverReconnaissanceLocalisation( area.source )
+        _DEC_Perception_ActiverReconnaissanceLocalisation( myself, area.source )
     perceptionReconnaissanceCallbacks[ area.recoAction ] = function( arg )
     end
     reportFunction(eRC_DebutSurveillance )
@@ -395,7 +395,7 @@ end
 -- @param area Area knowledge
 -- @return true
 integration.stopRensRecceArea  = function( area )
-    DEC_Perception_DesactiverReconnaissanceLocalisation( area.recoAction )
+    _DEC_Perception_DesactiverReconnaissanceLocalisation( myself, area.recoAction )
     reportFunction(eRC_FinSurveillance )
     perceptionReconnaissanceCallbacks[ area.recoAction ] = nil
     return true
@@ -403,12 +403,12 @@ end
 
 --- Report indirect fires detections
 integration.startRecoEo = function()
-    DEC_Perception_ActiverObserveurTir()
+    _DEC_Perception_ActiverObserveurTir( myself )
 end
 
 --- Stop reporting indirect fires detections
 integration.stopRecoEo = function()
-    DEC_Perception_DesactiverObserveurTir()
+    _DEC_Perception_DesactiverObserveurTir( myself )
 end
 
 -- --------------------------------------------------------------------------------
@@ -428,14 +428,14 @@ end
 -- @return true
 integration.startNBCArea = function( area, recceSpeed )
     local  lstObjects = {}
-    area.actionNBC = DEC_Perception_ActivateLocationProgressiveRecce( area.source, recceSpeed or areaNBCSpeed )
-    area.recceObjNBC = DEC_Perception_ActiverDetectionObjetLocalisation( area.source, area:getPosition(), recceSpeed or areaNBCSpeed )
+    area.actionNBC = _DEC_Perception_ActivateLocationProgressiveRecce( myself, area.source, recceSpeed or areaNBCSpeed )
+    area.recceObjNBC = _DEC_Perception_ActiverDetectionObjetLocalisation( myself, area.source, area:getPosition(), recceSpeed or areaNBCSpeed )
     area.bActionNBCFinished = false
     perceptionReconnaissanceCallbacks[ area.actionNBC ] = function( arg )
         area.bActionNBCFinished = true
-        lstObjects = DEC_ObjectKnowledgesIntersectingInZone( area.source, { eTypeObjectNBCZone, eTypeObjectNBCCloud, eTypeObjectRota } )
+        lstObjects = _DEC_ObjectKnowledgesIntersectingInZone( myself, area.source, { eTypeObjectNBCZone, eTypeObjectNBCCloud, eTypeObjectRota } )
         for _, object in pairs ( lstObjects ) do
-            DEC_ConnaissanceObjet_Reconnaitre( object )
+            _DEC_ConnaissanceObjet_Reconnaitre( myself, object )
         end
     end
     reportFunction(eRC_DebutMesure )
@@ -446,8 +446,8 @@ end
 -- @param area Area knowledge
 -- @return true
 integration.stopNBCArea = function( area )
-    DEC_Perception_DesactiverReconnaissanceLocalisation( area.actionNBC )
-    DEC_Perception_DesactiverDetectionObjetLocalisation( area.recceObjNBC )
+    _DEC_Perception_DesactiverReconnaissanceLocalisation( myself, area.actionNBC )
+    _DEC_Perception_DesactiverDetectionObjetLocalisation( myself, area.recceObjNBC )
     reportFunction(eRC_FinMesure )
     perceptionReconnaissanceCallbacks[ area.actionNBC ] = nil
     return true
@@ -469,12 +469,12 @@ end
 -- @param recceSpeed Optional. Speed of the reconnaissance in meters/tick. By default, objectRecceSpeed = 5
 -- @return true
 integration.startRecceObject = function( object, recceSpeed )
-    object.perceptionID = DEC_Perception_ActivateLocationProgressiveRecce( 
+    object.perceptionID = _DEC_Perception_ActivateLocationProgressiveRecce( myself,
             DEC_ConnaissanceObjet_Localisation( object.source ), recceSpeed or objectRecceSpeed )
     object.bActionFinished = false
     perceptionReconnaissanceCallbacks[ object.perceptionID ] = function( arg )
         object.bActionFinished = true
-        DEC_ConnaissanceObjet_Reconnaitre( object.source )
+        _DEC_ConnaissanceObjet_Reconnaitre( myself, object.source )
     end
     reportFunction( eRC_ReconnaissancePoint )
     return true
@@ -494,7 +494,7 @@ end
 -- @param noReport Boolean - if set to 'true', no report will be displayed.
 -- @return true
 integration.stopRecceObject  = function( object, noReport )
-    DEC_Perception_DesactiverReconnaissanceLocalisation( object.perceptionID )
+    _DEC_Perception_DesactiverReconnaissanceLocalisation( myself, object.perceptionID )
     if not noReport then
         reportFunction( eRC_ReconnaissanceTerminee )
     end
@@ -533,12 +533,12 @@ end
 integration.startSearchObject = function( object, recceSpeed )
     area = CreateKnowledge( integration.ontology.types.area, object:getLocalisation() )
     object.actionSearch = 
-        DEC_Perception_ActivateLocationProgressiveRecce( area.source, objectSearchSpeed )
-    object.recceObj = DEC_Perception_ActiverDetectionObjetLocalisation( area.source, area:getPosition(), recceSpeed or objectSearchSpeed )
+        _DEC_Perception_ActivateLocationProgressiveRecce( myself, area.source, objectSearchSpeed )
+    object.recceObj = _DEC_Perception_ActiverDetectionObjetLocalisation( myself, area.source, area:getPosition(), recceSpeed or objectSearchSpeed )
     object.bActionSearchFinished = false
     perceptionReconnaissanceCallbacks[ object.actionSearch ] = function( arg )
         object.bActionSearchFinished = true
-        DEC_Connaissances_IdentifierToutesUnitesDansZone( area.source )
+        _DEC_Connaissances_IdentifierToutesUnitesDansZone( myself, area.source )
     end
     reportFunction(eRC_DebutFouilleObjet )
     return true
@@ -549,8 +549,8 @@ end
 -- @param noReport Boolean - if set to 'true', no report will be displayed.
 -- @return true
 integration.stopSearchObject = function( object, noReport )
-    DEC_Perception_DesactiverReconnaissanceLocalisation( object.actionSearch )
-    DEC_Perception_DesactiverDetectionObjetLocalisation( object.recceObj )
+    _DEC_Perception_DesactiverReconnaissanceLocalisation( myself, object.actionSearch )
+    _DEC_Perception_DesactiverDetectionObjetLocalisation( myself, object.recceObj )
     if not noReport then
         reportFunction( eRC_FinFouilleObjet )
     end
@@ -574,14 +574,14 @@ end
 -- @return true
 integration.startNBCObject = function( object )
     local lstObjects = {}
-    object.actionNBC = DEC_Perception_ActivateLocationProgressiveRecce( DEC_ConnaissanceObjet_Localisation( object.source ), objectNBCSpeed )
-    object.recceObjNBC = DEC_Perception_ActiverDetectionObjetLocalisation( DEC_ConnaissanceObjet_Localisation( object.source ), object:getPosition(), objectNBCSpeed )
+    object.actionNBC = _DEC_Perception_ActivateLocationProgressiveRecce( myself, DEC_ConnaissanceObjet_Localisation( object.source ), objectNBCSpeed )
+    object.recceObjNBC = _DEC_Perception_ActiverDetectionObjetLocalisation( myself, DEC_ConnaissanceObjet_Localisation( object.source ), object:getPosition(), objectNBCSpeed )
     object.bActionNBCFinished = false
     perceptionReconnaissanceCallbacks[ object.actionNBC ] = function( arg )
         object.bActionNBCFinished = true
-        lstObjects = DEC_ObjectKnowledgesIntersectingInZone( DEC_ConnaissanceObjet_Localisation( object.source ), { eTypeObjectNBCZone, eTypeObjectNBCCloud, eTypeObjectRota } )
+        lstObjects = _DEC_ObjectKnowledgesIntersectingInZone( myself, DEC_ConnaissanceObjet_Localisation( object.source ), { eTypeObjectNBCZone, eTypeObjectNBCCloud, eTypeObjectRota } )
         for _, object in pairs ( lstObjects ) do
-            DEC_ConnaissanceObjet_Reconnaitre( object )
+            _DEC_ConnaissanceObjet_Reconnaitre( myself, object )
         end
     end
     reportFunction(eRC_DebutMesure )
@@ -592,8 +592,8 @@ end
 -- @param object Object knowledge
 -- @return true
 integration.stopNBCObject = function( object )
-    DEC_Perception_DesactiverReconnaissancePoint( object.actionNBC )
-    DEC_Perception_DesactiverDetectionObjetLocalisation( object.recceObjNBC )
+    _DEC_Perception_DesactiverReconnaissancePoint( myself, object.actionNBC )
+    _DEC_Perception_DesactiverDetectionObjetLocalisation( myself, object.recceObjNBC )
     reportFunction(eRC_FinMesure )
     perceptionReconnaissanceCallbacks[ object.actionNBC ] = nil
     return true
@@ -604,7 +604,7 @@ end
 -- @param target Knowledge defining a "getPosition" method returning a simulation position
 -- @return Boolean
 integration.isInRecoRange = function( target )
-    return integration.distance( meKnowledge, target ) < DEC_Reconnoissance_MajorComponentMinDistance()
+    return integration.distance( meKnowledge, target ) < _DEC_Reconnoissance_MajorComponentMinDistance( myself )
 end
 
 --- Returns true if the ongoing reconnoitering action on the given target is finished, false otherwise.

@@ -1,6 +1,7 @@
 -------------------------------------------------------------------
 ---- COMMUNICATIONINTEGRATION INTERFACE IMPLEMENTATION
 -------------------------------------------------------------------
+require 'debug'
 
 integration.taskKnowledge = {}
 
@@ -137,9 +138,9 @@ end
 -- <li> mission_objectives a table of mission parameter values indexed by parameter names</li>
 -- </ul>
 integration.communication.StartMissionPion = function( content  )
-  local mission = DEC_CreerMissionPion( content.mission_type )
+  local mission = _DEC_CreerMissionPion( myself, content.mission_type )
   fillParameters( mission, content.mission_objectives )
-  DEC_DonnerMissionPion( mission )
+  _DEC_DonnerMissionPion( myself, mission )
   F_Pion_SeteEtatEchelon( meKnowledge.source, content.echelon ) 
 end
 
@@ -151,9 +152,9 @@ end
 -- <li> mission_objectives a table of mission parameter values indexed by parameter names</li>
 -- </ul>
 integration.communication.StartMissionPionVersPion = function( content )
-  local mission = DEC_CreerMissionPionVersPion( content.mission_type )
+  local mission = _DEC_CreerMissionPionVersPion( myself, content.mission_type )
   fillParameters( mission, content.mission_objectives ) 
-  DEC_DonnerMissionPionVersPion( mission )
+  _DEC_DonnerMissionPionVersPion( myself, mission )
   F_Pion_SeteEtatEchelon( meKnowledge.source, content.echelon ) 
 end
 
@@ -162,14 +163,14 @@ end
 -- @param missionName the name of the task associated to the mission 
 -- @param waypoints the list of DirectIA positions given into parameter
 integration.communication.OrderMoveToFromCommander = function( missionName, waypoints )
-    local mission = DEC_CreerMissionPion( missionName )
+    local mission = _DEC_CreerMissionPion( myself, missionName )
     local tempSimPoints = {}
     for i = 1, #waypoints do
         tempSimPoints[ i ] = DEC_AssignMissionPointListParameter( waypoints[ i ].source )
     end
     DEC_AssignMissionListParameter( mission, "waypoints", tempSimPoints )
     DEC_AssignMissionBoolParameter( mission, "urgency", false )
-    DEC_DonnerMissionPion( mission ) -- Issue the mission
+    _DEC_DonnerMissionPion( myself, mission ) -- Issue the mission
 end
 
 --- Assign the given mission to the calling DirectIA agent with the works as parameter (usually a build or remove mission )
@@ -178,14 +179,14 @@ end
 -- @param works the list of Object knowledge given into parameter
 -- @param instantaneously Boolean, if true, the mission is done instantaneously (no delays, no resource used). If false, the mission takes time.
 integration.communication.OrderPerformWorkFromCommander = function( missionName, works, instantaneously )
-    local mission = DEC_CreerMissionPion( missionName )
+    local mission = _DEC_CreerMissionPion( myself, missionName )
     local tempSimObjects = {}
     for i = 1, #works do
         tempSimObjects[ i ] = DEC_AssignMissionGenObjectListParameter( works[ i ].source )
     end
     DEC_AssignMissionListParameter( mission, "works", tempSimObjects )
     DEC_AssignMissionBoolParameter( mission, "instantaneously", instantaneously )
-    DEC_DonnerMissionPion( mission ) -- Issue the mission
+    _DEC_DonnerMissionPion( myself, mission ) -- Issue the mission
 end
 
 --- Assign the mission to the calling DirectIA automat
@@ -196,7 +197,7 @@ end
 -- <li> mission_params a table of mission parameter values indexed by parameter names</li>
 -- </ul>
 integration.communication.StartMissionAutomate = function( content )
-  local mission = DEC_CreerMissionAutomate( content.entity.source, content.taskName )
+  local mission = _DEC_CreerMissionAutomate( myself, content.entity.source, content.taskName )
   fillParameters( mission, content.params ) 
   DEC_DonnerMissionADAAutomate( mission )
 end
@@ -264,7 +265,7 @@ integration.RetrievePionTask = function( entity, targetTask )
     if DEC_IsMissionAvailable( entity.source, targetTask ) then
         local knowledgeName = integration.taskKnowledge[ targetTask ]
         if knowledgeName == nil then
-            DEC_Trace( "The knowledge of the task "..tostring( targetTask ).." is missing" )
+            _DEC_Trace( myself, "The knowledge of the task "..tostring( targetTask ).." is missing" )
             return nil
         end
         return taskKnowledge[ knowledgeName ]
@@ -278,7 +279,7 @@ end
 integration.SendMessage = function( ... )
     local status, err = pcall( masalife.brain.communication.send, ... )
     if not status then
-        DEC_Trace( "Sending message failed: "..tostring( err ).." from "..debug.traceback() )
+        _DEC_Trace( myself, "Sending message failed: "..tostring( err ).." from "..debug.traceback() )
     end
     return status
 end
@@ -389,7 +390,7 @@ end
 
 --- Stop the current mission of the calling element
 integration.stopMission = function()
-    DEC_FinMission()
+    _DEC_FinMission( myself )
 end
 
 --- Returns the current mision of the given agent
@@ -412,7 +413,7 @@ end
 -- This method can only be called by an automat
 -- @return list of simulation agent
 integration.getUnitsWithoutHQCommunication = function( )
-    return DEC_Automate_PionsSansPCCommunication( )
+    return _DEC_Automate_PionsSansPCCommunication( myself )
 end
 
 --- Returns if the given agent has got a mission
@@ -426,7 +427,7 @@ end
 -- This method can only be called by an automat
 -- @param task the task's name
 integration.giveCommanderTask = function( task )
-    DEC_DonnerMissionAutomate( task )
+    _DEC_DonnerMissionAutomate( myself, task )
 end
 
 --- Returns the danger direction of the given agent
@@ -439,13 +440,13 @@ end
 --- Returns the area of responsibility of the calling element
 -- @return simulation area of responsibility, the element AOR
 integration.getAORFromCommander = function()
-    return DEC_Fuseau()
+    return _DEC_Fuseau( myself )
 end
 
 --- Returns the area of responsibility of the calling element
 -- @return simulation area of responsibility
 integration.getAORFromPlatoon = function()
-    return DEC_Fuseau()
+    return _DEC_Fuseau( myself )
 end
 
 --- Returns the area of responsibility of entity
@@ -583,10 +584,10 @@ end
 -- @param missionName the name of the task associated to the mission
 -- @see integration.communication.StartMissionPionVersPion
 integration.communication.FollowMe = function( missionName, sender )
-    local mission = DEC_CreerMissionPionVersPion( missionName )
+    local mission = _DEC_CreerMissionPionVersPion( myself, missionName )
     local followParam = DEC_AssignMissionPionListParameter( sender )   -- entities to folow: the sender of the message
     DEC_AssignMissionListParameter( mission, "entities", { followParam } )
     DEC_AssignMissionListParameter( mission, "positions", NIL )        -- positions
     DEC_AssignMissionNumericTypeParameter( mission, "minDistance", 0 ) -- distance min 0 meters
-    DEC_DonnerMissionPionVersPion( mission )                           -- Issue the mission
+    _DEC_DonnerMissionPionVersPion( myself, mission )                  -- Issue the mission
 end

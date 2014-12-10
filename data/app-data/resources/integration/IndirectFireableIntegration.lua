@@ -6,8 +6,8 @@
 -- @return Boolean
 integration.isOnRangeFor = function( target, munition )
     local dist = integration.distance( meKnowledge, target )
-    return dist > DEC_Tir_PorteeMinTirIndirect_SansTesterEtatMunitions( munition ) 
-         and dist < DEC_Tir_PorteeMaxTirIndirect_SansTesterEtatMunitions( munition )
+    return dist > _DEC_Tir_PorteeMinTirIndirect_SansTesterEtatMunitions( myself, munition ) 
+       and dist < _DEC_Tir_PorteeMaxTirIndirect_SansTesterEtatMunitions( myself, munition )
 end
 
 --- Returns true if this entity has a launcher for the given ammunition, false otherwise.
@@ -15,7 +15,7 @@ end
 -- @param munition Resource type
 -- @return Boolean
 integration.hasLauncherFor = function( munition )
-    return DEC_Tir_PorteeMaxTirIndirect_SansTesterEtatMunitions( munition ) ~= -1
+    return _DEC_Tir_PorteeMaxTirIndirect_SansTesterEtatMunitions( myself, munition ) ~= -1
 end
 
 --- Starts indirectly firing on the given agent knowledge with the given ammunition
@@ -29,7 +29,7 @@ end
 integration.startApplyFireOnPlatoon = function( target, munition, quantity )
     target[myself] = target[myself] or {}
     target[myself].firstTime = true
-    target[myself].actionIndirectFire = DEC_StartTirIndirectSurConnaissancePtr( munition, quantity, target.source )
+    target[myself].actionIndirectFire = _DEC_StartTirIndirectSurConnaissancePtr( myself, munition, quantity, target.source )
     actionCallbacks[ target[myself].actionIndirectFire ] = function( arg ) target[myself].eIndirectFireState = arg end
     return false
 end
@@ -70,7 +70,7 @@ integration.stopApplyFireOnPlatoon = function( target )
     if target[myself].eIndirectFireState == eIndirectFireState_Finished then
         reportFunction(eRC_FinTirIndirectSurCible, target.source )
     end
-    target[myself].actionIndirectFire = DEC__StopAction( target[myself].actionIndirectFire )
+    target[myself].actionIndirectFire = _DEC__StopAction( myself, target[myself].actionIndirectFire )
     target[myself].eIndirectFireState = nil
 end
 
@@ -87,9 +87,9 @@ integration.startApplyFireOnPoint = function( point, munition, quantity, request
     point[myself] = point[myself] or {}
     point[myself].firstTime = true
     if not requester then
-        point[myself].actionIndirectFire = DEC_StartTirIndirectSurPosition( munition, quantity, point.source )
+        point[myself].actionIndirectFire = _DEC_StartTirIndirectSurPosition( myself, munition, quantity, point.source )
     else
-        point[myself].actionIndirectFire = DEC_StartTirIndirectSurPositionAvecDemandeur( munition, quantity, point.source, requester.source )
+        point[myself].actionIndirectFire = _DEC_StartTirIndirectSurPositionAvecDemandeur( myself, munition, quantity, point.source, requester.source )
     end
     actionCallbacks[ point[myself].actionIndirectFire ] = function( arg ) point[myself].eIndirectFireState = arg end
     return false
@@ -135,7 +135,7 @@ integration.stopApplyFireOnPoint = function( point )
     if point[myself].eIndirectFireState == eIndirectFireState_Finished then
         reportFunction(eRC_TirExecute )
     end
-    point[myself].actionIndirectFire = DEC__StopAction( point[myself].actionIndirectFire )
+    point[myself].actionIndirectFire = _DEC__StopAction( myself, point[myself].actionIndirectFire )
     point[myself].eIndirectFireState = nil
 end
 
@@ -165,9 +165,9 @@ end
 -- @param bAvailable Boolean, the entity's new availability
 integration.sendfireAvailable = function( bAvailable )
     if bAvailable then
-        DEC_Agent_ChangeDisponibiliteAuTirIndirect( eFireAvailability_PretAuTir )
+        _DEC_Agent_ChangeDisponibiliteAuTirIndirect( myself, eFireAvailability_PretAuTir )
     else
-        DEC_Agent_ChangeDisponibiliteAuTirIndirect( eFireAvailability_Indisponible )
+        _DEC_Agent_ChangeDisponibiliteAuTirIndirect( myself, eFireAvailability_Indisponible )
     end
 end
 
@@ -175,7 +175,7 @@ end
 -- This method can only be called by an agent.
 -- @return Boolean
 integration.isUnderIndirectFire = function()
-    return DEC_Agent_EstCibleTirIndirect()
+    return _DEC_Agent_EstCibleTirIndirect( myself )
 end
 
 --- Returns an ammunition type appropriate to apply direct fire on the given position (i.e.
@@ -185,7 +185,7 @@ end
 -- @param position Point knowledge (optional)
 -- @return Resource type
 integration.munitionPourTirIndirect = function( position ) -- Be careful : if unit is load return is always nil
-    return DEC_Tir_MunitionPourTirIndirect( eObus_Explosif, position ) 
+    return _DEC_Tir_MunitionPourTirIndirect( myself, eObus_Explosif, position ) 
 end
 
 --- Returns a list of potential targets for indirect fire :
@@ -217,13 +217,13 @@ integration.findEnemyToMortarIndirectFire = function( targets )
     if not targets or #targets < 1 then
         return {}
     else
-        local DEC_ConnaissanceAgent_EstUnEnnemi = DEC_ConnaissanceAgent_EstUnEnnemi
+        local _DEC_ConnaissanceAgent_EstUnEnnemi = _DEC_ConnaissanceAgent_EstUnEnnemi
         local DEC_ConnaissanceAgent_EstDetruitTactique = DEC_ConnaissanceAgent_EstDetruitTactique
         local DEC_ConnaissanceAgent_EstEnVol = DEC_ConnaissanceAgent_EstEnVol
         local result = {}
         for i = 1, #targets do
             local dotation = integration.munitionPourTirIndirect( targets[i]:getPosition() )
-            if DEC_ConnaissanceAgent_EstUnEnnemi( targets[i].source ) and not DEC_ConnaissanceAgent_EstDetruitTactique( targets[i].source ) and not DEC_ConnaissanceAgent_EstEnVol( targets[i].source ) and 
+            if _DEC_ConnaissanceAgent_EstUnEnnemi( myself, targets[i].source ) and not DEC_ConnaissanceAgent_EstDetruitTactique( targets[i].source ) and not DEC_ConnaissanceAgent_EstEnVol( targets[i].source ) and 
               integration.isOnRangeFor( targets[i], dotation ) then
                 if not exists( result, targets[i] ) then
                     result[ #result + 1 ] = targets[i]
@@ -238,7 +238,7 @@ end
 -- This method can only be called by an agent.
 -- @return Float, the duration of the smoke screen (in ticks)
 integration.launchDREB = function()
-    return DEC_Tir_LancerFumigeneSurPosition(myself, meKnowledge:getPosition())
+    return DEC_Tir_LancerFumigeneSurPosition( myself, meKnowledge:getPosition() )
 end
 
 --- Launches smoke rounds on the given agent's current position.
@@ -246,7 +246,7 @@ end
 -- @param eni Simulation agent knowledge
 -- @return Float, the duration of the smoke screen (in ticks)
 integration.launchSmokesOnEni = function( eni )
-    return DEC_Tir_LancerFumigeneSurConnaissance( eni )
+    return _DEC_Tir_LancerFumigeneSurConnaissance( myself, eni )
 end
 
 --- Returns the greatest maximal indirect fire range of all

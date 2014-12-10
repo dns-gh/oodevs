@@ -17,7 +17,7 @@ end
 -- This method can only be called by an agent.
 -- @return Float between 0 and 1, 0 meaning very unfavourable, and 1 meaning very favourable
 integration.getForceRatio = function()
-    return DEC_RapportDeForceLocal() / 5
+    return _DEC_RapportDeForceLocal( myself ) / 5
 end
 
 --- Returns the given agent knowledge's force ratio
@@ -46,5 +46,5 @@ end
 
 --- Deprecated
 integration.getEstimateDangerosity = function( platoon )
-    return ( DEC_ConnaissanceAgent_Dangerosite( platoon.source ) - 1 ) * 100
+    return ( _DEC_ConnaissanceAgent_Dangerosite( myself, platoon.source ) - 1 ) * 100
 end

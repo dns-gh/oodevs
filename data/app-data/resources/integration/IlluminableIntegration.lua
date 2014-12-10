@@ -2,14 +2,14 @@
 -- @param unit DirectIA agent knowledge
 -- @return Boolean
 integration.canIlluminateIt = function( unit )
-  return DEC_ConnaissanceAgent_PeutEtreIllumine( unit.source )
+  return _DEC_ConnaissanceAgent_PeutEtreIllumine( myself, unit.source )
 end
 
 --- Returns true if this entity has illumination capacity, false otherwise.
 -- This method can only be called by an agent
 -- @return Boolean
 integration.canIlluminate = function()
-    return DEC_ConnaissanceAgent_PeutIlluminer()
+    return _DEC_ConnaissanceAgent_PeutIlluminer( myself )
 end
 
 --- Returns true if the given agent knowledge is definitively illuminated, false otherwise.
@@ -41,7 +41,7 @@ end
 -- @return Boolean, false
 integration.startIlluminateIt = function( target, allies )
     target[myself] = target[myself] or {}
-    target[myself].actionIlluminate = DEC_StartIlluminer( target.source, allies[1].source  )
+    target[myself].actionIlluminate = _DEC_StartIlluminer( myself, target.source, allies[1].source  )
     reportFunction(eRC_IllumineCible )
     actionCallbacks[ target[myself].actionIlluminate ] = function( arg ) target[myself].actionState = arg end
     return false
@@ -68,7 +68,7 @@ end
 -- @return Boolean, false
 integration.stopIlluminateIt = function( target )
     target[myself] = target[myself] or {}
-    target[myself].actionIlluminate = DEC__StopAction( target[myself].actionIlluminate )
+    target[myself].actionIlluminate = _DEC__StopAction( myself, target[myself].actionIlluminate )
     return false
 end
 
@@ -85,5 +85,5 @@ end
 -- @param target DirectIA agent
 -- @return Boolean
 integration.isInIlluminateRange = function( target )
-    return integration.distance( meKnowledge, target ) < DEC_Agent_IlluminateRange() 
+    return integration.distance( meKnowledge, target ) < _DEC_Agent_IlluminateRange( myself ) 
 end

@@ -28,7 +28,7 @@ end
 -- @param object a DirectIA object knowledge
 -- @return Boolean returns 'true' if the agent can improve the object, 'false' otherwise.
 integration.agentCanImproveObject = function( object )
-    return DEC_Agent_PeutValoriserObjet( object.source )
+    return _DEC_Agent_PeutValoriserObjet( myself, object.source )
 end
 
 --- Informs if the agent has dotation to improve the provided object. The implementation of this method also
@@ -75,7 +75,7 @@ end
 -- @param object a DirectIA object knowledge
 integration.startImproveIt = function( object )
     object[ myself ] = object [myself ] or {} 
-    object[ myself ].actionImprovement = DEC_StartValoriserObjet( object.source )
+    object[ myself ].actionImprovement = _DEC_StartValoriserObjet( myself, object.source )
     actionCallbacks[ object[ myself ].actionImprovement ] = function( arg ) 
         object[ myself ].actionImprovementState = arg
     end
@@ -89,11 +89,11 @@ end
 -- @param object a DirectIA object knowledge
 integration.updateImproveIt = function( object )
     if object[ myself ].actionImprovementState == eActionObjetImpossible then
-        DEC_Trace( "impossible works" ) -- the objet cannot be improved
+        _DEC_Trace( myself, "impossible works" ) -- the objet cannot be improved
     elseif object [ myself ].actionImprovementState == eActionObjetManqueDotation then
-        DEC_Trace( "not enough dotation" ) -- the agent has no dotation left
+        _DEC_Trace( myself, "not enough dotation" ) -- the agent has no dotation left
     elseif object[ myself ].actionImprovementState == eActionObjetPasDeCapacite then
-        DEC_Trace( "no capacity" ) -- the agent has no physical capability
+        _DEC_Trace( myself, "no capacity" ) -- the agent has no physical capability
     end
 end
 
@@ -106,13 +106,13 @@ end
 -- @returns Boolean returns 'true' once the improvement is terminated, 'false' if it fails.
 integration.updateImproveItWithFeedbacks = function( object )
     if object[ myself ].actionImprovementState == eActionObjetImpossible then
-        DEC_Trace( "this object cannot be improved" )
+        _DEC_Trace( myself, "this object cannot be improved" )
         return false
     elseif object[ myself ].actionImprovementState == eActionObjetManqueDotation then
-        DEC_Trace( "not enough dotation" ) 
+        _DEC_Trace( myself, "not enough dotation" ) 
         return false
     elseif object[ myself ].actionImprovementState == eActionObjetPasDeCapacite then
-        DEC_Trace( "the agent does not have the capacity to improve the object" )
+        _DEC_Trace( myself, "the agent does not have the capacity to improve the object" )
         return false
     elseif object[ myself ].actionImprovementState == eActionObjetTerminee then
         return true
@@ -128,7 +128,7 @@ integration.stopImproveIt = function( object )
     if object[ myself ].actionImprovementState == eActionObjetTerminee then
         reportFunction( eRC_FinValorisation, object.source )
     else
-        DEC_Trace( "pause work improve" )
+        _DEC_Trace( myself, "pause work improve" )
     end
-    object[ myself ].actionImprovement = DEC__StopAction( object[ myself ].actionImprovement )
+    object[ myself ].actionImprovement = _DEC__StopAction( myself, object[ myself ].actionImprovement )
 end

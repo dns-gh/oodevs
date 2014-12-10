@@ -11,10 +11,10 @@ end
 integration.getPerception = function( knowledgeA, knowledgeB )
     if immutablePosition( knowledgeA ) and immutablePosition( knowledgeB ) then
         knowledgeA.source.cachegetPerception = knowledgeA.source.cachegetPerception or {}
-        knowledgeA.source.cachegetPerception[ knowledgeB.source ] = knowledgeA.source.cachegetPerception[ knowledgeB.source ] or DEC_GetPerception( knowledgeA:getPosition(), knowledgeB:getPosition() )
+        knowledgeA.source.cachegetPerception[ knowledgeB.source ] = knowledgeA.source.cachegetPerception[ knowledgeB.source ] or _DEC_GetPerception( myself, knowledgeA:getPosition(), knowledgeB:getPosition() )
         return knowledgeA.source.cachegetPerception[ knowledgeB.source ]
     end
-    return DEC_GetPerception( knowledgeA:getPosition(), knowledgeB:getPosition() )
+    return _DEC_GetPerception( myself, knowledgeA:getPosition(), knowledgeB:getPosition() )
 end
 
 --- Returns true if the given agent knowledge is inside the cone of perception of this agent.
@@ -27,12 +27,12 @@ end
 -- @param angle Float, angle in degrees
 -- @return Boolean
 integration.connaissanceAgentEstAPorteDeCapteurDansCone = function( eni, direction, angle )
-    return DEC_ConnaissanceAgent_EstAPorteDeCapteurDansCone( eni.source, direction.source, angle )
+    return _DEC_ConnaissanceAgent_EstAPorteDeCapteurDansCone( myself, eni.source, direction.source, angle )
 end
 
 --- Returns a list of all living enemies perceived by this agent.
 -- This method can only be called by an agent.
 -- @return List of agent knowledges
 integration.knowledgePerceivedLivingEnemiesAgents = function( )
-    return DEC_Connaissances_UnitesEnnemiesVivantesPercues()
+    return _DEC_Connaissances_UnitesEnnemiesVivantesPercues( myself )
 end

@@ -6,7 +6,7 @@
 -- @param objectLocation Area knowledge
 integration.warnFriendsForBuildingObject = function( clearSealOffArea, objectLocation )
     if not meKnowledge:isSelfCommanding() then -- automat mission
-        local simAgents = DEC_Pion_PionsAvecPC()
+        local simAgents = myself:DEC_Pion_PionsAvecPC()
         for i = 1, #simAgents do
             local friend = CreateKnowledge( sword.military.world.PlatoonAlly, simAgents[i] )
             if clearSealOffArea then -- clear 
@@ -22,11 +22,11 @@ end
 
 local startSealOffLocation = function( location, knowledge )
     local border = DEC_Geometrie_CreerLocalisationPolyligne( DEC_Geometrie_ListePointsLocalisation( location ) )
-    knowledge.sealPerceptionID = DEC_Perception_ActivateLocationProgressiveRecce( DEC_Geometrie_AgrandirLocalisation( location, 10 ), 2 )
+    knowledge.sealPerceptionID = _DEC_Perception_ActivateLocationProgressiveRecce( myself, DEC_Geometrie_AgrandirLocalisation( location, 10 ), 2 )
     local sealOffArea = integration.obtenirObjetProcheDe( location, eTypeObjectSealOffArea, 10 )
     myself.buildingObject = myself.buildingObject or false
     if sealOffArea == nil and not myself.buildingObject then -- need to create seal off area
-        DEC_MagicGetOrCreateObject( eTypeObjectSealOffArea, border )
+        _DEC_MagicGetOrCreateObject( myself, eTypeObjectSealOffArea, border )
         myself.buildingObject = border
         integration.warnFriendsForBuildingObject( false, border )
     end
@@ -38,7 +38,7 @@ local startedSealOffLocation = function( location, knowledge )
     if sealOffArea then
         if not knowledge.constructedObject then
             knowledge.constructedObject = sealOffArea
-            knowledge.constructedObject.actionAnimation = DEC__StartAnimerObjet( knowledge.constructedObject )
+            knowledge.constructedObject.actionAnimation = _DEC__StartAnimerObjet( myself, knowledge.constructedObject )
             reportFunction( eRC_DebutAnimationObjet, knowledge.constructedObject )
         end
     end
@@ -49,13 +49,13 @@ local stopSealOffLocation = function( knowledge )
     if knowledge.constructedObject then
         local DEC_ConnaissanceObjet_NiveauAnimation = DEC_ConnaissanceObjet_NiveauAnimation
         if DEC_ConnaissanceObjet_NiveauAnimation( knowledge.constructedObject  ) > 0 then
-            DEC__StopAction( knowledge.constructedObject.actionAnimation )
+            _DEC__StopAction( myself, knowledge.constructedObject.actionAnimation )
             reportFunction( eRC_FinAnimationObjet, knowledge.constructedObject )
         end
         if DEC_ConnaissanceObjet_NiveauAnimation( knowledge.constructedObject  ) < 0.1 then
             if myself.buildingObject then
                 DEC_DetruireObjetSansDelais( knowledge.constructedObject ) -- destroy it
-                DEC_Perception_DesactiverReconnaissanceLocalisation( knowledge.sealPerceptionID )
+                _DEC_Perception_DesactiverReconnaissanceLocalisation( myself, knowledge.sealPerceptionID )
                 integration.warnFriendsForBuildingObject( true )
                 myself.buildingObject = false
                 knowledge.constructedObject = nil

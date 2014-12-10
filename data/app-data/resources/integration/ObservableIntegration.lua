@@ -8,9 +8,9 @@
 -- @return Numeric the level of hostility  (a percentage). A value of '0' means 'hostile', 
 -- a value of '100' means 'friend', a value '50' means neutral.
 integration.computeRelationAgent = function( unit )
-    if( DEC_ConnaissanceAgent_EstUnEnnemi( unit.source ) == 0 ) then
+    if _DEC_ConnaissanceAgent_EstUnEnnemi( myself, unit.source ) == 0 then
         return 0
-    elseif( DEC_ConnaissanceAgent_EstUnAllie( unit.source ) == 0 ) then
+    elseif _DEC_ConnaissanceAgent_EstUnAllie( myself, unit.source ) == 0 then
         return 100
     else
         return 50
@@ -23,9 +23,9 @@ end
 -- @return Numeric the level of hostility (a percentage). A value of '0' means 'hostile', 
 -- a value of '100' means 'friend', a value '50' means neutral.
 integration.computeRelationObject = function( object )
-    if( DEC_ConnaissanceObjet_EstUnEnnemi( object.source ) == 0 ) then
+    if _DEC_ConnaissanceObjet_EstUnEnnemi( myself, object.source ) == 0 then
         return 0
-    elseif( DEC_ConnaissanceObjet_EstUnAllie( object.source ) == 0 ) then
+    elseif _DEC_ConnaissanceObjet_EstUnAllie( myself, object.source ) == 0 then
         return 100
     else
         return 50
@@ -37,7 +37,7 @@ end
 -- @return Numeric the level of perception  (a percentage). A value of '0' means 'not perceived', 
 -- a value of '100' means 'perceived' (the target 'unit' is in sight).
 integration.getAgentPerceptionLevel = function( unit )
-    if DEC_ConnaissanceAgent_EstPercuParUnite( unit.source ) then
+    if _DEC_ConnaissanceAgent_EstPercuParUnite( myself, unit.source ) then
         return 100
     else
         return 0
@@ -49,7 +49,7 @@ end
 -- @return Numeric the level of perception  (a percentage). A value of '0' means 'not perceived', 
 -- a value of '100' means 'perceived' (the target 'crowd' is in sight).
 integration.getCrowdPerceptionLevel = function( crowd )
-    if DEC_ConnaissancePopulation_EstPercueParUnite( crowd.source ) then
+    if _DEC_ConnaissancePopulation_EstPercueParUnite( myself, crowd.source ) then
         return 100
     else
         return 0
@@ -61,12 +61,12 @@ end
 -- @return Numeric the level of identification  (a percentage). A value of '0' means 'not perceived', 
 -- a value of '100' means 'identified', a value of '60' means 'recognized', a value of 30 means 'detected'.
 integration.getObjectPerception = function( object )
-    local perceptionLevel = DEC_ConnaissanceObjet_NiveauDePerceptionCourant( object.source )
-    if ( perceptionLevel == 1 ) then
+    local perceptionLevel = _DEC_ConnaissanceObjet_NiveauDePerceptionCourant( myself, object.source )
+    if perceptionLevel == 1 then
         return 30 -- in sight, target is detected
-    elseif ( perceptionLevel == 2 ) then
+    elseif perceptionLevel == 2 then
         return 60 -- in sight, target is recognized
-    elseif ( perceptionLevel == 3 ) then
+    elseif perceptionLevel == 3 then
         return 100 -- in sight, target is identified
     else
         return 0 -- not perceived
@@ -88,7 +88,7 @@ end
 -- a value of '1' means totally 'reconnoitered'.
 -- @see integration.getUrbanBlockPerception
 integration.getUrbanBlockCurrentReconnaissanceState = function( urbanBlock )
-  return DEC_ConnaissanceUrbanBlock_NiveauDeReconnaissanceCourant( urbanBlock )
+    return _DEC_ConnaissanceUrbanBlock_NiveauDeReconnaissanceCourant( myself, urbanBlock )
 end
 
 --- Orientates the agent's sensors toward the given objective.
@@ -97,12 +97,12 @@ end
 -- (see sensors definitions in authoring tool). 
 integration.observeIt = function( objective, activateRadar  )
     if masalife.brain.core.class.isOfType( objective, integration.ontology.types.direction ) then
-        DEC_Perception_VisionVerrouilleeSurDirection( objective.source )
+        _DEC_Perception_VisionVerrouilleeSurDirection( myself, objective.source )
     else
         if objective:isValid() then
-            DEC_Perception_VisionVerrouilleeSurPointPtr( objective:getPosition() )
+            _DEC_Perception_VisionVerrouilleeSurPointPtr( myself, objective:getPosition() )
             if activateRadar then
-                DEC_Perception_ActiverRadarSurPointPtr( eRadarType_Radar, objective:getPosition() )
+                _DEC_Perception_ActiverRadarSurPointPtr( myself, eRadarType_Radar, objective:getPosition() )
             end
         end
     end
@@ -111,7 +111,7 @@ end
 --- Orientates the agent's sensors toward the given direction
 -- @param direction a 'Direction' DirectIA knowledge
 integration.observeDirection = function( direction )
-    DEC_Perception_VisionVerrouilleeSurDirection( direction.source )
+    _DEC_Perception_VisionVerrouilleeSurDirection( myself, direction.source )
 end
 
 --- Estimates the efficiency of the agent perception capability from the provided position, 
@@ -127,7 +127,7 @@ integration.getEstimatePerception = function( objective, position )
     end
     if not position.getEstimatePerceptionsResult[ objective ] then
         position.getEstimatePerceptionsResult[ objective ] 
-        = LinearInterpolation( 0, 100, 0, DEC_Detection_Distance(), true, 
+        = LinearInterpolation( 0, 100, 0, _DEC_Detection_Distance( myself ), true, 
         integration.getPerception( objective, position ) )
     end
     return position.getEstimatePerceptionsResult[ objective ]
@@ -159,7 +159,7 @@ end
 -- @param point a Directia knowledge defining the element to observe.
 -- @return Boolean 'true' if the point is in sight, 'false' otherwise.
 integration.isPointVisible = function( point )
-    return DEC_Perception_PointEstVisible( point.source )
+    return _DEC_Perception_PointEstVisible( myself, point.source )
 end
 
 --- Returns the relevance of the given agent knowledge.
@@ -180,7 +180,7 @@ end
 -- This method can only be called by an agent.
 -- @return Numeric the perception distance in meters
 integration.getDetectionDistance = function()
-    return DEC_Detection_Distance()
+    return _DEC_Detection_Distance( myself )
 end
 
 --- Informs if the agent is currently perceiving the given agent knowledge.
@@ -188,7 +188,7 @@ end
 -- @param agent a agent knowledge
 -- @return Boolean 'true' if the agent knowledge is perceiving the agent, 'false' otherwise.
 integration.isAgentPerceivesAgent = function( agent )
-    return DEC_ConnaissanceAgent_PercoitUnite( agent )
+    return _DEC_ConnaissanceAgent_PercoitUnite( myself, agent )
 end
 
 --- Deprecated
@@ -198,12 +198,12 @@ end
 -- This method can only be called by an agent.
 -- @return Numeric the identification distance in meters
 integration.getIdentificationDistance = function()
-    return DEC_Identification_DistanceMaxCompMajeure()
+    return _DEC_Identification_DistanceMaxCompMajeure( myself )
 end
 
 --- Returns true if the perception level of the given simulation agent knowledge is the maximum, false otherwise.
 -- @param agentKnowledge Simulation agent knowledge.
 -- @return Boolean
 integration.isPerceptionLevelMaxForUnit = function( agentKnowledge )
-    return DEC_KnowledgeAgent_IsPerceptionLevelMax( agentKnowledge )
+    return _DEC_KnowledgeAgent_IsPerceptionLevelMax( myself, agentKnowledge )
 end

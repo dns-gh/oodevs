@@ -15,7 +15,7 @@
 -- @see integration.getLimasFromType
 -- @return Integer (phase line id)
 integration.getLimaFromType = function( phaseLineType )
-    return DEC_GetLima( phaseLineType )
+    return _DEC_GetLima( myself, phaseLineType )
 end
 
 --- Returns all phase lines of the current mission with the given type.
@@ -35,7 +35,7 @@ end
 -- @see integration.getLimaFromType
 -- @return List of integers (phase line ids)
 integration.getLimasFromType = function( phaseLineType )
-    return DEC_GetLimasFromType( phaseLineType )
+    return _DEC_GetLimasFromType( myself, phaseLineType )
 end
 
 --- Returns the phase line at the given key position.
@@ -105,7 +105,7 @@ end
 -- @param nbPoints The number of computed positions for each retrieved phase lines
 -- @return List of list of simulation positions
 integration.getPointsLimas = function ( phaseLineType, nbPoints )
-    return DEC_Geometrie_GetPointsLimas( phaseLineType, nbPoints )
+    return _DEC_Geometrie_GetPointsLimas( myself, phaseLineType, nbPoints )
 end
 
 --- Returns positions relative to the given phase line.
@@ -130,7 +130,7 @@ end
 -- @param nbPoints The number of returned positions
 -- @return List of simulation positions
 integration.computePositionsRelativeToLima = function( phaseLine, distance, nbPoints )
-    return DEC_Geometrie_CalculerPositionsParRapportALima( phaseLine, distance, nbPoints )
+    return _DEC_Geometrie_CalculerPositionsParRapportALima( myself, phaseLine, distance, nbPoints )
 end
 
 --- Sets the given phase line's flagged state to the given boolean.
@@ -140,7 +140,7 @@ end
 -- @param phaseLine Integer (phase line id)
 -- @param boolean Boolean, the new value
 integration.setMissionLimaFlag = function( phaseLine, boolean )
-    DEC_SetMissionLimaFlag( phaseLine, boolean )
+    _DEC_SetMissionLimaFlag( myself, phaseLine, boolean )
 end
 
 --- Returns the given phase line's flagged state
@@ -148,7 +148,7 @@ end
 -- @param phaseLine Integer (phase line id)
 -- @return Boolean
 integration.getMissionLimaFlag = function( phaseLine )
-    return DEC_GetMissionLimaFlag( phaseLine )
+    return _DEC_GetMissionLimaFlag( myself, phaseLine )
 end
 
 --- Sets the given scheduled phase line's flagged state to the given boolean.
@@ -157,14 +157,14 @@ end
 -- @param phaseLine Integer (phase line id)
 -- @param boolean Boolean, the new value
 integration.setMissionLimaFlagSchedule = function( phaseLine, boolean )
-    DEC_SetMissionLimaFlagHoraire( phaseLine, boolean )
+    _DEC_SetMissionLimaFlagHoraire( myself, phaseLine, boolean )
 end
 
 --- Removes the given key position from the list of known key positions.
 -- @see integration.getPointsCategory
 -- @param point Simulation key position
 integration.removeFromPointsCategory = function( point )
-    DEC_RemoveFromPointsCategory( point )
+    _DEC_RemoveFromPointsCategory( myself, point )
 end
 
 ------------------------------------------------------------------

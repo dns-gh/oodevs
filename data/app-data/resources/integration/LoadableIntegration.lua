@@ -90,7 +90,7 @@ integration.dischargeAgent = function( unit, camp )
             return true
         end
     else
-        DEC_Transport_DebarquerPionSansDelais( unit.source )
+        _DEC_Transport_DebarquerPionSansDelais( myself, unit.source )
         integration.removeFromLoadedUnits( unit )
         integration.removeFromCapturedUnits( unit )
         return true
@@ -107,14 +107,14 @@ end
 integration.dischargeAgentKnowledge = function( enemy, camp )
     if DEC_ConnaissanceAgent_EstRefugie( enemy.source ) then
         if DEC_Refugies_EstEmbarque( enemy.source ) then
-            DEC_Refugies_DebarquerDansCamp( enemy.source, camp.source )
+            _DEC_Refugies_DebarquerDansCamp( myself, enemy.source, camp.source )
             integration.removeFromLoadedUnits( enemy )
             integration.removeFromCapturedUnits( enemy )
             return true
         end
     elseif DEC_ConnaissanceAgent_EstPrisonnier( enemy.source ) then
         if DEC_Prisonniers_EstEmbarque( enemy.source ) then
-            DEC_Prisonniers_DebarquerDansCamp( enemy.source, camp.source )
+            _DEC_Prisonniers_DebarquerDansCamp( myself, enemy.source, camp.source )
             integration.removeFromLoadedUnits( enemy )
             integration.removeFromCapturedUnits( enemy )
             return true
@@ -135,13 +135,13 @@ integration.loadFriendOrFoe = function( unit )
     integration.addToLoadedUnits( unit )
     if DEC_ConnaissanceAgent_EstRenduAMonCamp( myself, unit.source ) then
         if not DEC_Prisonniers_EstEmbarque( unit.source ) then
-            DEC_Prisonniers_CapturerEtEmbarquer( unit.source )
+            _DEC_Prisonniers_CapturerEtEmbarquer( myself, unit.source )
             integration.addToCapturedUnits( unit )
             return true
         end
     elseif DEC_ConnaissanceAgent_EstRefugie( unit.source ) then
         if not DEC_Refugies_EstEmbarque( unit.source ) then
-            DEC_Refugies_OrienterEtEmbarquer( unit.source )
+            _DEC_Refugies_OrienterEtEmbarquer( myself, unit.source )
             return true
         end
     else
@@ -161,11 +161,11 @@ integration.unloadFriendOrFoe = function( unit )
     integration.removeFromCapturedUnits( unit )
     
     if DEC_Prisonniers_EstEmbarque( unit.source ) then
-        DEC_Prisonniers_Debarquer( unit.source )
+        _DEC_Prisonniers_Debarquer( myself, unit.source )
         return true
     end
     if DEC_Refugies_EstEmbarque( unit.source ) then
-        DEC_Refugies_Debarquer( unit.source )
+        _DEC_Refugies_Debarquer( myself, unit.source )
         return true
     end
     return false
@@ -196,7 +196,7 @@ integration.loadFriend = function( unit, transportOnlyLoadable )
     if DEC_Agent_EstRefugie( unit.source ) then
         DEC_Agent_OrienterEtEmbarquer( meKnowledge.source, unit.source )
     else
-        DEC_Transport_EmbarquerPionSansDelais( unit.source, transportOnlyLoadable )
+        _DEC_Transport_EmbarquerPionSansDelais( myself, unit.source, transportOnlyLoadable )
     end
     return true
 end
@@ -208,7 +208,7 @@ end
 integration.unloadFriend = function( unit )
     integration.removeFromLoadedUnits( unit )
     integration.removeFromCapturedUnits( unit )
-    DEC_Transport_DebarquerPionSansDelais( unit.source )
+    _DEC_Transport_DebarquerPionSansDelais( myself, unit.source )
     return true
 end
 
@@ -226,7 +226,7 @@ integration.boardElementsWithoutDelay = function( units, transportOnlyLoadable )
         kUnits[i] = CreateKnowledge( integration.ontology.types.agent, units[i] )
     end
     integration.addListToLoadedUnits( kUnits )
-    DEC_Transport_EmbarquerPionsSansDelais( units, transportOnlyLoadable )
+    _DEC_Transport_EmbarquerPionsSansDelais( myself, units, transportOnlyLoadable )
 end
 
 --- Instantaneously unloads the given agents.
@@ -242,13 +242,13 @@ integration.unboardElementsWithoutDelay = function( units )
     end
     integration.removeListFromLoadedUnits( kUnits )
     integration.removeListFromCapturedUnits( kUnits )
-    DEC_Transport_DebarquerPionsSansDelais( units )
+    _DEC_Transport_DebarquerPionsSansDelais( myself, units )
 end
 
 --- Returns true if this entity is transported, false otherwise.
 -- @return Boolean, vwhether or not this entity is transported
 integration.isBodyTransported = function()
-    return DEC_Agent_EstTransporte()
+    return _DEC_Agent_EstTransporte( myself )
 end
 
 --- Returns true if the given agent is currently transported, false otherwise.
@@ -264,7 +264,7 @@ end
 -- @see integration.stopLoadQueue
 -- @return Boolean, false
 integration.startLoadQueue = function()
-    myself.actionEmbarquer = DEC_Start_TransportEmbarquer(  )
+    myself.actionEmbarquer = _DEC_Start_TransportEmbarquer( myself )
     actionCallbacks[ myself.actionEmbarquer ] = function( arg ) myself.eEtatTransport = arg end
     return false
 end
@@ -288,7 +288,7 @@ end
 -- @see integration.startLoadQueue
 -- @see integration.updateLoadQueue
 integration.stopLoadQueue = function()
-    myself.actionEmbarquer = DEC__StopAction( myself.actionEmbarquer )
+    myself.actionEmbarquer = _DEC__StopAction( myself, myself.actionEmbarquer )
     myself.eEtatTransport = nil
 end
 
@@ -297,7 +297,7 @@ end
 -- @see integration.stopUnloadQueue
 -- @return Boolean, false
 integration.startUnloadQueue = function()
-    myself.actionDebarquer = DEC_Start_TransportDebarquer( nil )
+    myself.actionDebarquer = _DEC_Start_TransportDebarquer( myself, nil )
     actionCallbacks[ myself.actionDebarquer ] = function( arg ) myself.eEtatTransport = arg end
     return false
 end
@@ -321,7 +321,7 @@ end
 -- @see integration.startUnloadQueue
 -- @see integration.updateUnloadQueue
 integration.stopUnloadQueue = function()
-    myself.actionDebarquer = DEC__StopAction( myself.actionDebarquer )
+    myself.actionDebarquer = _DEC__StopAction( myself, myself.actionDebarquer )
     myself.eEtatTransport = nil
 end
 
@@ -330,7 +330,7 @@ end
 -- @param onlyLoadable Boolean, whether or not the transport of this unit will only
 -- take into account components that are defined as 'loadable' in the physical database.
 integration.addPlatoonInQueue = function( unit, onlyLoadable )
-    DEC_Transport_AjouterPion( unit.source, onlyLoadable )
+    _DEC_Transport_AjouterPion( myself, unit.source, onlyLoadable )
 end
 
 --- Adds the given agent knowledge to the current loading queue.
@@ -436,7 +436,7 @@ end
 -- This method can only be called by an agent.
 -- @return Boolean
 integration.isTransportFinished = function()
-    return DEC_Transport_EstTermine()
+    return _DEC_Transport_EstTermine( myself )
 end
 
 --- Returns true if this entity can transport the given agent, false otherwise.
@@ -447,7 +447,7 @@ end
 -- account components that are defined as 'loadable' in the physical database.
 -- @return Boolean
 integration.canTransportUnit = function( unit, onlyLoadable )
-    return DEC_Agent_PeutTransporterPion( unit.source, onlyLoadable )
+    return _DEC_Agent_PeutTransporterPion( myself, unit.source, onlyLoadable )
 end
 
 --- Returns true if an agent can transport another agent, false otherwise.
@@ -487,7 +487,7 @@ end
 -- account components that are defined as 'loadable' in the physical database.
 -- @return Integer
 integration.transportUnitRoundTrip = function( unit, onlyLoadable )
-    return DEC_Agent_TransportNombreAllerRetour( unit.source, onlyLoadable )
+    return _DEC_Agent_TransportNombreAllerRetour( myself, unit.source, onlyLoadable )
 end
 
 --- Returns the necessary number of round trips for this entity to transport the given agent.
@@ -550,7 +550,7 @@ end
 -- @return Boolean, false
 integration.startLoadCrowd = function( crowd, concentration )
     reportFunction(eRC_TransportEmbarquement )
-    myself.actionLoadCrowd = DEC_StartEmbarquerFouleDUneConcentration( crowd.source, concentration )
+    myself.actionLoadCrowd = _DEC_StartEmbarquerFouleDUneConcentration( myself, crowd.source, concentration )
     actionCallbacks[ myself.actionLoadCrowd ] = function( arg ) myself.eEtatTransportCrowd = arg end
     return false
 end
@@ -566,7 +566,7 @@ integration.startedLoadCrowd = function( crowd )
         integration.addToLoadedCrowds( crowd )
         return true
     elseif myself.eEtatTransportCrowd == eActionTransport_Impossible then
-        DEC_Trace( "transportation impossible" )
+        _DEC_Trace( myself, "transportation impossible" )
         reportFunction(eRC_TransportImpossiblePasDeMoyens )
         return true  -- loading is impossible, so let us stop here
     end
@@ -578,7 +578,7 @@ end
 -- @see integration.startLoadCrowd
 -- @see integration.startedLoadCrowd
 integration.stopLoadCrowd = function()
-    myself.actionLoadCrowd = DEC__StopAction( myself.actionLoadCrowd )
+    myself.actionLoadCrowd = _DEC__StopAction( myself, myself.actionLoadCrowd )
     myself.eEtatTransportCrowd = nil
 end
 
@@ -595,7 +595,7 @@ integration.startUnloadCrowd = function( crowd )
         crowdId = crowd.source
     end
     reportFunction( eRC_TransportDebarquement )
-    myself.actionUnloadCrowd = DEC_StartDebarquerFouleSurPosition( crowdId, meKnowledge:getPosition() )
+    myself.actionUnloadCrowd = _DEC_StartDebarquerFouleSurPosition( myself, crowdId, meKnowledge:getPosition() )
     actionCallbacks[ myself.actionUnloadCrowd ] = function( arg ) myself.eEtatTransportUnloadCrowd = arg end
     return false
 end
@@ -623,7 +623,7 @@ end
 -- @see integration.startedUnloadCrowd
 integration.stopUnloadCrowd = function()
     if myself.actionUnloadCrowd ~= nil then
-        myself.actionUnloadCrowd = DEC__StopAction( myself.actionUnloadCrowd )
+        myself.actionUnloadCrowd = _DEC__StopAction( myself, myself.actionUnloadCrowd )
     end
     myself.eEtatTransportUnloadCrowd = nil
 end
@@ -647,14 +647,14 @@ end
 -- This method can only be called by an agent.
 -- @see integration.retrieveCarriers
 integration.allowCarriers = function()
-    DEC_LaisserTransporteursSansDelai()
+    _DEC_LaisserTransporteursSansDelai( myself )
 end
 
 --- Instantaneously retrieves this entity's carriers (if they have previously been left behind).
 -- This method can only be called by an agent.
 -- @see integration.allowCarriers
 integration.retrieveCarriers = function()
-    DEC_RecupererTransporteursSansDelai()
+    _DEC_RecupererTransporteursSansDelai( myself )
 end
 
 --- Returns true if the given agent is surrendered, false otherwise.
@@ -675,7 +675,7 @@ end
 -- This method can only be called by an agent.
 -- @return Boolean
 integration.isDuringTransport = function( )
-    return DEC_Transport_EnCoursDeTransport()
+    return _DEC_Transport_EnCoursDeTransport( myself )
 end
 
 --- Returns true if the given agent has loaded its supplies, false otherwise

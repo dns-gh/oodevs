@@ -1,4 +1,3 @@
-require "debug"
 
 --- Returns the given agent knowledge's position.
 -- Returns nil if the knowledge is not valid.
@@ -19,7 +18,7 @@ end
 -- This method can only be called by an agent.
 -- @return Simulation position
 integration.getBodyPosition = function()
-    return DEC_Agent_Position()
+    return _DEC_Agent_Position( myself )
 end
 
 --- Returns the given resource node's position.
@@ -219,7 +218,7 @@ integration.proximity = function( pos1, pos2, defaultDistanceMax ) -- $$$ MIA se
         return 1
     end 
     defaultDistanceMax = defaultDistanceMax or 4000
-    local distanceMax = DEC_Detection_Distance and DEC_Detection_Distance() or defaultDistanceMax
+    local distanceMax = _DEC_Detection_Distance and _DEC_Detection_Distance( myself ) or defaultDistanceMax
     return LinearInterpolation( 1, 100, 10, distanceMax, false, integration.distance( pos1, pos2 ) )
 end
 
@@ -315,7 +314,7 @@ integration.setMovementPace = function( modulation, maxSpeed ) -- maxSpeed TRUE/
     -- Urgency, moves at maximum.
     -- --------------------------------------------------------------------------------
     if maxSpeed then
-        DEC_ModulationVitesseMax( 1 )
+        _DEC_ModulationVitesseMax( myself, 1 )
         return
     end
 
@@ -328,7 +327,7 @@ integration.setMovementPace = function( modulation, maxSpeed ) -- maxSpeed TRUE/
     -- -------------------------------------------------------------------------------- 
     -- Terrain modulation
     -- --------------------------------------------------------------------------------
-    if integration.isAgentInsideTown() and not integration.isFlying() then -- $$$ MIA TODO integration.isFlying à virer qd on aura fait un moveto pour les flying agent.
+    if integration.isAgentInsideTown() and not integration.isFlying() then -- $$$ MIA TODO integration.isFlying Ã  virer qd on aura fait un moveto pour les flying agent.
         currentModulation = currentModulation / 2
     end
 
@@ -386,7 +385,7 @@ end
 -- This method can only be called by an agent.
 -- @param modulation Float, the max speed modulation (between 0 and 1)
 integration.speedMaxModulation = function( modulation )
-    DEC_ModulationVitesseMax( modulation )
+    _DEC_ModulationVitesseMax( myself, modulation )
 end
 
 --- Modify the current speed by the given modulation (between 0 and 1)
@@ -394,14 +393,14 @@ end
 -- This method can only be called by an agent.
 -- @param modulation Float, the current speed modulation (between 0 and 1)
 integration.speedCurrentModulation = function( modulation )
-    DEC_ModulationVitesseCourante( modulation )
+    _DEC_ModulationVitesseCourante( myself, modulation )
 end
 
 --  Tool functions
 -- check if two points are inside same urban block
 local pointsInsideSameUrbanBlock = function( simPosA, simPosB )
-    local urbanBlockA = DEC_Connaissances_BlocUrbainPourPosition( simPosA )
-    local urbanBlockB = DEC_Connaissances_BlocUrbainPourPosition( simPosB )
+    local urbanBlockA = _DEC_Connaissances_BlocUrbainPourPosition( myself, simPosA )
+    local urbanBlockB = _DEC_Connaissances_BlocUrbainPourPosition( myself, simPosB )
     if urbanBlockA and urbanBlockB then
         return urbanBlockA == urbanBlockB
     else
@@ -499,7 +498,7 @@ integration.startMoveToIt = function( objective, pathType, waypoints, ignorePrep
     -- Leaving occupied position
     -- -------------------------------------------------------------------------------- 
     if myself.actionOccupy then
-        myself.actionOccupy = DEC__StopAction( myself.actionOccupy )
+        myself.actionOccupy = _DEC__StopAction( myself, myself.actionOccupy )
     end
     myself.location = nil
     
@@ -511,7 +510,7 @@ integration.startMoveToIt = function( objective, pathType, waypoints, ignorePrep
         
         -- If a movement action was suspended, retrieve it
         if objective[ myself ].moveAction then
-            DEC_ReprendAction( objective[ myself ].moveAction )
+            _DEC_ReprendAction( myself, objective[ myself ].moveAction )
             return false
         end
         
@@ -526,8 +525,8 @@ integration.startMoveToIt = function( objective, pathType, waypoints, ignorePrep
     -- with a mounted agent.
     -- --------------------------------------------------------------------------------
     objective.initialeDestination = DEC_Geometrie_CopiePoint( objective:getPosition() )
-    if ( not DEC_IsPointInUrbanBlockTrafficable( objective.initialeDestination ) or DEC_IsPointInDestroyedUrbanBlock( objective.initialeDestination ) )
-        and not pointsInsideSameUrbanBlock( objective.initialeDestination, DEC_Agent_Position() ) 
+    if not DEC_IsPointInUrbanBlockTrafficableForPlatoon( myself, objective.initialeDestination ) or DEC_IsPointInDestroyedUrbanBlock( objective.initialeDestination )
+        and not pointsInsideSameUrbanBlock( objective.initialeDestination, _DEC_Agent_Position( myself ) ) 
         and not DEC_Agent_PionCanFly( myself ) then
         local simPositions = DEC_Geometrie_CalculerTrafficablePointPourPoint( objective.initialeDestination )
         objective.destination = DEC_Geometrie_CopiePoint(  getNearestSimPoint( objective.initialeDestination, simPositions ) )
@@ -553,13 +552,13 @@ integration.startMoveToIt = function( objective, pathType, waypoints, ignorePrep
     if #simWaypoints > 0 then
         simWaypoints[ #simWaypoints + 1 ] = objective.destination
         myself.movingOnPath = true
-        itinerary = DEC_CreerItineraireListe( simWaypoints, pathType )
+        itinerary = _DEC_CreerItineraireListe( myself, simWaypoints, pathType )
     else
-        itinerary = DEC_CreerItineraireBM( objective.destination, pathType )
+        itinerary = _DEC_CreerItineraireBM( myself, objective.destination, pathType )
     end
 
     F_Pion_SetitMvt( meKnowledge.source, itinerary )
-    objective[ myself ].moveAction = DEC_StartDeplacement( itinerary )
+    objective[ myself ].moveAction = _DEC_StartDeplacement( myself, itinerary, false )
     local moveAction = objective[ myself ].moveAction
     actionCallbacks[ objective[ myself ].moveAction ] = function( arg )
         objective[ myself ].etat = arg
@@ -620,14 +619,14 @@ integration.updateMoveToIt = function( objective, pathType, waypoints, wantToSto
             myself.enteringNonTrafficableElement = true
             
             -- Dismount if mounted, else compute a new path
-            if not DEC_Agent_EstDebarque() then
-                myself.dismount = myself.dismount or DEC_StartDebarquement()
+            if not _DEC_Agent_EstDebarque( myself ) then
+                myself.dismount = myself.dismount or _DEC_StartDebarquement( myself )
             else
                 if myself.dismount then
-                    DEC__StopAction( myself.dismount )
+                    _DEC__StopAction( myself, myself.dismount )
                     myself.dismount = nil
                 end
-                DEC__StopAction( objective[ myself ].moveAction )
+                _DEC__StopAction( myself, objective[ myself ].moveAction )
                 myself.dismounted = true
                 -- Once unit is dismounted, move to the real objective
                 objective.destination = DEC_Geometrie_CopiePoint( objective:getPosition() )
@@ -635,7 +634,7 @@ integration.updateMoveToIt = function( objective, pathType, waypoints, wantToSto
                 if pathType == NIL  or pathType == nil then -- pathType can have the MASA Life 'NIL' value
                     pathType = eTypeItiMouvement
                 end
-                local it = DEC_CreerItineraireBM( objective.destination, pathType )
+                local it = _DEC_CreerItineraireBM( myself, objective.destination, pathType )
                 F_Pion_SetitMvt( myself, it )
                 local escort = integration.getAgentEscort( myself )
                 if escort then -- Une unite m'escorte, la mission MoveToward devient StayClose
@@ -643,7 +642,7 @@ integration.updateMoveToIt = function( objective, pathType, waypoints, wantToSto
                     escortUnit:sendNeedRoute( meKnowledge, true )
                     escortUnit:sendGetRouteForEscorting( meKnowledge, false )
                 end
-                objective[ myself ].moveAction = DEC_StartDeplacement( it )      
+                objective[ myself ].moveAction = _DEC_StartDeplacement( myself, it, false )      
                 objective[ myself ].etat = nil
                 actionCallbacks[ objective[ myself ].moveAction ] = function( arg )
                     objective[ myself ].etat = arg
@@ -659,28 +658,28 @@ integration.updateMoveToIt = function( objective, pathType, waypoints, wantToSto
     -- --------------------------------------------------------------------------------
     elseif etat == eEtatActionDeplacement_Pause then
         if myself.mount == nil then
-            DEC_ReprendAction( objective[ myself ].moveAction )
+            _DEC_ReprendAction( myself, objective[ myself ].moveAction )
         elseif DEC_Agent_EstEmbarque() then  -- agent is mounting
-            DEC__StopAction( myself.mount )
+            _DEC__StopAction( myself, myself.mount )
             myself.mount = nil
-            DEC_ReprendAction( objective[ myself ].moveAction )
+            _DEC_ReprendAction( myself, objective[ myself ].moveAction )
         end
 
     -- -------------------------------------------------------------------------------- 
     -- Movement is running
-    -- $$$ Add DEC_Agent_EstEmbarquable() ??? un pion à pied n'est pas "débarqué" si?
+    -- $$$ Add DEC_Agent_EstEmbarquable() ??? un pion Ã  pied n'est pas "dÃ©barquÃ©" si?
     -- --------------------------------------------------------------------------------
     elseif etat == eEtatActionDeplacement_EnCours then
-        if objective.destination and DEC_Agent_TransporteursPret() then -- if unit has troop transporters
+        if objective.destination and _DEC_Agent_TransporteursPret( myself ) then -- if unit has troop transporters
             -- If agent exit from a non traficable element toward a traficable destination, mount
             -- if no no order to stay dismountes has been isssued 
-            if DEC_IsPointInUrbanBlockTrafficable( DEC_Agent_Position() ) 
-               and DEC_IsPointInUrbanBlockTrafficable( objective.destination ) 
+            if DEC_IsPointInUrbanBlockTrafficableForPlatoon( myself, _DEC_Agent_Position( myself ) ) 
+               and DEC_IsPointInUrbanBlockTrafficableForPlatoon( myself, objective.destination ) 
                and not myself.enteringNonTrafficableElement then
-                if DEC_Agent_EstDebarque() and not myself.stayDismounted then
+                if _DEC_Agent_EstDebarque( myself ) and not myself.stayDismounted then
                     if myself.mount == nil then
-                        myself.mount = DEC_StartEmbarquement()
-                        DEC_PauseAction( objective[ myself ].moveAction )
+                        myself.mount = _DEC_StartEmbarquement( myself )
+                        _DEC_PauseAction( myself, objective[ myself ].moveAction )
                     end
                 end
             end
@@ -688,12 +687,12 @@ integration.updateMoveToIt = function( objective, pathType, waypoints, wantToSto
 
         -- $$$ Specific case for escort, mount if going outside non traficable element
         if objective.destinationEscort then 
-             if DEC_IsPointInUrbanBlockTrafficable( DEC_Agent_Position() ) 
-                and DEC_IsPointInUrbanBlockTrafficable( objective.destinationEscort ) then
-                if DEC_Agent_EstDebarque() and not myself.stayDismounted then
+             if DEC_IsPointInUrbanBlockTrafficableForPlatoon( myself, _DEC_Agent_Position( myself ) ) 
+                and DEC_IsPointInUrbanBlockTrafficableForPlatoon( myself, objective.destinationEscort ) then
+                if _DEC_Agent_EstDebarque( myself ) and not myself.stayDismounted then
                     if myself.mount == nil then
-                        myself.mount = DEC_StartEmbarquement()
-                        DEC_PauseAction( objective[ myself ].moveAction )
+                        myself.mount = _DEC_StartEmbarquement( myself )
+                        _DEC_PauseAction( myself, objective[ myself ].moveAction )
                     end
                 end
             end
@@ -703,13 +702,13 @@ integration.updateMoveToIt = function( objective, pathType, waypoints, wantToSto
     -- Other feedbacks
     -- --------------------------------------------------------------------------------    
     elseif etat == eEtatActionDeplacement_ManqueCarburant then
-        DEC_PauseAction( objective[myself].moveAction )
+        _DEC_PauseAction( myself, objective[myself].moveAction )
     elseif etat == eEtatActionDeplacement_NonAutorise then
         if objective[myself].rcDone ~= etat then
             reportFunction(eRC_TerrainDifficile )
             objective[ myself ].rcDone = etat
             myself.canBeBlocked = true
-            DEC_Trace( " ** IMPOSSIBLE TO COMPUTE A PATH TO DESTINATION ** " )
+            _DEC_Trace( myself, " ** IMPOSSIBLE TO COMPUTE A PATH TO DESTINATION ** " )
         end
     elseif etat == eEtatActionDeplacement_CheminPartiel then
         myself.canBeBlocked = true
@@ -719,7 +718,7 @@ integration.updateMoveToIt = function( objective, pathType, waypoints, wantToSto
         end
         myself.canBeBlocked = true
         if wantToStopBecauseOfObstacle then -- Scipio compatibility
-            DEC_PauseAction( objective[ myself ].moveAction )
+            _DEC_PauseAction( myself, objective[ myself ].moveAction )
             local obstacle = DEC_GetCurrentObjectCollision( myself )
             if obstacle then
                 allRes = { CreateKnowledge( integration.ontology.types.object, obstacle ) }
@@ -728,11 +727,11 @@ integration.updateMoveToIt = function( objective, pathType, waypoints, wantToSto
         end
     elseif etat == eEtatActionDeplacement_DejaEnDeplacement then
         if etat ~= objective[ myself ].rcDone then
-            DEC_Trace( "Already moving" )
+            _DEC_Trace( myself, "Already moving" )
             objective[ myself ].rcDone = etat
         end
     elseif etat == eEtatActionDeplacement_Teleporte and not myself.movingOnPath then
-        DEC__StopAction( objective[ myself ].moveAction )
+        _DEC__StopAction( myself, objective[ myself ].moveAction )
         integration.stopMoveToIt( objective )
         integration.startMoveToIt( objective, pathType )
     end
@@ -746,7 +745,7 @@ end
 integration.deselectMoveToIt = function( objective )
     local myObjective = objective[ myself ]
     if myObjective and myObjective.moveAction then -- Temp : Wait deselect to be done before destroy
-        DEC_PauseAction( myObjective.moveAction )
+        _DEC_PauseAction( myself, myObjective.moveAction )
     end
 end
 
@@ -759,17 +758,17 @@ integration.stopMoveToIt = function( objective )
     F_Pion_SetitMvt( meKnowledge.source, nil ) -- for escort
     objective[ myself ] = objective[ myself ] or {}
     if objective[ myself ].moveAction then
-        DEC__StopAction( objective[ myself ].moveAction )
+        _DEC__StopAction( myself, objective[ myself ].moveAction )
         objective[ myself ].moveAction = nil
         objective[ myself ].etat = nil
         objective[ myself ].rcDone = nil
         myself.dismountedDone = nil
         if myself.dismount then
-            DEC__StopAction( myself.dismount )
+            _DEC__StopAction( myself, myself.dismount )
             myself.dismount = nil
         end
         if myself.mount then
-            DEC__StopAction( myself.mount )
+            _DEC__StopAction( myself, myself.mount )
             myself.mount = nil
         end
         myself.enteringNonTrafficableElement = nil
@@ -806,7 +805,7 @@ integration.updateMoveToItArea = function( objective, pathType )
         -- defined distanceMax.
         -- --------------------------------------------------------------------------------
         if objective[ myself ].etat == eEtatActionDeplacement_Termine then
-            local distance = DEC_Geometrie_DistanceBetweenPoints( DEC_Agent_Position(), objective:getPosition() )
+            local distance = DEC_Geometrie_DistanceBetweenPoints( _DEC_Agent_Position( myself ), objective:getPosition() )
 
             if DEC_Agent_PionCanFly( myself ) then -- simple case for flying agent.
                 if distance > 0  then
@@ -816,7 +815,7 @@ integration.updateMoveToItArea = function( objective, pathType )
             end
             if not DEC_Geometrie_PositionsEgales( objective.initialeDestination, objective:getPosition() ) -- specific case, itinerary computed on my own poition.
                and distance > 0 
-               and DEC_IsPointInUrbanBlockTrafficable( objective:getPosition() ) then -- update movement computation once the objective is out from non trafficable urban block.
+               and DEC_IsPointInUrbanBlockTrafficableForPlatoon( myself, objective:getPosition() ) then -- update movement computation once the objective is out from non trafficable urban block.
                 integration.stopMoveToIt( objective )
                 return integration.startMoveToItArea( objective, pathType )
            end
@@ -848,19 +847,19 @@ integration.startMoveToItItinerary = function( objective )
     -- Leave tactical object
     myself.blocked = nil
     if myself.actionOccupy then
-        myself.actionOccupy = DEC__StopAction( myself.actionOccupy )
+        myself.actionOccupy = _DEC__StopAction( myself, myself.actionOccupy )
     end
     objective[myself] = objective[myself] or {}
     if objective[myself].moveAction then
-        DEC_ReprendAction( objective[myself].moveAction )
+        _DEC_ReprendAction( myself, objective[myself].moveAction )
         return false 
     end
     myself.location = nil
 
-    local it = objective.source -- itineraire calculé dans la SIM par l'unité que l'on escorte
+    local it = objective.source -- itineraire calculÃ© dans la SIM par l'unitÃ© que l'on escorte
     objective.destinationEscort = DEC_Itineraire_DernierPoint( objective.source )
     F_Pion_SetitMvt( meKnowledge.source, it )
-    objective[ myself ].moveAction = DEC_StartDeplacement( it )
+    objective[ myself ].moveAction = _DEC_StartDeplacement( myself, it, false )
     local moveAction = objective[ myself ].moveAction
     actionCallbacks[ objective[ myself ].moveAction ] = function( arg )
         objective[ myself ].etat = arg end
@@ -888,8 +887,8 @@ integration.computePath = function( objective, pathType )
     objective[ myself ] = objective[ myself ] or {}
         
     objective.initialeDestination = DEC_Geometrie_CopiePoint( objective:getPosition() )
-    if not DEC_IsPointInUrbanBlockTrafficable( objective.initialeDestination )
-       and not pointsInsideSameUrbanBlock( objective.initialeDestination, DEC_Agent_Position() ) then
+    if not DEC_IsPointInUrbanBlockTrafficableForPlatoon( myself, objective.initialeDestination )
+       and not pointsInsideSameUrbanBlock( objective.initialeDestination, _DEC_Agent_Position( myself ) ) then
         local simPositions = DEC_Geometrie_CalculerTrafficablePointPourPoint( objective.initialeDestination )
         objective.destination = DEC_Geometrie_CopiePoint(  getNearestSimPoint( objective.initialeDestination, simPositions ) )
     else
@@ -897,8 +896,8 @@ integration.computePath = function( objective, pathType )
     end
      
     if not objective[ myself ].it then
-        objective[ myself ].it = DEC_CreerItineraireBM( objective.destination, pathType )
-        objective[ myself ].moveAction = DEC_StartMovementSuspended( objective[ myself ].it )
+        objective[ myself ].it = _DEC_CreerItineraireBM( myself, objective.destination, pathType )
+        objective[ myself ].moveAction = _DEC_StartDeplacement( myself, objective[ myself ].it, true )
     end
     local pathCompute
     if objective[ myself ].moveAction then
@@ -917,18 +916,18 @@ end
 integration.startMoveToItCrowd = function( objective )
     -- Leave tactical object
     if myself.actionOccupy then
-        myself.actionOccupy = DEC__StopAction( myself.actionOccupy )
+        myself.actionOccupy = _DEC__StopAction( myself, myself.actionOccupy )
     end
     objective[ myself ] = objective[myself] or {}
     if objective[ myself ].moveAction then
-        DEC_ReprendAction( objective[ myself ].moveAction )
+        _DEC_ReprendAction( myself, objective[ myself ].moveAction )
         return false
     end
     
     myself.location = nil
     objective.destination = DEC_Geometrie_CopiePoint( objective:getPosition() )
     objective.initialPosition = DEC_Geometrie_CopiePoint( meKnowledge:getPosition() )
-    objective[ myself ].moveAction = DEC__StartDeplacement( objective.destination )    
+    objective[ myself ].moveAction = _DEC__StartDeplacement( myself, objective.destination )    
     return false
 end
 
@@ -980,7 +979,7 @@ integration.updateMoveToItCrowd = function( objective, pathType, inertness )
             return integration.startMoveToItCrowd( objective, pathType)
         end
     end
-    if DEC_Population_HasReachedDestinationCompletely( objective:getPosition() ) then
+    if _DEC_Population_HasReachedDestinationCompletely( myself, objective:getPosition() ) then
         return true -- the all crowd has reached the objective
     end
     
@@ -995,7 +994,7 @@ end
 integration.stopMoveToItCrowd = function( objective )
     objective[myself] = objective[myself] or {}
     if objective[myself].moveAction then
-        DEC__StopAction( objective[myself].moveAction )
+        _DEC__StopAction( myself, objective[myself].moveAction )
         objective[myself].moveAction = nil
         objective.destination = nil
         return false
@@ -1011,11 +1010,11 @@ end
 integration.startMoveToListPointCrowd = function( objective, pathType, wayPoints )
     -- Leave tactical object
     if myself.actionOccupy then
-      myself.actionOccupy = DEC__StopAction( myself.actionOccupy )
+      myself.actionOccupy = _DEC__StopAction( myself, myself.actionOccupy )
     end
     objective[ myself ] = objective[myself] or {}
     if objective[ myself ].moveAction then
-        DEC_ReprendAction( objective[ myself ].moveAction )
+        _DEC_ReprendAction( myself, objective[ myself ].moveAction )
         return false
     end
 
@@ -1025,7 +1024,7 @@ integration.startMoveToListPointCrowd = function( objective, pathType, wayPoints
         itinerary[ i ] = wayPoints[ i ]:getPosition()
     end
     itinerary[ #itinerary + 1 ] = objective:getPosition()
-    objective[ myself ].moveAction = DEC_StartDeplacementItineraire( itinerary )
+    objective[ myself ].moveAction = _DEC_StartDeplacementItineraire( myself, itinerary )
     return false
 end
 
@@ -1043,7 +1042,7 @@ integration.isUrbanBlockTrafficable = function( urbanBlock, loaded )
         return 100
     end
     if not urbanBlock.isUrbanBlockTrafficableCache then
-        urbanBlock.isUrbanBlockTrafficableCache = ( DEC_ConnaissanceBlocUrbain_Traficabilite( urbanBlock.source ) >= 0 and 100 ) or 0
+        urbanBlock.isUrbanBlockTrafficableCache = ( _DEC_ConnaissanceBlocUrbain_Traficabilite( myself, urbanBlock.source ) >= 0 and 100 ) or 0
     end
     return urbanBlock.isUrbanBlockTrafficableCache
 end
@@ -1112,7 +1111,7 @@ integration.isPointInUrbanBlockTrafficableForProxy = function( location, loaded 
     if not loaded then 
         return 100 
     end
-    return DEC_IsPointInUrbanBlockTrafficable( pos ) and 100 or 0
+    return DEC_IsPointInUrbanBlockTrafficableForPlatoon( myself, pos ) and 100 or 0
 end
 
 --- Informs about the accessibility of a given location.
@@ -1129,7 +1128,7 @@ integration.isPointInUrbanBlockTrafficable = function( location, loaded )
     local isTrafficable = false
     if not location.isPointInUrbanBlockTrafficableCache then
         if integration.isAutomat( myself ) then 
-            local platoons = DEC_Automate_PionsAvecPC()
+            local platoons = myself:DEC_Automate_PionsAvecPC()
             for i = 1, #platoons do
                 if integration.isPointInUrbanBlockTrafficableForPlatoon( platoons[i], location.source ) then
                     isTrafficable = true
@@ -1137,7 +1136,7 @@ integration.isPointInUrbanBlockTrafficable = function( location, loaded )
             end
             location.isPointInUrbanBlockTrafficableCache = ( pos and isTrafficable and 100 ) or 0
         else
-          location.isPointInUrbanBlockTrafficableCache = ( pos and DEC_IsPointInUrbanBlockTrafficable( pos ) and 100 ) or 0
+          location.isPointInUrbanBlockTrafficableCache = ( pos and DEC_IsPointInUrbanBlockTrafficableForPlatoon( myself, pos ) and 100 ) or 0
         end
     end
     return location.isPointInUrbanBlockTrafficableCache
@@ -1171,7 +1170,7 @@ end
 -- @return Boolean
 integration.isPointTrafficable = function( location )
     local pos = location:getPosition()
-    return pos and DEC_IsPointInUrbanBlockTrafficable( pos )
+    return pos and DEC_IsPointInUrbanBlockTrafficableForPlatoon( myself, pos )
 end
 
 --- Returns a list of positions outside a urban block.
@@ -1211,7 +1210,7 @@ integration.creerItineraireAPartirListePoint = function( listPoint )
     for i=1,#listPoint do 
         listPointSource[#listPointSource + 1] = listPoint[i].source
     end
-    return CreateKnowledge( integration.ontology.types.itinerary, DEC_CreerItineraireListe( listPointSource, eTypeItiMouvement ) )
+    return CreateKnowledge( integration.ontology.types.itinerary, _DEC_CreerItineraireListe( myself, listPointSource, eTypeItiMouvement ) )
 end
 
 --- Returns 'true' if the given localized element is inside this entity's
@@ -1221,7 +1220,7 @@ end
 -- @param location DirectIA knowledge defining a "getPosition" method returning a simulation position
 -- @return Boolean
 integration.isElementInAOR = function( location )
-    return DEC_Geometrie_EstPointDansFuseau( location:getPosition() )
+    return _DEC_Geometrie_EstPointDansFuseau( myself, location:getPosition() )
 end
 
 --- Returns a copy of the given position.
@@ -1238,7 +1237,7 @@ end
 -- The distance before these points can be customised in the authoring tool for each unit.
 -- @return List of simulation path keypoints
 integration.getPointsCategory = function()
-    return DEC_GetPointsCategory()
+    return _DEC_GetPointsCategory( myself )
 end
 
 --- Returns 'true' if the given position is a key front position, 'false' otherwise.
@@ -1286,7 +1285,7 @@ end
 -- @param safetyDistance Float, the safety distance around the crossroads (in meters)
 -- @return List of simulation point
 integration.findSafetyPositions = function( radius, safetyDistance )
-    return DEC_FindSafetyPositions( radius, safetyDistance )
+    return _DEC_FindSafetyPositions( myself, radius, safetyDistance )
 end
 
 --- Returns a list of safety positions defined as :
@@ -1314,7 +1313,7 @@ end
 -- @param position DirectIA knowledge, the target with respect to which the time will be computed
 -- @return Float
 integration.getAgentTimeToReachPosition = function( position )
-    return DEC_Agent_TempsPourParcourirDistanceEnLigneDroite( DEC_Geometrie_Distance( meKnowledge:getPosition(), position:getPosition() ) )
+    return _DEC_Agent_TempsPourParcourirDistanceEnLigneDroite( myself, DEC_Geometrie_Distance( meKnowledge:getPosition(), position:getPosition() ) )
 end
 
 --- Returns the time left (minutes) during which the agent
@@ -1322,7 +1321,7 @@ end
 -- This method can only be called by an agent
 -- @return Float
 integration.getAgentMovementAutonomy = function()
-    return DEC_Agent_AutonomieEnDeplacement()
+    return _DEC_Agent_AutonomieEnDeplacement( myself )
 end
 
 --- Returns a list of all the elements inside the given table without
@@ -1358,7 +1357,7 @@ end
 -- <li> integration.getTeammatePosition to get the position of a teammate </li> </ul>
 integration.getPlatoonAllyPosition = function( platoon )
     if platoon == myself then -- @TODO MGD replace by shared_ptr< DEC_Knowledge_Agent_ABC > and proxy for allies
-        return DEC_Agent_Position()
+        return _DEC_Agent_Position( myself )
     else
         return DEC_Agent_PositionPtr( platoon.source )
     end
@@ -1366,7 +1365,7 @@ end
 
 --- Deprecated, use integration.getPointPositions instead
 integration.getPointPositionsForProxy = function( point )
-    local urbanblock = DEC_Connaissances_BlocUrbainPourPosition( point.source )
+    local urbanblock = _DEC_Connaissances_BlocUrbainPourPosition( myself, point.source )
     if urbanblock and ( point.getPointPositionsResultBlock == urbanblock ) then
         return point.getPointPositionsResult
     end
@@ -1384,12 +1383,12 @@ end
 
 --- Deprecated, use integration.beginReinforcementPlatoon instead
 integration.renfortMouvement = function( entity )
-    DEC_Renforce( entity.source )
+    _DEC_Renforce( myself, entity.source )
 end
 
 --- Deprecated, use integration.cancelReinforcement instead
 integration.annuleRenfortMouvement = function()
-    DEC_AnnuleRenforcement()
+    _DEC_AnnuleRenforcement( myself )
 end
 
 --- Deprecated, see integration.startMoveToIt

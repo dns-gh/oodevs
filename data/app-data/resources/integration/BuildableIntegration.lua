@@ -9,7 +9,7 @@
 -- @param localisationObject Simulation area
 -- @return Boolean, whether or not unit has the capacity to build
 integration.canBuildObjectType = function( objectType, localisationObject )
-    return DEC_Agent_PeutConstruireObjetEmbarqueAvecLocalisation( objectType, localisationObject )
+    return _DEC_Agent_PeutConstruireObjetEmbarqueAvecLocalisation( myself, objectType, localisationObject )
 end
 
 --- Returns true if the unit has the capacity to build the selected object without reinforcement, false otherwise
@@ -19,7 +19,7 @@ end
 -- @param localisationObject Simulation area
 -- @return Boolean, whether or not unit has the capacity to build
 integration.canBuildObjectTypeWithoutReinforcement = function( objectType, localisationObject )
-    return DEC_Agent_PeutConstruireObjetSansRenfortsAvecLocalisation( objectType, localisationObject )
+    return _DEC_Agent_PeutConstruireObjetSansRenfortsAvecLocalisation( myself, objectType, localisationObject )
 end
 
 --- Returns true if the unit has the capacity to build the selected object now, false otherwise
@@ -29,7 +29,7 @@ end
 -- @param localisationObject Simulation area
 -- @return Boolean, whether or not unit has the capacity to build
 integration.canBuildNowObjectType = function( objectType, localisationObject )
-    return DEC_Agent_PeutConstruireObjetAvecLocalisation( objectType, localisationObject )
+    return _DEC_Agent_PeutConstruireObjetAvecLocalisation( myself, objectType, localisationObject )
 end
 
 --- Returns true if the unit has enough resource to build the selected object now, false otherwise
@@ -37,7 +37,7 @@ end
 -- See ObjectNames.xml and Objects.xml in physical database for the types
 -- @return Boolean, whether or not unit has dotation to build
 integration.hasEnoughtDotationForObjectType = function( objectType )
-  return DEC_Agent_ADotationPourConstruireObjet( objectType )
+  return _DEC_Agent_ADotationPourConstruireObjet( myself, objectType )
 end
 
 --- Returns the percentage of the construction for the object
@@ -97,9 +97,9 @@ integration.startBuildIt = function( object, objectType, distance )
                         object:getType(), distance )
     object[ myself ] = object[ myself ] or {}
     if existingObject == nil then
-        object[myself].actionBuild = DEC_StartCreateObject( object.source )
+        object[myself].actionBuild = _DEC_StartCreateObject( myself, object.source, false )
     else
-        object[myself].actionBuild = DEC_StartReprendreTravauxObjet( existingObject.source, false ) 
+        object[myself].actionBuild = _DEC_StartReprendreTravauxObjet( myself, existingObject.source, false ) 
     end
     actionCallbacks[ object[ myself ].actionBuild ] = function( arg ) 
         object[ myself ].actionBuildState = arg
@@ -123,7 +123,7 @@ integration.startBuildItInstantaneously = function( object, objectType, withoutR
                         object:getType(), 10 )
     object[ myself ] = object[ myself ] or {}
     if existingObject == nil then
-        object[ myself ].actionCreate = DEC_StartCreateObjectInstantaneously( object.source )
+        object[ myself ].actionCreate = _DEC_StartCreateObject( myself, object.source, true )
     else
         object.knowledge = CreateKnowledge( objectType, existingObject )
         return
@@ -146,7 +146,7 @@ end
 -- @param objectKnowledge Object knowledge
 integration.startBuildItKnowledge = function( objectKnowledge )
     objectKnowledge[ myself ] = objectKnowledge[ myself ] or {}
-    objectKnowledge[ myself ].actionBuild = DEC_StartReprendreTravauxObjet( objectKnowledge.source, false )
+    objectKnowledge[ myself ].actionBuild = _DEC_StartReprendreTravauxObjet( myself, objectKnowledge.source, false )
     objectKnowledge.knowledge = objectKnowledge
     actionCallbacks[ objectKnowledge[ myself ].actionBuild ] = function( arg ) 
         objectKnowledge[myself].actionBuildState = arg 
@@ -161,7 +161,7 @@ end
 -- @param urbanBlock Urban block knowledge
 integration.startBuildItUrbanBlock = function( urbanBlock )  
     urbanBlock[ myself ] = urbanBlock[ myself ] or {}
-    urbanBlock[ myself ].actionBuild = DEC_ReparerBlocUrbain( urbanBlock.source )
+    urbanBlock[ myself ].actionBuild = _DEC_ReparerBlocUrbain( myself, urbanBlock.source )
     actionCallbacks[ urbanBlock[ myself ].actionBuild ] = function( arg ) 
         urbanBlock[ myself ].actionBuildState = arg
     end
@@ -184,7 +184,7 @@ integration.updateBuildIt = function( object, returnActionDone )
             end
             reportFunction(eRC_FinTravauxObjet, object.knowledge.source )
         end
-        object[myself].actionBuild = DEC__StopAction( object[myself].actionBuild )
+        object[myself].actionBuild = _DEC__StopAction( myself, object[myself].actionBuild )
         object[myself].actionBuildState = nil
     else
         if object[myself].actionBuildState == eActionObjetImpossible then
@@ -208,10 +208,10 @@ integration.stopBuildIt = function( object )
     if( object.knowledge ~= nil ) then
             reportFunction(eRC_FinTravauxObjet, object.knowledge.source )
         end
-        object[myself].actionBuild = DEC__StopAction( object[myself].actionBuild )
+        object[myself].actionBuild = _DEC__StopAction( myself, object[myself].actionBuild )
         object[myself].actionBuildState = nil
     else
-        object[myself].actionBuild = DEC__StopAction( object[myself].actionBuild )
+        object[myself].actionBuild = _DEC__StopAction( myself, object[myself].actionBuild )
         object[myself].actionBuildState = nil
     end
     object[myself].actionBuildState = nil
@@ -227,9 +227,9 @@ integration.stopBuildItUrbanBlock = function( urbanBlock )
     if urbanBlock[myself].actionBuildState == eActionObjetTerminee then
         reportFunction(eRC_FinTravauxBlocUrbain )
     else
-        DEC_Trace( "pause work build" )
+        _DEC_Trace( myself, "pause work build" )
     end
-    urbanBlock[myself].actionBuild = DEC__StopAction( urbanBlock[myself].actionBuild )
+    urbanBlock[myself].actionBuild = _DEC__StopAction( myself, urbanBlock[myself].actionBuild )
     urbanBlock[myself].actionBuildState = nil
     myself.hasStartedBuilding = nil
 end
@@ -266,9 +266,9 @@ integration.startBuildItSecu = function( object, objectType )
     local existingObject = integration.obtenirObjetProcheDe( object:getLocalisation(), 
                         object:getType(), 10 )
     if existingObject == nil then
-        object[myself].actionBuild = DEC_StartCreateObject( object.source )
+        object[myself].actionBuild = _DEC_StartCreateObject( myself, object.source, false )
     else
-        object[myself].actionBuild = DEC_StartReprendreTravauxObjet( existingObject, false )
+        object[myself].actionBuild = _DEC_StartReprendreTravauxObjet( myself, existingObject, false )
     end
     actionCallbacks[ object[ myself ].actionBuild ] = function( arg ) 
         object[ myself ].actionBuildState = arg
@@ -289,7 +289,7 @@ end
 -- @reurn Boolean true if simulation action is over, false otherwise
 integration.updateBuildItSecu = function( object )
     if object[ myself ].actionBuildState == eActionObjetTerminee and object.knowledge ~= nil then
-        object[ myself ].actionBuild = DEC__StopAction( object[ myself ].actionBuild )
+        object[ myself ].actionBuild = _DEC__StopAction( myself, object[ myself ].actionBuild )
         object[ myself ].actionBuildState = nil
         return true
     else
@@ -324,7 +324,7 @@ integration.stopBuildItSecu = function( object )
     else
         result = false
     end
-    object[ myself ].actionBuild = DEC__StopAction( object[ myself ].actionBuild )
+    object[ myself ].actionBuild = _DEC__StopAction( myself, object[ myself ].actionBuild )
     object[ myself ].actionBuildState = nil
     if( object.knowledge ~= nil ) then
         reportFunction(eRC_FinTravauxObjet, object.knowledge.source )
@@ -365,7 +365,7 @@ end
 -- @return the closest Simulation object knowledge 
 integration.obtenirObjetProcheDe = function( locRef, eTypeObject, rDistMax )
     local ptRef = integration.getBarycentreZoneFromLocalisation( locRef )
-    local lstObjets = DEC_Knowledges_AllObjectsInCircle( ptRef, rDistMax, {eTypeObject} )
+    local lstObjets = _DEC_Knowledges_ObjectsInCircle( myself, ptRef, rDistMax, {eTypeObject}, true )
     local _returnValue = integration.obtenirObjetProcheDePosition( ptRef, lstObjets, rDistMax )
     return _returnValue
 end
@@ -384,7 +384,7 @@ integration.getImplantationObjects = function( area, nbAreas )
     local nonTrafficablePosition = false
     local positions = {}
     local index = 0
-    local subAreas = DEC_Geometry_SplitLocalisation( area.source, nbAreas, nil )
+    local subAreas = DEC_Geometry_Pion_SplitLocalisation( myself, area.source, nbAreas, nil )
     local DEC_Geometrie_ConvertirPointEnLocalisation = DEC_Geometrie_ConvertirPointEnLocalisation
     local CreateKnowledge = CreateKnowledge
     local DEC_CreateDynamicGenObject = DEC_CreateDynamicGenObject
@@ -446,7 +446,7 @@ end
 -- @param objectType String, the sought object type (as defined in authoring tool)
 -- @return List of object knowledges
 integration.getCollidingObjectsFromType = function( objectType )
-    local lstObjects = DEC_Connaissances_CollisionsObjetsDeType( objectType )
+    local lstObjects = _DEC_Connaissances_CollisionsObjetsDeType( myself, objectType )
     if not lstObjects then
         return {}
     end
@@ -473,7 +473,7 @@ end
 -- @return Simulation point
 integration.getBarycentreZoneFromLocalisation = function( localisation )
     local _returnValue = nil
-    local ptRetour = DEC_Geometrie_CalculerBarycentreLocalisationDansFuseau( localisation )
+    local ptRetour = _DEC_Geometrie_CalculerBarycentreLocalisationDansFuseau( myself, localisation )
     if( ptRetour ~= nil ) then
         _returnValue = ptRetour
     else
@@ -492,7 +492,7 @@ integration.buildInstantlyCheckPointOn = function( position )  -- called only on
     local checkpoint = integration.obtenirObjetProcheDe( localisation, 
                         eTypeObjectCheckpoint, 10 )
     if checkpoint == nil then -- need to create a checkpoint object
-        DEC_MagicGetOrCreateObject( eTypeObjectCheckpoint, localisation )
+        _DEC_MagicGetOrCreateObject( myself, eTypeObjectCheckpoint, localisation )
         end
         reportFunction(eRC_MiseEnPlaceFiltrage )
     end
@@ -539,11 +539,11 @@ integration.setBodySearchIntensity = function( bodySearchStrength, position, che
     if checkpoint then
         if not position.constructedObject then
             position.constructedObject = checkpoint
-            position.constructedObject.actionAnimation = DEC__StartAnimerObjet( position.constructedObject )
+            position.constructedObject.actionAnimation = _DEC__StartAnimerObjet( myself, position.constructedObject )
         end
-        local crowds = DEC_Connaissances_Populations()
+        local crowds = _DEC_Connaissances_Populations( myself )
         for _,crowd in pairs( crowds ) do
-            DEC_Agent_ChangerNombreIndividuArmeDansFoule( crowd, ( 100 - bodySearchStrength ) / 100 )
+            _DEC_Agent_ChangerNombreIndividuArmeDansFoule( myself, crowd, ( 100 - bodySearchStrength ) / 100 )
         end
     end
 end
@@ -552,7 +552,7 @@ end
 -- @param crowd Crowd knowledge
 -- @param nbrToDisarmPerTick, Float number of people to disarm at each tick
 integration.disarmCrowd = function( crowd, nbrToDisarmPerTick ) -- Called at each tick
-    DEC_Agent_ChangerNombreIndividuArmeDansFoule( crowd.source, nbrToDisarmPerTick )
+    _DEC_Agent_ChangerNombreIndividuArmeDansFoule( myself, crowd.source, nbrToDisarmPerTick )
 end
 
 --- Instantaneously destroy a checkpoint
@@ -565,8 +565,8 @@ integration.destroyInstantlyCheckpointOn = function( position )
     meKnowledge.localisationForFilterCrowd = nil
     if position.constructedObject  then 
         if DEC_ConnaissanceObjet_NiveauAnimation( position.constructedObject  ) > 0 then
-            DEC__StopAction( position.constructedObject.actionAnimation )
-            reportFunction(eRC_FinAnimationObjet, position.constructedObject )
+            _DEC__StopAction( myself, position.constructedObject.actionAnimation )
+            reportFunction( eRC_FinAnimationObjet, position.constructedObject )
     end
         if DEC_ConnaissanceObjet_NiveauAnimation( position.constructedObject  ) == 0 then
             DEC_ConnaissanceObjet_ResetDensitePopulationSortante( position.constructedObject )
@@ -606,7 +606,7 @@ integration.buildInstantlyObjectOn = function( typeObject, position )  -- Called
     local localisation = integration.deleteObjectWithSameLocalisation( typeObject, position ) 
     myself.constructedInstantlyObject = myself.constructedInstantlyObject or {}
     myself.constructedInstantlyObject[ typeObject ] = myself.constructedInstantlyObject[ typeObject ] or {}
-    myself.constructedInstantlyObject[ typeObject ].id = DEC_MagicGetOrCreateObject( typeObject, localisation )
+    myself.constructedInstantlyObject[ typeObject ].id = _DEC_MagicGetOrCreateObject( myself, typeObject, localisation )
 end
 
 --- Create a polygonal object on area
@@ -620,7 +620,7 @@ integration.buildInstantlyPolyligneOnArea = function( typeObject, area )  -- Cal
     local polyligne = DEC_Geometrie_CreerLocalisationPolyligne( points )
     myself.constructedInstantlyObject = myself.constructedInstantlyObject or {}
     myself.constructedInstantlyObject[ typeObject ] = myself.constructedInstantlyObject[ typeObject ] or {}
-    myself.constructedInstantlyObject[ typeObject ].id = DEC_MagicGetOrCreateObject( typeObject, polyligne )
+    myself.constructedInstantlyObject[ typeObject ].id = _DEC_MagicGetOrCreateObject( myself, typeObject, polyligne )
 end
 
 --- Destroy instantaneously object on position
@@ -643,12 +643,10 @@ end
 -- @param position Point knowledge
 integration.buildInstantlyDecontaminatePlotOn = function( position )  -- Called only once
     if not position.constructedObject then
-    local localisation = DEC_Geometrie_ConvertirPointEnLocalisation( position.source )
-    local DecontaminatePlot = integration.obtenirObjetProcheDe( localisation, 
-                        eTypeObjectSiteDecontamination, 10 )
-    if DecontaminatePlot == nil then -- need to create a decontamination site object
-        DEC_MagicGetOrCreateObject( 
-                eTypeObjectSiteDecontamination, localisation )
+        local localisation = DEC_Geometrie_ConvertirPointEnLocalisation( position.source )
+        local DecontaminatePlot = integration.obtenirObjetProcheDe( localisation, eTypeObjectSiteDecontamination, 10 )
+        if DecontaminatePlot == nil then -- need to create a decontamination site object
+            _DEC_MagicGetOrCreateObject( myself, eTypeObjectSiteDecontamination, localisation )
         end
     end
 end
@@ -664,7 +662,7 @@ integration.animateDecontaminatePlot = function( position ) -- Called at each ti
     if DecontaminatePlot then
         if not position.constructedObject then
             position.constructedObject = DecontaminatePlot
-            position.constructedObject.actionAnimation = DEC__StartAnimerObjet( position.constructedObject )
+            position.constructedObject.actionAnimation = _DEC__StartAnimerObjet( myself, position.constructedObject )
             reportFunction(eRC_SiteDecontaminationAnime )
         end
     end
@@ -702,7 +700,7 @@ integration.startAffectMobility = function( target, affectionType )
     reportFunction(eRC_DebutTravaux )
     target[myself] = target[myself] or {}
     local genObject = DEC_CreateDynamicGenObject( affectionType, target:getLocalisation(), true )
-    target[myself].actionBuild = DEC_StartCreateObject( genObject )
+    target[myself].actionBuild = _DEC_StartCreateObject( myself, genObject, false )
     actionCallbacks[ target[myself].actionBuild ] = function( arg ) target[myself].actionBuildState = arg end
     actionKnowledgeCallbacks[ target[myself].actionBuild ] = function( arg ) target[myself].mobility = arg end
     return false
@@ -728,7 +726,7 @@ end
 -- @return true 
 integration.stopAffectMobility = function( target )
     target[myself] = target[myself] or {}
-    target[myself].actionBuild = DEC__StopAction( target[myself].actionBuild )
+    target[myself].actionBuild = _DEC__StopAction( myself, target[myself].actionBuild )
     target[myself].actionBuildState = nil
     reportFunction(eRC_FinTravaux )
     return true
@@ -754,7 +752,7 @@ integration.startEquipBridge = function( site, typePont )
     reportFunction(eRC_DebutTravaux )
     site[myself] = site[myself] or {}
     local genObject = DEC_CreateDynamicGenObject( typePont, site:getLocalisation(), true )
-    site[myself].actionBuild = DEC_StartCreateObject( genObject )
+    site[myself].actionBuild = _DEC_StartCreateObject( myself, genObject, false )
     actionCallbacks[ site[myself].actionBuild ] = function( arg ) site[myself].actionBuildState = arg end
     actionKnowledgeCallbacks[ site[myself].actionBuild ] = function( arg ) site[myself].bridge = arg end
     return false
@@ -776,7 +774,7 @@ end
 -- @return true
 integration.stopEquipBridge = function( site, typePont )
     site[myself] = site[myself] or {}
-    site[myself].actionBuild = DEC__StopAction( site[myself].actionBuild )
+    site[myself].actionBuild = _DEC__StopAction( myself, site[myself].actionBuild )
     site[myself].actionBuildState = nil
     reportFunction(eRC_FinTravaux )
     reportFunction(eRC_DebutExploitationSiteFranchissement )
@@ -802,14 +800,14 @@ end
 -- See ObjectNames.xml and Objects.xml in physical database for the types
 -- @return Boolean
 integration.hasEnoughtDotationForObjectTypeWithoutReinforcement = function( objectType )
-  return DEC_Agent_ADotationPourConstruireObjetSansRenforts( objectType )
+  return _DEC_Agent_ADotationPourConstruireObjetSansRenforts( myself, objectType )
 end
 
 --- Start filtering crowds
 -- @param intensity between 0 and 100
 -- @param checkpoint Object knowledge (checkpoint object)
 integration.startFilterCrowds = function( intensity, checkpoint )
--- $$$ MIA temp for Secu, à merger avec military
+-- $$$ MIA temp for Secu, Ã  merger avec military
     reportFunction(eRC_ControlPointEstablished )
     DEC_ConnaissanceObjet_ChangeDensitePopulationSortante( checkpoint, ( 100 - intensity ) / 100 )-- value needed is [0;1]
 end
@@ -894,10 +892,10 @@ integration.startBuildObjectOnLocalization = function( localization, objectType,
         existingObject = integration.obtenirObjetProcheDe( localization, objectType, proximityDistance )
     end
     if existingObject then
-        localization[ myself ].actionId = DEC_StartReprendreTravauxObjet( existingObject, false )
+        localization[ myself ].actionId = _DEC_StartReprendreTravauxObjet( myself, existingObject, false )
     else
         local genObject = DEC_CreateDynamicGenObject( objectType, localization, true )
-        localization[ myself ].actionId = instantaneously and DEC_StartCreateObjectInstantaneously( genObject ) or DEC_StartCreateObject( genObject )
+        localization[ myself ].actionId = instantaneously and _DEC_StartCreateObject( myself, genObject, true ) or _DEC_StartCreateObject( myself, genObject, false )
     end
     actionCallbacks[ localization[ myself ].actionId ] = function( arg ) 
        myself.buildActionsStates[ localization[ myself ].actionId ] = arg
@@ -937,7 +935,7 @@ end
 -- @param instantaneously Boolean, defines if the object has to be built instantaneously or not.
 integration.stopBuildObjectOnLocalization = function( localization, objectType, instantaneously )
     if localization[ myself ].actionId ~= nil then
-        DEC__StopAction( localization[ myself ].actionId )
+        _DEC__StopAction( myself, localization[ myself ].actionId )
     end
     myself.buildActionsStates[ localization[ myself ].actionId ] = nil
     localization[ myself ].actionId = nil

@@ -10,7 +10,7 @@ integration.canActivateIt = function( object )
         reportFunction(eRC_ActivationObstacleDeManoeuvre )
         return true
     else
-        DEC_Trace( "object cannot be activated" )
+        _DEC_Trace( myself, "object cannot be activated" )
         return false
     end
 end

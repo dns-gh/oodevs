@@ -7,7 +7,7 @@
 -- @return list of DirectIA agents
 integration.defaultPlatoonInCompany = function( )
     local allRes = {}
-    local listPlatoon = DEC_Automate_PionsAvecPCCommunication()
+    local listPlatoon = _DEC_Automate_PionsAvecPCCommunication( myself )
     local CreateKnowledge = CreateKnowledge
     local integration = integration
     for _,pion in pairs( listPlatoon ) do

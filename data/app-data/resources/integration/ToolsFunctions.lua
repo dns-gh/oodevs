@@ -1,5 +1,3 @@
-require 'debug'
-
 utilities = utilities or {}
 
 --- Linearly interpolates the given value from the [minFrom ; maxFrom] interval
@@ -79,7 +77,7 @@ utilities.affichePositions = function( elements )
         local point = element:getPosition()
         simPoints[ #simPoints + 1 ] = point
     end
-    DEC_DebugAffichePoints( simPoints )
+    _DEC_DebugAffichePoints( myself, simPoints )
 end
 
 --- Returns true once the delay given in parameter has passed, false otherwise
@@ -110,7 +108,7 @@ end
 -- @param idAction Integer, the id of the action
 -- @return Integer, the id of the current state of the action
 utilities.getEtatAction = function( idAction )
-    return DEC_EtatAction( idAction )
+    return _DEC_EtatAction( myself, idAction )
 end
 
 ------------------------------------------------------------------
