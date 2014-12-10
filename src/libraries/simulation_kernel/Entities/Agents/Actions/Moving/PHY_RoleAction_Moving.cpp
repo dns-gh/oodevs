@@ -23,6 +23,7 @@
 #include "Entities/Agents/Actions/Underground/PHY_RoleAction_MovingUnderground.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Roles/Posture/PHY_RoleInterface_Posture.h"
+#include "Entities/Agents/Roles/Transported/PHY_RoleInterface_Transported.h"
 #include "Entities/Agents/Units/Dotations/PHY_ConsumptionType.h"
 #include "Entities/Agents/Units/PHY_UnitType.h"
 #include "Entities/Agents/MIL_AgentPion.h"
@@ -130,8 +131,16 @@ void PHY_RoleAction_Moving::Execute( moving::SpeedComputer_ABC& algorithm ) cons
 // Name: PHY_RoleAction_Moving::ComputeSpeed
 // Created: MCO 2013-06-13
 // -----------------------------------------------------------------------------
-double PHY_RoleAction_Moving::ComputeSpeed( const SpeedStrategy_ABC& strategy ) const
+double PHY_RoleAction_Moving::ComputeSpeed( const SpeedStrategy_ABC& strategy, bool ignoreTransported ) const
 {
+    if( !ignoreTransported )
+    {
+        const transport::PHY_RoleInterface_Transported& roleTransported = owner_->GetRole< transport::PHY_RoleInterface_Transported >();
+        if( roleTransported.IsTransported() )
+            return 0.;
+        if( owner_->GetRole< PHY_RoleAction_MovingUnderground >().IsUnderground() )
+            return 0.;
+    }
     DefaultSpeedComputer computer( strategy );
     owner_->Execute< moving::SpeedComputer_ABC >( computer );
     return computer.GetSpeed();
@@ -143,7 +152,16 @@ double PHY_RoleAction_Moving::ComputeSpeed( const SpeedStrategy_ABC& strategy ) 
 // -----------------------------------------------------------------------------
 double PHY_RoleAction_Moving::GetMaxSpeed() const
 {
-    return ComputeSpeed( SpeedComputerStrategy( true ) );
+    return ComputeSpeed( SpeedComputerStrategy( true ), false );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_Moving::GetMaxSpeedEvenIfEmbarked
+// Created: LDC 2014-12-10
+// -----------------------------------------------------------------------------
+double PHY_RoleAction_Moving::GetMaxSpeedEvenIfEmbarked() const
+{
+    return ComputeSpeed( SpeedComputerStrategy( true ), true );
 }
 
 // -----------------------------------------------------------------------------
@@ -152,7 +170,7 @@ double PHY_RoleAction_Moving::GetMaxSpeed() const
 // -----------------------------------------------------------------------------
 double PHY_RoleAction_Moving::GetMaxSpeed( const TerrainData& environment ) const
 {
-    return ComputeSpeed( SpeedComputerStrategy( true, environment ) );
+    return ComputeSpeed( SpeedComputerStrategy( true, environment ), false );
 }
 
 // -----------------------------------------------------------------------------
@@ -162,7 +180,7 @@ double PHY_RoleAction_Moving::GetMaxSpeed( const TerrainData& environment ) cons
 double PHY_RoleAction_Moving::GetSpeed( const TerrainData& environment ) const
 {
     const SpeedComputerStrategy strategy( false, environment );
-    return std::min( ComputeSpeed( strategy ), GetMaxSpeed() );
+    return std::min( ComputeSpeed( strategy, false ), GetMaxSpeed() );
 }
 
 // -----------------------------------------------------------------------------
@@ -172,7 +190,7 @@ double PHY_RoleAction_Moving::GetSpeed( const TerrainData& environment ) const
 double PHY_RoleAction_Moving::GetTheoricSpeed( const TerrainData& environment ) const
 {
     const SpeedComputerStrategy strategy( false, environment, true );
-    return std::min( ComputeSpeed( strategy ), GetMaxSpeed() );
+    return std::min( ComputeSpeed( strategy, false ), GetMaxSpeed() );
 }
 
 // -----------------------------------------------------------------------------
@@ -181,7 +199,16 @@ double PHY_RoleAction_Moving::GetTheoricSpeed( const TerrainData& environment ) 
 // -----------------------------------------------------------------------------
 double PHY_RoleAction_Moving::GetTheoricMaxSpeed() const
 {
-    return ComputeSpeed( SpeedComputerStrategy( true, true ) );
+    return ComputeSpeed( SpeedComputerStrategy( true, true ), false  );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_Moving::GetTheoricMaxSpeedEvenIfEmbarked
+// Created: LDC 2014-12-10
+// -----------------------------------------------------------------------------
+double PHY_RoleAction_Moving::GetTheoricMaxSpeedEvenIfEmbarked() const
+{
+    return ComputeSpeed( SpeedComputerStrategy( true, true ), true  );
 }
 
 // -----------------------------------------------------------------------------
@@ -194,7 +221,7 @@ double PHY_RoleAction_Moving::GetSpeed( const TerrainData& environment, const MI
         return std::numeric_limits< double >::max();
     if( !object().IsTrafficable( *owner_ ) )
         return 0;
-    double rObjectSpeed = ComputeSpeed( SpeedComputerStrategy( false, object ) );
+    double rObjectSpeed = ComputeSpeed( SpeedComputerStrategy( false, object ), false );
     const double rCurrentMaxSpeed = GetMaxSpeed();
     const double rCurrentEnvSpeed = GetSpeed( environment );
     rObjectSpeed = std::min( rObjectSpeed, rCurrentMaxSpeed );

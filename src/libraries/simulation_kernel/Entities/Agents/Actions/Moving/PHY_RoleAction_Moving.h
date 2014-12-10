@@ -81,8 +81,10 @@ public:
     virtual double GetSpeed( const TerrainData& environment, const MIL_Object_ABC& object ) const;
     virtual double GetMaxSpeed() const;
     virtual double GetMaxSpeed( const TerrainData& environment ) const;
-    virtual double GetTheoricSpeed( const TerrainData& environment ) const;
+    virtual double GetMaxSpeedEvenIfEmbarked() const;
     virtual double GetTheoricMaxSpeed() const;
+    virtual double GetTheoricMaxSpeedEvenIfEmbarked() const;
+    virtual double GetTheoricSpeed( const TerrainData& environment ) const;
     virtual void SetSpeedModificator( double rFactor );
     virtual void SetMaxSpeedModificator( double rFactor );
     virtual double GetMaxSpeedModificator() const;
@@ -129,7 +131,7 @@ private:
     //@{
     double ApplyMaxSpeedModificators( double rSpeed ) const;
     double ApplySpeedModificators( double rSpeed ) const;
-    double ComputeSpeed( const SpeedStrategy_ABC& strategy ) const;
+    double ComputeSpeed( const SpeedStrategy_ABC& strategy, bool ignoreTransported ) const;
     //@}
 
     //! @name Network

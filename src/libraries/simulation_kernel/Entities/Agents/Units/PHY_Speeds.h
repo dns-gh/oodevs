@@ -52,7 +52,6 @@ public:
 private:
     //! @name Helpers
     //@{
-    void Initialize( const moving::PHY_RoleAction_InterfaceMoving& role, bool theoricSpeed );
     void ReadTerrain        ( xml::xistream& xis );
     void CheckInitialization( xml::xistream& xis );
     double& SpeedFor( const TerrainData& data );
