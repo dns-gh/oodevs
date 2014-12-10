@@ -170,7 +170,6 @@ public slots:
     // Public signals
 signals:
     void Ready();
-    void Stopped();
     void CreatedEvents( const timeline::Events& events, const timeline::Error& error );
     void GetEvents( const timeline::Events& events, const timeline::Error& error );
     void GetEvent( const timeline::Event& event, const timeline::Error& error );

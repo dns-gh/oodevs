@@ -14,7 +14,6 @@ enum ClientType
     // commands
     CLIENT_CENTER               = 0x104;
     CLIENT_QUERY_UPDATE         = 0x105;
-    CLIENT_STOP                 = 0x106;
     // event commands
     CLIENT_EVENT_CREATE         = 0x200;
     CLIENT_EVENT_READ_ALL       = 0x201;
@@ -33,7 +32,6 @@ enum ServerType
     SERVER_INVALID                       = 0x000;
     // commands
     SERVER_READY                         = 0x100;
-    SERVER_STOPPED                       = 0x101;
     // event commands
     SERVER_EVENT_CREATED                 = 0x200;
     SERVER_EVENT_READ_ALL                = 0x201;

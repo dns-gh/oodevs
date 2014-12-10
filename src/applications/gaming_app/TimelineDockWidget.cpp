@@ -104,12 +104,13 @@ void TimelineDockWidget::NotifyUpdated( const Profile& profile )
     webView_->Connect();
 }
 
-void TimelineDockWidget::NotifyUpdated( const kernel::ModelUnLoaded& )
+void TimelineDockWidget::Purge()
 {
     tabWidget_->setVisible( false );
     tabWidget_->clear();
     mainView_ = 0;
     maxTabNumber_= 0;
+    // Disconnect the timeline server before the model destruction
     webView_->Disconnect();
 }
 

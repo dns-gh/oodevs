@@ -113,11 +113,6 @@ T_Msg controls::CenterClient( const T_Logger& log )
     return PackType< ClientCommand >( log, sdk::CLIENT_CENTER );
 }
 
-T_Msg controls::StopClient( const T_Logger& log )
-{
-    return PackType< ClientCommand >( log, sdk::CLIENT_STOP );
-}
-
 namespace
 {
     void SetAction( sdk::Action& dst, const Action& action )
@@ -327,7 +322,6 @@ void controls::ParseClient( ClientHandler_ABC& handler,
     {
         case sdk::CLIENT_QUERY_UPDATE:          return handler.OnUpdateQuery( GetQuery( cmd.query() ) );
         case sdk::CLIENT_CENTER:                return handler.OnCenterClient();
-        case sdk::CLIENT_STOP:                  return handler.OnStopClient();
         case sdk::CLIENT_EVENT_CREATE:          return handler.OnCreateEvents( GetEvents( cmd.events() ) );
         case sdk::CLIENT_EVENT_SELECT:          return handler.OnSelectEvent( GetEvent( cmd.events() ).uuid );
         case sdk::CLIENT_EVENT_READ_ALL:        return handler.OnReadEvents();
@@ -343,11 +337,6 @@ void controls::ParseClient( ClientHandler_ABC& handler,
 T_Msg controls::ReadyServer( const T_Logger& log )
 {
     return PackType< ServerCommand >( log, sdk::SERVER_READY );
-}
-
-T_Msg controls::StoppedServer( const T_Logger& log )
-{
-    return PackType< ServerCommand >( log, sdk::SERVER_STOPPED );
 }
 
 T_Msg controls::CreatedEvents( const T_Logger& log, const Events& events, const Error& error )
@@ -512,7 +501,6 @@ void controls::ParseServer( ServerHandler_ABC& handler,
     switch( cmd.type() )
     {
         case sdk::SERVER_READY:                       return handler.OnReadyServer();
-        case sdk::SERVER_STOPPED:                     return handler.OnStoppedServer();
         case sdk::SERVER_EVENT_CREATED:               return handler.OnCreatedEvents( GetEvents( cmd.events() ), GetError( cmd.error() ) );
         case sdk::SERVER_EVENT_READ_ALL:              return handler.OnReadEvents( GetEvents( cmd.events() ), GetError( cmd.error() ) );
         case sdk::SERVER_EVENT_READ_ONE:              return handler.OnReadEvent( GetEvent( cmd.events() ), GetError( cmd.error() ) );

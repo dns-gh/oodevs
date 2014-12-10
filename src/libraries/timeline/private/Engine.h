@@ -44,7 +44,6 @@ public:
     void Register   ( CefRefPtr< CefBrowser > browser, CefRefPtr< CefV8Context > context );
     void Unregister ();
     void CenterClient();
-    void StopClient();
     void UpdateQuery( const std::map< std::string, std::string >& query );
     void CreateEvents( const Events& events );
     void SelectEvent( const std::string& uuid );
@@ -67,7 +66,6 @@ private:
 
     // V8 handlers
     CefRefPtr< CefV8Value > OnReady                ( const CefV8ValueList& args );
-    CefRefPtr< CefV8Value > OnStopped              ( const CefV8ValueList& args );
     CefRefPtr< CefV8Value > OnCreatedEvent         ( const CefV8ValueList& args );
     CefRefPtr< CefV8Value > OnCreatedEvents        ( const CefV8ValueList& args );
     CefRefPtr< CefV8Value > OnReadEvents           ( const CefV8ValueList& args );
