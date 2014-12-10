@@ -4,6 +4,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_UrbanCache.h"
+#include "Decision/DEC_AgentContext_ABC.h"
 #include "Entities/MIL_EntityManager.h"
 #include "MT_Tools/MT_Rect.h"
 #include "MT_Tools/MT_Logger.h"
@@ -148,10 +149,11 @@ namespace
     template< typename CollisionChecker >
     struct CostExtractor
     {
-        CostExtractor( const CollisionChecker& wrapper, float weight )
-            : wrapper_( wrapper )
-            , weight_ ( weight )
+        CostExtractor( const CollisionChecker& wrapper, const DEC_AgentContext_ABC& context )
+            : context_( context )
+            , weight_ ( context.GetUnitMajorWeight() )
             , cost_   ( 0. )
+            , wrapper_( wrapper )
         {
             // NOTHING
         }
@@ -171,12 +173,19 @@ namespace
                     }
                     tempCost =  pPhysical->GetOccupation() / key->GetStructuralState();
                 }
-                cost_ = std::max( cost_, tempCost );
+                const double state = context_.GetStructuralState( *key );
+                if( state <= 0 )
+                {
+                    cost_ = -1;
+                    return false;
+                }
+                cost_ = std::max( cost_, tempCost / state );
                 return wrapper_.DoContinue();
             }
             return true;
         }
 
+        const DEC_AgentContext_ABC& context_;
         double weight_;
         double cost_;
         const CollisionChecker wrapper_;
@@ -323,7 +332,7 @@ const std::vector< const MIL_UrbanObject_ABC* >& MIL_UrbanCache::GetUrbanBlocks(
 // Name: MIL_UrbanCache::GetUrbanBlockCost
 // Created: JSR 2012-04-23
 // -----------------------------------------------------------------------------
-double MIL_UrbanCache::GetUrbanBlockCost( float weight, const MT_Vector2D& from, const MT_Vector2D& to ) const
+double MIL_UrbanCache::GetUrbanBlockCost( const DEC_AgentContext_ABC& context, const MT_Vector2D& from, const MT_Vector2D& to ) const
 {
     if( !quadTree_.get() )
         return 0;
@@ -331,7 +340,7 @@ double MIL_UrbanCache::GetUrbanBlockCost( float weight, const MT_Vector2D& from,
                                                                       geometry::Point2d( to.rX_, to.rY_ ), maxElementSize_ );
     const MT_Line segment( from, to );
     const SegmentChecker checker( segment );
-    CostExtractor< SegmentChecker > extractor( checker, weight );
+    CostExtractor< SegmentChecker > extractor( checker, context );
     quadTree_->Apply( intersecter, extractor );
     return extractor.cost_;
 }

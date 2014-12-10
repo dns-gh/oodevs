@@ -105,3 +105,8 @@ const DEC_EquipmentListContext::T_PathKnowledgePopulationVector& DEC_EquipmentLi
     static const T_PathKnowledgePopulationVector k;
     return k;
 }
+
+double DEC_EquipmentListContext::GetStructuralState( const MIL_UrbanObject_ABC& ) const
+{
+    return 1;
+}

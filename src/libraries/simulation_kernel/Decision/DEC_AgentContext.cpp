@@ -16,11 +16,13 @@
 #include "DEC_Path_KnowledgeObjectBurnSurface.h"
 #include "DEC_Path_KnowledgeObjectDisaster.h"
 #include "DEC_Path_KnowledgePopulation.h"
+#include "Entities/MIL_Army_ABC.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Actions/Moving/PHY_RoleAction_Moving.h"
 #include "Entities/Agents/Units/PHY_UnitType.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
 #include "Entities/Agents/Roles/Reinforcement/PHY_RoleInterface_Reinforcement.h"
+#include "Entities/Agents/Roles/Urban/PHY_RoleInterface_UrbanLocation.h"
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Objects/BurnSurfaceCapacity.h"
 #include "Entities/Objects/DisasterCapacity.h"
@@ -36,6 +38,7 @@
 #include "Knowledge/DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
 #include "Knowledge/DEC_BlackBoard_CanContainKnowledgeObject.h"
 #include "Knowledge/MIL_KnowledgeGroup.h"
+#include "Urban/MIL_UrbanObject_ABC.h"
 #include <boost/make_shared.hpp>
 
 namespace
@@ -67,6 +70,7 @@ DEC_AgentContext::DEC_AgentContext( const MIL_Agent_ABC& agent, const DEC_Agent_
         InitializeAgentKnowledges( agent );
         InitializeObjectKnowledges( agent, points );
         InitializePopulationKnowledges( agent );
+        InitializeUrbanKnowledges( agent );
     }
 }
 
@@ -153,6 +157,16 @@ void DEC_AgentContext::InitializePopulationKnowledges( const MIL_Agent_ABC& agen
     }
 }
 
+void DEC_AgentContext::InitializeUrbanKnowledges( const MIL_Agent_ABC& agent )
+{
+    T_UrbanObjectVector urbanObjects;
+    agent.GetArmy().GetKnowledge().GetUrbanObjects( urbanObjects );
+    for( auto it = urbanObjects.begin(); it != urbanObjects.end(); ++it )
+        urbanObjectStates_[ (*it) ] = (*it)->GetStructuralState();
+    if( auto urbanBlock = agent.GetRole< PHY_RoleInterface_UrbanLocation >().GetCurrentUrbanBlock() )
+        urbanObjectStates_[ urbanBlock ] = 1;
+}
+
 const MIL_Fuseau& DEC_AgentContext::GetFuseau() const
 {
     return fuseau_;
@@ -214,4 +228,12 @@ const DEC_AgentContext::T_PathKnowledgePopulationVector& DEC_AgentContext::GetPa
 {
     assert( class_.HandlePopulations() || pathKnowledgePopulations_.empty() );
     return pathKnowledgePopulations_;
+}
+
+double DEC_AgentContext::GetStructuralState( const MIL_UrbanObject_ABC& object ) const
+{
+    const auto it = urbanObjectStates_.find( &object );
+    if( it == urbanObjectStates_.end() )
+        return 1;
+    return it->second;
 }

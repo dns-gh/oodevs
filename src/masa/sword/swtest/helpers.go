@@ -51,7 +51,7 @@ func ParseFlags() *Config {
 		cfg.Platform = "vc100"
 	}
 
-	cfg.Timeout = 5 * time.Second
+	cfg.Timeout = 15 * time.Second
 	timeoutStr := os.Getenv("MASA_TIMEOUT")
 	if timeoutStr != "" {
 		t, err := time.ParseDuration(timeoutStr)

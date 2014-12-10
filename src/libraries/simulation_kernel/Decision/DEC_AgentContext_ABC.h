@@ -15,6 +15,7 @@
 #include <vector>
 
 class MIL_Fuseau;
+class MIL_UrbanObject_ABC;
 class PHY_Speeds;
 class MT_Vector2D;
 class DEC_Agent_PathClass;
@@ -51,6 +52,7 @@ public:
     virtual double GetUnitSlopeDeceleration() const = 0;
     virtual double GetUnitMajorWeight() const = 0;
     virtual double GetCostOutsideOfAllObjects() const = 0;
+    virtual double GetStructuralState( const MIL_UrbanObject_ABC& ) const = 0;
 
     virtual const T_PathKnowledgeAgentVector& GetPathKnowledgeAgents() const = 0;
     virtual const T_PathKnowledgeObjectByTypesVector& GetPathKnowledgeObjects() const = 0;

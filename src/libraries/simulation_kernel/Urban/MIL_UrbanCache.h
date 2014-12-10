@@ -13,6 +13,7 @@
 #include <spatialcontainer/SpatialContainer.h>
 #include <map>
 
+class DEC_AgentContext_ABC;
 class MIL_UrbanObject_ABC;
 class MT_Vector2D;
 
@@ -47,7 +48,7 @@ public:
     const MIL_UrbanObject_ABC* FindBlock( const MT_Vector2D& point ) const;
     const std::vector< const MIL_UrbanObject_ABC* >& GetCities() const;
     const std::vector< const MIL_UrbanObject_ABC* >& GetUrbanBlocks() const;
-    double GetUrbanBlockCost( float weight, const MT_Vector2D& from, const MT_Vector2D& to ) const;
+    double GetUrbanBlockCost( const DEC_AgentContext_ABC& context, const MT_Vector2D& from, const MT_Vector2D& to ) const;
     void Clear();
     //@}
 

@@ -39,6 +39,7 @@ public:
     virtual double GetUnitSlopeDeceleration() const;
     virtual double GetUnitMajorWeight() const;
     virtual double GetCostOutsideOfAllObjects() const;
+    virtual double GetStructuralState( const MIL_UrbanObject_ABC& ) const;
 
     virtual const T_PathKnowledgeAgentVector& GetPathKnowledgeAgents() const;
     virtual const T_PathKnowledgeObjectByTypesVector& GetPathKnowledgeObjects() const;
@@ -48,6 +49,7 @@ private:
     void InitializeAgentKnowledges( const MIL_Agent_ABC& agent );
     void InitializeObjectKnowledges( const MIL_Agent_ABC& agent, const T_PointVector& points );
     void InitializePopulationKnowledges( const MIL_Agent_ABC& agent );
+    void InitializeUrbanKnowledges( const MIL_Agent_ABC& agent );
 
 private:
     const MIL_Fuseau fuseau_;
@@ -62,6 +64,7 @@ private:
     T_PathKnowledgeAgentVector pathKnowledgeAgents_;
     T_PathKnowledgeObjectByTypesVector pathKnowledgeObjects_;
     T_PathKnowledgePopulationVector pathKnowledgePopulations_;
+    std::map< const MIL_UrbanObject_ABC *, double > urbanObjectStates_;
 };
 
 #endif // __DEC_AgentContext_h_
