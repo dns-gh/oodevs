@@ -318,6 +318,11 @@ void FireResultListView::NotifyUpdated( const Explosions& results )
     UpdateDisplay();
 }
 
+void FireResultListView::NotifyCreated( const kernel::Entity_ABC& entity )
+{
+    NotifyDeleted( entity );
+}
+
 // -----------------------------------------------------------------------------
 // Name: FireResultListView::NotifyDeleted
 // Created: ABR 2014-08-25

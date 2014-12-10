@@ -79,6 +79,7 @@ private:
 
     virtual void NotifySelected( const kernel::Entity_ABC* element );
     virtual void NotifyUpdated( const Explosions& results );
+    virtual void NotifyCreated( const kernel::Entity_ABC& entity );
     virtual void NotifyUpdated( const kernel::Entity_ABC& entity );
     virtual void NotifyDeleted( const kernel::Entity_ABC& entity );
     void UpdateDisplay();
