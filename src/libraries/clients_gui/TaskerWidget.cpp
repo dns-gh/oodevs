@@ -88,7 +88,7 @@ TaskerWidget::TaskerWidget( const QString& objectName,
 // -----------------------------------------------------------------------------
 TaskerWidget::~TaskerWidget()
 {
-    controllers_.controller_.Unregister( *this );
+    controllers_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------
