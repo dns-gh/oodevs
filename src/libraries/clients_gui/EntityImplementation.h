@@ -62,6 +62,7 @@ public:
     virtual void Rename( const QString& name );
     virtual void SetName( const QString& name );
     virtual bool CanBeRenamed() const;
+    virtual void Touch() const;
 
     void Polish();
     void ForceNewId( unsigned long id );
@@ -71,7 +72,6 @@ protected:
     //! @name Modifiers
     //@{
     void Destroy();
-    void Touch();
     //@}
 
     //! @name Operations
@@ -83,7 +83,6 @@ protected:
 private:
     //! @name Helpers
     //@{
-    I& This();
     std::string GetDisplayId()
     {
         std::stringstream m;
@@ -207,8 +206,8 @@ template< typename I >
 void EntityImplementation< I >::Polish()
 {
     Update( kernel::InstanciationComplete() );
-    controller_.Create( This() );
-    controller_.Create( *(Entity_ABC*)this );
+    controller_.Create( static_cast< const I& >( *this ) );;
+    controller_.Create( static_cast< const Entity_ABC& >( *this ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -216,10 +215,10 @@ void EntityImplementation< I >::Polish()
 // Created: AGE 2006-10-12
 // -----------------------------------------------------------------------------
 template< typename I >
-void EntityImplementation< I >::Touch()
+void EntityImplementation< I >::Touch() const
 {
-    controller_.Update( This() );
-    controller_.Update( *(Entity_ABC*)this );
+    controller_.Update( static_cast< const I& >( *this ) );;
+    controller_.Update( static_cast< const Entity_ABC& >( *this ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -229,19 +228,9 @@ void EntityImplementation< I >::Touch()
 template< typename I >
 void EntityImplementation< I >::Destroy()
 {
-    controller_.Delete( This() );
-    controller_.Delete( *(Entity_ABC*)this );
+    controller_.Delete( static_cast< const I& >( *this ) );;
+    controller_.Delete( static_cast< const Entity_ABC& >( *this ) );
     DestroyExtensions();
-}
-
-// -----------------------------------------------------------------------------
-// Name: EntityImplementation::This
-// Created: AGE 2006-10-12
-// -----------------------------------------------------------------------------
-template< typename I >
-I& EntityImplementation< I >::This()
-{
-    return *this;
 }
 
 // -----------------------------------------------------------------------------

@@ -21,6 +21,7 @@
 #include "Objects.h"
 #include "Populations.h"
 #include "clients_gui/Color.h"
+#include "clients_gui/NoSideHelpers.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/DictionaryExtensions.h"
 #include "clients_kernel/Karma.h"
@@ -87,36 +88,16 @@ kernel::Team_ABC* TeamFactory::CreateTeam( xml::xistream& xis )
     return result;
 }
 
-namespace
-{
-    class NoSideDiplomacy : public kernel::Diplomacies_ABC
-    {
-    public:
-        //! @name Constructors/Destructor
-        //@{
-         NoSideDiplomacy() {}
-        ~NoSideDiplomacy() {}
-        //@}
-
-    public:
-        //! @name Operations
-        //@{
-        virtual const kernel::Karma& GetDiplomacy( const kernel::Entity_ABC& ) const { return kernel::Karma::unknown_; } // neutral?
-        virtual const kernel::Karma& GetKarma() const { return kernel::Karma::unknown_; }
-        //@}
-    };
-}
-
 // -----------------------------------------------------------------------------
 // Name: TeamFactory::CreateNoSideTeam
 // Created: JSR 2011-11-10
 // -----------------------------------------------------------------------------
 kernel::Team_ABC* TeamFactory::CreateNoSideTeam()
 {
-    kernel::Team_ABC* result = new gui::EntityImplementation< kernel::Team_ABC >( controllers_.controller_, 0, tools::translate( "TeamFactory", "No side" ) );
+    kernel::Team_ABC* result = new gui::NoSideTeam( controllers_.controller_, 0, tools::translate( "TeamFactory", "No side" ) );
     result->Attach( *new Objects( controllers_ ) );
     result->Attach< kernel::Color_ABC >( *new gui::Color() );
-    result->Attach< kernel::Diplomacies_ABC >( *new NoSideDiplomacy() );
+    result->Attach< kernel::Diplomacies_ABC >( *new gui::NoSideDiplomacy() );
     return result;
 }
 

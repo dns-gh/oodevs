@@ -479,7 +479,7 @@ void ExtensionsPanel::Commit()
             }
         }
     }
-    controllers_.controller_.Update( *selected_ );
+    selected_.ConstCast()->Touch();
     UpdateDependencies();
 }
 

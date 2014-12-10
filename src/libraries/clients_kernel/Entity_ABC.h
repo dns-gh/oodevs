@@ -88,6 +88,7 @@ public:
     virtual const std::string& GetTypeName() const;
     virtual bool CanBeRenamed() const;
     virtual void Rename( const QString& name );
+    virtual void Touch() const;
     //@}
 
     //! @name GraphicalEntity_ABC implementation

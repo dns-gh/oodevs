@@ -244,6 +244,7 @@ void LogisticTreeView::NotifyCreated( const kernel::Team_ABC& team )
         return;
 
     teamItem = dataModel_.AddRootSafeItem( dataModel_.rowCount(), 0, team.GetName(), team.GetTooltip(), team );
+    teamItem->setEditable( true );
     QStandardItem* item = dataModel_.AddChildDataItem( teamItem, teamItem->rowCount(), 0, tools::translate( "gui::LogisticTreeView", "Unsupported units" ), "", level_none, Qt::ItemIsDropEnabled );
     if( item )
         item->setSelectable( false );
@@ -589,4 +590,9 @@ void LogisticTreeView::OnChangeLogisticLinks()
         changeSuperiorDialog_.Show( *contextMenuEntity_.ConstCast(),
                                     tr( "Change logistic links" ),
                                     gui::ChangeSuperiorDialog::eLogisticSuperior );
+}
+
+void LogisticTreeView::NotifyUpdated( const kernel::Entity_ABC& /* entity */ )
+{
+    // NOTHING, here to ignore EntityTreeView_ABC default implementation
 }

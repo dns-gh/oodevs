@@ -69,8 +69,14 @@ void RenameInterface::OnRename()
 {
     if( !contextMenuEntity_ )
         return;
-    if( contextMenuView_ && contextMenuView_->IsActivated() && contextMenuView_->Exist( *contextMenuEntity_ ) )
-        contextMenuView_->Rename( *contextMenuEntity_.ConstCast() );
+    if( contextMenuView_ )
+    {
+        auto item = contextMenuView_->Find( *contextMenuEntity_ );
+        if( item && item->isEditable() && contextMenuView_->IsActivated() )
+            contextMenuView_->Rename( *contextMenuEntity_.ConstCast() );
+        else
+            gui::longname::ShowRenameDialog( qApp->activeWindow(), contextMenuEntity_ );
+    }
     else
         gui::longname::ShowRenameDialog( qApp->activeWindow(), contextMenuEntity_ );
     contextMenuEntity_ = 0;
