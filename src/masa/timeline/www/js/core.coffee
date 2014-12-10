@@ -179,7 +179,8 @@ class Events extends Backbone.Collection
         replay_tree = new SegmentTree()
         @events = []
         for it in @models
-            it.children = {}
+            if !it.children?
+                it.children = {}
             [min, max] = get_minmax_event it
             if is_range_event it
                 tree.add min, max,
