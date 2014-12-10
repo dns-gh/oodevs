@@ -732,7 +732,7 @@ end
 -- @param onlyLoadable Boolean, whether or not this method will only take into
 -- account components that are defined as 'loadable' in the physical database.
 -- @return Boolean
-integration.agentPeutTransporterPion( transporter, wouldBeTransported, onlyLoadable )
+integration.agentPeutTransporterPion = function( transporter, wouldBeTransported, onlyLoadable )
     return DEC_Agent_AgentPeutTransporterPion( transporter, wouldBeTransported, onlyLoadable )
 end
 
