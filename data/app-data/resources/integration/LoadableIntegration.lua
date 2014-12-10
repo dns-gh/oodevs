@@ -726,6 +726,16 @@ integration.getTransportedUnits = function( agent )
     return DEC_Agent_GetTransportedUnits( agent )
 end
 
+--- Returns true if an agent can transport another agent, false otherwise.
+-- @param transporter Simulation agent
+-- @param wouldBeTransported Simulation agent
+-- @param onlyLoadable Boolean, whether or not this method will only take into
+-- account components that are defined as 'loadable' in the physical database.
+-- @return Boolean
+integration.agentPeutTransporterPion( transporter, wouldBeTransported, onlyLoadable )
+    return DEC_Agent_AgentPeutTransporterPion( transporter, wouldBeTransported, onlyLoadable )
+end
+
 ------------------------------------------------------------------
 --- DECLARATIONS ENSURING BACKWARDS COMPATIBILITY
 ------------------------------------------------------------------
