@@ -329,6 +329,116 @@ integration.isImpassableObject = function( object )
     return DEC_ObjectKnowledge_IsImpassable( object )
 end
 
+--- Supply from the given object the list of given resource types
+--- This method must be called continuously on several
+--- consecutive ticks for the confinement to take place.
+-- @param object, decisionnal object
+-- @param resourceType, list of simulation resource type
+-- @return Boolean, true once it is supplied, false otherwise
+integration.supplyObject = masalife.brain.integration.startStopAction( 
+{ 
+    start   = function( object, resourceTypes )
+        object.actionSupply = DEC_StartSupplyObject( object.source, resourceTypes, 1000 ) --valeur arbitraire pour prendre une bonne quantité...
+        actionCallbacks[ object.actionSupply ] = function( arg ) object.actionSupplyState = arg end
+    end,
+
+    started = function( object )
+        if object.actionSupplyState == eActionObjetImpossible then
+            DEC_Trace( "impossible works" )
+            return false
+        elseif object.actionSupplyState == eActionObjetManqueDotation then
+            DEC_Trace( "not enough dotation" )
+            return false
+        elseif object.actionSupplyState == eActionObjetPasDeCapacite then
+            DEC_Trace( "no capacity" ) 
+            return false
+        end
+        return true
+    end,
+
+    stop    = function( object ) 
+        if object.actionSupplyState == eActionObjetTerminee then
+            DEC_Trace( "supplied" )
+        else
+            DEC_Trace( "pause work" )
+        end
+        object.actionSupply = DEC__StopAction( object.actionSupply )
+    end,
+} )
+
+--- Extract the list of given resource types from the given object
+--- This method must be called continuously on several
+--- consecutive ticks for the confinement to take place.
+-- @param object, decisionnal object
+-- @param resourceType, list of simulation resource type
+-- @return Boolean, true once it is extracted, false otherwise
+integration.extractObject = masalife.brain.integration.startStopAction(
+    { 
+        start = function( object, resourceTypes )
+            object.actionExtract = DEC_StartExtractFromStockObject( object.source, resourceTypes, 1000 )--valeur arbitraire pour prendre une bonne quantité...
+            actionCallbacks[ object.actionExtract ] = function( arg ) object.actionExtractState = arg end
+        end, 
+
+        started = function( object )
+            if object.actiobExtractState == eActionObjetImpossible then
+                DEC_Trace( "impossible works" )
+                return false
+            elseif object.actiobExtractState == eActionObjetManqueDotation then
+                DEC_Trace( "not enough dotation" )
+                return false
+            elseif object.actiobExtractState == eActionObjetPasDeCapacite then
+                DEC_Trace( "no capacity" ) 
+                return false
+            end
+            return true
+        end, 
+        stop = function( object )
+            if object.actiobExtractState == eActionObjetTerminee then
+                DEC_Trace( "extracted" )
+            else
+                DEC_Trace( "pause work" )
+            end
+            object.actionExtract = DEC__StopAction( object.actionExtract )
+        end,
+    } ),
+
+--- Distribute the list of given resource types to the given object
+--- This method must be called continuously on several
+--- consecutive ticks for the confinement to take place.
+-- @param object, decisionnal object
+-- @param resourceType, list of simulation resource type
+-- @return Boolean, true once it is distributed, false otherwise
+integration.distributeObject = masalife.brain.integration.startStopAction(
+    { 
+        start = function( object )
+            object.actionDistribute = DEC_StartDistributionObjet( object.source, 1000 )--valeur arbitraire pour prendre une bonne quantité...
+            actionCallbacks[ object.actionDistribute ] = function( arg ) object.actionDistributeState = arg end
+        end, 
+
+        started = function( object )
+            if object.actionDistributeState == eActionObjetImpossible then
+                DEC_Trace( "impossible works" )
+                return false
+            elseif object.actionDistributeState == eActionObjetManqueDotation then
+                DEC_Trace( "not enough dotation" )
+                return false
+            elseif object.actionDistributeState == eActionObjetPasDeCapacite then
+                DEC_Trace( "no capacity" ) 
+                return false
+            end
+            return true
+        end, 
+        stop = function( object )
+            if object.actionDistributeState == eActionObjetTerminee then
+                DEC_Trace( "distributed" )
+            else
+                DEC_Trace( "pause work" )
+            end
+            object.actionDistribute = DEC__StopAction( object.actionDistribute )
+        end,
+    } ),
+
+
 ------------------------------------------------------------------
 --- DECLARATIONS ENSURING BACKWARDS COMPATIBILITY
 ------------------------------------------------------------------

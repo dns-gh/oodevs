@@ -221,6 +221,12 @@ reportOnceFunction = function( ... )
     reportOnceAction( myself, ... )
 end
 
+--- Returns the simulation time in seconde
+-- @return integer, simulation time in second
+integration.getTimeInSecond = function()
+    return DEC_GetTimeInSeconds()
+end
+
 ---\ Callback management /---
 
 actionCallbacks = {}

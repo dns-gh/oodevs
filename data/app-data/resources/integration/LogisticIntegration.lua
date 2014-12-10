@@ -264,3 +264,15 @@ integration.ensureVictimsEvacuation = function( victimsUnit, medicalUnit )
     DEC_EvacuerBlessesVersTC2( victimsUnit.source, medicalUnit.source )
     return true
 end
+
+integration.stockCanBeDistributed = function( object, population )
+    return DEC_Stock_IsDistributePossible( object, population )
+end
+
+integration.stockCanBeExtracted = function( object, population )
+    return DEC_Stock_IsExtractPossible( object, population )
+end
+
+integration.stockCanBeSupplied = function( object, population )
+    return DEC_Stock_IsSupplyPossible( object, population )
+end
