@@ -40,7 +40,6 @@ namespace controls
     // Server commands
     T_Msg UpdateQuery    ( const T_Logger& log, const std::map< std::string, std::string >& query );
     T_Msg CenterClient   ( const T_Logger& log );
-    T_Msg StopClient     ( const T_Logger& log );
     T_Msg CreateEvents   ( const T_Logger& log, const Events& events );
     T_Msg SelectEvent    ( const T_Logger& log, const std::string& uuid );
     T_Msg ReadEvents     ( const T_Logger& log );
@@ -59,7 +58,6 @@ namespace controls
 
         virtual void OnUpdateQuery  ( const std::map< std::string, std::string >& query ) = 0;
         virtual void OnCenterClient () = 0;
-        virtual void OnStopClient   () = 0;
         virtual void OnCreateEvents ( const std::vector< Event >& events ) = 0;
         virtual void OnSelectEvent  ( const std::string& uuid ) = 0;
         virtual void OnReadEvents   () = 0;
@@ -76,7 +74,6 @@ namespace controls
 
     // Client events
     T_Msg ReadyServer           ( const T_Logger& log );
-    T_Msg StoppedServer         ( const T_Logger& log );
     T_Msg CreatedEvents         ( const T_Logger& log, const Events& events, const Error& error );
     T_Msg ReadEvents            ( const T_Logger& log, const Events& events, const Error& error );
     T_Msg ReadEvent             ( const T_Logger& log, const Event& event, const Error& error );
@@ -103,7 +100,6 @@ namespace controls
         virtual ~ServerHandler_ABC() {}
 
         virtual void OnReadyServer          () = 0;
-        virtual void OnStoppedServer        () = 0;
         virtual void OnCreatedEvents        ( const Events& events, const Error& error ) = 0;
         virtual void OnReadEvents           ( const Events& events, const Error& error ) = 0;
         virtual void OnReadEvent            ( const Event& event, const Error& error ) = 0;

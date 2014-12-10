@@ -645,8 +645,6 @@ class SessionView extends Backbone.View
         @listenTo     triggers,  "lock_updates",       @on_lock
         @listenTo     triggers,  "unlock_updates",     @on_unlock
         @listenTo     triggers,  "reset_link",         @on_reset_link
-        if gaming?
-            gaming.stop_link = @stop_link
         @model.fetch()
         @observe()
         return
@@ -707,10 +705,6 @@ class SessionView extends Backbone.View
         @on_lock()
         @timeline.set_layout !convert_to_boolean url_query.horizontal
         @on_unlock()
-     
-    stop_link: =>
-        @on_lock()
-        gaming.stopped()
 
     observe: =>
         return if @locked? || @link?
