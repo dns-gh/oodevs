@@ -72,9 +72,9 @@ void IndirectFire::Draw( const geometry::Point2f& /*where*/, const gui::Viewport
     const geometry::Point2f origin = origin_.Get< Positions >().GetPosition();
     if( viewport.IsVisible( geometry::Rectangle2f( origin, target_ ) ) )
     {
-        glPushAttrib( GL_CURRENT_BIT | GL_LINE_BIT );
         if( auto color = GetIndirectFireColor( view, origin_, ammo_ ) )
         {
+            glPushAttrib( GL_CURRENT_BIT | GL_LINE_BIT );
             glLineWidth( 3.f );
             view.DrawCurvedArrow( origin, target_, 0.2f, 10.f );
             glPopAttrib();
