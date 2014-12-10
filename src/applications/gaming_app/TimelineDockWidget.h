@@ -57,7 +57,6 @@ class TimelineDockWidget : public gui::RichDockWidget
                          , public tools::ElementObserver_ABC< gui::VisibilityFilter_ABC >
                          , public tools::ElementObserver_ABC< gui::Event >
                          , public tools::ElementObserver_ABC< Profile >
-                         , public tools::ElementObserver_ABC< kernel::ModelUnLoaded >
                          , public tools::SelectionObserver_ABC
                          , public tools::SelectionObserver_Base< kernel::Entity_ABC >
                          , public tools::SelectionObserver_Base< actions::Action_ABC >
@@ -74,6 +73,7 @@ public:
     //! @name Operations
     //@{
     const boost::shared_ptr< TimelineWebView >& GetWebView() const;
+    void Purge();
     //@}
 
     //! @name ElementObserver_ABC implementation
@@ -82,7 +82,6 @@ public:
     virtual void NotifyUpdated( const gui::VisibilityFilter_ABC& filter );
     virtual void NotifyUpdated( const gui::Event& event );
     virtual void NotifyUpdated( const Profile& profile );
-    virtual void NotifyUpdated( const kernel::ModelUnLoaded& );
     virtual void BeforeSelection();
     virtual void Select( const kernel::Entity_ABC& element );
     virtual void Select( const actions::Action_ABC& action );

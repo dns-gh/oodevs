@@ -210,11 +210,11 @@ DockContainer::DockContainer( QMainWindow* parent,
     // Timelines
     {
         // New Timeline
-        auto timeline = new TimelineDockWidget( parent, controllers, config, model, glWidgetManager, profile );
-        timeline->SetModes( eModes_Default );
-        parent->addDockWidget( Qt::TopDockWidgetArea, timeline );
-        eventDockWidget_->SetTimelineHandler( timeline->GetWebView() );
-        QObject::connect( timeline->GetWebView().get(), SIGNAL( StartCreation( E_EventTypes, const QDateTime& ) ),
+        timeline_ = new TimelineDockWidget( parent, controllers, config, model, glWidgetManager, profile );
+        timeline_->SetModes( eModes_Default );
+        parent->addDockWidget( Qt::TopDockWidgetArea, timeline_ );
+        eventDockWidget_->SetTimelineHandler( timeline_->GetWebView() );
+        QObject::connect( timeline_->GetWebView().get(), SIGNAL( StartCreation( E_EventTypes, const QDateTime& ) ),
             &eventDockWidget_->GetPresenter(), SLOT( StartCreation( E_EventTypes, const QDateTime& ) ) );
     }
 
@@ -259,6 +259,7 @@ DockContainer::~DockContainer()
 void DockContainer::Purge()
 {
     orbatDockWidget_->Purge();
+    timeline_->Purge();
     infoWnd_->Purge();
 }
 
