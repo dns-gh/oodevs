@@ -24,6 +24,7 @@ import (
 	"masa/timeline/util"
 	"math/rand"
 	"net/url"
+	"strconv"
 	"sync"
 	"time"
 )
@@ -1232,15 +1233,73 @@ func checkErrorUpdate(c *C, f *Fixture, messages chan interface{}, id string, ev
 	c.Assert(msg, IsNil)
 }
 
-func (t *TestSuite) TestChangeReplayRangeDates(c *C) {
-	f := t.MakeFixture(c, true)
-	defer f.Close()
-	f.sword.WaitForStatus(services.SwordStatusConnected)
+func checkPayload(c *C, event *sdk.Event, begin, end, enabled bool) {
+	c.Assert(string(event.Action.GetPayload()), Equals, `{"begin":`+strconv.FormatBool(begin)+`,"end":`+strconv.FormatBool(end)+`,"enabled":`+strconv.FormatBool(enabled)+"}")
+}
 
+func getEvent(events []*sdk.Event, uuid string) *sdk.Event {
+	for _, event := range events {
+		if event.GetUuid() == uuid {
+			return event
+		}
+	}
+	return nil
+}
+
+type ReplayFixture struct {
+	*Fixture
+	link        *SdkObserver
+	messages    chan interface{}
+	detached    swfake.DetachedLinks
+	replayBegin time.Time
+	replayEnd   time.Time
+}
+
+func (f *ReplayFixture) UpdateReplayInformation(begin, end, current time.Time) *sdk.Message {
+	for slink := range f.detached {
+		f.server.WriteReplayToClient(slink, 1, 0,
+			&sword.ReplayToClient_Content{
+				ControlReplayInformation: &sword.ControlReplayInformation{
+					CurrentTick:     proto.Int32(0),
+					InitialDateTime: swapi.MakeDateTime(begin),
+					EndDateTime:     swapi.MakeDateTime(end),
+					DateTime:        swapi.MakeDateTime(current),
+					TickDuration:    proto.Int32(10),
+					TimeFactor:      proto.Int32(1),
+					Status:          sword.EnumSimulationState_running.Enum(),
+					TickCount:       proto.Int32(6),
+				},
+			})
+	}
+	return waitBroadcastTag(f.messages, sdk.MessageTag_update_events)
+}
+
+func (f *ReplayFixture) UpdateSimInformation(begin, current time.Time, tick int32) *sdk.Message {
+	for slink := range f.detached {
+		f.server.WriteToClient(slink, 1, 0,
+			&sword.SimToClient_Content{
+				ControlInformation: &sword.ControlInformation{
+					CurrentTick:         proto.Int32(tick),
+					InitialDateTime:     swapi.MakeDateTime(begin),
+					DateTime:            swapi.MakeDateTime(current),
+					TickDuration:        proto.Int32(1),
+					TimeFactor:          proto.Int32(1),
+					CheckpointFrequency: proto.Int32(0),
+					Status:              sword.EnumSimulationState_running.Enum(),
+					SendVisionCones:     proto.Bool(false),
+					ProfilingEnabled:    proto.Bool(false),
+				},
+			})
+	}
+	return waitBroadcastTag(f.messages, sdk.MessageTag_update_session)
+}
+
+func (t *TestSuite) MakeReplayFixture(c *C, logins bool, begin, end time.Time) (*ReplayFixture, *sdk.Message) {
+	fixture := t.MakeFixture(c, true)
+	fixture.sword.WaitForStatus(services.SwordStatusConnected)
 	// Initialize replay informations
-	link, err := f.controller.RegisterObserver(f.session, services.EventFilterConfig{})
+	link, err := fixture.controller.RegisterObserver(fixture.session, services.EventFilterConfig{})
 	c.Assert(err, IsNil)
-	defer f.controller.UnregisterObserver(f.session, link)
 	messages := make(chan interface{})
 	go func() {
 		for msg := range link.Listen() {
@@ -1249,10 +1308,9 @@ func (t *TestSuite) TestChangeReplayRangeDates(c *C) {
 	}()
 	msg := waitBroadcastTag(messages, sdk.MessageTag_update_services)
 	c.Assert(msg, NotNil)
-	detached := f.server.GetLinks()
-	defer detached.Close()
+	detached := fixture.server.GetLinks()
 	for slink := range detached {
-		f.server.WriteDispatcherToClient(slink, 1, 0,
+		fixture.server.WriteDispatcherToClient(slink, 1, 0,
 			&sword.DispatcherToClient_Content{
 				ServicesDescription: &sword.ServicesDescription{
 					Services: []string{"struct replay::Service"},
@@ -1261,26 +1319,29 @@ func (t *TestSuite) TestChangeReplayRangeDates(c *C) {
 	}
 	msg = waitBroadcastTag(messages, sdk.MessageTag_update_services)
 	c.Assert(msg, NotNil)
-	// Replay range with 1mn length
-	replayBegin := time.Now().Truncate(time.Second).UTC()
-	replayEnd := replayBegin.Add(60 * time.Second)
-	for slink := range detached {
-		f.server.WriteReplayToClient(slink, 1, 0,
-			&sword.ReplayToClient_Content{
-				ControlReplayInformation: &sword.ControlReplayInformation{
-					CurrentTick:     proto.Int32(0),
-					InitialDateTime: swapi.MakeDateTime(replayBegin),
-					EndDateTime:     swapi.MakeDateTime(replayEnd),
-					DateTime:        swapi.MakeDateTime(replayBegin),
-					TickDuration:    proto.Int32(10),
-					TimeFactor:      proto.Int32(1),
-					Status:          sword.EnumSimulationState_running.Enum(),
-					TickCount:       proto.Int32(6),
-				},
-			})
-	}
-	msg = waitBroadcastTag(messages, sdk.MessageTag_update_events)
+	f := &ReplayFixture{fixture, &link, messages, detached, begin, end}
+	msg = f.UpdateReplayInformation(begin, end, begin)
 	c.Assert(msg, NotNil)
+	return f, msg
+}
+
+func (f *ReplayFixture) CloseReplay() {
+	f.detached.Close()
+	f.controller.UnregisterObserver(f.session, *f.link)
+	f.Fixture.Close()
+}
+
+func checkEvent(c *C, expected *sdk.Event, actual []*sdk.Event, begin, end, enabled bool) {
+	event := getEvent(actual, expected.GetUuid())
+	c.Assert(expected.GetBegin(), Equals, event.GetBegin())
+	c.Assert(expected.GetEnd(), Equals, event.GetEnd())
+	checkPayload(c, event, begin, end, enabled)
+}
+
+func (t *TestSuite) TestChangeReplayRangeDates(c *C) {
+	now := time.Now().Truncate(time.Second).UTC()
+	f, msg := t.MakeReplayFixture(c, true, now, now.Add(60*time.Second))
+	defer f.CloseReplay()
 	event := msg.GetEvents()[0]
 	checkIsReplayEvent(c, event)
 	c.Assert(event.GetName(), Equals, "Replay range")
@@ -1292,9 +1353,9 @@ func (t *TestSuite) TestChangeReplayRangeDates(c *C) {
 	event = services.CloneEvent(validEvent)
 	event.Name = proto.String("New name")
 	event.Info = proto.String("New information")
-	_, err = f.controller.UpdateEvents(f.session, event)
+	_, err := f.controller.UpdateEvents(f.session, event)
 	c.Assert(err, IsNil)
-	msg = waitBroadcastTag(messages, sdk.MessageTag_update_events)
+	msg = waitBroadcastTag(f.messages, sdk.MessageTag_update_events)
 	c.Assert(msg, NotNil)
 	c.Assert(*msg.GetEvents()[0].Name, Equals, *event.Name)
 	c.Assert(*msg.GetEvents()[0].Info, Equals, *event.Info)
@@ -1302,133 +1363,133 @@ func (t *TestSuite) TestChangeReplayRangeDates(c *C) {
 
 	// Modifying replay range event out of replay boundaries returns error
 	event = services.CloneEvent(validEvent)
-	event.Begin = proto.String(util.FormatTime(replayBegin.Add(-time.Hour)))
-	checkErrorUpdate(c, f, messages, id, event)
+	event.Begin = proto.String(util.FormatTime(f.replayBegin.Add(-time.Hour)))
+	checkErrorUpdate(c, f.Fixture, f.messages, id, event)
 	event = services.CloneEvent(validEvent)
-	event.End = proto.String(util.FormatTime(replayEnd.Add(time.Hour)))
-	checkErrorUpdate(c, f, messages, id, event)
+	event.End = proto.String(util.FormatTime(f.replayEnd.Add(time.Hour)))
+	checkErrorUpdate(c, f.Fixture, f.messages, id, event)
 
 	// Modifying replay event with erroneous range returns error
 	event = services.CloneEvent(validEvent)
 	event.Begin, event.End = event.End, event.Begin
-	checkErrorUpdate(c, f, messages, id, event)
+	checkErrorUpdate(c, f.Fixture, f.messages, id, event)
 	event = services.CloneEvent(validEvent)
 	event.Begin = event.End
-	checkErrorUpdate(c, f, messages, id, event)
+	checkErrorUpdate(c, f.Fixture, f.messages, id, event)
 
 	// Modifying first or last replay event and creating a gap between
 	// replay boundaries and events will return an error
 	event = services.CloneEvent(validEvent)
-	event.Begin = proto.String(util.FormatTime(replayBegin.Add(time.Second)))
-	checkErrorUpdate(c, f, messages, id, event)
+	event.Begin = proto.String(util.FormatTime(f.replayBegin.Add(time.Second)))
+	checkErrorUpdate(c, f.Fixture, f.messages, id, event)
 	event = services.CloneEvent(validEvent)
-	event.End = proto.String(util.FormatTime(replayEnd.Add(-time.Second)))
-	checkErrorUpdate(c, f, messages, id, event)
+	event.End = proto.String(util.FormatTime(f.replayEnd.Add(-time.Second)))
+	checkErrorUpdate(c, f.Fixture, f.messages, id, event)
 
 	// Modifying payload with garbage returns an error
 	event = services.CloneEvent(validEvent)
 	event.Action.Payload = []byte(`some garbage`)
-	checkErrorUpdate(c, f, messages, id, event)
+	checkErrorUpdate(c, f.Fixture, f.messages, id, event)
 
 	// Replay range can be disabled
 	event = services.CloneEvent(validEvent)
 	event.Action.Payload, _ = json.Marshal(&sdk.ReplayPayload{Enabled: proto.Bool(false)})
 	_, err = f.controller.UpdateEvents(f.session, event)
 	c.Assert(err, IsNil)
-	msg = waitBroadcastTag(messages, sdk.MessageTag_update_events)
+	msg = waitBroadcastTag(f.messages, sdk.MessageTag_update_events)
 	c.Assert(msg, NotNil)
-	c.Assert(string(msg.GetEvents()[0].Action.GetPayload()), Equals, `{"begin":false,"end":false,"enabled":false}`)
+	checkPayload(c, msg.GetEvents()[0], false, false, false)
 
 	// And re-enabled
 	event = services.CloneEvent(validEvent)
 	event.Action.Payload, _ = json.Marshal(&sdk.ReplayPayload{Enabled: proto.Bool(true)})
 	_, err = f.controller.UpdateEvents(f.session, event)
 	c.Assert(err, IsNil)
-	msg = waitBroadcastTag(messages, sdk.MessageTag_update_events)
+	msg = waitBroadcastTag(f.messages, sdk.MessageTag_update_events)
 	c.Assert(msg, NotNil)
-	c.Assert(string(msg.GetEvents()[0].Action.GetPayload()), Equals, `{"begin":false,"end":false,"enabled":true}`)
+	checkPayload(c, msg.GetEvents()[0], false, false, true)
 
 	// Valid replay event creation, split in half the current replay event
 	// The new replay event inherits its informations from the split event
 	event = services.CloneEvent(validEvent)
 	splitUuid := uuid.New()
 	event.Uuid = proto.String(splitUuid)
-	event.Begin = proto.String(util.FormatTime(replayBegin.Add(30 * time.Second)))
+	event.Begin = proto.String(util.FormatTime(f.replayBegin.Add(30 * time.Second)))
 	event.Name = proto.String("")
 	event.Info = proto.String("")
 	_, err = f.controller.UpdateEvents(f.session, event)
 	c.Assert(err, IsNil)
-	msg = waitBroadcastTag(messages, sdk.MessageTag_update_events)
+	msg = waitBroadcastTag(f.messages, sdk.MessageTag_update_events)
 	c.Assert(msg, NotNil)
 	c.Assert(len(msg.GetEvents()), Equals, 2)
 	// Checks old event update
-	event = msg.GetEvents()[1]
+	event = getEvent(msg.GetEvents(), id)
+	c.Assert(event, NotNil)
 	begin, _ := util.ParseTime(event.GetBegin())
 	end, _ := util.ParseTime(event.GetEnd())
-	c.Assert(event.GetUuid(), Equals, id)
 	c.Assert(event.GetName(), Equals, "New name")
 	c.Assert(event.GetInfo(), Equals, "New information")
-	c.Assert(begin, Equals, replayBegin)
-	c.Assert(end, Equals, replayBegin.Add(30*time.Second))
-	c.Assert(string(event.Action.GetPayload()), Equals, `{"begin":false,"end":true,"enabled":true}`)
+	c.Assert(begin, Equals, f.replayBegin)
+	c.Assert(end, Equals, f.replayBegin.Add(30*time.Second))
+	checkPayload(c, event, false, true, true)
 	validEvent = services.CloneEvent(event)
 	// Checks new event creation
-	event = msg.GetEvents()[0]
-	c.Assert(event.GetUuid(), Equals, splitUuid)
+	event = getEvent(msg.GetEvents(), splitUuid)
+	c.Assert(event, NotNil)
 	c.Assert(event.GetName(), Equals, "New name")
 	c.Assert(event.GetInfo(), Equals, "New information")
-	c.Assert(string(event.Action.GetPayload()), Equals, `{"begin":true,"end":false,"enabled":true}`)
+	checkPayload(c, event, true, false, true)
 	begin, _ = util.ParseTime(event.GetBegin())
 	end, _ = util.ParseTime(event.GetEnd())
-	c.Assert(begin, Equals, replayBegin.Add(30*time.Second))
-	c.Assert(end, Equals, replayEnd)
+	c.Assert(begin, Equals, f.replayBegin.Add(30*time.Second))
+	c.Assert(end, Equals, f.replayEnd)
 	splitEvent := services.CloneEvent(event)
 
 	// Creating a new replay event cannot overlap more than one existing event
 	// and must share one of the existing event boundaries, otherwise it returns an error
 	event = services.CloneEvent(validEvent)
 	event.Uuid = proto.String(uuid.New())
-	event.Begin = proto.String(util.FormatTime(replayBegin))
-	event.End = proto.String(util.FormatTime(replayEnd))
-	checkErrorUpdate(c, f, messages, id, event)
+	event.Begin = proto.String(util.FormatTime(f.replayBegin))
+	event.End = proto.String(util.FormatTime(f.replayEnd))
+	checkErrorUpdate(c, f.Fixture, f.messages, id, event)
 
 	event = services.CloneEvent(splitEvent)
 	event.Uuid = proto.String(uuid.New())
-	event.Begin = proto.String(util.FormatTime(replayBegin.Add(31 * time.Second)))
-	event.End = proto.String(util.FormatTime(replayEnd.Add(-1 * time.Second)))
-	checkErrorUpdate(c, f, messages, id, event)
+	event.Begin = proto.String(util.FormatTime(f.replayBegin.Add(31 * time.Second)))
+	event.End = proto.String(util.FormatTime(f.replayEnd.Add(-1 * time.Second)))
+	checkErrorUpdate(c, f.Fixture, f.messages, id, event)
 
 	// Modifying a replay event boundary modifies the previous or the next event too
 	event = services.CloneEvent(splitEvent)
-	event.Begin = proto.String(util.FormatTime(replayBegin.Add(31 * time.Second)))
+	event.Begin = proto.String(util.FormatTime(f.replayBegin.Add(31 * time.Second)))
 	_, err = f.controller.UpdateEvents(f.session, event)
 	c.Assert(err, IsNil)
-	msg = waitBroadcastTag(messages, sdk.MessageTag_update_events)
+	msg = waitBroadcastTag(f.messages, sdk.MessageTag_update_events)
 	c.Assert(msg, NotNil)
 	c.Assert(len(msg.GetEvents()), Equals, 2)
-	event = msg.GetEvents()[0]
-	c.Assert(event.GetUuid(), Equals, splitUuid)
-	begin, _ = util.ParseTime(event.GetBegin())
-	c.Assert(begin, Equals, replayBegin.Add(31*time.Second))
-	splitEvent = services.CloneEvent(event)
-	event = msg.GetEvents()[1]
+	event = getEvent(msg.GetEvents(), id)
+	c.Assert(event, NotNil)
 	end, _ = util.ParseTime(event.GetEnd())
-	c.Assert(event.GetUuid(), Equals, id)
-	c.Assert(end, Equals, replayBegin.Add(31*time.Second))
+	c.Assert(end, Equals, f.replayBegin.Add(31*time.Second))
 	validEvent = services.CloneEvent(event)
+	event = getEvent(msg.GetEvents(), splitUuid)
+	c.Assert(event, NotNil)
+	begin, _ = util.ParseTime(event.GetBegin())
+	c.Assert(begin, Equals, f.replayBegin.Add(31*time.Second))
+	splitEvent = services.CloneEvent(event)
 
 	// Removing a replay event fills the gap with the previous event
 	err = f.controller.DeleteEvent(f.session, splitUuid)
 	c.Assert(err, IsNil)
-	msg = waitBroadcastTag(messages, sdk.MessageTag_delete_events)
+	msg = waitBroadcastTag(f.messages, sdk.MessageTag_delete_events)
 	c.Assert(msg, NotNil)
-	msg = waitBroadcastTag(messages, sdk.MessageTag_update_events)
+	msg = waitBroadcastTag(f.messages, sdk.MessageTag_update_events)
 	c.Assert(msg, NotNil)
 	event = msg.GetEvents()[0]
 	end, _ = util.ParseTime(event.GetEnd())
 	c.Assert(event.GetUuid(), Equals, id)
-	c.Assert(end, Equals, replayEnd)
-	c.Assert(string(event.Action.GetPayload()), Equals, `{"begin":false,"end":false,"enabled":true}`)
+	c.Assert(end, Equals, f.replayEnd)
+	checkPayload(c, event, false, false, true)
 
 	// Cannot remove the last event
 	err = f.controller.DeleteEvent(f.session, id)
@@ -1436,139 +1497,174 @@ func (t *TestSuite) TestChangeReplayRangeDates(c *C) {
 }
 
 func (t *TestSuite) TestReplayRangeSendSkipToDate(c *C) {
-	f := t.MakeFixture(c, true)
-	defer f.Close()
-	f.sword.WaitForStatus(services.SwordStatusConnected)
-
-	// Initialize replay informations
-	link, err := f.controller.RegisterObserver(f.session, services.EventFilterConfig{})
-	c.Assert(err, IsNil)
-	defer f.controller.UnregisterObserver(f.session, link)
-	messages := make(chan interface{})
-	go func() {
-		for msg := range link.Listen() {
-			messages <- msg
-		}
-	}()
-	msg := waitBroadcastTag(messages, sdk.MessageTag_update_services)
-	c.Assert(msg, NotNil)
-	detached := f.server.GetLinks()
-	defer detached.Close()
-	for slink := range detached {
-		f.server.WriteDispatcherToClient(slink, 1, 0,
-			&sword.DispatcherToClient_Content{
-				ServicesDescription: &sword.ServicesDescription{
-					Services: []string{"struct replay::Service"},
-				},
-			})
-	}
-	msg = waitBroadcastTag(messages, sdk.MessageTag_update_services)
-	c.Assert(msg, NotNil)
-	// Replay range with 1mn length
-	replayBegin := time.Now().Truncate(time.Second).UTC()
-	replayEnd := replayBegin.Add(60 * time.Second)
-	for slink := range detached {
-		f.server.WriteReplayToClient(slink, 1, 0,
-			&sword.ReplayToClient_Content{
-				ControlReplayInformation: &sword.ControlReplayInformation{
-					CurrentTick:     proto.Int32(0),
-					InitialDateTime: swapi.MakeDateTime(replayBegin),
-					EndDateTime:     swapi.MakeDateTime(replayEnd),
-					DateTime:        swapi.MakeDateTime(replayBegin),
-					TickDuration:    proto.Int32(1),
-					TimeFactor:      proto.Int32(1),
-					Status:          sword.EnumSimulationState_running.Enum(),
-					TickCount:       proto.Int32(60),
-				},
-			})
-	}
-	msg = waitBroadcastTag(messages, sdk.MessageTag_update_events)
-	c.Assert(msg, NotNil)
+	now := time.Now().Truncate(time.Second).UTC()
+	f, msg := t.MakeReplayFixture(c, true, now, now.Add(60*time.Second))
+	defer f.CloseReplay()
 	event := msg.GetEvents()[0]
 	checkIsReplayEvent(c, event)
 	c.Assert(event.GetName(), Equals, "Replay range")
 	c.Assert(event.GetInfo(), Equals, "")
+	id := event.GetUuid()
 	validEvent := services.CloneEvent(event)
 
 	// Split and disable first display range
 	event = services.CloneEvent(validEvent)
 	splitUuid := uuid.New()
 	event.Uuid = proto.String(splitUuid)
-	event.Begin = proto.String(util.FormatTime(replayBegin.Add(30 * time.Second)))
+	event.Begin = proto.String(util.FormatTime(f.replayBegin.Add(30 * time.Second)))
 	f.controller.UpdateEvents(f.session, event)
-	msg = waitBroadcastTag(messages, sdk.MessageTag_update_events)
+	msg = waitBroadcastTag(f.messages, sdk.MessageTag_update_events)
 	c.Assert(msg, NotNil)
 	c.Assert(len(msg.GetEvents()), Equals, 2)
+	validEvent = services.CloneEvent(getEvent(msg.GetEvents(), id))
 	event = services.CloneEvent(validEvent)
-	event.End = proto.String(util.FormatTime(replayBegin.Add(30 * time.Second)))
+	//event.End = proto.String(util.FormatTime(f.replayBegin.Add(30 * time.Second)))
 	event.Action.Payload, _ = json.Marshal(&sdk.ReplayPayload{Enabled: proto.Bool(false)})
+	_, err := f.controller.UpdateEvents(f.session, event)
+	c.Assert(err, IsNil)
+	msg = waitBroadcastTag(f.messages, sdk.MessageTag_update_events)
+	c.Assert(msg, NotNil)
+	c.Assert(len(msg.GetEvents()), Equals, 1)
+	checkPayload(c, msg.GetEvents()[0], false, true, false)
+	validEvent = services.CloneEvent(msg.GetEvents()[0])
+
+	// First replay range can be resplitted
+	event = services.CloneEvent(validEvent)
+	splitUuid = uuid.New()
+	event.Uuid = proto.String(splitUuid)
+	event.Begin = proto.String(util.FormatTime(f.replayBegin.Add(15 * time.Second)))
+	event.Name = proto.String("")
+	event.Info = proto.String("")
 	_, err = f.controller.UpdateEvents(f.session, event)
 	c.Assert(err, IsNil)
-	msg = waitBroadcastTag(messages, sdk.MessageTag_update_events)
+	msg = waitBroadcastTag(f.messages, sdk.MessageTag_update_events)
 	c.Assert(msg, NotNil)
-	c.Assert(string(msg.GetEvents()[0].Action.GetPayload()), Equals, `{"begin":false,"end":true,"enabled":false}`)
 
 	// ticking in a deactivated sends skip to date to replay server
-	current := replayBegin.Add(time.Second)
-	for slink := range detached {
-		f.server.WriteToClient(slink, 1, 0,
-			&sword.SimToClient_Content{
-				ControlInformation: &sword.ControlInformation{
-					CurrentTick:         proto.Int32(1),
-					InitialDateTime:     swapi.MakeDateTime(replayBegin),
-					DateTime:            swapi.MakeDateTime(current),
-					TickDuration:        proto.Int32(1),
-					TimeFactor:          proto.Int32(1),
-					CheckpointFrequency: proto.Int32(0),
-					Status:              sword.EnumSimulationState_running.Enum(),
-					SendVisionCones:     proto.Bool(false),
-					ProfilingEnabled:    proto.Bool(false),
-				},
-			})
-	}
-	msg = waitBroadcastTag(messages, sdk.MessageTag_update_session)
+	current := f.replayBegin.Add(time.Second)
+	msg = f.UpdateSimInformation(f.replayBegin, current, 1)
+	c.Assert(msg, NotNil)
 
 	// ticking is disabled until it reaches an activated replay range
-	current = replayBegin.Add(29 * time.Second)
-	for slink := range detached {
-		f.server.WriteToClient(slink, 1, 0,
-			&sword.SimToClient_Content{
-				ControlInformation: &sword.ControlInformation{
-					CurrentTick:         proto.Int32(29),
-					InitialDateTime:     swapi.MakeDateTime(replayBegin),
-					DateTime:            swapi.MakeDateTime(current),
-					TickDuration:        proto.Int32(1),
-					TimeFactor:          proto.Int32(1),
-					CheckpointFrequency: proto.Int32(0),
-					Status:              sword.EnumSimulationState_running.Enum(),
-					SendVisionCones:     proto.Bool(false),
-					ProfilingEnabled:    proto.Bool(false),
-				},
-			})
-	}
-	msg = waitBroadcastTag(messages, sdk.MessageTag_update_session)
+	current = f.replayBegin.Add(29 * time.Second)
+	msg = f.UpdateSimInformation(f.replayBegin, current, 29)
 	c.Assert(msg, NotNil)
 	c.Assert(msg.Tick, IsNil)
 
-	current = replayBegin.Add(35 * time.Second)
-	for slink := range detached {
-		f.server.WriteToClient(slink, 1, 0,
-			&sword.SimToClient_Content{
-				ControlInformation: &sword.ControlInformation{
-					CurrentTick:         proto.Int32(35),
-					InitialDateTime:     swapi.MakeDateTime(replayBegin),
-					DateTime:            swapi.MakeDateTime(current),
-					TickDuration:        proto.Int32(1),
-					TimeFactor:          proto.Int32(1),
-					CheckpointFrequency: proto.Int32(0),
-					Status:              sword.EnumSimulationState_running.Enum(),
-					SendVisionCones:     proto.Bool(false),
-					ProfilingEnabled:    proto.Bool(false),
-				},
-			})
-	}
-	msg = waitBroadcastTag(messages, sdk.MessageTag_update_session)
+	current = f.replayBegin.Add(35 * time.Second)
+	msg = f.UpdateSimInformation(f.replayBegin, current, 35)
 	c.Assert(msg, NotNil)
 	currentTime, _ := util.ParseTime(msg.Session.GetTime())
 	c.Assert(currentTime, Equals, current)
+}
+
+func (t *TestSuite) TestReplayCanLoadPreviouslySavedRanges(c *C) {
+	begin, _ := util.ParseTime("2009-11-26T16:52:58Z")
+	end, _ := util.ParseTime("2009-11-26T20:29:08Z")
+	f, msg := t.MakeReplayFixture(c, true, begin, end)
+	defer f.CloseReplay()
+	c.Assert(len(msg.GetEvents()), Equals, 1)
+	input := `
+	[
+		{
+			"action": {
+				"apply": false,
+				"payload": "eyJiZWdpbiI6ZmFsc2UsImVuZCI6dHJ1ZSwiZW5hYmxlZCI6dHJ1ZX0=",
+				"target": "replay://simulation"
+			},
+			"begin": "2009-11-26T16:52:58Z",
+			"done": false,
+			"end": "2009-11-26T17:49:14Z",
+			"error_code": 0,
+			"error_text": "",
+			"info": "",
+			"metadata": "",
+			"name": "Replay range",
+			"parent": "",
+			"read_only": false,
+			"uuid": "90523a68-0df7-4e1f-baf9-d3ef25a3c4e4"
+		},
+		{
+			"action": {
+				"apply": false,
+				"payload": "eyJiZWdpbiI6dHJ1ZSwiZW5kIjp0cnVlLCJlbmFibGVkIjpmYWxzZX0=",
+				"target": "replay://simulation"
+				},
+			"begin": "2009-11-26T17:49:14Z",
+			"done": false,
+			"end": "2009-11-26T18:11:34Z",
+			"error_code": 0,
+			"error_text": "",
+			"info": "",
+			"metadata": "",
+			"name": "Replay range",
+			"parent": "",
+			"read_only": false,
+			"uuid": "c5b31f45-6e1b-4aaa-a3ed-88ee32dd4e4a"
+		},
+		{
+			"action": {
+				"apply": false,
+				"payload": "eyJiZWdpbiI6dHJ1ZSwiZW5kIjp0cnVlLCJlbmFibGVkIjp0cnVlfQ==",
+				"target": "replay://simulation"
+			},
+			"begin": "2009-11-26T18:11:34Z",
+			"done": false,
+			"end": "2009-11-26T19:28:00Z",
+			"error_code": 0,
+			"error_text": "",
+			"info": "",
+			"metadata": "",
+			"name": "Replay range",
+			"parent": "",
+			"read_only": false,
+			"uuid": "628209ba-7399-4392-9e76-8fbd87d7aa88"
+		},
+		{
+			"action": {
+				"apply": false,
+				"payload": "eyJiZWdpbiI6dHJ1ZSwiZW5kIjp0cnVlLCJlbmFibGVkIjpmYWxzZX0=",
+				"target": "replay://simulation"
+			},
+			"begin": "2009-11-26T19:28:00Z",
+			"done": false,
+			"end": "2009-11-26T19:39:10Z",
+			"error_code": 0,
+			"error_text": "",
+			"info": "",
+			"metadata": "",
+			"name": "Replay range",
+			"parent": "",
+			"read_only": false,
+			"uuid": "ab692f5b-70ab-4ab3-a95b-aafa34f5d367"
+		},
+		{
+			"action": {
+				"apply": false,
+				"payload": "eyJiZWdpbiI6dHJ1ZSwiZW5kIjpmYWxzZSwiZW5hYmxlZCI6ZmFsc2V9",
+				"target": "replay://simulation"
+			},
+			"begin": "2009-11-26T19:39:10Z",
+			"done": false,
+			"end": "2009-11-26T20:29:08Z",
+			"error_code": 0,
+			"error_text": "",
+			"info": "",
+			"metadata": "",
+			"name": "Replay range",
+			"parent": "",
+			"read_only": false,
+			"uuid": "5134c84b-de97-4b6b-a163-ae54905775e3"
+		}
+	]`
+	expected := []*sdk.Event{}
+	json.Unmarshal([]byte(input), &expected)
+	actual, err := f.controller.UpdateEvents(f.session, expected...)
+	c.Assert(err, IsNil)
+	c.Assert(len(actual), Equals, len(expected))
+	checkEvent(c, expected[0], actual, false, true, true)  // enabled
+	checkEvent(c, expected[1], actual, true, true, false)  // disabled
+	checkEvent(c, expected[2], actual, true, true, true)   // enabled
+	checkEvent(c, expected[3], actual, true, true, false)  // disabled
+	checkEvent(c, expected[4], actual, true, false, false) // disabled
 }
