@@ -288,14 +288,14 @@ func (s EventCheckers) CheckEvents(events ...*sdk.Event) ([]*sdk.Event, bool, er
 	return events, false, nil
 }
 
-func (s EventCheckers) CheckDeleteEvent(uuid string) error {
+func (s EventCheckers) CheckDeleteEvent(uuid string) (string, error) {
 	for _, checker := range s {
-		err := checker.CheckDeleteEvent(uuid)
+		uuid, err := checker.CheckDeleteEvent(uuid)
 		if err != nil {
-			return err
+			return uuid, err
 		}
 	}
-	return nil
+	return uuid, nil
 }
 
 func (s EventListeners) UpdateEncodedEvents(events EventSlice, encoded []*sdk.Event) {
@@ -485,11 +485,11 @@ func (s *Session) UpdateEvents(events ...*sdk.Event) ([]*sdk.Event, error) {
 }
 
 func (s *Session) DeleteEvent(uuid string) error {
-	event := s.events.Find(uuid)
-	err := s.checkers.CheckDeleteEvent(uuid)
+	uuid, err := s.checkers.CheckDeleteEvent(uuid)
 	if err != nil {
 		return err
 	}
+	event := s.events.Find(uuid)
 	updates, encoded := EventSlice{}, []*sdk.Event{}
 	parent := &Event{}
 	if event != nil {

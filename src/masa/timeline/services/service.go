@@ -45,7 +45,7 @@ type Service interface {
 
 type EventChecker interface {
 	CheckEvents(events ...*sdk.Event) ([]*sdk.Event, bool, error) // validate event upon creation or update, returns events modifications
-	CheckDeleteEvent(uuid string) error                           // validate event deletion
+	CheckDeleteEvent(uuid string) (string, error)                 // validate event deletion
 }
 
 type EventListener interface {

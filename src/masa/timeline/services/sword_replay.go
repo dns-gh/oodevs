@@ -367,16 +367,18 @@ func (s *Sword) CheckEvents(events ...*sdk.Event) ([]*sdk.Event, bool, error) {
 	return result, modified, nil
 }
 
-func (s *Sword) CheckDeleteEvent(uuid string) error {
-	for _, replay := range s.replays {
+func (s *Sword) CheckDeleteEvent(uuid string) (string, error) {
+	for index, replay := range s.replays {
 		if uuid == replay.GetUuid() {
 			if len(s.replays) < 2 {
-				return util.NewError(http.StatusBadRequest, "Cannot remove the last replay event")
+				return uuid, util.NewError(http.StatusBadRequest, "Cannot remove the last replay event")
+			} else if index == 0 {
+				return s.replays[1].GetUuid(), nil
 			}
-			return nil
+			return uuid, nil
 		}
 	}
-	return nil
+	return uuid, nil
 }
 
 func isActivated(event *sdk.Event) bool {
