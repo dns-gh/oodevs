@@ -10,7 +10,7 @@
 #ifndef __ReportsFactory_h_
 #define __ReportsFactory_h_
 
-#include <unordered_map>
+#include <unordered_set>
 
 class AgentsModel;
 class Publisher_ABC;
@@ -95,7 +95,7 @@ private:
     std::map< unsigned int, std::deque< Message > > messages_;
     // Entity with unread reports
     std::deque< unsigned int > entities_;
-    std::unordered_map< unsigned int, unsigned int > entitiesMap_;
+    std::unordered_set< unsigned int > entitiesSet_;
     //@}
 };
 
