@@ -232,11 +232,15 @@ void SvgLocationDrawer::VisitText( const QString& text, const QFont& font, const
     {
         if( imageText_.isNull() || text_ != text || font_ != font || colorChanged_ )
         {
-            imageText_ = tools::DrawText( text, font, overlined_ ? color_.light( 120 ) : color_ );
+            imageText_ = tools::DrawText( text, font, color_ );
             text_ = text;
             font_ = font;
         }
-        tools_->DrawShapeText( imageText_, point );
+        if( overlined_ )
+            glColor3f( static_cast< GLfloat >( color_.redF() ),
+                       static_cast< GLfloat >( color_.greenF() ),
+                       static_cast< GLfloat >( color_.blueF() ) );
+        tools_->DrawShapeText( imageText_, point, overlined_ );
     }
 }
 
