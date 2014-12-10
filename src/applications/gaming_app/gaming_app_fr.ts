@@ -2772,7 +2772,7 @@ Ces données ne peuvent pas être projetées.</translation>
     </message>
     <message>
         <source>Sweep mines</source>
-        <translation>Déminer</translation>
+        <translation>Dévaloriser</translation>
     </message>
     <message>
         <source>Alert</source>
