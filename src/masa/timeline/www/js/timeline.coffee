@@ -100,7 +100,9 @@ enable_popover = (el, enabled) ->
 
 get_zone = (y, h, pos) ->
     # each zone is at least 1 pixel
-    max = imax 1, (h - y) / 8
+    height = h - y
+    dragZone = imin height / 2, 12 # drag zone is 12 pixels maximum
+    max = imax 1, dragZone
     if Math.abs(pos - y) < max
         return -1
     else if Math.abs(pos - h) < max
@@ -228,9 +230,9 @@ class VerticalLayout
         h = parseFloat el.attr "height"
         return [y, y + h]
 
-    lane_zone: (el) ->
+    lane_zone: (el, delta) ->
         [y, h] = @lane_size el
-        switch get_zone y, h, d3.event.y
+        switch get_zone y-delta, h + delta, d3.event.y
             when -1 then "top"
             when +1 then "bottom"
             else "middle"
@@ -514,9 +516,9 @@ class HorizontalLayout
         w = parseFloat el.attr "width"
         return [x, x + w]
 
-    lane_zone: (el) ->
+    lane_zone: (el,delta) ->
         [x, w] = @lane_size el
-        switch get_zone x, w, d3.event.x
+        switch get_zone x-delta, w+delta, d3.event.x
             when -1 then "left"
             when +1 then "right"
             else "middle"
@@ -730,7 +732,7 @@ class Replay
     on_range_hover: (el, d) ->
         el = d3.select el
         cursor = null
-        switch @timeline.get_range_zone el
+        switch @timeline.get_range_zone el, 2
             when "top"    then cursor = "n-resize"
             when "bottom" then cursor = "s-resize"
             when "left"   then cursor = "w-resize"
@@ -743,19 +745,18 @@ class Replay
 
     range_drag_move: (el, d) ->
         element = d3.select el
-        return unless @timeline.layout.select( d3.event.dx, d3.event.dy)
         pos = @timeline.layout.select d3.event.x, d3.event.y
+        return unless pos
         event = @timeline.model.get d.id
         old = min: d.min, max: d.max
         unless @timeline.range_offsets?
-            range_zone = @timeline.get_range_zone(element)
-            @timeline.range_zone = range_zone
+            @timeline.range_zone = @timeline.get_range_zone element, 0
             enable_popover el, false
             first = pos - @timeline.layout.select d3.event.dx, d3.event.dy
             @timeline.range_offsets = (first - @timeline.scale x for x in [d.min, d.max])
             @timeline.lock()
             set_dom_topz el
-        return unless @timeline.range_zone != "middle"
+        return if @timeline.range_zone == "middle"
         @timeline.layout.lane_move d, @timeline.range_zone, pos, @timeline.range_offsets
         if d.idx != 0
             previous = @model.replays[d.idx-1]
@@ -810,7 +811,7 @@ class Replay
             )
             .attr
                 class: "replay_range"
-            .on("mousemove", (d) -> that.on_range_hover this, d )
+            .on("mousemove", (d) -> that.on_range_hover this, d)
             .on("mouseout",  -> that.timeline.on_range_hover_out this)
             .call d3.behavior.drag()
             .on("dragstart", (d) -> that.timeline.range_drag_begin this, d)
@@ -1022,14 +1023,14 @@ class Timeline
             .remove()
             .each((d) -> $(this).popover "destroy")
 
-    get_range_zone: (el) ->
+    get_range_zone: (el, delta) ->
         return @range_zone if @range_zone?
-        return @layout.lane_zone el
+        return @layout.lane_zone el, delta
 
     on_range_hover: (el) ->
         el = d3.select el
         cursor = "pointer"
-        switch @get_range_zone el
+        switch @get_range_zone el, 0
             when "top"    then cursor = "n-resize"
             when "bottom" then cursor = "s-resize"
             when "left"   then cursor = "w-resize"
@@ -1051,7 +1052,7 @@ class Timeline
         unless @range_offsets?
             enable_popover dom, false
             first = pos - @layout.select d3.event.dx, d3.event.dy
-            @range_zone = @get_range_zone el
+            @range_zone = @get_range_zone el, 0
             @range_offsets = (first - @scale x for x in [d.min, d.max])
             @range_children = {}
             for k, v of event.children
