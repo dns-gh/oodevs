@@ -88,11 +88,16 @@ bool ReportsPlugin::HandleClientTo( const M& msg, dispatcher::RewritingPublisher
         return false;
     const auto& message = msg.message().list_reports();
 
+    std::set< unsigned int > entities;
+    for( int i = 0; i < message.entities_size(); ++i )
+        entities.insert( message.entities( i ) );
+
     R reply;
     auto& ack = *reply.mutable_message()->mutable_list_reports_ack();
     ack.set_error_code( sword::ListReportsAck::no_error );
     reports_->ListReports( *reply.mutable_message()->mutable_list_reports_ack(),
         message.max_count(),
+        entities,
         message.has_report() ? boost::optional< unsigned int >( message.report() ) : boost::none,
         0,
         message.has_tick() ? message.tick() : std::numeric_limits< int >::max() );
@@ -104,6 +109,7 @@ void ReportsPlugin::SendState( dispatcher::ClientPublisher_ABC& publisher )
 {
     sword::ListReportsAck list;
     reports_->ListReports( list, std::numeric_limits< int >::max(),
+        std::set< unsigned int >(),
         boost::none,
         std::max< int >( 0, currentTick_ - frequency_ ),
         currentTick_ );

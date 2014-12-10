@@ -2067,9 +2067,10 @@ func (c *Client) CreateReport(count, report, source uint32, reportParams ...*swo
 	return <-c.postSimRequest(msg, defaultMagicHandler)
 }
 
-func (c *Client) ListReports(maxCount, start uint32) ([]*sword.Report, uint32, error) {
+func (c *Client) ListReports(maxCount, start uint32, entities ...uint32) ([]*sword.Report, uint32, error) {
 	param := sword.ListReports{
 		MaxCount: proto.Uint32(maxCount),
+		Entities: entities,
 	}
 	if start != 0 {
 		param.Report = proto.Uint32(start)

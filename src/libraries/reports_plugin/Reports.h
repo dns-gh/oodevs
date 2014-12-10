@@ -15,6 +15,7 @@
 #include <boost/noncopyable.hpp>
 #include <boost/shared_ptr.hpp>
 #include <memory>
+#include <set>
 #include <vector>
 
 namespace tools
@@ -48,6 +49,7 @@ public:
     // If no transaction is open, one will be created.
     void AddReport( const sword::Report& report, int tick );
     void ListReports( sword::ListReportsAck& reports, unsigned int count,
+                      const std::set< unsigned int >& entities,
                       const boost::optional< unsigned int >& fromReport,
                       int fromTick,
                       int toTick );

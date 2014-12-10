@@ -211,6 +211,7 @@ namespace
 }
 
 void Reports::ListReports( sword::ListReportsAck& reports, unsigned int count,
+                           const std::set< unsigned int >& entities,
                            const boost::optional< unsigned int >& fromReport,
                            int fromTick,
                            int toTick )
@@ -227,9 +228,21 @@ void Reports::ListReports( sword::ListReportsAck& reports, unsigned int count,
             ",      tick "
             ",      parameters "
             "FROM   reports "
-            "WHERE (tick BETWEEN ? AND ?) ";
-        if( fromReport )
-            sql += "AND id >= ? ";
+            "WHERE (tick BETWEEN ? AND ?) "
+            "AND id >= ? ";
+
+        if( !entities.empty() )
+        {
+            sql += "AND source IN (";
+            for( int i = 0 ; i < entities.size(); ++i )
+            {
+                if( i != 0 )
+                    sql += ",";
+                sql += "?";
+            }
+            sql += ") ";
+        }
+
         sql += "ORDER BY id ASC "
                "LIMIT  ? ";
 
@@ -238,8 +251,11 @@ void Reports::ListReports( sword::ListReportsAck& reports, unsigned int count,
 
         st->Bind( fromTick );
         st->Bind( toTick );
-        if( fromReport )
-            st->Bind( *fromReport );
+        st->Bind( fromReport ? *fromReport : 0 );
+
+        for( auto it = entities.begin() ; it != entities.end(); ++it )
+             st->Bind( *it );
+
         st->Bind( count + 1 );
 
         while( st->Next() )

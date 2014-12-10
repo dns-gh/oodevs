@@ -565,9 +565,12 @@ func CheckReportOrder(c *C, first, second *sword.Report) {
 	c.Assert(first.GetReport().GetId(), Lesser, second.GetReport().GetId())
 }
 
+const (
+	startMissionId = uint32(79)
+)
+
 func CreateReports(c *C, client *swapi.Client) {
 	// Create a bunch of reports
-	startMissionId := uint32(79)
 	unitId := getSomeUnit(c, client.Model.GetData()).Id
 	err := client.CreateReport(10, startMissionId, unitId)
 	c.Assert(err, IsNil)
@@ -620,6 +623,26 @@ func (s *TestSuite) TestListReports(c *C) {
 	if len(reports) != 0 {
 		CheckReportOrder(c, reports[0], reports[len(reports)-1])
 	}
+
+	// Get reports of an entity
+	unitId := getSomeUnit(c, client.Model.GetData()).Id
+	err = client.CreateReport(2, startMissionId, unitId)
+	c.Assert(err, IsNil)
+
+	unitReports, _, err := client.ListReports(math.MaxInt32, 0, unitId)
+	c.Assert(err, IsNil)
+	c.Assert(len(unitReports), Greater, 0)
+
+	for _, v := range unitReports {
+		c.Assert(unitId, Equals, v.GetSource().GetUnit().GetId())
+	}
+
+	automatId := getSomeAutomat(c, client.Model.GetData()).Id
+	err = client.CreateReport(2, startMissionId, automatId)
+
+	reports, _, err = client.ListReports(math.MaxInt32, 0, unitId, automatId)
+	c.Assert(err, IsNil)
+	c.Assert(len(reports), Greater, len(unitReports))
 }
 
 func (s *TestSuite) TestCheckpointListReports(c *C) {
