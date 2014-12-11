@@ -23,9 +23,12 @@ namespace gui
 namespace kernel
 {
     class Agent_ABC;
+    class Automat_ABC;
     class Controllers;
     class Entity_ABC;
+    class Formation_ABC;
     class KnowledgeConverter_ABC;
+    class Team_ABC;
 }
 
 class Explosions;
@@ -44,7 +47,10 @@ class FireResultListView : public QTreeView
                          , public tools::Observer_ABC
                          , public tools::SelectionObserver< kernel::Entity_ABC >
                          , public tools::ElementObserver_ABC< Explosions >
-                         , public tools::ElementObserver_ABC< kernel::Entity_ABC >
+                         , public tools::ElementObserver_ABC< kernel::Team_ABC >
+                         , public tools::ElementObserver_ABC< kernel::Formation_ABC >
+                         , public tools::ElementObserver_ABC< kernel::Automat_ABC >
+                         , public tools::ElementObserver_ABC< kernel::Agent_ABC >
 {
     Q_OBJECT
 
@@ -79,10 +85,24 @@ private:
 
     virtual void NotifySelected( const kernel::Entity_ABC* element );
     virtual void NotifyUpdated( const Explosions& results );
-    virtual void NotifyUpdated( const kernel::Entity_ABC& entity );
-    virtual void NotifyDeleted( const kernel::Entity_ABC& entity );
+    virtual void NotifyCreated( const kernel::Team_ABC& team );
+    virtual void NotifyUpdated( const kernel::Team_ABC& team );
+    virtual void NotifyDeleted( const kernel::Team_ABC& team );
+    virtual void NotifyCreated( const kernel::Formation_ABC& formation );
+    virtual void NotifyUpdated( const kernel::Formation_ABC& formation );
+    virtual void NotifyDeleted( const kernel::Formation_ABC& formation );
+    virtual void NotifyCreated( const kernel::Automat_ABC& automat );
+    virtual void NotifyUpdated( const kernel::Automat_ABC& automat );
+    virtual void NotifyDeleted( const kernel::Automat_ABC& automat );
+    virtual void NotifyCreated( const kernel::Agent_ABC& agent );
+    virtual void NotifyUpdated( const kernel::Agent_ABC& agent );
+    virtual void NotifyDeleted( const kernel::Agent_ABC& agent );
+
+    void UpdateNamesIfIsInHierarchy( const kernel::Entity_ABC& entity );
+    void RebuildModelIfIsInHierarchy( const kernel::Entity_ABC& entity );
+
     void UpdateDisplay();
-    void DisplaySelection();
+    void RebuildModel();
     void Display( const AgentFireResult& result );
     void Display( const PopulationFireResult& result );
     void Display( const Equipment& equipment, QStandardItem& parent );

@@ -57,9 +57,9 @@ DirectFire::DirectFire( const sword::StartUnitFire& message, kernel::Controller&
     : Fire_ABC( agentResolver.Get( message.firing_unit().id() ) )
     , controller_( controller )
     , profile_( profile )
-    , target_( GetTarget( message, agentResolver, populationResolver ) )
-    , isTarget_( target_.GetId() == entityId )
-    , position_( isTarget_ ? GetPosition( origin_ ) : GetPosition( target_, origin_ ) )
+    , target_( controller, &GetTarget( message, agentResolver, populationResolver ) )
+    , isTarget_( target_->GetId() == entityId )
+    , position_( isTarget_ ? GetPosition( origin_ ) : GetPosition( *target_, origin_ ) )
 {
     controller_.Update( gui::SoundEvent( &origin_, "directfire", gui::SoundEvent::eStart ) );
 }
@@ -92,8 +92,8 @@ void DirectFire::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& 
     {
         if( isTarget_ )
             DrawArrow( ComputePosition( origin_ ), where, viewport, view );
-        else
-            DrawArrow( where, ComputePosition( target_ ), viewport, view );
+        else if( target_ )
+            DrawArrow( where, ComputePosition( *target_ ), viewport, view );
     }
 }
 

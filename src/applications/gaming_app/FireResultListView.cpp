@@ -16,11 +16,14 @@
 #include "clients_gui/Roles.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/AgentKnowledge_ABC.h"
+#include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/KnowledgeConverter_ABC.h"
 #include "clients_kernel/Controllers.h"
+#include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/Population_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
+#include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/Tools.h"
 #include "gaming/PopulationFireResult.h"
 #include "gaming/AgentFireResult.h"
@@ -284,10 +287,10 @@ namespace
 }
 
 // -----------------------------------------------------------------------------
-// Name: FireResultListView::DisplaySelection
+// Name: FireResultListView::RebuildModel
 // Created: ABR 2014-08-25
 // -----------------------------------------------------------------------------
-void FireResultListView::DisplaySelection()
+void FireResultListView::RebuildModel()
 {
     explosions_.clear();
     if( selected_ )
@@ -304,13 +307,9 @@ void FireResultListView::NotifySelected( const kernel::Entity_ABC* element )
     if( element == selected_ )
         return;
     selected_ = element;
-    DisplaySelection();
+    RebuildModel();
 }
 
-// -----------------------------------------------------------------------------
-// Name: FireResultListView::NotifyUpdated
-// Created: SBO 2007-02-15
-// -----------------------------------------------------------------------------
 void FireResultListView::NotifyUpdated( const Explosions& results )
 {
     if( !selected_ || std::find( explosions_.begin(), explosions_.end(), &results ) == explosions_.end() )
@@ -318,25 +317,80 @@ void FireResultListView::NotifyUpdated( const Explosions& results )
     UpdateDisplay();
 }
 
-// -----------------------------------------------------------------------------
-// Name: FireResultListView::NotifyDeleted
-// Created: ABR 2014-08-25
-// -----------------------------------------------------------------------------
-void FireResultListView::NotifyDeleted( const kernel::Entity_ABC& entity )
+void FireResultListView::NotifyCreated( const kernel::Team_ABC& team )
 {
-    auto* hierarchy = entity.Retrieve< kernel::TacticalHierarchies >();
-    if( selected_ == &entity ||
-        selected_ && hierarchy && hierarchy->IsSubordinateOf( *selected_ ) )
-        DisplaySelection();
+    RebuildModelIfIsInHierarchy( team );
 }
 
-// -----------------------------------------------------------------------------
-// Name: FireResultListView::NotifyUpdated
-// Created: ABR 2014-09-11
-// -----------------------------------------------------------------------------
-void FireResultListView::NotifyUpdated( const kernel::Entity_ABC& entity )
+void FireResultListView::NotifyUpdated( const kernel::Team_ABC& team )
 {
-    for( int i = 0; i < model_[0]->rowCount(); ++i )
+    UpdateNamesIfIsInHierarchy( team );
+}
+
+void FireResultListView::NotifyDeleted( const kernel::Team_ABC& team )
+{
+    RebuildModelIfIsInHierarchy( team );
+}
+
+void FireResultListView::NotifyCreated( const kernel::Formation_ABC& formation )
+{
+    RebuildModelIfIsInHierarchy( formation );
+}
+
+void FireResultListView::NotifyUpdated( const kernel::Formation_ABC& formation )
+{
+    UpdateNamesIfIsInHierarchy( formation );
+}
+
+void FireResultListView::NotifyDeleted( const kernel::Formation_ABC& formation )
+{
+    RebuildModelIfIsInHierarchy( formation );
+}
+
+void FireResultListView::NotifyCreated( const kernel::Automat_ABC& automat )
+{
+    RebuildModelIfIsInHierarchy( automat );
+}
+
+void FireResultListView::NotifyUpdated( const kernel::Automat_ABC& automat )
+{
+    UpdateNamesIfIsInHierarchy( automat );
+}
+
+void FireResultListView::NotifyDeleted( const kernel::Automat_ABC& automat )
+{
+    RebuildModelIfIsInHierarchy( automat );
+}
+
+void FireResultListView::NotifyCreated( const kernel::Agent_ABC& agent )
+{
+    RebuildModelIfIsInHierarchy( agent );
+}
+
+void FireResultListView::NotifyUpdated( const kernel::Agent_ABC& agent )
+{
+    UpdateNamesIfIsInHierarchy( agent );
+}
+
+void FireResultListView::NotifyDeleted( const kernel::Agent_ABC& agent )
+{
+    RebuildModelIfIsInHierarchy( agent );
+}
+
+namespace
+{
+    bool IsInHierarchy( const kernel::Entity_ABC& selected, const kernel::Entity_ABC& entity )
+    {
+        auto* hierarchy = entity.Retrieve< kernel::TacticalHierarchies >();
+        return &selected == &entity || hierarchy && hierarchy->IsSubordinateOf( selected );
+    }
+}
+
+void FireResultListView::UpdateNamesIfIsInHierarchy( const kernel::Entity_ABC& entity )
+{
+    if( !selected_ || !IsInHierarchy( *selected_, entity ) )
+        return;
+    for( int i = 0; i < model_[ 0 ]->rowCount(); ++i )
     {
         if( auto* firerItem = model_[0]->item( i, 1 ) )
             if( const auto* firer = firerItem->data( Qt::UserRole ).value< const kernel::Entity_ABC* >() )
@@ -350,6 +404,12 @@ void FireResultListView::NotifyUpdated( const kernel::Entity_ABC& entity )
                     else if( target->GetTypeName() == kernel::Population_ABC::typeName_ )
                         targetItem->setData( extractor_.GetDisplayName( static_cast< const kernel::Population_ABC& >( entity ) ), Qt::DisplayRole );
     }
+}
+
+void FireResultListView::RebuildModelIfIsInHierarchy( const kernel::Entity_ABC& entity )
+{
+    if( selected_ && IsInHierarchy( *selected_, entity ) )
+        RebuildModel();
 }
 
 void FireResultListView::Purge()

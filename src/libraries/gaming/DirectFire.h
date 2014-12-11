@@ -11,6 +11,7 @@
 #define __DirectFire_h_
 
 #include "Fire_ABC.h"
+#include "clients_kernel/SafePointer.h"
 #include <tools/Resolver_ABC.h>
 
 namespace kernel
@@ -59,7 +60,7 @@ private:
     //@{
     kernel::Controller& controller_;
     const kernel::Profile_ABC& profile_;
-    const kernel::Entity_ABC& target_;
+    kernel::SafePointer< kernel::Entity_ABC > target_;
     bool isTarget_;
     geometry::Point2f position_;
     //@}
