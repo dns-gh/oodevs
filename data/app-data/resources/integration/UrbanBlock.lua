@@ -274,14 +274,14 @@ integration.stopDamageUrbanBlock = function( urbanBlock )
     return true
 end
 
---- Reintegrate the population into the urban block
--- Has to be called by a crows
-integration.reintegrateUrbanBlock = function()
-    DEC_ReintegrateUrbanBlock()
+--- Remove all humans from a crowd
+-- @param crowd Crowd knowledge
+integration.removeAllHumansFromCrowd = function( crowd )
+    _DEC_ReintegrateUrbanBlock( crowd )
 end
 
---- Return the crowd level of angriness 
--- Has to be called by a crows
+--- Return the crowd level of angriness
+-- Has to be called by a crowd
 -- @return integer
 integration.getUrbanBlockAngriness = function()
     return DEC_GetUrbanBlockAngriness()

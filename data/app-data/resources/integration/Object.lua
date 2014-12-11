@@ -331,14 +331,16 @@ end
 
 --- Supply from the given object the list of given resource types
 --- This method must be called continuously on several
---- consecutive ticks for the confinement to take place.
+--- consecutive ticks for the supply to take place.
 -- @param object, decisionnal object
 -- @param resourceType, list of simulation resource type
+-- @param quantity, integer quantity taken for each simulation tick
 -- @return Boolean, true once it is supplied, false otherwise
 integration.supplyObject = masalife.brain.integration.startStopAction( 
 { 
-    start   = function( object, resourceTypes )
-        object.actionSupply = DEC_StartSupplyObject( object.source, resourceTypes, 1000 ) --valeur arbitraire pour prendre une bonne quantité...
+    start   = function( object, resourceTypes, quantity )
+        local quantity = quantity or 1000 --valeur arbitraire pour prendre une bonne quantité...
+        object.actionSupply = DEC_StartSupplyObject( object.source, resourceTypes, quantity )
         actionCallbacks[ object.actionSupply ] = function( arg ) object.actionSupplyState = arg end
     end,
 
@@ -368,14 +370,16 @@ integration.supplyObject = masalife.brain.integration.startStopAction(
 
 --- Extract the list of given resource types from the given object
 --- This method must be called continuously on several
---- consecutive ticks for the confinement to take place.
+--- consecutive ticks for the supply to take place.
 -- @param object, decisionnal object
 -- @param resourceType, list of simulation resource type
+-- @param quantity, integer quantity taken for each simulation tick
 -- @return Boolean, true once it is extracted, false otherwise
 integration.extractObject = masalife.brain.integration.startStopAction(
     { 
-        start = function( object, resourceTypes )
-            object.actionExtract = DEC_StartExtractFromStockObject( object.source, resourceTypes, 1000 )--valeur arbitraire pour prendre une bonne quantité...
+        start = function( object, resourceTypes, quantity )
+            local quantity = quantity or 1000 --valeur arbitraire pour prendre une bonne quantité...
+            object.actionExtract = DEC_StartExtractFromStockObject( object.source, resourceTypes, quantity )
             actionCallbacks[ object.actionExtract ] = function( arg ) object.actionExtractState = arg end
         end, 
 
@@ -402,16 +406,19 @@ integration.extractObject = masalife.brain.integration.startStopAction(
         end,
     } ),
 
---- Distribute the list of given resource types to the given object
+--- Distribute resources in the object to the current agent in order to replenish its stocks.
+--- All resources available in the object will be passed to the agent until either the stocks
+--- of the agent are full or the stocks of the object are empty.
 --- This method must be called continuously on several
---- consecutive ticks for the confinement to take place.
+--- consecutive ticks for the distribution to take place.
 -- @param object, decisionnal object
--- @param resourceType, list of simulation resource type
+-- @param quantity, integer quantity taken for each simulation tick
 -- @return Boolean, true once it is distributed, false otherwise
 integration.distributeObject = masalife.brain.integration.startStopAction(
     { 
-        start = function( object )
-            object.actionDistribute = DEC_StartDistributionObjet( object.source, 1000 )--valeur arbitraire pour prendre une bonne quantité...
+        start = function( object, quantity )
+            local quantity = quantity or 1000 --valeur arbitraire pour prendre une bonne quantité...
+            object.actionDistribute = DEC_StartDistributionObjet( object.source, quantity )
             actionCallbacks[ object.actionDistribute ] = function( arg ) object.actionDistributeState = arg end
         end, 
 
