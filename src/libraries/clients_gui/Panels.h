@@ -27,12 +27,12 @@ namespace gui
 class Panels : public QWidget
              , public gui::PanelStack_ABC
 {
-    Q_OBJECT;
+    Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
     //@{
-    Panels( const QString& objectName, QWidget* pParent );
+             Panels( const QString& objectName, QWidget* pParent );
     virtual ~Panels();
     //@}
 
@@ -41,22 +41,19 @@ public:
     void AddPanel( InfoPanel_ABC* panel );
     virtual void Add( QWidget* widget );
     virtual void Remove( QWidget* widget );
-    void SelectAndLockPanel( int index, bool lock );
+    //@}
+
+public slots:
+    //! @name Slots
+    //@{
+    void Select( int index );
     //@}
 
 private slots:
     //! @name Slots
     //@{
-    void Select( int index );
     void PreviousPage();
     void NextPage();
-    //@}
-
-private:
-    //! @name Copy / Assignment
-    //@{
-    Panels( const Panels& );
-    Panels& operator=( const Panels& );
     //@}
 
 private:
@@ -65,11 +62,9 @@ private:
     typedef std::set< QWidget* >             T_Widgets;
     typedef std::pair< T_Widgets, QWidget* > T_SelectedWidget;
     typedef std::vector< T_SelectedWidget >  T_SelectedWidgets;
-    typedef T_SelectedWidgets::iterator     IT_SelectedWidgets;
 
     typedef std::map< QWidget*, bool > T_PanelStates;
     typedef std::vector< QWidget* > T_Panels;
-    typedef T_Panels::const_iterator CIT_Panels;
     //@}
 
     //! @name Helpers
@@ -79,7 +74,7 @@ private:
     void CheckButtons();
     virtual QSize sizeHint() const;
 
-    IT_SelectedWidgets FindSelectedSet();
+    T_SelectedWidgets::iterator FindSelectedSet();
     void ShowPreferedWidget( QWidget* defaultSelection );
     void SaveSelection( QWidget* widget );
     //@}

@@ -45,13 +45,6 @@ public:
     const QString& GetName() const { return name_; }
     //@}
 
-private:
-    //! @name Copy/Assignment
-    //@{
-    InfoPanel_ABC( const InfoPanel_ABC& );            //!< Copy constructor
-    InfoPanel_ABC& operator=( const InfoPanel_ABC& ); //!< Assignment operator
-    //@}
-
 protected:
     //! @name Member data
     //@{

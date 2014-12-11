@@ -83,7 +83,7 @@ Panels::~Panels()
 void Panels::AddPanel( InfoPanel_ABC* panel )
 {
     stack_->addWidget( panel );
-    panelStates_[panel] = false;
+    panelStates_[ panel ] = false;
     panels_.push_back( panel );
     panel->hide();
 }
@@ -94,7 +94,7 @@ void Panels::AddPanel( InfoPanel_ABC* panel )
 // -----------------------------------------------------------------------------
 void Panels::Select( int index )
 {
-    if( index != -1 && index < int( currentPanels_.size() ) )
+    if( index != -1 && index < static_cast< int >( currentPanels_.size() ) )
     {
         stack_->setCurrentWidget( currentPanels_.at( index ) );
         combo_->setCurrentItem( index );
@@ -112,15 +112,15 @@ void Panels::Select( int index )
 // -----------------------------------------------------------------------------
 void Panels::Select( QWidget* widget )
 {
-    if( currentPanels_.empty() || !widget )
+    if( !widget || currentPanels_.empty() )
     {
         Select( -1 );
         return;
     }
-    for( unsigned int i = 0; i < currentPanels_.size(); ++i )
-        if( currentPanels_[i] == widget )
+    for( std::size_t i = 0; i < currentPanels_.size(); ++i )
+        if( currentPanels_[ i ] == widget )
         {
-            Select( i );
+            Select( static_cast< int >( i ) );
             return;
         }
 }
@@ -134,7 +134,7 @@ void Panels::UpdateCombo()
     combo_->clear();
     currentPanels_.clear();
     for( auto it = panels_.begin(); it != panels_.end(); ++it )
-        if( panelStates_[*it] )
+        if( panelStates_[ *it ] )
         {
             combo_->insertItem( static_cast< InfoPanel_ABC* >( *it )->GetName() );
             currentPanels_.push_back( *it );
@@ -148,16 +148,16 @@ void Panels::UpdateCombo()
 // -----------------------------------------------------------------------------
 void Panels::Add( QWidget* widget )
 {
-    for( unsigned int i = 0; i < currentPanels_.size(); ++i )
-        if( currentPanels_[i] == widget )
+    for( std::size_t i = 0; i < currentPanels_.size(); ++i )
+        if( currentPanels_[ i ] == widget )
             return;
 
     QWidget* selected = 0;
     if( !currentPanels_.empty() )
-        selected = currentPanels_[combo_->currentItem()];
+        selected = currentPanels_[ combo_->currentItem() ];
     else
         selected = widget;
-    panelStates_[widget] = true;
+    panelStates_[ widget ] = true;
     UpdateCombo();
     ShowPreferedWidget( selected );
 }
@@ -170,8 +170,8 @@ void Panels::Remove( QWidget* widget )
 {
     QWidget* selected = 0;
     if( !currentPanels_.empty() )
-        selected = currentPanels_[combo_->currentItem()];
-    panelStates_[widget] = false;
+        selected = currentPanels_[ combo_->currentItem() ];
+    panelStates_[ widget ] = false;
     UpdateCombo();
     ShowPreferedWidget( selected );
 }
@@ -191,7 +191,7 @@ QSize Panels::sizeHint() const
 // -----------------------------------------------------------------------------
 void Panels::ShowPreferedWidget( QWidget* defaultSelection )
 {
-    IT_SelectedWidgets it = FindSelectedSet();
+    auto it = FindSelectedSet();
     if( it != widgets_.end() )
         Select( it->second );
     else
@@ -204,12 +204,12 @@ void Panels::ShowPreferedWidget( QWidget* defaultSelection )
 // -----------------------------------------------------------------------------
 void Panels::SaveSelection( QWidget* widget )
 {
-    IT_SelectedWidgets it = FindSelectedSet();
+    auto it = FindSelectedSet();
     if( it == widgets_.end() )
     {
         widgets_.push_back( T_SelectedWidget() );
-        for( unsigned int i = 0; i < currentPanels_.size(); ++i )
-            widgets_.back().first.insert( currentPanels_[i] );
+        for( std::size_t i = 0; i < currentPanels_.size(); ++i )
+            widgets_.back().first.insert( currentPanels_[ i ] );
         it = widgets_.end() - 1;
     }
     it->second = widget;
@@ -221,8 +221,15 @@ void Panels::SaveSelection( QWidget* widget )
 // -----------------------------------------------------------------------------
 void Panels::CheckButtons()
 {
-    previous_->setEnabled( combo_->currentItem() > 0 );
-    next_->setEnabled( combo_->currentItem() < combo_->count() - 1 );
+    const bool visible = currentPanels_.size() > 1;
+    combo_->setVisible( visible );
+    previous_->setVisible( visible );
+    next_->setVisible( visible );
+    if( visible )
+    {
+        previous_->setEnabled( combo_->currentItem() > 0 );
+        next_->setEnabled( combo_->currentItem() < combo_->count() - 1 );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -249,27 +256,14 @@ void Panels::NextPage()
 // Name: Panels::FindSelectedSet
 // Created: AGE 2006-05-22
 // -----------------------------------------------------------------------------
-Panels::IT_SelectedWidgets Panels::FindSelectedSet()
+Panels::T_SelectedWidgets::iterator Panels::FindSelectedSet()
 {
     T_Widgets current;
     for( unsigned int i = 0; i < currentPanels_.size(); ++i )
         current.insert( currentPanels_[i] );
 
-    IT_SelectedWidgets it = widgets_.begin();
+    auto it = widgets_.begin();
     while( it != widgets_.end() && it->first != current )
         ++it;
     return it;
 }
-
-// -----------------------------------------------------------------------------
-// Name: Panels::LockPanel
-// Created: NPT 2013-02-28
-// -----------------------------------------------------------------------------
-void Panels::SelectAndLockPanel( int index, bool lock )
-{
-    Select( index );
-    combo_->setVisible( !lock );
-    previous_->setVisible( !lock );
-    next_->setVisible( !lock );
-}
-
