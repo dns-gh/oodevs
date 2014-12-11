@@ -10,6 +10,7 @@
 #include "Simulation.h"
 #include "SimulationSenders.h"
 
+#include <tools/Helpers.h>
 #pragma warning( push, 0 )
 #include <google/protobuf/descriptor.h>
 #pragma warning( pop )
@@ -188,9 +189,9 @@ bool protocol::IsNull( const sword::MissionParameters& params, int i )
     return params.elem( i ).null_value();
 }
 
-const std::string& protocol::GetString( const sword::MissionParameters& params, int i, int j, int k )
+std::string protocol::GetString( const sword::MissionParameters& params, int i, int j, int k )
 {
-    return GetValue< String >( params, i, j, k );
+    return tools::ToUtf8( GetValue< String >( params, i, j, k ) );
 }
 
 bool protocol::GetBool( const sword::MissionParameters& params, int i, int j, int k )
