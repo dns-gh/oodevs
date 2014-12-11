@@ -137,9 +137,9 @@ bool UnitFilter::IsVisibleInHierarchy( const kernel::Knowledge_ABC& knowledge ) 
 // Name: UnitFilter::CanBeOrdered
 // Created: AGE 2006-11-29
 // -----------------------------------------------------------------------------
-bool UnitFilter::CanBeOrdered( const Entity_ABC& entity ) const
+bool UnitFilter::CanBeOrdered( const Entity_ABC& entity, bool forceInReplay ) const
 {
-    return IsInHierarchy( entity ) && forward_.CanBeOrdered( entity );
+    return IsInHierarchy( entity ) && forward_.CanBeOrdered( entity, forceInReplay );
 }
 
 // -----------------------------------------------------------------------------

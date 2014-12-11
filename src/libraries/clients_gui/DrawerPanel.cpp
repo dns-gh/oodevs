@@ -456,7 +456,7 @@ void DrawerPanel::UpdateDrawButton()
         entity = selectedDrawing_->GetDiffusionEntity();
     else
         entity = selectedEntity_;
-    bool enabled = entity ? profile_.CanBeOrdered( *entity ) : profile_.IsSupervision();
+    bool enabled = entity ? profile_.CanBeOrdered( *entity, true ) : profile_.IsSupervision();
     drawButton_->setEnabled( enabled );
     if( !enabled )
         layer_->Reset();

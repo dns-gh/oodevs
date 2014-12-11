@@ -45,7 +45,7 @@ public:
     virtual bool IsVisible( const kernel::Entity_ABC& entity ) const;
     virtual bool IsKnowledgeVisible( const kernel::Knowledge_ABC& knowledge ) const;
     virtual bool IsKnowledgeVisibleNoSupervision( const kernel::Knowledge_ABC& knowledge ) const;
-    virtual bool CanBeOrdered( const kernel::Entity_ABC& entity ) const;
+    virtual bool CanBeOrdered( const kernel::Entity_ABC& entity, bool forceInReplay = false ) const;
     virtual bool CanDoMagic( const kernel::Entity_ABC& entity ) const;
     virtual bool IsSupervision() const;
     virtual bool HasTimeControl() const;

@@ -98,7 +98,7 @@ void Drawing::SetLocation( const sword::CoordLatLongList& list )
 // -----------------------------------------------------------------------------
 bool Drawing::IsControlledBy( const kernel::Profile_ABC& profile ) const
 {
-    return !entity_ && profile.IsSupervision() || entity_ && profile.CanBeOrdered( *entity_ );
+    return !entity_ && profile.IsSupervision() || entity_ && profile.CanBeOrdered( *entity_, true );
 }
 
 // -----------------------------------------------------------------------------

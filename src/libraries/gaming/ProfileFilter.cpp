@@ -72,9 +72,9 @@ bool ProfileFilter::IsKnowledgeVisible( const kernel::Knowledge_ABC& knowledge )
 // Name: ProfileFilter::CanBeOrdered
 // Created: LGY 2011-11-24
 // -----------------------------------------------------------------------------
-bool ProfileFilter::CanBeOrdered( const kernel::Entity_ABC& entity ) const
+bool ProfileFilter::CanBeOrdered( const kernel::Entity_ABC& entity, bool forceInReplay ) const
 {
-    return pUnitFilter_->CanBeOrdered( entity );
+    return pUnitFilter_->CanBeOrdered( entity, forceInReplay );
 }
 
 // -----------------------------------------------------------------------------

@@ -135,7 +135,7 @@ bool RightsResolver::IsPerceived( const kernel::Entity_ABC& entity ) const
 // Name: RightsResolver::CanBeOrdered
 // Created: LGY 2011-11-25
 // -----------------------------------------------------------------------------
-bool RightsResolver::CanBeOrdered( const Entity_ABC& entity ) const
+bool RightsResolver::CanBeOrdered( const Entity_ABC& entity, bool /*forceInReplay*/ ) const
 {
     return IsInHierarchy( entity, readWriteEntities_, true );
 }
