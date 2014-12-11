@@ -36,7 +36,7 @@ end
 -- This method can only be called by an agent
 -- @return Boolean, whether or not the company is engaged
 integration.isCommanderEngaged = function( )
-    return DEC_Agent_AutomateEstEmbraye()
+    return _DEC_Agent_AutomateEstEmbraye( myself )
 end
 
 --- Returns true if the company is engaged, false otherwise
@@ -49,7 +49,7 @@ end
 --- Returns the HQ of the company
 -- @return Simulation agent
 integration.commanderGetHQUnit = function( )
-    return DEC_Automate_PionPC()
+    return _DEC_Automate_PionPC( myself )
 end
 
 --- Returns the company of the agent
@@ -71,7 +71,7 @@ end
 -- @param entity Simulation agent
 -- @return Boolean, whether or not the company is contaminated
 integration.isCommanderContaminated = function( entity )
-    return DEC_Automate_PionEstContamine( entity )
+    return _DEC_Automate_PionEstContamine( myself, entity )
 end
 
 --- Returns true if the provided agent is poisoned
@@ -79,7 +79,7 @@ end
 -- @param entity Simulation agent
 -- @return Boolean, whether or not the company is poisoned
 integration.isCommanderPoisoned = function( entity )
-    return DEC_Automate_PionEstEmpoisonne( entity )
+    return _DEC_Automate_PionEstEmpoisonne( myself, entity )
 end
 
 --- Returns the rules of engagement for this company against crowd
@@ -111,7 +111,7 @@ end
 --- Returns true if the company is engaged, false otherwise
 -- @return Boolean, whether or not the company is engaged 
 integration.isEngagedCommander = function( )
-    return DEC_Automate_EstEmbraye( )
+    return myself:DEC_Automate_EstEmbraye()
 end
 
 --- Returns the agent efficiency for the selected capacity

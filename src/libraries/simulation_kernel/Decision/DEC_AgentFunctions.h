@@ -62,7 +62,7 @@ public:
     static void DeactivateBlackout( DEC_Decision_ABC* callerAgent );
     static int GetPosture( const DEC_Decision_ABC* agent );
     static bool IsInCity( const DEC_Decision_ABC* pAgent );
-    static bool IsInCrowd( const DEC_Decision_ABC* agent, DEC_Decision_ABC* pion );
+    static bool IsInCrowd( const DEC_Decision_ABC* agent );
     static std::string GetMilPionType( DEC_Decision_ABC* pion );
     static std::string GetMilPionName( DEC_Decision_ABC* pion );
     static void ImmunizeAgent( DEC_Decision_ABC* callerAgent );  // deprecated

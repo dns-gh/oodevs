@@ -8,7 +8,7 @@
 integration.startDestroyingIt = function( target )
     target[ myself ] = target[ myself ] or {}
     if not target[ myself ].actionTir then
-        target[ myself ].actionTir = DEC_StartTirDirect( target.source, 100, eTirDirectNormal, -1 )
+        target[ myself ].actionTir = _DEC_StartTirDirect( myself, target.source, 100, eTirDirectNormal, -1 )
         actionCallbacks[ target[ myself ].actionTir ] = function( arg ) 
             target[ myself ].eTir = arg 
         end
@@ -22,7 +22,7 @@ end
 integration.startDestroyingItWithMissileAir = function( target, percentage )
     target[ myself ] = target[ myself ] or {}
     if not target[ myself ].actionTir then
-        target[ myself ].actionTir = DEC_StartTirDirect( target.source, percentage, eTirDirectNormal, eMunitionClasse_MissileAir )
+        target[ myself ].actionTir = _DEC_StartTirDirect( myself, target.source, percentage, eTirDirectNormal, eMunitionClasse_MissileAir )
         actionCallbacks[ target[ myself ].actionTir ] = function( arg ) 
             target[ myself ].eTir = arg
         end
@@ -35,7 +35,7 @@ end
 integration.startRespondIt = function( target )
     target[ myself ] = target[ myself ] or {}
     if not target[ myself ].actionRespond then
-        target[ myself ].actionRespond = DEC_StartTirDirect( target.source, 100, eTirDirectNormal, -1 )
+        target[ myself ].actionRespond = _DEC_StartTirDirect( myself, target.source, 100, eTirDirectNormal, -1 )
         actionCallbacks[ target[ myself ].actionRespond ] = function( arg )
             target[ myself ].eTir = arg 
         end
@@ -92,7 +92,7 @@ end
 integration.stopDestroyingIt = function( target )
     target[ myself ] = target[ myself ] or {}
     if  target[ myself ].actionTir ~= nil then
-        target[ myself ].actionTir = DEC__StopAction( target[ myself ].actionTir )
+        target[ myself ].actionTir = _DEC__StopAction( myself, target[ myself ].actionTir )
         target[ myself ].actionTir = nil
         target[ myself ].eTir = nil
         g_myEnemy = nil
@@ -106,7 +106,7 @@ end
 integration.stopRespondIt = function( target )
     target[ myself ] = target[ myself ] or {}
     if  target[ myself ].actionRespond ~= nil then
-        target[ myself ].actionRespond = DEC__StopAction( target[ myself ].actionRespond )
+        target[ myself ].actionRespond = _DEC__StopAction( myself, target[ myself ].actionRespond )
         target[ myself ].actionRespond = nil
         target[ myself ].eTir = nil
         g_myEnemy = nil
@@ -168,7 +168,7 @@ end
 -- @return a boolean 'true' if the target is located inside a "firing forbidden area" type of object, 'false' otherwise or if the target is dead.
 integration.isInForbiddenFireArea = function( target )
     local friendly = 1 -- tristate: 0 = enemy, 1 = friendly, 2 = unknown
-    return DEC_KnowledgeAgent_IsInObjectWithCapacity( "fire-forbidden", target.source, friendly )
+    return _DEC_KnowledgeAgent_IsInObjectWithCapacity( myself, "fire-forbidden", target.source, friendly )
 end
 
 --- Returns the estimation of the agent attrition power regarding the provided target, position and PH (Probability to Hit).
@@ -191,13 +191,13 @@ integration.getAttrition = function( self, target, position, pH )
     end
 
     -- check the range (distance between the position and the target --
-    local porteeMax    = DEC_Tir_PorteeMaxPourTirerSurUnitePosturesReelles( target.source, pH )
-    local porteeMin    = DEC_Tir_PorteeMinPourTirerSurUnitePosturesReelles( target.source, pH )
+    local porteeMax    = _DEC_Tir_PorteeMaxPourTirerSurUnitePosturesReelles( myself, target.source, pH )
+    local porteeMin    = _DEC_Tir_PorteeMinPourTirerSurUnitePosturesReelles( myself, target.source, pH )
     local distanceAEni = integration.distance( position, target )
     if( distanceAEni > porteeMax or distanceAEni < porteeMin ) then
         return 0 
     end
-    return DEC_ConnaissanceAgent_AttritionPotentielle( target.source, position:getPosition() ) * 100
+    return _DEC_ConnaissanceAgent_AttritionPotentielle( myself, target.source, position:getPosition() ) * 100
 end
 
 --- Returns the simulation agent ID from a DirectIA agent knowledge.
@@ -229,7 +229,7 @@ end
 -- @param ph the probability to hit.
 --  @return numeric the distance in meters.
 integration.porteeMaxPourTirerSurUnitePosturesReelles = function( eni, ph )
-    return DEC_Tir_PorteeMaxPourTirerSurUnitePosturesReelles( eni.source, ph )
+    return _DEC_Tir_PorteeMaxPourTirerSurUnitePosturesReelles( myself, eni.source, ph )
 end
 
 --- Informs if the agent is in range to engage the given target, regarding the given PH (Probability to Hit).
@@ -245,12 +245,12 @@ integration.niTropPresNiTropLoin = function( eni, ph, position )
     local currentPosition = position or meKnowledge -- if position is not issued, compute the range from current agent's position.
 
     -- check if eni is not too close.
-    local rPorteeMin = DEC_Tir_PorteeMinPourTirerSurUnitePosturesReelles( eni.source, ph )
+    local rPorteeMin = _DEC_Tir_PorteeMinPourTirerSurUnitePosturesReelles( myself, eni.source, ph )
     local rDistanceAEni = integration.distance( currentPosition, eni)
     local bTropProche = rDistanceAEni < rPorteeMin
 
     -- check if eni is not too far.
-    local rPorteeMax = DEC_Tir_PorteeMaxPourTirerSurUnitePosturesReelles( eni.source, ph )
+    local rPorteeMax = _DEC_Tir_PorteeMaxPourTirerSurUnitePosturesReelles( myself, eni.source, ph )
     local rDistanceAEni = DEC_Geometrie_Distance3D( currentPosition:getPosition(), 0, eni:getPosition(), DEC_ConnaissanceAgent_Altitude( eni.source ) )
     local bTropLoin =  rDistanceAEni > rPorteeMax
 
@@ -266,7 +266,7 @@ end
 -- This method can only be called by an agent.
 -- @param munitions the liste of the type to be fordiden
 integration.forbidAmmunition = function( munitions )
-    DEC_Pion_InterdireMunition( munitions )
+    _DEC_Pion_InterdireMunition( myself, munitions )
 end
 
 --- Authorize the use of the given types of ammunition. See dotation categories in authoring tool.
@@ -278,13 +278,13 @@ end
 -- This method can only be called by an agent.
 -- @param munitions munitions list of types to be forbidden
 integration.autoriseAmmunition = function( munitions )
-    DEC_Pion_AutoriserMunition( munitions )
+    _DEC_Pion_AutoriserMunition( myself, munitions )
 end
 
 --- Authorize the use of all types of ammunition. See dotation categories in authoring tool.
 -- This method can only be called by an agent
 integration.autoriseAllAmmunitions = function()
-    DEC_Pion_AutoriserToutesMunitions()
+    _DEC_Pion_AutoriserToutesMunitions( myself )
 end
 
 --- Returns the maximum range of the agent weapon systems allowing to hit with a certain probability.
@@ -298,7 +298,7 @@ integration.getMaxRangeToFireForPH = function( pH )
     if not pH then -- Scipio compatibility
         pH = integration.getDefaultPH()
     end
-    return DEC_Tir_PorteeMaxPourTirer( pH )
+    return _DEC_Tir_PorteeMaxPourTirer( myself, pH )
 end
 
 --- Returns the maximum range of the agent weapon systems allowing to hit the given target with a certain probability.
@@ -320,7 +320,7 @@ end
 -- This method can only be called by an agent.
 -- @return table containing the simulation agent knowledges engaging the agent.
 integration.getKnowledgesUnitsEngaging = function()
-    return DEC_Connaissances_UnitesPrenantAPartie()
+    return _DEC_Connaissances_UnitesPrenantAPartie( myself )
 end
 
 --- Returns the list of agent knowledges that are currently firing at the given 'friendAgent'.
@@ -337,7 +337,7 @@ end
 -- This method can only be called by an agent.
 -- @return table the agent knowledges that can engage the agent.
 integration.getKnowledgesDangerousUnits = function()
-    return DEC_Connaissances_UnitesEnnemiesDangereuses()
+    return _DEC_Connaissances_UnitesEnnemiesDangereuses( myself )
 end
 
 --- Returns the dangerosity of the given agent knowledge.
@@ -347,7 +347,7 @@ end
 -- @return numeric, a value between 0 and 1, the dangerosity of the given agent. A value of '0' means not dangerous at all,
 -- a value of '1' means very dangerous.
 integration.getKnowledgeDangerousAgent = function( agent )
-    return DEC_ConnaissanceAgent_Dangerosite( agent )
+    return _DEC_ConnaissanceAgent_Dangerosite( myself, agent )
 end
 
 --- Informs whether or not the given agent knowledge is tactically destroyed.
@@ -368,7 +368,7 @@ integration.getMaxRangeToFireOnAgent = function( agent, pH )
     if not pH then -- Scipio compatibility
         pH = integration.getDefaultPH()
     end
-    return DEC_Tir_PorteeMaxPourTirerSurUnite( agent, pH )
+    return _DEC_Tir_PorteeMaxPourTirerSurUnite( myself, agent, pH )
 end
 
 --- Returns the maximum range of the agent weapon systems allowing to hit the given target with a certain probability.
@@ -378,7 +378,7 @@ end
 -- @param pH numeric the probability to hit.
 -- @return numeric returns the maximum range distance (in meters).
 integration.getMaxRangeToBeFiriedByAgent = function( agent, pH )
-    return DEC_Tir_PorteeMaxPourEtreTireParUnite( agent, pH )
+    return _DEC_Tir_PorteeMaxPourEtreTireParUnite( myself, agent, pH )
 end
 
 

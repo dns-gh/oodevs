@@ -83,7 +83,7 @@ end
 integration.StartPassThroughUndergroundNetwork = function( exitIssue )
     integration.setStealth( true )
     exitIssue[myself] = exitIssue[myself] or {}
-    exitIssue[myself].actionPassThrough = DEC_StartTraverserReseauSouterrain( exitIssue.source )
+    exitIssue[myself].actionPassThrough = _DEC_StartTraverserReseauSouterrain( myself, exitIssue.source )
     actionCallbacks[ exitIssue[myself].actionPassThrough ] = function( arg ) exitIssue[myself].actionPassThroughState = arg end
     exitIssue[myself].firstTime = true
 end
@@ -121,7 +121,7 @@ end
 integration.StopPassThroughUndergroundNetwork = function( exitIssue )
     integration.setStealth( false )
     exitIssue[myself] = exitIssue[myself] or {}
-    exitIssue[myself].actionPassThrough = DEC__StopAction( exitIssue[myself].actionPassThrough )
+    exitIssue[myself].actionPassThrough = _DEC__StopAction( myself, exitIssue[myself].actionPassThrough )
     exitIssue[myself].actionPassThroughState = nil
 end
 

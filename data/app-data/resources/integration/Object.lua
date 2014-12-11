@@ -95,7 +95,7 @@ end
 -- @return List of object knowledges
 integration.getObjectsInArea = function( localisation, objectTypes )
     local integration = integration
-    local lstObjects = DEC_ObjectKnowledgesInZone( localisation, objectTypes )
+    local lstObjects = _DEC_ObjectKnowledgesInZone( myself, localisation, objectTypes )
     if not lstObjects then
         return {}
     end
@@ -184,7 +184,7 @@ end
 -- @param objectTypeList List of strings
 -- @return List of object knowledges
 integration.getKnowledgesObjectsInCircle = function( position, distance, objectTypeList )
-    return DEC_Knowledges_ObjectsInCircle( position, distance, objectTypeList )
+    return _DEC_Knowledges_ObjectsInCircle( myself, position, distance, objectTypeList, false )
 end
 
 --- Returns the given object's localisation
@@ -231,7 +231,7 @@ end
 -- @params paramsList List of strings
 -- @return Simulation object
 integration.getNextObjectOnPath = function( model, distance, paramsList )
-    return DEC_GetNextObjectOnPath( model, distance, paramsList )
+    return _DEC_GetNextObjectOnPath( myself, model, distance, paramsList )
 end
 
 --- Returns the next object on this entity's path.
@@ -242,7 +242,7 @@ end
 -- @params paramsList List of strings
 -- @return Simulation object
 integration.getNextObjectOnPathWithBypassed = function( model, distance, paramsList )
-    return DEC_GetNextObjectOnPathWithBypassed( model, distance, paramsList )
+    return _DEC_GetNextObjectOnPathWithBypassed( myself, model, distance, paramsList )
 end
 
 --- Returns true if the given planned work is not activated, false otherwise
@@ -272,7 +272,7 @@ end
 --- Queues this entity for decontamination in the given decontamination plot
 -- @param decontaminationPlot Object knowledge with a decontamination capacity
 integration.requestForDecontamination = function( decontaminationPlot )
-    DEC_ConnaissanceObjet_DemandeDeDecontamination( decontaminationPlot.source )
+    DEC_ConnaissanceObjet_DemandeDeDecontaminationSurPion( myself, decontaminationPlot.source )
 end
 
 --- Queues the given agent knowledge for decontamination in the given decontamination plot
@@ -280,7 +280,7 @@ end
 -- @param object Object knowledge
 -- @param decontaminationPlot Object knowledge with a decontamination capacity
 integration.addToDecontaminationList = function( unit, object )
-    DEC_ConnaissanceObjet_DemandeDeDecontaminationSurPion(unit.source, object.source)
+    DEC_ConnaissanceObjet_DemandeDeDecontaminationSurPion( unit.source, object.source)
 end
 
 -- Returns true if the given planned work needs improvement, false otherwise

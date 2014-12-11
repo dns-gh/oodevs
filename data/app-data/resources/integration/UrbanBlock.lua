@@ -164,8 +164,8 @@ end
 -- @param urbanBlock Urban block knowledge
 -- @return Boolean, true
 integration.decontaminateUrbanBlock = function( urbanBlock )
-    DEC_DecontaminerZone( DEC_PolygoneBlocUrbain( urbanBlock.source ) )
-    reportFunction(eRC_DecontaminationDone )        
+    _DEC_DecontaminerZone( myself, DEC_PolygoneBlocUrbain( urbanBlock.source ) )
+    reportFunction( eRC_DecontaminationDone )        
     return true
 end
 
@@ -196,7 +196,7 @@ end
 -- Note that this method can only be called by an agent.
 -- @return Boolean, whether or not this entity is inside an urban block.
 integration.isAgentInsideTown = function( )
-    return DEC_Agent_EnVille()
+    return _DEC_Agent_EnVille( myself )
 end
 
 --- Returns true if the given agent is inside the convex hull of all
@@ -234,7 +234,7 @@ end
 -- @param area Simulation area
 -- @return List of urban block knowledges
 integration.getUrbanBlockInsideOrIntersectArea = function( area )
-    return DEC_Connaissances_BlocUrbainDansOuIntersectentZone( area )
+    return _DEC_Connaissances_BlocUrbainDansOuIntersectentZone( myself, area )
 end
 
 --- Returns the urban block at the given position.
@@ -242,7 +242,7 @@ end
 -- @param pos Simulation position
 -- @return Simulation urban block (or nil)
 integration.getUrbanBlockFromPosition = function( pos )
-    return DEC_Connaissances_BlocUrbainPourPosition( pos )
+    return _DEC_Connaissances_BlocUrbainPourPosition( myself, pos )
 end
 
 ------------------------------------------------------------------
@@ -255,8 +255,8 @@ end
 -- @param urbanBlock a urban block knowledge
 -- @return Boolean, returns 'false'.
 integration.startDamageUrbanBlock = function( urbanBlock )
-    urbanBlock.actionDamage = DEC_DetruireBlocUrbain( urbanBlock.source )
-    DEC_Population_ChangeUrbanDestructionState( true )
+    urbanBlock.actionDamage = _DEC_Population_DetruireBlocUrbain( myself, urbanBlock.source )
+    _DEC_Population_ChangeUrbanDestructionState( myself, true )
     return false
 end
 
@@ -267,10 +267,10 @@ end
 -- @return Boolean, returns 'true'.
 integration.stopDamageUrbanBlock = function( urbanBlock )
     if urbanBlock.actionDamage then
-        urbanBlock.actionDamage = DEC__StopAction( urbanBlock.actionDamage )
+        urbanBlock.actionDamage = _DEC__StopAction( myself, urbanBlock.actionDamage )
         urbanBlock.actionDamage = nil
     end
-    DEC_Population_ChangeUrbanDestructionState( false )
+    _DEC_Population_ChangeUrbanDestructionState( myself, false )
     return true
 end
 
@@ -280,5 +280,5 @@ end
 
 --- Deprecated : use integration.getUrbanBlockInArea instead
 integration.getUrbanBlockInsideArea = function( area )
-    return DEC_Connaissances_BlocUrbainDansZone( area )
+    return _DEC_Connaissances_BlocUrbainDansZone( myself, area )
 end

@@ -11,7 +11,7 @@ local defaultPointRecceSpeed = 3
 -- @param pointRecceSpeed Float, the reconnaissance speed in meters/tick (optional, default value defaultPointRecceSpeed = 3)
 -- @return true
 integration.startControlArea = function( location, pointRecceSpeed )
-    location.perceptionID = DEC_Perception_ActivateLocationProgressiveRecce( location:getLocalisation(), pointRecceSpeed or defaultPointRecceSpeed )
+    location.perceptionID = _DEC_Perception_ActivateLocationProgressiveRecce( myself, location:getLocalisation(), pointRecceSpeed or defaultPointRecceSpeed )
     location.bActionFinished = false
     perceptionReconnaissanceCallbacks[ location.perceptionID ] = function( arg )
         location.bActionFinished = true
@@ -29,7 +29,7 @@ end
 -- @param location, the DirectIA location or object to stop controlling
 -- @return true
 integration.stopControlArea = function( location )
-    DEC_Perception_DesactiverReconnaissanceLocalisation( location.perceptionID )
+    _DEC_Perception_DesactiverReconnaissanceLocalisation( myself, location.perceptionID )
     reportFunction( eRC_FinControleZone )
     perceptionReconnaissanceCallbacks[ location.perceptionID ] = nil
     return true
@@ -41,7 +41,7 @@ end
 -- @param urbanBlock The DirectIA urbanBlock to control
 -- @return true
 integration.startControlUrbanBlock = function( urbanBlock )
-    urbanBlock.recceAction = DEC_Perception_ActiverReconnaissanceDansBlocUrbain( urbanBlock.source )
+    urbanBlock.recceAction = _DEC_Perception_ActiverReconnaissanceDansBlocUrbain( myself, urbanBlock.source )
     reportFunction(eRC_DebutControleBlocUrbain )
     return true
 end
@@ -52,7 +52,7 @@ end
 -- @param urbanBlock, the DirectIA urbanBlock to stop controlling
 -- @return true
 integration.stopControlUrbanBlock  = function( urbanBlock )
-    DEC_Perception_DesactiverReconnaissanceDansBlocUrbain( urbanBlock.recceAction )
+    _DEC_Perception_DesactiverReconnaissanceDansBlocUrbain( myself, urbanBlock.recceAction )
     reportFunction(eRC_FinControleBlocUrbain )
     return true
 end
@@ -65,7 +65,7 @@ end
 -- @param pointRecceSpeed Float, the reconnaissance speed in km/h (optional, default value is defaultPointRecceSpeed = 3)
 -- @return true
 integration.startControlPoint = function( point, pointCircleSize, pointRecceSpeed )
-    point.perceptionID = DEC_Perception_ActiverReconnaissancePoint( point.source, pointCircleSize or defaultPointCircleSize, pointRecceSpeed or defaultPointRecceSpeed )
+    point.perceptionID = _DEC_Perception_ActiverReconnaissancePoint( myself, point.source, pointCircleSize or defaultPointCircleSize, pointRecceSpeed or defaultPointRecceSpeed )
     point.bActionFinished = false
     perceptionReconnaissanceCallbacks[ point.perceptionID ] = function( arg )
         point.bActionFinished = true
@@ -80,7 +80,7 @@ end
 -- @param point, the DirectIA point to stop controlling
 -- @return true
 integration.stopControlPoint = function( point )
-    DEC_Perception_DesactiverReconnaissancePoint( point.perceptionID )
+    _DEC_Perception_DesactiverReconnaissancePoint( myself, point.perceptionID )
     reportFunction(eRC_FinControlPoint )
     perceptionReconnaissanceCallbacks[ point.perceptionID ] = nil
     return true

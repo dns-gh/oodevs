@@ -19,7 +19,7 @@ integration.setStealth = function( beStealth )
     end
     if stealthFactor == 0 then -- Become invisible
         if myself.lastStealth == 1 then
-            DEC_Perception_Furtivite( stealthFactor )
+            _DEC_Perception_Furtivite( myself, stealthFactor )
             myself.lastStealth = stealthFactor
         end
         myself.wantedVisible = false
@@ -31,7 +31,7 @@ end
 --- Returns true if agent is stealthy, false otherwise
 -- @return Boolean, whether or not this entity is stealthy
 integration.isStealth = function( )
-    return DEC_Perception_EstFurtif()
+    return _DEC_Perception_EstFurtif( myself )
 end
 
 --- Returns the maximum indirect firing range for a particular ammunition
@@ -39,7 +39,7 @@ end
 -- @return Float, value is the indirect firing range in meters
 integration.porteePourAttentat = function( dotation )
     myself[dotation] = myself[dotation] or {}
-    myself[dotation].portee = myself[dotation].portee or DEC_Tir_PorteeMaxTirIndirect( dotation )
+    myself[dotation].portee = myself[dotation].portee or _DEC_Tir_PorteeMaxTirIndirect( myself, dotation )
     return myself[dotation].portee
 end
 
@@ -56,7 +56,7 @@ integration.startAttackIt = function( target, suicide, dotation )
         nbIntervention = DEC_Agent_GetAgentDotation( myself, dotation ) 
     end 
     reportFunction(eRC_ExecutionAttentat )
-    target[myself].attackAction = DEC_StartTirIndirectSurPosition( dotation, nbIntervention, target:getPosition() )
+    target[myself].attackAction = _DEC_StartTirIndirectSurPosition( myself, dotation, nbIntervention, target:getPosition() )
     actionCallbacks[ target[myself].attackAction ] = function( arg ) target[myself].attackState = arg end
     return true
 end
@@ -74,7 +74,7 @@ integration.updateAttackIt = function( target, suicide, dotation )
         if target[myself].attackState == eIndirectFireState_Running then
             return false
         elseif target[myself].attackState == eIndirectFireState_Finished or target[myself].attackState == eIndirectFireState_NoAmmo then
-            if suicide then DEC_Suicide() end
+            if suicide then _DEC_Suicide( myself ) end
             return true
         else
             reportFunction(eRC_MissionImpossibleReason, "Attentat impossible" )
@@ -92,7 +92,7 @@ end
 -- @return true
 integration.stopAttackIt = function( target, suicide, dotation )
     target[myself] = target[myself] or {}
-    target[myself].attackAction = DEC__StopAction( target[myself].attackAction )
+    target[myself].attackAction = _DEC__StopAction( myself, target[myself].attackAction )
     target[myself].attackState = nil
     return true
 end
@@ -100,7 +100,7 @@ end
 --- Allows the entity to commit suicide
 -- Note that this method can only be called by an agent
 integration.commitSuicide = function( )
-    DEC_Suicide()
+    _DEC_Suicide( myself )
 end
 
 --- Allows terrorist to attack the provided object knowledge
@@ -113,8 +113,8 @@ end
 -- @return true
 integration.attackObject = function( target, suicide, dotation )
     reportFunction(eRC_ExecutionAttentat )
-    DEC_ConnaissanceObjet_Degrader( target.source, 0.5, dotation )
-    if suicide then DEC_Suicide() end
+    _DEC_Agent_ConnaissanceObjet_Degrader( myself, target.source, 0.5, dotation )
+    if suicide then _DEC_Suicide( myself ) end
     return true
 end
 
@@ -135,9 +135,10 @@ end
 -- @param ph Float (between 0 and 1), the wanted probability to hit (optional, default value is defaultPhForFiringRange = 0.9)
 -- @return Boolean, whether or not the target is in firing range
 integration.isInFiringRangeForDotation = function( target, dotation, ph )
-    return integration.distance( meKnowledge, target ) < DEC_Tir_PorteeMaxPourTirerSurUniteAvecMunition( target.source,
-                                                                                                         ph or defaultPhForFiringRange,
-                                                                                                         dotation )
+    return integration.distance( meKnowledge, target ) < _DEC_Tir_PorteeMaxPourTirerSurUniteAvecMunition( myself,
+                                                                                                          target.source,
+                                                                                                          ph or defaultPhForFiringRange,
+                                                                                                          dotation )
 end
 
 --- Deprecated
@@ -181,7 +182,7 @@ integration.capture = function( units, message )
     for _, unit in pairs( units ) do
         if not myself.CRCaptureSomeone[unit] and not DEC_ConnaissanceAgent_EstPrisonnier( unit.source ) then
             local agent = DEC_ConnaissanceAgent_EnAgent(unit.source)
-            DEC_Agent_AutomateForcerReddition( DEC_GetAutomate( agent ))
+            _DEC_Agent_AutomateForcerReddition( myself, DEC_GetAutomate( agent ))
             DEC_UnitDecisionalState( unit.source, "hostage", "true" )
             DEC_Connaissance_Transporter( myself, unit.source )
             reportFunction(message, unit.source )
@@ -226,7 +227,7 @@ end
 -- @param unit Directia agent knowledge
 -- @return true
 integration.dropUnit = function( unit )
-    DEC_Prisonniers_Debarquer(unit.source)
+    _DEC_Prisonniers_Debarquer( myself, unit.source )
     reportFunction(eRC_TerroristDropped, unit.source )
     integration.removeFromLoadedUnits( unit )
     integration.removeFromCapturedUnits( unit )
@@ -246,7 +247,7 @@ end
 -- @param dest Directia agent knowledge
 -- @param delay Float delay in minutes
 integration.shareKnowledgeAgent = function( dest, delay )
-    DEC_Connaissances_PartageConnaissancesAvec(DEC_GetAutomate( dest.source ), delay )
+    _DEC_Connaissances_PartageConnaissancesAvec( myself, DEC_GetAutomate( dest.source ), delay )
 end
 
 --- Allows the automat to share knowledges information (e.g. objects knowledges, units knowledges) with the provided agent knowledge
@@ -254,7 +255,7 @@ end
 -- @param dest Directia agent knowledge
 -- @param delay Float delay in minutes
 integration.shareKnowledgeAgentFromAutomat = function( dest, delay )
-    DEC_Connaissances_PartageConnaissancesAvec(dest.source, delay )
+    _DEC_Connaissances_PartageConnaissancesAvec( myself, dest.source, delay )
 end
 
 --- Allows the unit to Launch projectile on the provided localized element knowledge
@@ -267,7 +268,7 @@ integration.startLaunchProjectile = function( target, dotation, quantity )
 -- $$$ MIA : to merge with militaty
     target[ myself ] = target[ myself ] or {}
     local nbIntervention = quantity
-    target[ myself ].attackAction = DEC_StartTirIndirectSurPosition( dotation, quantity, target:getPosition() )
+    target[ myself ].attackAction = _DEC_StartTirIndirectSurPosition( myself, dotation, quantity, target:getPosition() )
     actionCallbacks[ target[ myself ].attackAction ] = function( arg ) 
         target[ myself ].attackState = arg 
     end
@@ -307,7 +308,7 @@ end
 -- @return true
 integration.stopLaunchProjectile = function( target, dotation )
     target[ myself ] = target[ myself ] or {}
-    target[ myself ].attackAction = DEC__StopAction( target[ myself ].attackAction )
+    target[ myself ].attackAction = _DEC__StopAction( myself, target[ myself ].attackAction )
     target[ myself ].attackState = nil
     return true
 end

@@ -3,7 +3,7 @@
 -- @param agent DirectIA agent
 -- @return Boolean
 integration.canRelieveIt = function( agent )
-    return DEC_PeutReleverPion( agent.source )
+    return _DEC_PeutReleverPion( myself, agent.source )
 end
 
 --- Relieves the given agent (i.e. starts a new mission
@@ -15,7 +15,7 @@ end
 -- @param agent DirectIA agent
 -- @return Boolean, whether or not the given agent's was successfully relieved.
 integration.relieveIt = function( agent )
-    if DEC_ReleverPion( agent.source ) then
+    if _DEC_ReleverPion( myself, agent.source ) then
         reportFunction( eRC_Releve, agent.source )
         return true
     end
@@ -29,7 +29,7 @@ end
 -- @param agentToRelieve Simulation agent
 -- @return Boolean
 integration.isAgentInAutomatCanRelieveAgent = function( agentRelieving, agentToRelieve )
-    return DEC_Automate_PionPeutReleverPion( agentRelieving, agentToRelieve )
+    return _DEC_Automate_PionPeutReleverPion( myself, agentRelieving, agentToRelieve )
 end
 
 --- Makes the given reliever agent relieve the given agent to relieve
@@ -41,5 +41,5 @@ end
 -- @param agentToRelieve Simulation agent
 -- @return Boolean, whether or not the given agent to relieve has 
 integration.agentInAutomatRelieveAgent = function( agentRelieving, agentToRelieve )
-    return DEC_Automate_PionRelevePion( agentRelieving, agentToRelieve )
+    return _DEC_Automate_PionRelevePion( myself, agentRelieving, agentToRelieve )
 end

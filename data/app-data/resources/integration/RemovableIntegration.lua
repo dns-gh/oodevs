@@ -19,7 +19,7 @@ end
 -- @param object Object knowledge
 -- @return Boolean
 integration.canDemineIt = function( object )
-    return DEC_Agent_PeutDevaloriserObjet( object.source )
+    return _DEC_Agent_PeutDevaloriserObjet( myself, object.source )
 end
 
 --- Starts demining the given object.
@@ -30,7 +30,7 @@ end
 -- @param object Object knowledge
 integration.startDemineIt = function( object )
     object[myself] = object[myself] or {} 
-    object[myself].actionDemine = DEC_StartDevaloriserObjet( object.source )
+    object[myself].actionDemine = _DEC_StartDevaloriserObjet( myself, object.source )
     actionCallbacks[ object[myself].actionDemine ] = function( arg ) object[myself].actionDemineState = arg end    
     reportFunction( eRC_DebutDevalorisation, object.source )
 end
@@ -64,14 +64,14 @@ end
 -- @return Boolean, whether or not the action is over.
 integration.stopDemineIt = function( object )
     object[myself] = object[myself] or {} 
-    object[myself].actionDemine = DEC__StopAction( object[myself].actionDemine )
+    object[myself].actionDemine = _DEC__StopAction( myself, object[myself].actionDemine )
     if object[myself].actionDemineState == eActionObjetTerminee then
         reportFunction( eRC_FinDevalorisation, object.source )
         object[myself].actionDemineState = nil
         return true
     else
         object[myself].actionDemineState = nil
-        DEC_Trace( "pause work demine" )
+        _DEC_Trace( myself, "pause work demine" )
         return false
     end
 end
@@ -83,7 +83,7 @@ end
 -- This method returns false if the given knowledge is not an object.
 integration.canRemoveIt = function( object )
     if masalife.brain.core.class.isOfType( object, integration.ontology.types.object ) then
-        return DEC_Agent_PeutDetruireObjet( object.source )
+        return _DEC_Agent_PeutDetruireObjet( myself, object.source )
     elseif masalife.brain.core.class.isOfType( object, integration.ontology.types.urbanBlock ) then
         return true -- decreasing the structural state of urban blocks doesn't require specific physical ability.
     end
@@ -107,7 +107,7 @@ end
 -- @param object Object knowledge
 integration.startRemoveIt = function( object )
     object[myself] = object[myself] or {} 
-    object[myself].actionRemove = DEC_StartDetruireObjet( object.source )
+    object[myself].actionRemove = _DEC_StartDetruireObjet( myself, object.source )
     actionCallbacks[ object[myself].actionRemove ] = function( arg ) object[myself].actionRemoveState = arg end
     reportFunction(eRC_DebutDegagement, object.source )
 end
@@ -121,13 +121,13 @@ end
 -- @return Boolean, whether or not the object removal is happening without any issue.
 integration.updateRemoveIt = function( object )
     if object[myself].actionRemoveState == eActionObjetImpossible then
-        DEC_Trace( "impossible works" )
+        _DEC_Trace( myself, "impossible works" )
         return false 
     elseif object[myself].actionRemoveState == eActionObjetManqueDotation then
-        DEC_Trace( "not enough dotation" )
+        _DEC_Trace( myself, "not enough dotation" )
         return false 
     elseif object[myself].actionRemoveState == eActionObjetPasDeCapacite then
-        DEC_Trace( "no capacity" )
+        _DEC_Trace( myself, "no capacity" )
         return false 
     end
     return true
@@ -149,7 +149,7 @@ integration.stopRemoveIt = function( object )
         return true
     else
         object[myself].actionRemoveState = nil
-        DEC_Trace( "pause work remove" )
+        _DEC_Trace( myself, "pause work remove" )
         return false
     end
 end
@@ -180,14 +180,14 @@ end
 integration.updateRemoveItSecu = function( object )
     if object[myself].actionRemoveState == eActionObjetImpossible then
         reportOnceFunction( eRC_ConstructionObjetImpossible )
-        DEC_Trace( "impossible works" )
+        _DEC_Trace( myself, "impossible works" )
         return true 
     elseif object[ myself ].actionRemoveState == eActionObjetManqueDotation then
-        DEC_Trace( "not enough dotation" )
+        _DEC_Trace( myself, "not enough dotation" )
         reportOnceFunction( eRC_PasDotationConstructionObjet )
         return true 
     elseif object[ myself ].actionRemoveState == eActionObjetPasDeCapacite then
-        DEC_Trace( "no capacity" )
+        _DEC_Trace( myself, "no capacity" )
         reportOnceFunction( eRC_PasDotationConstructionObjet )
         return true 
     elseif object[ myself ].actionRemoveState == eActionObjetTerminee then
@@ -209,7 +209,7 @@ integration.stopRemoveItSecu = function( object )
         reportFunction(eRC_FinDegagement )
     end
     object[ myself ] = object[ myself ] or {} 
-    object[ myself ].actionRemove = DEC__StopAction( object[myself].actionRemove )
+    object[ myself ].actionRemove = _DEC__StopAction( myself, object[myself].actionRemove )
     return true
 end
 
@@ -221,7 +221,7 @@ end
 -- @param urbanBlock Urban block knowledge
 integration.startDecontructItUrbanBlock = function( urbanBlock )
     urbanBlock[ myself ] = urbanBlock[ myself ] or {} 
-    urbanBlock[ myself ].actionRemove = DEC_DeteriorateUrbanBlock( urbanBlock.source, 0 )
+    urbanBlock[ myself ].actionRemove = _DEC_DeteriorateUrbanBlock( myself, urbanBlock.source, 0 )
     actionCallbacks[ urbanBlock[ myself ].actionRemove ] = function( arg ) 
         urbanBlock[ myself ].actionRemoveState = arg 
     end

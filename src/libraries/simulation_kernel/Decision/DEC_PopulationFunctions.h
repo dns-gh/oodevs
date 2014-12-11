@@ -54,6 +54,7 @@ public:
     static bool GetUrbanDestructionState( DEC_Decision_ABC* callerPopulation );
     static void SetDemonstrationState( DEC_Decision_ABC* callerPopulation, bool state );
     static bool GetDemonstrationState( DEC_Decision_ABC* callerPopulation );
+    static bool IsAgentInside( const DEC_Decision_ABC* caller, DEC_Decision_ABC* pAgent );
 
     // Knowledge agents
     static int GetKnowledgeAgentRoePopulation ( unsigned int agentId );

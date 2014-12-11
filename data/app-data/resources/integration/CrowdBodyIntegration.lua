@@ -8,7 +8,7 @@
 -- <li> eAttitudeExcitee (excited) </li>
 -- <li> eAttitudeAgressive (aggressive) </li> </ul>
 integration.setAttitude = function( newAttitude )
-    if DEC_Population_Attitude() ~= newAttitude then
+    if _DEC_Population_Attitude( myself ) ~= newAttitude then
         integration.changeAttitude( newAttitude )
         reportFunction( eRC_AttitudePopulation, newAttitude )
     end
@@ -23,7 +23,7 @@ end
 -- <li> eAttitudeExcitee (excited) </li>
 -- <li> eAttitudeAgressive (aggressive) </li> </ul>
 integration.getAttitude = function( )
-    return DEC_Population_Attitude()
+    return _DEC_Population_Attitude( myself )
 end
 
 --- Returns true if the given agent is inside this crowd, false otherwise.
@@ -33,9 +33,9 @@ end
 integration.unitIsInCrowd = function( unit )
     if masalife.brain.core.class.isOfType( unit, integration.ontology.types.agentKnowledge) then
         local agent = DEC_Connaissance_EnAgent( unit.source )
-        return DEC_Agent_EstDansFoule( agent )
+        return _DEC_Population_EstDansFoule( myself, agent )
     else
-        return DEC_Agent_EstDansFoule( unit.source )
+        return _DEC_Population_EstDansFoule( myself, unit.source )
     end
 end
 
@@ -54,7 +54,7 @@ end
 -- @return Float between 0 and 1, 0 meaning this crowd is
 -- quiet and 1 meaning that this crowd is aggressive.
 local coeffAgressionForCurrentAttitude = function()
-    local attitude =  DEC_Population_Attitude()
+    local attitude =  _DEC_Population_Attitude( myself )
     if attitude == eAttitudePopulation_Calme then
         return 0.01 
     elseif attitude == eAttitudePopulation_Agitee then
@@ -80,15 +80,15 @@ end
 integration.startAttackingIt = function( target )
     target[ myself ] = target[ myself ] or {}
     if target[ myself ].actionTir then
-        DEC_ReprendAction( target[ myself ].actionTir )
+        _DEC_ReprendAction( myself, target[ myself ].actionTir )
         return false
     end
     target[ myself ].intensity = coeffAgressionForCurrentAttitude()
     if masalife.brain.core.class.isOfType( target, integration.ontology.types.agentKnowledge) then
         local agent = DEC_Connaissance_EnAgent( target.source )
-        target[ myself ].actionTir = DEC_StartTirSurPion( target[ myself ].intensity, agent )
+        target[ myself ].actionTir = _DEC_StartTirSurPion( myself, target[ myself ].intensity, agent )
     else
-        target[ myself ].actionTir = DEC_StartTirSurPion( target[ myself ].intensity, target.source )
+        target[ myself ].actionTir = _DEC_StartTirSurPion( myself, target[ myself ].intensity, target.source )
     end
     return true
 end
@@ -110,9 +110,9 @@ integration.updateAttackingIt = function( target )
         target[myself].intensity = currentIntensity
         if masalife.brain.core.class.isOfType( target, integration.ontology.types.agentKnowledge) then
             local agent = DEC_Connaissance_EnAgent( target.source )
-            target[ myself ].actionTir = DEC_StartTirSurPion( currentIntensity, agent )
+            target[ myself ].actionTir = _DEC_StartTirSurPion( myself, currentIntensity, agent )
         else
-            target[myself].actionTir = DEC_StartTirSurPion( currentIntensity, target.source )
+            target[myself].actionTir = _DEC_StartTirSurPion( myself, currentIntensity, target.source )
         end
         return false
     end
@@ -131,7 +131,7 @@ end
 integration.stopAttackingIt = function( target )
     target[myself] = target[myself] or {}
     if target[myself].actionTir then
-        DEC__StopAction( target[myself].actionTir )
+        _DEC__StopAction( myself, target[myself].actionTir )
         target[myself].actionTir = nil
         return false
     end
@@ -143,7 +143,7 @@ end
 -- @param urbanBlock Urban block knowledge
 -- @return Boolean
 integration.hasReachUrbanBlock = function( urbanBlock )
-    return DEC_Population_HasReachedBlockBorder( urbanBlock.source )
+    return _DEC_Population_HasReachedBlockBorder( myself, urbanBlock.source )
 end
 
 --- Returns true if this crowd has entirely reached the given localized element, false otherwise.
@@ -154,7 +154,7 @@ end
 -- "getPosition" method returning a simulation point.
 -- @return Boolean
 integration.hasEntirelyReachedDestination = function( localizedElement )
-    return DEC_Population_HasReachedDestinationCompletely( localizedElement:getPosition() )
+    return _DEC_Population_HasReachedDestinationCompletely( myself, localizedElement:getPosition() )
 end
 
 --- Sets the domination value to the result of integration.FouleEstSecurisee computation.
@@ -209,12 +209,12 @@ end
 -- the more sensitive the crowd is to lethal weapons.
 -- @return Negative float, the computed domination differential (between -0.1 and 0).
 function S_EffetSecurisationSurDomination( roe, nonLethalWeaponsAuthorizedFactor, lethalWeaponsAuthorizedFactor )
-    local nbrPersonne = DEC_GetNombrePersonne()
+    local nbrPersonne = _DEC_GetNombrePersonne( myself )
     local valeurNominale = -10
     if nbrPersonne ~= 0 then
         valeurNominale = -10 / nbrPersonne
     end
-    local attitude = DEC_Population_Attitude()
+    local attitude = _DEC_Population_Attitude( myself )
     
     if attitude == eAttitudePopulation_Calme then
         -- NOTHING
@@ -254,7 +254,7 @@ end
 -- on the domination value if the controlling units can use lethal weapons. The bigger this factor,
 -- the more sensitive the crowd is to lethal weapons.
 integration.FouleEstSecurisee = function( nonLethalWeaponsAuthorizedFactor, lethalWeaponsAuthorizedFactor )
-    local pions = DEC_Connaissances_PionsSecurisant()
+    local pions = _DEC_Connaissances_PionsSecurisant( myself )
     
     -- Reports
     if #pions > 0 then
@@ -298,7 +298,7 @@ end
 -- @param domination Float, this crowd's new domination value between 0 and 1
 -- (0 meaning the crowd is fully controlled, 1 meaning it is not controlled at all).
 integration.setDomination = function( domination ) 
-    DEC_Population_ChangeEtatDomination( domination )
+    _DEC_Population_ChangeEtatDomination( myself, domination )
 end
 
 --- Returns the intensity level of this crowd's protesting.
@@ -307,7 +307,7 @@ end
 -- @see integration.updateDemonstrate
 -- @return Float between 0 and 1
 function S_IntensiteManifestationSurPions()
-    local attitude = DEC_Population_Attitude()
+    local attitude = _DEC_Population_Attitude( myself )
     if attitude == eAttitudePopulation_Calme then
         return 0.01
     elseif attitude == eAttitudePopulation_Agitee then
@@ -328,7 +328,7 @@ end
 integration.startDemonstrate = function()
     local intensite = S_IntensiteManifestationSurPions()
     meKnowledge.manifIntensity = intensite
-    meKnowledge.actionSurPions = DEC__StartTirSurPions( intensite )
+    meKnowledge.actionSurPions = _DEC__StartTirSurPions( myself, intensite )
     DEC_Population_ChangeDemonstrationState( true )
 end
 
@@ -342,8 +342,8 @@ end
 integration.updateDemonstrate = function()
     local intensite = S_IntensiteManifestationSurPions()
     if intensite ~= meKnowledge.manifIntensity then
-        meKnowledge.actionSurPions = DEC__StopAction( meKnowledge.actionSurPions )
-        meKnowledge.actionSurPions = DEC__StartTirSurPions( intensite )
+        meKnowledge.actionSurPions = _DEC__StopAction( myself, meKnowledge.actionSurPions )
+        meKnowledge.actionSurPions = _DEC__StartTirSurPions( myself, intensite )
         meKnowledge.manifIntensity = intensite
     end
 end
@@ -354,17 +354,17 @@ end
 -- @see integration.updateDemonstrate
 integration.stopDemonstrate = function()
     if meKnowledge.actionSurPions then
-        meKnowledge.actionSurPions = DEC__StopAction( meKnowledge.actionSurPions )
+        meKnowledge.actionSurPions = _DEC__StopAction( myself, meKnowledge.actionSurPions )
         meKnowledge.actionSurPions = nil
     end
-    DEC_Population_ChangeDemonstrationState( false )
+    _DEC_Population_ChangeDemonstrationState( myself, false )
 end
 
 --- Returns true if this crowd is contaminated, false otherwise.
 -- This method can only be called by a crowd.
 -- @return Boolean
 integration.crowdIsContamined = function ()
-    return DEC_GetNombrePersonneContaminee() > 0
+    return _DEC_GetNombrePersonneContaminee( myself ) > 0
 end
 
 --- Makes this crowd damage the given object.
@@ -374,12 +374,12 @@ end
 -- 0 meaning no damage and 1 meaning total destruction.
 -- @return Integer, 0 if the damaging was successful, 1 otherwise.
 integration.damageObject = function( object, damageFactor )
-    return DEC_ConnaissanceObjet_Degrader( object.source, damageFactor )
+    return _DEC_Population_ConnaissanceObjet_Degrader( myself, object.source, damageFactor )
 end
 
 --- Returns true if this crowd has a flow, false otherwise.
 -- This method can only be called by a crowd.
 -- @return Boolean
 integration.crowdAgentHasFlow = function()
-    return DEC_HasFlow()
+    return _DEC_HasFlow( myself )
 end

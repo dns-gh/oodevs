@@ -19,12 +19,12 @@ integration.changeAutomate = function( ally, isAutomat )
     if isAutomat then
         -- No need to change if the old and new companies are the same
         if ally.source ~= DEC_GetAutomate( myself ) then
-            return DEC_Pion_ChangeAutomate( ally.source ) 
+            return _DEC_Pion_ChangeAutomate( myself, ally.source ) 
         end
-    else 
+    else
         -- No need to change if the old and new companies are the same
         if DEC_GetAutomate( ally.source ) ~= DEC_GetAutomate( myself ) then
-            return DEC_Pion_ChangeAutomate( DEC_GetAutomate( ally.source ) ) 
+            return _DEC_Pion_ChangeAutomate( myself, DEC_GetAutomate( ally.source ) ) 
         end
     end
 end

@@ -1140,21 +1140,9 @@ bool DEC_AgentFunctions::IsInCity( const DEC_Decision_ABC* pAgent )
 // Name: DEC_AgentFunctions::IsInCrowd
 // Created: DDA 2011-05-13
 // -----------------------------------------------------------------------------
-bool DEC_AgentFunctions::IsInCrowd( const DEC_Decision_ABC* agent, DEC_Decision_ABC* pion )
+bool DEC_AgentFunctions::IsInCrowd( const DEC_Decision_ABC* agent )
 {
-    switch( agent->GetKind() )
-    {
-        case DEC_Decision_ABC::ePion:
-            return agent->GetPion().Get< PHY_RoleInterface_Population >().HasCollision();
-        case DEC_Decision_ABC::ePopulation:
-        {
-            if( !pion )
-                throw MASA_EXCEPTION( "invalid parameter." );
-            return pion->GetPion().Get< PHY_RoleInterface_Population >().HasCollisionWithCrowd( agent->GetPopulation() );
-        }
-        default:
-            throw MASA_EXCEPTION( "DEC_AgentFunctions::GetPosture: cannot be called for this entity" );
-    }
+    return agent->GetPion().Get< PHY_RoleInterface_Population >().HasCollision();
 }
 
 // -----------------------------------------------------------------------------

@@ -2,42 +2,42 @@
 --- Logistic Integration
 ------------------------------------------------------------------
 integration.getActionCouranteConvoi = function()
-    return DEC_Ravitaillement_Convoi_ActionCourante()
+    return _DEC_Ravitaillement_Convoi_ActionCourante( myself )
 end
 
 -- Returns the supplies provider. 
 -- /!\ Returns nil if the agent is not performing a logistic convoy mission
 integration.getRavitailleur = function() 
-    return DEC_Ravitaillement_Convoi_Ravitailleur()
+    return _DEC_Ravitaillement_Convoi_Ravitailleur( myself )
 end
 -- Returns the supplies receiver.
 -- /!\ Returns nil if the agent is not performing a logistic convoy mission
 integration.getDestinataireCourant = function() 
-    return DEC_Ravitaillement_Convoi_DestinataireCourant()
+    return _DEC_Ravitaillement_Convoi_DestinataireCourant( myself )
 end
 -- Returns the vehicles provider.
 -- /!\ Returns nil if the agent is not performing a logistic convoy mission
 integration.getTransporter = function()
-    return DEC_Ravitaillement_Convoi_Transporteur()
+    return _DEC_Ravitaillement_Convoi_Transporteur( myself )
 end
 
 integration.getItineraireVersProchaineDestination = function()
-    return DEC_Ravitaillement_Convoi_ItineraireVersProchaineDestination()
+    return _DEC_Ravitaillement_Convoi_ItineraireVersProchaineDestination( myself )
 end
 integration.deplacementVersRavitailleurEffectue = function()
-    DEC_Ravitaillement_Convoi_DeplacementVersRavitailleurEffectue()
+    _DEC_Ravitaillement_Convoi_DeplacementVersRavitailleurEffectue( myself )
 end
 
 integration.deplacementVersDestinataireEffectue = function()
-    DEC_Ravitaillement_Convoi_DeplacementVersDestinataireEffectue()
+    _DEC_Ravitaillement_Convoi_DeplacementVersDestinataireEffectue( myself )
 end
 
 integration.deplacementVersTransporteurEffectue = function()
-    DEC_Ravitaillement_Convoi_DeplacementVersTransporteurEffectue()
+    _DEC_Ravitaillement_Convoi_DeplacementVersTransporteurEffectue( myself )
 end
 
 integration.finMissionConvoi = function()
-    DEC_Ravitaillement_Convoi_FinMission()
+    _DEC_Ravitaillement_Convoi_FinMission( myself )
 end
 
 integration.isMedical = function( agent )
@@ -45,101 +45,101 @@ integration.isMedical = function( agent )
 end
 
 integration.startGiveEquipment = function( agent, agentToReinforce, equipment, nbrAmbulance )
-    DEC_StartPreterComposantes( agent, agentToReinforce, equipment, nbrAmbulance )
+    _DEC_StartPreterComposantes( myself, agent, agentToReinforce, equipment, nbrAmbulance )
 end
 
 integration.startTakeEquipment = function( agent, equipment, nbrAmbulance )
-	DEC_RecupererComposantes( agent, equipment, nbrAmbulance )
+	_DEC_RecupererComposantes( myself, agent, equipment, nbrAmbulance )
 end
 
 integration.changeMaintenanceWorkMode = function( workOrganization )
-    DEC_Maintenance_ChangerRegimeTravail( workOrganization )
+    _DEC_Maintenance_ChangerRegimeTravail( myself, workOrganization )
 end
 
 integration.changeTacticHealtPriority = function( tacticPriority )
-    DEC_Sante_ChangerPrioritesTactiques( tacticPriority )
+    _DEC_Sante_ChangerPrioritesTactiques( myself, tacticPriority )
 end
 
 integration.changeTacticMaintenancePriority = function( tacticPriority )
-    DEC_Maintenance_ChangerPrioritesTactiques( tacticPriority )
+    _DEC_Maintenance_ChangerPrioritesTactiques( myself, tacticPriority )
 end
 
 integration.changeMaintenancePriority = function( priority )
-    DEC_Maintenance_ChangerPriorites( priority )
+    _DEC_Maintenance_ChangerPriorites( myself, priority )
 end
 
 integration.changeHealthPriority = function( priority )
-    DEC_Sante_ChangerPriorites( priority )
+    _DEC_Sante_ChangerPriorites( myself, priority )
 end
 
 integration.changeTacticPriority = function( priority )
-    DEC_Sante_ChangerPrioritesTactiques( priority )
+    _DEC_Sante_ChangerPrioritesTactiques( myself, priority )
 end
 
 integration.isLogSupplyPushFlow = function()
-    return DEC_Ravitaillement_Convoi_EstFluxPousse()
+    return _DEC_Ravitaillement_Convoi_EstFluxPousse( myself )
 end
 
 integration.isLogisticAutomat = function( )
-    return DEC_Automate_isLogistic( )
+    return _DEC_Automate_isLogistic( myself )
 end
 
 integration.isLogisticAutomatExist = function( )
-    return DEC_Automate_isLogistic
+    return _DEC_Automate_isLogistic
 end
 
 integration.getWorkRegime = function( )
-    return DEC_Maintenance_RegimeTravail( )
+    return _DEC_Maintenance_RegimeTravail( myself )
 end
 
 integration.getWorkRegimeExist = function( )
-    return DEC_Maintenance_RegimeTravail
+    return _DEC_Maintenance_RegimeTravail
 end
 
 integration.getTacticalPrioritiesHealth = function( )
-    return DEC_Sante_PrioritesTactiques( )
+    return _DEC_Sante_PrioritesTactiques( myself )
 end
 
 integration.getTacticalPrioritiesHealthExist = function( )
-    return DEC_Sante_PrioritesTactiques
+    return _DEC_Sante_PrioritesTactiques
 end
 
 integration.getTacticalPrioritiesMaintenance = function( )
-    return DEC_Maintenance_PrioritesTactiques( )
+    return _DEC_Maintenance_PrioritesTactiques( myself )
 end
 
 integration.getTacticalPrioritiesMaintenanceExist = function( )
-    return DEC_Maintenance_PrioritesTactiques
+    return _DEC_Maintenance_PrioritesTactiques
 end
 
 integration.getPrioritiesMaintenance = function( )
-    return DEC_Maintenance_Priorites( )
+    return _DEC_Maintenance_Priorites( myself )
 end
 
 integration.getPrioritiesMaintenanceExist = function( )
-    return DEC_Maintenance_Priorites
+    return _DEC_Maintenance_Priorites
 end
 
 integration.getPrioritiesHealth = function( )
-    return DEC_Sante_Priorites( )
+    return _DEC_Sante_Priorites( myself )
 end
 
 integration.getPrioritiesHealthExist = function( )
-    return DEC_Sante_Priorites
+    return _DEC_Sante_Priorites
 end
 
 integration.supplyRequest = function( )
-    return DEC_DemandeDeRavitaillement()
+    return _DEC_DemandeDeRavitaillement( myself )
 end
 
 -- Returns the HQ of the current TC2 (returns nil if there is no current TC2)
 integration.getHQofTC2 = function( )
-    return DEC_Pion_PcDeTC2()
+    return _DEC_Pion_PcDeTC2( myself )
 end
 
 -- Returns the knowledge of the HQ of the current TC2 (returns nil if there is no current TC2)
 integration.getHQknowledgeOfTC2 = function( )
-    local tc2 = DEC_Pion_PcDeTC2()
+    local tc2 = _DEC_Pion_PcDeTC2( myself )
     if tc2 then
         return CreateKnowledge( integration.ontology.types.agent, tc2 )
     end
@@ -151,7 +151,7 @@ end
 -- @param ressourceType : integer, the type of ressource (e.g. eDotation_Fuel)
 -- @param capacityFactor : float, the proportion (over the total capacity) of resource that will be set
 integration.changeResourceValueUsingCombatTrains = function( resourceType, capacityFactor )
-    DEC_ChangeValeurDotations2( resourceType, capacityFactor )
+    _DEC_ChangeValeurDotations( myself, resourceType, capacityFactor, -1 )
 end
 
 -- Changes the amount of resource for the agent, taking from or giving back to the logistic superior stocks,
@@ -165,14 +165,14 @@ end
 -- This method can only be called by a logistic agent or company.
 -- @see integration.desactivateInjuredSorting
 integration.activateInjuredSorting = function()
-    DEC_Sante_ActiverFonctionTri()
+    _DEC_Sante_ActiverFonctionTri( myself )
 end
 
 --- Disables the sorting of wounded units.
 -- This method can only be called by a logistic agent or company.
 -- @see integration.activateInjuredSorting
 integration.desactivateInjuredSorting = function()
-    DEC_Sante_DesactiverFonctionTri()
+    _DEC_Sante_DesactiverFonctionTri( myself )
 end
 
 --- Enables the logistics system (medical, supply and maintenance chains).
@@ -182,10 +182,10 @@ end
 -- @return Boolean, whether or not the caller is of a logistic type.
 integration.activateLogisticChains = function()
     if integration.isLogisticTypeUnit() then
-        DEC_Sante_ActiverChaine()
-        DEC_Maintenance_ActiverChaine()
-        DEC_Ravitaillement_ActiverChaine()
-        DEC_Sante_ActiverFonctionSoin()
+        _DEC_Sante_ActiverChaine( myself )
+        _DEC_Maintenance_ActiverChaine( myself )
+        _DEC_Ravitaillement_ActiverChaine( myself )
+        _DEC_Sante_ActiverFonctionSoin( myself )
         return true
     else
         return false
@@ -199,10 +199,10 @@ end
 -- @return Boolean, whether or not the caller is of a logistic type.
 integration.desactivateLogisticChains = function()
     if integration.isLogisticTypeUnit() then
-        DEC_Sante_DesactiverChaine()
-        DEC_Maintenance_DesactiverChaine()
-        DEC_Ravitaillement_DesactiverChaine()
-        DEC_Sante_DesactiverFonctionSoin()
+        _DEC_Sante_DesactiverChaine( myself )
+        _DEC_Maintenance_DesactiverChaine( myself )
+        _DEC_Ravitaillement_DesactiverChaine( myself )
+        _DEC_Sante_DesactiverFonctionSoin( myself )
         return true
     else
         return false
@@ -213,14 +213,14 @@ end
 -- This method can only be called by a logistic agent or company.
 -- @see integration.desactivateInjuredTreatment
 integration.activateInjuredTreatment = function()
-    DEC_Sante_ActiverFonctionSoin()
+    _DEC_Sante_ActiverFonctionSoin( myself )
 end
 
 --- Disables the treatment of wounded units.
 -- This method can only be called by a logistic agent or company.
 -- @see integration.activateInjuredTreatment
 integration.desactivateInjuredTreatment = function ( )
-    DEC_Sante_DesactiverFonctionSoin()
+    _DEC_Sante_DesactiverFonctionSoin( myself )
 end
 
 --- Changes the wounded units treatment priority.
@@ -241,7 +241,7 @@ end
 -- @param value the total percentage of the maximum to decrease
 -- @param duration the duration of the decrease in seconds
 integration.startConsumingResources = function( dotation, value, duration )
-    DEC_StartConsumingResources( dotation, value, duration )
+    _DEC_StartConsumingResources( myself, dotation, value, duration )
 end
 
 --- Triggers a breakdown of the given id to the equipment of the
@@ -251,7 +251,7 @@ end
 -- @param breakdownID Integer, the id of breakdown
 -- @return Boolean, whether or not the breakdown has been successfully triggered.
 integration.triggerBreakdown = function( equipmentType, breakdownID )
-    return DEC_CreateBreakdown( equipmentType, breakdownID )
+    return _DEC_CreateBreakdown( myself, equipmentType, breakdownID )
 end
 
 --- Evacuate victims through a medical logistic chain.

@@ -86,7 +86,7 @@ end
 -- @param agent Simulation agent
 -- @return Float standing for the advance of the agent along the AOR
 integration.advanceAlongAOR = function( agent )
-    return DEC_Geometrie_AdvanceAlongFuseau( agent )
+    return _DEC_Geometrie_AdvanceAlongFuseau( myself, agent )
 end
 
 --- Returns the advance of the given point along the danger direction of the provided agent
@@ -163,7 +163,7 @@ end
 -- @param area Simulation area
 -- @return Simulation position 
 integration.computePointNearLocationsInsideAOR = function( area )
-    return DEC_Geometrie_CalculerPointProcheLocalisationDansFuseau( area )
+    return _DEC_Geometrie_CalculerPointProcheLocalisationDansFuseau( myself, area )
 end
 
 --- Returns an area with the provided list of positions as vertices
@@ -202,7 +202,7 @@ end
 -- @param safetyDistance Float, the safety distance
 -- @return Simulation position
 integration.computeSafetyPosition = function( enemyAgent, safetyDistance )
-    return DEC_Geometrie_CalculerPositionSurete( enemyAgent, safetyDistance )
+    return _DEC_Geometrie_CalculerPositionSurete( myself, enemyAgent, safetyDistance )
 end
 
 --- Splits the current area of responsibility along its global direction
@@ -210,7 +210,7 @@ end
 -- @param length Float, the length of each section
 -- @return List of simulation areas of responsibility
 integration.splitAORInSections = function( length )
-    return DEC_Geometrie_DecoupeFuseauEnTroncons( length )
+    return _DEC_Geometrie_DecoupeFuseauEnTroncons( myself, length )
 end
 
 --- Returns points in the middle of the provided area of responsibility.
@@ -322,7 +322,7 @@ end
 -- <li> 2 : The numberOfParts parameter is negative </li>
 -- <li> 3 : The splitting was successful </li> </ul> </ul>
 integration.geometrySplitLocalisation = function( localisation, numberOfParts, direction )
-    return DEC_Geometry_SplitLocalisation( localisation, numberOfParts, direction )
+    return DEC_Geometry_Pion_SplitLocalisation( myself, localisation, numberOfParts, direction )
 end
 
 --- Sets the forward line computer to start the computation of the distance
@@ -382,7 +382,7 @@ end
 
 --- Returns the surface of the provided area
 -- @param area Simulation area
--- @return Double, the surface of the area in meter²
+-- @return Double, the surface of the area in meterÂ²
 integration.getAreaSize = function( area )
     return DEC_Geometrie_AreaSize( area )
 end
@@ -390,7 +390,7 @@ end
 --- Returns the surface of the intersection of the two provided area
 -- @param area1 Simulation area
 -- @param area2 Simulation area
--- @return Double, the surface of the area in meter²
+-- @return Double, the surface of the area in meterÂ²
 integration.getIntersectionSize = function( area1, area2 )
     return DEC_Geometrie_IntersectionSize( area1, area2 )
 end

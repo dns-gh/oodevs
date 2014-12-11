@@ -12,7 +12,7 @@
 -- @return false
 integration.startInterrogatePion = function( pion )
     pion[myself] = pion[myself] or {}
-    pion[myself].actionInterrogate = DEC_StartInterrogateUnit( pion.source )
+    pion[myself].actionInterrogate = _DEC_StartInterrogateUnit( myself, pion.source )
     actionCallbacks[ pion[myself].actionInterrogate ] = function( arg ) pion[myself].actionInterrogateState = arg end
     return false
 end
@@ -48,7 +48,7 @@ integration.stopInterrogatePion = function( pion )
     if pion[myself].actionInterrogateState == eActionObjetImpossible then
         reportFunction(eRC_criticalIntelligenceImpossible )
     end
-    pion[myself].actionInterrogate = DEC__StopAction( pion[myself].actionInterrogate )
+    pion[myself].actionInterrogate = _DEC__StopAction( myself, pion[myself].actionInterrogate )
     pion[myself].actionInterrogateState = nil
     return true
 end
@@ -63,7 +63,7 @@ end
 -- @return false
 integration.startInterrogateCrowd = function( crowd )
     crowd[myself] = crowd[myself] or {}
-    crowd[myself].actionInterrogate = DEC_StartInterrogateCrowd( crowd.source )
+    crowd[myself].actionInterrogate = _DEC_StartInterrogateCrowd( myself, crowd.source )
     actionCallbacks[ crowd[myself].actionInterrogate ] = function( arg ) crowd[myself].actionInterrogateState = arg end
     return false
 end
@@ -87,7 +87,7 @@ end
 integration.stopInterrogateCrowd = function( crowd )
     crowd[myself] = crowd[myself] or {}
     if crowd[myself].actionInterrogateState == eActionObjetTerminee then
-        local criticalIntelligence = DEC_ObtenirRenseignementCritiqueSurFoule( crowd.source )
+        local criticalIntelligence = _DEC_ObtenirRenseignementCritiqueSurFoule( myself, crowd.source )
         if string.len( criticalIntelligence ) ~= 0 then
             reportFunction(eRC_criticalIntelligence, criticalIntelligence )
             meKnowledge:sendCriticalIntelligence( integration.GetSuperiorKnowledge( meKnowledge ), {criticalIntelligence = criticalIntelligence, RC =eRC_criticalIntelligence} )
@@ -96,7 +96,7 @@ integration.stopInterrogateCrowd = function( crowd )
             meKnowledge:sendCriticalIntelligence( integration.GetSuperiorKnowledge( meKnowledge ), {RC = eRC_criticalIntelligenceNone } )
         end
     end
-    crowd[myself].actionInterrogate = DEC__StopAction( crowd[myself].actionInterrogate )
+    crowd[myself].actionInterrogate = _DEC__StopAction( myself, crowd[myself].actionInterrogate )
     crowd[myself].actionInterrogateState = nil
     return true
 end

@@ -89,7 +89,7 @@ integration.genericRC = integration.report
 -- @see DEC_Message
 -- Any additional parameter will be used as parameters to the report.
 integration.pionRC = function ( ... )
-    if not DEC_Agent_AutomateEstEmbraye() then
+    if not _DEC_Agent_AutomateEstEmbraye( myself ) then
         integration.report( ... )
     else
         DEC_Message( ... )
@@ -103,7 +103,7 @@ function RegisterTaskListener()
         OnNewTick = function( self )
             myself.newMission = false
             if myself.stealthTick == 2 then -- I wait 2 ticks
-                DEC_Perception_Furtivite( 1 )  -- I become visible
+                _DEC_Perception_Furtivite( myself, 1 )  -- I become visible
                 myself.lastStealth = 1
                 myself.wantedVisible = false
                 myself.stealthTick = 0
@@ -153,7 +153,7 @@ function RegisterTaskListener()
                     self.stage = nil
                 end
                 reportFunction( eRC_FinMission )
-                DEC_FinMission()
+                _DEC_FinMission( myself )
             end
             self:Cleanup()
         end,
@@ -166,7 +166,7 @@ function RegisterTaskListener()
                     reportFunction( eRC_BM_FinPhase, self.stage )
                     self.stage = nil
                 end
-                DEC_Trace( "mission interrupted" )
+                _DEC_Trace( myself, "mission interrupted" )
             end
         end,
     }

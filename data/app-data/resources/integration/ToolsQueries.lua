@@ -108,13 +108,13 @@ end
 -- @return Table with "entities", "munition" and "interventionType" as keys,
 -- or nil if no fire fragmentary order was retrieved
 integration.query.getFirstFireOrder = function( )
-    local ordres_recus = DEC_GetOrdersCategory()
+    local ordres_recus = _DEC_GetOrdersCategory( myself )
     local integration = integration
     for _, x in pairs( ordres_recus or emptyTable ) do
         if isApplyFireOrder( x ) then
             local res = CreateKnowledge( integration.ontology.types.fragOrder, x )
-            DEC_RemoveFromOrdersCategory( x )
-            DEC_DeleteRepresentation( x )
+            _DEC_RemoveFromOrdersCategory( myself, x )
+            _DEC_DeleteRepresentation( myself, x )
             return res:getParameters()
         end
     end
@@ -138,13 +138,13 @@ end
 -- @param fragOrderType String, the DIA type of the fragmentary order
 -- @return Fragmentary order knowledge, or nil if no fragmentary order with the given type was retrieved
 integration.query.getFirstFragOrderFromType = function( fragOrderType )
-    local ordres_recus = DEC_GetOrdersCategory()
+    local ordres_recus = _DEC_GetOrdersCategory( myself )
     local integration = integration
     for _, x in pairs( ordres_recus or emptyTable ) do
         if integration.getAnyType( x ) == fragOrderType then
             local res = CreateKnowledge( integration.ontology.types.fragOrder, x )
-            DEC_RemoveFromOrdersCategory( x )
-            DEC_DeleteRepresentation( x )
+            _DEC_RemoveFromOrdersCategory( myself, x )
+            _DEC_DeleteRepresentation( myself, x )
             return res
         end
     end
@@ -179,7 +179,7 @@ end
 -- @param nbSubAORs Integer, the number of sub-areas of responsibility
 -- @return List of simulation areas of responsibility
 integration.query.getFuseaux = function( nbSubAORs )
-    return DEC_DecouperFuseau( nbSubAORs )
+    return _DEC_DecouperFuseau( myself, nbSubAORs )
 end
 
 --- Returns the appropriate number of units to put in the first
@@ -191,17 +191,17 @@ end
 -- @return Integer, the number of units to put in the first echelon
 integration.query.getNbrFront = function( nbrEchelon )
     if nbrEchelon == NIL or nbrEchelon == 0 then
-        return #( DEC_Automate_PionsAvecPC() ) -- all
+        return #( myself:DEC_Automate_PionsAvecPC() ) -- all
     end
-    local pions = DEC_Automate_PionsMelee()
-    return  math.max(1, ( #pions )/ nbrEchelon )
+    local pions = _DEC_Automate_PionsMelee( myself )
+    return math.max( 1, ( #pions ) / nbrEchelon )
 end
 
 --- Returns the total number of engineer units in this company.
 -- Note that this method can only be called by a company.
 -- @return Integer, the number of engineer units in this company.
 integration.query.getNbrGEN = function()
-    return #( DEC_Automate_PionsGenie() ) -- all
+    return #( _DEC_Automate_PionsGenie( myself ) ) -- all
 end
 
 --- Filters the given entities by keeping only those without a mission,
@@ -360,7 +360,7 @@ integration.getEntitiesFromAutomatCommunication = function ( company, role, with
  
 --- Deprecated
 integration.getEntitiesFromBatallion = function ()
-    local temp = DEC_Automate_AutomatesSubordonnes()
+    local temp = _DEC_Automate_AutomatesSubordonnes( myself )
     local integration = integration
     local CreateKnowledge = CreateKnowledge
     
@@ -417,7 +417,7 @@ integration.getDestroyableInObjective = function( objective, radius )
     if masalife.brain.core.class.isOfType( objective, integration.ontology.types.area ) then
         enemies = integration.getAgentKnowledgesInArea( objective.source ) 
     elseif masalife.brain.core.class.isOfType( objective, integration.ontology.types.urbanBlock ) then
-        enemies = DEC_Connaissances_UnitesEnnemiesVivantesDansBlocUrbain( objective.source )           
+        enemies = _DEC_Connaissances_UnitesEnnemiesVivantesDansBlocUrbain( myself, objective.source )           
     else
         enemies = integration.getKnowledgesLivingAgentsInCircle( objective:getPosition(), radius or 600 )
     end
@@ -473,7 +473,7 @@ integration.query.getSiteFranchissementDansZone = function( area )
     local CreateKnowledge = CreateKnowledge
     local allRes = {}
     local obstacles = {}
-    obstacles = DEC_ObjectKnowledgesInZone( area.source, { eTypeObjectCrossingSite } )
+    obstacles = _DEC_ObjectKnowledgesInZone( myself, area.source, { eTypeObjectCrossingSite } )
     for i = 1, #obstacles do
         allRes[ #allRes + 1 ] = CreateKnowledge( integration.ontology.types.object, obstacles[i] )
     end
@@ -486,7 +486,7 @@ end
 integration.query.getPontoonBridgesInArea = function( area )
     local allRes = {}
     local pontoonBridges = {}
-    pontoonBridges = DEC_ObjectKnowledgesInZone( area.source, { eTypeObjectContinuousPontoonBridge, eTypeObjectDiscontinuousPontoonBridge } )
+    pontoonBridges = _DEC_ObjectKnowledgesInZone( myself, area.source, { eTypeObjectContinuousPontoonBridge, eTypeObjectDiscontinuousPontoonBridge } )
     for i = 1, #pontoonBridges do
         allRes[ #allRes + 1 ] = CreateKnowledge( sword.military.world.Object, pontoonBridges[ i ] )
     end
@@ -519,9 +519,9 @@ integration.getFirePositions = function( deploymentMethod, area, angle )
     local directionEnnemi = DEC_GetDirectionEnnemi( DEC_GetRawMission( meKnowledge.source ) )
     local firePositions = {}
     if deploymentMethod == eDeploiementEn_carre then
-        firePositions = DEC_Geometrie_PosDeploiementASAOmni( nombrePositions, area:getPosition(), M_POLY_DOCTRINE_DISTANCE_MAX_ENTRE_SECTIONS * 0.707 )
+        firePositions = _DEC_Geometrie_PosDeploiementASAOmni( myself, nombrePositions, area:getPosition(), M_POLY_DOCTRINE_DISTANCE_MAX_ENTRE_SECTIONS * 0.707 )
     elseif deploymentMethod == eDeploiementEn_triangle then
-        firePositions = DEC_Geometrie_PosDeploiementASAOmni( nombrePositions, area:getPosition(), ( M_POLY_DOCTRINE_DISTANCE_MAX_ENTRE_SECTIONS / 2 ) * 1.155 )
+        firePositions = _DEC_Geometrie_PosDeploiementASAOmni( myself, nombrePositions, area:getPosition(), ( M_POLY_DOCTRINE_DISTANCE_MAX_ENTRE_SECTIONS / 2 ) * 1.155 )
     elseif deploymentMethod == eDeploiementNasse_trois_sections then
         firePositions = DEC_Geometrie_PosDeploiementMistralNasse( nombrePositions, area:getPosition(), angle, M_POLY_DOCTRINE_DISTANCE_POINT_A_DEFENDRE, M_POLY_DOCTRINE_DISTANCE_MAX_ENTRE_SECTIONS, directionEnnemi )
     elseif deploymentMethod == eDeploiementNasse_quatre_sections then
@@ -531,7 +531,7 @@ integration.getFirePositions = function( deploymentMethod, area, angle )
     elseif deploymentMethod == eDeploiementSimple_rideau then
         firePositions = DEC_Geometrie_PosDeploiementMistralNasse( nombrePositions, area:getPosition(), 180, M_POLY_DOCTRINE_DISTANCE_POINT_A_DEFENDRE, M_POLY_DOCTRINE_DISTANCE_MAX_ENTRE_SECTIONS, directionEnnemi )
     else
-        firePositions = DEC_Geometrie_PosDeploiementASAOmni( nombrePositions, area:getPosition(), M_POLY_DOCTRINE_DISTANCE_MAX_ENTRE_SECTIONS * 0.707 )
+        firePositions = _DEC_Geometrie_PosDeploiementASAOmni( myself, nombrePositions, area:getPosition(), M_POLY_DOCTRINE_DISTANCE_MAX_ENTRE_SECTIONS * 0.707 )
     end
     local returnPositions = {}
     for i = 1, #firePositions do
@@ -545,16 +545,16 @@ end
 -- @return List of directia agent knowledges
 integration.query.getEnemiesToIndirectFireWhenSupport = function( friends, onlyRespondFire )
     local DEC_Connaissances_UnitesPrenantAPartieSurAmi = DEC_Connaissances_UnitesPrenantAPartieSurAmi
-    local DEC_Connaissances_UnitesEnnemiesVivantesPercuesParPion = DEC_Connaissances_UnitesEnnemiesVivantesPercuesParPion
+    local _DEC_Connaissances_UnitesEnnemiesVivantesPercuesParPion = _DEC_Connaissances_UnitesEnnemiesVivantesPercuesParPion
     local integration = integration
     local CreateKnowledge = CreateKnowledge
     local enemies = {}
     local simEnemies = {}
     for i = 1, #friends do
         if onlyRespondFire then
-            simEnemies = DEC_Connaissances_UnitesPrenantAPartieSurAmi(friends[i].source )
+            simEnemies = DEC_Connaissances_UnitesPrenantAPartieSurAmi( friends[i].source )
         else
-            simEnemies = DEC_Connaissances_UnitesEnnemiesVivantesPercuesParPion( friends[i].source )
+            simEnemies = _DEC_Connaissances_UnitesEnnemiesVivantesPercuesParPion( myself, friends[i].source )
         end
         for j = 1, #simEnemies do
             local eny = CreateKnowledge( integration.ontology.types.agentKnowledge, simEnemies[j] )
@@ -572,7 +572,7 @@ end
 -- @return Point knowledge
 integration.query.getNearestPositionInAOR = function( objective )
     local target = objective:getPosition()
-    local simPos = DEC_Geometrie_CalculerPointProcheLocalisationNonClippeeDansFuseau( DEC_Geometrie_ConvertirPointEnLocalisation( target ) )
+    local simPos = _DEC_Geometrie_CalculerPointProcheLocalisationNonClippeeDansFuseau( myself, DEC_Geometrie_ConvertirPointEnLocalisation( target ) )
     return CreateKnowledge( integration.ontology.types.point, simPos )
 end
 
@@ -665,7 +665,7 @@ end
 
 --- Deprecated, use integration.getKnowledgeHQ instead
 integration.query.getPCUnit = function()
-    local HQUnit = DEC_Automate_PionPC()
+    local HQUnit = _DEC_Automate_PionPC( myself )
     if HQUnit then
         return CreateKnowledge( integration.ontology.types.agent, HQUnit )
     else

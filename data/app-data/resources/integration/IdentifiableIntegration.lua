@@ -20,8 +20,8 @@ end
 -- @param objective DirectIA agent knowledge
 integration.identifyIt = function( objective )
     if not DEC_ConnaissanceAgent_EstDetruitTactique( objective.source ) then
-        DEC_Perception_VisionVerrouilleeSurPointPtr( objective:getPosition() )
-        DEC_Perception_ActiverRadarSurPointPtr( eRadarType_Radar, objective:getPosition() )
+        _DEC_Perception_VisionVerrouilleeSurPointPtr( myself, objective:getPosition() )
+        _DEC_Perception_ActiverRadarSurPointPtr( myself, eRadarType_Radar, objective:getPosition() )
     end
 end
 
@@ -30,5 +30,5 @@ end
 -- @param target Knowledge defining a "getPosition" method returning a simulation position
 -- @return Boolean
 integration.isInIdentificationRange = function( target )
-    return integration.distance( meKnowledge, target ) < ( DEC_Reconnoissance_MajorComponentMinDistance() * 0.9 )
+    return integration.distance( meKnowledge, target ) < ( _DEC_Reconnoissance_MajorComponentMinDistance( myself ) * 0.9 )
 end

@@ -7,7 +7,7 @@
 -- @param object Object knowledge
 -- @return Boolean, whether or not unit has the capacity to bypass this object
 integration.canBypassIt = function( object )
-    return DEC_Agent_PeutConstruireContournementObjet( object.source )
+    return _DEC_Agent_PeutConstruireContournementObjet( myself, object.source )
 end
 
 --- Returns true if the object knowledge can be bypassed, false otherwise
@@ -32,7 +32,7 @@ end
 integration.startBypassIt = function( object )
     reportFunction(eRC_EnContournementObstacle )
     object[myself] = object[myself] or {}
-    object[myself].actionBypass = DEC_StartCreerContournementObjet( object.source )
+    object[myself].actionBypass = _DEC_StartCreerContournementObjet( myself, object.source )
     actionCallbacks[ object[myself].actionBypass ] = function( arg ) object[myself].actionBypassState = arg end
     
     reportFunction(eRC_DebutTravaux )
@@ -64,13 +64,13 @@ integration.stopBypassIt = function( object )
     object[myself] = object[myself] or {}
     reportFunction(eRC_FinTravaux )
     if object[myself].actionBypassState == eActionObjetTerminee then
-        object[myself].actionBypass = DEC__StopAction( object[myself].actionBypass )
+        object[myself].actionBypass = _DEC__StopAction( myself, object[myself].actionBypass )
         object[myself].actionBypassState = nil
         return true
     else
-        object[myself].actionBypass = DEC__StopAction( object[myself].actionBypass )
+        object[myself].actionBypass = _DEC__StopAction( myself, object[myself].actionBypass )
         object[myself].actionBypassState = nil
-        DEC_Trace( "pause work bypass" )
+        _DEC_Trace( myself, "pause work bypass" )
         return false
     end
 end

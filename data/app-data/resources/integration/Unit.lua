@@ -26,7 +26,7 @@ integration.isIdentifiedPredicate = {
 -- @param category String, the name of the category
 -- @param value String, the new value of the category
 integration.setDecisionalState = function( category, value)
-    DEC_DecisionalState( category, value )
+    _DEC_DecisionalState( myself, category, value )
 end
 
 --- Sets the force ratio state to the provided value
@@ -36,7 +36,7 @@ end
 -- <li> eForceRatioStateFavorable </li>
 -- <li> eForceRatioStateUnfavorable </li> </ul>
 integration.setForceRatioState = function( value )
-    DEC_Agent_ChangeEtatRapportDeForce( value )
+    _DEC_Agent_ChangeEtatRapportDeForce( myself, value )
 end
 
 --- Sets the operational state to the provided value
@@ -45,7 +45,7 @@ end
 -- <li> eEtatDestruction_Tactique </li>
 -- <li> eEtatDestruction_Total </li> </ul>
 integration.setOperationalState = function( value )
-    DEC_Agent_ChangeEtatOperationnel( value )
+    _DEC_Agent_ChangeEtatOperationnel( myself, value )
 end
 
 --- Returns the provided agent's major operational state
@@ -64,7 +64,7 @@ integration.getAgentOpsState = function( agent )
     if agent then
         return agent:DEC_Agent_EtatOps()
     else
-        return DEC_Agent_EtatOps()
+        return _DEC_Agent_EtatOps( myself )
     end
 end
 
@@ -100,7 +100,7 @@ end
 -- @param area Simulation area
 -- @return List of simulation agent knowledges
 integration.getAgentKnowledgesInArea = function( area )
-    return DEC_Connaissances_UnitesEnnemiesVivantesDansZone( area )
+    return _DEC_Connaissances_UnitesEnnemiesVivantesDansZone( myself, area )
 end
 
 --- Returns all the known friendly units inside the provided area
@@ -108,7 +108,7 @@ end
 -- @param area Simulation area
 -- @return Table of friendly simulation agent knowledges
 integration.getFriendsInArea = function( area )
-    local friends = DEC_Connaissances_UnitesAmiesDansZone( area )
+    local friends = _DEC_Connaissances_UnitesAmiesDansZone( myself, area )
     local DEC_ConnaissanceAgent_EnAgent = DEC_ConnaissanceAgent_EnAgent
     for i=1,#friends do
         if DEC_ConnaissanceAgent_EnAgent( friends[ i ] ) == myself then
@@ -126,7 +126,7 @@ end
 -- @param distance Float, the radius of the circle
 -- @return List of living simulation agent knowledges in the circle
 integration.getKnowledgesLivingAgentsInCircle = function( position, distance )
-    return DEC_Connaissances_UnitesEnnemiesVivantesDansCercle( position, distance )
+    return _DEC_Connaissances_UnitesEnnemiesVivantesDansCercle( myself, position, distance )
 end
 
 --- Returns the flying height for the provided agent knowledge
@@ -243,7 +243,7 @@ end
 -- This method can only be called by an agent.
 -- @return List of agent knowledges
 integration.unitesDetecteesDansFuseau = function()
-    return DEC_Connaissances_UnitesDetecteesDansFuseau()
+    return _DEC_Connaissances_UnitesDetecteesDansFuseau( myself )
 end
 
 --- Returns all the known wounded or dead units inside the circle defined by
@@ -252,21 +252,21 @@ end
 -- @param distance Float, the radius of the circle
 -- @return List of all known wounded or dead simulation agent knowledges in the circle
 integration.getWoundedOrDeadUnitsInCircle = function( position, radius )
-    return DEC_Connaissances_UnitesBlesseesOuTueesDansCercle( position, radius )
+    return _DEC_Connaissances_UnitesBlesseesOuTueesDansCercle( myself, position, radius )
 end
 
 --- Returns all the known civilians in the provided area
 -- @param area Area knowledge
 -- @return List of all known civilian simulation units in the area
 integration.getCiviliansInArea = function( area )
-    return DEC_Connaissances_UnitesCivilesDansZone( area.source )
+    return _DEC_Connaissances_UnitesCivilesDansZone( myself, area.source )
 end
 
 --- Returns all the known wounded units in the provided area
 -- @param area Area knowledge
 -- @return List of all the known wounded simulation units in the area
 integration.getWoundedInArea = function( area )
-    return DEC_Connaissances_UnitesBlesseesDansZone( area.source )
+    return _DEC_Connaissances_UnitesBlesseesDansZone( myself, area.source )
 end
 
 --- Returns a list of all terrorist agent knowledges at the given distance of this entity.
@@ -274,7 +274,7 @@ end
 -- @param distance Float, the distance (in meters, 600 by default).
 -- @return List of agent knowledges
 integration.getNearbyTerrorists = function( distance )
-    local terrorists = DEC_Connaissances_TerroristsAProximite( distance or 600 )    
+    local terrorists = _DEC_Connaissances_TerroristsAProximite( myself, distance or 600 )    
     local newResult = {}
     for i = 1, #terrorists do
         newResult[ i ] = CreateKnowledge( integration.ontology.types.agentKnowledge, terrorists[ i ] )
@@ -288,7 +288,7 @@ end
 -- @param ph Float, the probability to hit
 -- @return Float, the distance. 0 if it is impossible to fire. -1 if the agent knowledge is invalid
 integration.getFiringDistanceToEngageMe = function( platoon, ph )
-    return DEC_Tir_PorteeMaxPourEtreTireParUnite( platoon.source, ph )
+    return _DEC_Tir_PorteeMaxPourEtreTireParUnite( myself, platoon.source, ph )
 end
 
 --- Returns true if the provided agent is flying, false otherwise
@@ -308,7 +308,7 @@ end
 --- Returns all the crowds knowledges colliding with this entity
 -- @return List of crowd knowledges
 integration.getCollidingCrowds = function()
-    local simCrowds = DEC_Connaissances_CollisionsPopulations()
+    local simCrowds = _DEC_Connaissances_CollisionsPopulations( myself )
     local crowds = {}
     for i = 1, #simCrowds do
         crowds[ i ] = CreateKnowledge( integration.ontology.types.population, simCrowds[ i ] )

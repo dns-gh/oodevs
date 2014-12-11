@@ -3,7 +3,7 @@
 -- @param resource Resource type
 -- @return Boolean
 integration.hasDotation = function( resource )
-    return DEC_HasDotation( resource )
+    return _DEC_HasDotation( myself, resource )
 end
 
 --- Returns true if this entity has at least the given quantity of
@@ -21,7 +21,7 @@ end
 -- @param resource Resource type
 -- @return Boolean
 integration.canUseDotation = function( resource )
-    return DEC_CanUseDotation( resource )
+    return _DEC_CanUseDotation( myself, resource )
 end
 
 --- Returns true if the given agent is contaminated, false otherwise.
@@ -42,14 +42,14 @@ end
 -- This method can only be called by an agent.
 -- @return Boolean
 integration.isPoisoned = function()
-    return DEC_Agent_EstEmpoisonne()
+    return _DEC_Agent_EstEmpoisonne( myself )
 end
 
 --- Returns true if this entity is an agent of type "NBC troop", false otherwise.
 -- This method can only be called by an agent.
 -- @return Boolean
 integration.isAgentNBC = function()
-    return DEC_Agent_EstAgentNBC()
+    return _DEC_Agent_EstAgentNBC( myself )
 end
 
 --- Makes this entity equip its NBC outfit.
@@ -66,7 +66,7 @@ integration.equipNBCOutfitSecu = function()
     local RNBCLevel = integration.getRNBCProtectionLevel()
     if RNBCLevel and RNBCLevel ~= 0 then
         reportOnceFunction( eRC_TenueProtectionNiveauNRBC, RNBCLevel )
-        DEC_Agent_MettreTenueProtectionNBC()
+        _DEC_Agent_MettreTenueProtectionNBC( myself )
         meKnowledge.equipOutfit = true
         return true
     else
@@ -87,7 +87,7 @@ integration.unequipNBCOutfitSecu = function()
     local RNBCLevel = integration.getRNBCProtectionLevel()
     if RNBCLevel and RNBCLevel ~= 0 then
         reportOnceFunction( eRC_TenueProtectionNBCEnlevee )
-        DEC_Agent_EnleverTenueProtectionNBC()
+        _DEC_Agent_EnleverTenueProtectionNBC( myself )
         meKnowledge.equipOutfit = false
     else
         reportOnceFunction( eRC_PasTenueNBC )
@@ -99,7 +99,7 @@ end
 -- @return Integer, the NBC protection level from 0 to 5, 0 meaning there is no
 -- protection available for this entity.
 integration.getRNBCProtectionLevel = function()
-    meKnowledge.RNBCProtectionLevel = meKnowledge.RNBCProtectionLevel or DEC_Agent_NiveauProtectionNBC()
+    meKnowledge.RNBCProtectionLevel = meKnowledge.RNBCProtectionLevel or _DEC_Agent_NiveauProtectionNBC( myself )
     return meKnowledge.RNBCProtectionLevel
 end
 
@@ -117,7 +117,7 @@ end
 -- This method can only be called by an agent.
 integration.equipNBCOutfit = function()
     reportFunction( eRC_TenueProtectionNBCMise )
-    DEC_Agent_MettreTenueProtectionNBC()
+    _DEC_Agent_MettreTenueProtectionNBC( myself )
 end
 
 --- Makes this entity unequip its NBC outfit and 
@@ -132,7 +132,7 @@ integration.unequipNBCOutfit = function()
         F_Pion_SeteEtatNbc( myself, eEtatNbc_Niv0 )
         myself.NBCAlert = false
     end
-    DEC_Agent_EnleverTenueProtectionNBC()
+    _DEC_Agent_EnleverTenueProtectionNBC( myself )
 end
 
 --- Switches off the radio communications of the given agent.
@@ -141,7 +141,7 @@ end
 integration.switchOffRadio = function( agent )
     reportFunction( eRC_DebutSilenceRadio )
     F_Pion_SeteEtatRadio( agent.source, eEtatRadio_Silence )
-    DEC_Agent_PasserEnSilenceRadio()
+    _DEC_Agent_PasserEnSilenceRadio( myself )
 end
 
 --- Switches off the outgoing radio emissions of the given agent.
@@ -150,7 +150,7 @@ end
 integration.switchEmitOnlyOffRadio = function( agent )
     reportFunction( eRC_DebutSilencePartielRadio )
     F_Pion_SeteEtatRadio( agent.source, eEtatRadio_Silence_Partiel )
-    DEC_Agent_PasserEnSilenceRadioPartiel()
+    _DEC_Agent_PasserEnSilenceRadioPartiel( myself, true )
 end
 
 --- Switches on the radio communications of the given agent.
@@ -159,33 +159,33 @@ end
 integration.switchOnRadio = function( agent )
     reportFunction( eRC_FinSilenceRadio )
     F_Pion_SeteEtatRadio( agent.source, eEtatRadio_Ouverte )
-    DEC_Agent_ArreterSilenceRadio()
+    _DEC_Agent_ArreterSilenceRadio( myself )
 end
 
 integration.switchEmitOnly = function( self )
     F_Pion_SeteEtatRadio( self.source, eEtatRadio_Silence_Partiel )
-    DEC_Agent_PasserEnEmissionRestreinte()
+    _DEC_Agent_PasserEnSilenceRadioPartiel( myself, false )
 end
 
 integration.disableEmitOnly = function( self )
     F_Pion_SeteEtatRadio( self.source, eEtatRadio_Ouverte )
-    DEC_Agent_ArreterSilenceRadio()
+    _DEC_Agent_ArreterSilenceRadio( myself )
 end
 
 integration.enabledSharedPerception = function( supportedUnit )
-    DEC_EnableSharedPerception( supportedUnit.source )
+    _DEC_EnableSharedPerception( myself, supportedUnit.source )
 end
 
 integration.disabledSharedPerception = function( supportedUnit )
-    DEC_DisabledSharedPerception( supportedUnit.source )
+    _DEC_DisabledSharedPerception( myself, supportedUnit.source )
 end
 
 integration.enableSharingKnowledges = function( unit )
-    DEC_EnableSharingKnowledges( unit.source )
+    _DEC_EnableSharingKnowledges( myself, unit.source )
 end
 
 integration.disabledSharingKnowledges = function( unit )
-    DEC_DisabledSharingKnowledges( unit.source )
+    _DEC_DisabledSharingKnowledges( myself, unit.source )
 end
 
 integration.enabledSharedPerceptionWithKnowledge = function( supportedUnit )
@@ -206,7 +206,7 @@ end
 
 integration.agentKnowledgeSharedPerception = function( self )
     local agent = DEC_ConnaissanceAgent_EnAgent( self.source)
-    DEC_Knowledge_EnableSharedPerceptionWithKnowledge( agent, myself)
+    DEC_Knowledge_EnableSharedPerceptionWithKnowledge( agent, myself )
 end
 
 integration.agentKnowledgeStopSharedPerceptionWithKnowledge = function( self )
@@ -232,9 +232,9 @@ end
 integration.switchOffRadar = function( agent )
     reportFunction( eRC_DebutSilenceRadar )
     F_Pion_SeteEtatRadar( agent.source, eEtatRadar_Silence )
-    DEC_Perception_DesactiverRadar( eRadarType_Radar )
-    DEC_Perception_DesactiverRadar( eRadarType_Ecoute )
-    DEC_Perception_DesactiverRadar( eRadarType_EcouteRadar )
+    _DEC_Perception_DesactiverRadar( myself, eRadarType_Radar )
+    _DEC_Perception_DesactiverRadar( myself, eRadarType_Ecoute )
+    _DEC_Perception_DesactiverRadar( myself, eRadarType_EcouteRadar )
 end
 
 --- Enables radar silence for the given agent.
@@ -243,9 +243,9 @@ end
 integration.switchOnRadar = function( agent )
     reportFunction( eRC_FinSilenceRadar )
     F_Pion_SeteEtatRadar( agent.source, eEtatRadar_Ouvert )
-    DEC_Perception_ActiverRadar( eRadarType_Radar )
-    DEC_Perception_ActiverRadar( eRadarType_Ecoute )
-    DEC_Perception_ActiverRadar( eRadarType_EcouteRadar )
+    _DEC_Perception_ActiverRadar( myself, eRadarType_Radar )
+    _DEC_Perception_ActiverRadar( myself, eRadarType_Ecoute )
+    _DEC_Perception_ActiverRadar( myself, eRadarType_EcouteRadar )
 end
 
 --- Switches this entity's safety attitude on, in order for it to take cover,
@@ -255,15 +255,15 @@ end
 -- @see integration.switchOffSafetyMode
 -- @see integration.setMovementPace
 integration.switchOnSafetyMode = function()
-    DEC_Perception_ActiverCoupsDeSonde()
-    DEC_Agent_ChangerAmbianceEnSurete( true )
+    _DEC_Perception_ActiverCoupsDeSonde( myself )
+    _DEC_Agent_ChangerAmbianceEnSurete( myself, true )
     if integration.isFlying() then
         local tacticalFlyingHeight = DEC_Agent_GetTacticalFlyingHeight( myself ) 
         if tacticalFlyingHeight > 0 then
-            DEC_Agent_HauteurDeVol( tacticalFlyingHeight )
+            _DEC_Agent_HauteurDeVol( myself, tacticalFlyingHeight )
         else
-            if DEC_Agent_EstEnVol() and myself.altitude then
-                DEC_Agent_HauteurDeVol( myself.altitude * 0.2 )
+            if _DEC_Agent_EstEnVol( myself ) and myself.altitude then
+                _DEC_Agent_HauteurDeVol( myself, myself.altitude * 0.2 )
             end
         end
     end
@@ -299,10 +299,10 @@ end
 -- @see integration.switchOnSafetyMode
 -- @see integration.setMovementPace
 integration.switchOffSafetyMode = function()
-    DEC_Perception_DesactiverCoupsDeSonde()
-    DEC_Agent_ChangerAmbianceEnSurete( false )
+    _DEC_Perception_DesactiverCoupsDeSonde( myself )
+    _DEC_Agent_ChangerAmbianceEnSurete( myself, false )
     if integration.isFlying() then
-        DEC_Agent_HauteurDeVol( DEC_Agent_GetStandardFlyingHeight( myself ) )
+        _DEC_Agent_HauteurDeVol( myself, DEC_Agent_GetStandardFlyingHeight( myself ) )
     end
     if myself.reportSafetyMode or myself.reportSafetyMode == nil then
         myself.reportSafetyMode = false
@@ -319,8 +319,8 @@ end
 -- @see integration.switchOnCoverMode
 -- @see integration.setMovementPace
 integration.switchOffCoverMode = function()
-    DEC_Perception_DesactiverCoupsDeSonde()
-    DEC_Agent_ChangerAmbianceEnSurete( false )
+    _DEC_Perception_DesactiverCoupsDeSonde( myself )
+    _DEC_Agent_ChangerAmbianceEnSurete( myself, false )
     reportFunction(eRC_CouvertureDesactive )
 	myself.speedModulation = myself.speedModulation or {}
 	myself.speedModulation.switchOnCoverMode = 1 --scipio
@@ -343,7 +343,7 @@ end
 -- @see integration.canMount
 -- @return Boolean
 integration.canDismount = function()
-    return DEC_Agent_EstEmbarquable()
+    return _DEC_Agent_EstEmbarquable( myself )
 end
 
 --- Returns true if this entity can mount, false otherwise.
@@ -355,7 +355,7 @@ end
 -- @see integration.canDismount
 -- @return Boolean
 integration.canMount = function()
-    return DEC_Agent_EstEmbarquable() and DEC_CanMount( myself )
+    return _DEC_Agent_EstEmbarquable( myself ) and DEC_CanMount( myself )
 end
 
 --- Returns true if the given agent is underground, false otherwise.
@@ -370,8 +370,8 @@ end
 -- This method can only be called by an agent.
 -- @return Boolean
 integration.shouldDismount = function()
-    return DEC_Agent_EstEmbarquable() and not DEC_Agent_EstDebarque()
-           and not DEC_IsPointInUrbanBlockTrafficable( DEC_Agent_Position() )
+    return _DEC_Agent_EstEmbarquable( myself ) and not _DEC_Agent_EstDebarque( myself )
+           and not DEC_IsPointInUrbanBlockTrafficableForPlatoon( myself, _DEC_Agent_Position( myself ) )
 end
 
 --- Makes this entity start mounting if it is supposed to (this entity is located
@@ -390,14 +390,14 @@ end
 integration.mountStarted = function()
     myself.stayDismounted = false
     if( myself.mount == nil and myself.dismount == nil ) -- means that movement use mount or dismount action
-      and not DEC_Agent_EstEmbarque() 
+      and not _DEC_Agent_EstEmbarque( myself ) 
       and not myself.enteringNonTrafficableElement
-      and DEC_IsPointInUrbanBlockTrafficable( DEC_Agent_Position() ) then
-        myself.orderMount = myself.orderMount or DEC_StartEmbarquement()
+      and DEC_IsPointInUrbanBlockTrafficableForPlatoon( myself, _DEC_Agent_Position( myself ) ) then
+        myself.orderMount = myself.orderMount or _DEC_StartEmbarquement( myself )
         return false
     else
         if myself.orderMount then
-            DEC__StopAction( myself.orderMount )
+            _DEC__StopAction( myself, myself.orderMount )
             myself.orderMount = nil
         end
     end
@@ -417,12 +417,12 @@ end
 integration.dismountStarted = function()
     myself.stayDismounted = true
     if( myself.mount == nil and myself.dismount == nil ) -- means that movement use mount or dismount action
-        and not DEC_Agent_EstDebarque() then
-        myself.orderDismount = myself.orderDismount or DEC_StartDebarquement()
+        and not _DEC_Agent_EstDebarque( myself ) then
+        myself.orderDismount = myself.orderDismount or _DEC_StartDebarquement( myself )
         return false
     else -- movement, manage
         if myself.orderDismount then
-            DEC__StopAction( myself.orderDismount )
+            _DEC__StopAction( myself, myself.orderDismount )
             myself.orderDismount = nil
         end
     end
@@ -436,7 +436,7 @@ end
 integration.stopDismount = function()  
     myself.stayDismounted = false
     if myself.orderDismount then
-        DEC__StopAction( myself.orderDismount )
+        _DEC__StopAction( myself, myself.orderDismount )
         myself.orderDismount = nil
     end
 end
@@ -448,7 +448,7 @@ end
 integration.stopMount = function()
     myself.stayDismounted = false
     if myself.orderMount then
-        DEC__StopAction( myself.orderMount )
+        _DEC__StopAction( myself, myself.orderMount )
         myself.orderMount = nil
     end
 end
@@ -457,14 +457,14 @@ end
 -- This method can only be called by an agent.
 -- @return Boolean
 integration.isMounted = function()
-    return DEC_Agent_EstEmbarque()
+    return _DEC_Agent_EstEmbarque( myself )
 end
 
 --- Returns true if this entity is dismounted, false otherwise.
 -- This method can only be called by an agent.
 -- @return Boolean
 integration.isDismounted = function()
-    return DEC_Agent_EstDebarque()
+    return _DEC_Agent_EstDebarque( myself )
 end
 
 --- Deploys this entity for it to complete its positioning.
@@ -473,7 +473,7 @@ end
 -- @see integration.undeploy
 -- This method can only be called by an agent.
 integration.startDeploy = function()
-    DEC_Agent_Deploy()
+    _DEC_Agent_Deploy( myself )
 end
 
 --- Undeploys this entity.
@@ -482,13 +482,13 @@ end
 -- @see integration.startDeploy
 -- This method can only be called by an agent.
 integration.undeploy = function()
-    DEC_Agent_Undeploye()
+    _DEC_Agent_Undeploye( myself )
 end
 
 --- Returns true if this entity is deployed, false otherwise.
 -- This method can only be called by an agent.
 integration.isDeployed = function()
-    return DEC_Agent_IsDeployed()
+    return _DEC_Agent_IsDeployed( myself )
 end
 
 --- Finds an available drone and starts activating it (deploys it).
@@ -508,7 +508,7 @@ integration.startActivateDrone = function ( self, alreadyDeployed )
         end
 	else
 	    if not alreadyDeployed then
-		    DEC_Agent_Deploy()
+		    _DEC_Agent_Deploy( myself )
 		end
 		reportFunction( eRC_DebutMiseEnOeuvreDrone )
 	end
@@ -552,11 +552,11 @@ integration.setAvailableDrones = function( minFuelQuantity, maxDistance )
         local operationalLevel = pion:DEC_Agent_EtatOpsMajeur() * 100
         local fuelDotationNumber = DEC_Agent_GetFuelDotationNumber( pion )	
         if operationalLevel ~= 0 and fuelDotationNumber > minFuelQuantity then -- The drone should be operational
-            if DEC_Geometrie_DistanceBetweenPoints( DEC_Agent_Position(), DEC_Agent_PositionPtr(pion) ) < maxDistance and not pion:GetbMiseEnOeuvre_() then
+            if DEC_Geometrie_DistanceBetweenPoints( _DEC_Agent_Position( myself ), DEC_Agent_PositionPtr(pion) ) < maxDistance and not pion:GetbMiseEnOeuvre_() then
                 integration.setUAVDeployed( pion, true ) -- mandatory to permit the flight
                 integration.removeFromLoadedUnits( pion )
                 integration.removeFromCapturedUnits( pion )
-                DEC_Transport_DebarquerPionSansDelais( pion )
+                _DEC_Transport_DebarquerPionSansDelais( myself, pion )
                 myself.droneAvailable = pion
                 break
             end
@@ -627,8 +627,8 @@ integration.checkFlyTrack = function ( distance, agent )
         end
         return true
     else
-        local tempsDeParcours = DEC_Agent_TempsPourParcourirDistanceEnLigneDroite( distance )
-        local autonomy = DEC_Agent_AutonomieEnDeplacement(  )
+        local tempsDeParcours = _DEC_Agent_TempsPourParcourirDistanceEnLigneDroite( myself, distance )
+        local autonomy = _DEC_Agent_AutonomieEnDeplacement( myself )
         if autonomy < tempsDeParcours then
             return false
         end
@@ -641,14 +641,14 @@ end
 -- @param distance Float the distance in meter to cover 
 -- @return Float, time to cover the distance
 integration.getTimeToFlyOverDistance = function( distance )
-    return DEC_Agent_TempsPourParcourirDistanceEnLigneDroite( distance )
+    return _DEC_Agent_TempsPourParcourirDistanceEnLigneDroite( myself, distance )
 end
 
 --- Returns the autonomy in minutes for an agent
 -- The time is computed on the assumption that the agent is moving
 -- @return Float, the time in minutes
 integration.movingAutonomy = function( )
-    return DEC_Agent_AutonomieEnDeplacement()
+    return _DEC_Agent_AutonomieEnDeplacement( myself )
 end
 
 --- Returns true if this agent is moving, false otherwise.
@@ -665,7 +665,7 @@ end
 -- @param nbrTugs Integer, the number of tugs to lend.
 -- This method can only be called by an agent.
 integration.StartLendTugs = function ( supportingUnit, supportedUnit, nbrTugs )
-    DEC_StartPreterRemorqueurs( supportingUnit.source, supportedUnit.source, nbrTugs )
+    _DEC_StartPreterRemorqueurs( myself, supportingUnit.source, supportedUnit.source, nbrTugs )
 end
 
 --- Makes the given supported unit give back the tugs previously lent to it by this entity.
@@ -674,7 +674,7 @@ end
 -- @param nbrTugs Integer, the number of tugs to retrieve.
 -- This method can only be called by an agent.
 integration.StartGetTugs = function ( supportedUnit, nbrTugs )
-    DEC_RecupererRemorqueurs( supportedUnit.source, nbrTugs )
+    _DEC_RecupererRemorqueurs( myself, supportedUnit.source, nbrTugs )
 end
 
 --- Makes the given supporting unit lend ambulances to the given supported unit.
@@ -684,7 +684,7 @@ end
 -- @param nbrAmbulances Integer, the number of ambulances to lend.
 -- This method can only be called by an agent.
 integration.LendAmbulances = function ( supportingUnit, supportedUnit, nbrAmbulances )
-    DEC_StartPreterVSRAM( supportingUnit, supportedUnit, nbrAmbulances )
+    _DEC_StartPreterVSRAM( myself, supportingUnit, supportedUnit, nbrAmbulances )
 end
 
 --- Makes the given supported unit give back the ambulances previously lent to it by this entity.
@@ -693,7 +693,7 @@ end
 -- @param nbrAmbulances Integer, the number of ambulances to retrieve.
 -- This method can only be called by an agent.
 integration.GetBackAmbulances = function ( supportedUnit, nbrAmbulances )
-    DEC_RecupererVSRAM( supportedUnit, nbrAmbulances )
+    _DEC_RecupererVSRAM( myself, supportedUnit, nbrAmbulances )
 end
 
 --- Enables all types of radar detection on the given area.
@@ -750,7 +750,7 @@ end
 -- @param area Area knowledge
 integration.startActivateRadarTirIndirect = function ( area )
     area[myself] = area[myself] or {}
-    area[myself].actionRadar = DEC_Perception_ActiverPerceptionTirsIndirect( area.source )
+    area[myself].actionRadar = _DEC_Perception_ActiverPerceptionTirsIndirect( myself, area.source )
     actionCallbacks[ area[myself].actionRadar ] = function( arg ) area[myself].actionRadar = arg end
 
     reportFunction( eRC_DebutSurveillance )
@@ -767,7 +767,7 @@ integration.stopActivateRadarTirIndirect = function ( area )
         reportFunction( eRC_FinSurveillance )
     end  
     if area[myself].actionRadar then
-        area[myself].actionRadar = DEC_Perception_DesactiverPerceptionTirsIndirect( area[myself].actionRadar )
+        area[myself].actionRadar = _DEC_Perception_DesactiverPerceptionTirsIndirect( myself, area[myself].actionRadar )
     end
 end
 
@@ -793,7 +793,7 @@ end
 -- @see integration.deactivateRecording
 -- This method can only be called by an agent.
 integration.activateRecording = function()
-    DEC_Perception_ActiverModeEnregistrement()
+    _DEC_Perception_ActiverModeEnregistrement( myself )
 end
 
 --- Deactivates the recording mode for this entity.
@@ -801,21 +801,21 @@ end
 -- @see integration.activateRecording
 -- This method can only be called by an agent.
 integration.deactivateRecording = function()
-    DEC_Perception_DesactiverModeEnregistrement()
+    _DEC_Perception_DesactiverModeEnregistrement( myself )
 end
 
 --- Activates this entity's sensors (but neither its special sensors nor sensors set as 'activated on request').
 -- @see integration.deactivateSensors
 -- This method can only be called by an agent.
 integration.activateSensors = function()
-    DEC_Perception_ActiverSenseurs()
+    _DEC_Perception_ActiverSenseurs( myself, true )
 end
 
 --- Deactivates this entity's sensors (but neither its special sensors nor sensors set as 'activated on request').
 -- @see integration.activateSensors
 -- This method can only be called by an agent.
 integration.deactivateSensors = function()
-    DEC_Perception_DesactiverSenseurs()
+    _DEC_Perception_ActiverSenseurs( myself, false )
 end
 
 --- Increases the production of the given resource node with the provided quantity.
@@ -883,15 +883,15 @@ end
 -- This method can only be called by an agent or a crowd.
 -- @return Boolean
 integration.isDead = function()
-    return DEC_Agent_EstMort()
+    return _DEC_Agent_EstMort( myself )
 end
 
 --- Instantaneously decontaminates this entity.
 -- This method can only be called by an NBC agent.
 -- @return Boolean, true if the unit can self-decontaminate, false otherwise
 integration.selfDecontaminate = function()
-    if DEC_Agent_SeDecontaminer then
-        DEC_Agent_SeDecontaminer()
+    if _DEC_Agent_SeDecontaminer then
+        _DEC_Agent_SeDecontaminer( myself )
         return true
     else
         return false
@@ -903,7 +903,7 @@ end
 -- @param height Float, the new flying height (in meters)
 integration.changeHeight = function( height )
     myself.altitude = height
-    DEC_Agent_HauteurDeVol( height )
+    _DEC_Agent_HauteurDeVol( myself, height )
 end
 
 --- Returns the flying height of the caller entity.
@@ -917,7 +917,7 @@ end
 -- This method can only be called by an agent.
 -- @return Boolean
 integration.isFlying = function()
-    return DEC_Agent_EstEnVol()
+    return _DEC_Agent_EstEnVol( myself )
 end
 
 --- Returns true if the given agent knowledge is flying, false otherwise.
@@ -972,7 +972,7 @@ end
 -- This method can only be called by an agent.
 -- @return Boolean
 integration.meKnowledgeIsTransported = function()
-    return DEC_Agent_EstTransporte()
+    return DEC_Agent_EstTransporte( myself )
 end
 
 --- Enables a radar of the given radar type to detect activity in the given area.
@@ -985,7 +985,7 @@ end
 -- @param area Simulation area
 -- @return Integer, the id of the activated radar
 integration.activeRadarOnLocalisation = function( radarType, area )
-    return DEC_Perception_ActiverRadarSurLocalisation( radarType, area )
+    return _DEC_Perception_ActiverRadarSurLocalisation( myself, radarType, area )
 end
 
 --- Disables the given radar of the given radar type, previously enabled
@@ -997,7 +997,7 @@ end
 -- <li> eRadarType_EcouteRadar (radar listening) </li> </ul>
 -- @param radar Integer, the id of the radar to disable.
 integration.disableRadarOnLocalisation = function( radarType, radar )
-    DEC_Perception_DesactiverRadarSurLocalisation( radarType, radar )
+    _DEC_Perception_DesactiverRadarSurLocalisation( myself, radarType, radar )
 end
 
 --- Returns the current speed of the provided agent in m/s
@@ -1016,7 +1016,7 @@ end
 -- This method can only be called by an agent.
 -- @return Simulation direction
 integration.getAgentDirection = function()
-    return DEC_Agent_Direction()
+    return _DEC_Agent_Direction( myself )
 end
 
 --- Returns the list of all agents in the same company
@@ -1024,7 +1024,7 @@ end
 -- This method can only be called by an agent.
 -- @return List of simulation agents
 integration.getAgentsWithoutHQ = function()
-    return DEC_Pion_PionsSansPC()
+    return _DEC_Pion_PionsSansPC( myself )
 end
 
 --- Returns the list of all agents in this company (if this method
@@ -1033,7 +1033,7 @@ end
 -- This method can be called by an agent or by a company.
 -- @return List of simulation agents
 integration.getAgentsWithHQ = function()
-    return DEC_Pion_PionsAvecPC()
+    return myself:DEC_Pion_PionsAvecPC()
 end
 
 --- Returns true if the given drone is exploited, false otherwise.
@@ -1069,7 +1069,7 @@ end
 -- @return Boolean, true
 integration.activateSpecialSensors = function( area, eType )
     area[ myself ] = area[ myself ] or {}
-    area[ myself ].actionRadar = DEC_Perception_ActiverRadarSurLocalisation( eType, area.source )
+    area[ myself ].actionRadar = _DEC_Perception_ActiverRadarSurLocalisation( myself, eType, area.source )
     reportFunction( eRC_DebutSurveillance )
     return true
 end
@@ -1087,7 +1087,7 @@ end
 -- @param area Area knowledge
 integration.deactivateSpecialSensors = function( area, eType )
     if area[ myself ] and area[ myself ].actionRadar then
-        area[ myself ].actionRadar = DEC_Perception_DesactiverRadarSurLocalisation( eType, area[ myself ].actionRadar )
+        area[ myself ].actionRadar = _DEC_Perception_DesactiverRadarSurLocalisation( myself, eType, area[ myself ].actionRadar )
         reportFunction( eRC_FinSurveillance )
     end
 end
@@ -1096,28 +1096,28 @@ end
 -- This method can only be called by an agent.
 -- @see integration.deactivateSensorsUponRequest
 integration.activateSensorsUponRequest = function ()
-    DEC_Perception_ActiverSenseursSurDecision()
+    _DEC_Perception_ActiverSenseursSurDecision( myself )
 end
 
 --- Disables this entity's sensors set as 'activated on request' (see authoring tool).
 -- This method can only be called by an agent.
 -- @see integration.activateSensorsUponRequest
 integration.deactivateSensorsUponRequest = function ()
-    DEC_Perception_DesactiverSenseursSurDecision()
+    _DEC_Perception_DesactiverSenseursSurDecision( myself )
 end
 
 --- Returns true if a toxic plume is detected by this entity, false otherwise.
 -- This method can only be called by an agent.
 -- @return Boolean
 integration.isToxicPlumeDetected = function()
-    return #DEC_Connaissances_CollisionsDesastres() > 0
+    return #_DEC_Connaissances_CollisionsDesastres( myself ) > 0
 end
 
 --- Returns a list of all the toxic plumes detected by this entity.
 -- This method can only be called by an agent.
 -- @return List of object knowledges
 integration.getToxicPlumeDetected = function()
-    return DEC_Connaissances_CollisionsDesastres()
+    return _DEC_Connaissances_CollisionsDesastres( myself )
 end
 
 --- Makes the caller agent start to consume the given percentage of the given resource.
@@ -1130,7 +1130,7 @@ end
 integration.startConsumeResource = function( resourceType, percentage, duration )
     myself.consumeAction = myself.consumeAction or {}
     myself.consumeAction[ resourceType ] = {}
-    myself.consumeAction[ resourceType ].actionId = DEC_StartConsumingResources( resourceType, -percentage, duration * 60 )
+    myself.consumeAction[ resourceType ].actionId = _DEC_StartConsumingResources( myself, resourceType, -percentage, duration * 60 )
     actionCallbacks[ myself.consumeAction[ resourceType ].actionId ] = function( arg )
         myself.consumeAction[ resourceType ].etatAction = arg
     end
@@ -1143,11 +1143,11 @@ end
 integration.updateConsumeResource = function( resourceType, percentage, duration )
     local etat = myself.consumeAction[ resourceType ].etatAction
     if etat == eActionFinished then
-        DEC__StopAction( myself.consumeAction[ resourceType ].actionId )
+        _DEC__StopAction( myself, myself.consumeAction[ resourceType ].actionId )
         myself.consumeAction[ resourceType ] = nil
         return true
     elseif etat == eActionNotAllowed then
-        DEC_Trace( "the agent cannot consume the given resource "..tostring( resourceType ) )
+        _DEC_Trace( myself, "the agent cannot consume the given resource "..tostring( resourceType ) )
         return false
     else
         return false -- action is running
@@ -1160,12 +1160,12 @@ end
 
 --- Deprecated, use integration.forcerImmunisationNbc instead (with the immunize parameter set to true)
 integration.startImmuniserNbc = function( self )
-    DEC_Agent_ImmuniserNbc( )
+    _DEC_Agent_ImmuniserNbc( myself )
 end
 
 --- Deprecated, use integration.forcerImmunisationNbc instead (with the immunize parameter set to false)
 integration.stopImmuniserNbc = function( self )
-    DEC_Agent_StopImmuniserNbc( )
+    _DEC_Agent_StopImmuniserNbc( myself )
 end
 
 --- Deprecated, use integration.getKnowledgeHQ instead
@@ -1181,7 +1181,7 @@ end
 --- Deprecated, use integration.undeploy instead
 integration.stopActivateDrone = function( self, alreadyUnDeployed )
     if not alreadyUnDeployed then
-        DEC_Agent_Undeploye()
+        _DEC_Agent_Undeploye( myself )
     end
 end
 
@@ -1240,7 +1240,7 @@ integration.startDeployDrone = function ( self, distance, listPoints )
             meKnowledge:sendNoDisponibleDrone( meKnowledge:getAutomat() )
         end
     else
-        DEC_Agent_Deploy()
+        _DEC_Agent_Deploy( myself )
         reportFunction( eRC_DebutMiseEnOeuvreDrone, myself.droneAvailable )
     end
 end
@@ -1259,14 +1259,14 @@ end
 
 --- Deprecated, use integration.stopActivateDrone
 integration.stopDeployDrone = function( self, distance, listPoints )
-    DEC_Agent_Undeploye()
+    _DEC_Agent_Undeploye( myself )
     return true
 end
 
 --- Deprecated, use integration.setAvailableDrones
 integration.setAvailableDronesForFlyTrack = function ( distance, listPoints )
     myself.droneAvailable  = nil
-    local listePions = DEC_Pion_PionsSansPC()
+    local listePions = _DEC_Pion_PionsSansPC( myself )
     local autonomie = false
     for _,pion in pairs( listePions or emptyTable ) do
         local operationalLevel = pion:DEC_Agent_EtatOpsMajeur() * 100
@@ -1288,8 +1288,8 @@ integration.setAvailableDronesForFlyTrack = function ( distance, listPoints )
             autonomie = true
         end	
         if operationalLevel ~= 0 and possible then
-            if DEC_Geometrie_DistanceBetweenPoints( DEC_Agent_Position(), DEC_Agent_PositionPtr(pion) ) < 80 and  not pion:GetbMiseEnOeuvre_() then
-                DEC_Transport_DebarquerPionSansDelais( pion )
+            if DEC_Geometrie_DistanceBetweenPoints( _DEC_Agent_Position( myself ), DEC_Agent_PositionPtr(pion) ) < 80 and  not pion:GetbMiseEnOeuvre_() then
+                _DEC_Transport_DebarquerPionSansDelais( myself, pion )
                 myself.droneAvailable = pion
                 meKnowledge:sendFlyTrack( CreateKnowledge( sword.military.world.PlatoonAlly, pion ), listPoints )
                 break
