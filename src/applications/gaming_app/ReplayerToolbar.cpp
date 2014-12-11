@@ -49,9 +49,66 @@ ReplayerToolbar::ReplayerToolbar( QMainWindow* pParent, kernel::Controllers& con
     , lastTickSkip_( 0 )
 {
     setWindowTitle( tr( "Replay control" ) );
+    // icon
     QLabel* label = new QLabel( this );
     addWidget( label );
     label->setPixmap( MAKE_PIXMAP( replayer ) );
+    // min time
+    minTime_ = new QLabel( this );
+    minTime_->setAlignment( Qt::AlignHCenter );
+    addWidget( minTime_ );
+    // slider
+    slider_ = new QSlider( Qt::Horizontal, this );
+    addWidget( slider_ );
+    slider_->setPageStep( 1 );
+    slider_->setMinimumWidth( 200 );
+    slider_->setTickmarks( QSlider::TicksBelow );
+    // max time
+    maxTime_ = new QLabel( this );
+    maxTime_->setAlignment( Qt::AlignHCenter );
+    addWidget( maxTime_ );
+    addSeparator();
+    // tick button
+    button_ = new QPushButton();
+    menu_ = new kernel::ContextMenu( button_ );
+    button_->setPopup( menu_ );
+    button_->setText( tr( "Ticks" ) );
+    menu_->insertItem( tr( "Ticks" ), 0 );
+    menu_->insertItem( tr( "Time" ), 1 );
+    menu_->setItemChecked( 0, true );
+    addWidget( button_ );
+    // current tick spin box
+    QSpinBox* spinBox = new EditWidget< QSpinBox >();
+    spinBoxAction_ = addWidget( spinBox );
+    spinBoxAction_->setVisible( true );
+    // current time date time
+    QDateTimeEdit* dateTime = new EditWidget< QDateTimeEdit >();
+    dateTime->setDisplayFormat( QLocale::system().dateTimeFormat( QLocale::ShortFormat ) );
+    dateTime->setButtonSymbols( QAbstractSpinBox::NoButtons );
+    dateTimeAction_ = addWidget( dateTime );
+    dateTimeAction_->setVisible( false );
+    addSeparator();
+    // time table button
+    QToolButton* pTimeTableButton = new QToolButton();
+    pTimeTableButton->setIconSet( MAKE_ICON( tic_temps ) );
+    pTimeTableButton->setTextLabel( tr( "Time table" ) );
+    addWidget( pTimeTableButton );
+    addSeparator();
+    // refresh button
+    QToolButton* pRefreshButton = new QToolButton();
+    pRefreshButton->setIconSet( MAKE_ICON( refresh ) );
+    pRefreshButton->setTextLabel( tr( "Refresh" ) );
+    addWidget( pRefreshButton );
+
+    connect( slider_, SIGNAL( sliderPressed() ), SLOT( OnSliderPressed() ) );
+    connect( slider_, SIGNAL( sliderReleased() ), SLOT( OnSliderReleased() ) );
+    connect( slider_, SIGNAL( valueChanged( int ) ), SLOT( OnSliderMoved( int ) ) );
+    connect( spinBox, SIGNAL( editingFinished() ), SLOT( OnSpinBoxChanged() ) );
+    connect( dateTime, SIGNAL( editingFinished() ), SLOT( OnDateTimeChanged() ) );
+    connect( pTimeTableButton, SIGNAL( clicked() ), SLOT( OnTimeTable() ) );
+    connect( pRefreshButton, SIGNAL( clicked() ), SLOT( OnRefresh() ) );
+    connect( menu_, SIGNAL( activated( int ) ), SLOT( OnMenuActivated( int ) ) );
+
     controllers_.Update( *this );
 }
 
@@ -70,60 +127,10 @@ ReplayerToolbar::~ReplayerToolbar()
 // -----------------------------------------------------------------------------
 void ReplayerToolbar::NotifyUpdated( const Simulation& simulation )
 {
-    if( controllers_.GetCurrentMode() != eModes_Replay )
+    const auto currentMode = controllers_.GetCurrentMode();
+    if( currentMode != eModes_Replay && currentMode != eModes_Default )
         return;
-    const unsigned int maxTick = simulation.GetTickCount();
-    if( ! slider_ )
-    {
-        minTime_ = new QLabel( this );
-        minTime_->setAlignment( Qt::AlignHCenter );
-        addWidget( minTime_ );
-        slider_ = new QSlider( Qt::Horizontal, this );
-        addWidget( slider_ );
-        const unsigned int firstTick = simulation.GetFirstTick();
-        slider_->setMinValue( firstTick == std::numeric_limits< unsigned int >::max() ? maxTick : firstTick );
-        slider_->setPageStep( 1 );
-        slider_->setMinimumWidth( 200 );
-        slider_->setTickmarks( QSlider::TicksBelow );
-        maxTime_ = new QLabel( this );
-        maxTime_->setAlignment( Qt::AlignHCenter );
-        addWidget( maxTime_ );
-        addSeparator();
-        button_ = new QPushButton();
-        menu_ = new kernel::ContextMenu( button_ );
-        button_->setPopup( menu_ );
-        button_->setText( tr( "Ticks" ) );
-        menu_->insertItem( tr( "Ticks" ), 0 );
-        menu_->insertItem( tr( "Time" ), 1 );
-        menu_->setItemChecked( 0, true );
-        addWidget( button_ );
-        QSpinBox* spinBox = new EditWidget< QSpinBox >();
-        spinBoxAction_ = addWidget( spinBox );
-        spinBoxAction_->setVisible( true );
-        QDateTimeEdit* dateTime = new EditWidget< QDateTimeEdit >();
-        dateTime->setDisplayFormat( QLocale::system().dateTimeFormat( QLocale::ShortFormat ) );
-        dateTime->setButtonSymbols( QAbstractSpinBox::NoButtons );
-        dateTimeAction_ = addWidget( dateTime );
-        dateTimeAction_->setVisible( false );
-        addSeparator();
-        QToolButton* pTimeTableButton = new QToolButton();
-        pTimeTableButton->setIconSet( MAKE_ICON( tic_temps ) );
-        pTimeTableButton->setTextLabel( tr( "Time table" ) );
-        addWidget( pTimeTableButton );
-        addSeparator();
-        QToolButton* pRefreshButton = new QToolButton();
-        pRefreshButton->setIconSet( MAKE_ICON( refresh ) );
-        pRefreshButton->setTextLabel( tr( "Refresh" ) );
-        addWidget( pRefreshButton );
-        connect( slider_, SIGNAL( sliderPressed() ), SLOT( OnSliderPressed() ) );
-        connect( slider_, SIGNAL( sliderReleased() ), SLOT( OnSliderReleased() ) );
-        connect( slider_, SIGNAL( valueChanged( int ) ), SLOT( OnSliderMoved( int ) ) );
-        connect( spinBox, SIGNAL( editingFinished() ), SLOT( OnSpinBoxChanged() ) );
-        connect( dateTime, SIGNAL( editingFinished() ), SLOT( OnDateTimeChanged() ) );
-        connect( pTimeTableButton, SIGNAL( clicked() ), SLOT( OnTimeTable() ) );
-        connect( pRefreshButton, SIGNAL( clicked() ), SLOT( OnRefresh() ) );
-        connect( menu_, SIGNAL( activated( int ) ), SLOT( OnMenuActivated( int ) ) );
-    }
+    const auto maxTick = simulation.GetTickCount();
     const auto dateFmt = QLocale::system().dateFormat( QLocale::ShortFormat );
     const auto timeFmt = QLocale::system().timeFormat( QLocale::ShortFormat );
     const auto SetDateTime = [&]( QLabel& dst, int tick ){
