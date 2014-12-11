@@ -39,6 +39,7 @@
     <xs:attribute name="name" type="xs:string" use="required"/>
     <xs:attribute name="alias" type="xs:string" use="optional"/>
     <xs:attribute name="option" type="xs:string" use="optional"/>
+    <xs:attribute name="link" type="xs:string" use="optional"/>
     <xs:attribute name="id" type="xs:nonNegativeInteger" use="required"/>
   </xs:complexType>
   <xs:complexType name="OrbatAttribute">

@@ -324,6 +324,16 @@
 					<xs:documentation source="Fonction permettant l'affichage d'un indicateur visuel POPULATION suite à un CR population detectee (CR n°225) ou agression de population (CR n°249)" xml:lang="fr"/>
 				</xs:annotation>
 			</xs:enumeration>
+			<xs:enumeration value="EngagedFire">
+				<xs:annotation>
+					<xs:documentation source="Fonction permettant l'affichage d'un automate embraye" xml:lang="fr"/>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="DisengagedFire">
+				<xs:annotation>
+					<xs:documentation source="Fonction permettant l'affichage d'un automate debraye" xml:lang="fr"/>
+				</xs:annotation>
+			</xs:enumeration>
 			<!--- Gestion des tirs -->
 			<!--- Gestion des indicateurs visuels -->
 		</xs:restriction>
