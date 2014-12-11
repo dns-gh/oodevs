@@ -65,7 +65,7 @@ type Fixture struct {
 
 func (Fixture) Abort(err error)                              {}
 func (Fixture) CloseEvent(uuid string, err error, lock bool) {}
-func (Fixture) UpdateEvent(uuid string, event *sdk.Event)    {}
+func (Fixture) UpdateEvents(events ...*sdk.Event)            {}
 func (Fixture) InvalidateFilters()                           {}
 func (Fixture) UpdateServices()                              {}
 func (Fixture) UpdateRangeDates(start, end time.Time)        {}

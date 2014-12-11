@@ -34,7 +34,7 @@ type SdkController interface {
 	DetachService(uuid, name string) (*sdk.Session, error)
 	ReadServices(uuid string) ([]*sdk.Service, error)
 	// events
-	UpdateEvent(session, event string, msg *sdk.Event) (*sdk.Event, error) // Create or update
+	UpdateEvents(session string, events ...*sdk.Event) ([]*sdk.Event, error) // Create or update
 	ReadEvents(uuid string, config services.EventFilterConfig) ([]*sdk.Event, error)
 	DeleteEvent(session, event string) error
 	CloseEvent(session, event string, msg *sdk.CloseEvent) (*sdk.Event, error)

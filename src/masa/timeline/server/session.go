@@ -288,14 +288,14 @@ func (s EventCheckers) CheckEvents(events ...*sdk.Event) ([]*sdk.Event, bool, er
 	return events, false, nil
 }
 
-func (s EventCheckers) CheckDeleteEvent(uuid string) error {
+func (s EventCheckers) CheckDeleteEvent(uuid string) (string, error) {
 	for _, checker := range s {
-		err := checker.CheckDeleteEvent(uuid)
+		uuid, err := checker.CheckDeleteEvent(uuid)
 		if err != nil {
-			return err
+			return uuid, err
 		}
 	}
-	return nil
+	return uuid, nil
 }
 
 func (s EventListeners) UpdateEncodedEvents(events EventSlice, encoded []*sdk.Event) {
@@ -440,13 +440,12 @@ func makeUpdate(event *Event) (EventSlice, []*sdk.Event) {
 	return updates, encoded
 }
 
-func (s *Session) UpdateEvent(uuid string, msg *sdk.Event) (*sdk.Event, error) {
-	events := []*sdk.Event{msg}
+func (s *Session) UpdateEvents(events ...*sdk.Event) ([]*sdk.Event, error) {
 	// FIX: We should recheck new events if modification occurs
 	//      if another service than sword is added
 	events, _, err := s.checkers.CheckEvents(events...)
 	if err != nil {
-		s.Log("Error during UpdateEvent ", err, uuid, msg)
+		s.Log("Error while updating events", err)
 		return nil, err
 	}
 	updates := EventSlice{}
@@ -482,18 +481,15 @@ func (s *Session) UpdateEvent(uuid string, msg *sdk.Event) (*sdk.Event, error) {
 		encoded = append(encoded[:0], append(eventEncoded, encoded[0:]...)...) // push_front
 	}
 	s.listeners.UpdateEncodedEvents(updates, encoded)
-	if len(encoded) == 0 {
-		return msg, nil
-	}
-	return encoded[0], nil
+	return encoded, nil
 }
 
 func (s *Session) DeleteEvent(uuid string) error {
-	event := s.events.Find(uuid)
-	err := s.checkers.CheckDeleteEvent(uuid)
+	uuid, err := s.checkers.CheckDeleteEvent(uuid)
 	if err != nil {
 		return err
 	}
+	event := s.events.Find(uuid)
 	updates, encoded := EventSlice{}, []*sdk.Event{}
 	parent := &Event{}
 	if event != nil {
