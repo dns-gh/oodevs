@@ -769,7 +769,11 @@ end
 -- Crowd
 function DEC_Agent_EstDansFoule( pion )
     -- also supported by Population
-    return _DEC_Agent_EstDansFoule( myself, pion )
+    if pion then
+        return _DEC_Population_EstDansFoule( myself, pion )
+    else
+        return _DEC_Agent_EstDansFoule( myself )
+    end
 end
 
 -- NBC

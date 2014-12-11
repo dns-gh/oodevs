@@ -33,9 +33,9 @@ end
 integration.unitIsInCrowd = function( unit )
     if masalife.brain.core.class.isOfType( unit, integration.ontology.types.agentKnowledge) then
         local agent = DEC_Connaissance_EnAgent( unit.source )
-        return _DEC_Agent_EstDansFoule( myself, agent )
+        return _DEC_Population_EstDansFoule( myself, agent )
     else
-        return _DEC_Agent_EstDansFoule( myself, unit.source )
+        return _DEC_Population_EstDansFoule( myself, unit.source )
     end
 end
 

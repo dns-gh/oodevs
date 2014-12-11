@@ -44,6 +44,7 @@ void DEC_PopulationFunctions::Register( sword::Brain& brain )
     // Population
     brain.RegisterFunction( "DEC_GetDomination", &DEC_PopulationFunctions::GetDominationState );
     brain.RegisterFunction( "DEC_ConnaissanceAgent_RoePopulation", &DEC_PopulationFunctions::GetKnowledgeAgentRoePopulation );
+    brain.RegisterFunction( "_DEC_Population_EstDansFoule", &DEC_PopulationFunctions::IsAgentInside );
     brain.RegisterFunction( "DEC_ConnaissanceObjet_Localisation", &DEC_PopulationFunctions::GetKnowledgeObjectLocalisation );
     brain.RegisterFunction( "_DEC_Population_ConnaissanceObjet_Degrader", &DEC_PopulationFunctions::DamageObject );
 
@@ -199,6 +200,18 @@ int DEC_PopulationFunctions::GetKnowledgeAgentRoePopulation( unsigned int agentI
     if( !pAgent  )
         throw MASA_EXCEPTION( "invalid parameter." );
     return pAgent->GetRole< DEC_RolePion_Decision >().GetRoePopulation().GetID();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_PopulationFunctions::IsAgentInside
+// Created: DDA 2011-05-17
+// -----------------------------------------------------------------------------
+bool DEC_PopulationFunctions::IsAgentInside( const DEC_Decision_ABC* caller, DEC_Decision_ABC* pAgent )
+{
+    if( !pAgent )
+        throw MASA_EXCEPTION( "invalid parameter." );
+    MIL_AgentPion& pion = pAgent->GetPion() ;
+	return pion.Get< PHY_RoleInterface_Population >().HasCollisionWithCrowd( caller->GetPopulation() );
 }
 
 // -----------------------------------------------------------------------------
