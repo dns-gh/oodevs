@@ -448,6 +448,7 @@ void DrawerPanel::UpdateDrawButton()
     if( !selectedStyle_ || selectedStyle_->GetType() == "text" )
     {
         drawButton_->setEnabled( false );
+        layer_->Reset();
         return;
     }
     const kernel::Entity_ABC* entity = 0;
@@ -455,5 +456,8 @@ void DrawerPanel::UpdateDrawButton()
         entity = selectedDrawing_->GetDiffusionEntity();
     else
         entity = selectedEntity_;
-    drawButton_->setEnabled( entity ? profile_.CanBeOrdered( *entity ) : profile_.IsSupervision() );
+    bool enabled = entity ? profile_.CanBeOrdered( *entity ) : profile_.IsSupervision();
+    drawButton_->setEnabled( enabled );
+    if( !enabled )
+        layer_->Reset();
 }
