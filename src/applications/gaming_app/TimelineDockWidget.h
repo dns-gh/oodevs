@@ -81,6 +81,7 @@ public:
     virtual void NotifyCreated( const gui::VisibilityFilter_ABC& filter );
     virtual void NotifyUpdated( const gui::VisibilityFilter_ABC& filter );
     virtual void NotifyUpdated( const gui::Event& event );
+    virtual void NotifyDeleted( const gui::Event& event );
     virtual void NotifyUpdated( const Profile& profile );
     virtual void BeforeSelection();
     virtual void Select( const kernel::Entity_ABC& element );

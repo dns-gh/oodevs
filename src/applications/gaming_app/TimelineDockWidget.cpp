@@ -346,6 +346,20 @@ void TimelineDockWidget::NotifyUpdated( const gui::Event& event )
 }
 
 // -----------------------------------------------------------------------------
+// Name: TimelineDockWidget::NotifyDeleted
+// Created: JSR 2014-12-11
+// -----------------------------------------------------------------------------
+void TimelineDockWidget::NotifyDeleted( const gui::Event& event )
+{
+    auto it = showOnlyViews_.find( event.GetEvent().uuid );
+    if( it != showOnlyViews_.end() )
+    {
+        tabWidget_->removeTab( tabWidget_->indexOf( it->second ) );
+        showOnlyViews_.erase( it );
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: TimelineDockWidget::BeforeSelection
 // Created: JSR 2014-11-17
 // -----------------------------------------------------------------------------
