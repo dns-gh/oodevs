@@ -37,6 +37,16 @@ namespace
         MOCK_METHOD( Convert, 2 );
     };
 
+    class DummyWriter : public protocol::Writer_ABC
+    {
+        virtual std::string Convert( double x, double y ) const
+        {
+            std::stringstream str;
+            str << "x: " << x << " , y: " << y;
+            return str.str();
+        }
+    };
+
     const Reader_ABC::Point dummy = { 0.0, 0.0 };
 
     std::string Indent( const std::string& src )
@@ -1457,6 +1467,25 @@ BOOST_FIXTURE_TEST_CASE( read_complex_list_of_list, Fixture )
                                          "list { booleanValue: false } "
                                          "list { booleanValue: false } } }" );
     CheckCycle( input, msg );
+}
+
+BOOST_AUTO_TEST_CASE( encoding_conversion )
+{
+    sword::MissionParameters params;
+    params.add_elem()->add_value()->set_acharstr( "\xe9" );
+    params.add_elem()->add_value()->set_stage( "\xe9" );
+
+    DummyWriter writer;
+    xml::xostringstream xos;  
+    xos << xml::start( "params" );
+    protocol::Write( xos, writer, params );
+    BOOST_CHECK_EQUAL( xos.str(),
+            "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
+            "<params>\n"
+            "  <parameter type=\"string\" value=\"""\xc3""\xa9""\"/>\n"
+            "  <parameter type=\"stage\" value=\"""\xc3""\xa9""\"/>\n"
+            "</params>\n"
+    );
 }
 
 #if 0
