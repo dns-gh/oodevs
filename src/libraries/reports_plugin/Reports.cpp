@@ -234,7 +234,7 @@ void Reports::ListReports( sword::ListReportsAck& reports, unsigned int count,
         if( !entities.empty() )
         {
             sql += "AND source IN (";
-            for( int i = 0 ; i < entities.size(); ++i )
+            for( size_t i = 0 ; i < entities.size(); ++i )
             {
                 if( i != 0 )
                     sql += ",";
