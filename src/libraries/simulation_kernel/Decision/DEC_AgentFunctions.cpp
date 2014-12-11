@@ -1142,7 +1142,7 @@ bool DEC_AgentFunctions::IsInCity( const DEC_Decision_ABC* pAgent )
 // -----------------------------------------------------------------------------
 bool DEC_AgentFunctions::IsInCrowd( const DEC_Decision_ABC* agent )
 {
-	return agent->GetPion().Get< PHY_RoleInterface_Population >().HasCollision();
+    return agent->GetPion().Get< PHY_RoleInterface_Population >().HasCollision();
 }
 
 // -----------------------------------------------------------------------------

@@ -211,7 +211,7 @@ bool DEC_PopulationFunctions::IsAgentInside( const DEC_Decision_ABC* caller, DEC
     if( !pAgent )
         throw MASA_EXCEPTION( "invalid parameter." );
     MIL_AgentPion& pion = pAgent->GetPion() ;
-	return pion.Get< PHY_RoleInterface_Population >().HasCollisionWithCrowd( caller->GetPopulation() );
+    return pion.Get< PHY_RoleInterface_Population >().HasCollisionWithCrowd( caller->GetPopulation() );
 }
 
 // -----------------------------------------------------------------------------
