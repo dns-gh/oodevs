@@ -1190,9 +1190,9 @@ float DEC_AgentFunctions::TheoricTimeToMoveDistance( const DEC_Decision_ABC* pAg
     const double rDistance = MIL_Tools::ConvertMeterToSim( distance );
     double rMaxSpeed = 0.;
     if ( loaded ) 
-        rMaxSpeed = pAgent->GetPion().GetRole< moving::PHY_RoleAction_InterfaceMoving >().GetTheoricMaxSpeed();
+        rMaxSpeed = pAgent->GetPion().GetRole< moving::PHY_RoleAction_InterfaceMoving >().GetTheoricMaxSpeedEvenIfEmbarked();
     else
-        rMaxSpeed = pAgent->GetPion().GetRole< moving::PHY_RoleAction_InterfaceMoving >().GetMaxSpeed();
+        rMaxSpeed = pAgent->GetPion().GetRole< moving::PHY_RoleAction_InterfaceMoving >().GetMaxSpeedEvenIfEmbarked();
     return rMaxSpeed != 0. ? float( MIL_Tools::ConvertSimToMinutes( rDistance / rMaxSpeed ) ) : std::numeric_limits< float >::max();
 }
 

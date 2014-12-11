@@ -670,13 +670,9 @@ bool PHY_ComposantePion::CanComponentBeUsed( const transport::PHY_RoleAction_Loa
 bool PHY_ComposantePion::CanBeUsedForMove() const
 {
     assert( pRole_ );
-    const transport::PHY_RoleInterface_Transported& roleTransported = pRole_->GetPion().GetRole< transport::PHY_RoleInterface_Transported >();
-    if( roleTransported.IsTransported() )
-        return false;
-    if( pRole_->GetPion().GetRole< PHY_RoleAction_MovingUnderground >().IsUnderground() )
-        return false;
     if( bLoadable_ )
         return !pRole_->GetPion().GetRole< transport::PHY_RoleAction_Loading >().IsLoaded();
+    const transport::PHY_RoleInterface_Transported& roleTransported = pRole_->GetPion().GetRole< transport::PHY_RoleInterface_Transported >();
     return !roleTransported.HasHumanTransportersToRecover();
 }
 
@@ -974,7 +970,7 @@ bool PHY_ComposantePion::CanSortHumans() const
 bool PHY_ComposantePion::CanBePartOfConvoy() const
 {
     assert( pType_ );
-    return pState_->IsUsable() && CanBeUsed() && CanMove( false ) && bCanBePartOfConvoy_;
+    return pState_->IsUsable() && CanBeUsed() && CanMove() && bCanBePartOfConvoy_;
 }
 
 // -----------------------------------------------------------------------------
@@ -1147,10 +1143,10 @@ bool PHY_ComposantePion::CanPerceive( const transport::PHY_RoleAction_Loading* r
 // Name: PHY_ComposantePion::CanMove
 // Created: NLD 2004-09-23
 // -----------------------------------------------------------------------------
-bool PHY_ComposantePion::CanMove( bool theoretical ) const
+bool PHY_ComposantePion::CanMove() const
 {
     assert( pState_ );
-    return pState_->IsUsable() && !pState_->IsDamaged() && ( theoretical || CanBeUsedForMove() );
+    return pState_->IsUsable() && !pState_->IsDamaged() && CanBeUsedForMove();
 }
 
 // -----------------------------------------------------------------------------
