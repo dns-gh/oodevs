@@ -130,9 +130,10 @@ void Reports::Commit()
             database_->Commit( *transaction_ );
             transaction_.reset();
         }
-        catch( const tools::SqlException& err )
+        catch( const std::exception& err )
         {
-            MT_LOG_ERROR_MSG( err.msg );
+            MT_LOG_ERROR_MSG( "reports commit failed: " <<
+                    tools::GetExceptionMsg( err ) );
         }
     }
 }
@@ -180,9 +181,10 @@ void Reports::AddReport( const sword::Report& report, int tick )
 
         Execute( *st );
     }
-    catch( const tools::SqlException& err )
+    catch( const std::exception& err )
     {
-        MT_LOG_ERROR_MSG( err.msg );
+        MT_LOG_ERROR_MSG( "reports addreports failed: "
+                << tools::GetExceptionMsg( err ) );
     }
 }
 
@@ -275,8 +277,8 @@ void Reports::Save( const tools::Path& filename )
         Commit();
         database_->Save( filename );
     }
-    catch( const tools::SqlException& err )
+    catch( const std::exception& err )
     {
-        MT_LOG_ERROR_MSG( err.msg );
+        MT_LOG_ERROR_MSG( "reports save failed: " << tools::GetExceptionMsg( err ) );
     }
 }
