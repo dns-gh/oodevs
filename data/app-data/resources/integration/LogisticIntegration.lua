@@ -267,9 +267,8 @@ end
 
 --- Returns true if the object can distribute stocks ("stock" capacity ticked in the authoring tool).
 -- @param object Object knowledge. The object to be queried
--- @param population Population knowledge
-integration.stockCanBeDistributed = function( object, population )
-    return DEC_Stock_IsDistributePossible( object, population )
+integration.stockCanBeDistributed = function( object )
+    return DEC_Stock_IsDistributePossible( object, nil )
 end
 
 --- Returns true if the agent can take resources of the specified type from the object.
