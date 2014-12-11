@@ -20,7 +20,6 @@ namespace kernel
 }
 
 class ReportFactory;
-class ReportsModel;
 
 // =============================================================================
 /** @class  Reports
@@ -35,7 +34,7 @@ class Reports : public kernel::Extension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Reports( const kernel::Entity_ABC& entity, const ReportsModel& reportsModel, const ReportFactory& reportFactory );
+             Reports( const kernel::Entity_ABC& entity, const ReportFactory& reportFactory );
     virtual ~Reports();
     //@}
 
@@ -55,7 +54,6 @@ private:
     //! @name Member data
     //@{
     const kernel::Entity_ABC& entity_;
-    const ReportsModel& reportsModel_;
     const ReportFactory& reportFactory_;
     //@}
 };

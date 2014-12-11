@@ -25,13 +25,12 @@ namespace gui
 namespace kernel
 {
     class Controllers;
-    class Time_ABC;
 }
 
 class AgentsModel;
-class Publisher_ABC;
 class ReportFactory;
 class ReportsModel;
+class SimulationController;
 
 // =============================================================================
 /** @class  ReportListView
@@ -48,8 +47,8 @@ public:
     //! @name Constructors/Destructor
     //@{
              ReportListView( QWidget* pParent, kernel::Controllers& controllers, gui::DisplayExtractor& extractor,
-                             const ReportFactory& factory, Publisher_ABC& publisher, ReportsModel& model,
-                             const AgentsModel& agents, const kernel::Time_ABC& time );
+                             const ReportFactory& factory, ReportsModel& model,
+                             const AgentsModel& agents, SimulationController& simulation );
     virtual ~ReportListView();
     //@}
 
@@ -65,7 +64,6 @@ public slots:
     //@{
     void OnSelectionChanged();
     void OnReadTimerOut();
-    void OnClearAll();
     void OnClearTrace();
     void OnRequestCenter();
     void OnToggle( QAction* action );
@@ -80,9 +78,10 @@ private:
     void CreateItem( const ReportsModel::Message& message, const kernel::Entity_ABC& entity, bool unreadMessages );
     template< typename T >
     void Create( const T& report );
-    void FillReports();
-    void AddReports();
+    void FillReports( const sword::ListReportsAck& ack );
+    void Refresh();
     void AddMenuItem( QMenu* menu, const QString& name, Report::E_Type type ) const;
+    void SendRequest();
     //@}
 
 private:
@@ -98,7 +97,10 @@ private:
     const ReportFactory& factory_;
     ReportsModel& model_;
     const AgentsModel& agents_;
-    const kernel::Time_ABC& time_;
+    SimulationController& simulation_;
+    int context_;
+    bool unreadMessages_;
+    std::vector< ReportsModel::Message > reports_;
     //@}
 };
 

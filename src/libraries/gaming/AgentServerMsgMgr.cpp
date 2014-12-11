@@ -2031,8 +2031,8 @@ void AgentServerMsgMgr::OnReceiveSimToClient( const std::string& /*from*/, const
         { &sword::SimToClient_Content::has_urban_update,                                &AgentServerMsgMgr::OnReceiveUrbanUpdate },
         // ignore those messages
         { &sword::SimToClient_Content::has_action,                                      nullptr },
-        { &sword::SimToClient_Content::has_action_destruction,                          nullptr },
         { &sword::SimToClient_Content::has_action_create_fire_order_ack,                nullptr },
+        { &sword::SimToClient_Content::has_action_destruction,                          nullptr },
         { &sword::SimToClient_Content::has_compute_pathfind_ack,                        nullptr },
         { &sword::SimToClient_Content::has_control_checkpoint_delete_ack,               nullptr },
         { &sword::SimToClient_Content::has_control_checkpoint_list,                     nullptr },
@@ -2043,6 +2043,7 @@ void AgentServerMsgMgr::OnReceiveSimToClient( const std::string& /*from*/, const
         { &sword::SimToClient_Content::has_crowd_damaged_by_unit_fire,                  nullptr },
         { &sword::SimToClient_Content::has_hierarchy_creation,                          nullptr },
         { &sword::SimToClient_Content::has_list_enabled_vision_cones_ack,               nullptr },
+        { &sword::SimToClient_Content::has_list_reports_ack,                            nullptr },
         { &sword::SimToClient_Content::has_log_supply_request_creation,                 nullptr },
         { &sword::SimToClient_Content::has_log_supply_request_destruction,              nullptr },
         { &sword::SimToClient_Content::has_log_supply_request_update,                   nullptr },

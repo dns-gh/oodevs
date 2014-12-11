@@ -249,3 +249,12 @@ const MIL_Report* MIL_Report::Find( const std::string& key )
         return 0;
     return Find( it->second );
 }
+
+void MIL_Report::PostTrace( const sword::Tasker& tasker, const std::string& message )
+{
+    client::Trace msg;
+    msg().set_id( nextMessageId_-- );
+    *msg().mutable_source() = tasker;
+    *msg().mutable_message() = message.c_str();
+    msg.Send( NET_Publisher_ABC::Publisher() );
+}

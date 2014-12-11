@@ -342,6 +342,30 @@ void SimulationController::SendHistoryRequests( const std::set< unsigned int >& 
         ::SendHistoryRequests< sword::ClientToSim >( requests, publisher_ );
 }
 
+namespace
+{
+    template< typename T >
+    void SendReportsRequest( unsigned int entity, unsigned int tick, int context, Publisher_ABC& publisher )
+    {
+        T msg;
+        msg.set_context( context );
+        auto& list = *msg.mutable_message()->mutable_list_reports();
+        list.set_max_count( 500 );
+        list.set_tick( tick );
+        list.add_entities( entity );
+        publisher.Send( msg );
+    }
+}
+
+void SimulationController::SendReportsRequest( unsigned int entity, int context ) const
+{
+    const auto currentTick = simulation_.GetCurrentTick();
+    if( hasReplay_ )
+        ::SendReportsRequest< sword::ClientToReplay >( entity, currentTick, context, publisher_ );
+    else if( hasSimulation_ )
+        ::SendReportsRequest< sword::ClientToSim >( entity, currentTick, context, publisher_ );
+}
+
 // -----------------------------------------------------------------------------
 // Name: SimulationController::RegisterSimHandler
 // Created: LGY 2014-01-07

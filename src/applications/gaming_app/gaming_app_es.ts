@@ -3151,10 +3151,6 @@ Los datos no pueden ser proyectados.</translation>
 <context>
     <name>ReportListView</name>
     <message>
-        <source>Clear</source>
-        <translation>Limpiar</translation>
-    </message>
-    <message>
         <source>Clear traces</source>
         <translation>Limpiar trazos</translation>
     </message>

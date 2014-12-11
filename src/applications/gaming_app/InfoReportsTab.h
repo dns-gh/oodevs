@@ -19,14 +19,13 @@ namespace kernel
 {
     class Controllers;
     class Entity_ABC;
-    class Time_ABC;
 }
 
 class AgentsModel;
-class Publisher_ABC;
 class ReportFactory;
 class ReportListView;
 class ReportsModel;
+class SimulationController;
 
 // =============================================================================
 /** @class  InfoReportsTab
@@ -40,8 +39,8 @@ public:
     //! @name Constructors/Destructor
     //@{
              InfoReportsTab( QTabWidget* parent, kernel::Controllers& controllers, gui::DisplayExtractor& extractor,
-                             const ReportFactory& factory, Publisher_ABC& publisher, ReportsModel& model,
-                             const AgentsModel& agents, const kernel::Time_ABC& time );
+                             const ReportFactory& factory, SimulationController& simulation, ReportsModel& model,
+                             const AgentsModel& agents );
     virtual ~InfoReportsTab();
     //@}
 
