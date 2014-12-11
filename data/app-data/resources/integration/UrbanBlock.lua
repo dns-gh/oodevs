@@ -281,10 +281,10 @@ integration.removeAllHumansFromCrowd = function( crowd )
 end
 
 --- Return the crowd level of angriness
--- Has to be called by a crowd
+-- @param crowd Crowd knowledge
 -- @return integer
-integration.getUrbanBlockAngriness = function()
-    return DEC_GetUrbanBlockAngriness()
+integration.getUrbanBlockAngriness = function( crowd )
+    return _DEC_GetUrbanBlockAngriness( crowd )
 end
 
 ------------------------------------------------------------------

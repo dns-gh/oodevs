@@ -329,10 +329,10 @@ integration.isImpassableObject = function( object )
     return DEC_ObjectKnowledge_IsImpassable( object )
 end
 
---- Supply from the given object the list of given resource types
+--- Supplies the object with the list of given resources from the stocks of this agent.
 --- This method must be called continuously on several
 --- consecutive ticks for the supply to take place.
--- @param object, decisionnal object
+-- @param DirectIA object knowledge
 -- @param resourceType, list of simulation resource type
 -- @param quantity, integer quantity taken for each simulation tick
 -- @return Boolean, true once it is supplied, false otherwise
@@ -370,7 +370,7 @@ integration.supplyObject = masalife.brain.integration.startStopAction(
 
 --- Extract the list of given resource types from the given object
 --- This method must be called continuously on several
---- consecutive ticks for the supply to take place.
+--- consecutive ticks for the extraction to take place.
 -- @param object, decisionnal object
 -- @param resourceType, list of simulation resource type
 -- @param quantity, integer quantity taken for each simulation tick
