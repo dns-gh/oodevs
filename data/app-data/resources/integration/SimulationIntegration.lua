@@ -251,7 +251,7 @@ RemoveAction = function( action )
 end
 
 local swordErrorHandler = function( err )
-    DEC_Trace( myself, tostring( err )..debug.traceback() )
+    DEC_Trace( tostring( err )..debug.traceback() )
     return err
 end
 
