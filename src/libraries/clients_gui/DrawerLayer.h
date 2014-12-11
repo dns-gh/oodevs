@@ -76,6 +76,7 @@ private:
     std::shared_ptr< ParametersLayer > parameters_;
     ModelObserver_ABC& model_;
     geometry::Rectangle2f viewport_;
+    kernel::Drawing_ABC* selectedForEdition_;
     //@}
 };
 
