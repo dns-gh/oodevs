@@ -401,7 +401,8 @@ public:
     virtual void DrawRectangle( const T_PointVector& points, bool fill ) const = 0;
     virtual void DrawSelectedPolygon( const T_PointVector& points ) const = 0;
     virtual void DrawShapeText( const QImage& image,
-                                const geometry::Point2f& where ) const = 0;
+                                const geometry::Point2f& where,
+                                bool frame ) const = 0;
     virtual void DrawStippledLine( const geometry::Point2f& from,
                                    const geometry::Point2f& to ) const = 0;
     virtual void DrawSvg( const std::string& svg,

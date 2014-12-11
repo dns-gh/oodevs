@@ -819,11 +819,29 @@ void GL2DWidget::DrawSvg( const std::string& svg,
 }
 
 void GL2DWidget::DrawShapeText( const QImage& image,
-                                const geometry::Point2f& where ) const
+                                const geometry::Point2f& where,
+                                bool frame ) const
 {
     if( image.bits() )
     {
         glPushMatrix();
+        glTranslatef( where.X(), where.Y(), 300.f );
+        glScalef( image.width() * Pixels(), image.height() * Pixels(), 1.f );
+
+        if( frame )
+        {
+            glPushAttrib( GL_ENABLE_BIT );
+            glLineStipple( 1, 0x0f0f );
+            glEnable( GL_LINE_STIPPLE );
+            glBegin( GL_LINE_LOOP );
+                glVertex2f( 0.f, -1.f );
+                glVertex2f( 0.f, 0 );
+                glVertex2f( 1, 0 );
+                glVertex2f( 1, -1.f );
+            glEnd();
+            glPopAttrib();
+        }
+
         glPushAttrib( GL_TEXTURE_BIT | GL_CURRENT_BIT );
         glEnable( GL_TEXTURE_2D );
         glDisable( GL_TEXTURE_GEN_S );
@@ -839,8 +857,6 @@ void GL2DWidget::DrawShapeText( const QImage& image,
         glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
         glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
 
-        glTranslatef( where.X(), where.Y(), 300.f );
-        glScalef( image.width() * Pixels(), image.height() * Pixels(), 1.f );
         glBegin( GL_QUADS );
             glTexCoord2f( 0.f, 1.f );
             glVertex2f( 0.f, -1.f );

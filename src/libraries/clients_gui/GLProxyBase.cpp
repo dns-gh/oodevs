@@ -347,9 +347,9 @@ void GLProxyBase::DrawCell( const geometry::Point2f& center ) const
     GetCurrentView().DrawCell( center );
 }
 
-void GLProxyBase::DrawShapeText( const QImage& image, const geometry::Point2f& where ) const
+void GLProxyBase::DrawShapeText( const QImage& image, const geometry::Point2f& where, bool frame ) const
 {
-    GetCurrentView().DrawShapeText( image, where );
+    GetCurrentView().DrawShapeText( image, where, frame );
 }
 
 void GLProxyBase::DrawSvg( const std::string& svg,
