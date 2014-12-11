@@ -709,6 +709,7 @@ integration.updateMoveToIt = function( objective, pathType, waypoints, wantToSto
             objective[ myself ].rcDone = etat
             myself.canBeBlocked = true
             _DEC_Trace( myself, " ** IMPOSSIBLE TO COMPUTE A PATH TO DESTINATION ** " )
+            _DEC__StopAction( myself, objective[ myself ].moveAction )
         end
     elseif etat == eEtatActionDeplacement_CheminPartiel then
         myself.canBeBlocked = true
