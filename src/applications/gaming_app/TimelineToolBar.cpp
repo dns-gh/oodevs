@@ -73,6 +73,7 @@ TimelineToolBar::TimelineToolBar( const TimelineToolBar& other )
     , selected_( other.selected_ )
 {
     Initialize();
+    eventActionsController_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -375,8 +376,11 @@ void TimelineToolBar::NotifyContextMenu( const gui::Event& event, kernel::Contex
     if( IsTaskWithEnd( event ) )
     {
         contextMenuEvent_ = &event;
-        menu.addSeparator();
-        menu.InsertItem( "Command", tr( "Add children events" ), this, SLOT( OnAddShowOnlyFilter() ) );
+        if( showOnlyFilter_.empty() )
+        {
+            menu.addSeparator();
+            menu.InsertItem( "Command", tr( "Add children events" ), this, SLOT( OnAddShowOnlyFilter() ) );
+        }
         menu.addSeparator();
         auto it = std::find( hideHierarchiesFilter_.begin(), hideHierarchiesFilter_.end(), event.GetEvent().uuid );
         if( it == hideHierarchiesFilter_.end() )
@@ -384,7 +388,7 @@ void TimelineToolBar::NotifyContextMenu( const gui::Event& event, kernel::Contex
         else
             menu.InsertItem( "Command", tr( "Show children" ), this, SLOT( OnShowChildren() ) );
     }
-    else if( selected_ && IsTaskWithEnd( *selected_ ) && event.GetEvent().parent != selected_->GetEvent().uuid )
+    else if( showOnlyFilter_.empty() && selected_ && IsTaskWithEnd( *selected_ ) && event.GetEvent().parent != selected_->GetEvent().uuid )
     {
         contextMenuEvent_ = &event;
         menu.addSeparator();

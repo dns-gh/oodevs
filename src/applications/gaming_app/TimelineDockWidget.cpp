@@ -98,8 +98,6 @@ void TimelineDockWidget::NotifyUpdated( const Profile& profile )
     if( !profile.IsLoggedIn() || mainView_ )
         return;
     mainView_ = AddView( true );
-    connect( mainView_, SIGNAL( ShowOnlyFilterChanged( const std::string&, const std::string& ) ),
-                        SLOT( OnShowOnlyFilterChanged( const std::string&, const std::string& ) ) );
     tabWidget_->setVisible( true );
     webView_->Connect();
 }
@@ -139,6 +137,7 @@ TimelineToolBar* TimelineDockWidget::AddView( bool main /* = false */,
     connect( toolBar, SIGNAL( HideHierarchiesFilterChanged( const std::string& ) ), webView_.get(), SLOT( OnHideHierarchiesFilterChanged( const std::string& ) ) );
     connect( toolBar, SIGNAL( SelectedFilterChanged() ), this, SLOT( OnSelectedFilterChanged() ) );
     connect( toolBar, SIGNAL( ParentChanged( const std::string&, const std::string& ) ), webView_.get(), SLOT( OnParentChanged( const std::string&, const std::string& ) ) );
+    connect( toolBar, SIGNAL( ShowOnlyFilterChanged( const std::string&, const std::string& ) ), SLOT( OnShowOnlyFilterChanged( const std::string&, const std::string& ) ) );
     const int index = tabWidget_->addTab( toolBar, "" );
     tabWidget_->setTabText( index, main ? tr( "Main" ) : name.empty() ? tr( "View %1" ).arg( ++maxTabNumber_ ) : QString::fromStdString( name ) );
     tabWidget_->setCurrentIndex( index );
