@@ -2887,6 +2887,7 @@ message ListEnabledVisionCones {
 // most ten reports following the first set in reverse chronological
 // order".
 //! If tick is supplied, list reports until the tick value.
+//! If entities is supplied, returns only reports of these entities.
 message ListReports {
     //! Maximum number of reports to send
     required uint32 max_count = 1;
@@ -2894,6 +2895,8 @@ message ListReports {
     optional uint32 report    = 2;
     //! The maximum tick
     optional uint32 tick      = 3;
+    //! The entity identifier
+    repeated uint32 entities  = 4;
 }
 
 // Reports list returned for a ListReports request.

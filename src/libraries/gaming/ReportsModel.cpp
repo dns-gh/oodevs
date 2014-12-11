@@ -104,7 +104,7 @@ const std::deque< ReportsModel::Message >& ReportsModel::GetReports( unsigned in
 
 bool ReportsModel::HasUnreadReports( unsigned int entity ) const
 {
-    return entitiesMap_.find( entity ) != entitiesMap_.end();
+    return entitiesSet_.find( entity ) != entitiesSet_.end();
 }
 
 size_t ReportsModel::UnreadReports() const
@@ -141,22 +141,26 @@ void ReportsModel::AddUnreadReports( unsigned int id )
             if( profile_.IsVisible( *entity ) )
             {
                 entities_.push_back( id );
-                entitiesMap_[ id ] = id;
+                entitiesSet_.insert( id );
             }
 }
 
 void ReportsModel::ReadReports()
 {
-    entitiesMap_.erase( entities_.front() );
+    entitiesSet_.erase( entities_.front() );
     entities_.pop_front();
 }
 
 void ReportsModel::ReadReports( unsigned int entity )
 {
-    auto it = std::find( entities_.begin(), entities_.end(), entity );
-    if( it != entities_.end() )
-        entities_.erase( it );
-    entitiesMap_.erase( entity );
+    auto it = entitiesSet_.find( entity );
+    if( it == entitiesSet_.end() )
+        return;
+    entitiesSet_.erase( entity );
+
+    auto itEntity = std::find( entities_.begin(), entities_.end(), entity );
+    if( itEntity != entities_.end() )
+        entities_.erase( itEntity );
 }
 
 unsigned int ReportsModel::NextUnreadReports() const
@@ -167,24 +171,24 @@ unsigned int ReportsModel::NextUnreadReports() const
 void ReportsModel::UpdateUnreadReports()
 {
     std::deque< unsigned int > filtered;
-    std::unordered_map< unsigned int, unsigned int > filteredMap;
+    std::unordered_set< unsigned int > filteredSet;
 
     for( auto it = entities_.begin(); it != entities_.end(); ++it )
         if( const auto* entity = agents_.FindAllAgent( *it ) )
             if( profile_.IsVisible( *entity ) )
             {
                 filtered.push_back( *it );
-                filteredMap[ *it ] = *it;
+                filteredSet.insert( *it );
             }
     std::swap( filtered, entities_ );
-    std::swap( filteredMap, entitiesMap_ );
+    std::swap( filteredSet, entitiesSet_ );
 }
 
 void ReportsModel::Purge()
 {
     messages_.clear();
     entities_.clear();
-    entitiesMap_.clear();
+    entitiesSet_.clear();
 }
 
 template< typename T >
