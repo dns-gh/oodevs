@@ -605,12 +605,13 @@ BOOST_AUTO_TEST_CASE( TestMIL_RealParameter )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( TestMIL_StringParameter )
 {
-    std::string in( "value" );
+    const std::string in( "value""\xe9" );
+    const std::string expected( "value""\xc3""\xa9" );
     MIL_StringParameter param( in );
     MissionParameter_Value out;
     BOOST_CHECK_EQUAL( true, param.ToElement( out ) );
     BOOST_CHECK_EQUAL( true, out.has_acharstr() );
-    BOOST_CHECK_EQUAL( in, out.acharstr() );
+    BOOST_CHECK_EQUAL( expected, out.acharstr() );
 }
 
 // -----------------------------------------------------------------------------

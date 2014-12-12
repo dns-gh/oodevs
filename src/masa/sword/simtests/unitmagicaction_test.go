@@ -232,12 +232,12 @@ func (s *TestSuite) TestCreateUnit(c *C) {
 	c.Assert(err, IsNil)
 	listener.Check(c, swapi.ModelEvent{Tag: swapi.AutomatCreate, Id: automat.Id})
 
-	// Add unit with name, becomes a PC even if PC is false (wut?)
-	name := "some unit"
+	// Add unit with broken name, becomes a PC even if PC is false (wut?)
+	name := "some unit" + string([]byte{0xe9})
 	u1, err := client.CreateUnitWithName(automat.Id, unitType, pos, name, false)
 	c.Assert(err, IsNil)
 	c.Assert(u1, NotNil)
-	c.Assert(u1.Name, Equals, name)
+	c.Assert(u1.Name, Equals, "some unit\u00e9")
 	c.Assert(u1.Pc, Equals, true)
 	listener.Check(c, swapi.ModelEvent{Tag: swapi.UnitCreate, Id: u1.Id})
 
