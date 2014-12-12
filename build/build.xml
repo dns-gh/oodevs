@@ -670,7 +670,8 @@
                                   **/timeline_app.exe"/>
                     <flattenmapper/>
                 </mappedresources>
-                <fileset dir="${bin.dir}" includes="csvclient.exe,
+                <fileset dir="${bin.dir}" includes="addreports.exe,
+                                                    csvclient.exe,
                                                     replay.exe,
                                                     simbench.exe"/>
                 <fileset dir="${run.dir}">
