@@ -57,7 +57,9 @@ public:
     void Start          ( ShapeHandler_ABC& handler, const kernel::Location_ABC& location );
     void Start          ( ShapeHandler_ABC& handler, const kernel::Location_ABC& location, const QColor& color );
     void SelectRaster   ( ShapeHandler_ABC& handler );
-    void Reset          ();
+
+    void Reset();
+    void Accept();
 
     void AddPoint( const geometry::Point2f& point );
 

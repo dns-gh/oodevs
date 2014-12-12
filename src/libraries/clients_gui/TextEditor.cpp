@@ -33,9 +33,12 @@ namespace
 // Created: LGY 2014-06-10
 // -----------------------------------------------------------------------------
 TextEditor::TextEditor( QWidget* parent )
-    : QDialog( parent, "text_editor" )
+    : QDialog( parent )
     , location_( 0 )
 {
+    setObjectName( "text_editor" );
+    setModal( true );
+
     setWindowTitle( tr( "Text edition" ) );
     QHBoxLayout* toolsLayout = new QHBoxLayout();
 
@@ -196,10 +199,13 @@ namespace
 // Name: TextEditor::Exec
 // Created: LGY 2014-06-11
 // -----------------------------------------------------------------------------
-int TextEditor::Exec( kernel::Location_ABC* location )
+void TextEditor::Exec( kernel::Location_ABC* location )
 {
     if( !location )
-        return QDialog::Accepted;
+    {
+        setResult( QDialog::Accepted );
+        return;
+    }
     location_ = location;
     TextVisitor visitor( *textEdit_ );
     location_->Accept( visitor );
@@ -209,7 +215,7 @@ int TextEditor::Exec( kernel::Location_ABC* location )
     actionTextItalic_->setChecked( font.italic() );
     comboSize_->setCurrentIndex( comboSize_->findText( QString::number( font.pointSize() ) ) );
     textEdit_->setFocus();
-    return exec();
+    show();
 }
 
 // -----------------------------------------------------------------------------

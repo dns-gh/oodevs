@@ -43,7 +43,7 @@ public:
     //! @name Operations
     //@{
     void SetFontColor( const QColor& color );
-    int Exec( kernel::Location_ABC* location );
+    void Exec( kernel::Location_ABC* location );
     //@}
 
 private slots:
