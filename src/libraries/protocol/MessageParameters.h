@@ -56,7 +56,7 @@ namespace protocol
     int          GetCount( const sword::MissionParameters& params, int i = -1, int j = -1 );
 
     bool                               IsNull( const sword::MissionParameters& params, int i );
-    const std::string&                 GetString( const sword::MissionParameters& params, int i, int j = -1, int k = -1 );
+    std::string                        GetString( const sword::MissionParameters& params, int i, int j = -1, int k = -1 );
     bool                               GetBool( const sword::MissionParameters& params, int i, int j = -1, int k = -1 );
     float                              GetReal( const sword::MissionParameters& params, int i, int j = -1, int k = -1 );
     const std::string&                 GetDateTimeStr( const sword::MissionParameters& params, int i, int j = -1, int k = -1 );

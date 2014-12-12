@@ -11,6 +11,7 @@
 #include "MIL_StringParameter.h"
 #include "protocol/Protocol.h"
 #include "MIL.h"
+#include <tools/Helpers.h>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_StringParameter )
 
@@ -28,7 +29,7 @@ MIL_StringParameter::MIL_StringParameter()
 // Created: LDC 2009-06-16
 // -----------------------------------------------------------------------------
 MIL_StringParameter::MIL_StringParameter( const std::string& message )
-    : value_( message )
+    : value_( tools::ToUtf8( message ) )
 {
     // NOTHING
 }
@@ -57,7 +58,7 @@ bool MIL_StringParameter::IsOfType( MIL_ParameterType_ABC::E_Type type ) const
 // -----------------------------------------------------------------------------
 bool MIL_StringParameter::ToString( std::string& value ) const
 {
-    value = value_;
+    value = tools::ToUtf8( value_ );
     return true;
 }
 

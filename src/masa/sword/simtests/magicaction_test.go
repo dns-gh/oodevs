@@ -572,7 +572,9 @@ const (
 func CreateReports(c *C, client *swapi.Client) {
 	// Create a bunch of reports
 	unitId := getSomeUnit(c, client.Model.GetData()).Id
-	err := client.CreateReport(10, startMissionId, unitId)
+	err := client.CreateReport(10, startMissionId, unitId,
+		// invalid UTF-8 sequence
+		swapi.MakeString(string([]byte{0xe9})))
 	c.Assert(err, IsNil)
 
 	// Create a report with a parameter

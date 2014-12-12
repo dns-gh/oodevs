@@ -42,6 +42,13 @@ namespace
         xos << xml::attribute( "value", value );
     }
 
+    template<>
+    void WritePair( xml::xostream& xos, const std::string& type, const std::string& value )
+    {
+        xos << xml::attribute( "type", type );
+        xos << xml::attribute( "value", tools::ToUtf8( value ) );
+    }
+
     template< typename T >
     void AddParameter( xml::xosubstream xos, const std::string& type, const T& value )
     {
@@ -55,7 +62,7 @@ namespace
         xos << xml::start( "parameter" )
             << xml::attribute( "type", type );
         if( !value.empty() )
-            xos << xml::attribute( "value", value );
+            xos << xml::attribute( "value", tools::ToUtf8( value ) );
     }
 
     template< typename T >
