@@ -1035,16 +1035,6 @@ void AgentServerMsgMgr::OnReceiveMsgCR( const sword::SimToClient& msg )
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnReceiveTrace
-// Created: AGE 2007-05-31
-// -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveTrace( const sword::SimToClient& msg )
-{
-    const auto& message = msg.message().trace();
-    OnReceiveMessageWithTasker( GetModel().agents_, message, message.source() );
-}
-
-// -----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReceiveMsgDecisionalState
 // Created: AGE 2007-05-31
 // -----------------------------------------------------------------------------
@@ -2008,7 +1998,6 @@ void AgentServerMsgMgr::OnReceiveSimToClient( const std::string& /*from*/, const
         { &sword::SimToClient_Content::has_stop_fire_effect,                            &AgentServerMsgMgr::OnReceiveStopFireEffect },
         { &sword::SimToClient_Content::has_stop_unit_fire,                              &AgentServerMsgMgr::OnReceiveStopUnitFire },
         { &sword::SimToClient_Content::has_stop_unit_fire_detection,                    &AgentServerMsgMgr::OnReceiveStopUnitFireDetection },
-        { &sword::SimToClient_Content::has_trace,                                       &AgentServerMsgMgr::OnReceiveTrace },
         { &sword::SimToClient_Content::has_unit_attributes,                             &AgentServerMsgMgr::OnReceiveUnitAttributes },
         { &sword::SimToClient_Content::has_unit_change_superior,                        &AgentServerMsgMgr::OnReceiveUnitChangeSuperior },
         { &sword::SimToClient_Content::has_unit_change_superior_ack,                    &AgentServerMsgMgr::OnReceiveUnitChangeSuperiorAck },
@@ -2049,6 +2038,7 @@ void AgentServerMsgMgr::OnReceiveSimToClient( const std::string& /*from*/, const
         { &sword::SimToClient_Content::has_log_supply_request_update,                   nullptr },
         { &sword::SimToClient_Content::has_segment_request_ack,                         nullptr },
         { &sword::SimToClient_Content::has_stock_resource,                              nullptr },
+        { &sword::SimToClient_Content::has_trace,                                       nullptr },
         { &sword::SimToClient_Content::has_unit_damaged_by_crowd_fire,                  nullptr },
         { &sword::SimToClient_Content::has_unit_damaged_by_unit_fire,                   nullptr },
         { &sword::SimToClient_Content::has_unit_environment_type,                       nullptr },
