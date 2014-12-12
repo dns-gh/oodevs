@@ -70,7 +70,7 @@ With -unit=0, the reports will be spread over all readable model units.
 		log.Fatalf("local model took too long to initialize")
 	}
 
-	entities := []uint32{uint32(*unit)}
+	entities := []uint32{}
 	if *unit == 0 {
 		// List all exercise units, pick randomly when emitting reports
 		model := logger.Model.GetData()
@@ -78,6 +78,8 @@ With -unit=0, the reports will be spread over all readable model units.
 			entities = append(entities, id)
 		}
 		fmt.Printf("spreading reports over %d entities\n", len(entities))
+	} else {
+		entities = []uint32{uint32(*unit)}
 	}
 
 	// Get tick information
