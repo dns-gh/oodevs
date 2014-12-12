@@ -183,17 +183,31 @@ used to exercise swapi.Model update against real world scenarii.
 	tickCh := make(chan tickInfo, 8)
 	tick := int32(0)
 	go func() {
-		client.Model.WaitConditionTimeout(0, func(data *swapi.ModelData) bool {
-			if tick < data.Tick {
-				tick = data.Tick
-				tickCh <- tickInfo{
-					Automats: len(data.Automats),
-					Units:    len(data.Units),
-					Tick:     int(data.Tick),
+		client.Model.RegisterHandlerTimeout(0,
+			func(data *swapi.ModelData, msg *swapi.SwordMessage, err error) bool {
+				if tick < data.Tick {
+					tick = data.Tick
+					tickCh <- tickInfo{
+						Automats: len(data.Automats),
+						Units:    len(data.Units),
+						Tick:     int(data.Tick),
+					}
+				} else {
+					// In replay mode, update after skipping
+					if msg != nil &&
+						msg.ReplayToClient != nil &&
+						msg.ReplayToClient.GetMessage() != nil &&
+						msg.ReplayToClient.GetMessage().GetControlSkipToTickAck() != nil {
+						skip := msg.ReplayToClient.GetMessage().GetControlSkipToTickAck()
+						tickCh <- tickInfo{
+							Automats: len(data.Automats),
+							Units:    len(data.Units),
+							Tick:     int(*skip.Tick),
+						}
+					}
 				}
-			}
-			return false
-		})
+				return false
+			})
 	}()
 
 	// Consolidate compression and tick information and print it.
@@ -233,6 +247,7 @@ used to exercise swapi.Model update against real world scenarii.
 	// Detect server-side termination
 	client.Register(func(msg *swapi.SwordMessage, id, ctx int32, err error) bool {
 		if err != nil {
+			log.Printf("main handler closed with: %s", err)
 			termination <- 1
 		}
 		return err != nil
