@@ -39,14 +39,6 @@ private slots:
     //! @name Slots
     //@{
     void Validate();
-    void Reject();
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    DisconnectDialog( const DisconnectDialog& );
-    DisconnectDialog& operator=( const DisconnectDialog& );
     //@}
 
 private:

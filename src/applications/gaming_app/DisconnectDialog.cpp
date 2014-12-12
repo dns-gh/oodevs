@@ -33,7 +33,7 @@ DisconnectDialog::DisconnectDialog( QWidget* pParent, Network& network )
     pMainLayout->addWidget( pCancelButton, 0, 1 );
     pOKButton->setDefault( TRUE );
 
-    connect( pCancelButton, SIGNAL( clicked() ), SLOT( Reject() ) );
+    connect( pCancelButton, SIGNAL( clicked() ), SLOT( reject() ) );
     connect( pOKButton    , SIGNAL( clicked() ), SLOT( Validate() ) );
 }
 
@@ -52,16 +52,6 @@ DisconnectDialog::~DisconnectDialog()
 //-----------------------------------------------------------------------------
 void DisconnectDialog::Validate()
 {
-    network_.Disconnect();
     accept();
+    network_.Disconnect();
 }
-
-//-----------------------------------------------------------------------------
-// Name: DisconnectDialog::Validate
-// Created:  NLD 2002-01-03
-//-----------------------------------------------------------------------------
-void DisconnectDialog::Reject()
-{
-    reject();
-}
-

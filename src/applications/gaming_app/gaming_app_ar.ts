@@ -2260,6 +2260,74 @@ This data can&apos;t be projected.</source>
         <source>Error loading physical data: </source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Loading physical base ...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Receiving profiles information ...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Loading graphical interface ...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Loading options ...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Loading complete</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Saving options ...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Closing graphical interface ...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Disconnecting ...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Data cleaning ...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Closing complete</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Closing failed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select a user profile ...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Receiving initial state ...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Loading failed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Generating symbols ...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Starting threads ...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Closing threads ...</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MaintenanceHaulersListView</name>

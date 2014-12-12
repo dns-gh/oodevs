@@ -2263,6 +2263,74 @@ Ces données ne peuvent pas être projetées.</translation>
         <source>Error loading physical data: </source>
         <translation>Erreur au chargement de la base physique: </translation>
     </message>
+    <message>
+        <source>Loading physical base ...</source>
+        <translation>Chargement de la base physique ...</translation>
+    </message>
+    <message>
+        <source>Receiving profiles information ...</source>
+        <translation>Réception des informations de profiles ....</translation>
+    </message>
+    <message>
+        <source>Loading graphical interface ...</source>
+        <translation>Chargement de l&apos;interface graphique ...</translation>
+    </message>
+    <message>
+        <source>Generating symbols ...</source>
+        <translation>Génération des symboles ...</translation>
+    </message>
+    <message>
+        <source>Loading options ...</source>
+        <translation>Chargement des options ...</translation>
+    </message>
+    <message>
+        <source>Loading complete</source>
+        <translation>Chargement terminé</translation>
+    </message>
+    <message>
+        <source>Saving options ...</source>
+        <translation>Enregistrement des options ...</translation>
+    </message>
+    <message>
+        <source>Closing graphical interface ...</source>
+        <translation>Fermeture de l&apos;interface graphique ...</translation>
+    </message>
+    <message>
+        <source>Disconnecting ...</source>
+        <translation>Déconnexion ...</translation>
+    </message>
+    <message>
+        <source>Data cleaning ...</source>
+        <translation>Nettoyage des données ...</translation>
+    </message>
+    <message>
+        <source>Closing complete</source>
+        <translation>Fermeture terminé</translation>
+    </message>
+    <message>
+        <source>Closing failed</source>
+        <translation>Echec de la fermeture</translation>
+    </message>
+    <message>
+        <source>Select a user profile ...</source>
+        <translation>Selectionner un profil utilisateur ...</translation>
+    </message>
+    <message>
+        <source>Receiving initial state ...</source>
+        <translation>Reception de l&apos;état initial ...</translation>
+    </message>
+    <message>
+        <source>Loading failed</source>
+        <translation>Echec de chargement</translation>
+    </message>
+    <message>
+        <source>Starting threads ...</source>
+        <translation>Initialisation des threads ...</translation>
+    </message>
+    <message>
+        <source>Closing threads ...</source>
+        <translation>Fermeture des threads ...</translation>
+    </message>
 </context>
 <context>
     <name>MaintenanceHaulersListView</name>
