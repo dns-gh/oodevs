@@ -88,30 +88,37 @@ With -unit=0, the reports will be spread over all readable model units.
 	go func() {
 		prevNow := time.Now()
 		prevCount := reports
-		logger.Model.WaitCondition(func(data *swapi.ModelData) bool {
-			count := atomic.LoadInt32(&reports)
-			if tick < data.Tick {
-				tick = data.Tick
-				now := time.Now()
-				dtime := now.Sub(prevNow)
-				created := float64(0)
-				if dtime > 0 {
-					created = float64(count-prevCount) / (float64(dtime) / float64(time.Second))
+		logger.Model.RegisterHandlerTimeout(0,
+			func(data *swapi.ModelData, msg *swapi.SwordMessage, err error) bool {
+				if err != nil {
+					log.Printf("tick handler error: %s", err)
+					return true
 				}
-				log.Printf("Tick %d, %.2f sec, reports %d, %.1f reports/s\n", tick,
-					float64(dtime)/float64(time.Second), reports, created)
-				prevNow = now
-				prevCount = count
-			}
-			return false
-		})
+
+				count := atomic.LoadInt32(&reports)
+				if tick < data.Tick {
+					tick = data.Tick
+					now := time.Now()
+					dtime := now.Sub(prevNow)
+					created := float64(0)
+					if dtime > 0 {
+						created = float64(count-prevCount) / (float64(dtime) / float64(time.Second))
+					}
+					log.Printf("Tick %d, %.2f sec, reports %d, %.1f reports/s\n", tick,
+						float64(dtime)/float64(time.Second), reports, created)
+					prevNow = now
+					prevCount = count
+				}
+				return false
+			})
 	}()
 
 	// Get report count information
-	logger.Model.RegisterHandler(
+	logger.Model.RegisterHandlerTimeout(0,
 		func(data *swapi.ModelData, msg *swapi.SwordMessage, err error) bool {
 			if err != nil {
-				return false
+				log.Printf("handler error: %s", err)
+				return true
 			}
 			sim := msg.SimulationToClient
 			if sim == nil || sim.Message == nil {
