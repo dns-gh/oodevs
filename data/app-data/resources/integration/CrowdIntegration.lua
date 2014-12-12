@@ -372,7 +372,7 @@ integration.extractVictimsFromCrowd = function( crowd, center, distance )
         position = _DEC_Agent_Position( myself ) -- extract wounded creating a new crowd on my own position
     end
     position = DEC_Geometrie_PositionAleatoireDansFuseauDansCercle( myself, position, distance or 50 ) or center or _DEC_Agent_Position( myself )
-    local newCrowd = DEC_Crowd_ExtractWoundedFromCrowd( myself, crowd.source, position )
+    local newCrowd = _DEC_Crowd_ExtractWoundedFromCrowd( myself, crowd.source, position )
     return ( newCrowd ~= 0 ), position, newCrowd
 end
 
