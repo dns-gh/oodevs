@@ -274,6 +274,19 @@ integration.stopDamageUrbanBlock = function( urbanBlock )
     return true
 end
 
+--- Remove all humans from a crowd
+-- @param crowd Crowd knowledge
+integration.removeAllHumansFromCrowd = function( crowd )
+    _DEC_ReintegrateUrbanBlock( crowd )
+end
+
+--- Return the crowd level of angriness
+-- @param crowd Crowd knowledge
+-- @return integer
+integration.getUrbanBlockAngriness = function( crowd )
+    return _DEC_GetUrbanBlockAngriness( crowd )
+end
+
 ------------------------------------------------------------------
 --- DECLARATIONS ENSURING BACKWARDS COMPATIBILITY
 ------------------------------------------------------------------

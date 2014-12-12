@@ -329,6 +329,123 @@ integration.isImpassableObject = function( object )
     return DEC_ObjectKnowledge_IsImpassable( object )
 end
 
+--- Supplies the object with the list of given resources from the stocks of this agent.
+--- This method must be called continuously on several
+--- consecutive ticks for the supply to take place.
+-- @param DirectIA object knowledge
+-- @param resourceType, list of simulation resource type
+-- @param quantity, integer quantity taken for each simulation tick
+-- @return Boolean, true once it is supplied, false otherwise
+integration.supplyObject = masalife.brain.integration.startStopAction( 
+{ 
+    start   = function( object, resourceTypes, quantity )
+        local quantity = quantity or 1000 --valeur arbitraire pour prendre une bonne quantité...
+        object.actionSupply = DEC_StartSupplyObject( object.source, resourceTypes, quantity )
+        actionCallbacks[ object.actionSupply ] = function( arg ) object.actionSupplyState = arg end
+    end,
+
+    started = function( object )
+        if object.actionSupplyState == eActionObjetImpossible then
+            DEC_Trace( "impossible works" )
+            return false
+        elseif object.actionSupplyState == eActionObjetManqueDotation then
+            DEC_Trace( "not enough dotation" )
+            return false
+        elseif object.actionSupplyState == eActionObjetPasDeCapacite then
+            DEC_Trace( "no capacity" ) 
+            return false
+        end
+        return true
+    end,
+
+    stop    = function( object ) 
+        if object.actionSupplyState == eActionObjetTerminee then
+            DEC_Trace( "supplied" )
+        else
+            DEC_Trace( "pause work" )
+        end
+        object.actionSupply = DEC__StopAction( object.actionSupply )
+    end,
+} )
+
+--- Extract the list of given resource types from the given object
+--- This method must be called continuously on several
+--- consecutive ticks for the extraction to take place.
+-- @param object, decisionnal object
+-- @param resourceType, list of simulation resource type
+-- @param quantity, integer quantity taken for each simulation tick
+-- @return Boolean, true once it is extracted, false otherwise
+integration.extractObject = masalife.brain.integration.startStopAction(
+    { 
+        start = function( object, resourceTypes, quantity )
+            local quantity = quantity or 1000 --valeur arbitraire pour prendre une bonne quantité...
+            object.actionExtract = DEC_StartExtractFromStockObject( object.source, resourceTypes, quantity )
+            actionCallbacks[ object.actionExtract ] = function( arg ) object.actionExtractState = arg end
+        end, 
+
+        started = function( object )
+            if object.actiobExtractState == eActionObjetImpossible then
+                DEC_Trace( "impossible works" )
+                return false
+            elseif object.actiobExtractState == eActionObjetManqueDotation then
+                DEC_Trace( "not enough dotation" )
+                return false
+            elseif object.actiobExtractState == eActionObjetPasDeCapacite then
+                DEC_Trace( "no capacity" ) 
+                return false
+            end
+            return true
+        end, 
+        stop = function( object )
+            if object.actiobExtractState == eActionObjetTerminee then
+                DEC_Trace( "extracted" )
+            else
+                DEC_Trace( "pause work" )
+            end
+            object.actionExtract = DEC__StopAction( object.actionExtract )
+        end,
+    } ),
+
+--- Distribute resources in the object to the current agent in order to replenish its stocks.
+--- All resources available in the object will be passed to the agent until either the stocks
+--- of the agent are full or the stocks of the object are empty.
+--- This method must be called continuously on several
+--- consecutive ticks for the distribution to take place.
+-- @param object, decisionnal object
+-- @param quantity, integer quantity taken for each simulation tick
+-- @return Boolean, true once it is distributed, false otherwise
+integration.distributeObject = masalife.brain.integration.startStopAction(
+    { 
+        start = function( object, quantity )
+            local quantity = quantity or 1000 --valeur arbitraire pour prendre une bonne quantité...
+            object.actionDistribute = DEC_StartDistributionObjet( object.source, quantity )
+            actionCallbacks[ object.actionDistribute ] = function( arg ) object.actionDistributeState = arg end
+        end, 
+
+        started = function( object )
+            if object.actionDistributeState == eActionObjetImpossible then
+                DEC_Trace( "impossible works" )
+                return false
+            elseif object.actionDistributeState == eActionObjetManqueDotation then
+                DEC_Trace( "not enough dotation" )
+                return false
+            elseif object.actionDistributeState == eActionObjetPasDeCapacite then
+                DEC_Trace( "no capacity" ) 
+                return false
+            end
+            return true
+        end, 
+        stop = function( object )
+            if object.actionDistributeState == eActionObjetTerminee then
+                DEC_Trace( "distributed" )
+            else
+                DEC_Trace( "pause work" )
+            end
+            object.actionDistribute = DEC__StopAction( object.actionDistribute )
+        end,
+    } ),
+
+
 ------------------------------------------------------------------
 --- DECLARATIONS ENSURING BACKWARDS COMPATIBILITY
 ------------------------------------------------------------------

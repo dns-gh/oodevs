@@ -264,3 +264,28 @@ integration.ensureVictimsEvacuation = function( victimsUnit, medicalUnit )
     DEC_EvacuerBlessesVersTC2( victimsUnit.source, medicalUnit.source )
     return true
 end
+
+--- Returns true if the object can distribute stocks ("stock" capacity ticked in the authoring tool).
+-- @param object Object knowledge. The object to be queried
+integration.stockCanBeDistributed = function( object )
+    return DEC_Stock_IsDistributePossible( object, nil )
+end
+
+--- Returns true if the agent can take resources of the specified type from the object.
+-- This requires the object to have stocked these resources and the querying agent to have some room for more of these resources in their stock.
+-- Can only be called on an agent.
+-- @param object Objectknowledge. The object to extract resources from
+-- @param resourceTypes List of simulation resource type to be extracted.
+integration.stockCanBeExtracted = function( object, resourceTypes )
+    return DEC_Stock_IsExtractPossible( object, resourceTypes )
+end
+
+--- Returns true if the agent can put resources of the specified type into the object.
+-- This requires the object to have the "stock" capacity defined in authoring and be able to stock the specified resource.
+-- The querying agent must have some of these resources in their stock.
+-- Can only be called on an agent.
+-- @param object Objectknowledge. The object to put resources into
+-- @param resourceTypes List of simulation  resource type to be added.
+integration.stockCanBeSupplied = function( object, resourceTypes )
+    return DEC_Stock_IsSupplyPossible( object, resourceTypes )
+end
