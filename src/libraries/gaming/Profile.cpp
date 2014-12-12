@@ -244,9 +244,9 @@ bool Profile::IsVisible( const Entity_ABC& entity ) const
 // Name: Profile::CanBeOrdered
 // Created: AGE 2006-10-11
 // -----------------------------------------------------------------------------
-bool Profile::CanBeOrdered( const Entity_ABC& entity ) const
+bool Profile::CanBeOrdered( const Entity_ABC& entity, bool forceInReplay ) const
 {
-    return simulation_ && RightsResolver::CanBeOrdered( entity );
+    return ( forceInReplay || simulation_ ) && RightsResolver::CanBeOrdered( entity, forceInReplay );
 }
 
 // -----------------------------------------------------------------------------

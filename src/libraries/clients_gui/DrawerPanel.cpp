@@ -445,7 +445,13 @@ void DrawerPanel::NotifyUpdated( const kernel::Profile_ABC& )
 // -----------------------------------------------------------------------------
 void DrawerPanel::UpdateDrawButton()
 {
-    if( !selectedStyle_ || selectedStyle_->GetType() == "text" )
+    if( !selectedStyle_ )
+    {
+        drawButton_->setEnabled( false );
+        layer_->Reset();
+        return;
+    }
+    if( selectedStyle_->GetType() == "text" )
     {
         drawButton_->setEnabled( false );
         return;
@@ -455,5 +461,8 @@ void DrawerPanel::UpdateDrawButton()
         entity = selectedDrawing_->GetDiffusionEntity();
     else
         entity = selectedEntity_;
-    drawButton_->setEnabled( entity ? profile_.CanBeOrdered( *entity ) : profile_.IsSupervision() );
+    bool enabled = entity ? profile_.CanBeOrdered( *entity, true ) : profile_.IsSupervision();
+    drawButton_->setEnabled( enabled );
+    if( !enabled )
+        layer_->Reset();
 }

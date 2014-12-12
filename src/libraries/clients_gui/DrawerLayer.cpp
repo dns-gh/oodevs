@@ -31,6 +31,7 @@ DrawerLayer::DrawerLayer( kernel::Controllers& controllers,
     : EntityLayer< kernel::Drawing_ABC >( controllers, view, strategy, profile, eLayerTypes_Drawings )
     , parameters_( parameters )
     , model_     ( model )
+    , selectedForEdition_( 0 )
 {
     controllers.Update( *this );
 }
@@ -61,12 +62,7 @@ void DrawerLayer::ContextMenu( const kernel::GraphicalEntity_ABC& selectable, co
 // -----------------------------------------------------------------------------
 void DrawerLayer::NotifyContextMenu( const kernel::Drawing_ABC& drawing, kernel::ContextMenu& menu )
 {
-    if( selected_ != &drawing )
-    {
-        std::vector< const kernel::Drawing_ABC* > vector;
-        vector.push_back( &drawing );
-        NotifySelectionChanged( vector );
-    }
+    selectedForEdition_ = const_cast< kernel::Drawing_ABC* >( &drawing );
     if( drawing.IsControlledBy( profile_ ) )
         menu.InsertItem( "Creation", tools::translate( "gui::DrawerLayer", "Edit..." ), this, SLOT( OnEditDrawing() ) );
 }
@@ -77,8 +73,8 @@ void DrawerLayer::NotifyContextMenu( const kernel::Drawing_ABC& drawing, kernel:
 // -----------------------------------------------------------------------------
 void DrawerLayer::OnEditDrawing()
 {
-    if( selected_ )
-        static_cast< Drawing* >( selected_.ConstCast() )->Edit( *parameters_ );
+    if( selectedForEdition_ )
+        static_cast< Drawing* >( selectedForEdition_ )->Edit( *parameters_ );
 }
 
 // -----------------------------------------------------------------------------

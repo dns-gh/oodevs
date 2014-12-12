@@ -87,7 +87,6 @@ private:
     virtual void NotifyUpdated( const kernel::ModelLoaded& model );
     virtual void NotifyUpdated( const kernel::ModelUnLoaded& model );
     virtual void NotifyUpdated( const kernel::Profile_ABC& profile );
-    virtual void NotifyModeChanged( E_Modes newMode, bool useDefault, bool firstChangeToSavedMode );
     //@}
 
     //! @name Helpers

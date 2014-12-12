@@ -145,7 +145,7 @@ bool UserProfile::IsVisible( const kernel::Entity_ABC& ) const
 // Name: UserProfile::CanBeOrdered
 // Created: JSR 2014-06-05
 // -----------------------------------------------------------------------------
-bool UserProfile::CanBeOrdered( const kernel::Entity_ABC& ) const
+bool UserProfile::CanBeOrdered( const kernel::Entity_ABC&, bool ) const
 {
     return true;
 }

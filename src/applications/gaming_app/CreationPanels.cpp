@@ -15,13 +15,10 @@
 #include "gaming/StaticModel.h"
 #include "gaming/TeamsModel.h"
 #include "clients_kernel/AgentTypes.h"
-#include "clients_kernel/Controllers.h"
 #include "clients_kernel/Profile_ABC.h"
-#include "clients_kernel/Tools.h"
 #include "clients_gui/PopulationsPanel.h"
 #include "clients_gui/UnitsPanel.h"
 #include "tools/ExerciseConfig.h"
-#include "protocol/SimulationSenders.h"
 #include "FireCreationPanel.h"
 #include "ObjectCreationPanel.h"
 #include "WeatherPanel.h"
@@ -86,6 +83,7 @@ void CreationPanels::NotifyUpdated( const kernel::ModelLoaded& )
 {
     AddPanels();
     panels_->Add( drawings_ );
+    panels_->Select( 0 );
 }
 
 // -----------------------------------------------------------------------------
@@ -108,16 +106,7 @@ void CreationPanels::NotifyUpdated( const kernel::Profile_ABC& profile )
         RemovePanels();
     else
         AddPanels();
-}
-
-// -----------------------------------------------------------------------------
-// Name: CreationPanels::NotifyModeChanged
-// Created: NPT 2013-02-28
-// -----------------------------------------------------------------------------
-void CreationPanels::NotifyModeChanged( E_Modes newMode, bool useDefault, bool firstChangeToSavedMode )
-{
-    RichDockWidget::NotifyModeChanged( newMode, useDefault, firstChangeToSavedMode );
-    panels_->SelectAndLockPanel( GetCurrentMode() == eModes_Replay? 5 : 0, GetCurrentMode() == eModes_Replay );
+    panels_->Select( 0 );
 }
 
 // -----------------------------------------------------------------------------

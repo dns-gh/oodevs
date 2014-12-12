@@ -61,7 +61,7 @@ bool PreparationProfile::IsKnowledgeVisible( const kernel::Knowledge_ABC& /*enti
 // Name: PreparationProfile::CanBeOrdered
 // Created: AGE 2006-10-16
 // -----------------------------------------------------------------------------
-bool PreparationProfile::CanBeOrdered( const kernel::Entity_ABC& ) const
+bool PreparationProfile::CanBeOrdered( const kernel::Entity_ABC&, bool ) const
 {
     return true;
 }
