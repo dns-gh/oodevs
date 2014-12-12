@@ -126,7 +126,7 @@ boost::shared_ptr< TER_PathResult > TER_PathComputer::Execute(
     {
         MT_LOG_MESSAGE_MSG( "TER_PathComputer[" << requestId << "] begin entity: "
                 << callerId );
-        MT_LOG_MESSAGE_MSG( "TER_PathComputer[" << requestId << "] section: "
+        MT_LOG_MESSAGE_MSG( "TER_PathComputer[" << requestId << "] sections: "
                 << GetPathAsString( sections ) );
         profiler_.Start();
     }
