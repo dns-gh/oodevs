@@ -15,6 +15,7 @@
 #include "GLView_ABC.h"
 #include "LocationEditor_ABC.h"
 #include "ShapeHandler_ABC.h"
+#include "SignalAdapter.h"
 #include "TextEditor.h"
 #include "resources.h"
 
@@ -42,7 +43,12 @@ ParametersLayer::ParametersLayer( kernel::Controllers& controllers, GLView_ABC& 
     , current_( 0 )
     , validation_( false )
 {
-    // NOTHING
+    gui::connect( &textEditor_, SIGNAL( finished( int ) ), [&] {
+        if( textEditor_.result() == QDialog::Accepted )
+            Accept();
+        else
+            Reset();
+    });
 }
 
 // -----------------------------------------------------------------------------
@@ -301,33 +307,40 @@ void ParametersLayer::Reset()
 }
 
 // -----------------------------------------------------------------------------
+// Name: ParametersLayer::Accept
+// Created: JSR 2014-12-12
+// -----------------------------------------------------------------------------
+void ParametersLayer::Accept()
+{
+    if( handler_ && current_ )
+        handler_->Handle( *current_ );
+    validation_ = false;
+    handler_ = 0;
+    current_ = 0;
+    cursors_->SelectTool( QCursor(), false );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ParametersLayer::NotifyDone
 // Created: AGE 2006-03-23
 // -----------------------------------------------------------------------------
 void ParametersLayer::NotifyDone()
 {
-    if( !current_ || current_ && current_->IsValid() )
+    if( !current_ )
     {
-        ShapeHandler_ABC* handler = handler_;
-        Location_ABC* location = current_;
-
-        if( location )
-        {
-            if( location->GetTypeName() == "text" )
-            {
-                validation_ = true;
-                if( textEditor_.Exec( location ) != QDialog::Accepted )
-                {
-                    Reset();
-                    return;
-                }
-            }
-            handler->Handle( *location );
-        }
         validation_ = false;
         handler_ = 0;
-        current_ = 0;
         cursors_->SelectTool( QCursor(), false );
+    }
+    else if( current_->IsValid() )
+    {
+        if( current_->GetTypeName() == "text" )
+        {
+            validation_ = true;
+            textEditor_.Exec( current_ );
+            return;
+        }
+        Accept();
     }
 }
 

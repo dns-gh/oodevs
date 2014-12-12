@@ -1027,7 +1027,7 @@ void GL2DWidget::enterEvent( QEvent* event )
 void GL2DWidget::leaveEvent( QEvent* event )
 {
     SetHoveredView( 0 );
-    MapWidget::enterEvent( event );
+    MapWidget::leaveEvent( event );
 }
 
 // -----------------------------------------------------------------------------

@@ -842,7 +842,7 @@ void GL3DWidget::enterEvent( QEvent* event )
 void GL3DWidget::leaveEvent( QEvent* event )
 {
     SetHoveredView( 0 );
-    Widget3D::enterEvent( event );
+    Widget3D::leaveEvent( event );
 }
 
 // -----------------------------------------------------------------------------
