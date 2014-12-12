@@ -52,7 +52,6 @@ With -unit=0, the reports will be spread over all readable model units.
 	user := flag.String("user", "", "user name")
 	password := flag.String("password", "", "user password")
 
-	report := flag.Uint("report", 0, "report identifier, 'NTR' report by default")
 	number := flag.Uint("number", 100, "total number of reports to emit, 0 means infinity")
 	block := flag.Uint("block", 100, "number of reports per client call")
 	unit := flag.Uint("unit", 0, "recipient of reports")
@@ -133,6 +132,8 @@ With -unit=0, the reports will be spread over all readable model units.
 		})
 
 	// Send reports
+	reportCounter := uint32(0)
+	reportId := uint32(219) // trace
 	blocks := make(chan uint, *jobs)
 	wg := sync.WaitGroup{}
 	for i := 0; i != *clientCount; i++ {
@@ -142,10 +143,12 @@ With -unit=0, the reports will be spread over all readable model units.
 			go func() {
 				defer wg.Done()
 				for n := range blocks {
+					c := atomic.AddUint32(&reportCounter, 1)
 					id := entities[rand.Intn(len(entities))]
-					err := client.CreateReport(uint32(n), uint32(*report), uint32(id))
+					err := client.CreateReport(uint32(n), reportId, uint32(id),
+						swapi.MakeString(fmt.Sprintf("%d", c)))
 					if err != nil {
-						fmt.Errorf("could not create report: %s", err)
+						log.Printf("could not create report for %d: %s", id, err)
 					}
 				}
 			}()
