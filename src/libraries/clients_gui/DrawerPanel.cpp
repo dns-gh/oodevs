@@ -445,10 +445,15 @@ void DrawerPanel::NotifyUpdated( const kernel::Profile_ABC& )
 // -----------------------------------------------------------------------------
 void DrawerPanel::UpdateDrawButton()
 {
-    if( !selectedStyle_ || selectedStyle_->GetType() == "text" )
+    if( !selectedStyle_ )
     {
         drawButton_->setEnabled( false );
         layer_->Reset();
+        return;
+    }
+    if( selectedStyle_->GetType() == "text" )
+    {
+        drawButton_->setEnabled( false );
         return;
     }
     const kernel::Entity_ABC* entity = 0;
