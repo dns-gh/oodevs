@@ -11,9 +11,9 @@
 #include "tools/ExerciseConfig.h"
 #include "tools/PhyLoader.h"
 #include "MT_Tools/MT_Logger.h"
+#include <tools/Helpers.h>
 #include <xeumeuleu/xml.hpp>
 #include <boost/bind.hpp>
-#include <QtCore/qstring.h>
 
 // -----------------------------------------------------------------------------
 // Name: Stages constructor
@@ -87,13 +87,12 @@ void Stages::ReadStage( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 std::string Stages::FindTranslation( const std::string& key ) const
 {
-    if( stages_.find( key ) != stages_.end() )
-        return stages_.at( key );
-    else
-    {
-        const std::string convertedKey = QString::fromLatin1( key.c_str() ).toStdString(); // $$$$ ABR 2013-02-21: key is coming from the decisional, so Latin1 encoding.
-        if( stages_.find( convertedKey ) != stages_.end() )
-            return stages_.at( convertedKey );
-    }
-    return key;
+    auto it = stages_.find( key );
+    if( it != stages_.end() )
+        return it->second;
+    const auto converted = tools::ToUtf8( key );
+    it = stages_.find( converted );
+    if( it != stages_.end() )
+        return it->second;
+    return converted;
 }
