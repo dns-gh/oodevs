@@ -9,7 +9,6 @@
 
 #include "gaming_pch.h"
 #include "Reports.h"
-#include "ReportsModel.h"
 #include "reports/Report.h"
 #include "reports/ReportFactory.h"
 
@@ -19,9 +18,8 @@ using namespace kernel;
 // Name: Reports constructor
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-Reports::Reports( const Entity_ABC& entity, const ReportsModel& reportsModel, const ReportFactory& reportFactory )
+Reports::Reports( const Entity_ABC& entity, const ReportFactory& reportFactory )
     : entity_       ( entity )
-    , reportsModel_ ( reportsModel )
     , reportFactory_( reportFactory )
 {
     // NOTHING
@@ -42,13 +40,16 @@ Reports::~Reports()
 // -----------------------------------------------------------------------------
 void Reports::DisplayInTooltip( Displayer_ABC& displayer ) const
 {
-    unsigned int displayed = 0;
-    const auto& reports = reportsModel_.GetReports( entity_.GetId() );
-    for( auto it = reports.rbegin(); it != reports.rend() && displayed < 5; ++it )
-        if( it->report_.IsInitialized() )
-        {
-            auto report = reportFactory_.CreateReport( entity_, it->report_ );
-            report->DisplayInTooltip( displayer );
-            ++displayed;
-        }
+    for( auto it = reports_.begin(); it != reports_.end(); ++it )
+    {
+        const auto report = reportFactory_.CreateReport( entity_, *it );
+        report->DisplayInTooltip( displayer );
+    }
+}
+
+void Reports::DoUpdate( const sword::Report& message )
+{
+    if( reports_.size() > 4 )
+        reports_.pop_back();
+    reports_.push_front( message );
 }

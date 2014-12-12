@@ -643,11 +643,9 @@ void DEC_MiscFunctions::Trace( const DEC_Decision_ABC* caller, const std::string
 {
     try
     {
-        client::Trace msg;
-        MIL_AgentServer::GetWorkspace().GetEntityManager().SetToTasker( *msg().mutable_source(),
-            caller->GetEntity().GetID() );
-        *msg().mutable_message() = message.c_str();
-        msg.Send( NET_Publisher_ABC::Publisher() );
+        sword::Tasker tasker;
+        MIL_AgentServer::GetWorkspace().GetEntityManager().SetToTasker( tasker, caller->GetEntity().GetID() );
+        MIL_Report::PostTrace( tasker, message );
     }
     catch( const std::exception& ) {}
 }

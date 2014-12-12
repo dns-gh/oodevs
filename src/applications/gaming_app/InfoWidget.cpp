@@ -57,8 +57,8 @@ InfoWidget::InfoWidget( QWidget* parent,
 
     QTabWidget* tabs = new QTabWidget( this );
     tabs->setTabShape( QTabWidget::Triangular );
-    reports_ = new InfoReportsTab( tabs, controllers, extractor, model.static_.reportFactory_, model.publisher_,
-        model.reportsModel_, model.agents_, simulation );
+    reports_ = new InfoReportsTab( tabs, controllers, extractor, model.static_.reportFactory_, simulationController,
+        model.reportsModel_, model.agents_ );
     tabs->addTab( reports_, MAKE_PIXMAP( msg ), tr( "Reports" ) );
     conflicts_ = new InfoConflictsTab( tabs, controllers, extractor, converter );
     tabs->addTab( conflicts_, MAKE_PIXMAP( conflict ), tr( "Conflicts" ) );

@@ -3142,10 +3142,6 @@ This data can&apos;t be projected.</source>
 <context>
     <name>ReportListView</name>
     <message>
-        <source>Clear</source>
-        <translation>Clear</translation>
-    </message>
-    <message>
         <source>Clear traces</source>
         <translation>Clear traces</translation>
     </message>

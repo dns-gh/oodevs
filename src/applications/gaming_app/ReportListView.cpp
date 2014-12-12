@@ -18,9 +18,9 @@
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/Population_ABC.h"
-#include "clients_kernel/Time_ABC.h"
 #include "gaming/AgentsModel.h"
 #include "gaming/ReportsModel.h"
+#include "gaming/SimulationController.h"
 #include "protocol/MessageParameters.h"
 #include "protocol/Protocol.h"
 #include "protocol/ServerPublisher_ABC.h"
@@ -34,18 +34,20 @@
 // Created: AGE 2006-03-09
 // -----------------------------------------------------------------------------
 ReportListView::ReportListView( QWidget* pParent, kernel::Controllers& controllers, gui::DisplayExtractor& extractor,
-                                const ReportFactory& factory, Publisher_ABC& publisher, ReportsModel& model,
-                                const AgentsModel& agents, const kernel::Time_ABC& time )
+                                const ReportFactory& factory, ReportsModel& model,
+                                const AgentsModel& agents, SimulationController& simulation )
     : QTreeView( pParent )
-    , controllers_( controllers )
-    , extractor_  ( extractor )
-    , factory_    ( factory )
-    , readTimer_  ( new QTimer( this ) )
-    , delegate_   ( new gui::LinkItemDelegate( this ) )
-    , model_      ( model )
-    , agents_     ( agents )
-    , time_       ( time )
-    , selected_   ( 0 )
+    , controllers_   ( controllers )
+    , extractor_     ( extractor )
+    , factory_       ( factory )
+    , readTimer_     ( new QTimer( this ) )
+    , delegate_      ( new gui::LinkItemDelegate( this ) )
+    , model_         ( model )
+    , agents_        ( agents )
+    , selected_      ( 0 )
+    , simulation_    ( simulation )
+    , unreadMessages_( false )
+    , context_       ( 0 )
 {
     setItemDelegateForColumn( 1, delegate_ );
     //filter regexp
@@ -84,20 +86,31 @@ ReportListView::ReportListView( QWidget* pParent, kernel::Controllers& controlle
 
     controllers_.Register( *this );
 
-    publisher.Register( Publisher_ABC::T_SimHandler( [&]( const sword::SimToClient& message, bool /*ack*/ ) {
-        if( !selected_ || !isVisible() )
-            return;
-        if( message.message().has_report() )
+    simulation_.RegisterSimHandler( [&]( const sword::SimToClient& message, bool ack ) {
+        if( message.message().has_list_reports_ack() )
+        {
+            const auto context = message.context();
+            if( !ack || context != context_ )
+                return;
+            FillReports( message.message().list_reports_ack() );
+        }
+        else if( message.message().has_report() )
             Create( message.message().report() );
         else if( message.message().has_trace() )
             Create( message.message().trace() );
-    } ) );
-    publisher.Register( Publisher_ABC::T_ReplayHandler( [&]( const sword::ReplayToClient& message )
+    } );
+    simulation_.RegisterReplayHandler( [&]( const sword::ReplayToClient& message )
     {
-        if( !message.message().has_list_reports_ack() )
-            return;
-        FillReports();
-    } ) );
+        if( message.message().has_list_reports_ack() )
+        {
+            const auto context = message.context();
+            if( context != context_ )
+                return;
+            FillReports( message.message().list_reports_ack() );
+        }
+        else if( message.message().has_control_skip_to_tick_ack() )
+            SendRequest();
+    } );
 }
 
 // -----------------------------------------------------------------------------
@@ -113,9 +126,10 @@ ReportListView::~ReportListView()
 // Name: ReportListView::showEvent
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
-void ReportListView::showEvent( QShowEvent* )
+void ReportListView::showEvent( QShowEvent* event )
 {
-    FillReports();
+    if( event && !event->spontaneous() )
+        SendRequest();
 }
 
 // -----------------------------------------------------------------------------
@@ -129,7 +143,6 @@ void ReportListView::contextMenuEvent( QContextMenuEvent * e )
     kernel::ContextMenu* menu = new kernel::ContextMenu( this );
     connect( menu, SIGNAL( aboutToHide() ), menu, SLOT( deleteLater() ) );
     connect( menu, SIGNAL( triggered( QAction* ) ), SLOT( OnToggle( QAction* ) ) );
-    menu->insertItem( tr( "Clear" ),        this, SLOT( OnClearAll() ) );
     menu->insertItem( tr( "Clear traces" ), this, SLOT( OnClearTrace() ) );
     menu->insertSeparator();
     AddMenuItem( menu, tr( "Show reports" ) , Report::eRC      );
@@ -155,26 +168,55 @@ void ReportListView::NotifySelected( const kernel::Entity_ABC* element )
         return;
 
     selected_ = id;
-    FillReports();
+    SendRequest();
 }
 
-void ReportListView::FillReports()
+void ReportListView::SendRequest()
+{
+    if( !selected_ || !isVisible() )
+        return;
+    unreadMessages_ = model_.HasUnreadReports( selected_ );
+    simulation_.SendReportsRequest( selected_, ++context_ );
+}
+
+void ReportListView::FillReports( const sword::ListReportsAck& ack )
 {
     reportModel_.removeRows( 0, reportModel_.rowCount() );
-    if( selected_ != 0 )
-        AddReports();
+    if( !selected_ || !isVisible() )
+        return;
+    reports_.clear();
+
+    // Add reports
+    for( int i = ack.reports_size() - 1; i >= 0; --i )
+    {
+        ReportsModel::Message message( selected_, ack.reports( i ), simulation_.GetDateTime() );
+        reports_.push_back( message );
+    }
+
+    // Add traces
+    const auto& traces = model_.GetTraces( selected_ );
+    if( !traces.empty() )
+    {
+        for( auto it = traces.begin(); it != traces.end(); ++it )
+            reports_.push_back( *it );
+        std::sort( reports_.begin(), reports_.end(),
+            [&]( const ReportsModel::Message& lhs, const ReportsModel::Message& rhs ) -> bool
+            {
+                return lhs.id_ > rhs.id_;
+            } );
+    }
+    Refresh();
 }
 
-void ReportListView::AddReports()
+void ReportListView::Refresh()
 {
+    reportModel_.removeRows( 0, reportModel_.rowCount() );
     const auto* entity =  agents_.FindAllAgent( selected_ );
     if( !entity )
         return;
 
-    const auto unreadMessages = model_.HasUnreadReports( selected_ );
-    const auto& reports = model_.GetReports( selected_ );
-    for( auto it = reports.begin(); it != reports.end(); ++it )
-        CreateItem( *it, *entity, unreadMessages );
+    for( auto it = reports_.begin(); it != reports_.end(); ++it )
+        CreateItem( *it, *entity, unreadMessages_ );
 }
 
 template< typename T >
@@ -188,7 +230,8 @@ void ReportListView::Create( const T& report )
     const auto* entity = agents_.FindAllAgent( selected_ );
     if( !entity )
         return;
-    ReportsModel::Message message( selected_, report, time_.GetDateTime() );
+    ReportsModel::Message message( selected_, report, simulation_.GetDateTime() );
+    reports_.push_back( message );
     CreateItem( message, *entity, true );
 }
 
@@ -261,23 +304,20 @@ void ReportListView::OnReadTimerOut()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ReportListView::OnClearAll
-// Created: AGE 2006-09-18
-// -----------------------------------------------------------------------------
-void ReportListView::OnClearAll()
-{
-    model_.Clear( selected_ );
-    FillReports();
-}
-
-// -----------------------------------------------------------------------------
 // Name: ReportListView::OnClearTrace
 // Created: AGE 2006-09-18
 // -----------------------------------------------------------------------------
 void ReportListView::OnClearTrace()
 {
     model_.ClearTraces( selected_ );
-    FillReports();
+    for( auto it = reports_.begin(); it != reports_.end(); )
+    {
+        if( it->trace_.IsInitialized() )
+            it = reports_.erase( it );
+        else
+            ++it;
+    }
+    Refresh();
 }
 
 // -----------------------------------------------------------------------------
@@ -305,7 +345,7 @@ void ReportListView::OnToggle( QAction* action )
         toDisplay_.insert( type );
     else
         toDisplay_.erase( type );
-    FillReports();
+    Refresh();
 }
 
 // -----------------------------------------------------------------------------

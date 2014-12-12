@@ -41,14 +41,17 @@ public:
             : entity_( entity )
             , report_( report )
             , date_  ( date )
+            , id_    ( report.report().id() )
         {}
         Message( unsigned int entity, const sword::Trace& trace,
             const QDateTime& date )
             : entity_( entity )
             , trace_ ( trace )
             , date_  ( date )
+            , id_    ( trace.has_id() ? trace.id() : 0u )
         {}
         unsigned int entity_;
+        unsigned int id_;
         QDateTime date_;
         sword::Report report_;
         sword::Trace trace_;
@@ -57,7 +60,7 @@ public:
 
     //! @name Accessors
     //@{
-    const std::deque< Message >& GetReports( unsigned int entity ) const;
+    const std::deque< Message >& GetTraces( unsigned int entity ) const;
     bool HasUnreadReports( unsigned int entity ) const;
     size_t UnreadReports() const;
     unsigned int NextUnreadReports() const;
@@ -66,7 +69,6 @@ public:
     //! @name Operations
     //@{
     void Purge();
-    void Clear( unsigned int entity );
     void ClearTraces( unsigned int entity );
     void UpdateUnreadReports();
     void ReadReports();
@@ -76,8 +78,6 @@ public:
 private:
     //! @name Helpers
     //@{
-    void SendRequest( int context, unsigned int report = 0 );
-    void FillReports( const sword::ListReportsAck& ack );
     template< typename T >
     void AddMessage( const T& message );
     void AddUnreadReports( unsigned int entity );
@@ -90,9 +90,7 @@ private:
     AgentsModel& agents_;
     const kernel::Profile_ABC& profile_;
     const kernel::Time_ABC& time_;
-    int tick_;
-    int context_;
-    std::map< unsigned int, std::deque< Message > > messages_;
+    std::map< unsigned int, std::deque< Message > > traces_;
     // Entity with unread reports
     std::deque< unsigned int > entities_;
     std::unordered_set< unsigned int > entitiesSet_;

@@ -1793,6 +1793,8 @@ message Trace {
     required Tasker source  = 1;
     //! The trace description
     required string message = 2;
+    //! The trace identifier
+    optional uint32 id      = 3;
 }
 
 /** @struct DecisionalState

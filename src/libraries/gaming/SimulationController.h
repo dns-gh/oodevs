@@ -64,6 +64,7 @@ public:
     void SkipToTick( unsigned int tick ) const;
     void SendLogisticRequests( const std::set< unsigned long >& entities ) const;
     void SendHistoryRequests( const std::set< unsigned int >& requests ) const;
+    void SendReportsRequest( unsigned int entity, int context ) const;
     void RequestCheckpoint( const std::string& name ) const;
     void ForceReplayDataRequest() const;
     void SendEnableVisionCones( bool value ) const;

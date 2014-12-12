@@ -158,7 +158,7 @@ kernel::Automat_ABC* AgentFactory::Create( const sword::AutomatCreation& message
     result->Attach( *new LogMedicalConsigns( controllers_.controller_ ) );
     result->Attach( *new LogSupplyConsigns( controllers_.controller_ ) );
     result->Attach( *new LogFuneralConsigns( controllers_.controller_ ) );
-    result->Attach( *new Reports( *result, model_.reportsModel_, static_.reportFactory_ ) );
+    result->Attach( *new Reports( *result, static_.reportFactory_ ) );
     result->Attach< kernel::Dotations_ABC >( *new Dotations( *result,controllers_.controller_, static_.objectTypes_, dictionary, model_.agents_, model_.teams_, model_.teams_ ) );
     result->Attach< kernel::Equipments_ABC >( *new Equipments( *result,controllers_.controller_, static_.objectTypes_, dictionary, model_.agents_, model_.teams_, model_.teams_ ) );
     result->Attach( *new Troops( controllers_.controller_, model_.agents_, model_.teams_, model_.teams_ ) );
@@ -288,7 +288,7 @@ void AgentFactory::AttachExtensions( kernel::Entity_ABC& agent )
     agent.Attach( *new DebugPoints( static_.coordinateConverter_ ) );
     agent.Attach( *new MissionParameters( controllers_.controller_, model_.actionFactory_, agent.GetId() ) );
     agent.Attach( *new gui::Paths( static_.coordinateConverter_ ) );
-    agent.Attach( *new Reports( agent, model_.reportsModel_, static_.reportFactory_ ) );
+    agent.Attach( *new Reports( agent, static_.reportFactory_ ) );
     agent.Attach( *new ObjectDetections( controllers_.controller_, model_.objects_ ) );
     agent.Attach( *new PopulationDetections( controllers_.controller_, static_.coordinateConverter_, model_.agents_, agent ) );
     agent.Attach( *new Explosions( controllers_.controller_, model_.fireResultsFactory_ ) );

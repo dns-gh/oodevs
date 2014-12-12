@@ -65,6 +65,7 @@ public:
     static void Initialize( xml::xistream& xis );
     static const MIL_Report* Find( const std::string& key );
     static const MIL_Report* Find( unsigned int nID );
+    static void PostTrace( const sword::Tasker& tasker, const std::string& message );
     //@}
 
     //! @name Operations

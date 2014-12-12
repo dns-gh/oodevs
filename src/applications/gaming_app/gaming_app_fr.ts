@@ -3156,10 +3156,6 @@ Ces données ne peuvent pas être projetées.</translation>
 <context>
     <name>ReportListView</name>
     <message>
-        <source>Clear</source>
-        <translation>Tout effacer</translation>
-    </message>
-    <message>
         <source>Clear traces</source>
         <translation>Effacer les traces</translation>
     </message>

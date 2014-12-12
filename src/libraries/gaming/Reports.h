@@ -12,6 +12,7 @@
 
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Displayable_ABC.h"
+#include <deque>
 
 namespace kernel
 {
@@ -20,7 +21,6 @@ namespace kernel
 }
 
 class ReportFactory;
-class ReportsModel;
 
 // =============================================================================
 /** @class  Reports
@@ -31,11 +31,12 @@ class ReportsModel;
 // =============================================================================
 class Reports : public kernel::Extension_ABC
               , public kernel::Displayable_ABC
+              , public kernel::Updatable_ABC< sword::Report >
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             Reports( const kernel::Entity_ABC& entity, const ReportsModel& reportsModel, const ReportFactory& reportFactory );
+             Reports( const kernel::Entity_ABC& entity, const ReportFactory& reportFactory );
     virtual ~Reports();
     //@}
 
@@ -51,13 +52,17 @@ private:
     Reports& operator=( const Reports& ); //!< Assignment operator
     //@}
 
+    //! @name Helpers
+    //@{
+    virtual void DoUpdate( const sword::Report& message );
+    //@}
+
 private:
     //! @name Member data
     //@{
     const kernel::Entity_ABC& entity_;
-    const ReportsModel& reportsModel_;
     const ReportFactory& reportFactory_;
+    std::deque< sword::Report > reports_;
     //@}
 };
-
 #endif // __Reports_h_

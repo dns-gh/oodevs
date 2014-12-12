@@ -10,9 +10,6 @@
 #include "gaming_pch.h"
 #include "ReportsModel.h"
 #include "AgentsModel.h"
-#include "clients_kernel/Agent_ABC.h"
-#include "clients_kernel/Automat_ABC.h"
-#include "clients_kernel/Population_ABC.h"
 #include "clients_kernel/Profile_ABC.h"
 #include "clients_kernel/Time_ABC.h"
 #include "protocol/ServerPublisher_ABC.h"
@@ -26,25 +23,7 @@ ReportsModel::ReportsModel( Publisher_ABC& publisher, AgentsModel& agents,
     , agents_    ( agents )
     , profile_   ( profile )
     , time_      ( time )
-    , tick_      ( 0 )
-    , context_   ( 0 )
 {
-    publisher_.Register( Publisher_ABC::T_ReplayHandler( [&]( const sword::ReplayToClient& message )
-    {
-        if( message.message().has_control_skip_to_tick_ack() )
-        {
-            tick_ = message.message().control_skip_to_tick_ack().tick();
-            Purge();
-            SendRequest( ++context_ );
-        }
-        else if( message.message().has_list_reports_ack() )
-        {
-            const auto context = message.context();
-            if( context != context_ )
-                return;
-            FillReports( message.message().list_reports_ack() );
-        }
-    } ) );
     publisher.Register( Publisher_ABC::T_SimHandler( [&]( const sword::SimToClient& message, bool /*ack*/ )
     {
         if( message.message().has_report() )
@@ -59,45 +38,11 @@ ReportsModel::~ReportsModel()
     // NOTHING
 }
 
-namespace
-{
-    const unsigned int maxCount = 500u;
-}
-
-void ReportsModel::SendRequest( int context, unsigned int report )
-{
-    sword::ClientToReplay message;
-    message.set_context( context );
-    auto& list = *message.mutable_message()->mutable_list_reports();
-    list.set_max_count( maxCount );
-    list.set_tick( tick_ );
-    if( report != 0 )
-        list.set_report( report );
-    publisher_.Send( message );
-}
-
-void ReportsModel::FillReports( const sword::ListReportsAck& ack )
-{
-    for( int i = 0; i < ack.reports_size(); ++i )
-    {
-        const auto& report = ack.reports( i );
-        const auto id = protocol::TryGetTasker( report.source() );
-        if( !id )
-            continue;
-        auto& container = messages_[ *id ];
-        const Message msg( *id, report, time_.GetDateTime() );
-        container.push_front( msg );
-        AddUnreadReports( *id );
-    }
-    if( ack.has_next_report() )
-        SendRequest( context_, ack.next_report() );
-}
-
-const std::deque< ReportsModel::Message >& ReportsModel::GetReports( unsigned int entity ) const
+const std::deque< ReportsModel::Message >& ReportsModel::GetTraces( unsigned int entity ) const
 {
     const static std::deque< ReportsModel::Message > emptyMessages;
-    auto it = messages_.find( entity );
-    if( it != messages_.end() )
+    auto it = traces_.find( entity );
+    if( it != traces_.end() )
         return it->second;
     return emptyMessages;
 }
@@ -112,26 +57,9 @@ size_t ReportsModel::UnreadReports() const
     return entities_.size();
 }
 
-void ReportsModel::Clear( unsigned int entity )
-{
-    ReadReports( entity );
-    messages_.erase( entity );
-}
-
 void ReportsModel::ClearTraces( unsigned int entity )
 {
-    auto it = messages_.find( entity );
-    if( it != messages_.end() )
-    {
-        auto& list = it->second;
-        for( auto msg = list.begin(); msg != list.end(); )
-        {
-            if( msg->trace_.IsInitialized() )
-                msg = list.erase( msg );
-            else
-                ++msg;
-        }
-    }
+    traces_.erase( entity );
 }
 
 void ReportsModel::AddUnreadReports( unsigned int id )
@@ -186,7 +114,7 @@ void ReportsModel::UpdateUnreadReports()
 
 void ReportsModel::Purge()
 {
-    messages_.clear();
+    traces_.clear();
     entities_.clear();
     entitiesSet_.clear();
 }
@@ -197,7 +125,8 @@ void ReportsModel::AddMessage( const T& message )
     const auto id = protocol::TryGetTasker( message.source() );
     if( !id )
         return;
+    AddUnreadReports( *id );
     const Message msg( *id , message, time_.GetDateTime() );
-    messages_[ msg.entity_ ].push_back( msg );
-    AddUnreadReports( msg.entity_ );
+    if( msg.trace_.IsInitialized() )
+        traces_[ *id ].push_back( msg );
 }
