@@ -162,7 +162,7 @@ public:
     static boost::shared_ptr< MT_Vector2D > GetPointAlongFuseau( const MIL_Fuseau* pFuseau, double advance );
     static std::vector< std::vector< boost::shared_ptr< MT_Vector2D > > > GetPointsOnLimasInFuseau( const DEC_Decision_ABC* callerAutomate, int limaType, int divider );
     static boost::shared_ptr< MT_Vector2D > ComputeEntryPointForFuseau( DEC_Decision_ABC* pPion, MIL_Fuseau& fuseau );
-    static bool IsPointInObject( DEC_Decision_ABC& callerAgent, const MT_Vector2D& point, const std::string& capacity,  int isFriend );
+    static bool IsPointInObject( DEC_Decision_ABC& callerAgent, const MT_Vector2D& point, const std::string& capacity, int isFriend, const std::string& expectedType );
     static double GetUrbanRatio( const TER_Localisation* localisation );
     static std::vector< double > GetSurfaceParametersUrbanRatio( DEC_Decision_ABC* entity );
     static std::vector< double > GetPointParametersUrbanRatio( DEC_Decision_ABC* entity );

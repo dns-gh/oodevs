@@ -135,7 +135,7 @@ end
 integration.firePermittedForPoint = function( target )
     local stateROE = integration.getROE()
     local friendly = 1 -- tristate: 0 = enemy, 1 = friendly, 2 = unknown
-    if DEC_IsPointInObject( myself, target:getPosition(), "fire-forbidden", friendly ) then
+    if DEC_IsPointInObject( myself, target:getPosition(), "fire-forbidden", friendly, "" ) then
         reportOnceFunction( eRC_FireNotPermittedDueToForbiddenArea )
         return false
     end
