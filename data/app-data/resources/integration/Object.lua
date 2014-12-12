@@ -404,7 +404,7 @@ integration.extractObject = masalife.brain.integration.startStopAction(
             end
             object.actionExtract = DEC__StopAction( object.actionExtract )
         end,
-    } ),
+    } )
 
 --- Distribute resources in the object to the current agent in order to replenish its stocks.
 --- All resources available in the object will be passed to the agent until either the stocks
@@ -443,7 +443,7 @@ integration.distributeObject = masalife.brain.integration.startStopAction(
             end
             object.actionDistribute = DEC__StopAction( object.actionDistribute )
         end,
-    } ),
+    } )
 
 
 ------------------------------------------------------------------
