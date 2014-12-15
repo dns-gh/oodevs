@@ -384,18 +384,18 @@ void Context::AddItem( const Tree& src, const std::string& type, size_t& idx )
 
     QUrl next = url_;
     next.setPath( "/api/download_client" );
-    QList< QPair< QString, QString > > list;
-    list.append( qMakePair( QString( "sid" ), url_.queryItemValue( "sid" ) ) );
-    list.append( qMakePair( QString( "x64" ), QString( runtime::Api_ABC::Has64BitSystem() ? "1" : "0" ) ) );
+    QList< QPair< QByteArray, QByteArray > > list;
+    list.append( qMakePair< QByteArray >( "sid", url_.encodedQueryItemValue( "sid" ) ) );
+    list.append( qMakePair< QByteArray >( "x64", runtime::Api_ABC::Has64BitSystem() ? QByteArray( "1" ) : QByteArray( "0" ) ) );
     if( type != GetClient() )
     {
         next.setPath( "/api/download_install" );
-        list.append( qMakePair( QString( "id" ),  QUtf8( node ) ) );
-        list.append( qMakePair( QString( "type" ), qtype ) );
-        list.append( qMakePair( QString( "name" ),  qname ) );
-        list.append( qMakePair( QString( "checksum" ),  qchecksum ) );
+        list.append( qMakePair< QByteArray >( "id",       QUrl::toPercentEncoding( node.c_str() ) ) );
+        list.append( qMakePair< QByteArray >( "type",     QUrl::toPercentEncoding( type.c_str() ) ) );
+        list.append( qMakePair< QByteArray >( "name",     QUrl::toPercentEncoding( name.c_str() ) ) );
+        list.append( qMakePair< QByteArray >( "checksum", QUrl::toPercentEncoding( checksum.c_str() ) ) );
     }
-    next.setQueryItems( list );
+    next.setEncodedQueryItems( list );
 
     QNetworkRequest req( next );
     req.setAttribute( id_attribute, id );
