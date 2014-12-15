@@ -24,8 +24,8 @@ using namespace gui;
 namespace
 {
     const std::string header = "SymbolSize/";
-    const int maxValue = 8; // 8x
-    const int minValue = -8; // 1/8
+    const int maxValue = 16;
+    const int minValue = -16;
     const float ratio = 1.1f; // same percentage as in SymbolSizeOptionChooser
     const float fromRatio = std::log( ratio );
 
@@ -36,8 +36,7 @@ namespace
 
     int FromRatio( float y )
     {
-        const float result = std::log( y ) / fromRatio;
-        return static_cast< int >( result < 0 ? std::floor( result ) : std::ceil( result ) );
+        return static_cast< int >( std::floor( 0.5f + std::log( y ) / fromRatio ) );
     }
 
     class NatureLevelSlider : public OptionWidget< RichWidget< QSlider > >
