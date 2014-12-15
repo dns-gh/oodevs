@@ -148,7 +148,8 @@ void OwnershipController::PerformDivestiture( const std::string& identifier, con
         return;
 
     logger_.LogInfo( "Starting divestiture for object " + identifier );
-    it->second->hlaClass_.Divest( identifier, attributes, tag );
+    const std::vector< ::hla::AttributeIdentifier>& actualAttributes = attributes.empty() ? it->second->hlaClass_.GetAttributes() : attributes;
+    it->second->hlaClass_.Divest( identifier, actualAttributes, tag );
 }
 
 // -----------------------------------------------------------------------------
@@ -162,6 +163,7 @@ void OwnershipController::PerformAcquisition( const std::string& identifier, con
         return;
 
     logger_.LogInfo( "Starting acquisition for object " + identifier );
-    it->second->hlaClass_.Acquire( identifier, attributes, tag );
+    const std::vector< ::hla::AttributeIdentifier>& actualAttributes = attributes.empty() ? it->second->hlaClass_.GetAttributes() : attributes;
+    it->second->hlaClass_.Acquire( identifier, actualAttributes, tag );
 }
 

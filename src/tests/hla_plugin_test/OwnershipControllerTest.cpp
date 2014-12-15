@@ -61,8 +61,18 @@ namespace
 BOOST_FIXTURE_TEST_CASE( ownership_push, ControllerFixture )
 {
     const ::hla::VariableLengthData sentTag((uint32_t)42);
+    MOCK_EXPECT( hlaClass.GetAttributes ).once().returns( attributes );
     MOCK_EXPECT( hlaClass.Divest ).once().with( "identifier", attributes, mock::any );
     ownershipController.PerformDivestiture( "identifier", attributes, sentTag );
+}
+
+BOOST_FIXTURE_TEST_CASE( ownership_push_with_attributes, ControllerFixture )
+{
+    const ::hla::VariableLengthData sentTag((uint32_t)42);
+    std::vector< ::hla::AttributeIdentifier > otherAttributes( 1, ::hla::AttributeIdentifier( "attrib" ) );
+
+    MOCK_EXPECT( hlaClass.Divest ).once().with( "identifier", otherAttributes, mock::any );
+    ownershipController.PerformDivestiture( "identifier", otherAttributes, sentTag );
 }
 
 namespace
@@ -72,8 +82,9 @@ namespace
         DivestedFixture()
         {
             const ::hla::VariableLengthData sentTag((uint32_t)42);
-            MOCK_EXPECT( hlaClass.Divest ).once().with( "identifier", attributes, mock::any );
-            ownershipController.PerformDivestiture( "identifier", attributes, sentTag );
+            std::vector< ::hla::AttributeIdentifier > otherAttributes( 1, ::hla::AttributeIdentifier( "attrib" ) );
+            MOCK_EXPECT( hlaClass.Divest ).once().with( "identifier", otherAttributes, mock::any );
+            ownershipController.PerformDivestiture( "identifier", otherAttributes, sentTag );
             classListener->Divested( "identifier", attributes );
         }
     };
@@ -82,6 +93,16 @@ namespace
 BOOST_FIXTURE_TEST_CASE( ownership_pull, DivestedFixture )
 {
     const ::hla::VariableLengthData sentTag((uint32_t)42);
+    MOCK_EXPECT( hlaClass.GetAttributes ).once().returns( attributes );
     MOCK_EXPECT( hlaClass.Acquire ).once().with( "identifier", attributes, mock::any );
     ownershipController.PerformAcquisition( "identifier", attributes, sentTag );
+}
+
+BOOST_FIXTURE_TEST_CASE( ownership_pull_with_attributes, DivestedFixture )
+{
+    const ::hla::VariableLengthData sentTag((uint32_t)42);
+    std::vector< ::hla::AttributeIdentifier > otherAttributes( 1, ::hla::AttributeIdentifier( "attrib" ) );
+
+    MOCK_EXPECT( hlaClass.Acquire ).once().with( "identifier", otherAttributes, mock::any );
+    ownershipController.PerformAcquisition( "identifier", otherAttributes, sentTag );
 }
