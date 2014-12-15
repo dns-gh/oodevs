@@ -60,6 +60,8 @@ void SmoothPositions::InitializePositions( const geometry::Point2f& position )
     const float distance = currentPosition_.Distance( futurePosition_ );
     const float tickTime = static_cast< float >( simulation_.GetTickDuration() ) / simulation_.GetSpeed();
     const float frame = tickTime / refreshRate_;
+    if( frame <= 2 )
+        currentPosition_ = futurePosition_;
     remainingSteps_ = std::max( static_cast< int >( frame ), 1 );
     step_ = geometry::Vector2f( currentPosition_, futurePosition_ ).Normalize() * ( distance / remainingSteps_ );
 }
@@ -70,7 +72,7 @@ void SmoothPositions::InitializePositions( const geometry::Point2f& position )
 // -----------------------------------------------------------------------------
 void SmoothPositions::ComputeCurrentPosition()
 {
-    if( remainingSteps_ < 0 || currentPosition_.Distance( futurePosition_ ) < step_.Length() )
+    if( remainingSteps_ <= 0 || currentPosition_.SquareDistance( futurePosition_ ) <= step_.SquareLength() )
         currentPosition_ = futurePosition_;
     else
     {
