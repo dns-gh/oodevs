@@ -2269,7 +2269,7 @@ Ces données ne peuvent pas être projetées.</translation>
     </message>
     <message>
         <source>Receiving profiles information ...</source>
-        <translation>Réception des informations de profiles ....</translation>
+        <translation>Réception des informations de profils ....</translation>
     </message>
     <message>
         <source>Loading graphical interface ...</source>
@@ -2305,7 +2305,7 @@ Ces données ne peuvent pas être projetées.</translation>
     </message>
     <message>
         <source>Closing complete</source>
-        <translation>Fermeture terminé</translation>
+        <translation>Fermeture terminée</translation>
     </message>
     <message>
         <source>Closing failed</source>
@@ -2317,7 +2317,7 @@ Ces données ne peuvent pas être projetées.</translation>
     </message>
     <message>
         <source>Receiving initial state ...</source>
-        <translation>Reception de l&apos;état initial ...</translation>
+        <translation>Réception de l&apos;état initial ...</translation>
     </message>
     <message>
         <source>Loading failed</source>

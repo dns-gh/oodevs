@@ -535,7 +535,7 @@ void MainWindow::NotifyUpdated( const Profile& profile )
         static ConnectLoginDialog* dialog = new ConnectLoginDialog( this, profile, network_, controllers_ );
         SetProgression( 29, tr( "Select a user profile ..." ) );
         QTimer::singleShot( 0, dialog, SLOT( show() ) );
-        gui::connect( dialog, SIGNAL( accepted() ), [ &]() {
+        gui::connect( dialog, SIGNAL( accepted() ), [&]() {
             SetProgression( 30, tr( "Receiving initial state ..." ) );
         } );
     }
