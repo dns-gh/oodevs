@@ -11,8 +11,8 @@
 #define __MainWindow_h_
 
 #include "clients_kernel/OptionsObserver_ABC.h"
-#include "clients_kernel/ModesObserver_ABC.h"
 #include "gaming/Simulation.h"
+#include "ENT/ENT_Enums.h"
 #include <tools/ElementObserver_ABC.h>
 #include <boost/shared_ptr.hpp>
 
@@ -86,7 +86,6 @@ class MainWindow : public QMainWindow
                  , public tools::ElementObserver_ABC< Simulation::Reconnection >
                  , public tools::ElementObserver_ABC< Services >
                  , public tools::ElementObserver_ABC< Profile >
-                 , public kernel::ModesObserver_ABC
 {
     Q_OBJECT
 
@@ -134,14 +133,13 @@ private:
     void Close();
     void LoadPhysical();
     void LoadGUI();
+    void SetProgression( int value, const QString& text );
+    void HandleError( const QString& msg, const std::exception& e );
 
-    virtual void NotifyModeChanged( E_Modes newMode );
     virtual void NotifyUpdated( const Simulation& simulation );
     virtual void NotifyUpdated( const Simulation::Reconnection& reconnection );
     virtual void NotifyUpdated( const Services& connection );
     virtual void NotifyUpdated( const Profile& profile );
-
-    static std::string BuildRemotePath( std::string server, std::string path );
 
     void CreateLayers( const std::shared_ptr< gui::ParametersLayer >& parameters,
                        const std::shared_ptr< gui::Layer_ABC >& locations,
@@ -173,6 +171,7 @@ private:
     std::unique_ptr< gui::TextEditor > textEditor_; // should move in parameter layer
     boost::shared_ptr< QProcess > process_; // should move in layers panel
 
+    std::unique_ptr< QProgressDialog > progressDialog_;
     std::shared_ptr< gui::GLMainProxy > glProxy_;
     std::unique_ptr< gui::GLWidgetManager > glWidgetManager_;
     std::shared_ptr< gui::SelectionMenu > selectionMenu_;

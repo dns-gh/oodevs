@@ -131,6 +131,7 @@
 #include "clients_gui/WatershedLayer.h"
 #include "clients_kernel/Workers.h"
 #include "geodata/ProjectionException.h"
+#include "MT_Tools/MT_Logger.h"
 #include "protocol/Dispatcher.h"
 #include "protocol/ReplaySenders.h"
 #include "protocol/SimulationSenders.h"
@@ -181,6 +182,7 @@ MainWindow::MainWindow( Controllers& controllers,
     , config_( config )
     , profile_( filter )
     , workers_( workers )
+    , progressDialog_( new QProgressDialog( "", "", 0, 100, this, Qt::SplashScreen ) )
     , pColorController_( new ColorController( controllers_ ) )
     , connected_( false )
     , onPlanif_( false )
@@ -319,6 +321,13 @@ MainWindow::MainWindow( Controllers& controllers,
     planifName_ = tr( "SWORD" ) + tr( " - Not connected" );
     setCaption( planifName_ );
     resize( 800, 600 );
+
+    // progress dialog
+    progressDialog_->setAutoClose( true );
+    progressDialog_->setModal( true );
+    progressDialog_->setContentsMargins( 5, 5, 5, 5 );
+    progressDialog_->setCancelButton( 0 );
+
     // Read settings
     controllers_.modes_.LoadOptions( currentMode_ );
     controllers_.modes_.LoadGeometry( currentMode_ );
@@ -413,20 +422,22 @@ void MainWindow::CreateLayers( const std::shared_ptr< gui::ParametersLayer >& pa
 }
 
 // -----------------------------------------------------------------------------
-// Name: MainWindow::LoadPhysical
-// Created: AGE 2006-05-03
+// Load / close
 // -----------------------------------------------------------------------------
 void MainWindow::LoadPhysical()
 {
     try
     {
+        SetProgression( 0, tr( "Loading physical base ..." ) );
         staticModel_.Load( config_ );
         staticModelLoaded_ = true;
+        SetProgression( 20, tr( "Receiving profiles information ..." ) );
     }
     catch( const xml::exception& e )
     {
+        SetProgression( 100, tr( "Loading failed" ) );
+        HandleError( tr( "Error loading physical data: " ), e );
         Close();
-        QMessageBox::critical( this, tr( "SWORD" ), tr( "Error loading physical data: " ) + tools::GetExceptionMsg( e ).c_str() );
     }
 }
 
@@ -434,22 +445,25 @@ void MainWindow::LoadGUI()
 {
     try
     {
-        // load gui
+        SetProgression( 70, tr( "Starting threads ..." ) );
         workers_.Initialize();
+        SetProgression( 80, tr( "Loading graphical interface ..." ) );
         dockContainer_->Load();
         unitStateDialog_->Load();
         glWidgetManager_->Load( staticModel_.drawings_, config_.GetSessionDir() );
-        // generate symbol
+        SetProgression( 85, tr( "Generating symbols ..." ) );
         symbolIcons_->Initialize( glWidgetManager_->GetMainWidget()->GetWidget2d().get() );
         icons_->GenerateSymbols( model_.teams_ );
-        // load options
+        SetProgression( 99, tr( "Loading options ..." ) );
         controllers_.modes_.LoadOptions( currentMode_ );
         controllers_.ChangeMode( currentMode_ );
+        SetProgression( 100, tr( "Loading complete" ) );
     }
     catch( const xml::exception& e )
     {
+        SetProgression( 100, tr( "Loading failed" ) );
+        HandleError( tr( "Error loading graphical interface: " ), e );
         Close();
-        QMessageBox::critical( this, tr( "SWORD" ), tr( "Error loading graphical interface: " ) + tools::GetExceptionMsg( e ).c_str() );
     }
 }
 
@@ -458,45 +472,38 @@ namespace
     struct SelectionStub {};
 }
 
-// -----------------------------------------------------------------------------
-// Name: MainWindow::Close
-// Created: SBO 2006-05-24
-// -----------------------------------------------------------------------------
 void MainWindow::Close()
 {
     try
     {
-        // reset data
         connected_ = false;
         staticModelLoaded_ = false;
         controllers_.actions_.Select( SelectionStub() );
         login_ = "";
-        // save options
+        SetProgression( 0, tr( "Saving options ..." ) );
         controllers_.modes_.SaveGeometry( currentMode_ );
         controllers_.modes_.SaveOptions( currentMode_ );
         controllers_.ChangeMode( eModes_Default );
-        // close gui
-        workers_.Terminate();
+        SetProgression( 10, tr( "Closing graphical interface ..." ) );
         glWidgetManager_->Purge();
         dockContainer_->Purge();
         unitStateDialog_->Purge();
-        repaint();
-        // disconnect
+        SetProgression( 40, tr( "Closing threads ..." ) );
+        workers_.Terminate();
+        SetProgression( 80, tr( "Disconnecting ..." ) );
         network_.Disconnect();
-        // close data
+        SetProgression( 90, tr( "Data cleaning ..." ) );
         model_.Purge();
         staticModel_.Purge();
+        SetProgression( 100, tr( "Closing complete" ) );
     }
     catch( const xml::exception& e )
     {
-        QMessageBox::critical( this, tr( "SWORD" ), tr( "Error closing exercise: " ) + tools::GetExceptionMsg( e ).c_str() );
+        SetProgression( 100, tr( "Closing failed" ) ); 
+        HandleError( tr( "Error closing exercise: " ), e );
     }
 }
 
-// -----------------------------------------------------------------------------
-// Name: MainWindow::closeEvent
-// Created: AGE 2006-02-27
-// -----------------------------------------------------------------------------
 void MainWindow::closeEvent( QCloseEvent* pEvent )
 {
     Close();
@@ -504,12 +511,39 @@ void MainWindow::closeEvent( QCloseEvent* pEvent )
 }
 
 // -----------------------------------------------------------------------------
-// Name: MainWindow::NotifyModeChanged
-// Created: ABR 2013-02-15
+// NotifyUpdated: Services -> load physical model, and choose mode gaming or replay
+//                Profile -> choose profile if needed
+//                Simulation -> when fully initialized, load GUI, which terminates load process.
+//                Reconnection -> reconnect network, which updates services, profile then simulation
 // -----------------------------------------------------------------------------
-void MainWindow::NotifyModeChanged( E_Modes newMode )
+void MainWindow::NotifyUpdated( const ::Services& services )
 {
-    ModesObserver_ABC::NotifyModeChanged( newMode );
+    const auto hasSim = services.HasService( sword::service_simulation );
+    const auto hasReplay = services.HasService( sword::service_replay );
+    if( !hasSim && !hasReplay )
+        return;
+    currentMode_ = hasSim ? eModes_Gaming : eModes_Replay;
+    LoadPhysical();
+}
+
+void MainWindow::NotifyUpdated( const Profile& profile )
+{
+    // called between LoadPhysical and LoadGUI, so it updates progression state
+    if( !profile.IsLoggedIn() )
+    {
+        login_ = profile.GetLogin();
+        static ConnectLoginDialog* dialog = new ConnectLoginDialog( this, profile, network_, controllers_ );
+        SetProgression( 29, tr( "Select a user profile ..." ) );
+        QTimer::singleShot( 0, dialog, SLOT( show() ) );
+        gui::connect( dialog, SIGNAL( accepted() ), [ &]() {
+            SetProgression( 30, tr( "Receiving initial state ..." ) );
+        } );
+    }
+    else
+    {
+        login_ = profile.GetLogin();
+        SetProgression( 30, tr( "Receiving initial state ..." ) );
+    }
 }
 
 namespace
@@ -520,10 +554,6 @@ namespace
     }
 }
 
-// -----------------------------------------------------------------------------
-// Name: MainWindow::NotifyUpdated
-// Created: SBO 2007-03-20
-// -----------------------------------------------------------------------------
 void MainWindow::NotifyUpdated( const Simulation& simulation )
 {
     const QString appName = tr( "SWORD" );
@@ -549,108 +579,13 @@ void MainWindow::NotifyUpdated( const Simulation& simulation )
     setCaption( planifName_ );
 }
 
-// -----------------------------------------------------------------------------
-// Name: MainWindow::NotifyUpdated
-// Created: LGY 2014-02-07
-// -----------------------------------------------------------------------------
 void MainWindow::NotifyUpdated( const Simulation::Reconnection& reconnection )
 {
     network_.Reconnect();
     network_.GetMessageMgr().Reconnect( reconnection.login_, reconnection.password_ );
 }
 
-// -----------------------------------------------------------------------------
-// Name: MainWindow::NotifyUpdated
-// Created: AGE 2006-04-20
-// -----------------------------------------------------------------------------
-void MainWindow::NotifyUpdated( const ::Services& services )
-{
-    const auto hasSim = services.HasService( sword::service_simulation );
-    const auto hasReplay = services.HasService( sword::service_replay );
-    if( !hasSim && !hasReplay )
-        return;
-    currentMode_ = hasSim ? eModes_Gaming : eModes_Replay;
-    LoadPhysical();
-}
-
-// -----------------------------------------------------------------------------
-// Name: MainWindow::NotifyUpdated
-// Created: AGE 2006-10-11
-// -----------------------------------------------------------------------------
-void MainWindow::NotifyUpdated( const Profile& profile )
-{
-    if( ! profile.IsLoggedIn() )
-    {
-        login_ = profile.GetLogin();
-        static ConnectLoginDialog* dialog = new ConnectLoginDialog( this, profile, network_, controllers_ );
-        // $$$$ AGE 2006-10-11: exec would create a reentrance...
-        QTimer::singleShot( 0, dialog, SLOT( show() ) );
-    }
-    else
-        login_ = profile.GetLogin();
-}
-
-// -----------------------------------------------------------------------------
-// Name: MainWindow::BuildRemotePath
-// Created: AGE 2006-07-03
-// -----------------------------------------------------------------------------
-std::string MainWindow::BuildRemotePath( std::string server, std::string path )
-{
-    server = server.substr( 0, server.find( ':' ) );
-    const char drive = path.at( 0 );
-    path = path.substr( 2 );
-    return "\\\\" + server + "\\" + drive + '$' + path;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MainWindow::ToggleFullScreen
-// Created: SBO 2011-04-05
-// -----------------------------------------------------------------------------
-void MainWindow::ToggleFullScreen()
-{
-    if( isFullScreen() )
-        showNormal();
-    else
-        showFullScreen();
-}
-
-// -----------------------------------------------------------------------------
-// Name: MainWindow::ToggleDocks
-// Created: SBO 2011-04-08
-// -----------------------------------------------------------------------------
-void MainWindow::ToggleDocks()
-{
-    static QByteArray states_;
-
-    if( states_.isNull() || states_.isEmpty() )
-    {
-        states_ = saveState();
-        QList< QToolBar* > toolbars = qFindChildren< QToolBar* >( this , QString() );
-        for( QList< QToolBar* >::iterator it = toolbars.begin(); it != toolbars.end(); ++it )
-        {
-            if( kernel::DisplayableModesObserver_ABC* observer = dynamic_cast< kernel::DisplayableModesObserver_ABC* >( *it ) )
-                if( GetCurrentMode() & observer->GetVisibleModes() )
-                    continue;
-            if( ( *it )->parent() == this )
-                ( *it )->hide();
-        }
-        QList< QDockWidget* > docks = qFindChildren< QDockWidget* >( this , QString() );
-        for( QList< QDockWidget* >::iterator it = docks.begin(); it != docks.end(); ++it )
-        {
-            if( kernel::DisplayableModesObserver_ABC* observer = dynamic_cast< kernel::DisplayableModesObserver_ABC* >( *it ) )
-                if( GetCurrentMode() & observer->GetVisibleModes() )
-                    continue;
-            ( *it )->hide();
-        }
-    }
-    else if( restoreState( states_ ) )
-        states_ = 0;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MainWindow::OnAddRaster
-// Created: ABR 2012-06-12
-// -----------------------------------------------------------------------------
+// todo: move to layer panel
 void MainWindow::OnAddRaster()
 {
     if( !config_.BuildTerrainChildFile( "config.xml" ).Exists() )
@@ -687,11 +622,65 @@ void MainWindow::OnAddRaster()
     }
 }
 
-// -----------------------------------------------------------------------------
-// Name: MainWindow::PlayPauseSoundControl
-// Created: NPT 2013-07-22
-// -----------------------------------------------------------------------------
+// todo: remove that ...
 void MainWindow::PlayPauseSoundControl( bool play )
 {
     firePlayer_->PlayPauseSoundControl( play );
+}
+
+// todo: move the following to a common "MainWindow" class in clients_gui,
+// as well as many member data duplicated between gaming and prepa.
+void MainWindow::ToggleFullScreen()
+{
+    if( isFullScreen() )
+        showNormal();
+    else
+        showFullScreen();
+}
+
+void MainWindow::ToggleDocks()
+{
+    static QByteArray states_;
+
+    if( states_.isNull() || states_.isEmpty() )
+    {
+        states_ = saveState();
+        QList< QToolBar* > toolbars = qFindChildren< QToolBar* >( this, QString() );
+        for( QList< QToolBar* >::iterator it = toolbars.begin(); it != toolbars.end(); ++it )
+        {
+            if( kernel::DisplayableModesObserver_ABC* observer = dynamic_cast< kernel::DisplayableModesObserver_ABC* >( *it ) )
+                if( controllers_.GetCurrentMode() & observer->GetVisibleModes() )
+                    continue;
+            if( ( *it )->parent() == this )
+                ( *it )->hide();
+        }
+        QList< QDockWidget* > docks = qFindChildren< QDockWidget* >( this, QString() );
+        for( QList< QDockWidget* >::iterator it = docks.begin(); it != docks.end(); ++it )
+        {
+            if( kernel::DisplayableModesObserver_ABC* observer = dynamic_cast< kernel::DisplayableModesObserver_ABC* >( *it ) )
+                if( controllers_.GetCurrentMode() & observer->GetVisibleModes() )
+                    continue;
+            ( *it )->hide();
+        }
+    }
+    else if( restoreState( states_ ) )
+        states_ = 0;
+}
+
+void MainWindow::SetProgression( int value, const QString& text )
+{
+    if( !progressDialog_ )
+        return;
+    if( !value )
+        progressDialog_->show();
+    MT_LOG_INFO_MSG( text.toStdString() );
+    progressDialog_->setLabelText( text );
+    progressDialog_->setValue( value );
+    qApp->processEvents();
+}
+
+void MainWindow::HandleError( const QString& msg, const std::exception& e )
+{
+    QMessageBox::critical( this, tools::translate( "Application", "SWORD" ),
+                           msg + QString::fromStdString( tools::GetExceptionMsg( e ) ) );
 }

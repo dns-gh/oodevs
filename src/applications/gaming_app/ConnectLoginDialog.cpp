@@ -95,9 +95,9 @@ void ConnectLoginDialog::OnAccept()
         item = static_cast< UserItem* >( users_->item( 0 ) );
     if( item )
     {
+        accept();
         profiles_.clear();
         profile_.Login( item->Login().toStdString(), password_->text().toStdString() );
-        accept();
     }
 }
 
@@ -107,9 +107,9 @@ void ConnectLoginDialog::OnAccept()
 // -----------------------------------------------------------------------------
 void ConnectLoginDialog::reject()
 {
+    LoginDialog::reject();
     profiles_.clear();
     network_.Disconnect();
-    LoginDialog::reject();
 }
 
 // -----------------------------------------------------------------------------

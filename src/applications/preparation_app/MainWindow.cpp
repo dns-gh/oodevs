@@ -428,13 +428,13 @@ void MainWindow::Load( const tools::Path& filename )
     catch( const std::exception& e )
     {
         SetProgression( 100, tr( "Loading failed" ) );
+        Close( false );
         HandleError( tr( "Error loading exercise: " ), e );
     }
 }
 
 void MainWindow::HandleError( const QString& msg, const std::exception& e )
 {
-    Close( false );
     QMessageBox::critical( this, tools::translate( "Application", "SWORD" ),
                            msg + QString::fromStdString( tools::GetExceptionMsg( e ) ) );
 }
