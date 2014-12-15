@@ -671,8 +671,10 @@ void MainWindow::SetProgression( int value, const QString& text )
 {
     if( !progressDialog_ )
         return;
-    if( !value )
+    if( value == 0 )
         progressDialog_->show();
+    else if( !progressDialog_->isVisible() )
+        return;
     MT_LOG_INFO_MSG( text.toStdString() );
     progressDialog_->setLabelText( text );
     progressDialog_->setValue( value );
