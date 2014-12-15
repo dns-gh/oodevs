@@ -86,7 +86,7 @@ void SmoothPositions::ComputeCurrentPosition()
 void SmoothPositions::Compute()
 {
     const geometry::Point2f position = positions_.GetPosition( false );
-    if( std::abs( static_cast< int >( simulation_.GetCurrentTick() ) - lastTick_ ) > 1 )
+    if( simulation_.IsPaused() && remainingSteps_ <= 0 || std::abs( static_cast< int >( simulation_.GetCurrentTick() ) - lastTick_ ) > 1 )
     {
         futurePosition_ = position;
         currentPosition_ = position;
