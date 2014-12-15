@@ -11,6 +11,7 @@ package main
 import (
 	"bufio"
 	"bytes"
+	"code.google.com/p/goprotobuf/proto"
 	"compress/zlib"
 	"encoding/binary"
 	"encoding/json"
@@ -144,6 +145,7 @@ used to exercise swapi.Model update against real world scenarii.
 	password := flag.String("password", "", "user password")
 	logfile := flag.String("logfile", "", "write messages to this log file")
 	endtick := flag.Int("endtick", 0, "automatically disconnect and quit at given tick")
+	verbose := flag.Bool("v", false, "verbose mode, display model errors")
 	flag.Parse()
 
 	addr := fmt.Sprintf("%s:%d", *host, *port)
@@ -178,6 +180,14 @@ used to exercise swapi.Model update against real world scenarii.
 	if logWriter != nil {
 		addMessageLogger(client, logWriter)
 	}
+	client.Model.SetErrorHandler(func(model *swapi.ModelData, msg *swapi.SwordMessage,
+		err error) error {
+
+		if *verbose {
+			log.Printf("model error: %s %s", err, proto.CompactTextString(msg.GetMessage()))
+		}
+		return nil
+	})
 
 	// Get tick information
 	tickCh := make(chan tickInfo, 8)
