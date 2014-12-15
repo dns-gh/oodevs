@@ -876,7 +876,7 @@ void GL3DWidget::PaintLayers()
 
 void GL3DWidget::UpdateGL()
 {
-    if( isVisible() )
+    if( isVisible() && !blockDisplay_ )
         Widget3D::updateGL();
 }
 
@@ -903,6 +903,8 @@ void GL3DWidget::resizeGL( int w, int h )
 
 void GL3DWidget::paintGL()
 {
+    if( blockDisplay_ )
+        return;
     SetCurrentView( this );
     Widget3D::paintGL();
     SetCurrentView( 0 );

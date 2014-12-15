@@ -31,6 +31,11 @@ public:
     virtual ~GLViewBase();
     //@}
 
+    //! @name GLViewBase operations
+    //@{
+    void BlockDisplay( bool block );
+    //@}
+
     //! @name Informations -> throw not implemented
     //@{
     virtual const QString& GetName() const;
@@ -115,6 +120,7 @@ protected:
     //@{
     GLView_ABC& parent_;
     QGLContext* context_;
+    bool blockDisplay_;
     //@}
 };
 

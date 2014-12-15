@@ -38,7 +38,7 @@ namespace gui
 */
 // Created: AGE 2007-03-09
 // =============================================================================
-class GLStackedWidget : public QStackedWidget
+class GLStackedWidget : public QWidget
 {
     Q_OBJECT
 
@@ -71,10 +71,11 @@ public:
     void Load();
     void Close();
     void ChangeTo( E_Widget type );
-    void SetFocus();
     std::shared_ptr< GLView_ABC > GetProxy() const;
     std::shared_ptr< GL2DWidget > GetWidget2d() const;
     std::shared_ptr< QGLWidget > GetCurrentWidget() const;
+
+    E_Widget GetCurrentIndex() const;
     //@}
 
 signals:
@@ -99,6 +100,7 @@ private:
     EventStrategy_ABC& strategy_;
     std::shared_ptr< IconLayout > iconLayout_;
     QGLWidget* shareWidget_;
+    QStackedLayout* layout_;
 
     std::shared_ptr< GLView_ABC > proxy_;
     std::shared_ptr< GL2DWidget > widget2d_;

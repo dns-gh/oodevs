@@ -42,16 +42,29 @@ GLStackedWidget::GLStackedWidget( QWidget* parent,
                                   EventStrategy_ABC& strategy,
                                   const std::shared_ptr< IconLayout >& iconLayout,
                                   QGLWidget* shareWidget /* = 0 */ )
-    : QStackedWidget( parent )
+    : QWidget( parent )
     , proxy_( proxy )
     , config_( config )
     , map_( map )
     , strategy_( strategy )
     , iconLayout_( iconLayout )
     , shareWidget_( shareWidget )
+    , layout_( new QStackedLayout( this ) )
 {
+    // To fix a white flash when swapping 2d/3d in fullscreen, the only thing that
+    // seems to work is to use StackAll as stacking mode here, and to stop changing
+    // gl widgets visibilities.
+    // In StackAll mode, all widgets are visible, the current widget is merely
+    // raised.
+    // Since both gl widget are now visible, we have to prevent the 'background'
+    // one to drawn itself:
+    // - paint operations from the main updateGL loop are avoided by unregistering
+    //   the background view from the proxy
+    // - paint operations triggered by qt (focus, resize, etc.) are blocked by
+    //   GLViewBase::BlockDisplay.
+    layout_->setStackingMode( QStackedLayout::StackAll );
     setObjectName( "GLStackedWidget" );
-    insertWidget( eWidget_Empty, new GlPlaceHolder( this ) );
+    layout_->insertWidget( eWidget_Empty, new GlPlaceHolder( this ) );
     ChangeTo( eWidget_Empty );
 }
 
@@ -94,8 +107,8 @@ void GLStackedWidget::Load()
     } );
     widget2d_->Configure( movementLayer );
     
-    insertWidget( eWidget_2D, widget2d_.get() );
-    insertWidget( eWidget_3D, widget3d_.get() );
+    layout_->insertWidget( eWidget_2D, widget2d_.get() );
+    layout_->insertWidget( eWidget_3D, widget3d_.get() );
 
     connect( widget2d_.get(), SIGNAL( MouseMove( const geometry::Point2f& ) ),
              this, SIGNAL( MouseMove( const geometry::Point2f& ) ) );
@@ -112,21 +125,30 @@ void GLStackedWidget::Load()
 // -----------------------------------------------------------------------------
 void GLStackedWidget::ChangeTo( E_Widget type )
 {
-    const auto currentType = static_cast< E_Widget >( currentIndex() );
+    const auto currentType = static_cast< E_Widget >( layout_->currentIndex() );
     if( type == currentType )
         return;
-
+    std::shared_ptr< GLViewBase > prev;
+    std::shared_ptr< GLViewBase > next;
     if( currentType == eWidget_2D )
-        proxy_->Unregister( widget2d_ );
+        prev = widget2d_;
     else if( currentType == eWidget_3D )
-        proxy_->Unregister( widget3d_ );
-
+        prev = widget3d_;
     if( type == eWidget_2D )
-        proxy_->Register( widget2d_ );
+        next = widget2d_;
     else if( type == eWidget_3D )
-        proxy_->Register( widget3d_ );
-
-    setCurrentIndex( type );
+        next = widget3d_;
+    if( prev )
+    {
+        proxy_->Unregister( prev );
+        prev->BlockDisplay( true );
+    }
+    if( next )
+    {
+        proxy_->Register( next );
+        next->BlockDisplay( false );
+    }
+    layout_->setCurrentIndex( type );
 }
 
 // -----------------------------------------------------------------------------
@@ -136,8 +158,8 @@ void GLStackedWidget::ChangeTo( E_Widget type )
 void GLStackedWidget::Close()
 {
     ChangeTo( eWidget_Empty );
-    removeWidget( widget2d_.get() );
-    removeWidget( widget3d_.get() );
+    layout_->removeWidget( widget2d_.get() );
+    layout_->removeWidget( widget3d_.get() );
     widget2d_.reset();
     widget3d_.reset();
 }
@@ -159,18 +181,6 @@ void GLStackedWidget::InitializePasses()
     widget2d_->AddPass( *compo );
     widget2d_->AddPass( *fog );
     widget2d_->AddPass( *main );
-}
-
-// -----------------------------------------------------------------------------
-// Name: GLStackedWidget::SetFocus
-// Created: ABR 2012-07-10
-// -----------------------------------------------------------------------------
-void GLStackedWidget::SetFocus()
-{
-    if( widget2d_ )
-        widget2d_->setFocus();
-    else if( widget3d_ )
-        widget3d_->setFocus();
 }
 
 // -----------------------------------------------------------------------------
@@ -197,10 +207,15 @@ std::shared_ptr< GLView_ABC > GLStackedWidget::GetProxy() const
 // -----------------------------------------------------------------------------
 std::shared_ptr< QGLWidget > GLStackedWidget::GetCurrentWidget() const
 {
-    auto currentType = static_cast< E_Widget >( currentIndex() );
+    auto currentType = static_cast< E_Widget >( layout_->currentIndex() );
     if( currentType == eWidget_2D )
         return widget2d_;
     if( currentType == eWidget_3D )
         return widget3d_;
     return std::shared_ptr< QGLWidget >();
+}
+
+GLStackedWidget::E_Widget GLStackedWidget::GetCurrentIndex() const
+{
+    return static_cast< E_Widget >( layout_->currentIndex() );
 }
