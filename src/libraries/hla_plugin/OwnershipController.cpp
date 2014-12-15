@@ -24,10 +24,19 @@
 #include "dispatcher/Logger_ABC.h"
 #include <hla/Interaction.h>
 #include <boost/bind.hpp>
+#include <algorithm>
 
 using namespace plugins::hla;
 
-
+namespace
+{
+    std::set< ::hla::AttributeIdentifier > attributesDifference( const std::set< ::hla::AttributeIdentifier >& lhs, const std::set< ::hla::AttributeIdentifier >& rhs )
+    {
+        std::vector< ::hla::AttributeIdentifier > result = std::vector< ::hla::AttributeIdentifier >( lhs.size(), ::hla::AttributeIdentifier("") );
+        std::vector< ::hla::AttributeIdentifier >::iterator it = std::set_difference(lhs.begin(), lhs.end(), rhs.begin(), rhs.end(), result.begin() );
+        return std::set< ::hla::AttributeIdentifier >( result.begin(), it );
+    }
+}
 // =============================================================================
 /** @class  OwnershipController::OwnershipInfo
     @brief  OwnershipInfo
@@ -41,6 +50,8 @@ struct OwnershipController::OwnershipInfo : private boost::noncopyable
     std::string agentID_;
     HlaClass_ABC& hlaClass_;
     HlaObject_ABC& object_;
+    std::set< ::hla::AttributeIdentifier > localAttributes_;
+    std::set< ::hla::AttributeIdentifier > divestPending_;
 };
 
 OwnershipController::OwnershipInfo::OwnershipInfo( const std::string& agentID, HlaClass_ABC& hlaClass, HlaObject_ABC& object )
@@ -99,6 +110,8 @@ void OwnershipController::RemoteDestroyed( const std::string& identifier )
 void OwnershipController::LocalCreated( const std::string& identifier, HlaClass_ABC& hlaClass, HlaObject_ABC& object )
 {
     OwnershipInfo* ptr = new OwnershipInfo( identifier, hlaClass, object );
+    const T_AttributeIdentifiers& allAttributes = hlaClass.GetAttributes();
+    ptr->localAttributes_.insert(allAttributes.begin(), allAttributes.end());
     states_[identifier] = OwnershipInfoPtr(ptr);
 }
 
@@ -115,12 +128,13 @@ void OwnershipController::LocalDestroyed( const std::string& identifier )
 // Name: OwnershipController::Divested
 // Created: AHC 2010-03-02
 // -----------------------------------------------------------------------------
-void OwnershipController::Divested( const std::string& identifier, const T_AttributeIdentifiers& /*attributes*/ )
+void OwnershipController::Divested( const std::string& identifier, const T_AttributeIdentifiers& attributes )
 {
     T_OwnershipInfos::iterator it = states_.find( identifier );
     if( states_.end() == it )
         return;
-
+    it->second->localAttributes_ = attributesDifference( it->second->localAttributes_, std::set< ::hla::AttributeIdentifier >( attributes.begin(), attributes.end() ) );
+    it->second->divestPending_ = attributesDifference( it->second->divestPending_, std::set< ::hla::AttributeIdentifier >( attributes.begin(), attributes.end() ) );
     logger_.LogInfo( "Divestiture complete for object " + identifier );
 }
 
@@ -128,12 +142,13 @@ void OwnershipController::Divested( const std::string& identifier, const T_Attri
 // Name: OwnershipController::Acquired
 // Created: AHC 2010-02-27
 // -----------------------------------------------------------------------------
-void OwnershipController::Acquired( const std::string& identifier, const T_AttributeIdentifiers& /*attributes*/ )
+void OwnershipController::Acquired( const std::string& identifier, const T_AttributeIdentifiers& attributes )
 {
     T_OwnershipInfos::iterator it = states_.find( identifier );
     if( states_.end() == it )
         return;
 
+    it->second->localAttributes_.insert( attributes.begin(), attributes.end() );
     logger_.LogInfo( "Acquisition complete for object " + identifier );
 }
 
@@ -147,9 +162,16 @@ void OwnershipController::PerformDivestiture( const std::string& identifier, con
     if( states_.end() == it )
         return;
 
-    logger_.LogInfo( "Starting divestiture for object " + identifier );
     const std::vector< ::hla::AttributeIdentifier>& actualAttributes = attributes.empty() ? it->second->hlaClass_.GetAttributes() : attributes;
-    it->second->hlaClass_.Divest( identifier, actualAttributes, tag );
+    std::vector< ::hla::AttributeIdentifier > attrsToDivest;
+    for(auto itAttr = actualAttributes.begin(); actualAttributes.end() != itAttr; ++itAttr)
+    {
+        if( it->second->localAttributes_.count( *itAttr ) && !it->second->divestPending_.count( *itAttr ) )
+            attrsToDivest.push_back(*itAttr);
+    }
+    logger_.LogInfo( "Starting divestiture for object " + identifier );
+    it->second->hlaClass_.Divest( identifier, attrsToDivest, tag );
+    it->second->divestPending_.insert(attrsToDivest.begin(), attrsToDivest.end());
 }
 
 // -----------------------------------------------------------------------------
@@ -162,8 +184,9 @@ void OwnershipController::PerformAcquisition( const std::string& identifier, con
     if( states_.end() == it )
         return;
 
-    logger_.LogInfo( "Starting acquisition for object " + identifier );
     const std::vector< ::hla::AttributeIdentifier>& actualAttributes = attributes.empty() ? it->second->hlaClass_.GetAttributes() : attributes;
-    it->second->hlaClass_.Acquire( identifier, actualAttributes, tag );
+    const std::set< ::hla::AttributeIdentifier > attrsToAcquire = attributesDifference( std::set< ::hla::AttributeIdentifier >( actualAttributes.begin(), actualAttributes.end() ), it->second->localAttributes_ );
+    logger_.LogInfo( "Starting acquisition for object " + identifier );
+    it->second->hlaClass_.Acquire( identifier, std::vector< ::hla::AttributeIdentifier >( attrsToAcquire.begin(), attrsToAcquire.end() ), tag );
 }
 
