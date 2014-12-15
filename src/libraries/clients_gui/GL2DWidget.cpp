@@ -1056,7 +1056,7 @@ void GL2DWidget::ComputeData()
 
 void GL2DWidget::UpdateGL()
 {
-    if( isVisible() )
+    if( isVisible() && !blockDisplay_ )
         MapWidget::updateGL();
 }
 
@@ -1104,7 +1104,8 @@ void GL2DWidget::resizeGL( int w, int h )
 
 void GL2DWidget::paintGL()
 {
-    if( !hasMultiTexturing_ ) // $$$$ LGY 2012-03-05: disable painGL : crash in remote desktop
+    if( !hasMultiTexturing_ || // $$$$ LGY 2012-03-05: disable painGL : crash in remote desktop
+        blockDisplay_ )
         return;
     SetCurrentView( this );
     ApplyOptions();
@@ -1120,7 +1121,7 @@ void GL2DWidget::paintGL()
 
 void GL2DWidget::PickGL()
 {
-    if( !hasMultiTexturing_ ) // $$$$ LGY 2012-03-05: disable painGL : crash in remote desktop
+    if( !hasMultiTexturing_ || blockDisplay_ ) // $$$$ LGY 2012-03-05: disable painGL : crash in remote desktop
         return;
     makeCurrent();
     SetCurrentView( this );

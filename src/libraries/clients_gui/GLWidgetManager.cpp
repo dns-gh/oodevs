@@ -182,7 +182,7 @@ void GLWidgetManager::OptionChanged( const std::string& name,
     else if( name == "3D" )
     {
         auto activeWidget = GetActiveWidget();
-        if( activeWidget && activeWidget->currentIndex() != GLStackedWidget::eWidget_Empty )
+        if( activeWidget && activeWidget->GetCurrentIndex() != GLStackedWidget::eWidget_Empty )
             activeWidget->ChangeTo( value.To< bool >() ? GLStackedWidget::eWidget_3D : GLStackedWidget::eWidget_2D );
     }
     else if( name == "ContourLines/Height" )
