@@ -144,7 +144,7 @@ used to exercise swapi.Model update against real world scenarii.
 	resume := flag.Bool("resume", false, "resume the simulation once logged in")
 	password := flag.String("password", "", "user password")
 	logfile := flag.String("logfile", "", "write messages to this log file")
-	endtick := flag.Int("endtick", 0, "automatically disconnect and quit at given tick")
+	endtick := flag.Int("endtick", -1, "automatically disconnect and quit at given tick")
 	verbose := flag.Bool("v", false, "verbose mode, display model errors")
 	flag.Parse()
 
