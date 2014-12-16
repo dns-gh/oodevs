@@ -53,6 +53,7 @@ public:
     unsigned int GetFirstTick() const;
     unsigned int GetTickCount() const;
     unsigned int GetTickDuration() const;
+    unsigned int GetCurrentTick() const;
     QDateTime GetDateTime() const;
     QDateTime GetTime( uint32_t tick ) const;
     void Pause();
@@ -64,7 +65,7 @@ public:
     void SkipToTick( unsigned int tick ) const;
     void SendLogisticRequests( const std::set< unsigned long >& entities ) const;
     void SendHistoryRequests( const std::set< unsigned int >& requests ) const;
-    void SendReportsRequest( unsigned int entity, int context ) const;
+    void SendReportsRequest( unsigned int entity, int context, unsigned int tick ) const;
     void RequestCheckpoint( const std::string& name ) const;
     void ForceReplayDataRequest() const;
     void SendEnableVisionCones( bool value ) const;

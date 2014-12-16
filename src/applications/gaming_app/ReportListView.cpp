@@ -109,7 +109,7 @@ ReportListView::ReportListView( QWidget* pParent, kernel::Controllers& controlle
             FillReports( message.message().list_reports_ack() );
         }
         else if( message.message().has_control_skip_to_tick_ack() )
-            SendRequest();
+            SendRequest( message.message().control_skip_to_tick_ack().tick() );
     } );
 }
 
@@ -129,7 +129,7 @@ ReportListView::~ReportListView()
 void ReportListView::showEvent( QShowEvent* event )
 {
     if( event && !event->spontaneous() )
-        SendRequest();
+        SendRequest( simulation_.GetCurrentTick() );
 }
 
 // -----------------------------------------------------------------------------
@@ -168,15 +168,15 @@ void ReportListView::NotifySelected( const kernel::Entity_ABC* element )
         return;
 
     selected_ = id;
-    SendRequest();
+    SendRequest( simulation_.GetCurrentTick() );
 }
 
-void ReportListView::SendRequest()
+void ReportListView::SendRequest( unsigned int tick )
 {
     if( !selected_ || !isVisible() )
         return;
     unreadMessages_ = model_.HasUnreadReports( selected_ );
-    simulation_.SendReportsRequest( selected_, ++context_ );
+    simulation_.SendReportsRequest( selected_, ++context_, tick );
 }
 
 void ReportListView::FillReports( const sword::ListReportsAck& ack )
