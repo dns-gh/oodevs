@@ -442,3 +442,13 @@ func (s *Sword) updateReplayTick(current time.Time) {
 		}
 	}
 }
+
+func (s *Sword) replayCanTrigger(begin time.Time) bool {
+	for _, replay := range s.replays {
+		replayBegin, replayEnd, _ := checkBoundaries(replay, s.startTime, s.endTime)
+		if begin.After(replayBegin) && begin.Before(replayEnd) {
+			return isActivated(replay)
+		}
+	}
+	return true
+}
