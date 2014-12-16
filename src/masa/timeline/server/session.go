@@ -15,6 +15,7 @@ import (
 	"masa/timeline/services"
 	"masa/timeline/util"
 	"net/http"
+	"net/url"
 	"time"
 )
 
@@ -533,10 +534,13 @@ func (f *FilteredObserver) update(events EventSlice, encoded []*sdk.Event, reset
 	added := make([]*sdk.Event, 0, len(encoded))
 	filters := []services.EventFilter{func(event *sdk.Event) bool {
 		id := event.GetUuid()
-		for it := range f.session.filterers {
-			if it.Filter(event, f.config) {
-				deleted = append(deleted, id)
-				return true
+		url, _ := url.Parse(event.GetAction().GetTarget())
+		if url.Scheme != "replay" {
+			for it := range f.session.filterers {
+				if it.Filter(event, f.config) {
+					deleted = append(deleted, id)
+					return true
+				}
 			}
 		}
 		prev := len(f.known)
