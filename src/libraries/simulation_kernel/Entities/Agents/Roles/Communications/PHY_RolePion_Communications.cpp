@@ -134,6 +134,19 @@ void PHY_RolePion_Communications::Jam( const MIL_Object_ABC& jammer )
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Communications::OnDeleteOwner
+// Created: LDC 2014-12-16
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Communications::OnDeleteOwner()
+{
+    if( pJammingKnowledgeGroup_ )
+    {
+        pJammingKnowledgeGroup_->Destroy();
+        pJammingKnowledgeGroup_.reset();
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Communications::CopyKnowledgeGroup
 // Created: LDC 2010-04-12
 // -----------------------------------------------------------------------------
