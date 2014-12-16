@@ -131,11 +131,6 @@ func (opts *ClientOpts) StartPaused() *ClientOpts {
 	return opts
 }
 
-func (opts *ClientOpts) EnableTestCommands() *ClientOpts {
-	opts.TestCommands = true
-	return opts
-}
-
 func (opts *ClientOpts) RecordReports() *ClientOpts {
 	opts.Reports = true
 	return opts

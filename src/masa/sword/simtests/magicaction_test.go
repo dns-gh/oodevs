@@ -518,8 +518,7 @@ func (s *TestSuite) TestSelectRepairTeam(c *C) {
 }
 
 func (s *TestSuite) TestReportCreation(c *C) {
-	sim, client := connectAndWaitModel(c,
-		NewAdminOpts(ExCrossroadLog).EnableTestCommands())
+	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadLog))
 	defer stopSimAndClient(c, sim, client)
 	phydb := loadPhysical(c, "test")
 	data := client.Model.GetData()
@@ -584,8 +583,7 @@ func CreateReports(c *C, client *swapi.Client) {
 }
 
 func (s *TestSuite) TestListReports(c *C) {
-	sim, client := connectAndWaitModel(c,
-		NewAdminOpts(ExCrossroadLog).EnableTestCommands())
+	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadLog))
 	defer stopSimAndClient(c, sim, client)
 
 	// Check the size of reports
@@ -648,8 +646,7 @@ func (s *TestSuite) TestListReports(c *C) {
 }
 
 func (s *TestSuite) TestCheckpointListReports(c *C) {
-	sim, client := connectAndWaitModel(c,
-		NewAdminOpts(ExCrossroadLog).EnableTestCommands())
+	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadLog))
 	defer stopSimAndClient(c, sim, client)
 
 	CreateReports(c, client)
@@ -709,8 +706,7 @@ func (s *TestSuite) TestHideActions(c *C) {
 }
 
 func (s *TestSuite) TestReplayListReports(c *C) {
-	sim, client := connectAndWaitModel(c,
-		NewAdminOpts(ExCrossroadLog).EnableTestCommands())
+	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadLog))
 	defer stopSimAndClient(c, sim, client)
 
 	// Create reports
@@ -750,7 +746,7 @@ func (s *TestSuite) TestReplayListReports(c *C) {
 }
 
 func (s *TestSuite) TestListReportsInitialization(c *C) {
-	opts := NewAdminOpts(ExCrossroadLog).EnableTestCommands().RecordReports()
+	opts := NewAdminOpts(ExCrossroadLog).RecordReports()
 	sim, clientA := connectAndWaitModel(c, opts)
 	defer stopSimAndClient(c, sim, clientA)
 

@@ -21,8 +21,7 @@ func checkEcho(c *C, client *swapi.Client, s string) {
 }
 
 func (s *TestSuite) TestEcho(c *C) {
-	sim, client := connectAndWaitModel(c,
-		NewAllUserOpts(ExCrossroadSmallEmpty).EnableTestCommands())
+	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadSmallEmpty))
 	defer stopSimAndClient(c, sim, client)
 
 	checkEcho(c, client, "")
