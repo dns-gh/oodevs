@@ -52,7 +52,6 @@ With -unit=0, the reports will be spread over all readable model units.
 	user := flag.String("user", "", "user name")
 	password := flag.String("password", "", "user password")
 
-	report := flag.Uint("report", 0, "report identifier, 'NTR' report by default")
 	number := flag.Uint("number", 100, "total number of reports to emit, 0 means infinity")
 	block := flag.Uint("block", 100, "number of reports per client call")
 	unit := flag.Uint("unit", 0, "recipient of reports")
@@ -70,7 +69,7 @@ With -unit=0, the reports will be spread over all readable model units.
 		log.Fatalf("local model took too long to initialize")
 	}
 
-	entities := []uint32{uint32(*unit)}
+	entities := []uint32{}
 	if *unit == 0 {
 		// List all exercise units, pick randomly when emitting reports
 		model := logger.Model.GetData()
@@ -78,6 +77,8 @@ With -unit=0, the reports will be spread over all readable model units.
 			entities = append(entities, id)
 		}
 		fmt.Printf("spreading reports over %d entities\n", len(entities))
+	} else {
+		entities = []uint32{uint32(*unit)}
 	}
 
 	// Get tick information
@@ -86,30 +87,37 @@ With -unit=0, the reports will be spread over all readable model units.
 	go func() {
 		prevNow := time.Now()
 		prevCount := reports
-		logger.Model.WaitCondition(func(data *swapi.ModelData) bool {
-			count := atomic.LoadInt32(&reports)
-			if tick < data.Tick {
-				tick = data.Tick
-				now := time.Now()
-				dtime := now.Sub(prevNow)
-				created := float64(0)
-				if dtime > 0 {
-					created = float64(count-prevCount) / (float64(dtime) / float64(time.Second))
+		logger.Model.RegisterHandlerTimeout(0,
+			func(data *swapi.ModelData, msg *swapi.SwordMessage, err error) bool {
+				if err != nil {
+					log.Printf("tick handler error: %s", err)
+					return true
 				}
-				log.Printf("Tick %d, %.2f sec, reports %d, %.1f reports/s\n", tick,
-					float64(dtime)/float64(time.Second), reports, created)
-				prevNow = now
-				prevCount = count
-			}
-			return false
-		})
+
+				count := atomic.LoadInt32(&reports)
+				if tick < data.Tick {
+					tick = data.Tick
+					now := time.Now()
+					dtime := now.Sub(prevNow)
+					created := float64(0)
+					if dtime > 0 {
+						created = float64(count-prevCount) / (float64(dtime) / float64(time.Second))
+					}
+					log.Printf("Tick %d, %.2f sec, reports %d, %.1f reports/s\n", tick,
+						float64(dtime)/float64(time.Second), reports, created)
+					prevNow = now
+					prevCount = count
+				}
+				return false
+			})
 	}()
 
 	// Get report count information
-	logger.Model.RegisterHandler(
+	logger.Model.RegisterHandlerTimeout(0,
 		func(data *swapi.ModelData, msg *swapi.SwordMessage, err error) bool {
 			if err != nil {
-				return false
+				log.Printf("handler error: %s", err)
+				return true
 			}
 			sim := msg.SimulationToClient
 			if sim == nil || sim.Message == nil {
@@ -124,6 +132,8 @@ With -unit=0, the reports will be spread over all readable model units.
 		})
 
 	// Send reports
+	reportCounter := uint32(0)
+	reportId := uint32(219) // trace
 	blocks := make(chan uint, *jobs)
 	wg := sync.WaitGroup{}
 	for i := 0; i != *clientCount; i++ {
@@ -133,10 +143,12 @@ With -unit=0, the reports will be spread over all readable model units.
 			go func() {
 				defer wg.Done()
 				for n := range blocks {
+					c := atomic.AddUint32(&reportCounter, 1)
 					id := entities[rand.Intn(len(entities))]
-					err := client.CreateReport(uint32(n), uint32(*report), uint32(id))
+					err := client.CreateReport(uint32(n), reportId, uint32(id),
+						swapi.MakeString(fmt.Sprintf("%d", c)))
 					if err != nil {
-						fmt.Errorf("could not create report: %s", err)
+						log.Printf("could not create report for %d: %s", id, err)
 					}
 				}
 			}()

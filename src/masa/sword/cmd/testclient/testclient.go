@@ -11,6 +11,7 @@ package main
 import (
 	"bufio"
 	"bytes"
+	"code.google.com/p/goprotobuf/proto"
 	"compress/zlib"
 	"encoding/binary"
 	"encoding/json"
@@ -143,7 +144,8 @@ used to exercise swapi.Model update against real world scenarii.
 	resume := flag.Bool("resume", false, "resume the simulation once logged in")
 	password := flag.String("password", "", "user password")
 	logfile := flag.String("logfile", "", "write messages to this log file")
-	endtick := flag.Int("endtick", 0, "automatically disconnect and quit at given tick")
+	endtick := flag.Int("endtick", -1, "automatically disconnect and quit at given tick")
+	verbose := flag.Bool("v", false, "verbose mode, display model errors")
 	flag.Parse()
 
 	addr := fmt.Sprintf("%s:%d", *host, *port)
@@ -178,22 +180,44 @@ used to exercise swapi.Model update against real world scenarii.
 	if logWriter != nil {
 		addMessageLogger(client, logWriter)
 	}
+	client.Model.SetErrorHandler(func(model *swapi.ModelData, msg *swapi.SwordMessage,
+		err error) error {
+
+		if *verbose {
+			log.Printf("model error: %s %s", err, proto.CompactTextString(msg.GetMessage()))
+		}
+		return nil
+	})
 
 	// Get tick information
 	tickCh := make(chan tickInfo, 8)
 	tick := int32(0)
 	go func() {
-		client.Model.WaitConditionTimeout(0, func(data *swapi.ModelData) bool {
-			if tick < data.Tick {
-				tick = data.Tick
-				tickCh <- tickInfo{
-					Automats: len(data.Automats),
-					Units:    len(data.Units),
-					Tick:     int(data.Tick),
+		client.Model.RegisterHandlerTimeout(0,
+			func(data *swapi.ModelData, msg *swapi.SwordMessage, err error) bool {
+				if tick < data.Tick {
+					tick = data.Tick
+					tickCh <- tickInfo{
+						Automats: len(data.Automats),
+						Units:    len(data.Units),
+						Tick:     int(data.Tick),
+					}
+				} else {
+					// In replay mode, update after skipping
+					if msg != nil &&
+						msg.ReplayToClient != nil &&
+						msg.ReplayToClient.GetMessage() != nil &&
+						msg.ReplayToClient.GetMessage().GetControlSkipToTickAck() != nil {
+						skip := msg.ReplayToClient.GetMessage().GetControlSkipToTickAck()
+						tickCh <- tickInfo{
+							Automats: len(data.Automats),
+							Units:    len(data.Units),
+							Tick:     int(*skip.Tick),
+						}
+					}
 				}
-			}
-			return false
-		})
+				return false
+			})
 	}()
 
 	// Consolidate compression and tick information and print it.
@@ -233,6 +257,7 @@ used to exercise swapi.Model update against real world scenarii.
 	// Detect server-side termination
 	client.Register(func(msg *swapi.SwordMessage, id, ctx int32, err error) bool {
 		if err != nil {
+			log.Printf("main handler closed with: %s", err)
 			termination <- 1
 		}
 		return err != nil
