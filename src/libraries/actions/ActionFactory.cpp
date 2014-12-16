@@ -591,7 +591,7 @@ Action_ABC* ActionFactory::CreateAgentCreationAction( const kernel::AgentType& t
     tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
     action->AddParameter( *new parameters::Identifier( it.NextElement(), type.GetId() ) );
     action->AddParameter( *new parameters::Point( it.NextElement(), coordinateConverter_, location ) );
-    action->AddParameter( *new parameters::String( it.NextElement() ) );
+    action->AddParameter( *new parameters::String( it.NextElement(), type.GetLocalizedName() ) );
     action->AddParameter( *new parameters::Bool( it.NextElement() ) );
     action->AddParameter( *new parameters::ExtensionList( it.NextElement() ) );
     action->Attach( *new ActionTiming( controller_, simulation_ ) );
@@ -608,8 +608,8 @@ Action_ABC* ActionFactory::CreateFormationCreationAction( int level, const kerne
     kernel::MagicActionType& actionType = magicActions_.Get( "formation_creation" );
     std::unique_ptr< UnitMagicAction > action( new UnitMagicAction( actionType, controller_, false ) );
     tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
-    action->AddParameter( *new parameters::Numeric( it.NextElement(), static_cast<float>( level ) ) );
-    action->AddParameter( *new parameters::String( it.NextElement(), std::string() ) );
+    action->AddParameter( *new parameters::Numeric( it.NextElement(), static_cast< float >( level ) ) );
+    action->AddParameter( *new parameters::String( it.NextElement(), ENT_Tr::ConvertFromNatureLevel( static_cast< E_NatureLevel >( level ) ) ) );
     const std::string logisticLevel = isLogisticBase ? ENT_Tr::ConvertFromLogisticLevel( sword::logistic_base, ENT_Tr::eToSim ) : std::string();
     action->AddParameter( *new parameters::String( it.NextElement(), logisticLevel ) );
     action->AddParameter( *new parameters::ExtensionList( it.NextElement() ) );
@@ -634,7 +634,7 @@ Action_ABC* ActionFactory::CreateCrowdCreationAction( const kernel::PopulationTy
     action->AddParameter( *new parameters::Quantity( it.NextElement(), numberHealthy ) );
     action->AddParameter( *new parameters::Quantity( it.NextElement(), numberWounded ) );
     action->AddParameter( *new parameters::Quantity( it.NextElement(), numberDead ) );
-    action->AddParameter( *new parameters::String( it.NextElement(), std::string() ) );
+    action->AddParameter( *new parameters::String( it.NextElement(), type.GetName() ) );
     action->Attach( *new ActionTiming( controller_, simulation_ ) );
     AddTasker( *action, &selected, false );
     return action.release();

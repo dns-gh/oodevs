@@ -1291,7 +1291,7 @@ void MIL_EntityManager::ProcessAutomatAndUnitsCreationRequest( const UnitMagicAc
         throw MASA_BADPARAM_UNIT( "knowledge group is invalid or jammed" );
 
     MIL_DictionaryExtensions extensions;
-    MIL_Automate& automat = CreateAutomat( *pType, groupId, "", entity, nCtx, extensions );
+    MIL_Automate& automat = CreateAutomat( *pType, groupId, pType->GetName(), entity, nCtx, extensions );
 
     unsigned int numberOfAgents = 0;
     const auto& compositions = pType->GetComposition();
@@ -1323,7 +1323,7 @@ void MIL_EntityManager::ProcessAutomatAndUnitsCreationRequest( const UnitMagicAc
                     newPosition = MT_Vector2D( 100.f * std::sin( current * angle ), 100.f * std::cos( current * angle ) ) + position;
                     current++;
                 }
-                MIL_AgentPion& pion = CreatePion( *agentType, automat, newPosition, 0, nCtx, 0 );
+                MIL_AgentPion& pion = CreatePion( *agentType, automat, newPosition, agentType->GetName(), nCtx, 0 );
                 ack.mutable_result()->add_elem()->add_value()->mutable_agent()
                     ->set_id( pion.GetID() );
             }
