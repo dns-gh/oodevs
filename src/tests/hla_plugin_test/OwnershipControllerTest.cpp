@@ -44,6 +44,9 @@ namespace
             ownershipController( federateID, remoteSubject, logger )
         {
             BOOST_REQUIRE( classListener );
+            allAttributes.push_back(::hla::AttributeIdentifier("attr_a"));
+            allAttributes.push_back(::hla::AttributeIdentifier("attr_b"));
+            MOCK_EXPECT( hlaClass.GetAttributes ).returns( allAttributes );
             classListener->LocalCreated( "identifier", hlaClass, object );
         }
         ~ControllerFixture()
@@ -55,13 +58,33 @@ namespace
         MockHlaClass hlaClass;
         MockHlaObject object;
         OwnershipController ownershipController;
+        std::vector< ::hla::AttributeIdentifier > allAttributes;
     };
 }
 
 BOOST_FIXTURE_TEST_CASE( ownership_push, ControllerFixture )
 {
     const ::hla::VariableLengthData sentTag((uint32_t)42);
+    MOCK_EXPECT( hlaClass.Divest ).once().with( "identifier", allAttributes, mock::any );
+    ownershipController.PerformDivestiture( "identifier", allAttributes, sentTag );
+}
+
+BOOST_FIXTURE_TEST_CASE( ownership_push_partial, ControllerFixture )
+{
+    const ::hla::VariableLengthData sentTag((uint32_t)42);
+    attributes.push_back(::hla::AttributeIdentifier("attr_a"));
     MOCK_EXPECT( hlaClass.Divest ).once().with( "identifier", attributes, mock::any );
+    ownershipController.PerformDivestiture( "identifier", attributes, sentTag );
+}
+
+BOOST_FIXTURE_TEST_CASE( ownership_push_too_many, ControllerFixture )
+{
+    std::vector< ::hla::AttributeIdentifier > expected;
+    expected.push_back(::hla::AttributeIdentifier("attr_a"));
+    const ::hla::VariableLengthData sentTag((uint32_t)42);
+    attributes.push_back(::hla::AttributeIdentifier("attr_a"));
+    attributes.push_back(::hla::AttributeIdentifier("attr_c"));
+    MOCK_EXPECT( hlaClass.Divest ).once().with( "identifier", expected, mock::any );
     ownershipController.PerformDivestiture( "identifier", attributes, sentTag );
 }
 
@@ -72,6 +95,7 @@ namespace
         DivestedFixture()
         {
             const ::hla::VariableLengthData sentTag((uint32_t)42);
+            attributes.push_back(::hla::AttributeIdentifier("attr_a"));
             MOCK_EXPECT( hlaClass.Divest ).once().with( "identifier", attributes, mock::any );
             ownershipController.PerformDivestiture( "identifier", attributes, sentTag );
             classListener->Divested( "identifier", attributes );
@@ -84,4 +108,11 @@ BOOST_FIXTURE_TEST_CASE( ownership_pull, DivestedFixture )
     const ::hla::VariableLengthData sentTag((uint32_t)42);
     MOCK_EXPECT( hlaClass.Acquire ).once().with( "identifier", attributes, mock::any );
     ownershipController.PerformAcquisition( "identifier", attributes, sentTag );
+}
+
+BOOST_FIXTURE_TEST_CASE( ownership_pull_too_many, DivestedFixture )
+{
+    const ::hla::VariableLengthData sentTag((uint32_t)42);
+    MOCK_EXPECT( hlaClass.Acquire ).once().with( "identifier", attributes, mock::any );
+    ownershipController.PerformAcquisition( "identifier", allAttributes, sentTag );
 }
