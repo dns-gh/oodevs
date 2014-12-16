@@ -357,13 +357,12 @@ namespace
     }
 }
 
-void SimulationController::SendReportsRequest( unsigned int entity, int context ) const
+void SimulationController::SendReportsRequest( unsigned int entity, int context, unsigned int tick ) const
 {
-    const auto currentTick = simulation_.GetCurrentTick();
     if( hasReplay_ )
-        ::SendReportsRequest< sword::ClientToReplay >( entity, currentTick, context, publisher_ );
+        ::SendReportsRequest< sword::ClientToReplay >( entity, tick, context, publisher_ );
     else if( hasSimulation_ )
-        ::SendReportsRequest< sword::ClientToSim >( entity, currentTick, context, publisher_ );
+        ::SendReportsRequest< sword::ClientToSim >( entity, tick, context, publisher_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -387,4 +386,9 @@ void SimulationController::RegisterReplayHandler( Publisher_ABC::T_ReplayHandler
 QDateTime SimulationController::GetTime( uint32_t tick ) const
 {
     return simulation_.GetTime( tick );
+}
+
+unsigned int SimulationController::GetCurrentTick() const
+{
+    return simulation_.GetCurrentTick();
 }

@@ -81,7 +81,7 @@ private:
     void FillReports( const sword::ListReportsAck& ack );
     void Refresh();
     void AddMenuItem( QMenu* menu, const QString& name, Report::E_Type type ) const;
-    void SendRequest();
+    void SendRequest( unsigned int tick );
     //@}
 
 private:
