@@ -51,6 +51,7 @@
 #include "Tools/MIL_IDManager.h"
 #include "Tools/MIL_MessageParameters.h"
 #include "MT_Tools/MT_FormatString.h"
+#include "MT_Tools/MT_Logger.h"
 #include <boost/serialization/scoped_ptr.hpp>
 #include <boost/lexical_cast.hpp>
 
@@ -194,8 +195,10 @@ MIL_KnowledgeGroup::~MIL_KnowledgeGroup()
             msg().mutable_party()->set_id( army_->GetID() );
             msg.Send( NET_Publisher_ABC::Publisher() );
         }
-        catch( const std::exception& )
-        {} // Never mind if no publisher registered, just don't throw.
+        catch( const std::exception& e )
+        {
+            MT_LOG_ERROR_MSG( "Error when destroying knowledge group " << id_ << " : " << tools::GetExceptionMsg( e ) );
+        } // Never mind if no publisher registered, just don't throw.
     }
 }
 

@@ -881,6 +881,7 @@ void MIL_AgentPion::DeleteUnit( unsigned int nCtx, unsigned int clientId )
     GetRole< PHY_RolePion_Composantes >().ReturnAllBorrowedComposantes();
     GetRole< PHY_RolePion_Composantes >().CancelLogisticRequests();
     GetRole< transport::PHY_RoleAction_Transport >().Cancel();
+    GetRole< PHY_RolePion_Communications >().OnDeleteOwner();
 
     if( pAutomate_ )
     {

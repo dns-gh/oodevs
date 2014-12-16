@@ -68,6 +68,7 @@ public:
     virtual void NotifyReleased();
     virtual void NotifySurrendered();
     virtual void NotifySurrenderCanceled();
+    void OnDeleteOwner();
     //@}
 
     //! @name Main
