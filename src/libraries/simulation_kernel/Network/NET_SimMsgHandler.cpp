@@ -205,8 +205,7 @@ void NET_SimMsgHandler::OnReceiveMagicAction( const sword::MagicAction& msg,
                 server.GetMeteoDataManager().OnReceiveMsgMeteo( msg, ack(), ctx );
                 break;
             case sword::MagicAction::debug_internal:
-                if( enableTestCommands_ )
-                    OnReceiveDebugError( msg.parameters(), ack() );
+                OnReceiveDebugError( msg.parameters(), ack(), enableTestCommands_ );
                 break;
             case sword::MagicAction::hide_actions:
                 actions_.Hide( clientId, actionId );
@@ -258,10 +257,27 @@ int RecursionOfDeath( int count, char* data )
 } // namespace
 
 void NET_SimMsgHandler::OnReceiveDebugError( const sword::MissionParameters& params,
-        sword::MagicActionAck& ack )
+        sword::MagicActionAck& ack, bool allowTestCommands )
 {
     protocol::Check( params.elem_size() > 1, "invalid number of parameters" );
     const std::string& command = protocol::GetString( params, 0 );
+    if( command == "create_report" )
+    {
+        // create_report is a command of the debug_internal magic action because
+        // procotol actions can't manage an undefined number of parameters.
+        MIL_AgentServer::GetWorkspace().GetEntityManager().OnReceiveReportCreation( params );
+        return;
+    }
+    else if( command == "echo" )
+    {
+        const std::string& input = protocol::GetString( params, 1 );
+        ack.mutable_result()->add_elem()->add_value()->set_acharstr( input );
+        return;
+    }
+
+    if( !allowTestCommands )
+        // Disable harmful commands by default
+        return;
     if( command == "trigger_error" )
     {
         const std::string& err = protocol::GetString( params, 1 );
@@ -271,20 +287,9 @@ void NET_SimMsgHandler::OnReceiveDebugError( const sword::MissionParameters& par
             RecursionOfDeath( 0, nullptr );
         else
             throw MASA_BADPARAM_MAGICACTION( "unknown error: " << err );
+        return;
     }
-    else if( command == "echo" )
-    {
-        const std::string& input = protocol::GetString( params, 1 );
-        ack.mutable_result()->add_elem()->add_value()->set_acharstr( input );
-    }
-    else if( command == "create_report" )
-    {
-        // create_report is a command of the debug_internal magic action because
-        // procotol actions can't manage an undefined number of parameters.
-        MIL_AgentServer::GetWorkspace().GetEntityManager().OnReceiveReportCreation( params );
-    }
-    else
-        throw MASA_BADPARAM_MAGICACTION( "unknown command: " << command );
+    throw MASA_BADPARAM_MAGICACTION( "unknown command: " << command );
 }
 
 namespace
