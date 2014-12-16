@@ -835,9 +835,8 @@ class Timeline
 
     constructor: (vertical, model) ->
         @h = 0
-        @lane_size = 88
         lane = history_get().lane
-        @lane_size = 0 | lane if lane?
+        @lane_size = if lane? then lane else 88
         @model = model
         _.extend @, Backbone.Events
         @listenTo triggers, "check_cluster", @on_check
@@ -907,7 +906,7 @@ class Timeline
 
     clip_lane: (w) ->
         max = @layout.select @h, @w
-        return 0 | clip w, 0, max - @layout.axis - 64
+        return Math.floor clip w, 0, max - @layout.axis - 64
 
     # trigger a range event on each mouseup
     # and potentially update browser history
@@ -1374,9 +1373,9 @@ class Timeline
 
     # main render callback
     render: ->
-        @lane_size = @clip_lane @lane_size
+        lane_size = @clip_lane @lane_size
         @render_ticks()
-        @grid.tickSize snap_to_grid @replay.size() + @lane_size - 1
+        @grid.tickSize snap_to_grid @replay.size() + lane_size - 1
         grid = @svg.select("#grid")
         grid.call @grid
         grid.attr @layout.grid_attributes()
