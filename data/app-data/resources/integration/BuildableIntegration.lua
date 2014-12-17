@@ -941,10 +941,11 @@ integration.stopBuildObjectOnLocalization = function( localization, objectType, 
     localization[ myself ].actionId = nil
 end
 
---- Create the given objet type into the localisation
+--- Create the given object type into the location
 -- @param objectType, String, the type of object as defined in authoring tool.
 -- @param localization, Simulation area onto which the object must be built.
 -- @param preliminary Boolean, defines if the object is preliminary or not.
+-- @return Simulation genObject
 integration.createDynamicObject = function( objectType, localization, preliminary )
     return DEC_CreateDynamicGenObject( objectType, localization, true )
 end

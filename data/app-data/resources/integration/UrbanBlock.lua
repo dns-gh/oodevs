@@ -52,10 +52,10 @@ integration.isUrbanBlockAlerted = function( urbanBlock )
     return DEC_Agent_IsAlerted( localisation )
 end
 
---- Returns true if the given area is alerted, false otherwise.
+--- Returns true if at least one population inside the given area is alerted, false otherwise.
 -- @param area Simulation area
 -- @return Boolean, whether or not the given area is alerted
-integration.isUrbanBlockInAreaAlerted = function( area )
+integration.isPopInAreaAlerted = function( area )
     return DEC_Agent_IsAlerted( area )
 end
 

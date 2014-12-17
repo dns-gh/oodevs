@@ -177,8 +177,7 @@ integration.getPositionsAroundObject = function( object, distance )
     return result
 end
 
---- Returns all the object knowledges inside the circle defined by
---- the provided center and radius which type belongs to the list
+--- Returns all object knowledges of a given type inside a circle around the given position
 -- @param position Simulation position, center of the circle
 -- @param distance Float, radius of the circle (in meters)
 -- @param objectTypeList List of strings
@@ -187,8 +186,7 @@ integration.getKnowledgesObjectsInCircle = function( position, distance, objectT
     return _DEC_Knowledges_ObjectsInCircle( myself, position, distance, objectTypeList, false )
 end
 
---- Returns all the object knowledges inside the circle defined by
---- the my position and the given radius which type belongs to the list
+--- Returns all object knowledges of a given type inside a circle around the caller unit position
 -- @param radius Float, radius of the circle (in meters)
 -- @param objectTypeList List of strings
 -- @return List of object knowledges
