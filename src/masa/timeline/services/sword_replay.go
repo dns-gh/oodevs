@@ -437,10 +437,20 @@ func (s *Sword) updateReplayTick(current time.Time) {
 			},
 		}
 		s.Log("-> replay deactivated in this section, skipping to %v", timeToSkip)
-		action := NewAction(gouuid.New(), url.URL{}, []byte{}, msg, false)
-		s.pending[action.id] = action
+		actionSkip := NewAction(gouuid.New(), url.URL{}, []byte{}, msg, false)
+		msg = swapi.SwordMessage{
+			ClientToReplay: &sword.ClientToReplay{
+				Message: &sword.ClientToReplay_Content{
+					ControlResume: &sword.ControlResume{},
+				},
+			},
+		}
+		actionResume := NewAction(gouuid.New(), url.URL{}, []byte{}, msg, false)
+		s.pending[actionSkip.id] = actionSkip
+		s.pending[actionResume.id] = actionResume
 		if s.status == SwordStatusConnected {
-			s.link.PostAction(action)
+			s.link.PostAction(actionSkip)
+			s.link.PostAction(actionResume)
 		}
 	}
 }
