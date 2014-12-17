@@ -16,9 +16,9 @@ integration.alertUrbanBlock = function( urbanBlock )
     return true
 end
 
---- Alerts the urbans blocks in the given area
+--- Alerts the population in the given area
 -- @param area Simulation area
-integration.alertUrbanBlockInArea = function( area )
+integration.alertPopInArea = function( area )
     DEC_Agent_Alert( area )
 end
 
