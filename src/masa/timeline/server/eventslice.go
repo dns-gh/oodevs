@@ -55,6 +55,17 @@ func (e *EventSlice) Append(event *Event) {
 	*e = slice
 }
 
+func (e *EventSlice) Update(event *Event) {
+	slice := *e
+	for i, evt := range slice {
+		if evt.uuid == event.uuid {
+			*e = append(slice[:i], slice[i+1:]...)
+			break
+		}
+	}
+	e.Append(event)
+}
+
 func (e *EventSlice) Remove(uuid string) bool {
 	slice := *e
 	for i, event := range slice {

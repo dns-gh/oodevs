@@ -478,6 +478,7 @@ func (s *Session) UpdateEvents(events ...*sdk.Event) ([]*sdk.Event, error) {
 			if !modified {
 				continue
 			}
+			s.events.Update(event)
 			if children {
 				for child := range event.children {
 					updates = append(updates, child)
