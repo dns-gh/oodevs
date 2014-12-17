@@ -943,9 +943,9 @@ end
 
 --- Create the given object type into the location
 -- @param objectType, String, the type of object as defined in authoring tool.
--- @param localization, Simulation area onto which the object must be built.
+-- @param location, Simulation area onto which the object must be built.
 -- @param preliminary Boolean, defines if the object is preliminary or not.
 -- @return Simulation genObject
-integration.createDynamicObject = function( objectType, localization, preliminary )
-    return DEC_CreateDynamicGenObject( objectType, localization, true )
+integration.createDynamicObject = function( objectType, location, preliminary )
+    return DEC_CreateDynamicGenObject( objectType, location, true )
 end

@@ -186,7 +186,8 @@ integration.getKnowledgesObjectsInCircle = function( position, distance, objectT
     return _DEC_Knowledges_ObjectsInCircle( myself, position, distance, objectTypeList, false )
 end
 
---- Returns all object knowledges of a given type inside a circle around the caller unit position
+--- Returns all object knowledges of a given type inside a circle around the caller crowd position
+--- This method must be called by a crowd
 -- @param radius Float, radius of the circle (in meters)
 -- @param objectTypeList List of strings
 -- @return List of object knowledges

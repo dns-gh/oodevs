@@ -18,7 +18,7 @@ end
 
 --- Alerts the population in the given area
 -- @param area Simulation area
-integration.alertPopInArea = function( area )
+integration.alertPopulationInArea = function( area )
     DEC_Agent_Alert( area )
 end
 
@@ -55,7 +55,7 @@ end
 --- Returns true if at least one population inside the given area is alerted, false otherwise.
 -- @param area Simulation area
 -- @return Boolean, whether or not the given area is alerted
-integration.isPopInAreaAlerted = function( area )
+integration.isPopulationInAreaAlerted = function( area )
     return DEC_Agent_IsAlerted( area )
 end
 

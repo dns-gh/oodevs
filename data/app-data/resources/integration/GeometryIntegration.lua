@@ -501,13 +501,17 @@ integration.getClosestPath = function( agent, from, to )
     return DEC_GetClosestPath( agent, from, to )
 end
 
---- Splits given location in 4 recursively until each resulting area surface is smaller than or equal to the given averageArea, according to the caller agent's area of responsibility
+--- Splits given location in 4 recursively until each resulting area surface is smaller than or equal to the given averageArea.
+---- Clips the location passed in parameter according to the caller agent's area of responsibility.
 --- Returns a table whose .first attribute is a list of simulation locations, and .second is an error code.
 -- @param localization Simulation localization to split
 -- @param averageArea Double the wanted area surface to return
--- @return a table
--- .first attribute is a list of simulation locations
--- .second attribute is an error code (1 if the given area is not is the caller agent's area of responsibility ; 2 if the split is too big ; 3 if it succeed )
+-- @return Table with two keys :
+-- <ul> <li> "first" : List of simulation locations  </li>
+-- <li> "second" : Integer, the error code among one of the following : </li>
+-- <ul> <li> 1 : The area has no intersection with the current area of responsibility
+-- <li> 2 : The split is too big </li>
+-- <li> 3 : The splitting was successful </li> </ul> </ul>
 integration.recursiveSplitLocalizationSurface( localization, averageArea )
     return _DEC_Geometry_RecursiveSplitLocalisationSurface( myself, localization, averageArea )
 end
