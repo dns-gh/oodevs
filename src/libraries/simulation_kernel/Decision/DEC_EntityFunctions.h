@@ -18,7 +18,11 @@ class DEC_EntityFunctions
 public:
     static void Register( sword::Brain& brain );
 
-    static void DecisionalState( const DEC_Decision_ABC* agent, const std::string& key, const std::string& value );
+    static bool IsAgent( const DEC_Decision_ABC* actor );
+    static bool IsAutomaton( const DEC_Decision_ABC* actor );
+    static bool IsCrowd( const DEC_Decision_ABC* actor );
+
+    static void DecisionalState( const DEC_Decision_ABC* actor, const std::string& key, const std::string& value );
 };
 
 #endif // __DEC_EntityFunctions_h_

@@ -106,14 +106,14 @@ end
 -- @return Boolean, whether or not the unloading succeeded
 integration.dischargeAgentKnowledge = function( enemy, camp )
     if DEC_ConnaissanceAgent_EstRefugie( enemy.source ) then
-        if DEC_Refugies_EstEmbarque( enemy.source ) then
+        if _DEC_PrisonniersRefugies_EstEmbarque( myself, enemy.source ) then
             _DEC_Refugies_DebarquerDansCamp( myself, enemy.source, camp.source )
             integration.removeFromLoadedUnits( enemy )
             integration.removeFromCapturedUnits( enemy )
             return true
         end
     elseif DEC_ConnaissanceAgent_EstPrisonnier( enemy.source ) then
-        if DEC_Prisonniers_EstEmbarque( enemy.source ) then
+        if _DEC_PrisonniersRefugies_EstEmbarque( myself, enemy.source ) then
             _DEC_Prisonniers_DebarquerDansCamp( myself, enemy.source, camp.source )
             integration.removeFromLoadedUnits( enemy )
             integration.removeFromCapturedUnits( enemy )
@@ -134,13 +134,13 @@ end
 integration.loadFriendOrFoe = function( unit )
     integration.addToLoadedUnits( unit )
     if DEC_ConnaissanceAgent_EstRenduAMonCamp( myself, unit.source ) then
-        if not DEC_Prisonniers_EstEmbarque( unit.source ) then
+        if not _DEC_PrisonniersRefugies_EstEmbarque( myself, unit.source ) then
             _DEC_Prisonniers_CapturerEtEmbarquer( myself, unit.source )
             integration.addToCapturedUnits( unit )
             return true
         end
     elseif DEC_ConnaissanceAgent_EstRefugie( unit.source ) then
-        if not DEC_Refugies_EstEmbarque( unit.source ) then
+        if not _DEC_PrisonniersRefugies_EstEmbarque( myself, unit.source ) then
             _DEC_Refugies_OrienterEtEmbarquer( myself, unit.source )
             return true
         end
@@ -160,11 +160,11 @@ integration.unloadFriendOrFoe = function( unit )
     integration.removeFromLoadedUnits( unit )
     integration.removeFromCapturedUnits( unit )
     
-    if DEC_Prisonniers_EstEmbarque( unit.source ) then
+    if DEC_ConnaissanceAgent_EstPrisonnier( unit.source ) and _DEC_PrisonniersRefugies_EstEmbarque( myself, unit.source ) then
         _DEC_Prisonniers_Debarquer( myself, unit.source )
         return true
     end
-    if DEC_Refugies_EstEmbarque( unit.source ) then
+    if DEC_Agent_EstRefugie( unit.source) and _DEC_PrisonniersRefugies_EstEmbarque( myself, unit.source ) then
         _DEC_Refugies_Debarquer( myself, unit.source )
         return true
     end
@@ -175,13 +175,7 @@ end
 -- @param unit Directia agent knowledge
 -- @return Boolean, whether or not the agent knowledge is transported
 integration.isFriendOrFoeTransported = function( unit )
-    if DEC_Prisonniers_EstEmbarque( unit.source ) then
-        return true
-    end
-    if DEC_Refugies_EstEmbarque( unit.source ) then
-        return true
-    end
-    return false
+    return _DEC_PrisonniersRefugies_EstEmbarque( myself, unit.source )
 end
 
 --- Instantaneously loads the given agent
