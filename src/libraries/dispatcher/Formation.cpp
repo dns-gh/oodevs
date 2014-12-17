@@ -171,6 +171,15 @@ void Formation::SendFullUpdate( ClientPublisher_ABC& publisher ) const
     }
     if( logisticEntity_.get() )
         logisticEntity_->SendFullUpdate( publisher );
+    {
+        client::FormationChangeSuperior msg;
+        msg().mutable_formation()->set_id( GetId() );
+        if( parent_ )
+            msg().mutable_superior()->mutable_formation()->set_id( parent_->GetId() );
+        else
+            msg().mutable_superior()->mutable_party()->set_id( team_.GetId() );
+        msg.Send( publisher );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -292,6 +301,15 @@ const tools::Resolver< dispatcher::Automat_ABC >& Formation::GetAutomates() cons
 LogisticEntity_ABC* Formation::GetLogisticEntity() const
 {
     return logisticEntity_.get();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Formation::DoUpdate
+// Created: LDC 2014-12-17
+// -----------------------------------------------------------------------------
+void Formation::DoUpdate( const sword::FormationCreation& msg )
+{
+    parent_ = msg.has_parent() ? &model_.Formations().Get( msg.parent().id() ) : 0;
 }
 
 // -----------------------------------------------------------------------------
