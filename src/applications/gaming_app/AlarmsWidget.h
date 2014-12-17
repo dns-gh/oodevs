@@ -56,6 +56,7 @@ private:
     bool IsAfter( QTreeWidgetItem* item, const QDateTime& date );
     void Trigger( QTreeWidgetItem* item );
     void ShowEditor( QTreeWidgetItem* item, bool newAlarm );
+    bool IsValid( QTreeWidgetItem* item ) const;
     //@}
 
 private:

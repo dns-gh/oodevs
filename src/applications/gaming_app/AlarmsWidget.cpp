@@ -14,6 +14,7 @@
 #include "gaming/SimulationController.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Tools.h"
+#include <boost/optional.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: AlarmsWidget constructor
@@ -87,6 +88,19 @@ void AlarmsWidget::NotifyUpdated( const Simulation& simulation )
     }
 }
 
+// Returns true if item belongs to the tree.
+bool AlarmsWidget::IsValid( QTreeWidgetItem* item ) const
+{
+    QTreeWidgetItem* it = list_->topLevelItem( 0 );
+    while( it )
+    {
+        if( item == it )
+            return true;
+        it = list_->itemBelow( item );
+    }
+    return false;
+}
+
 // -----------------------------------------------------------------------------
 // Name: AlarmsWidget::IsAfter
 // Created: AGE 2007-05-09
@@ -151,13 +165,18 @@ void AlarmsWidget::ShowEditorSlot( QTreeWidgetItem* item )
 
 namespace
 {
+    struct Alarm
+    {
+        QString time;
+        QString text;
+    };
+
     class AlarmEditor : public QDialog
     {
     public:
         AlarmEditor( QWidget* parent, const SimulationController& simulationController )
             : QDialog( parent )
             , simulationController_( simulationController )
-            , item_( 0 )
         {
             setCaption( tools::translate( "AlarmsWidget", "Alarm parameters" ) );
             Q3GridLayout* pLayout = new Q3GridLayout( this, 2, 3 );
@@ -176,34 +195,25 @@ namespace
             connect( cancel, SIGNAL( clicked() ), this, SLOT( reject() ) );
 
             pLayout->addMultiCellWidget( buttonBox, 1, 1, 0, 2 );
-
-            Show( 0 );
         }
-        void Show( QTreeWidgetItem* item )
+
+        boost::optional< Alarm > Show( QString time, QString text )
         {
-            item_ = item;
-            if( item_ && ! item_->text( 0 ).isEmpty() )
-                time_->setDateTime( QDateTime::fromString( item_->text( 0 ), Qt::ISODate ) );
+            if( !time.isEmpty() )
+                time_->setDateTime( QDateTime::fromString( time, Qt::ISODate ) );
             else
                 time_->setDateTime( simulationController_.GetDateTime() );
-            if( item_ )
-            {
-                text_->setText( item_->text( 1 ) );
-                exec();
-            }
-            else
-                hide();
+            text_->setText( text );
+            if( exec() == QDialog::Rejected )
+                return boost::none;
+            Alarm alarm;
+            alarm.time = time_->dateTime().toString( Qt::ISODate );
+            alarm.text = text_->text();
+            return alarm;
         }
 
-        virtual void accept()
-        {
-            item_->setText( 0, time_->dateTime().toString( Qt::ISODate ) );
-            item_->setText( 1, text_->text() );
-            QDialog::accept();
-        }
     private:
         const SimulationController& simulationController_;
-        QTreeWidgetItem* item_;
         QDateTimeEdit* time_;
         QLineEdit* text_;
     };
@@ -216,7 +226,17 @@ namespace
 void AlarmsWidget::ShowEditor( QTreeWidgetItem* item, bool newAlarm )
 {
     static AlarmEditor* editor = new AlarmEditor( this, simulationController_ );
-    editor->Show( item );
-    if( newAlarm && editor->result() == QDialog::Rejected )
-        delete item;
+    const auto res = editor->Show( item->text( 0 ), item->text( 1 ) );
+    if( !IsValid( item ) )
+        return;
+    if( res )
+    {
+        item->setText( 0, res->time );
+        item->setText( 1, res->text );
+    }
+    else
+    {
+        if( newAlarm )
+            delete item;
+    }
 }
