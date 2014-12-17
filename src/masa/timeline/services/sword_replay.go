@@ -291,7 +291,7 @@ func (s *Sword) updateReplay(events ...*sdk.Event) {
 		}
 		// reorder events, modifications are first, insertions are last
 		if s.isModification(event) {
-			eventsToApply = append(eventsToApply[:0], append([]*sdk.Event{event}, events[0:]...)...) // push_front
+			eventsToApply = append(eventsToApply[:0], append([]*sdk.Event{event}, eventsToApply[0:]...)...) // push_front
 		} else {
 			eventsToApply = append(eventsToApply, event) // push_back
 		}
