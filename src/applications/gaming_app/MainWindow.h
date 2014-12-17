@@ -126,12 +126,20 @@ signals:
     //@}
 
 private:
-    //! @name Helpers
-    //@{
+    enum E_LoadSteps
+    {
+        eDisconnected,
+        eLoadPhysical,
+        eChooseProfile,
+        eFullyLoaded
+    };
+
+private:
     virtual void closeEvent( QCloseEvent* pEvent );
 
     void Close();
     void LoadPhysical();
+    void LoadProfile( const Profile& profile );
     void LoadGUI();
     void SetProgression( int value, const QString& text );
     void HandleError( const QString& msg, const std::exception& e );
@@ -147,6 +155,8 @@ private:
                        const std::shared_ptr< gui::Layer_ABC >& profiler,
                        const Simulation& simulation,
                        gui::TerrainPicker& picker );
+    void UpdateTitle( const QString& host = "" );
+    bool CanProcessLoadStep( E_LoadSteps step ) const;
 
 private:
     //! @name Member data
@@ -160,13 +170,9 @@ private:
     const kernel::Profile_ABC& profile_;
     kernel::Workers& workers_;
 
-    QByteArray states_;
-    bool connected_;
-    bool staticModelLoaded_;
-    bool onPlanif_;
-    QString planifName_;
-    QString savedState_;
     E_Modes currentMode_;
+    E_LoadSteps currentLoadStep_;
+    const QString appName_;
 
     std::unique_ptr< gui::TextEditor > textEditor_; // should move in parameter layer
     boost::shared_ptr< QProcess > process_; // should move in layers panel
