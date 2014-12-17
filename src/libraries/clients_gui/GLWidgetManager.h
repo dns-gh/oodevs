@@ -96,7 +96,6 @@ public:
 
     bool LoadDisplaySettings( const tools::Path& filename, bool displayMessage );
 
-    bool IsLoading() const;
     T_GLStackedWidget GetMainWidget() const;
     T_GLStackedWidget GetHoveredWidget() const;
     //@}
@@ -158,7 +157,6 @@ private:
     std::shared_ptr< ContourLinesObserver > contourLinesObserver_;
 
     int dockWidgetCount_;
-    bool loading_;
     std::auto_ptr< QTimer > displayTimer_;
     T_GLStackedWidget mainWidget_;
     std::map< unsigned, T_GLDockWidget > dockWidgets_;

@@ -75,7 +75,6 @@ GLWidgetManager::GLWidgetManager( QMainWindow& mainWindow,
     , contourLinesObserver_( new ContourLinesObserver() )
     , dockWidgetCount_( 0 )
     , displayTimer_( new QTimer( this ) )
-    , loading_( false )
 {
     setObjectName( "GLWidgetManager" );
     mainProxy_.AddActiveChangeObserver( this, [&]( const GLView_ABC::T_View& ) {
@@ -463,7 +462,6 @@ bool GLWidgetManager::LoadDisplaySettings( const tools::Path& filename, bool dis
                                   .arg( fileExercise ) );
         return false;
     }
-    loading_ = true;
     PurgeViews();
 
     settings.beginGroup( "General" );
@@ -483,7 +481,6 @@ bool GLWidgetManager::LoadDisplaySettings( const tools::Path& filename, bool dis
     }
     controllers_.options_.UpdateViewOptions();
     RestoreGeometryAndState( mainWindow_, settings, "WindowGeometry", "WindowState" );
-    loading_ = false;
     return true;
 }
 
@@ -528,15 +525,6 @@ void GLWidgetManager::LoadView( kernel::Settings& settings,
     view->LoadFrustum( FrustumInfos( settings ) );
     settings.endGroup();
     settings.endGroup();
-}
-
-// -----------------------------------------------------------------------------
-// Name: GLWidgetManager::IsLoading
-// Created: ABR 2014-07-18
-// -----------------------------------------------------------------------------
-bool GLWidgetManager::IsLoading() const
-{
-    return loading_;
 }
 
 // -----------------------------------------------------------------------------
