@@ -133,6 +133,7 @@ func (*ObserverService) Start() error                     { return nil }
 func (*ObserverService) Stop() error                      { return nil }
 func (*ObserverService) AttachObserver(services.Observer) {}
 func (*ObserverService) UpdateTick(time.Time)             {}
+func (*ObserverService) CanTrigger(event time.Time) bool  { return true }
 
 func (os *ObserverService) Trigger(url url.URL, event *sdk.Event) error {
 	os.log.Printf("external[%v] -> action %v\n", os.uuid, event.GetUuid())

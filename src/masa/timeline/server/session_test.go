@@ -530,6 +530,7 @@ func (f *FakeService) Trigger(url.URL, *sdk.Event) error            { return nil
 func (f *FakeService) CheckEvent(event *sdk.Event) error            { return nil }
 func (f *FakeService) CheckDeleteEvent(uuid string) (string, error) { return "", nil }
 func (f *FakeService) UpdateTick(time.Time)                         {}
+func (f *FakeService) CanTrigger(event time.Time) bool              { return true }
 
 func (f *FakeService) UpdateEvents(events ...*sdk.Event) {
 	f.lock.Lock()

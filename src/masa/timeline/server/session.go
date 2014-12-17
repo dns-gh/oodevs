@@ -351,6 +351,15 @@ func (s *Session) triggerEvent(event *Event) {
 	}
 }
 
+func (s *Session) canTrigger(event time.Time) bool {
+	for _, service := range s.services {
+		if !service.CanTrigger(event) {
+			return false
+		}
+	}
+	return true
+}
+
 func (s *Session) triggerEvents(begin, end time.Time) {
 	idx := s.events.Search(begin)
 	for _, event := range s.events[idx:] {
@@ -360,7 +369,9 @@ func (s *Session) triggerEvents(begin, end time.Time) {
 		if event.begin.After(end) {
 			continue
 		}
-		s.triggerEvent(event)
+		if s.canTrigger(event.begin) {
+			s.triggerEvent(event)
+		}
 	}
 }
 

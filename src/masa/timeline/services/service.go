@@ -41,6 +41,7 @@ type Service interface {
 	Stop() error
 	UpdateTick(tick time.Time)
 	Trigger(target url.URL, event *sdk.Event) error
+	CanTrigger(event time.Time) bool
 }
 
 type EventChecker interface {

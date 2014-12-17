@@ -87,6 +87,10 @@ func (t *Timer) Stop() error {
 	return nil
 }
 
+func (t *Timer) CanTrigger(event time.Time) bool {
+	return true
+}
+
 func (t *Timer) Trigger(url.URL, *sdk.Event) error {
 	return ErrInvalidTrigger
 }

@@ -370,6 +370,13 @@ func (s *Sword) Trigger(url url.URL, event *sdk.Event) error {
 	return nil
 }
 
+func (s *Sword) CanTrigger(event time.Time) bool {
+	if len(s.replays) == 0 {
+		return true
+	}
+	return s.replayCanTrigger(event)
+}
+
 func (s *Sword) closeAction(link *SwordLink, id string, err error) {
 	// Discard actions when we're not in connected state
 	// It should not happen and would not fix potential errors
