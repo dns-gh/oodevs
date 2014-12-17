@@ -184,12 +184,11 @@ MainWindow::MainWindow( Controllers& controllers,
     , workers_( workers )
     , progressDialog_( new QProgressDialog( "", "", 0, 100, this, Qt::SplashScreen ) )
     , pColorController_( new ColorController( controllers_ ) )
-    , connected_( false )
-    , onPlanif_( false )
-    , staticModelLoaded_( false )
     , drawingsBuilder_( new DrawingsBuilder( controllers_, profile_ ) )
     , glProxy_( std::make_shared< gui::GLMainProxy >( controllers_, filter, model.teams_ ) )
     , currentMode_( eModes_Gaming )
+    , currentLoadStep_( eDisconnected )
+    , appName_( tr( "SWORD" ) )
 {
     controllers_.modes_.SetMainWindow( this );
     controllers_.actions_.AddSelectionner( new Selectionner< actions::Action_ABC >() );
@@ -318,8 +317,7 @@ MainWindow::MainWindow( Controllers& controllers,
 
     // Initialize
     setIcon( gui::Pixmap( tools::GeneralConfig::BuildResourceChildFile( "images/gui/logo32x32.png" ) ) );
-    planifName_ = tr( "SWORD" ) + tr( " - Not connected" );
-    setCaption( planifName_ );
+    UpdateTitle();
     resize( 800, 600 );
 
     // progress dialog
@@ -428,10 +426,12 @@ void MainWindow::LoadPhysical()
 {
     try
     {
+        if( !CanProcessLoadStep( eLoadPhysical ) )
+            return;
         SetProgression( 0, tr( "Loading physical base ..." ) );
         staticModel_.Load( config_ );
-        staticModelLoaded_ = true;
         SetProgression( 20, tr( "Receiving profiles information ..." ) );
+        currentLoadStep_ = eLoadPhysical;
     }
     catch( const xml::exception& e )
     {
@@ -441,10 +441,33 @@ void MainWindow::LoadPhysical()
     }
 }
 
+void MainWindow::LoadProfile( const Profile& profile )
+{
+    if( !CanProcessLoadStep( eChooseProfile ) )
+        return;
+    if( !profile.IsLoggedIn() )
+    {
+        static ConnectLoginDialog* dialog = new ConnectLoginDialog( this, profile, network_, controllers_ );
+        SetProgression( 29, tr( "Select a user profile ..." ) );
+        QTimer::singleShot( 0, dialog, SLOT( show() ) );
+        gui::connect( dialog, SIGNAL( accepted() ), [ &]() {
+            SetProgression( 30, tr( "Receiving initial state ..." ) );
+            currentLoadStep_ = eChooseProfile;
+        } );
+    }
+    else
+    {
+        SetProgression( 30, tr( "Receiving initial state ..." ) );
+        currentLoadStep_ = eChooseProfile;
+    }
+}
+
 void MainWindow::LoadGUI()
 {
     try
     {
+        if( !CanProcessLoadStep( eFullyLoaded ) )
+            return;
         SetProgression( 70, tr( "Starting threads ..." ) );
         workers_.Initialize();
         SetProgression( 80, tr( "Loading graphical interface ..." ) );
@@ -458,6 +481,7 @@ void MainWindow::LoadGUI()
         controllers_.modes_.LoadOptions( currentMode_ );
         controllers_.ChangeMode( currentMode_ );
         SetProgression( 100, tr( "Loading complete" ) );
+        currentLoadStep_ = eFullyLoaded;
     }
     catch( const xml::exception& e )
     {
@@ -474,12 +498,12 @@ namespace
 
 void MainWindow::Close()
 {
+    if( currentLoadStep_ == eDisconnected )
+        return;
     try
     {
-        connected_ = false;
-        staticModelLoaded_ = false;
         controllers_.actions_.Select( SelectionStub() );
-        login_ = "";
+        login_.clear();
         SetProgression( 0, tr( "Saving options ..." ) );
         controllers_.modes_.SaveGeometry( currentMode_ );
         controllers_.modes_.SaveOptions( currentMode_ );
@@ -502,6 +526,8 @@ void MainWindow::Close()
         SetProgression( 100, tr( "Closing failed" ) ); 
         HandleError( tr( "Error closing exercise: " ), e );
     }
+    UpdateTitle();
+    currentLoadStep_ = eDisconnected;
 }
 
 void MainWindow::closeEvent( QCloseEvent* pEvent )
@@ -511,9 +537,9 @@ void MainWindow::closeEvent( QCloseEvent* pEvent )
 }
 
 // -----------------------------------------------------------------------------
-// NotifyUpdated: Services -> load physical model, and choose mode gaming or replay
-//                Profile -> choose profile if needed
-//                Simulation -> when fully initialized, load GUI, which terminates load process.
+// NotifyUpdated: Services -> load physical model -> step 1
+//                Profile -> load profile -> step 2
+//                Simulation -> when simulation is initialized, load GUI -> step 3
 //                Reconnection -> reconnect network, which updates services, profile then simulation
 // -----------------------------------------------------------------------------
 void MainWindow::NotifyUpdated( const ::Services& services )
@@ -528,22 +554,10 @@ void MainWindow::NotifyUpdated( const ::Services& services )
 
 void MainWindow::NotifyUpdated( const Profile& profile )
 {
-    // called between LoadPhysical and LoadGUI, so it updates progression state
-    if( !profile.IsLoggedIn() )
-    {
-        login_ = profile.GetLogin();
-        static ConnectLoginDialog* dialog = new ConnectLoginDialog( this, profile, network_, controllers_ );
-        SetProgression( 29, tr( "Select a user profile ..." ) );
-        QTimer::singleShot( 0, dialog, SLOT( show() ) );
-        gui::connect( dialog, SIGNAL( accepted() ), [&]() {
-            SetProgression( 30, tr( "Receiving initial state ..." ) );
-        } );
-    }
-    else
-    {
-        login_ = profile.GetLogin();
-        SetProgression( 30, tr( "Receiving initial state ..." ) );
-    }
+    login_ = profile.GetLogin();
+    if( login_.isEmpty() )
+        login_ = tools::translate( "LoginDialog", "Anonymous" );
+    LoadProfile( profile );
 }
 
 namespace
@@ -559,24 +573,12 @@ void MainWindow::NotifyUpdated( const Simulation& simulation )
     const QString appName = tr( "SWORD" );
     if( simulation.IsConnected() )
     {
-        if( !connected_ && simulation.IsInitialized() && staticModelLoaded_ )
-        {
-            connected_ = true; // we update the caption until Model is totally loaded
-            if( login_.isEmpty() )
-                login_ = tools::translate( "LoginDialog", "Anonymous" );
+        UpdateTitle( QString::fromStdString( simulation.GetSimulationHost() ) );
+        if( simulation.IsInitialized() )
             LoadGUI();
-        }
-        planifName_ = appName + QString( " - [%1@%2][%3]" )
-                                .arg( login_ )
-                                .arg( simulation.GetSimulationHost().c_str() )
-                                .arg( ExtractExerciceName( config_.GetExerciseFile() ));
     }
     else
-    {
-        planifName_ = appName + tr( " - Not connected" ) ;
         Close();
-    }
-    setCaption( planifName_ );
 }
 
 void MainWindow::NotifyUpdated( const Simulation::Reconnection& reconnection )
@@ -584,6 +586,23 @@ void MainWindow::NotifyUpdated( const Simulation::Reconnection& reconnection )
     network_.Reconnect();
     network_.GetMessageMgr().Reconnect( reconnection.login_, reconnection.password_ );
 }
+
+// -----------------------------------------------------------------------------
+// helpers
+// -----------------------------------------------------------------------------
+bool MainWindow::CanProcessLoadStep( E_LoadSteps step ) const
+{
+    return step == currentLoadStep_ + 1;
+}
+
+void MainWindow::UpdateTitle( const QString& host )
+{
+    const QString notConnectedTitle = appName_ + tr( " - Not connected" );
+    setCaption( host.isEmpty()
+                ? notConnectedTitle
+                : appName_ + QString( " - [%1@%2][%3]" ).arg( login_ ).arg( host ).arg( ExtractExerciceName( config_.GetExerciseFile() ) ) );
+}
+
 
 // todo: move to layer panel
 void MainWindow::OnAddRaster()
@@ -640,11 +659,11 @@ void MainWindow::ToggleFullScreen()
 
 void MainWindow::ToggleDocks()
 {
-    static QByteArray states_;
+    static QByteArray states;
 
-    if( states_.isNull() || states_.isEmpty() )
+    if( states.isNull() || states.isEmpty() )
     {
-        states_ = saveState();
+        states = saveState();
         QList< QToolBar* > toolbars = qFindChildren< QToolBar* >( this, QString() );
         for( QList< QToolBar* >::iterator it = toolbars.begin(); it != toolbars.end(); ++it )
         {
@@ -663,8 +682,8 @@ void MainWindow::ToggleDocks()
             ( *it )->hide();
         }
     }
-    else if( restoreState( states_ ) )
-        states_ = 0;
+    else if( restoreState( states ) )
+        states = 0;
 }
 
 void MainWindow::SetProgression( int value, const QString& text )
@@ -683,6 +702,5 @@ void MainWindow::SetProgression( int value, const QString& text )
 
 void MainWindow::HandleError( const QString& msg, const std::exception& e )
 {
-    QMessageBox::critical( this, tools::translate( "Application", "SWORD" ),
-                           msg + QString::fromStdString( tools::GetExceptionMsg( e ) ) );
+    QMessageBox::critical( this, appName_, msg + QString::fromStdString( tools::GetExceptionMsg( e ) ) );
 }
