@@ -145,12 +145,14 @@ func checkEventInsertion(event *sdk.Event, replays []*sdk.Event, eventBegin, eve
 
 type ModifiedEvents map[string]*sdk.Event
 
-func (s *Sword) filterEvents(modified *bool, replays *[]*sdk.Event, events ...*sdk.Event) (ModifiedEvents, error) {
+func (s *Sword) filterEvents(modified *bool, replays *[]*sdk.Event, events ...*sdk.Event) (ModifiedEvents, []*sdk.Event, error) {
 	result := ModifiedEvents{}
 	eventsToApply := []*sdk.Event{}
+	nonreplays := []*sdk.Event{}
 	for _, event := range events {
 		// check if the event has replay protocol
 		if !isSwordEvent(event, "replay", false) {
+			nonreplays = append(nonreplays, event)
 			continue
 		}
 		// reorder events, modifications are first, insertions are last
@@ -164,21 +166,21 @@ func (s *Sword) filterEvents(modified *bool, replays *[]*sdk.Event, events ...*s
 		// Cannot modify event outside replay boundaries
 		eventBegin, eventEnd, err := checkBoundaries(event, s.startTime, s.endTime)
 		if err != nil {
-			return result, err
+			return result, nonreplays, err
 		}
 
 		if eventBegin == eventEnd || eventBegin.After(eventEnd) {
-			return result, util.NewError(http.StatusBadRequest, "Invalid replay range modification")
+			return result, nonreplays, util.NewError(http.StatusBadRequest, "Invalid replay range modification")
 		}
 		// Checks payload error
 		_, err = readPayload(event)
 		if err != nil {
-			return result, err
+			return result, nonreplays, err
 		}
 		// Checks event modification
 		checked, err := checkEventModification(event, *replays, eventBegin, eventEnd)
 		if err != nil {
-			return result, err
+			return result, nonreplays, err
 		}
 		if checked {
 			s.modifyEvent(modified, event, &result, replays)
@@ -195,10 +197,10 @@ func (s *Sword) filterEvents(modified *bool, replays *[]*sdk.Event, events ...*s
 			continue
 		}
 		// If there is no valid modification or no valid creation, it's an error
-		return result, util.NewError(http.StatusBadRequest, "Invalid event update")
+		return result, nonreplays, util.NewError(http.StatusBadRequest, "Invalid event update")
 	}
 	// return replay event filtered, with no error
-	return result, nil
+	return result, nonreplays, nil
 }
 
 func (s *Sword) modifyEvent(modified *bool, event *sdk.Event, result *ModifiedEvents, replays *[]*sdk.Event) bool {
@@ -371,7 +373,7 @@ func (s *Sword) CheckEvents(events ...*sdk.Event) ([]*sdk.Event, bool, error) {
 	for i := range s.replays {
 		replays[i] = CloneEvent(s.replays[i])
 	}
-	result, err := s.filterEvents(&modified, &replays, events...)
+	result, nonreplays, err := s.filterEvents(&modified, &replays, events...)
 	if err != nil {
 		return toSlice(result), modified, err
 	}
@@ -385,7 +387,7 @@ func (s *Sword) CheckEvents(events ...*sdk.Event) ([]*sdk.Event, bool, error) {
 			result[event.GetUuid()] = event
 		}
 	}
-	return toSlice(result), modified, nil
+	return append(toSlice(result), nonreplays...), modified, nil
 }
 
 func (s *Sword) CheckDeleteEvent(uuid string) (string, error) {
