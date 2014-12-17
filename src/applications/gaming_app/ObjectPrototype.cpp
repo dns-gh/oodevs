@@ -267,11 +267,11 @@ void ObjectPrototype::DoCommit( const kernel::Team_ABC& team )
         kernel::MagicActionType& actionType = static_cast< tools::Resolver< kernel::MagicActionType, std::string >& > ( static_.types_ ).Get( "create_object" );
         std::unique_ptr< Action_ABC > action( new ObjectMagicAction( actionType, controllers_.controller_, false ) );
         action->Rename( tools::translate( "gaming_app::Action", "Object Creation" ) );
+        const kernel::ObjectType* type = objectTypes_->GetValue();
         tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
-
         action->AddParameter( *new String( it.NextElement(), objectTypes_->GetValue()->GetType() ) );
         action->AddParameter( *new Location( it.NextElement(), static_.coordinateConverter_, GetCurrentLocation() ) );
-        action->AddParameter( *new String( it.NextElement(), name_->text().isEmpty() ? "" : name_->text().toStdString() ) );
+        action->AddParameter( *new String( it.NextElement(), name_->text().isEmpty() ? ( type ? type->GetName() : "" ) : name_->text().toStdString() ) );
         action->AddParameter( *new Army( it.NextElement(), team, controllers_.controller_ ) );
 
         attributesList_ = new ParameterList( it.NextElement() );
