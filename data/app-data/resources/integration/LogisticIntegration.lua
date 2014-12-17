@@ -85,7 +85,7 @@ integration.isLogisticAutomat = function( )
 end
 
 integration.isLogisticAutomatExist = function( )
-    return _DEC_Automate_isLogistic
+    return true
 end
 
 integration.getWorkRegime = function( )
@@ -93,7 +93,7 @@ integration.getWorkRegime = function( )
 end
 
 integration.getWorkRegimeExist = function( )
-    return _DEC_Maintenance_RegimeTravail
+    return true
 end
 
 integration.getTacticalPrioritiesHealth = function( )
@@ -101,7 +101,7 @@ integration.getTacticalPrioritiesHealth = function( )
 end
 
 integration.getTacticalPrioritiesHealthExist = function( )
-    return _DEC_Sante_PrioritesTactiques
+    return true
 end
 
 integration.getTacticalPrioritiesMaintenance = function( )
@@ -109,7 +109,7 @@ integration.getTacticalPrioritiesMaintenance = function( )
 end
 
 integration.getTacticalPrioritiesMaintenanceExist = function( )
-    return _DEC_Maintenance_PrioritesTactiques
+    return true
 end
 
 integration.getPrioritiesMaintenance = function( )
@@ -117,7 +117,7 @@ integration.getPrioritiesMaintenance = function( )
 end
 
 integration.getPrioritiesMaintenanceExist = function( )
-    return _DEC_Maintenance_Priorites
+    return true
 end
 
 integration.getPrioritiesHealth = function( )
@@ -125,7 +125,7 @@ integration.getPrioritiesHealth = function( )
 end
 
 integration.getPrioritiesHealthExist = function( )
-    return _DEC_Sante_Priorites
+    return true
 end
 
 integration.supplyRequest = function( )

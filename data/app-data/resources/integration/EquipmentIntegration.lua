@@ -890,12 +890,8 @@ end
 -- This method can only be called by an NBC agent.
 -- @return Boolean, true if the unit can self-decontaminate, false otherwise
 integration.selfDecontaminate = function()
-    if _DEC_Agent_SeDecontaminer then
-        _DEC_Agent_SeDecontaminer( myself )
-        return true
-    else
-        return false
-    end
+    _DEC_Agent_SeDecontaminer( myself )
+    return true
 end
 
 --- Sets the flying height of this entity to the given height.

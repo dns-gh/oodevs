@@ -8,16 +8,35 @@
 
 void DEC_EntityFunctions::Register( sword::Brain& brain )
 {
+    brain.RegisterFunction( "DEC_IsAgent", &DEC_EntityFunctions::IsAgent );
+    brain.RegisterFunction( "DEC_IsAutomaton", &DEC_EntityFunctions::IsAutomaton );
+    brain.RegisterFunction( "DEC_IsCrowd", &DEC_EntityFunctions::IsCrowd ); 
+
     brain.RegisterFunction( "_DEC_DecisionalState", &DEC_EntityFunctions::DecisionalState );
 }
 
-void DEC_EntityFunctions::DecisionalState( const DEC_Decision_ABC* agent, const std::string& key, const std::string& value )
+bool DEC_EntityFunctions::IsAgent( const DEC_Decision_ABC* actor )
 {
-    if( agent )
+    return actor->GetKind() == DEC_Decision_ABC::ePion;
+}
+
+bool DEC_EntityFunctions::IsAutomaton( const DEC_Decision_ABC* actor )
+{
+    return actor->GetKind() == DEC_Decision_ABC::eAutomate;
+}
+
+bool DEC_EntityFunctions::IsCrowd( const DEC_Decision_ABC* actor )
+{
+    return actor->GetKind() == DEC_Decision_ABC::ePopulation;
+}
+
+void DEC_EntityFunctions::DecisionalState( const DEC_Decision_ABC* actor, const std::string& key, const std::string& value )
+{
+    if( actor )
     {
         client::DecisionalState msg;
-        const auto id = agent->GetEntity().GetID();
-        switch( agent->GetKind() )
+        const auto id = actor->GetEntity().GetID();
+        switch( actor->GetKind() )
         {
         case DEC_Decision_ABC::ePion:
             msg().mutable_source()->mutable_unit()->set_id( id );

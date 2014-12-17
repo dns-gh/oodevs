@@ -218,7 +218,7 @@ integration.proximity = function( pos1, pos2, defaultDistanceMax ) -- $$$ MIA se
         return 1
     end 
     defaultDistanceMax = defaultDistanceMax or 4000
-    local distanceMax = _DEC_Detection_Distance and _DEC_Detection_Distance( myself ) or defaultDistanceMax
+    local distanceMax = DEC_IsAgent( myself ) and _DEC_Detection_Distance( myself ) or defaultDistanceMax
     return LinearInterpolation( 1, 100, 10, distanceMax, false, integration.distance( pos1, pos2 ) )
 end
 
