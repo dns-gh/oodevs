@@ -37,6 +37,7 @@ namespace dispatcher
 // =============================================================================
 class Formation : public dispatcher::Formation_ABC
                 , public kernel::Extension_ABC
+                , public kernel::Updatable_ABC< sword::FormationCreation >
                 , public kernel::Updatable_ABC< sword::FormationUpdate >
                 , public kernel::Updatable_ABC< sword::FormationChangeSuperior >
 {
@@ -67,6 +68,7 @@ public:
     virtual void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
     virtual void SendDestruction( ClientPublisher_ABC& publisher ) const;
 
+    virtual void DoUpdate( const sword::FormationCreation& msg );
     virtual void DoUpdate( const sword::FormationUpdate& msg );
     virtual void DoUpdate( const sword::FormationChangeSuperior&  msg );
 
