@@ -11,6 +11,7 @@ package services
 import (
 	"masa/sword/swapi"
 	"sync"
+	"sync/atomic"
 	"time"
 )
 
@@ -25,14 +26,63 @@ type SwordLinkObserver interface {
 	PostReplayRangeDates(link *SwordLink, start, end time.Time)
 }
 
+// ActionThrottler executes a user function at regular interval if Schedule()
+// has been called before. Executing the action resets the scheduling state.
+//
+// When done with the throttler, call Close() to release related resources.
+type ActionThrottler struct {
+	dirty  int32     // non-zero if the action must be executed next tick
+	quit   chan bool // close it to require throttler termination
+	done   chan bool // closed when throttler goroutine has exited
+	closed bool      // true if Close() has been called already
+}
+
+func NewActionThrottler(period time.Duration, action func()) *ActionThrottler {
+	t := &ActionThrottler{
+		quit: make(chan bool),
+		done: make(chan bool),
+	}
+	go func() {
+		defer close(t.done)
+		ticker := time.NewTicker(period)
+		defer ticker.Stop()
+		for {
+			select {
+			case <-t.quit:
+				return
+			case <-ticker.C:
+				if atomic.LoadInt32(&t.dirty) != 0 {
+					atomic.StoreInt32(&t.dirty, 0)
+					action()
+				}
+			}
+		}
+	}()
+	return t
+}
+
+func (t *ActionThrottler) Schedule() {
+	atomic.StoreInt32(&t.dirty, 1)
+}
+
+func (t *ActionThrottler) Close() {
+	if !t.closed {
+		t.closed = true
+		close(t.quit)
+		<-t.done
+	}
+}
+
 type SwordLink struct {
 	poster   SwordLinkObserver
-	client   *swapi.Client             // gosword client
-	listener int32                     // model listener id
-	reader   *SwordReader              // message reader
-	pending  sync.WaitGroup            // pending callbacks
-	mutex    sync.Mutex                // protect writers
-	writers  map[*SwordWriter]struct{} // pending actions
+	client   *swapi.Client    // gosword client
+	listener int32            // model listener id
+	updater  *ActionThrottler // throttles InvalidFilters calls triggered
+	// by model updates
+	reader  *SwordReader              // message reader
+	pending sync.WaitGroup            // pending callbacks
+	mutex   sync.Mutex                // protect writers
+	writers map[*SwordWriter]struct{} // pending actions
 }
 
 func NewSwordLink(poster SwordLinkObserver, address, name string, clock bool) (*SwordLink, error) {
@@ -95,12 +145,22 @@ func (s *SwordReaderHandler) SetReplayRangeDates(start, end time.Time) {
 
 func (s *SwordLink) Attach(observer Observer, orders Ids, actions Ids) {
 	s.reader.Attach(&SwordReaderHandler{s.poster, observer, s}, orders, actions)
-	s.listener = s.client.Model.RegisterListener(func(event swapi.ModelEvent) {
+	s.updater = NewActionThrottler(250*time.Millisecond, func() {
 		s.poster.PostInvalidateFilters(s)
+	})
+	s.listener = s.client.Model.RegisterListener(func(event swapi.ModelEvent) {
+		// InvalidateFilters is slow enough that triggering it for every
+		// event hamper replay performance, when skipping ticks or replaying
+		// at high speed. Updating immediately does not matter, visible
+		// events can be updated asynchronously, for display purpose.
+		s.updater.Schedule()
 	})
 }
 
 func (s *SwordLink) Detach() {
+	if s.updater != nil {
+		s.updater.Close()
+	}
 	if s.reader != nil {
 		s.reader.Close()
 	}
