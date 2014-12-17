@@ -16,6 +16,18 @@ integration.alertUrbanBlock = function( urbanBlock )
     return true
 end
 
+--- Alerts the urbans blocks in the given area
+-- @param area Simulation area
+integration.alertUrbanBlockInArea = function( area )
+    DEC_Agent_Alert( area )
+end
+
+--- Confines the urbans blocks in the given area
+-- @param area Simulation area
+integration.confineArea = function( area )
+    DEC_Agent_Confine( area )
+end
+
 --- Undoes the alerting of the given urban block, and displays appropriate reports.
 -- This method only undoes the alerting of the given urban block if it is populated.
 -- @see integration.alertUrbanBlock
@@ -38,6 +50,13 @@ end
 integration.isUrbanBlockAlerted = function( urbanBlock )
     local localisation = DEC_PolygoneBlocUrbain( urbanBlock.source )
     return DEC_Agent_IsAlerted( localisation )
+end
+
+--- Returns true if the given area is alerted, false otherwise.
+-- @param area Simulation area
+-- @return Boolean, whether or not the given area is alerted
+integration.isUrbanBlockInAreaAlerted = function( area )
+    return DEC_Agent_IsAlerted( area )
 end
 
 --- Confines the given urban block, and displays appropriate reports.

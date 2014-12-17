@@ -395,6 +395,13 @@ integration.getIntersectionSize = function( area1, area2 )
     return DEC_Geometrie_IntersectionSize( area1, area2 )
 end
 
+--- Returns the given position in the caller agent AOR
+-- @param position Simulation position
+-- @return the position in the agent AOR
+integration.positionAdvanceAlongFuseau = function( position )
+    return DEC_Geometrie_PositionAdvanceAlongAOR( myself, position )
+end
+
 ------------------------------------------------------------------
 --- DECLARATIONS ENSURING BACKWARDS COMPATIBILITY
 ------------------------------------------------------------------
@@ -492,4 +499,16 @@ end
 -- @return list of positions
 integration.getClosestPath = function( agent, from, to )
     return DEC_GetClosestPath( agent, from, to )
+end
+
+--- Returns a table whose .first attribute is a list of simulation locations, and .second is an error code.
+--- Clips the location passed in parameter according to the caller agent's area of responsibility, 
+--- then splits said location in 4 recursively until each resulting area surface is smaller than or equal to the given averageArea
+-- @param localization Simulation localization to split
+-- @param averageArea Double the wanted area surface to return
+-- @return a table
+-- @return .first attribute is a list of simulation locations
+-- @return .second attribute is an error code (1 if the given area is not is the caller agent's area of responsibility ; 2 if the split is too big ; 3 if it succeed )
+integration.recursiveSplitLocalizationSurface( localization, averageArea )
+    return _DEC_Geometry_RecursiveSplitLocalisationSurface( myself, localization, averageArea )
 end
