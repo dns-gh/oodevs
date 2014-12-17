@@ -502,8 +502,8 @@ integration.getClosestPath = function( agent, from, to )
 end
 
 --- Splits given location in 4 recursively until each resulting area surface is smaller than or equal to the given averageArea.
----- Clips the location passed in parameter according to the caller agent's area of responsibility.
---- Returns a table whose .first attribute is a list of simulation locations, and .second is an error code.
+-- Clips the location passed in parameter according to the caller agent's area of responsibility.
+-- Returns a table whose .first attribute is a list of simulation locations, and .second is an error code.
 -- @param localization Simulation localization to split
 -- @param averageArea Double the wanted area surface to return
 -- @return Table with two keys :
