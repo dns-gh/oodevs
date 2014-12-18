@@ -69,7 +69,9 @@ public:
         }
         catch( const std::exception& e )
         {
-            throw MASA_EXCEPTION( tools::GetExceptionMsg( e ) + (" " + message.ShortDebugString()) );
+            // Disable traces as error spamming in replay can slow down the
+            // server a lot.
+            throw MASA_EXCEPTION_NOTRACE( tools::GetExceptionMsg( e ) + (" " + message.ShortDebugString()) );
         }
     }
     void OnMessage( const std::string& link, T& message ) const
@@ -85,7 +87,7 @@ public:
         }
         catch( const std::exception& e )
         {
-            throw MASA_EXCEPTION( tools::GetExceptionMsg( e ) + (" " + message.ShortDebugString()) );
+            throw MASA_EXCEPTION_NOTRACE( tools::GetExceptionMsg( e ) + (" " + message.ShortDebugString()) );
         }
     }
     virtual void OnMessage( const std::string& link, Message& message, MessageCallback_ABC& callback ) const
