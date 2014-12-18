@@ -159,13 +159,15 @@ end
 integration.unloadFriendOrFoe = function( unit )
     integration.removeFromLoadedUnits( unit )
     integration.removeFromCapturedUnits( unit )
-    
-    if DEC_ConnaissanceAgent_EstPrisonnier( unit.source ) and _DEC_PrisonniersRefugies_EstEmbarque( myself, unit.source ) then
-        _DEC_Prisonniers_Debarquer( myself, unit.source )
-        return true
-    end
-    if DEC_Agent_EstRefugie( unit.source) and _DEC_PrisonniersRefugies_EstEmbarque( myself, unit.source ) then
-        _DEC_Refugies_Debarquer( myself, unit.source )
+
+    if _DEC_PrisonniersRefugies_EstEmbarque( myself, unit.source ) then
+        if DEC_ConnaissanceAgent_EstPrisonnier( unit.source ) then
+            _DEC_Prisonniers_Debarquer( myself, unit.source )
+        elseif DEC_ConnaissanceAgent_EstRefugie( unit.source ) then
+            _DEC_Refugies_Debarquer( myself, unit.source )
+        else
+            _DEC_Transport_DebarquerPionSansDelais( myself, DEC_ConnaissanceAgent_EnAgent( unit.source ) )
+        end
         return true
     end
     return false
@@ -278,7 +280,7 @@ integration.updateLoadQueue = function()
 end
 
 --- Stops loading the units in its current loading queue.
--- The simulation action of loading is stopped. 
+-- The simulation action of loading is stopped.
 -- @see integration.startLoadQueue
 -- @see integration.updateLoadQueue
 integration.stopLoadQueue = function()
@@ -311,7 +313,7 @@ integration.updateUnloadQueue = function()
 end
 
 --- Stops unloading the units in its current unloading queue.
--- The simulation action of unloading is stopped. 
+-- The simulation action of unloading is stopped.
 -- @see integration.startUnloadQueue
 -- @see integration.updateUnloadQueue
 integration.stopUnloadQueue = function()
@@ -344,7 +346,7 @@ end
 integration.friendHasTransportationMission = function( unit, taskName )
     local mission = DEC_GetRawMission( unit.source )
     if mission ~= nil and ( integration.getAnyType( mission ) == taskName ) then
-       return true 
+       return true
     end
     return false
 end
@@ -364,7 +366,7 @@ integration.unitHasTransportationMission = function( unit, missionName )
 end
 
 --- Returns true if the given mission is a 'Get Transported' mission, false otherwise.
--- The mission has to be one of the following DIA types : 
+-- The mission has to be one of the following DIA types :
 -- <ul> <li> T_Task_Pion_SeFaireTransporter </li>
 -- <li> T_Mission_Pion_SeFaireTransporter </li>
 -- <li> platoon.tasks.SeFaireTransporter </li>
@@ -379,9 +381,9 @@ local isAMissionForTransport = function( mission )
     if taskKnowledge and taskKnowledge.isLoadMission then
         return taskKnowledge:isLoadMission()
     end
-    return mission ~= nil and ( 
-           missionType == "T_Task_Pion_SeFaireTransporter" 
-        or missionType == "T_Mission_Pion_SeFaireTransporter" 
+    return mission ~= nil and (
+           missionType == "T_Task_Pion_SeFaireTransporter"
+        or missionType == "T_Mission_Pion_SeFaireTransporter"
         or missionType == "platoon.tasks.SeFaireTransporter"
         or missionType == "worldwide.agent.tasks.GetTransported"
         or missionType == "france.military.platoon.tasks.SeFaireTransporter" )
@@ -390,9 +392,9 @@ end
 local readyForLoad = function( knowledge, distanceMax, area, mission )
     distanceMax = distanceMax or 300
     if isAMissionForTransport( mission ) then
-        if ( distanceMax == -1 and DEC_Geometrie_EstPointDansLocalisation( knowledge:getPosition(), area ) ) or 
+        if ( distanceMax == -1 and DEC_Geometrie_EstPointDansLocalisation( knowledge:getPosition(), area ) ) or
            ( DEC_Geometrie_Distance( meKnowledge:getPosition(), knowledge:getPosition() ) < distanceMax ) then
-            return true 
+            return true
         end
     end
     return false
@@ -405,7 +407,7 @@ integration.readyForLoad = function( unit, distanceMax, area )
 end
 
 --- Returns true if the given agent knowledge is ready to be loaded, false otherwise.
--- For it to be deemed ready to be loaded, the agent must have a mission with one of the following DIA types : 
+-- For it to be deemed ready to be loaded, the agent must have a mission with one of the following DIA types :
 -- <ul> <li> T_Task_Pion_SeFaireTransporter </li>
 -- <li> T_Mission_Pion_SeFaireTransporter </li>
 -- <li> platoon.tasks.SeFaireTransporter </li>
@@ -528,7 +530,7 @@ end
 -- @return Integer, the necessary number of round trips. 0 if this entity has no capacity to transport crowds.
 integration.transportCrowdRoundTrip = function( crowd )
     local capacityTransport = DEC_Agent_GetCapacityToTransportCrowd( myself )
-    local crowdsNumber = DEC_GetNombrePersonnesDansFoule( myself, crowd.source )  
+    local crowdsNumber = DEC_GetNombrePersonnesDansFoule( myself, crowd.source )
     if capacityTransport > 0 then
         return math.ceil( crowdsNumber / capacityTransport )
     else
