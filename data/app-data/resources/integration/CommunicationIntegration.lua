@@ -58,7 +58,8 @@ end
 -- @param parameterType the type of the parameter (Adaptation tool, tab 'missions', part 'parameters', column 'type')
 -- @param value the value of the parameter, filled by the user when he gives a mission
 -- @return Error code
-local AssignMissionParameter AssignMissionParameter = function ( missionPion, parameterName, parameterType, value )
+local AssignMissionParameter
+AssignMissionParameter = function ( missionPion, parameterName, parameterType, value )
     if not myself.ParameterRegistrationFunctor then initializeAssignMissions() end
     if not myself.ParameterRegistrationFunctor[ parameterType ] then
         local superClass = masalife.brain.core.class.getParentType( parameterType )
