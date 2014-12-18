@@ -56,6 +56,22 @@ message ControlSkipToTickAck {
     required ControlAck.ErrorCode error_code = 2;
 }
 
+/** @struct BeginSkip
+    @brief Inform clients when the replayer starts skipping tick
+
+    @see ControlSkipToTick & ControlSkipToDate
+*/
+message BeginSkip {
+}
+
+/** @struct EndSkip
+    @brief Inform clients when the replayer has finished skipping tick
+
+    @see ControlSkipToTick & ControlSkipToDate
+*/
+message EndSkip {
+}
+
 /** @struct TimeTable
     @brief Sends a time table
 
@@ -144,6 +160,8 @@ message ReplayToClient {
         optional ListLogisticRequestsAck    list_logistic_requests_ack     = 11;
         optional Timeskip                   timeskip                       = 12;
         optional ListReportsAck             list_reports_ack               = 13;
+        optional BeginSkip                  begin_skip                     = 14;
+        optional EndSkip                    end_skip                       = 15;
     }
     /** @property context
         @brief Identifies the request matching the response.
