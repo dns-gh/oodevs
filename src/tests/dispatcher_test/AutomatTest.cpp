@@ -292,7 +292,7 @@ BOOST_FIXTURE_TEST_CASE( Automat_DecisionalStateCanBeChanged, Fixture )
 
         // network serialization
         MockClientPublisher publisher;
-        MOCK_EXPECT( publisher.SendSimToClient ).exactly( 2 ); // TODO! AutomatAttributes, AutomatOrder
+        MOCK_EXPECT( publisher.SendSimToClient ).exactly( 3 ); // TODO! AutomatAttributes, AutomatOrder, ChangeSuperior
         MOCK_EXPECT( publisher.SendSimToClient ).once().with( expected );
         MOCK_EXPECT( publisher.SendSimToClient ).exactly( 1 ); // AutomatChangeLogisticLinks
         result->SendFullUpdate( publisher );
@@ -354,7 +354,7 @@ BOOST_FIXTURE_TEST_CASE( Automat_AttributesCanBeChanged, Fixture )
         // network serialization
         MockClientPublisher publisher;
         MOCK_EXPECT( publisher.SendSimToClient ).once().with( expected );
-        MOCK_EXPECT( publisher.SendSimToClient ).exactly( 2 ); // TODO! AutomatChangeLogisticLinks, AutomatOrder
+        MOCK_EXPECT( publisher.SendSimToClient ).exactly( 3 ); // TODO! AutomatChangeLogisticLinks, AutomatOrder, ChangeSuperior
         // no DecisionalStates if none is set
         result->SendFullUpdate( publisher );
         mock::verify( publisher );
@@ -438,7 +438,7 @@ BOOST_FIXTURE_TEST_CASE( Automat_LogLinksAndSupplyQuotasCanBeChanged, Fixture )
 
         // network serialization
         MockClientPublisher publisher;
-        MOCK_EXPECT( publisher.SendSimToClient ).exactly( 2 ); // TODO! AutomatChangeLogisticLinks, AutomatOrder
+        MOCK_EXPECT( publisher.SendSimToClient ).exactly( 3 ); // TODO! AutomatChangeLogisticLinks, AutomatOrder, ChangeSuperior
         MOCK_EXPECT( logisticEntity.Send ).exactly( 2 ).calls( ParentEntitySender( 51 ) ); // 1 for logistic links, 1 for quotas
         MOCK_EXPECT( publisher.SendSimToClient ).once().with( expectedLink );
         MOCK_EXPECT( publisher.SendSimToClient ).once().with( expectedQuotas );
