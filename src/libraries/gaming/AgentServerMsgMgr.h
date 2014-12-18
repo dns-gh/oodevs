@@ -136,6 +136,8 @@ private:
     void OnReceiveTimeskip                    ( const sword::ReplayToClient& msg );
     void OnReceiveTimeTableRequestAck         ( const sword::ReplayToClient& msg );
     void OnReceiveTimeTable                   ( const sword::ReplayToClient& msg );
+    void OnReceiveBeginSkip                   ( const sword::ReplayToClient& msg );
+    void OnReceiveEndSkip                     ( const sword::ReplayToClient& msg );
 
     // Profiles
     void OnReceiveProfileCreation             ( const sword::AuthenticationToClient& msg );

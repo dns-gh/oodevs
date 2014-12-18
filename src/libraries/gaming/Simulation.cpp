@@ -455,3 +455,15 @@ QDateTime Simulation::GetTime( uint32_t tick ) const
     now.setTimeSpec( Qt::LocalTime );
     return now.toLocalTime();
 }
+
+void Simulation::Update( const sword::BeginSkip& )
+{
+    static const sBeginSkip beginSkip;
+    controller_.Update( beginSkip );
+}
+
+void Simulation::Update( const sword::EndSkip& )
+{
+    static const sEndSkip endSkip;
+    controller_.Update( endSkip );
+}

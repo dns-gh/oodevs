@@ -44,6 +44,8 @@ class Simulation : public kernel::Time_ABC
 public:
     struct sStartTick {};
     struct sEndTick {};
+    struct sBeginSkip {};
+    struct sEndSkip {};
     struct sCheckPoint
     {
         bool start_;
@@ -81,6 +83,8 @@ public:
     void Update( const sword::NewDataChunkNotification& message );
     void Update( const sword::TimeTable& message );
     void Update( const sword::Timeskip& message );
+    void Update( const sword::BeginSkip& message );
+    void Update( const sword::EndSkip& message );
     //@}
 
     //! @name Operations

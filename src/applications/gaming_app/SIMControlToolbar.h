@@ -11,6 +11,7 @@
 #define __SIMControlToolbar_h_
 
 #include "clients_gui/RichToolBar.h"
+#include "gaming/Simulation.h"
 #include <tools/ElementObserver_ABC.h>
 
 namespace kernel
@@ -23,7 +24,6 @@ namespace kernel
 class ConnectDialog;
 class DisconnectDialog;
 class Network;
-class Simulation;
 class SimulationController;
 
 // =============================================================================
@@ -34,6 +34,8 @@ class SimulationController;
 // =============================================================================
 class SIMControlToolbar : public gui::RichToolBar
                         , public tools::ElementObserver_ABC< Simulation >
+                        , public tools::ElementObserver_ABC< Simulation::sBeginSkip >
+                        , public tools::ElementObserver_ABC< Simulation::sEndSkip >
                         , public tools::ElementObserver_ABC< kernel::Profile_ABC >
 {
     Q_OBJECT
@@ -68,6 +70,8 @@ private:
     //! @name Helpers
     //@{
     virtual void NotifyUpdated( const Simulation& simulation );
+    virtual void NotifyUpdated( const Simulation::sBeginSkip& );
+    virtual void NotifyUpdated( const Simulation::sEndSkip& );
     virtual void NotifyUpdated( const kernel::Profile_ABC& profile );
     virtual void NotifyModeChanged( E_Modes newMode, bool useDefault, bool firstChangeToSavedMode );
     void RequestCheckpoint( const std::string& name );
