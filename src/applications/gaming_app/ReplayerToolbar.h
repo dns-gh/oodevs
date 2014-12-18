@@ -32,6 +32,8 @@ class SimulationController;
 class ReplayerToolbar : public gui::RichToolBar
                       , public tools::ElementObserver_ABC< Simulation >
                       , public tools::ElementObserver_ABC< Simulation::sTimeTable >
+                      , public tools::ElementObserver_ABC< Simulation::sBeginSkip >
+                      , public tools::ElementObserver_ABC< Simulation::sEndSkip >
 {
     Q_OBJECT
 
@@ -47,6 +49,8 @@ protected:
     //@{
     virtual void NotifyUpdated( const Simulation& simulation );
     virtual void NotifyUpdated( const Simulation::sTimeTable& timeTable );
+    virtual void NotifyUpdated( const Simulation::sBeginSkip& );
+    virtual void NotifyUpdated( const Simulation::sEndSkip& );
     //@}
 
 private slots:

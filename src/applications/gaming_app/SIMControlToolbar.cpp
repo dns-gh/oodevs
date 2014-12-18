@@ -434,3 +434,13 @@ void SIMControlToolbar::RequestCheckpoint( const std::string& name )
     simulationController_.RequestCheckpoint( name );
     pCheckpointButton_->popup()->hide();
 }
+
+void SIMControlToolbar::NotifyUpdated( const Simulation::sBeginSkip& )
+{
+    setEnabled( false );
+}
+
+void SIMControlToolbar::NotifyUpdated( const Simulation::sEndSkip& )
+{
+    setEnabled( true );
+}

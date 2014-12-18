@@ -146,6 +146,7 @@ void Simulation::Update( const sword::ControlProfilingInformation& message )
 // -----------------------------------------------------------------------------
 void Simulation::Update( const sword::ControlBeginTick& message )
 {
+    static const sStartTick startTick;
     currentTick_ = message.current_tick();
     simDate_ = message.date_time().data();
     if( message.has_real_date_time() )
@@ -157,7 +158,7 @@ void Simulation::Update( const sword::ControlBeginTick& message )
         profiling_.GetMemory() / 1048576.,
         profiling_.GetVirtualMemory() / 1048576.
         ));
-    controller_.Update( startTick_ );
+    controller_.Update( startTick );
     controller_.Update( *this );
 }
 
@@ -167,8 +168,9 @@ void Simulation::Update( const sword::ControlBeginTick& message )
 // -----------------------------------------------------------------------------
 void Simulation::Update( const sword::ControlEndTick& message )
 {
+    static const sEndTick endTick;
     profiling_.Update( message );
-    controller_.Update( endTick_ );
+    controller_.Update( endTick );
     controller_.Update( *this );
 }
 
@@ -454,4 +456,16 @@ QDateTime Simulation::GetTime( uint32_t tick ) const
     auto now = QDateTime::fromTime_t( time + ( tick - max ) * tickDuration_ );
     now.setTimeSpec( Qt::LocalTime );
     return now.toLocalTime();
+}
+
+void Simulation::Update( const sword::BeginSkip& )
+{
+    static const sBeginSkip beginSkip;
+    controller_.Update( beginSkip );
+}
+
+void Simulation::Update( const sword::EndSkip& )
+{
+    static const sEndSkip endSkip;
+    controller_.Update( endSkip );
 }

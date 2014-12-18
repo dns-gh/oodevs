@@ -246,7 +246,11 @@ void ReplayPlugin::SkipToFrame( unsigned int frame )
 
     asn.Send( clients_ );
     if( frame < loader_.GetTickNumber() )
+    {
+        ::replay::BeginSkip().Send( clients_ );
         loader_.SkipToFrame( frame );
+        ::replay::EndSkip().Send( clients_ );
+    }
 }
 
 // -----------------------------------------------------------------------------

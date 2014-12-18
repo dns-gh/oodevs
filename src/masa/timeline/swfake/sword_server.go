@@ -488,6 +488,12 @@ func (s *SwordServer) clientToReplay(slink *SwordLink, msg *sword.ClientToReplay
 				ErrorCode: sword.ControlAck_no_error.Enum(),
 			},
 		})
+	} else if resume := msg.GetMessage().GetControlResume(); resume != nil {
+		s.writeContent(slink, ctx, &sword.ReplayToClient_Content{
+			ControlResumeAck: &sword.ControlResumeAck{
+				ErrorCode: sword.ControlAck_no_error.Enum(),
+			},
+		})
 	} else {
 		slink.Fatal(fmt.Errorf("unable to reply to %v", msg))
 	}

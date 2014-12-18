@@ -324,3 +324,13 @@ QDateTimeEdit* ReplayerToolbar::DateTimeEdit()
 {
     return static_cast< QDateTimeEdit* >( widgetForAction( dateTimeAction_ ) );
 }
+
+void ReplayerToolbar::NotifyUpdated( const Simulation::sBeginSkip& )
+{
+    setEnabled( false );
+}
+
+void ReplayerToolbar::NotifyUpdated( const Simulation::sEndSkip& )
+{
+    setEnabled( true );
+}

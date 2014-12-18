@@ -2100,6 +2100,8 @@ void AgentServerMsgMgr::OnReceiveMsgReplayToClient( const std::string& /*from*/,
         { &sword::ReplayToClient_Content::has_timeskip,                         &AgentServerMsgMgr::OnReceiveTimeskip },
         { &sword::ReplayToClient_Content::has_time_table,                       &AgentServerMsgMgr::OnReceiveTimeTable },
         { &sword::ReplayToClient_Content::has_time_table_request_ack,           &AgentServerMsgMgr::OnReceiveTimeTableRequestAck },
+        { &sword::ReplayToClient_Content::has_begin_skip,                       &AgentServerMsgMgr::OnReceiveBeginSkip },
+        { &sword::ReplayToClient_Content::has_end_skip,                         &AgentServerMsgMgr::OnReceiveEndSkip },
     };
     if( !Receive( *this, callbacks, COUNT_OF( callbacks ), msg ) )
         UnhandledMessage( &msg );
@@ -2414,4 +2416,14 @@ void AgentServerMsgMgr::OnReceivePathfindDestruction( const sword::SimToClient& 
 void AgentServerMsgMgr::OnReceiveTimeskip( const sword::ReplayToClient& msg )
 {
     simulation_.Update( msg.message().timeskip() );
+}
+
+void AgentServerMsgMgr::OnReceiveBeginSkip( const sword::ReplayToClient& msg )
+{
+    simulation_.Update( msg.message().begin_skip() );
+}
+
+void AgentServerMsgMgr::OnReceiveEndSkip( const sword::ReplayToClient& msg )
+{
+    simulation_.Update( msg.message().end_skip() );
 }
