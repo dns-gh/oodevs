@@ -147,8 +147,6 @@ private:
     bool paused_;
     bool connected_;
     bool initialized_;
-    sStartTick startTick_;
-    sEndTick endTick_;
     sCheckPoint checkPoint_;
     std::string simulationHost_;
     Profiling profiling_;
