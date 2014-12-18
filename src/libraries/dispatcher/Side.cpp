@@ -167,7 +167,9 @@ const kernel::Karma& Side::GetKarma() const
 // -----------------------------------------------------------------------------
 void Side::Register( dispatcher::Formation_ABC& formation )
 {
-    formations_.Register( formation.GetId(), formation );
+    unsigned long id = formation.GetId();
+    if( !formations_.Find( id ) )
+        formations_.Register( id, formation );
 }
 
 // -----------------------------------------------------------------------------

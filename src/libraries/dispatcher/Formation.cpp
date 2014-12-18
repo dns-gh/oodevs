@@ -309,7 +309,11 @@ LogisticEntity_ABC* Formation::GetLogisticEntity() const
 // -----------------------------------------------------------------------------
 void Formation::DoUpdate( const sword::FormationCreation& msg )
 {
-    parent_ = msg.has_parent() ? &model_.Formations().Get( msg.parent().id() ) : 0;
+    auto parent = msg.has_parent() ? &model_.Formations().Get( msg.parent().id() ) : 0;
+    if( !parent )
+        SetSuperior( team_ );
+    else if( parent_ != parent )
+        SetSuperior( *parent );
 }
 
 // -----------------------------------------------------------------------------
