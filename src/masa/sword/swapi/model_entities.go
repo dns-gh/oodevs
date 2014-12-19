@@ -887,7 +887,9 @@ func (model *ModelData) changeFormationSuperior(formationId, partyId, parentId u
 		}
 	}
 	formation.ParentId = parentId
-	formation.PartyId = partyId
+	if partyId != 0 {
+		formation.PartyId = partyId
+	}
 	model.listeners.NotifyId(FormationReparent, formationId)
 	return nil
 }
