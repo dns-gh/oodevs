@@ -9,9 +9,9 @@
 #include "Runtime.h"
 #include "Process.h"
 #include "Api_ABC.h"
-#include <runtime/Utf8.h>
 #include <cpplog/cpplog.hpp>
 #include <tools/Helpers.h>
+#include <tools/Path.h>
 
 #include <boost/filesystem/path.hpp>
 #include <boost/filesystem/operations.hpp>
@@ -69,7 +69,7 @@ boost::shared_ptr< Process_ABC > MakeProcess( const Api_ABC& api,
                                               const std::wstring& log )
 {
     if( !log.empty() )
-        boost::filesystem::create_directories( boost::filesystem::path( log ).remove_filename() );
+        tools::Path::FromUnicode( log ).RemoveFilename().CreateDirectories();
     ProcessDescriptor proc = api.MakeProcess( app.c_str(), &args[0], run.empty() ? 0 : run.c_str(), log.empty() ? 0 : log.c_str() );
     if( !proc.handle )
         throw std::runtime_error( "unable to create process" );
@@ -90,11 +90,12 @@ boost::shared_ptr< Process_ABC > Runtime::Start( const std::string& cmd,
     try
     {
         std::vector< std::wstring > wargs;
-        wargs.push_back( Utf8( cmd ) );
+        wargs.push_back( tools::FromUtf8ToUnicode( tools::ToUtf8( cmd ) ) );
         for( auto it = args.begin(); it != args.end(); ++it )
-            wargs.push_back( Utf8( *it ) );
+            wargs.push_back( tools::FromUtf8ToUnicode( tools::ToUtf8( *it ) ) );
         auto wcmd = tools::ArgsToCommandLine( wargs );
-        return MakeProcess( api_, Utf8( cmd ), wcmd, Utf8( run ), Utf8( log ) );
+        return MakeProcess( api_, tools::FromUtf8ToUnicode( tools::ToUtf8( cmd ) ),
+            wcmd, tools::FromUtf8ToUnicode( tools::ToUtf8( run ) ), tools::FromUtf8ToUnicode( tools::ToUtf8( log ) ) );
     }
     catch( const std::runtime_error& err )
     {
@@ -107,9 +108,9 @@ boost::shared_ptr< Process_ABC > Runtime::Start( const std::string& cmd,
 // Name: Runtime::GetModuleFilename
 // Created: BAX 2012-05-09
 // -----------------------------------------------------------------------------
-boost::filesystem::path Runtime::GetModuleFilename() const
+tools::Path Runtime::GetModuleFilename() const
 {
-    return api_.GetModuleFilename();
+    return tools::Path::FromUnicode( api_.GetModuleFilename() );
 }
 
 // -----------------------------------------------------------------------------

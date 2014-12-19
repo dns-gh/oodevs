@@ -12,12 +12,9 @@
 
 #include <string>
 
-namespace boost
+namespace tools
 {
-namespace filesystem
-{
-    class path;
-}
+    class Path;
 }
 
 namespace runtime
@@ -27,9 +24,7 @@ namespace runtime
 
 namespace host
 {
-    typedef boost::filesystem::path Path;
-
-    std::string GetLastError( const runtime::FileSystem_ABC& fs, const Path& output );
+    std::string GetLastError( const runtime::FileSystem_ABC& fs, const tools::Path& output );
 }
 
 #endif // HOST_ERROR_H

@@ -15,6 +15,8 @@
 #include "web/Configs.h"
 #include "web/Plugins.h"
 
+#include <tools/Helpers.h>
+
 #include <cpplog/cpplog.hpp>
 #include <boost/assign/list_of.hpp>
 #include <boost/foreach.hpp>
@@ -27,7 +29,7 @@ BOOST_AUTO_TEST_CASE( plugin_directory_skips_invalid_root )
 {
     cpplog::OstreamLogger log( std::cout );
     FileSystem fs( log );
-    const std::string path = testOptions.GetDataPath( "missing" ).ToUTF8();
+    const auto path = testOptions.GetDataPath( "missing" );
     Plugins plugins( fs, path );
     BOOST_CHECK( !plugins.Count() );
     BOOST_CHECK( plugins.GetNames( 0, INT_MAX ).empty() );
@@ -37,7 +39,7 @@ BOOST_AUTO_TEST_CASE( plugin_directory_parses )
 {
     cpplog::OstreamLogger log( std::cout );
     FileSystem fs( log );
-    const std::string path = testOptions.GetDataPath( "plugins" ).ToUTF8();
+    const auto path = testOptions.GetDataPath( "plugins" );
     static const char* valid_plugins[] =
     {
         "with spaces",
@@ -70,7 +72,7 @@ BOOST_AUTO_TEST_CASE( plugin_parse_bml )
 {
     cpplog::OstreamLogger log( std::cout );
     FileSystem fs( log );
-    const std::string path = testOptions.GetDataPath( "plugins" ).ToUTF8();
+    const auto path = testOptions.GetDataPath( "plugins" );
     Plugins plugins( fs, path );
     const Plugins::T_Defaults expected = boost::assign::map_list_of
         ( "server/@url", "" )

@@ -14,12 +14,9 @@
 #include <boost/property_tree/ptree_fwd.hpp>
 #include <vector>
 
-namespace boost
+namespace tools
 {
-namespace filesystem
-{
-    class path;
-}
+    class Path;
 }
 
 namespace runtime
@@ -34,7 +31,6 @@ namespace web
 
 namespace host
 {
-    typedef boost::filesystem::path Path;
     typedef boost::property_tree::ptree Tree;
 
 // =============================================================================
@@ -55,7 +51,7 @@ struct Package_ABC : public boost::noncopyable
     //@{
     struct Item_ABC;
     typedef boost::shared_ptr< Item_ABC > T_Item;
-    typedef std::vector< Path >           T_Exercises;
+    typedef std::vector< tools::Path >    T_Exercises;
     typedef std::vector< T_Item >         T_Items;
     //@}
 
@@ -64,8 +60,8 @@ struct Package_ABC : public boost::noncopyable
     virtual Tree GetProperties() const = 0;
     virtual Tree GetPropertiesFrom( const Item_ABC& item ) const = 0;
     virtual size_t GetSize() const = 0;
-    virtual Path GetPath() const = 0;
-    virtual Path GetRoot( const Item_ABC& item ) const = 0;
+    virtual tools::Path GetPath() const = 0;
+    virtual tools::Path GetRoot( const Item_ABC& item ) const = 0;
     virtual T_Item FindId( size_t id ) const = 0;
     virtual T_Item FindAlive( const Item_ABC& item ) const = 0;
     virtual T_Items FindAll( const Item_ABC& item ) const = 0;
@@ -74,9 +70,9 @@ struct Package_ABC : public boost::noncopyable
     virtual size_t CountExercises() const = 0;
     virtual bool Parse() = 0;
     virtual void Identify( const Package_ABC& ref ) = 0;
-    virtual void InstallWith( runtime::Async& async, const Path& root, const T_Items& items, bool move ) = 0;
-    virtual void Install( runtime::Async& async, const Path& root, const Package_ABC& src, const std::vector< size_t >& ids ) = 0;
-    virtual void Uninstall( runtime::Async& async, const Path& root, const std::vector< size_t >& ids ) = 0;
+    virtual void InstallWith( runtime::Async& async, const tools::Path& root, const T_Items& items, bool move ) = 0;
+    virtual void Install( runtime::Async& async, const tools::Path& root, const Package_ABC& src, const std::vector< size_t >& ids ) = 0;
+    virtual void Uninstall( runtime::Async& async, const tools::Path& root, const std::vector< size_t >& ids ) = 0;
     virtual Tree LinkExercise( const std::string& name ) = 0;
     virtual Tree LinkItem( Item_ABC& item ) = 0;
     virtual Tree LinkItem( const Tree& tree ) = 0;
@@ -102,7 +98,7 @@ struct PackageFactory_ABC : public boost::noncopyable
 
     //! @name Methods
     //@{
-    virtual boost::shared_ptr< Package_ABC > Make( const Path& path, bool reference ) const = 0;
+    virtual boost::shared_ptr< Package_ABC > Make( const tools::Path& path, bool reference ) const = 0;
     //@}
 };
 }

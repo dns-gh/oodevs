@@ -12,6 +12,7 @@
 #include "runtime/Helpers.h"
 
 #include <boost/static_assert.hpp>
+#include <tools/Helpers.h>
 
 using namespace web;
 

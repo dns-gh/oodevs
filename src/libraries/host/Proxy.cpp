@@ -13,7 +13,6 @@
 #include "runtime/Process_ABC.h"
 #include "runtime/PropertyTree.h"
 #include "runtime/Runtime_ABC.h"
-#include "runtime/Utf8.h"
 #include "web/Client_ABC.h"
 
 #include <boost/assign/list_of.hpp>
@@ -25,7 +24,6 @@
 using namespace host;
 using namespace host::proxy;
 using namespace property_tree;
-using runtime::Utf8;
 using runtime::Async;
 using runtime::FileSystem_ABC;
 using runtime::Pool_ABC;
@@ -72,10 +70,10 @@ Proxy::Proxy( cpplog::BaseLogger& log, const runtime::Runtime_ABC& runtime,
     , async_  ( pool )
 {
     if( !fs_.Exists( config_.app ) )
-        throw std::runtime_error( runtime::Utf8( config_.app ) + " is missing" );
+        throw std::runtime_error( config_.app.ToUTF8() + " is missing" );
     if( !fs_.IsFile( config_.app ) )
-        throw std::runtime_error( runtime::Utf8( config_.app ) + " is not a file" );
-    const Path tag = config_.root / "proxy.id";
+        throw std::runtime_error( config_.app.ToUTF8() + " is not a file" );
+    const tools::Path tag = config_.root / "proxy.id";
     LOG_INFO( log_ ) << "[proxy] Listening to localhost:" << config_.http;
     bool hasProcess = fs_.IsFile( tag );
     if( hasProcess )
@@ -190,7 +188,7 @@ Tree Proxy::GetProperties() const
 // Name: Proxy::Reload
 // Created: BAX 2012-04-11
 // -----------------------------------------------------------------------------
-bool Proxy::Reload( const Path& path )
+bool Proxy::Reload( const tools::Path& path )
 {
     try
     {
@@ -213,7 +211,7 @@ bool Proxy::Reload( const Path& path )
     }
     catch( const std::exception& err )
     {
-        LOG_DEBUG( log_ ) << "[proxy] Unable to reload proxy from " << path.string() << " - " << err.what();
+        LOG_DEBUG( log_ ) << "[proxy] Unable to reload proxy from " << path << " - " << err.what();
         return false;
     }
 }
@@ -231,13 +229,13 @@ Proxy::T_Process Proxy::MakeProcess() const
     {
         args.push_back( "--ssl" );
         args.push_back( "--ssl_certificate" );
-        args.push_back( Utf8( config_.ssl.certificate ) );
+        args.push_back( config_.ssl.certificate.ToUTF8() );
         args.push_back( "--ssl_key" );
-        args.push_back( Utf8( config_.ssl.key ) );
+        args.push_back( config_.ssl.key.ToUTF8() );
     }
-    return runtime_.Start( Utf8( config_.app ), args,
-            Utf8( Path( config_.app ).remove_filename() ),
-            Utf8( config_.root / "proxy.log" ) );
+    return runtime_.Start( config_.app.ToUTF8(), args,
+            tools::Path( config_.app ).RemoveFilename().ToUTF8(),
+            ( config_.root / "proxy.log" ).ToUTF8() );
 }
 
 // -----------------------------------------------------------------------------

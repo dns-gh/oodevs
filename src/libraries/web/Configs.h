@@ -10,17 +10,16 @@
 #ifndef CONFIGS_H
 #define CONFIGS_H
 
-#include <boost/filesystem/path.hpp>
 #include <boost/property_tree/ptree_fwd.hpp>
 #include <map>
 #include <set>
 #include <string>
+#include <tools/Path.h>
 
 namespace web
 {
     class  Plugins;
     struct Request_ABC;
-    typedef boost::filesystem::path Path;
     typedef boost::property_tree::ptree Tree;
 }
 
@@ -57,10 +56,10 @@ struct RngConfig
 // -----------------------------------------------------------------------------
 struct PluginConfig
 {
-    PluginConfig( const Plugins& plugins, const Path& path );
+    PluginConfig( const Plugins& plugins, const tools::Path& path );
     typedef std::map< std::string, std::string > T_Parameters;
     bool         enabled;
-    Path         library;
+    tools::Path  library;
     T_Parameters parameters;
 };
 

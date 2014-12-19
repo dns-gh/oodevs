@@ -83,10 +83,10 @@ namespace
         "    }"
         "}";
 
-    bool EndWith( const std::string& suffix, const host::Path& path )
+    bool EndWith( const std::string& suffix, const tools::Path& path )
     {
         const auto regex = boost::xpressive::sregex::compile( suffix + "$" );
-        return boost::xpressive::regex_search( path.string(), regex );
+        return boost::xpressive::regex_search( path.ToUTF8(), regex );
     }
 
     int BlockUntil( Event& start, Event& end, int code )
@@ -102,9 +102,9 @@ namespace
         return data.get< std::string >( "status" );
     }
 
-    host::Path MakePath( int& idx, const host::Path& root )
+    tools::Path MakePath( int& idx, const tools::Path& root )
     {
-        return root / boost::lexical_cast< std::string >( ++idx );
+        return root / boost::lexical_cast< std::string >( ++idx ).c_str();
     }
 
     struct SubFixture
@@ -131,8 +131,8 @@ namespace
         MockPool pool;
         MockUuidFactory uuids;
         boost::shared_ptr< MockNode > node;
-        const host::Path apps;
-        const host::Path timeline;
+        const tools::Path apps;
+        const tools::Path timeline;
         const web::Plugins plugins;
         int any_idx;
         Fixture()
@@ -237,7 +237,7 @@ namespace
         Session_ABC::T_Ptr ReplaySession( Session& session )
         {
             MOCK_EXPECT( uuids.Create ).once().returns( boost::uuids::random_generator()() );
-            MOCK_EXPECT( nodes.LinkExerciseName ).once().with( mock::same( *node ), session.GetExercise() ).returns( FromJson( links ) );
+            MOCK_EXPECT( nodes.LinkExerciseName ).once().with( mock::same( *node ), session.GetExercise().ToUTF8() ).returns( FromJson( links ) );
             MOCK_EXPECT( ports.Create0 ).once().returns( new MockPort( defaultPort + 17 ) );
             return session.Replay( web::User( 42, "" ) );
         }
@@ -556,17 +556,17 @@ BOOST_FIXTURE_TEST_CASE( replay_session_cannot_be_replayed, Fixture )
 
 namespace
 {
-    bool EndsWith( host::Path suffix, host::Path path )
+    bool EndsWith( tools::Path suffix, tools::Path path )
     {
-        for( ; !suffix.empty(); suffix.remove_filename(), path.remove_filename() )
-            if( path.empty() )
+        for( ; !suffix.IsEmpty(); suffix.RemoveFilename(), path.RemoveFilename() )
+            if( path.IsEmpty() )
                 return false;
-            else if( suffix.filename() != path.filename() )
+            else if( suffix.FileName() != path.FileName() )
                 return false;
         return true;
     }
 
-    void ReadCheckpoints( const host::Path& path, bool /*recurse*/,
+    void ReadCheckpoints( const tools::Path& path, bool /*recurse*/,
                           const MockFileSystem& fs,
                           const FileSystem_ABC::T_Predicate& predicate )
     {

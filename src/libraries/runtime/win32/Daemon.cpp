@@ -16,12 +16,13 @@
 #include "runtime/Process_ABC.h"
 #include "runtime/Runtime_ABC.h"
 #include "runtime/Scoper.h"
-#include "runtime/Utf8.h"
 
 #include <boost/bind.hpp>
 #include <boost/foreach.hpp>
 #include <boost/optional.hpp>
 #include <boost/thread.hpp>
+
+#include <tools/Helpers.h>
 
 #include <windows.h>
 
@@ -113,16 +114,16 @@ struct Daemon::Private
         std::string join;
         BOOST_FOREACH( const std::string& arg, args )
             join += " \"" + arg + "\"";
-        const std::wstring cmd = L"\"" + module + L"\"" + Utf8( join );
+        const std::wstring cmd = L"\"" + module + L"\"" + tools::FromUtf8ToUnicode( tools::ToUtf8( join ) );
 
-        const std::wstring wname = Utf8( name );
+        const std::wstring wname = tools::FromUtf8ToUnicode( tools::ToUtf8( name ) );
         const bool hasPassword = !username.empty();
         SC_HANDLE service = CreateServiceW( manager, wname.c_str(), wname.c_str(),
                                             SERVICE_ALL_ACCESS, SERVICE_WIN32_OWN_PROCESS,
                                             SERVICE_AUTO_START, SERVICE_ERROR_IGNORE,
                                             cmd.c_str(), NULL, NULL, NULL,
-                                            hasPassword ? Utf8( username ).c_str() : NULL,
-                                            hasPassword ? Utf8( password ).c_str() : NULL );
+                                            hasPassword ? tools::FromUtf8ToUnicode( tools::ToUtf8( username ) ).c_str() : NULL,
+                                            hasPassword ? tools::FromUtf8ToUnicode( tools::ToUtf8( password ) ).c_str() : NULL );
         ABORT_IF( !service, "Unable to create service" );
 
         Scoper closeService( boost::bind( &CloseScHandle, service ) );
@@ -188,7 +189,7 @@ struct Daemon::Private
         ABORT_IF( !manager, "Unable to open service manager" );
 
         Scoper closeManager( boost::bind( &CloseScHandle, manager ) );
-        const std::wstring wname = Utf8( name );
+        const std::wstring wname = tools::FromUtf8ToUnicode( tools::ToUtf8( name ) );
         SC_HANDLE service = OpenServiceW( manager, wname.c_str(), SERVICE_STOP | SERVICE_QUERY_STATUS | SERVICE_CHANGE_CONFIG | DELETE );
         ABORT_IF( !service, "Unable to open service" );
 

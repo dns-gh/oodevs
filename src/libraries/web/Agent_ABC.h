@@ -19,10 +19,6 @@
 namespace boost
 {
     template< typename T > class optional;
-namespace filesystem
-{
-    class path;
-}
 }
 
 namespace io
@@ -30,11 +26,15 @@ namespace io
     struct Reader_ABC;
 }
 
+namespace tools
+{
+    class Path;
+}
+
 namespace web
 {
     struct Chunker_ABC;
     struct User;
-    typedef boost::filesystem::path Path;
     typedef boost::property_tree::ptree Tree;
     typedef boost::uuids::uuid Uuid;
 namespace node
@@ -127,14 +127,14 @@ struct Agent_ABC : public boost::noncopyable
 
     //! @name Exercise Methods
     //@{
-    virtual std::vector< Path > ListExercises ( const Uuid& id, int offset, int limit ) const = 0;
-    virtual size_t              CountExercises( const Uuid& id ) const = 0;
+    virtual std::vector< tools::Path > ListExercises ( const Uuid& id, int offset, int limit ) const = 0;
+    virtual size_t                     CountExercises( const Uuid& id ) const = 0;
     //@}
 
     //! @name Plugin Methods
     //@{
-    virtual std::vector< Path > ListPlugins ( int offset, int limit ) const = 0;
-    virtual size_t              CountPlugins() const = 0;
+    virtual std::vector< tools::Path > ListPlugins ( int offset, int limit ) const = 0;
+    virtual size_t                     CountPlugins() const = 0;
     //@}
 
     //! @name Licenses Methods

@@ -11,7 +11,6 @@
 
 #include "host/SessionController.h"
 #include "runtime/PropertyTree.h"
-#include "runtime/Utf8.h"
 #include "web/Configs.h"
 #include "web/User.h"
 #include "web/HttpException.h"
@@ -35,13 +34,12 @@
 using namespace host;
 using namespace mocks;
 using namespace property_tree;
-using runtime::Utf8;
 
 namespace
 {
     struct SubFixture
     {
-        SubFixture( const Path& root, const Path& cwd, const Path& simulation, const Path& replayer, const Path& timeline )
+        SubFixture( const tools::Path& root, const tools::Path& cwd, const tools::Path& simulation, const tools::Path& replayer, const tools::Path& timeline )
             : nodes( false )
             , idx  ( 0 )
         {
@@ -55,9 +53,9 @@ namespace
             MOCK_EXPECT( fs.Remove ).returns( true );
         };
 
-        Path MakePath( const Path& root )
+        tools::Path MakePath( const tools::Path& root )
         {
-            return root / boost::lexical_cast< std::string >( ++idx );
+            return root / tools::Path::FromUTF8( boost::lexical_cast< std::string >( ++idx ) );
         }
 
         size_t idx;
@@ -114,22 +112,22 @@ namespace
         {
             // NOTHING
         }
-        const Path root;
-        const Path cwd;
-        const Path simulation;
-        const Path replayer;
-        const Path timeline;
+        const tools::Path root;
+        const tools::Path cwd;
+        const tools::Path simulation;
+        const tools::Path replayer;
+        const tools::Path timeline;
         SubFixture sub;
         SessionController control;
         boost::shared_ptr< MockSession > active;
         boost::shared_ptr< MockSession > idle;
 
-        boost::shared_ptr< MockSession > AddSession( const Uuid& id, const web::User& user, const std::string& text, const Path& path = Path() )
+        boost::shared_ptr< MockSession > AddSession( const Uuid& id, const web::User& user, const std::string& text, const tools::Path& path = tools::Path() )
         {
             const Tree tree = FromJson( text );
             boost::shared_ptr< MockSession > session = boost::make_shared< MockSession >( id, user.node, tree );
-            if( path.empty() )
-                MOCK_EXPECT( sub.factory.Make5 ).once().with( mock::any, mock::any, user.node, mock::any, session->GetExercise(), mock::same( user ) ).returns( session );
+            if( path.IsEmpty() )
+                MOCK_EXPECT( sub.factory.Make5 ).once().with( mock::any, mock::any, user.node, mock::any, session->GetExercise().ToUTF8(), mock::same( user ) ).returns( session );
             else
                 MOCK_EXPECT( sub.factory.Make2 ).once().returns( session );
             MOCK_EXPECT( sub.fs.WriteFile ).returns( true );
@@ -140,7 +138,7 @@ namespace
         void Reload()
         {
             MOCK_EXPECT( sub.fs.Walk ).once().with( root / "sessions", false,
-                boost::bind( &MockFileSystem::Apply, &sub.fs, _1, boost::assign::list_of< Path >( "a" )( "b" ) ) );
+                boost::bind( &MockFileSystem::Apply, &sub.fs, _1, boost::assign::list_of< tools::Path >( "a" )( "b" ) ) );
             MOCK_EXPECT( sub.fs.IsFile ).once().with( "a/session.id" ).returns( true );
             MOCK_EXPECT( sub.fs.IsFile ).once().with( "b/session.id" ).returns( true );
             active = AddSession( idActive, standardUser, sessionActive, "a/session.id" );

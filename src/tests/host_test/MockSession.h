@@ -25,7 +25,7 @@ namespace mocks
             MOCK_EXPECT( GetId ).returns( id );
             MOCK_EXPECT( GetRoot ).returns( "" );
             MOCK_EXPECT( GetNode ).returns( node );
-            MOCK_EXPECT( GetExercise ).returns( tree.get< std::string >( "exercise" ) );
+            MOCK_EXPECT( GetExercise ).returns( tools::Path::FromUTF8( tree.get< std::string >( "exercise" ) ) );
             MOCK_EXPECT( GetName ).returns( tree.get< std::string >( "name" ) );
             MOCK_EXPECT( GetPort ).returns( tree.get< int >( "port" ) );
             MOCK_EXPECT( Save ).returns( tree );
@@ -66,8 +66,8 @@ namespace mocks
 
     MOCK_BASE_CLASS( MockSessionFactory, host::SessionFactory_ABC )
     {
-        MOCK_METHOD_EXT( Make, 2, host::Session_ABC::T_Ptr( const host::Path& tag,  const host::Path& trash ), Make2 );
-        MOCK_METHOD_EXT( Make, 6, host::Session_ABC::T_Ptr( const host::Path& root, const host::Path& trash,
+        MOCK_METHOD_EXT( Make, 2, host::Session_ABC::T_Ptr( const tools::Path& tag,  const tools::Path& trash ), Make2 );
+        MOCK_METHOD_EXT( Make, 6, host::Session_ABC::T_Ptr( const tools::Path& root, const tools::Path& trash,
                          const host::Uuid& node, const web::session::Config& cfg, const std::string& exercise, const web::User& owner ), Make5 );
     };
 };

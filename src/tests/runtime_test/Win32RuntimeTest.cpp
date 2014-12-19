@@ -9,7 +9,6 @@
 
 #include "runtime_test_pch.h"
 
-#include <runtime/Utf8.h>
 #include <runtime/win32/Api.h>
 #include <runtime/win32/Process.h>
 #include <runtime/win32/Runtime.h>
@@ -19,7 +18,6 @@
 #include <boost/lexical_cast.hpp>
 #include <boost/assign/list_of.hpp>
 #include <boost/filesystem.hpp>
-#include <boost/filesystem/path.hpp>
 #include <iostream>
 #include <ctime>
 
@@ -42,19 +40,19 @@ namespace
 
 struct FileDeleter : boost::noncopyable
 {
-     FileDeleter( const boost::filesystem::path& p ): path( p ) {}
+     FileDeleter( const tools::Path& p ): path( p ) {}
     ~FileDeleter()
     {
         try
         {
-            boost::filesystem::remove(path);
+            path.Remove();
         }
         catch( const std::exception& )
         {
         }
     }
 
-    const boost::filesystem::path path;
+    const tools::Path path;
 };
 
 }  //namespace
@@ -76,11 +74,10 @@ BOOST_AUTO_TEST_CASE( runtime_process_starts )
     std::string randarg = boost::lexical_cast< std::string >( std::time( NULL ));
     const std::vector< std::string > args
         = boost::assign::list_of( "hello" )( randarg.c_str() );
-    const std::string dir = boost::filesystem::path( runtime.GetModuleFilename() )
-        .parent_path().string();
-    FileDeleter logDeleter(dir / boost::filesystem::path( "runtime_process_starts" + randarg + ".log" ));
-    const std::string logs = logDeleter.path.string();
-    boost::shared_ptr< Process_ABC > p = runtime.Start( app.ToUTF8(), args, dir, logs );
+    const auto dir = runtime.GetModuleFilename().Parent();
+    FileDeleter logDeleter(dir / tools::Path::FromUTF8( "runtime_process_starts" + randarg + ".log" ));
+    const std::string logs = logDeleter.path.ToUTF8();
+    boost::shared_ptr< Process_ABC > p = runtime.Start( app.ToUTF8(), args, dir.ToUTF8(), logs );
     BOOST_REQUIRE( p );
     BOOST_CHECK_GT( p->GetPid(), 0 );
     p->Join( 5000 );

@@ -21,9 +21,9 @@ namespace runtime
     struct Pool_ABC;
 }
 
-namespace gui
+namespace tools
 {
-    typedef boost::filesystem::path Path;
+    class Path;
 }
 
 namespace gui
@@ -55,7 +55,7 @@ size_t GetDownloadId( const QNetworkReply* rpy );
 boost::shared_ptr< Download_ABC > MakeDownload( size_t id, QNetworkReply* rpy,
                                                 const runtime::FileSystem_ABC& fs,
                                                 runtime::Pool_ABC& pool,
-                                                const Path& root );
+                                                const tools::Path& root );
 }
 
 #endif // DOWNLOAD_H_

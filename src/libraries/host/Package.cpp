@@ -13,7 +13,6 @@
 #include "runtime/Async.h"
 #include "runtime/FileSystem_ABC.h"
 #include "runtime/PropertyTree.h"
-#include "runtime/Utf8.h"
 #include "web/Configs.h"
 #include "web/Chunker_ABC.h"
 #include "web/HttpException.h"
@@ -27,17 +26,18 @@
 #include <boost/thread/lock_guard.hpp>
 
 #include <tools/Version.h>
+#include <tools/Helpers.h>
+#include <tools/Path.h>
 
 using namespace host;
 using namespace property_tree;
 using runtime::Async;
 using runtime::FileSystem_ABC;
 using runtime::Pool_ABC;
-using runtime::Utf8;
 
 namespace
 {
-    typedef std::function< void( const Path& ) > PathOperand;
+    typedef std::function< void( const tools::Path& ) > PathOperand;
 }
 
 struct Package_ABC::Item_ABC : public boost::noncopyable
@@ -45,23 +45,23 @@ struct Package_ABC::Item_ABC : public boost::noncopyable
     virtual Tree        GetProperties() const = 0;
     virtual size_t      GetSize() const = 0;
     virtual std::string GetType() const = 0;
-    virtual Path        GetName() const = 0;
-    virtual Path        GetRoot() const = 0;
-    virtual Path        GetSuffix() const = 0;
+    virtual tools::Path GetName() const = 0;
+    virtual tools::Path GetRoot() const = 0;
+    virtual tools::Path GetSuffix() const = 0;
     virtual std::string GetChecksum() const = 0;
     virtual bool        Compare( size_t id ) const = 0;
     virtual bool        Compare( const Item_ABC& item ) const = 0;
-    virtual bool        Compare( const std::pair< Path, std::string >& pair ) const = 0;
+    virtual bool        Compare( const std::pair< tools::Path, std::string >& pair ) const = 0;
     virtual bool        IsExercise() const = 0;
     virtual bool        IsInstalled() const = 0;
     virtual bool        IsLinked() const = 0;
     virtual bool        IsValid() const = 0;
     virtual void        Identify( const Package_ABC& ref, const Package_ABC& root ) = 0;
     virtual void        CheckDependencies( const Package_ABC& dst, const Package::T_Items& targets ) const = 0;
-    virtual void        Install( Async& async, const FileSystem_ABC& fs, const Path& tomb,
-                                 const Path& output, const Package_ABC& dst,
+    virtual void        Install( Async& async, const FileSystem_ABC& fs, const tools::Path& tomb,
+                                 const tools::Path& output, const Package_ABC& dst,
                                  const PathOperand& operand, bool move, bool replace ) const = 0;
-    virtual void        Uninstall( Async& async, const FileSystem_ABC& fs, const Path& dst ) = 0;
+    virtual void        Uninstall( Async& async, const FileSystem_ABC& fs, const tools::Path& dst ) = 0;
     virtual void        Reinstall( const FileSystem_ABC& fs ) = 0;
     virtual void        Link( Tree& tree, const Package_ABC& ref, bool recurse ) = 0;
     virtual bool        Unlink( Async& async, const FileSystem_ABC& fs ) = 0;
@@ -110,8 +110,8 @@ namespace
         {
             Tree rpy;
             SaveTo( rpy );
-            if( !tomb_.empty() )
-                rpy.put( "tomb", Utf8( tomb_ ) );
+            if( !tomb_.IsEmpty() )
+                rpy.put( "tomb", tomb_.ToUTF8() );
             return rpy;
         }
 
@@ -129,7 +129,7 @@ namespace
            size_ = size;
         }
 
-        static std::string GetFilename()
+        static tools::Path GetFilename()
         {
             return "metadata.tag";
         }
@@ -144,18 +144,18 @@ namespace
             version_ = version;
         }
 
-        static Metadata Reload( const FileSystem_ABC& fs, const Path& root )
+        static Metadata Reload( const FileSystem_ABC& fs, const tools::Path& root )
         {
             return Metadata( FromJson( fs.ReadFile( root / GetFilename() ) ) );
         }
 
-        void Save( const FileSystem_ABC& fs, const Path& root, bool force ) const
+        void Save( const FileSystem_ABC& fs, const tools::Path& root, bool force ) const
         {
             if( force || !discard_ )
                 fs.WriteFile( root / GetFilename(), ToJson( GetProperties() ) );
         }
 
-        void TryUninstall( Async& async, const FileSystem_ABC& fs, const Path& root, const Path& tomb )
+        void TryUninstall( Async& async, const FileSystem_ABC& fs, const tools::Path& root, const tools::Path& tomb )
         {
             tomb_ = tomb;
             if( IsLinked() )
@@ -163,15 +163,15 @@ namespace
             TryKill( async, fs, root );
         }
 
-        void Reinstall( const FileSystem_ABC& fs, const Path& root )
+        void Reinstall( const FileSystem_ABC& fs, const tools::Path& root )
         {
-            tomb_.clear();
+            tomb_.Clear();
             Save( fs, root, false );
         }
 
         bool IsInstalled() const
         {
-            return tomb_.empty();
+            return tomb_.IsEmpty();
         }
 
         bool IsLinked() const
@@ -184,7 +184,7 @@ namespace
             links_++;
         }
 
-        bool Unlink( Async& async, const FileSystem_ABC& fs, const Path& root )
+        bool Unlink( Async& async, const FileSystem_ABC& fs, const tools::Path& root )
         {
             links_--;
             return TryKill( async, fs, root );
@@ -196,7 +196,7 @@ namespace
             , package_ ( Get< std::string >( tree, "package" ) )
             , version_ ( GetVersion( tree, "version" ) )
             , checksum_( Get< std::string >( tree, "checksum" ) )
-            , tomb_    ( Utf8( Get< std::string >( tree, "tomb" ) ) )
+            , tomb_    ( tools::Path::FromUTF8( tools::ToUtf8( Get< std::string >( tree, "tomb" ) ) ) )
             , links_   ( 0 )
             , size_    ( Get< size_t >( tree, "size", 0 ) )
         {
@@ -205,11 +205,11 @@ namespace
 
         Metadata& operator=( const Metadata& );
 
-        bool TryKill( Async& async, const FileSystem_ABC& fs, const Path& root )
+        bool TryKill( Async& async, const FileSystem_ABC& fs, const tools::Path& root )
         {
             if( IsLinked() || IsInstalled() )
                 return false;
-            const Path next = fs.MakeAnyPath( tomb_ );
+            const tools::Path next = fs.MakeAnyPath( tomb_ );
             fs.Rename( root, next / "_" );
             Post( async, boost::bind( &FileSystem_ABC::Remove, &fs, next ) );
             return true;
@@ -219,7 +219,7 @@ namespace
         const std::string package_;
         std::string version_;
         std::string checksum_;
-        Path tomb_;
+        tools::Path tomb_;
         size_t links_;
         size_t size_;
     };
@@ -267,32 +267,36 @@ namespace
         return lhs->GetChecksum() < rhs->GetChecksum();
     }
 
-    bool BeginWith( const Path& prefix, const Path& path )
+    bool BeginWith( const tools::Path& prefix, const tools::Path& path )
     {
-        for( Path::const_iterator a = prefix.begin(), b = path.begin(); a != prefix.end(); ++a, ++b )
-            if( b == path.end() )
+        const auto boostPrefix = prefix.ToBoost();
+        const auto boostPath = path.ToBoost();
+        auto a = boostPrefix.begin();
+        auto b = boostPath.begin();
+        for( ; a != boostPrefix.end(); ++a, ++b )
+            if( b == boostPath.end() )
                 return false;
             else if( *a != *b )
                 return false;
         return true;
     }
 
-    bool EndWith( Path suffix, Path path )
+    bool EndWith( tools::Path suffix, tools::Path path )
     {
-        for( ; !suffix.empty(); suffix.remove_filename(), path.remove_filename() )
-            if( path.empty() )
+        for( ; !suffix.IsEmpty(); suffix.RemoveFilename(), path.RemoveFilename() )
+            if( path.IsEmpty() )
                 return false;
-            else if( suffix.filename() != path.filename() )
+            else if( suffix.FileName() != path.FileName() )
                 return false;
         return true;
     }
 
     struct Item : Package_ABC::Item_ABC
     {
-        Item( const FileSystem_ABC& fs, const Path& root, size_t id, const std::string& name, const std::string& date, const Metadata* meta )
+        Item( const FileSystem_ABC& fs, const tools::Path& root, size_t id, const std::string& name, const std::string& date, const Metadata* meta )
             : root_ ( root )
             , id_   ( id )
-            , name_ ( name )
+            , name_ ( tools::Path::FromUTF8( name ) )
             , date_ ( date )
             , meta_ ( meta ? *meta : Metadata::Reload( fs, root ) )
         {
@@ -301,7 +305,7 @@ namespace
 
         Item( const std::string& name )
             : id_   ( 0 )
-            , name_ ( name )
+            , name_ ( tools::Path::FromUTF8( name ) )
         {
             // NOTHING
         }
@@ -316,7 +320,7 @@ namespace
             Tree tree;
             tree.put( "id", id_ );
             tree.put( "type", GetType() );
-            tree.put( "name", Utf8( name_ ) );
+            tree.put( "name", name_.ToUTF8() );
             tree.put( "date", date_ );
             meta_.SaveTo( tree );
             if( !action_.empty() )
@@ -331,12 +335,12 @@ namespace
             return meta_.GetSize();
         }
 
-        virtual Path GetRoot() const
+        virtual tools::Path GetRoot() const
         {
             return root_;
         }
 
-        virtual Path GetName() const
+        virtual tools::Path GetName() const
         {
             return name_;
         }
@@ -361,7 +365,7 @@ namespace
             return name_ == item.GetName() && GetType() == item.GetType();
         }
 
-        virtual bool Compare( const std::pair< Path, std::string >& pair ) const
+        virtual bool Compare( const std::pair< tools::Path, std::string >& pair ) const
         {
             return pair.first == root_ && pair.second == GetChecksum();
         }
@@ -380,7 +384,7 @@ namespace
                 if( !ref.FindAlive( *dep ) && !root.FindAlive( *dep ) )
                 {
                     action_ = "error";
-                    error_ = "Missing " + dep->GetType() + " " + Utf8( dep->GetName() );
+                    error_ = "Missing " + dep->GetType() + " " + dep->GetName().ToUTF8();
                     return;
                 }
             const auto next = ref.FindAlive( *this );
@@ -390,10 +394,10 @@ namespace
                 action_ = "update";
         }
 
-        virtual FileSystem_ABC::T_Predicate IsItemFile( const Path& /*root*/ ) const
+        virtual FileSystem_ABC::T_Predicate IsItemFile( const tools::Path& /*root*/ ) const
         {
             const auto meta = Metadata::GetFilename();
-            return [=]( const Path& path )
+            return [=]( const tools::Path& path )
             {
                 return !EndWith( meta, path );
             };
@@ -404,15 +408,15 @@ namespace
             if( !GetChecksum().empty() )
                return;
             size_t read;
-            const Path root = root_ / GetSuffix();
+            const tools::Path root = root_ / GetSuffix();
             const std::string checksum = fs.Checksum( root, IsItemFile( root ), read );
             meta_.Finalize( checksum, read );
             meta_.Save( fs, root_, false );
         }
 
-        static bool Copy( const FileSystem_ABC& fs, const Path& path, const Path& dst )
+        static bool Copy( const FileSystem_ABC& fs, const tools::Path& path, const tools::Path& dst )
         {
-            return fs.Rename( path, dst / Path( path ).filename() );
+            return fs.Rename( path, dst / path.FileName() );
         }
 
         void CheckDependencies( const Package_ABC& dst, const Package::T_Items& targets ) const
@@ -420,10 +424,10 @@ namespace
             BOOST_FOREACH( const T_Dependencies::value_type& dep, GetDependencies() )
                 if( !dst.FindAlive( *dep ) && !HasItem( targets, *dep ) )
                     throw web::HttpException( web::BAD_REQUEST, "Missing dependency "
-                        + Utf8( dep->GetName() ) + " on package " + Utf8( GetName() ) );
+                        + dep->GetName().ToUTF8() + " on package " + GetName().ToUTF8() );
         }
 
-        void Install( Async& async, const FileSystem_ABC& fs, const Path& tomb, const Path& root, const Package_ABC& dst,
+        void Install( Async& async, const FileSystem_ABC& fs, const tools::Path& tomb, const tools::Path& root, const Package_ABC& dst,
                       const PathOperand& operand, bool move, bool replace ) const
         {
             const auto olds = dst.FindAll( *this );
@@ -432,7 +436,7 @@ namespace
                 if( *it && (*it)->GetChecksum() == checksum )
                     return (*it)->Reinstall( fs );
 
-            const Path output = fs.MakeAnyPath( root );
+            const tools::Path output = fs.MakeAnyPath( root );
             if( move )
             {
                 fs.MakePaths( output );
@@ -440,7 +444,7 @@ namespace
             }
             else
             {
-                const Path sub =  output / GetSuffix();
+                const tools::Path sub =  output / GetSuffix();
                 fs.MakePaths( sub );
                 fs.CopyDirectory( root_ / GetSuffix(), sub );
             }
@@ -452,7 +456,7 @@ namespace
             operand( output );
         }
 
-        void Uninstall( Async& async, const FileSystem_ABC& fs, const Path& dst )
+        void Uninstall( Async& async, const FileSystem_ABC& fs, const tools::Path& dst )
         {
             meta_.TryUninstall( async, fs, root_, dst );
         }
@@ -485,8 +489,8 @@ namespace
         void Link( Tree& tree, const Package_ABC& ref, bool recurse )
         {
             const std::string prefix = GetType();
-            tree.put( prefix + ".name", Utf8( name_ ) );
-            tree.put( prefix + ".root", Utf8( root_ ) );
+            tree.put( prefix + ".name", name_.ToUTF8() );
+            tree.put( prefix + ".root", root_.ToUTF8() );
             tree.put( prefix + ".checksum", GetChecksum() );
             if( recurse )
                 BOOST_FOREACH( const auto& it, GetDependencies() )
@@ -502,7 +506,7 @@ namespace
 
         void Download( const FileSystem_ABC& fs, web::Chunker_ABC& dst ) const
         {
-            dst.SetName( Utf8( name_ ) + ".tar.gz" );
+            dst.SetName( name_.ToUTF8() + ".tar.gz" );
             dst.SetHeader( "Content-Type", "application/x-tar" );
             dst.SetHeader( "Original-Content-Length", boost::lexical_cast< std::string >( GetSize() ) );
             io::Writer_ABC& io = dst.OpenWriter();
@@ -512,9 +516,9 @@ namespace
         }
 
     protected:
-        const Path root_;
+        const tools::Path root_;
         const size_t id_;
-        const Path name_;
+        const tools::Path name_;
         const std::string date_;
         Metadata meta_;
         std::string action_;
@@ -528,20 +532,20 @@ namespace
         return std::string( tmp, size );
     }
 
-    Path PopFilename( Path& path )
+    tools::Path PopFilename( tools::Path& path )
     {
-        Path reply = path.filename();
-        path.remove_filename();
+        tools::Path reply = path.FileName();
+        path.RemoveFilename();
         return reply;
     }
 
-    std::string GetFilename( Path path, const std::string& root )
+    std::string GetFilename( tools::Path path, const std::string& root )
     {
-        Path reply;
-        path.remove_filename();
-        while( path.filename() != root )
+        tools::Path reply;
+        path.RemoveFilename();
+        while( path.FileName().ToUTF8() != root )
             reply = PopFilename( path ) / reply;
-        return Utf8( reply );
+        return reply.ToUTF8();
     }
 
     template< typename T >
@@ -552,13 +556,13 @@ namespace
     }
 
     template< typename T >
-    void AttachSimple( Async& async, const Path& path, const FileSystem_ABC& fs, const Path& root, Package::T_Items& items, const Metadata* meta )
+    void AttachSimple( Async& async, const tools::Path& path, const FileSystem_ABC& fs, const tools::Path& root, Package::T_Items& items, const Metadata* meta )
     {
         AttachItem( async, fs, items, boost::make_shared< T >( fs, root, path, items.size(), meta ) );
     }
 
     template< typename T >
-    bool AttachExtended( Async& async, const Path& path, const FileSystem_ABC& fs, const Path& root, Package::T_Items& items, const Metadata* meta )
+    bool AttachExtended( Async& async, const tools::Path& path, const FileSystem_ABC& fs, const tools::Path& root, Package::T_Items& items, const Metadata* meta )
     {
         AttachItem( async, fs, items, boost::make_shared< T >( fs, root, path, items.size(), meta, FromXml( fs.ReadFile( path ) ) ) );
         return true;
@@ -566,8 +570,8 @@ namespace
 
     struct Model : public Item
     {
-        Model( const FileSystem_ABC& fs, const Path& root, const Path& file, size_t id, const Metadata* meta )
-            : Item( fs, root, id, Utf8( Path( file ).remove_filename().remove_filename().filename() ), Format( fs.GetLastWrite( file ) ), meta )
+        Model( const FileSystem_ABC& fs, const tools::Path& root, const tools::Path& file, size_t id, const Metadata* meta )
+            : Item( fs, root, id, tools::Path( file ).RemoveFilename().RemoveFilename().FileName().ToUTF8(), Format( fs.GetLastWrite( file ) ), meta )
         {
             // NOTHING
         }
@@ -577,21 +581,21 @@ namespace
             return "model";
         }
 
-        Path GetSuffix() const
+        tools::Path GetSuffix() const
         {
-            return Path( "data" ) / "models" / name_;
+            return tools::Path( "data" ) / "models" / name_;
         }
 
-        static bool Operand( Async& async, const FileSystem_ABC& fs, const Path& root, Package::T_Items& items, const Metadata* meta,
-                             const Path& path )
+        static bool Operand( Async& async, const FileSystem_ABC& fs, const tools::Path& root, Package::T_Items& items, const Metadata* meta,
+                             const tools::Path& path )
         {
-            const Path target = path / "decisional" / "decisional.xml";
+            const tools::Path target = path / "decisional" / "decisional.xml";
             if( fs.IsFile( target ) )
                 AttachSimple< Model >( async, target, fs, root, items, meta );
             return true;
         }
 
-        static void Parse( Async& async, const FileSystem_ABC& fs, const Path& root, Package::T_Items& items, const Metadata* meta )
+        static void Parse( Async& async, const FileSystem_ABC& fs, const tools::Path& root, Package::T_Items& items, const Metadata* meta )
         {
             FileSystem_ABC::T_Predicate op = boost::bind( &Model::Operand,
                 boost::ref( async ), boost::cref( fs ), boost::cref( root ), boost::ref( items ), meta, _1 );
@@ -601,7 +605,7 @@ namespace
 
     struct Terrain : public Item
     {
-        Terrain( const FileSystem_ABC& fs, const Path& root, const Path& file, size_t id, const Metadata* meta )
+        Terrain( const FileSystem_ABC& fs, const tools::Path& root, const tools::Path& file, size_t id, const Metadata* meta )
             : Item( fs, root, id, GetFilename( file, "terrains" ), Format( fs.GetLastWrite( file ) ), meta )
         {
             // NOTHING
@@ -612,22 +616,22 @@ namespace
             return "terrain";
         }
 
-        Path GetSuffix() const
+        tools::Path GetSuffix() const
         {
-            return Path( "data" ) / "terrains" / name_;
+            return tools::Path( "data" ) / "terrains" / name_;
         }
 
-        static bool Operand( Async& async, const FileSystem_ABC& fs, const Path& root, Package::T_Items& items, const Metadata* meta,
-                             const Path& path )
+        static bool Operand( Async& async, const FileSystem_ABC& fs, const tools::Path& root, Package::T_Items& items, const Metadata* meta,
+                             const tools::Path& path )
         {
-            std::wstring filename = path.filename().wstring();
+            std::wstring filename = path.FileName().ToUnicode();
             boost::to_lower( filename );
             if( filename == L"terrain.xml" )
                 AttachSimple< Terrain >( async, path, fs, root, items, meta );
             return true;
         }
 
-        static void Parse( Async& async, const FileSystem_ABC& fs, const Path& root, Package::T_Items& items, const Metadata* meta )
+        static void Parse( Async& async, const FileSystem_ABC& fs, const tools::Path& root, Package::T_Items& items, const Metadata* meta )
         {
             FileSystem_ABC::T_Predicate op = boost::bind( &Terrain::Operand,
                 boost::ref( async ), boost::cref( fs ), boost::cref( root ), boost::ref( items ), meta, _1 );
@@ -649,9 +653,9 @@ namespace
             return type_;
         }
 
-        Path GetSuffix() const
+        tools::Path GetSuffix() const
         {
-            return Path();
+            return tools::Path();
         }
 
         const std::string type_;
@@ -659,7 +663,7 @@ namespace
 
     typedef std::map< std::string, std::string > T_Sides;
 
-    T_Sides GetSides( const FileSystem_ABC& fs, const Path& path )
+    T_Sides GetSides( const FileSystem_ABC& fs, const tools::Path& path )
     {
         if( !fs.Exists( path ) )
             return T_Sides();
@@ -684,7 +688,7 @@ namespace
 
     typedef web::session::Config::T_Profiles T_Profiles;
 
-    T_Profiles GetProfiles( const FileSystem_ABC& fs, const Path& path )
+    T_Profiles GetProfiles( const FileSystem_ABC& fs, const tools::Path& path )
     {
         if( !fs.Exists( path ) )
             return T_Profiles();
@@ -703,13 +707,13 @@ namespace
 
     struct Exercise : public Item
     {
-        Exercise( const FileSystem_ABC& fs, const Path& root, const Path& file, size_t id, const Metadata* meta, const Tree& more )
+        Exercise( const FileSystem_ABC& fs, const tools::Path& root, const tools::Path& file, size_t id, const Metadata* meta, const Tree& more )
             : Item     ( fs, root, id, GetFilename( file, "exercises" ), Format( fs.GetLastWrite( file ) ), meta )
             , briefing_( Get< std::string >( more, "exercise.meta.briefing.text" ) )
             , model_   ( Get< std::string >( more, "exercise.model.<xmlattr>.dataset" ) )
             , terrain_ ( Get< std::string >( more, "exercise.terrain.<xmlattr>.name" ) )
-            , sides_   ( GetSides( fs, file.parent_path() / "orbat.xml" ) )
-            , profiles_( GetProfiles( fs, file.parent_path() / "profiles.xml" ) )
+            , sides_   ( GetSides( fs, file.Parent() / "orbat.xml" ) )
+            , profiles_( GetProfiles( fs, file.Parent() / "profiles.xml" ) )
         {
             // NOTHING
         }
@@ -730,9 +734,9 @@ namespace
             return "exercise";
         }
 
-        Path GetSuffix() const
+        tools::Path GetSuffix() const
         {
-            return Path( "exercises" ) / name_;
+            return tools::Path( "exercises" ) / name_;
         }
 
         T_Dependencies GetDependencies() const
@@ -750,24 +754,24 @@ namespace
             return true;
         }
 
-        FileSystem_ABC::T_Predicate IsItemFile( const Path& root ) const
+        FileSystem_ABC::T_Predicate IsItemFile( const tools::Path& root ) const
         {
             const auto predicate = Item::IsItemFile( root );
-            return [=]( const Path& path )
+            return [=]( const tools::Path& path )
             {
                 return predicate( path ) && !BeginWith( root / "sessions", path );
             };
         }
 
-        static bool Operand( Async& async, const FileSystem_ABC& fs, const Path& root, Package::T_Items& items, const Metadata* meta,
-                             const Path& path )
+        static bool Operand( Async& async, const FileSystem_ABC& fs, const tools::Path& root, Package::T_Items& items, const Metadata* meta,
+                             const tools::Path& path )
         {
-            if( path.filename() == "exercise.xml" )
+            if( path.FileName() == "exercise.xml" )
                 AttachExtended< Exercise >( async, path, fs, root, items, meta );
             return true;
         }
 
-        static void Parse( Async& async, const FileSystem_ABC& fs, const Path& root, Package::T_Items& items, const Metadata* meta )
+        static void Parse( Async& async, const FileSystem_ABC& fs, const tools::Path& root, Package::T_Items& items, const Metadata* meta )
         {
             FileSystem_ABC::T_Predicate op = boost::bind( &Exercise::Operand,
                 boost::ref( async ), boost::cref( fs ), boost::cref( root ), boost::ref( items ), meta, _1 );
@@ -801,16 +805,16 @@ namespace
         return version.empty() ? "Unversioned" : version;
     }
 
-    std::string GetClient( const Path& root )
+    std::string GetClient( const tools::Path& root )
     {
         const auto app = root / "gaming_app.exe";
-        const bool x64 = runtime::Api_ABC::Is64BitBinary( app.wstring().data() );
+        const bool x64 = runtime::Api_ABC::Is64BitBinary( app.ToUnicode().data() );
         return std::string( "client" ) + ( x64 ? "64" : "32" );
     };
 
     struct Client : public Item
     {
-        Client( const FileSystem_ABC& fs, const Path& root, const Path& file, size_t id )
+        Client( const FileSystem_ABC& fs, const tools::Path& root, const tools::Path& file, size_t id )
             : Item( fs, root, id, "gaming", Format( fs.GetLastWrite( file ) ), nullptr )
             , type_( GetClient( root ) )
         {
@@ -822,18 +826,18 @@ namespace
             return type_;
         }
 
-        Path GetSuffix() const
+        tools::Path GetSuffix() const
         {
-            return Path();
+            return tools::Path();
         }
 
-        static void Parse( Async& async, const FileSystem_ABC& fs, const Path& root, Package::T_Items& items )
+        static void Parse( Async& async, const FileSystem_ABC& fs, const tools::Path& root, Package::T_Items& items )
         {
-            const Path file = root / "gaming_app.exe";
+            const tools::Path file = root / "gaming_app.exe";
             if( fs.IsFile( file ) )
             {
                 const auto item = boost::make_shared< Client >( fs, root, file, items.size() );
-                item->SetVersion( GetVersion( Splice( Split( tools::GetAppVersion( file.wstring(), "Unversioned" ) ), 3 ) ) );
+                item->SetVersion( GetVersion( Splice( Split( tools::GetAppVersion( file.ToUnicode(), "Unversioned" ) ), 3 ) ) );
                 AttachItem( async, fs, items, item );
             }
         }
@@ -846,7 +850,7 @@ namespace
 // Name: Package::Package
 // Created: BAX 2012-05-14
 // -----------------------------------------------------------------------------
-Package::Package( Pool_ABC& pool, const FileSystem_ABC& fs, const Path& path,
+Package::Package( Pool_ABC& pool, const FileSystem_ABC& fs, const tools::Path& path,
                   bool reference, bool replace )
     : pool_     ( pool )
     , fs_       ( fs )
@@ -902,7 +906,7 @@ Tree Package::GetPropertiesFrom( const Item_ABC& item ) const
 // Name: Package::GetPath
 // Created: BAX 2012-05-31
 // -----------------------------------------------------------------------------
-Path Package::GetPath() const
+tools::Path Package::GetPath() const
 {
     return path_;
 }
@@ -911,14 +915,14 @@ Path Package::GetPath() const
 // Name: Package::GetRoot
 // Created: BAX 2012-10-02
 // -----------------------------------------------------------------------------
-Path Package::GetRoot( const Item_ABC& item ) const
+tools::Path Package::GetRoot( const Item_ABC& item ) const
 {
     return item.GetRoot();
 }
 
 namespace
 {
-bool FillItems( Async& async, const FileSystem_ABC& fs, const Path& path, Package::T_Items& items, Metadata* meta )
+bool FillItems( Async& async, const FileSystem_ABC& fs, const tools::Path& path, Package::T_Items& items, Metadata* meta )
 {
     Model::Parse   ( async, fs, path, items, meta );
     Terrain::Parse ( async, fs, path, items, meta );
@@ -938,7 +942,7 @@ bool Package::Parse()
 
     if( !reference_ )
     {
-        const Path index = path_ / "content.xml";
+        const tools::Path index = path_ / "content.xml";
         if( !fs_.IsFile( index ) )
             return false;
 
@@ -1009,7 +1013,7 @@ Package_ABC::T_Items Package::FindAll( const Item_ABC& item ) const
 // Name: Package::Find
 // Created: BAX 2012-06-06
 // -----------------------------------------------------------------------------
-Package_ABC::T_Item Package::FindRoot( const Path& root, const std::string& checksum, bool installed ) const
+Package_ABC::T_Item Package::FindRoot( const tools::Path& root, const std::string& checksum, bool installed ) const
 {
     T_Items::const_iterator it = FindItem( items_, std::make_pair( root, checksum ), installed );
     return it == items_.end() ? T_Item() : *it;
@@ -1024,7 +1028,7 @@ namespace
 bool CompareChecksum( const Package_ABC::T_Item& item, const std::string& type, const std::string& name, const std::string& checksum )
 {
     return item->GetType()     == type
-        && item->GetName()     == name
+        && item->GetName()     == tools::Path::FromUTF8( name )
         && item->GetChecksum() == checksum;
 }
 }
@@ -1041,7 +1045,7 @@ Package_ABC::T_Item Package::Find( const std::string& type, const std::string& n
 
 namespace
 {
-void AddItemPath( boost::mutex& access, std::vector< Path >& list, const Path& path )
+void AddItemPath( boost::mutex& access, std::vector< tools::Path >& list, const tools::Path& path )
 {
     boost::lock_guard< boost::mutex > lock( access );
     list.push_back( path );
@@ -1052,7 +1056,7 @@ void AddItemPath( boost::mutex& access, std::vector< Path >& list, const Path& p
 // Name: Package::Install
 // Created: BAX 2012-09-24
 // -----------------------------------------------------------------------------
-void Package::InstallWith( Async& io, const Path& tomb, const T_Items& install, bool move )
+void Package::InstallWith( Async& io, const tools::Path& tomb, const T_Items& install, bool move )
 {
     if( install.empty() )
         return;
@@ -1064,14 +1068,14 @@ void Package::InstallWith( Async& io, const Path& tomb, const T_Items& install, 
     fs_.MakePaths( path_ );
     Async async( pool_ );
     boost::mutex access;
-    std::vector< Path > paths;
+    std::vector< tools::Path > paths;
     PathOperand op = boost::bind( &AddItemPath, boost::ref( access ), boost::ref( paths ), _1 );
     BOOST_FOREACH( const T_Items::value_type& item, install )
         async.Post( boost::bind( &Item_ABC::Install, item, boost::ref( io ), boost::cref( fs_ ),
                   tomb, path_, boost::cref( *this ), op, move, replace_ ) );
     async.Join();
 
-    BOOST_FOREACH( const Path& path, paths )
+    BOOST_FOREACH( const tools::Path& path, paths )
         FillItems( async, fs_, path, items_, 0 );
     async.Join();
 
@@ -1083,7 +1087,7 @@ void Package::InstallWith( Async& io, const Path& tomb, const T_Items& install, 
 // Name: Package::Install
 // Created: BAX 2012-05-24
 // -----------------------------------------------------------------------------
-void Package::Install( Async& io, const Path& tomb, const Package_ABC& src, const std::vector< size_t >& ids )
+void Package::Install( Async& io, const tools::Path& tomb, const Package_ABC& src, const std::vector< size_t >& ids )
 {
     T_Items install;
     BOOST_FOREACH( size_t id, ids )
@@ -1117,7 +1121,7 @@ void RemoveItems( T& list, U predicate )
 // Name: Package::Uninstall
 // Created: BAX 2012-05-25
 // -----------------------------------------------------------------------------
-void Package::Uninstall( Async& io, const Path& tomb, const std::vector< size_t >& ids )
+void Package::Uninstall( Async& io, const tools::Path& tomb, const std::vector< size_t >& ids )
 {
     Async async( pool_ );
     BOOST_FOREACH( const T_Items::value_type& item, items_ )
@@ -1196,7 +1200,7 @@ namespace
 {
 void Link( Tree& dst, const Tree& src, const std::string& key, const Package& pkg )
 {
-    const Path root = Utf8( Get< std::string >( src, key + ".root"  ) );
+    const tools::Path root = tools::Path::FromUTF8( tools::ToUtf8( Get< std::string >( src, key + ".root" ) ) );
     const std::string checksum = Get< std::string >( src, key + ".checksum" );
     Package_ABC::T_Item item = pkg.FindRoot( root, checksum, false );
     if( item )

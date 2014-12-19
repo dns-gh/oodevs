@@ -18,10 +18,6 @@
 namespace boost
 {
     template< typename T > class shared_ptr;
-namespace filesystem
-{
-    class path;
-}
 }
 
 namespace io
@@ -30,9 +26,9 @@ namespace io
     struct Writer_ABC;
 }
 
-namespace runtime
+namespace tools
 {
-    typedef boost::filesystem::path Path;
+    class Path;
 }
 
 namespace runtime
@@ -73,13 +69,13 @@ struct Packer_ABC : public boost::noncopyable
 
     //! @name Methods
     //@{
-    typedef std::function< bool( const Path& ) > T_Predicate;
+    typedef std::function< bool( const tools::Path& ) > T_Predicate;
     //@}
 
     //! @name Methods
     //@{
-    virtual void Pack( const Path& input, const T_Predicate& predicate ) = 0;
-    virtual void PackEntry( const Path& file, const void* data, size_t size ) = 0;
+    virtual void Pack( const tools::Path& input, const T_Predicate& predicate ) = 0;
+    virtual void PackEntry( const tools::Path& file, const void* data, size_t size ) = 0;
     //@}
 };
 
@@ -109,31 +105,31 @@ struct FileSystem_ABC : public boost::noncopyable
     typedef boost::shared_ptr< Unpacker_ABC > T_Unpacker;
     typedef boost::shared_ptr< Packer_ABC > T_Packer;
     typedef boost::shared_ptr< io::Writer_ABC > T_Writer;
-    typedef std::function< bool( const Path& ) > T_Predicate;
+    typedef std::function< bool( const tools::Path& ) > T_Predicate;
     //@}
 
     //! @name Methods
     //@{
-    virtual bool        IsFile( const Path& path ) const = 0;
-    virtual bool        IsDirectory( const Path& path ) const = 0;
-    virtual bool        Exists( const Path& path ) const = 0;
-    virtual void        CopyDirectory( const Path& dst, const Path& src ) const = 0;
-    virtual bool        CopyFile( const Path& dst, const Path& src ) const = 0;
-    virtual void        MakePaths( const Path& path ) const = 0;
-    virtual bool        MakePath( const Path& path ) const = 0;
-    virtual bool        Remove( const Path& path ) const = 0;
-    virtual bool        Rename( const Path& src, const Path& dst ) const = 0;
-    virtual bool        WriteFile( const Path& path, const std::string& content ) const = 0;
-    virtual std::string ReadFile( const Path& path ) const = 0;
-    virtual void        LimitedReadFile( io::Writer_ABC& sink, const Path& path, int limit ) const = 0;
-    virtual void        Walk( const Path& path, bool recurse, const T_Predicate& predicate ) const = 0;
-    virtual T_Unpacker  Unpack( const Path& output, io::Reader_ABC& src, io::Writer_ABC* dst ) const = 0;
+    virtual bool        IsFile( const tools::Path& path ) const = 0;
+    virtual bool        IsDirectory( const tools::Path& path ) const = 0;
+    virtual bool        Exists( const tools::Path& path ) const = 0;
+    virtual void        CopyDirectory( const tools::Path& dst, const tools::Path& src ) const = 0;
+    virtual bool        CopyFile( const tools::Path& dst, const tools::Path& src ) const = 0;
+    virtual void        MakePaths( const tools::Path& path ) const = 0;
+    virtual bool        MakePath( const tools::Path& path ) const = 0;
+    virtual bool        Remove( const tools::Path& path ) const = 0;
+    virtual bool        Rename( const tools::Path& src, const tools::Path& dst ) const = 0;
+    virtual bool        WriteFile( const tools::Path& path, const std::string& content ) const = 0;
+    virtual std::string ReadFile( const tools::Path& path ) const = 0;
+    virtual void        LimitedReadFile( io::Writer_ABC& sink, const tools::Path& path, int limit ) const = 0;
+    virtual void        Walk( const tools::Path& path, bool recurse, const T_Predicate& predicate ) const = 0;
+    virtual T_Unpacker  Unpack( const tools::Path& output, io::Reader_ABC& src, io::Writer_ABC* dst ) const = 0;
     virtual T_Packer    Pack( io::Writer_ABC& dst, ArchiveFormat fmt ) const = 0;
     virtual T_Writer    MakeDeflateFilter( io::Writer_ABC& writer ) const = 0;
-    virtual std::string Checksum( const Path& root, const T_Predicate& predicate, size_t& read ) const = 0;
-    virtual Path        MakeAnyPath( const Path& root ) const = 0;
-    virtual std::time_t GetLastWrite( const Path& file ) const = 0;
-    virtual size_t      GetDirectorySize( const Path& dir ) const = 0;
+    virtual std::string Checksum( const tools::Path& root, const T_Predicate& predicate, size_t& read ) const = 0;
+    virtual tools::Path MakeAnyPath( const tools::Path& root ) const = 0;
+    virtual std::time_t GetLastWrite( const tools::Path& file ) const = 0;
+    virtual size_t      GetDirectorySize( const tools::Path& dir ) const = 0;
     virtual std::string ReadAll( io::Reader_ABC& input ) const = 0;
     //@}
 };

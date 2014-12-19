@@ -12,6 +12,8 @@
 #include "runtime/FileSystem_ABC.h"
 #include "runtime/PropertyTree.h"
 
+#include <tools/Path.h>
+
 #include <boost/algorithm/string.hpp>
 #include <boost/bind.hpp>
 #include <boost/foreach.hpp>
@@ -51,7 +53,7 @@ void AddSettings( T_Defaults& dst, const Tree& src, const std::string& key )
     property_tree::Walk( src, tokens.begin(), tokens.end(), boost::bind( &AddSetting, boost::ref( dst ), _1 ) );
 }
 
-T_Defaults LoadDefaults( const FileSystem_ABC& fs, const Path& cfg )
+T_Defaults LoadDefaults( const FileSystem_ABC& fs, const tools::Path& cfg )
 {
     const Tree meta = property_tree::FromXml( fs.ReadFile( cfg ) );
     T_Defaults dst;
@@ -64,7 +66,7 @@ T_Defaults LoadDefaults( const FileSystem_ABC& fs, const Path& cfg )
 
 struct web::Plugin
 {
-    Plugin( const FileSystem_ABC& fs, const Path& library, const Path& cfg )
+    Plugin( const FileSystem_ABC& fs, const tools::Path& library, const tools::Path& cfg )
         : library_ ( library )
         , defaults_( LoadDefaults( fs, cfg ) )
     {
@@ -76,8 +78,8 @@ struct web::Plugin
         // NOTHING
     }
 
-    Path       library_;
-    T_Defaults defaults_;
+    tools::Path library_;
+    T_Defaults  defaults_;
 };
 
 namespace
@@ -86,12 +88,12 @@ namespace
 // Name: MatchLibrary
 // Created: BAX 2012-08-23
 // -----------------------------------------------------------------------------
-bool MatchLibrary( boost::optional< Path >& reply, const Path& name, const Path& candidate )
+bool MatchLibrary( boost::optional< tools::Path >& reply, const tools::Path& name, const tools::Path& candidate )
 {
-    const std::wstring filename = candidate.filename().wstring();
-    if( boost::algorithm::starts_with( filename, name.wstring() + L"_plugin" ) )
+    const std::wstring filename = candidate.FileName().ToUnicode();
+    if( boost::algorithm::starts_with( filename, name.ToUnicode() + L"_plugin" ) )
         if( boost::algorithm::ends_with( filename, L".dll" ) )
-            reply = candidate.filename();
+            reply = candidate.FileName();
     // iterate until we get a candidate
     return reply == boost::none;
 }
@@ -100,9 +102,9 @@ bool MatchLibrary( boost::optional< Path >& reply, const Path& name, const Path&
 // Name: FindLibrary
 // Created: BAX 2012-08-23
 // -----------------------------------------------------------------------------
-boost::optional< Path > FindLibrary( const FileSystem_ABC& fs, const Path& root, const Path& name )
+boost::optional< tools::Path > FindLibrary( const FileSystem_ABC& fs, const tools::Path& root, const tools::Path& name )
 {
-    boost::optional< Path > reply;
+    boost::optional< tools::Path > reply;
     fs.Walk( root, false, boost::bind( &MatchLibrary, boost::ref( reply ), boost::cref( name ), _1 ) );
     return reply;
 }
@@ -111,13 +113,13 @@ boost::optional< Path > FindLibrary( const FileSystem_ABC& fs, const Path& root,
 // Name: ParsePlugins
 // Created: BAX 2012-08-23
 // -----------------------------------------------------------------------------
-bool ParsePlugins( Plugins::T_Plugins& data, const FileSystem_ABC& fs, const Path& dir )
+bool ParsePlugins( Plugins::T_Plugins& data, const FileSystem_ABC& fs, const tools::Path& dir )
 {
     if( !fs.IsFile( dir / "plugin.xml" ) )
         return true;
 
-    const Path name = dir.filename();
-    const boost::optional< Path > library = FindLibrary( fs, dir, name );
+    const tools::Path name = dir.FileName();
+    const boost::optional< tools::Path > library = FindLibrary( fs, dir, name );
     if( library == boost::none )
         return true;
 
@@ -129,7 +131,7 @@ bool ParsePlugins( Plugins::T_Plugins& data, const FileSystem_ABC& fs, const Pat
 // Name: ParsePlugins
 // Created: BAX 2012-08-23
 // -----------------------------------------------------------------------------
-Plugins::T_Plugins ParsePlugins( const FileSystem_ABC& fs, const Path& root )
+Plugins::T_Plugins ParsePlugins( const FileSystem_ABC& fs, const tools::Path& root )
 {
     Plugins::T_Plugins reply;
     fs.Walk( root, false, boost::bind( &ParsePlugins, boost::ref( reply ), boost::cref( fs ), _1 ) );
@@ -141,7 +143,7 @@ Plugins::T_Plugins ParsePlugins( const FileSystem_ABC& fs, const Path& root )
 // Name: Plugins::Plugins
 // Created: BAX 2012-08-24
 // -----------------------------------------------------------------------------
-Plugins::Plugins( const FileSystem_ABC& fs, const Path& root )
+Plugins::Plugins( const FileSystem_ABC& fs, const tools::Path& root )
     : plugins_( ParsePlugins( fs, root ) )
 {
     // NOTHING
@@ -186,14 +188,14 @@ Plugins::T_Names Plugins::GetNames( int offset, int limit ) const
 // -----------------------------------------------------------------------------
 bool Plugins::Has( const std::string& name ) const
 {
-    return plugins_.find( name ) != plugins_.end();
+    return plugins_.find( name.c_str() ) != plugins_.end();
 }
 
 // -----------------------------------------------------------------------------
 // Name: Plugins::GetDefaults
 // Created: BAX 2012-08-28
 // -----------------------------------------------------------------------------
-Plugins::T_Defaults Plugins::GetDefaults( const Path& plugin ) const
+Plugins::T_Defaults Plugins::GetDefaults( const tools::Path& plugin ) const
 {
     T_Plugins::const_iterator it = plugins_.find( plugin );
     if( it == plugins_.end() )
@@ -205,10 +207,10 @@ Plugins::T_Defaults Plugins::GetDefaults( const Path& plugin ) const
 // Name: Plugins::GetLibrary
 // Created: BAX 2012-08-31
 // -----------------------------------------------------------------------------
-Path Plugins::GetLibrary( const Path& plugin ) const
+tools::Path Plugins::GetLibrary( const tools::Path& plugin ) const
 {
     T_Plugins::const_iterator it = plugins_.find( plugin );
     if( it == plugins_.end() )
-        return Path();
+        return tools::Path();
     return it->second.library_;
 }

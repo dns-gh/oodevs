@@ -24,12 +24,16 @@ namespace cpplog
     class BaseLogger;
 }
 
+namespace tools
+{
+    class Path;
+}
+
 namespace host
 {
     struct NodeController_ABC;
     struct SessionController_ABC;
     struct UserController_ABC;
-    typedef boost::filesystem::path Path;
     typedef boost::property_tree::ptree Tree;
     typedef boost::uuids::uuid Uuid;
 }
@@ -115,14 +119,14 @@ public:
 
     //! @name Exercise Methods
     //@{
-    virtual std::vector< Path > ListExercises ( const Uuid& id, int offset, int limit ) const;
-    virtual size_t              CountExercises( const Uuid& id ) const;
+    virtual std::vector< tools::Path > ListExercises ( const Uuid& id, int offset, int limit ) const;
+    virtual size_t                     CountExercises( const Uuid& id ) const;
     //@}
 
     //! @name Plugin Methods
     //@{
-    virtual std::vector< Path > ListPlugins ( int offset, int limit ) const;
-    virtual size_t              CountPlugins() const;
+    virtual std::vector< tools::Path > ListPlugins ( int offset, int limit ) const;
+    virtual size_t                     CountPlugins() const;
     //@}
 
     //! @name Licenses Methods

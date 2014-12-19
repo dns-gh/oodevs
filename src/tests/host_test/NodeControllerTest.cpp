@@ -35,19 +35,19 @@ using namespace property_tree;
 
 namespace
 {
-    bool EndWith( Path suffix, Path path )
+    bool EndWith( tools::Path suffix, tools::Path path )
     {
-        for( ; !suffix.empty(); suffix.remove_filename(), path.remove_filename() )
-            if( path.empty() )
+        for( ; !suffix.IsEmpty(); suffix.RemoveFilename(), path.RemoveFilename() )
+            if( path.IsEmpty() )
                 return false;
-            else if( suffix.filename() != path.filename() )
+            else if( suffix.FileName() != path.FileName() )
                 return false;
         return true;
     }
 
     struct SubFixture
     {
-        SubFixture( const Path& app, const Path& web, const Path& license )
+        SubFixture( const tools::Path& app, const tools::Path& web, const tools::Path& license )
             : idx( 0 )
         {
             MOCK_EXPECT( fs.MakePaths );
@@ -60,9 +60,9 @@ namespace
             MOCK_EXPECT( fs.Walk ).once().with( boost::bind( &EndWith, "plugins", _1 ), false, mock::any );
         };
 
-        Path MakePath( const Path& root )
+        tools::Path MakePath( const tools::Path& root )
         {
-            return root / boost::lexical_cast< std::string >( ++idx );
+            return root / boost::lexical_cast< std::string >( ++idx ).c_str();
         }
 
         size_t idx;
@@ -106,14 +106,14 @@ namespace
             , type   ( isCluster ? "cluster" : "node" )
             , sub    ( app, web, license )
             , plugins( sub.fs, "plugins" )
-            , control( sub.log, sub.runtime, sub.fs, plugins, sub.nodes, root, app, web, Path(), license, type, 0, 0, sub.pool, sub.proxy )
+            , control( sub.log, sub.runtime, sub.fs, plugins, sub.nodes, root, app, web, tools::Path(), license, type, 0, 0, sub.pool, sub.proxy )
         {
             // NOTHING
         }
-        const Path root;
-        const Path app;
-        const Path web;
-        const Path license;
+        const tools::Path root;
+        const tools::Path app;
+        const tools::Path web;
+        const tools::Path license;
         const std::string type;
         SubFixture sub;
         web::Plugins plugins;
@@ -121,11 +121,11 @@ namespace
         boost::shared_ptr< MockNode > active;
         boost::shared_ptr< MockNode > idle;
 
-        boost::shared_ptr< MockNode > AddNode( const Uuid& id, const std::string& data, const Path& path = Path() )
+        boost::shared_ptr< MockNode > AddNode( const Uuid& id, const std::string& data, const tools::Path& path = tools::Path() )
         {
             const Tree tree = FromJson( data );
             boost::shared_ptr< MockNode > node = boost::make_shared< MockNode >( id, tree );
-            if( path.empty() )
+            if( path.IsEmpty() )
             {
                 web::node::Config cfg;
                 cfg.name = tree.get< std::string >( "name" );
@@ -145,7 +145,7 @@ namespace
         void Reload()
         {
             MOCK_EXPECT( sub.fs.Walk ).once().with( root / "nodes", false,
-                boost::bind( &MockFileSystem::Apply, &sub.fs, _1, boost::assign::list_of< Path >( "a" )( "b" ) ) );
+                boost::bind( &MockFileSystem::Apply, &sub.fs, _1, boost::assign::list_of< tools::Path >( "a" )( "b" ) ) );
             MOCK_EXPECT( sub.fs.IsFile ).once().with( "a/node.id" ).returns( true );
             MOCK_EXPECT( sub.fs.IsFile ).once().with( "b/node.id" ).returns( true );
             active = AddNode( idActive, nodeActive, "a/node.id" );

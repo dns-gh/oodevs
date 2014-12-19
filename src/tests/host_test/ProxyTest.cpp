@@ -65,7 +65,7 @@ namespace
             MOCK_EXPECT( fs.IsFile ).once().with( "proxy.id" ).returns( false );
             MOCK_EXPECT( fs.MakePaths );
             MOCK_EXPECT( fs.WriteFile ).once().with( mock::any, mock::retrieve( tag ) ).returns( true );
-            MOCK_EXPECT( runtime.Start ).once().with( config.app, mock::any, "", mock::any ).returns( process );
+            MOCK_EXPECT( runtime.Start ).once().with( config.app.ToUTF8(), mock::any, "", mock::any ).returns( process );
             MOCK_EXPECT( fs.Remove ).once().with( "proxy.id" ).returns( true );
             MOCK_EXPECT( process->Kill ).once().returns( true );
             MOCK_EXPECT( process->Join ).returns( true );

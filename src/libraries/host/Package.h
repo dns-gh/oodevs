@@ -11,8 +11,8 @@
 #define PACKAGE_H
 
 #include "Package_ABC.h"
-#include <boost/filesystem/path.hpp>
 #include <boost/shared_ptr.hpp>
+#include <tools/Path.h>
 
 namespace runtime
 {
@@ -22,8 +22,6 @@ namespace runtime
 
 namespace host
 {
-    typedef boost::filesystem::path Path;
-
 // =============================================================================
 /** @class  Package
     @brief  Package class definition
@@ -36,7 +34,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              Package( runtime::Pool_ABC& pool, const runtime::FileSystem_ABC& fs,
-                      const Path& path, bool reference, bool replace );
+                      const tools::Path& path, bool reference, bool replace );
     virtual ~Package();
     //@}
 
@@ -45,20 +43,20 @@ public:
     virtual Tree GetProperties() const;
     virtual Tree GetPropertiesFrom( const Item_ABC& item ) const;
     virtual size_t GetSize() const;
-    virtual Path GetPath() const;
-    virtual Path GetRoot( const Item_ABC& item ) const;
+    virtual tools::Path GetPath() const;
+    virtual tools::Path GetRoot( const Item_ABC& item ) const;
     virtual T_Item FindId( size_t id ) const;
     virtual T_Item FindAlive( const Item_ABC& item ) const;
     virtual T_Items FindAll( const Item_ABC& item ) const;
-    virtual T_Item FindRoot( const Path& root, const std::string& checksum, bool alive ) const;
+    virtual T_Item FindRoot( const tools::Path& root, const std::string& checksum, bool alive ) const;
     virtual T_Item Find( const std::string& type, const std::string& name, const std::string& checksum ) const;
     virtual T_Exercises GetExercises( int offset, int limit ) const;
     virtual size_t CountExercises() const;
     virtual bool Parse();
     virtual void Identify( const Package_ABC& reference );
-    virtual void InstallWith( runtime::Async& async, const Path& root, const T_Items& items, bool move );
-    virtual void Install( runtime::Async& async, const Path& root, const Package_ABC& src, const std::vector< size_t >& ids );
-    virtual void Uninstall( runtime::Async& async, const Path& root, const std::vector< size_t >& ids );
+    virtual void InstallWith( runtime::Async& async, const tools::Path& root, const T_Items& items, bool move );
+    virtual void Install( runtime::Async& async, const tools::Path& root, const Package_ABC& src, const std::vector< size_t >& ids );
+    virtual void Uninstall( runtime::Async& async, const tools::Path& root, const std::vector< size_t >& ids );
     virtual Tree LinkExercise( const std::string& name );
     virtual Tree LinkItem( Item_ABC& item );
     virtual Tree LinkItem( const Tree& tree );
@@ -80,7 +78,7 @@ private:
     //@{
     runtime::Pool_ABC& pool_;
     const runtime::FileSystem_ABC& fs_;
-    const Path path_;
+    const tools::Path path_;
     const bool reference_;
     const bool replace_;
     std::string name_;

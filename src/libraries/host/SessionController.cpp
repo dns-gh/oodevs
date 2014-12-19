@@ -13,7 +13,6 @@
 #include "NodeController_ABC.h"
 #include "runtime/FileSystem_ABC.h"
 #include "runtime/PropertyTree.h"
-#include "runtime/Utf8.h"
 #include "Session_ABC.h"
 #include "web/User.h"
 #include "web/HttpException.h"
@@ -22,7 +21,6 @@
 
 using namespace host;
 using namespace property_tree;
-using runtime::Utf8;
 using runtime::Async;
 using runtime::FileSystem_ABC;
 using runtime::Pool_ABC;
@@ -36,11 +34,11 @@ SessionController::SessionController( cpplog::BaseLogger& log,
                                       const FileSystem_ABC& fs,
                                       const SessionFactory_ABC& sessions,
                                       const NodeController_ABC& nodes,
-                                      const Path& root,
-                                      const Path& cwd,
-                                      const Path& simulation,
-                                      const Path& replayer,
-                                      const Path& timeline,
+                                      const tools::Path& root,
+                                      const tools::Path& cwd,
+                                      const tools::Path& simulation,
+                                      const tools::Path& replayer,
+                                      const tools::Path& timeline,
                                       Pool_ABC& pool )
     : log_       ( log )
     , runtime_   ( runtime )
@@ -57,13 +55,13 @@ SessionController::SessionController( cpplog::BaseLogger& log,
 {
     fs_.MakePaths( trash_ );
     if( !fs_.IsDirectory( cwd ) )
-        throw std::runtime_error( "'" + runtime::Utf8( cwd_ ) + "' is not a directory" );
+        throw std::runtime_error( "'" + cwd_.ToUTF8() + "' is not a directory" );
     if( !fs_.IsFile( simulation_ ) )
-        throw std::runtime_error( "'" + runtime::Utf8( simulation_ ) + "' is not a file" );
+        throw std::runtime_error( "'" + simulation_.ToUTF8() + "' is not a file" );
     if( !fs_.IsFile( replayer_ ) )
-        throw std::runtime_error( "'" + runtime::Utf8( replayer_ ) + "' is not a file" );
+        throw std::runtime_error( "'" + replayer_.ToUTF8() + "' is not a file" );
     if( !fs_.IsFile( timeline_ ) )
-        throw std::runtime_error( "'" + runtime::Utf8( timeline_ ) + "' is not a file" );
+        throw std::runtime_error( "'" + timeline_.ToUTF8() + "' is not a file" );
     timer_ = MakeTimer( pool, boost::posix_time::seconds( 5 ), boost::bind( &SessionController::Refresh, this ) );
     sizes_ = MakeTimer( pool, boost::posix_time::minutes( 1 ), boost::bind( &SessionController::RefreshSize, this ) );
 }
@@ -142,7 +140,7 @@ void SessionController::RefreshSize()
 // Name: SessionController::ReloadSession
 // Created: BAX 2012-07-20
 // -----------------------------------------------------------------------------
-void SessionController::ReloadSession( const Path& path, T_Predicate predicate )
+void SessionController::ReloadSession( const tools::Path& path, T_Predicate predicate )
 {
     try
     {
@@ -155,7 +153,7 @@ void SessionController::ReloadSession( const Path& path, T_Predicate predicate )
     catch( const std::exception& err )
     {
         LOG_WARN( log_ ) << "[session] " << err.what();
-        LOG_WARN( log_ ) << "[session] Unable to reload " << Utf8( path );
+        LOG_WARN( log_ ) << "[session] Unable to reload " << path;
     }
 }
 
@@ -163,9 +161,9 @@ void SessionController::ReloadSession( const Path& path, T_Predicate predicate )
 // Name: SessionController::ReloadDirectory
 // Created: BAX 2012-08-10
 // -----------------------------------------------------------------------------
-bool SessionController::ReloadDirectory( runtime::Async& reload, const Path& dir, T_Predicate predicate )
+bool SessionController::ReloadDirectory( runtime::Async& reload, const tools::Path& dir, T_Predicate predicate )
 {
-    const Path path = dir / "session.id";
+    const tools::Path path = dir / "session.id";
     if( fs_.IsFile( path ) )
         reload.Post( boost::bind( &SessionController::ReloadSession, this, path, predicate ) );
     return true;
@@ -246,7 +244,7 @@ void SessionController::Create( Session_ABC& session )
     LOG_INFO( log_ ) << "[session] "
                      << session.GetId() << " "
                      << session.GetName() << " "
-                     << Utf8( session.GetExercise() ) << " :" << session.GetPort();
+                     << session.GetExercise().ToUTF8() << " :" << session.GetPort();
     Save( session );
 }
 
@@ -256,7 +254,7 @@ void SessionController::Create( Session_ABC& session )
 // -----------------------------------------------------------------------------
 SessionController::T_Session SessionController::Create( const web::User& user, const web::session::Config& cfg, const std::string& exercise )
 {
-    const Path output = fs_.MakeAnyPath( root_ );
+    const tools::Path output = fs_.MakeAnyPath( root_ );
     auto session = factory_.Make( output, trash_, user.node, cfg, exercise, user );
     sessions_.Attach( session );
     Create( *session );
@@ -269,7 +267,7 @@ SessionController::T_Session SessionController::Create( const web::User& user, c
 // -----------------------------------------------------------------------------
 void SessionController::Save( const Session_ABC& session ) const
 {
-    const Path path = session.GetRoot() / "session.id";
+    const tools::Path path = session.GetRoot() / "session.id";
     Post( async_, boost::bind( &FileSystem_ABC::WriteFile, &fs_, path, ToJson( session.Save() ) ) );
 }
 
@@ -339,9 +337,9 @@ SessionController::T_Session SessionController::Dispatch( const web::User& user,
 namespace
 {
     bool StartSession( const boost::shared_ptr< Session_ABC >& session,
-                       const Path& cwd,
-                       const Path& simulation, const Path& replayer,
-                       const Path& timeline, const std::string& checkpoint )
+                       const tools::Path& cwd,
+                       const tools::Path& simulation, const tools::Path& replayer,
+                       const tools::Path& timeline, const std::string& checkpoint )
     {
         return session->Start( cwd, session->IsReplay() ? replayer : simulation, timeline, checkpoint );
     }

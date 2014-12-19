@@ -58,8 +58,8 @@ namespace mocks
 
     MOCK_BASE_CLASS( MockNodeFactory, host::NodeFactory_ABC )
     {
-        MOCK_METHOD_EXT( Make, 1, host::NodeFactory_ABC::Ptr( const host::Path& tag ), Make1 );
-        MOCK_METHOD_EXT( Make, 3, host::NodeFactory_ABC::Ptr( const host::Path& root, const std::string& ident, const web::node::Config& ), Make3 );
+        MOCK_METHOD_EXT( Make, 1, host::NodeFactory_ABC::Ptr( const tools::Path& tag ), Make1 );
+        MOCK_METHOD_EXT( Make, 3, host::NodeFactory_ABC::Ptr( const tools::Path& root, const std::string& ident, const web::node::Config& ), Make3 );
     };
 };
 

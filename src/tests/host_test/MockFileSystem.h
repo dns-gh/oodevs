@@ -11,7 +11,6 @@
 #define MOCK_FILE_SYSTEM_H
 
 #include "runtime/FileSystem_ABC.h"
-#include <boost/filesystem.hpp>
 
 namespace mocks
 {
@@ -39,7 +38,7 @@ namespace mocks
         MOCK_METHOD( LimitedReadFile, 3 );
         MOCK_METHOD( MakeDeflateFilter, 1 );
 
-        bool Apply( const T_Predicate& operand, const std::vector< boost::filesystem::path >& list )
+        bool Apply( const T_Predicate& operand, const std::vector< tools::Path >& list )
         {
             for( auto it = list.begin(); it != list.end(); ++it )
                 operand( *it );

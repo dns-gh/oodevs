@@ -53,9 +53,13 @@ namespace session
 }
 }
 
+namespace tools
+{
+    class Path;
+}
+
 namespace host
 {
-    typedef boost::filesystem::path Path;
     typedef boost::property_tree::ptree Tree;
     typedef boost::uuids::uuid Uuid;
 namespace node
@@ -83,7 +87,7 @@ struct Node_ABC : public boost::noncopyable
     //! @name Accessors
     //@{
     virtual Uuid GetId() const = 0;
-    virtual Path GetRoot() const = 0;
+    virtual tools::Path GetRoot() const = 0;
     virtual int  GetPort() const = 0;
     virtual std::string GetIdent() const = 0;
     virtual Tree GetProperties() const = 0;
@@ -92,7 +96,7 @@ struct Node_ABC : public boost::noncopyable
     //! @name Public methods
     //@{
     virtual Tree Save() const = 0;
-    virtual bool Start( const Path& app, const Path& web,
+    virtual bool Start( const tools::Path& app, const tools::Path& web,
                         const std::string& type, int http, int tcp, bool weak ) = 0;
     virtual bool Stop( bool weak ) = 0;
     virtual void Remove( runtime::Async& async ) = 0;
@@ -118,7 +122,7 @@ struct Node_ABC : public boost::noncopyable
 
     //! @name Exercise methods
     //@{
-    typedef std::vector< Path > T_Exercises;
+    typedef std::vector< tools::Path > T_Exercises;
     virtual T_Exercises GetExercises( int offset, int limit ) const = 0;
     virtual Tree        GetExerciseProperties( const std::string& exercise ) const = 0;
     virtual size_t      CountExercises() const = 0;
@@ -158,8 +162,8 @@ struct NodeFactory_ABC : public boost::noncopyable
 
     //! @name Methods
     //@{
-    virtual Ptr Make( const Path& root, const std::string& ident, const web::node::Config& cfg ) const = 0;
-    virtual Ptr Make( const Path& tag ) const = 0;
+    virtual Ptr Make( const tools::Path& root, const std::string& ident, const web::node::Config& cfg ) const = 0;
+    virtual Ptr Make( const tools::Path& tag ) const = 0;
     //@}
 };
 }

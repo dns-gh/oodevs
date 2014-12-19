@@ -16,6 +16,8 @@
 #include "runtime/Async.h"
 #include "runtime/FileSystem_ABC.h"
 
+#include <tools/Path.h>
+
 #include <boost/make_shared.hpp>
 #include <boost/thread/condition_variable.hpp>
 #include <boost/thread/mutex.hpp>
@@ -39,7 +41,7 @@ struct Download : public gui::Download_ABC, public io::Writer_ABC
     Download( size_t id, QNetworkReply* rpy,
               const FileSystem_ABC& fs,
               runtime::Pool_ABC& pool,
-              const Path& root )
+              const tools::Path& root )
         : fs_      ( fs )
         , buffer_  ( buffer_size )
         , id_      ( id )
@@ -249,7 +251,7 @@ struct Download : public gui::Download_ABC, public io::Writer_ABC
 private:
     const FileSystem_ABC& fs_;
     const size_t id_;
-    const Path root_;
+    const tools::Path root_;
     mutable boost::mutex access_;
     boost::condition_variable gate_;
     std::vector< char > buffer_;
@@ -273,7 +275,7 @@ private:
 boost::shared_ptr< gui::Download_ABC > gui::MakeDownload( size_t id, QNetworkReply* rpy,
                                                           const runtime::FileSystem_ABC& fs,
                                                           runtime::Pool_ABC& pool,
-                                                          const Path& root )
+                                                          const tools::Path& root )
 {
     return boost::make_shared< Download >( id, rpy, fs, pool, root );
 }

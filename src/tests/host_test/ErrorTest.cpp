@@ -27,9 +27,9 @@ namespace
     const std::string pre = MakeInfo( "some info before" );
     const std::string post = MakeInfo( "some info after" );
 
-    const runtime::Path path = "some\\funky //\\\\path";
+    const tools::Path path = "some\\funky //\\\\path";
 
-    void PopulateLog( const std::function< bool( const runtime::Path& ) >& f )
+    void PopulateLog( const std::function< bool( const tools::Path& ) >& f )
     {
         f( path / "Sim.log" );
     }
@@ -85,7 +85,7 @@ BOOST_AUTO_TEST_CASE( last_error_extracts_error_from_consecutive_errors )
 
 namespace
 {
-    bool PopulateLogs( const std::function< bool( const runtime::Path& ) >& f )
+    bool PopulateLogs( const std::function< bool( const tools::Path& ) >& f )
     {
         f( path / "Sim.20101104T110600.log" );
         f( path / "Sim.20131104T110600.log" );

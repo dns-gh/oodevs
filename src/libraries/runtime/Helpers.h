@@ -10,8 +10,6 @@
 #ifndef RUNTIME_HELPERS_H
 #define RUNTIME_HELPERS_H
 
-#define COUNT_OF( X ) ( sizeof( X ) / sizeof *( X ) )
-
 #ifdef _MSC_VER
 #define ONCE __pragma( warning( push ) )\
              __pragma( warning( disable: 4127 ) )\

@@ -13,13 +13,15 @@
 #include "cpplog/cpplog.hpp"
 #include "Io.h"
 #include "Scoper.h"
-#include "Utf8.h"
 
 #include <boost/bind.hpp>
 #include <boost/filesystem.hpp>
 #include <boost/filesystem/fstream.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/make_shared.hpp>
+
+#include <tools/Path.h>
+#include <tools/FileWrapper.h>
 
 #include <stdint.h>
 #include <fcntl.h>
@@ -47,7 +49,6 @@
 #endif
 
 using namespace runtime;
-using runtime::Utf8;
 
 // -----------------------------------------------------------------------------
 // Name: FileSystem::FileSystem
@@ -72,66 +73,53 @@ FileSystem::~FileSystem()
 // Name: FileSystem::IsFile
 // Created: BAX 2012-03-19
 // -----------------------------------------------------------------------------
-bool FileSystem::IsFile( const Path& path ) const
+bool FileSystem::IsFile( const tools::Path& path ) const
 {
-    return boost::filesystem::is_regular_file( path );
+    return path.IsRegularFile();
 }
 
 // -----------------------------------------------------------------------------
 // Name: FileSystem::IsDirectory
 // Created: BAX 2012-03-19
 // -----------------------------------------------------------------------------
-bool FileSystem::IsDirectory( const Path& path ) const
+bool FileSystem::IsDirectory( const tools::Path& path ) const
 {
-    return boost::filesystem::is_directory( path );
+    return path.IsDirectory();
 }
 
 // -----------------------------------------------------------------------------
 // Name: FileSystem::Exists
 // Created: BAX 2012-03-19
 // -----------------------------------------------------------------------------
-bool FileSystem::Exists( const Path& path ) const
+bool FileSystem::Exists( const tools::Path& path ) const
 {
-    return boost::filesystem::exists( path );
-}
-
-namespace
-{
-Path MovePath( const Path& dst, const std::wstring& prefix, const Path& src )
-{
-    return dst / src.wstring().substr( prefix.size() );
-}
+    return path.Exists();
 }
 
 // -----------------------------------------------------------------------------
 // Name: FileSystem::CopyDirectory
 // Created: BAX 2012-03-19
 // -----------------------------------------------------------------------------
-void FileSystem::CopyDirectory( const Path& src, const Path& dst ) const
+void FileSystem::CopyDirectory( const tools::Path& src, const tools::Path& dst ) const
 {
-    const std::wstring prefix = src.wstring();
-    for( boost::filesystem::recursive_directory_iterator it( src ); it != boost::filesystem::recursive_directory_iterator(); ++it )
-        if( boost::filesystem::is_directory( it->status() ) )
-            boost::filesystem::create_directory( MovePath( dst, prefix, *it ) );
-        else if( boost::filesystem::is_regular_file( it->status() ) )
-            boost::filesystem::copy_file( *it, MovePath( dst, prefix, *it ) );
+    src.Copy( dst );
 }
 
 // -----------------------------------------------------------------------------
 // Name: FileSystem::CopyFile
 // Created: BAX 2012-03-29
 // -----------------------------------------------------------------------------
-bool FileSystem::CopyFile( const Path& src, const Path& dst ) const
+bool FileSystem::CopyFile( const tools::Path& src, const tools::Path& dst ) const
 {
     try
     {
-        boost::filesystem::copy_file( src, dst / src.filename() );
+        src.Copy( dst / src.FileName() );
         return true;
     }
     catch( const std::exception& err )
     {
         LOG_ERROR( log_ ) << "[file] " << err.what();
-        LOG_ERROR( log_ ) << "[file] Unable to copy " << src.string() << " to " << dst.string();
+        LOG_ERROR( log_ ) << "[file] Unable to copy " << src << " to " << dst;
     }
     return false;
 }
@@ -140,27 +128,27 @@ bool FileSystem::CopyFile( const Path& src, const Path& dst ) const
 // Name: FileSystem::MakePaths
 // Created: BAX 2012-03-19
 // -----------------------------------------------------------------------------
-void FileSystem::MakePaths( const Path& path ) const
+void FileSystem::MakePaths( const tools::Path& path ) const
 {
-    boost::filesystem::create_directories( path );
+    path.CreateDirectories();
 }
 
 // -----------------------------------------------------------------------------
 // Name: FileSystem::MakePath
 // Created: BAX 2012-03-19
 // -----------------------------------------------------------------------------
-bool FileSystem::MakePath( const Path& path ) const
+bool FileSystem::MakePath( const tools::Path& path ) const
 {
-    return boost::filesystem::create_directory( path );
+    return path.CreateDirectories();
 }
 
 namespace
 {
-bool TryRemove( const Path& path, cpplog::BaseLogger* log )
+bool TryRemove( const tools::Path& path, cpplog::BaseLogger* log )
 {
     try
     {
-        boost::filesystem::remove_all( path );
+        path.RemoveAll();
         return true;
     }
     catch( const std::exception& err )
@@ -168,7 +156,7 @@ bool TryRemove( const Path& path, cpplog::BaseLogger* log )
         if( log )
         {
             LOG_ERROR( *log ) << "[file] " << err.what();
-            LOG_ERROR( *log ) << "[file] Unable to remove path " << path.string();
+            LOG_ERROR( *log ) << "[file] Unable to remove path " << path;
         }
     }
     return false;
@@ -179,7 +167,7 @@ bool TryRemove( const Path& path, cpplog::BaseLogger* log )
 // Name: FileSystem::Remove
 // Created: BAX 2012-03-19
 // -----------------------------------------------------------------------------
-bool FileSystem::Remove( const Path& path ) const
+bool FileSystem::Remove( const tools::Path& path ) const
 {
     bool done = TryRemove( path, 0 );
     if( !done )
@@ -191,37 +179,37 @@ bool FileSystem::Remove( const Path& path ) const
 // Name: FileSystem::Rename
 // Created: BAX 2012-05-30
 // -----------------------------------------------------------------------------
-bool FileSystem::Rename( const Path& src, const Path& dst ) const
+bool FileSystem::Rename( const tools::Path& src, const tools::Path& dst ) const
 {
     try
     {
-        boost::filesystem::rename( src, dst );
+        src.Rename( dst );
         return true;
     }
     catch( const std::exception& err )
     {
         LOG_ERROR( log_ ) << "[file] " << err.what();
-        LOG_ERROR( log_ ) << "[file] Unable to rename " << src.string() << " to " << dst.string();
+        LOG_ERROR( log_ ) << "[file] Unable to rename " << src << " to " << dst;
     }
     return false;
 }
 
 namespace
 {
-void RemoveFile( const FileSystem_ABC& fs, const Path& tmp )
+void RemoveFile( const FileSystem_ABC& fs, const tools::Path& tmp )
 {
-    if( !tmp.empty() )
+    if( !tmp.IsEmpty() )
         fs.Remove( tmp );
 }
 
-int OpenDescriptor( const Path& path )
+int OpenDescriptor( const tools::Path& path )
 {
 #ifdef _MSC_VER
     int fd;
-    _wsopen_s( &fd, path.wstring().c_str(), O_WRONLY | O_CREAT | O_EXCL | O_BINARY, _SH_DENYRW, _S_IREAD | _S_IWRITE );
+    _wsopen_s( &fd, path.ToUnicode().c_str(), O_WRONLY | O_CREAT | O_EXCL | O_BINARY, _SH_DENYRW, _S_IREAD | _S_IWRITE );
     return fd;
 #else
-    return open( Utf8( path ).c_str(), O_WRONLY | O_CREAT | O_EXCL | O_BINARY );
+    return open( path.ToUTF8().c_str(), O_WRONLY | O_CREAT | O_EXCL | O_BINARY );
 #endif
 }
 
@@ -248,16 +236,16 @@ size_t WriteToFile( int fd, const char* data, size_t size )
 // Name: FileSystem::WriteFile
 // Created: BAX 2012-03-20
 // -----------------------------------------------------------------------------
-bool FileSystem::WriteFile( const Path& path, const std::string& content ) const
+bool FileSystem::WriteFile( const tools::Path& path, const std::string& content ) const
 {
     try
     {
         int fd = -1;
-        Path tmp;
+        tools::Path tmp;
         for( size_t retry = 0; retry < 3 && fd == -1; ++retry )
         {
             boost::system::error_code ec;
-            tmp = boost::filesystem::unique_path( Path( path ).remove_filename() / "%%%%%%%%.%%%", ec );
+            tmp = tools::Path::UniquePath( tools::Path( path ).RemoveFilename() / "%%%%%%%%.%%%", ec );
             if( ec )
                 continue;
             fd = OpenDescriptor( tmp );
@@ -270,14 +258,14 @@ bool FileSystem::WriteFile( const Path& path, const std::string& content ) const
         if( fill != content.size() )
             throw std::runtime_error( "Unable to write temporary file contents" );
         if( !Rename( tmp, path ) )
-            throw std::runtime_error( "Unable to rename " + tmp.string() + " to " + path.string() );
-        tmp.clear();
+            throw std::runtime_error( "Unable to rename " + tmp.ToDebug() + " to " + path.ToDebug() );
+        tmp.Clear();
         return true;
     }
     catch( const std::exception& err )
     {
         LOG_ERROR( log_ ) << "[file] " << err.what();
-        LOG_ERROR( log_ ) << "[file] Unable to write file " << path.string();
+        LOG_ERROR( log_ ) << "[file] Unable to write file " << path;
     }
     return false;
 }
@@ -291,18 +279,18 @@ bool FileSystem::WriteFile( const Path& path, const std::string& content ) const
 // Name: FileSystem::ReadFile
 // Created: BAX 2012-03-21
 // -----------------------------------------------------------------------------
-std::string FileSystem::ReadFile( const Path& path ) const
+std::string FileSystem::ReadFile( const tools::Path& path ) const
 {
     try
     {
-        boost::filesystem::ifstream ifs( path, std::ifstream::binary );
+        tools::Ifstream ifs( path, std::ifstream::binary );
         if( !ifs.fail() )
             return std::string( std::istreambuf_iterator< char >( ifs ), std::istreambuf_iterator< char >() );
     }
     catch( const std::exception& err )
     {
         LOG_ERROR( log_ ) << "[file] " << err.what();
-        LOG_ERROR( log_ ) << "[file] Unable to read file " << path.string();
+        LOG_ERROR( log_ ) << "[file] Unable to read file " << path;
     }
     return std::string();
 }
@@ -311,12 +299,12 @@ std::string FileSystem::ReadFile( const Path& path ) const
 // Name: FileSystem::ReadFileWithLimitSize
 // Created: NPT 2013-07-25
 // -----------------------------------------------------------------------------
-void FileSystem::LimitedReadFile( io::Writer_ABC& sink, const Path& path, int limit ) const
+void FileSystem::LimitedReadFile( io::Writer_ABC& sink, const tools::Path& path, int limit ) const
 {
     try
     {
         char buffer[ 4 * 1024 ];
-        boost::filesystem::ifstream ifs( path, std::ifstream::binary );
+        tools::Ifstream ifs( path, std::ifstream::binary );
         if( ifs.fail() )
             return;
         if( limit )
@@ -342,32 +330,19 @@ void FileSystem::LimitedReadFile( io::Writer_ABC& sink, const Path& path, int li
     catch( const std::exception& err )
     {
         LOG_ERROR( log_ ) << "[file] " << err.what();
-        LOG_ERROR( log_ ) << "[file] Unable to read file " << path.string();
+        LOG_ERROR( log_ ) << "[file] Unable to read file " << path;
     }
-}
-
-namespace
-{
-template< typename T, typename U >
-void Iterate( const Path& path, const U& predicate )
-{
-    if( boost::filesystem::is_directory( path ) )
-        for( T it( path), end; it != end; ++it )
-            if( !predicate( it->path() ) )
-                return;
-}
 }
 
 // -----------------------------------------------------------------------------
 // Name: FileSystem::Walk
 // Created: BAX 2012-05-14
 // -----------------------------------------------------------------------------
-void FileSystem::Walk( const Path& path, bool recurse, const T_Predicate& predicate ) const
+void FileSystem::Walk( const tools::Path& path, bool recurse, const T_Predicate& predicate ) const
 {
-    if( recurse )
-        Iterate< boost::filesystem::recursive_directory_iterator >( path, predicate );
-    else
-        Iterate< boost::filesystem::directory_iterator >( path, predicate );
+    path.Apply( [&] ( const tools::Path& path ) -> bool {
+        return !predicate( path );
+    }, recurse );
 }
 
 namespace
@@ -417,12 +392,12 @@ void CopyBlocks( cpplog::BaseLogger& log, Archive* src, Archive* dst, io::Writer
     }
 }
 
-void TransferArchive( cpplog::BaseLogger& log, Archive* dst, Archive* src, const Path& root,
+void TransferArchive( cpplog::BaseLogger& log, Archive* dst, Archive* src, const tools::Path& root,
                       const Packer_ABC::T_Predicate& predicate, bool pack, io::Writer_ABC* writer )
 {
-    const size_t diff = root.generic_wstring().size();
+    const size_t diff = root.Normalize().ToUnicode().size();
     boost::shared_ptr< ArchiveEntry > ptr( archive_entry_new(), archive_entry_free );
-    Path next;
+    tools::Path next;
     for( ;; )
     {
         ArchiveEntry* entry = ptr.get();
@@ -438,7 +413,7 @@ void TransferArchive( cpplog::BaseLogger& log, Archive* dst, Archive* src, const
             if( predicate && !predicate( next ) )
                 continue;
             archive_read_disk_descend( src );
-            if( next.empty() )
+            if( next.IsEmpty() )
                 continue;
         }
         else
@@ -449,7 +424,7 @@ void TransferArchive( cpplog::BaseLogger& log, Archive* dst, Archive* src, const
             next = root / name;
         }
 
-        archive_entry_copy_pathname_w( entry, next.wstring().c_str() );
+        archive_entry_copy_pathname_w( entry, next.ToUnicode().c_str() );
         err = archive_write_header( dst, entry );
         if( err != ARCHIVE_OK )
             CheckArchiveCode( log, dst, err );
@@ -462,7 +437,7 @@ void TransferArchive( cpplog::BaseLogger& log, Archive* dst, Archive* src, const
 
 struct Unpacker : public Unpacker_ABC
 {
-    Unpacker( cpplog::BaseLogger& log, const Path& output, io::Reader_ABC& src, io::Writer_ABC* dst )
+    Unpacker( cpplog::BaseLogger& log, const tools::Path& output, io::Reader_ABC& src, io::Writer_ABC* dst )
         : log_   ( log )
         , output_( output )
         , src_   ( src )
@@ -523,7 +498,7 @@ struct Unpacker : public Unpacker_ABC
     }
 
     cpplog::BaseLogger& log_;
-    const Path output_;
+    const tools::Path output_;
     io::Reader_ABC& src_;
     io::Writer_ABC* dst_;
     std::vector< char > buffer_;
@@ -534,7 +509,7 @@ struct Unpacker : public Unpacker_ABC
 // Name: FileSystem::Unpack
 // Created: BAX 2012-05-11
 // -----------------------------------------------------------------------------
-FileSystem_ABC::T_Unpacker FileSystem::Unpack( const Path& output, io::Reader_ABC& src, io::Writer_ABC* dst ) const
+FileSystem_ABC::T_Unpacker FileSystem::Unpack( const tools::Path& output, io::Reader_ABC& src, io::Writer_ABC* dst ) const
 {
     return boost::make_shared< Unpacker >( boost::ref( log_ ), output, boost::ref( src ), dst );
 }
@@ -599,10 +574,10 @@ struct Packer : public Packer_ABC
         return -1;
     }
 
-    void Pack( const Path& input, const T_Predicate& predicate )
+    void Pack( const tools::Path& input, const T_Predicate& predicate )
     {
         boost::shared_ptr< Archive > src( archive_read_disk_new(), archive_read_free );
-        int err = archive_read_disk_open_w( src.get(), input.generic_wstring().c_str() );
+        int err = archive_read_disk_open_w( src.get(), input.Normalize().ToUnicode().c_str() );
         if( err != ARCHIVE_OK )
             throw std::runtime_error( archive_error_string( src.get() ) );
         TransferArchive( log_, dst_.get(), src.get(), input, predicate, true, 0 );
@@ -622,11 +597,11 @@ struct Packer : public Packer_ABC
         }
     }
 
-    void PackEntry( const Path& file, const void* data, size_t size )
+    void PackEntry( const tools::Path& file, const void* data, size_t size )
     {
         boost::shared_ptr< ArchiveEntry > ptr( archive_entry_new(), archive_entry_free );
         ArchiveEntry* entry = ptr.get();
-        archive_entry_copy_pathname_w( entry, file.wstring().c_str() );
+        archive_entry_copy_pathname_w( entry, file.ToUnicode().c_str() );
         archive_entry_set_filetype( entry, AE_IFREG );
         archive_entry_set_size( entry, size );
         archive_write_header( dst_.get(), entry );
@@ -721,28 +696,25 @@ FileSystem_ABC::T_Writer FileSystem::MakeDeflateFilter( io::Writer_ABC& dst ) co
 // Name: FileSystem::Checksum
 // Created: BAX 2012-05-23
 // -----------------------------------------------------------------------------
-std::string FileSystem::Checksum( const Path& root, const FileSystem_ABC::T_Predicate& predicate, size_t& read ) const
+std::string FileSystem::Checksum( const tools::Path& root, const FileSystem_ABC::T_Predicate& predicate, size_t& read ) const
 {
     read = 0;
     boost::crc_32_type sum;
     std::vector< char > buffer( UINT16_MAX );
-    for( boost::filesystem::recursive_directory_iterator it( root ); it != boost::filesystem::recursive_directory_iterator(); ++it )
-    {
-        if( !boost::filesystem::is_regular_file( it.status() ) )
-            continue;
-        const Path path = it->path();
+    bool error = false;
+
+    root.Apply( [&] ( const tools::Path& path ) -> bool {
+        if( !path.IsRegularFile() )
+            return false;
         if( predicate && !predicate( path ) )
-            continue;
-#ifdef _MSC_VER
-        // msvc does not support utf-8 strings
-        std::ifstream in( path.wstring(), std::ifstream::binary );
-#else
-        std::ifstream in( Utf8( path ).c_str(), std::ifstream::binary );
-#endif
+            return false;
+
+        tools::Ifstream in( path, std::ifstream::binary );
         if( in.bad() )
         {
-            LOG_ERROR( log_ ) << "[file] Unable to checksum " << path.string();
-            return std::string();
+            LOG_ERROR( log_ ) << "[file] Unable to checksum " << path;
+            error = true;
+            return true;
         }
         while( in.good() )
         {
@@ -751,7 +723,12 @@ std::string FileSystem::Checksum( const Path& root, const FileSystem_ABC::T_Pred
             sum.process_bytes( &buffer[0], next );
             read += next;
         }
-    }
+        return false;
+    } );
+
+    if( error )
+        return std::string();
+
     const size_t size = sprintf( &buffer[0], "%08X", sum.checksum() );
     return std::string( &buffer[0], size );
 }
@@ -760,12 +737,12 @@ std::string FileSystem::Checksum( const Path& root, const FileSystem_ABC::T_Pred
 // Name: FileSystem::MakeAnyPath
 // Created: BAX 2012-05-23
 // -----------------------------------------------------------------------------
-Path FileSystem::MakeAnyPath( const Path& root ) const
+tools::Path FileSystem::MakeAnyPath( const tools::Path& root ) const
 {
     for( uint16_t idx = 0; ; ++idx )
     {
-        const Path next = root / boost::lexical_cast< std::string >( idx );
-        if( boost::filesystem::exists( next ) )
+        const tools::Path next = root / boost::lexical_cast< std::string >( idx ).c_str();
+        if( next.Exists() )
             continue;
         else if( MakePath( next ) )
             return next;
@@ -776,30 +753,32 @@ Path FileSystem::MakeAnyPath( const Path& root ) const
 // Name: FileSystem::GetLastWrite
 // Created: BAX 2012-06-08
 // -----------------------------------------------------------------------------
-std::time_t FileSystem::GetLastWrite( const Path& file ) const
+std::time_t FileSystem::GetLastWrite( const tools::Path& file ) const
 {
-    return boost::filesystem::last_write_time( file );
+    return file.LastWriteTime();
 }
 
 // -----------------------------------------------------------------------------
 // Name: FileSystem::GetDirectorySize
 // Created: BAX 2012-07-19
 // -----------------------------------------------------------------------------
-size_t FileSystem::GetDirectorySize( const Path& root ) const
+size_t FileSystem::GetDirectorySize( const tools::Path& root ) const
 {
     size_t sum = 0;
     try
     {
-        if( !boost::filesystem::is_directory( root ) )
+        if( !root.IsDirectory() )
             return 0;
-        for( boost::filesystem::recursive_directory_iterator it( root ); it != boost::filesystem::recursive_directory_iterator(); ++it )
-            if( boost::filesystem::is_regular_file( it.status() ) )
-                sum += static_cast< size_t >( boost::filesystem::file_size( it->path() ) );
+        root.Apply( [&]( const tools::Path& path ) -> bool {
+            if( path.IsRegularFile() )
+                sum += path.FileSize();
+            return false;
+        } );
     }
     catch( const std::exception& err )
     {
         LOG_ERROR( log_ ) << "[file] " << err.what();
-        LOG_ERROR( log_ ) << "[file] Unable to size directory " << root.string();
+        LOG_ERROR( log_ ) << "[file] Unable to size directory " << root;
     }
     return sum;
 }
