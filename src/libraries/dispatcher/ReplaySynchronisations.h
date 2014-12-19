@@ -18,40 +18,28 @@ namespace sword
 {
     class Action;
     class ActionDestruction;
-    class AutomatChangeSuperior;
     class AutomatCreation;
     class ChangeDiplomacy;
     class ChangeDiplomacyAck;
     class ControlGlobalWeather;
     class CrowdConcentrationCreation;
     class CrowdConcentrationKnowledgeCreation;
-    class CrowdConcentrationKnowledgeDestruction;
     class CrowdCreation;
     class CrowdFlowCreation;
-    class CrowdFlowDestruction;
     class CrowdFlowKnowledgeCreation;
-    class CrowdFlowKnowledgeDestruction;
     class CrowdKnowledgeCreation;
-    class CrowdKnowledgeDestruction;
-    class FormationChangeSuperior;
     class FormationCreation;
     class KnowledgeGroupCreation;
-    class KnowledgeGroupDestruction;
     class LimitCreation;
     class LogFuneralHandlingCreation;
     class LogMaintenanceHandlingCreation;
     class LogMedicalHandlingCreation;
     class LogSupplyHandlingCreation;
     class LogMaintenanceHandlingCreation;
-    class LogMaintenanceHandlingDestruction;
     class LogMedicalHandlingCreation;
-    class LogMedicalHandlingDestruction;
     class LogSupplyHandlingCreation;
-    class LogSupplyHandlingDestruction;
     class ObjectCreation;
-    class ObjectDestruction;
     class ObjectKnowledgeCreation;
-    class ObjectKnowledgeDestruction;
     class PartyCreation;
     class Pathfind;
     class PathfindDestruction;
@@ -61,15 +49,24 @@ namespace sword
     class StartCrowdFire;
     class StartFireEffect;
     class StartUnitFire;
-    class UnitChangeSuperior;
     class UnitCreation;
-    class UnitDestruction;
     class UnitKnowledgeCreation;
-    class UnitKnowledgeDestruction;
-    class UnitVisionCones;
     class UrbanCreation;
     class UrbanKnowledgeCreation;
+    class CrowdConcentrationKnowledgeDestruction;
+    class CrowdFlowDestruction;
+    class CrowdFlowKnowledgeDestruction;
+    class CrowdKnowledgeDestruction;
+    class KnowledgeGroupDestruction;
+    class LogMaintenanceHandlingDestruction;
+    class LogMedicalHandlingDestruction;
+    class LogSupplyHandlingDestruction;
+    class ObjectDestruction;
+    class ObjectKnowledgeDestruction;
+    class UnitDestruction;
+    class UnitKnowledgeDestruction;
     class UrbanKnowledgeDestruction;
+    class UnitVisionCones;
 }
 
 namespace kernel
@@ -91,36 +88,24 @@ namespace dispatcher
 class ReplaySynchronisations : public kernel::Extension_ABC
                              , public kernel::Updatable_ABC< sword::Action >
                              , public kernel::Updatable_ABC< sword::ActionDestruction >
-                             , public kernel::Updatable_ABC< sword::AutomatChangeSuperior >
                              , public kernel::Updatable_ABC< sword::AutomatCreation >
                              , public kernel::Updatable_ABC< sword::ChangeDiplomacy >
                              , public kernel::Updatable_ABC< sword::ChangeDiplomacyAck >
                              , public kernel::Updatable_ABC< sword::ControlGlobalWeather >
                              , public kernel::Updatable_ABC< sword::CrowdConcentrationCreation >
                              , public kernel::Updatable_ABC< sword::CrowdConcentrationKnowledgeCreation >
-                             , public kernel::Updatable_ABC< sword::CrowdConcentrationKnowledgeDestruction >
                              , public kernel::Updatable_ABC< sword::CrowdCreation >
                              , public kernel::Updatable_ABC< sword::CrowdFlowCreation >
-                             , public kernel::Updatable_ABC< sword::CrowdFlowDestruction >
                              , public kernel::Updatable_ABC< sword::CrowdFlowKnowledgeCreation >
-                             , public kernel::Updatable_ABC< sword::CrowdFlowKnowledgeDestruction >
                              , public kernel::Updatable_ABC< sword::CrowdKnowledgeCreation >
-                             , public kernel::Updatable_ABC< sword::CrowdKnowledgeDestruction >
-                             , public kernel::Updatable_ABC< sword::FormationChangeSuperior >
                              , public kernel::Updatable_ABC< sword::FormationCreation >
                              , public kernel::Updatable_ABC< sword::KnowledgeGroupCreation >
-                             , public kernel::Updatable_ABC< sword::KnowledgeGroupDestruction >
                              , public kernel::Updatable_ABC< sword::LimitCreation >
                              , public kernel::Updatable_ABC< sword::LogMaintenanceHandlingCreation >
-                             , public kernel::Updatable_ABC< sword::LogMaintenanceHandlingDestruction >
                              , public kernel::Updatable_ABC< sword::LogMedicalHandlingCreation >
-                             , public kernel::Updatable_ABC< sword::LogMedicalHandlingDestruction >
                              , public kernel::Updatable_ABC< sword::LogSupplyHandlingCreation >
-                             , public kernel::Updatable_ABC< sword::LogSupplyHandlingDestruction >
                              , public kernel::Updatable_ABC< sword::ObjectCreation >
-                             , public kernel::Updatable_ABC< sword::ObjectDestruction >
                              , public kernel::Updatable_ABC< sword::ObjectKnowledgeCreation >
-                             , public kernel::Updatable_ABC< sword::ObjectKnowledgeDestruction >
                              , public kernel::Updatable_ABC< sword::Pathfind >
                              , public kernel::Updatable_ABC< sword::PathfindDestruction >
                              , public kernel::Updatable_ABC< sword::PartyCreation >
@@ -130,15 +115,24 @@ class ReplaySynchronisations : public kernel::Extension_ABC
                              , public kernel::Updatable_ABC< sword::StartCrowdFire >
                              , public kernel::Updatable_ABC< sword::StartFireEffect >
                              , public kernel::Updatable_ABC< sword::StartUnitFire >
-                             , public kernel::Updatable_ABC< sword::UnitChangeSuperior >
                              , public kernel::Updatable_ABC< sword::UnitCreation >
-                             , public kernel::Updatable_ABC< sword::UnitDestruction >
                              , public kernel::Updatable_ABC< sword::UnitKnowledgeCreation >
-                             , public kernel::Updatable_ABC< sword::UnitKnowledgeDestruction >
-                             , public kernel::Updatable_ABC< sword::UnitVisionCones >
                              , public kernel::Updatable_ABC< sword::UrbanCreation >
                              , public kernel::Updatable_ABC< sword::UrbanKnowledgeCreation >
+                             , public kernel::Updatable_ABC< sword::CrowdConcentrationKnowledgeDestruction >
+                             , public kernel::Updatable_ABC< sword::CrowdFlowDestruction >
+                             , public kernel::Updatable_ABC< sword::CrowdFlowKnowledgeDestruction >
+                             , public kernel::Updatable_ABC< sword::CrowdKnowledgeDestruction >
+                             , public kernel::Updatable_ABC< sword::KnowledgeGroupDestruction >
+                             , public kernel::Updatable_ABC< sword::LogMaintenanceHandlingDestruction >
+                             , public kernel::Updatable_ABC< sword::LogMedicalHandlingDestruction >
+                             , public kernel::Updatable_ABC< sword::LogSupplyHandlingDestruction >
+                             , public kernel::Updatable_ABC< sword::ObjectDestruction >
+                             , public kernel::Updatable_ABC< sword::ObjectKnowledgeDestruction >
+                             , public kernel::Updatable_ABC< sword::UnitDestruction >
+                             , public kernel::Updatable_ABC< sword::UnitKnowledgeDestruction >
                              , public kernel::Updatable_ABC< sword::UrbanKnowledgeDestruction >
+                             , public kernel::Updatable_ABC< sword::UnitVisionCones >
                              , private boost::noncopyable
 {
 public:
@@ -204,9 +198,6 @@ public:
     virtual void DoUpdate( const sword::UnitKnowledgeDestruction& msg );
     virtual void DoUpdate( const sword::UrbanKnowledgeDestruction& msg );
     virtual void DoUpdate( const sword::UnitVisionCones& msg );
-    virtual void DoUpdate( const sword::AutomatChangeSuperior& msg );
-    virtual void DoUpdate( const sword::FormationChangeSuperior& msg );
-    virtual void DoUpdate( const sword::UnitChangeSuperior& msg );
     //@}
 
 private:

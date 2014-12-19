@@ -342,16 +342,6 @@ void Automat::SendFullUpdate( ClientPublisher_ABC& publisher ) const
         order_->Send( publisher );
     else
         AutomatOrder::SendNoMission( *this, publisher );
-        
-    {
-        client::AutomatChangeSuperior msg;
-        msg().mutable_automat()->set_id( GetId() );
-        if( parentFormation_ )
-            msg().mutable_superior()->mutable_formation()->set_id( parentFormation_->GetId() );
-        else if( parentAutomat_ )
-            msg().mutable_superior()->mutable_automat()->set_id( parentAutomat_->GetId() );
-        msg.Send( publisher );
-    }
 
     decisionalInfos_.Send( GetId(), publisher );
 
