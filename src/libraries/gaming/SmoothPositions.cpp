@@ -27,7 +27,7 @@ SmoothPositions::SmoothPositions( kernel::Controllers& controllers, const Simula
     , refreshRate_( 0.05f ) // 50 ms in second
     , smoothEnabled_( true )
 {
-    controllers_.options_.Register( *this );
+    controllers_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -36,7 +36,7 @@ SmoothPositions::SmoothPositions( kernel::Controllers& controllers, const Simula
 // -----------------------------------------------------------------------------
 SmoothPositions::~SmoothPositions()
 {
-    controllers_.options_.Unregister( *this );
+    controllers_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -98,6 +98,15 @@ void SmoothPositions::Compute()
     else
         ComputeCurrentPosition();
     lastTick_ = simulation_.GetCurrentTick();
+}
+
+// -----------------------------------------------------------------------------
+// Name: SmoothPositions::NotifyUpdated
+// Created: JSR 2014-12-19
+// -----------------------------------------------------------------------------
+void SmoothPositions::NotifyUpdated( const Simulation::sEndSkip& )
+{
+    remainingSteps_ = 0;
 }
 
 // -----------------------------------------------------------------------------
