@@ -78,7 +78,10 @@ type Sword struct {
 	services  SwordServices                 // published sword services (like replay/simulation/aar)
 	startTime time.Time                     // exercise start date
 	endTime   time.Time                     // exercise end date
-	replays   []*sdk.Event                  // replay events list
+	// Replay events are contiguous elements with start and end dates, dividing
+	// the global replay range. The first event start date and last event end
+	// date, that is the replay range start and end dates, cannot be edited.
+	replays []*sdk.Event
 }
 
 func NewSword(log util.Logger, clock bool, name, address string) *Sword {

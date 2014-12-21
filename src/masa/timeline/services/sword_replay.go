@@ -323,34 +323,48 @@ func (s *Sword) deleteReplay(uuid string) {
 }
 
 func (s *Sword) setReplayRangeDates(link *SwordLink, start, end time.Time) {
-	if link == s.link && (s.startTime != start || s.endTime != end) {
-		s.startTime = start
-		s.endTime = end
-		// remove all replay events except the first
-		for i, event := range s.replays {
-			if i > 0 {
-				s.observer.DeleteEvent(event.GetUuid())
-			}
-		}
-		if len(s.replays) > 0 {
-			s.replays = s.replays[:1]
-			ReplayRangeUuid = s.replays[0].GetUuid()
-		}
-		// create a new replay event
-		event := &sdk.Event{
-			Uuid:     proto.String(ReplayRangeUuid),
-			Name:     proto.String("Replay range"),
-			Begin:    proto.String(util.FormatTime(start)),
-			End:      proto.String(util.FormatTime(end)),
-			ReadOnly: proto.Bool(false),
-			Action: &sdk.Action{
-				Target:  proto.String("replay://" + s.name),
-				Payload: marshal(false, false, true),
-			},
-		}
-		s.observer.UpdateRangeDates(start, end)
-		s.observer.UpdateEvents(event)
+	if link != s.link ||
+		(s.startTime == start && end == s.endTime) {
+		return
 	}
+	// Prepare to update the last event or create a new one
+	event := &sdk.Event{
+		Uuid:     proto.String(ReplayRangeUuid),
+		Name:     proto.String("Replay range"),
+		Begin:    proto.String(util.FormatTime(start)),
+		End:      proto.String(util.FormatTime(end)),
+		ReadOnly: proto.Bool(false),
+		Action: &sdk.Action{
+			Payload: marshal(false, false, true),
+			Target:  proto.String("replay://" + s.name),
+		},
+	}
+
+	if len(s.replays) > 0 {
+		if s.startTime != start || !end.After(s.endTime) {
+			// We assume only end can change and increase monotonically.
+			// Otherwise, delete all existing events except the last one
+			for i, event := range s.replays {
+				if i > 0 {
+					s.observer.DeleteEvent(event.GetUuid())
+				}
+			}
+			s.replays = s.replays[:1]
+		}
+		lastIndex := len(s.replays) - 1
+		event = CloneEvent(s.replays[lastIndex])
+		event.End = proto.String(util.FormatTime(end))
+		if lastIndex == 0 {
+			ReplayRangeUuid = event.GetUuid()
+		}
+		updatePayload(lastIndex, len(s.replays), event)
+	}
+	s.startTime = start
+	s.endTime = end
+
+	// create a new replay event
+	s.observer.UpdateRangeDates(start, end)
+	s.observer.UpdateEvents(event)
 }
 
 func CloneEvent(event *sdk.Event) *sdk.Event {

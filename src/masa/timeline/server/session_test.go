@@ -1669,3 +1669,57 @@ func (t *TestSuite) TestReplayCanLoadPreviouslySavedRanges(c *C) {
 	checkEvent(c, expected[3], actual, true, true, false)  // disabled
 	checkEvent(c, expected[4], actual, true, false, false) // disabled
 }
+
+func (t *TestSuite) TestChangeReplayDates(c *C) {
+	now := time.Now().Truncate(time.Second).UTC()
+	f, msg := t.MakeReplayFixture(c, true, now, now.Add(60*time.Second))
+	defer f.CloseReplay()
+	event := msg.GetEvents()[0]
+	checkIsReplayEvent(c, event)
+	c.Assert(event.GetName(), Equals, "Replay range")
+	c.Assert(event.GetInfo(), Equals, "")
+
+	// Single event properties should be preserved when changing replay dates
+	event = services.CloneEvent(event)
+	event.Name = proto.String("First name")
+	event.Info = proto.String("First information")
+	event.Action.Payload, _ = json.Marshal(&sdk.ReplayPayload{Enabled: proto.Bool(false)})
+	_, err := f.controller.UpdateEvents(f.session, event)
+	c.Assert(err, IsNil)
+	msg = waitBroadcastTag(f.messages, sdk.MessageTag_update_events)
+	c.Assert(msg, NotNil)
+	msg = f.UpdateReplayInformation(now, now.Add(70*time.Second), now)
+	c.Assert(msg, NotNil)
+	newEvent := msg.GetEvents()[0]
+	c.Assert(*newEvent.Name, Equals, *event.Name)
+	c.Assert(*newEvent.Info, Equals, *event.Info)
+	c.Assert(*newEvent.Begin, Equals, util.FormatTime(now))
+	c.Assert(*newEvent.End, Equals, util.FormatTime(now.Add(70*time.Second)))
+	checkPayload(c, newEvent, false, false, false)
+
+	// Split the replay in 2, only the last event should be modified
+	event2 := services.CloneEvent(newEvent)
+	splitUuid := uuid.New()
+	event2.Uuid = proto.String(splitUuid)
+	event2.Begin = proto.String(util.FormatTime(f.replayBegin.Add(30 * time.Second)))
+	event2.Name = proto.String("Second name")
+	event2.Info = proto.String("Second info")
+	event2.Action.Payload, _ = json.Marshal(&sdk.ReplayPayload{Enabled: proto.Bool(true)})
+	_, err = f.controller.UpdateEvents(f.session, event2)
+	c.Assert(err, IsNil)
+	msg = waitBroadcastTag(f.messages, sdk.MessageTag_update_events)
+	c.Assert(msg, NotNil)
+	// Both events are split
+	c.Assert(len(msg.GetEvents()), Equals, 2)
+	msg = f.UpdateReplayInformation(now, now.Add(80*time.Second), now)
+	c.Assert(msg, NotNil)
+	events := msg.GetEvents()
+	// Only the last one end date is updated
+	c.Assert(len(events), Equals, 1)
+	newEvent = events[0]
+	c.Assert(*newEvent.Name, Equals, *event2.Name)
+	c.Assert(*newEvent.Info, Equals, *event2.Info)
+	c.Assert(*newEvent.Begin, Equals, util.FormatTime(now.Add(30*time.Second)))
+	c.Assert(*newEvent.End, Equals, util.FormatTime(now.Add(80*time.Second)))
+	checkPayload(c, newEvent, true, false, true)
+}
