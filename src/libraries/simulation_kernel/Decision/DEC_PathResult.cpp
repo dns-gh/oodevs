@@ -362,16 +362,14 @@ const DEC_PathType& DEC_PathResult::GetPathType() const
 
 void DEC_PathResult::StartCompute()
 {
-    StartCompute( std::vector< geometry::Point2f >(), false );
+    StartCompute( std::vector< geometry::Point2f >() );
 }
 
-void DEC_PathResult::StartCompute( const std::vector< geometry::Point2f >& itinerary,
-                                   bool ignoreDynamicObjects )
+void DEC_PathResult::StartCompute( const std::vector< geometry::Point2f >& itinerary )
 {
     auto& pathfinder = MIL_AgentServer::GetWorkspace().GetPathFindManager();
     const auto rq = boost::make_shared< TER_PathfindRequest >( callerId_, sections_ );
     rq->SetItinerary( itinerary );
-    rq->SetIgnoreDynamicObjects( ignoreDynamicObjects );
     future_ = pathfinder.StartCompute( rq );
 }
 

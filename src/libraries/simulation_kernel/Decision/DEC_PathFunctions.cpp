@@ -144,9 +144,7 @@ namespace
                                                         static_cast< float >( point.rY_ ) ) );
             }
         }
-        // $$$ forwarding ignored_dynamic_objects is debatable, but left for
-        // compatibility with the previous code for now.
-        path->StartCompute( itinerary, pathfind.request().ignore_dynamic_objects() );
+        path->StartCompute( itinerary );
         return path;
     }
 }
