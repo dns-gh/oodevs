@@ -138,6 +138,7 @@ private:
     //@{
     void Serialize( sword::MissionParameters& asn ) const;
     void Send( ActionManager& actions, client::FragOrder& message ) const;
+    const MIL_MissionParameter_ABC& FindParam( const std::string& name ) const;
     //@}
 
     //! @name Member data
