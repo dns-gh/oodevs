@@ -25,6 +25,8 @@ class MIL_Population;
 class PathRequest;
 class PHY_ComposanteTypePion;
 class TER_Pathfinder;
+class TER_PathFuture;
+class TER_PathfindRequest;
 class TER_PathSection;
 
 // =============================================================================
@@ -54,6 +56,10 @@ public:
     void OnReceivePathfindDestruction( const sword::MagicAction& message, sword::MagicActionAck& ack );
     void OnPathfindRequest           ( const sword::PathfindRequest& message, unsigned int nCtx, unsigned int clientId );
     void DeletePathfindsFromUnit     ( uint32_t unitId );
+
+    // Forward path computation to TER_Pathfinder.
+    boost::shared_ptr< TER_PathFuture > StartCompute(
+            const boost::shared_ptr< TER_PathfindRequest >& request );
 
     //! @name Serialization
     //@{

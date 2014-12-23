@@ -9,6 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_PathResult.h"
+#include "PathfindComputer.h"
 #include "MIL_AgentServer.h"
 #include "Decision/DEC_PathType.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
@@ -22,7 +23,6 @@
 #include "simulation_terrain/TER_GridTools.h"
 #include "simulation_terrain/TER_PathPoint.h"
 #include "simulation_terrain/TER_Pathfinder.h"
-#include "simulation_terrain/TER_Pathfinder_ABC.h"
 #include "simulation_terrain/TER_PathfindRequest.h"
 #include "simulation_terrain/TER_World.h"
 #include <boost/make_shared.hpp>
@@ -367,7 +367,7 @@ void DEC_PathResult::StartCompute()
 
 void DEC_PathResult::StartCompute( const std::vector< geometry::Point2f >& itinerary )
 {
-    auto& pathfinder = MIL_AgentServer::GetWorkspace().GetPathFindManager();
+    auto& pathfinder = MIL_AgentServer::GetWorkspace().GetPathfindComputer();
     const auto rq = boost::make_shared< TER_PathfindRequest >( callerId_, sections_ );
     rq->SetItinerary( itinerary );
     future_ = pathfinder.StartCompute( rq );

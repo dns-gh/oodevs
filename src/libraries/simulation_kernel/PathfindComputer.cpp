@@ -167,6 +167,12 @@ void PathfindComputer::Compute( unsigned int callerId,
             future, ctx, clientId, id, message, magic );
 }
 
+boost::shared_ptr< TER_PathFuture > PathfindComputer::StartCompute(
+        const boost::shared_ptr< TER_PathfindRequest >& request )
+{
+    return manager_.StartCompute( request );
+}
+
 // -----------------------------------------------------------------------------
 // Name: PathfindComputer::Destroy
 // Created: LGY 2014-03-03
