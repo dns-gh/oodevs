@@ -188,8 +188,7 @@ boost::shared_ptr< MIL_FragOrder > MIL_FragOrder::CreateFragOrder( std::string t
 // -----------------------------------------------------------------------------
 int MIL_FragOrder::GetAmbianceMission() const
 {
-    static const std::string parameterName( "ambianceMission_" );
-    return GetIntegerParameter( parameterName );
+    return GetIntegerParameter( "ambianceMission_" );
 }
 
 // -----------------------------------------------------------------------------
@@ -198,8 +197,7 @@ int MIL_FragOrder::GetAmbianceMission() const
 // -----------------------------------------------------------------------------
 const PHY_DotationCategory* MIL_FragOrder::GetMunition() const
 {
-    static const std::string parameterName( "munitions_" );
-    return GetResourceTypeParameter( parameterName );
+    return GetResourceTypeParameter( "munitions_" );
 }
 
 // -----------------------------------------------------------------------------
@@ -208,8 +206,7 @@ const PHY_DotationCategory* MIL_FragOrder::GetMunition() const
 // -----------------------------------------------------------------------------
 std::vector< const PHY_DotationCategory* > MIL_FragOrder::GetMunitions() const
 {
-    static const std::string parameterName( "munitions_" );
-    return GetResourceTypeListParameter( parameterName );
+    return GetResourceTypeListParameter( "munitions_" );
 }
 
 // -----------------------------------------------------------------------------
@@ -218,8 +215,7 @@ std::vector< const PHY_DotationCategory* > MIL_FragOrder::GetMunitions() const
 // -----------------------------------------------------------------------------
 int MIL_FragOrder::GetNbIT() const
 {
-    static const std::string parameterName( "nbIT_" );
-    return GetIntegerParameter( parameterName );
+    return GetIntegerParameter( "nbIT_" );
 }
 
 // -----------------------------------------------------------------------------
@@ -228,8 +224,7 @@ int MIL_FragOrder::GetNbIT() const
 // -----------------------------------------------------------------------------
 int MIL_FragOrder::GetNbrAmbulances() const
 {
-    static const std::string parameterName( "nbrAmbulances_" );
-    return GetIntegerParameter( parameterName );
+    return GetIntegerParameter( "nbrAmbulances_" );
 }
 
 // -----------------------------------------------------------------------------
@@ -238,8 +233,7 @@ int MIL_FragOrder::GetNbrAmbulances() const
 // -----------------------------------------------------------------------------
 int MIL_FragOrder::GetNbrRemorqueurs() const
 {
-    static const std::string parameterName( "nbrRemorqueurs_" );
-    return GetIntegerParameter( parameterName );
+    return GetIntegerParameter( "nbrRemorqueurs_" );
 }
 
 // -----------------------------------------------------------------------------
@@ -248,8 +242,7 @@ int MIL_FragOrder::GetNbrRemorqueurs() const
 // -----------------------------------------------------------------------------
 int MIL_FragOrder::GetOrderConduiteAutomateActiverObstacle() const
 {
-    static const std::string parameterName( "orderConduiteAutomateActiverObstacle_" );
-    return GetIntegerParameter( parameterName );
+    return GetIntegerParameter( "orderConduiteAutomateActiverObstacle_" );
 }
 
 // -----------------------------------------------------------------------------
@@ -280,8 +273,7 @@ void MIL_FragOrder::SetOrderConduiteChangerAmbiance( int value )
 // -----------------------------------------------------------------------------
 boost::shared_ptr< MT_Vector2D > MIL_FragOrder::GetOrderConduiteChangerPositionDebarquement() const
 {
-    static const std::string parameterName( "orderConduiteChangerPositionDebarquement_" );
-    return GetPointParameter( parameterName );
+    return GetPointParameter( "orderConduiteChangerPositionDebarquement_" );
 }
 
 // -----------------------------------------------------------------------------
@@ -290,8 +282,7 @@ boost::shared_ptr< MT_Vector2D > MIL_FragOrder::GetOrderConduiteChangerPositionD
 // -----------------------------------------------------------------------------
 int MIL_FragOrder::GetOrderConduiteChangerReglesEngagementPopulation() const
 {
-    static const std::string parameterName( "orderConduiteChangerReglesEngagementPopulation_" );
-    return GetIntegerParameter( parameterName );
+    return GetIntegerParameter( "orderConduiteChangerReglesEngagementPopulation_" );
 }
 
 // -----------------------------------------------------------------------------
@@ -300,8 +291,7 @@ int MIL_FragOrder::GetOrderConduiteChangerReglesEngagementPopulation() const
 // -----------------------------------------------------------------------------
 int MIL_FragOrder::GetOrderConduiteChangerReglesEngagement() const
 {
-    static const std::string parameterName( "orderConduiteChangerReglesEngagement_" );
-    return GetIntegerParameter( parameterName );
+    return GetIntegerParameter( "orderConduiteChangerReglesEngagement_" );
 }
 
 // -----------------------------------------------------------------------------
@@ -310,8 +300,7 @@ int MIL_FragOrder::GetOrderConduiteChangerReglesEngagement() const
 // -----------------------------------------------------------------------------
 MIL_FragOrder::T_MedicalPriorityVector MIL_FragOrder::GetOrderConduiteModifierPrioritesBlesses() const
 {
-    static const std::string parameterName( "orderConduiteModifierPrioritesBlesses_" );
-    return GetMedicalPriorityParameter( parameterName );
+    return GetMedicalPriorityParameter( "orderConduiteModifierPrioritesBlesses_" );
 }
 
 // -----------------------------------------------------------------------------
@@ -342,8 +331,7 @@ MIL_FragOrder::T_MaintenancePriorityVector MIL_FragOrder::GetOrderConduiteModifi
 // -----------------------------------------------------------------------------
 std::vector< DEC_Decision_ABC* > MIL_FragOrder::GetOrderConduiteModifierPrioritesTactiquesBlesses() const
 {
-    static const std::string parameterName( "orderConduiteModifierPrioritesTactiquesBlesses_" );
-    return GetAutomatListParameter( parameterName );
+    return GetAutomatListParameter( "orderConduiteModifierPrioritesTactiquesBlesses_" );
 }
 
 // -----------------------------------------------------------------------------
@@ -626,8 +614,7 @@ std::vector< boost::shared_ptr< DEC_Knowledge_Object > > MIL_FragOrder::GetObjec
 // -----------------------------------------------------------------------------
 std::vector< DEC_Decision_ABC* > MIL_FragOrder::GetOrderConduiteModifierPrioritesTactiquesReparations() const
 {
-    static const std::string parameterName( "orderConduiteModifierPrioritesTactiquesReparations_" );
-    return GetAutomatListParameter( parameterName );
+    return GetAutomatListParameter( "orderConduiteModifierPrioritesTactiquesReparations_" );
 }
 
 // -----------------------------------------------------------------------------
@@ -636,8 +623,7 @@ std::vector< DEC_Decision_ABC* > MIL_FragOrder::GetOrderConduiteModifierPriorite
 // -----------------------------------------------------------------------------
 int MIL_FragOrder::GetOrderConduiteModifierRegimeTravailMaintenance() const
 {
-    static const std::string parameterName( "orderConduiteModifierRegimeTravailMaintenance_" );
-    return GetIntegerParameter( parameterName );
+    return GetIntegerParameter( "orderConduiteModifierRegimeTravailMaintenance_" );
 }
 
 // -----------------------------------------------------------------------------
@@ -646,8 +632,7 @@ int MIL_FragOrder::GetOrderConduiteModifierRegimeTravailMaintenance() const
 // -----------------------------------------------------------------------------
 int MIL_FragOrder::GetOrderConduitePopulationChangerAttitude() const
 {
-    static const std::string parameterName( "orderConduitePopulationChangerAttitude_" );
-    return GetIntegerParameter( parameterName );
+    return GetIntegerParameter( "orderConduitePopulationChangerAttitude_" );
 }
 
 // -----------------------------------------------------------------------------
@@ -656,8 +641,7 @@ int MIL_FragOrder::GetOrderConduitePopulationChangerAttitude() const
 // -----------------------------------------------------------------------------
 const DEC_Decision_ABC* MIL_FragOrder::GetPionARenforcer() const
 {
-    static const std::string parameterName( "pionARenforcer_" );
-    return GetAgentParameter( parameterName );
+    return GetAgentParameter( "pionARenforcer_" );
 }
 
 // -----------------------------------------------------------------------------
@@ -666,8 +650,7 @@ const DEC_Decision_ABC* MIL_FragOrder::GetPionARenforcer() const
 // -----------------------------------------------------------------------------
 const DEC_Decision_ABC* MIL_FragOrder::GetPionRenforce() const
 {
-    static const std::string parameterName( "pionRenforce_" );
-    return GetAgentParameter( parameterName );
+    return GetAgentParameter( "pionRenforce_" );
 }
 
 // -----------------------------------------------------------------------------
@@ -676,8 +659,7 @@ const DEC_Decision_ABC* MIL_FragOrder::GetPionRenforce() const
 // -----------------------------------------------------------------------------
 boost::shared_ptr< MT_Vector2D > MIL_FragOrder::GetPointCible() const
 {
-    static const std::string parameterName( "pointCible_" );
-    return GetPointParameter( parameterName );
+    return GetPointParameter( "pointCible_" );
 }
 
 // -----------------------------------------------------------------------------
@@ -686,8 +668,7 @@ boost::shared_ptr< MT_Vector2D > MIL_FragOrder::GetPointCible() const
 // -----------------------------------------------------------------------------
 boost::shared_ptr< TER_Localisation > MIL_FragOrder::GetZoneCible() const
 {
-    static const std::string parameterName( "zoneCible_" );
-    return GetLocationParameter( parameterName );
+    return GetLocationParameter( "zoneCible_" );
 }
 
 // -----------------------------------------------------------------------------
@@ -696,8 +677,7 @@ boost::shared_ptr< TER_Localisation > MIL_FragOrder::GetZoneCible() const
 // -----------------------------------------------------------------------------
 int MIL_FragOrder::GetPorteeAction() const
 {
-    static const std::string parameterName( "porteeAction_" );
-    return GetIntegerParameter( parameterName );
+    return GetIntegerParameter( "porteeAction_" );
 }
 
 // -----------------------------------------------------------------------------
@@ -706,8 +686,7 @@ int MIL_FragOrder::GetPorteeAction() const
 // -----------------------------------------------------------------------------
 int MIL_FragOrder::GetSiteFranchissementOriginal() const
 {
-    static const std::string parameterName( "siteFranchissementOriginal_" );
-    return GetIntegerParameter( parameterName );
+    return GetIntegerParameter( "siteFranchissementOriginal_" );
 }
 
 // -----------------------------------------------------------------------------
@@ -716,8 +695,7 @@ int MIL_FragOrder::GetSiteFranchissementOriginal() const
 // -----------------------------------------------------------------------------
 int MIL_FragOrder::GetSiteFranchissementVariante() const
 {
-    static const std::string parameterName( "siteFranchissementVariante_" );
-    return GetIntegerParameter( parameterName );
+    return GetIntegerParameter( "siteFranchissementVariante_" );
 }
 
 // -----------------------------------------------------------------------------
@@ -726,8 +704,7 @@ int MIL_FragOrder::GetSiteFranchissementVariante() const
 // -----------------------------------------------------------------------------
 boost::shared_ptr< DEC_Knowledge_Agent > MIL_FragOrder::GetAgentKnowledge() const
 {
-    static const std::string parameterName( "agentKnowledge_" );
-    return GetAgentKnowledgeParameter( parameterName );
+    return GetAgentKnowledgeParameter( "agentKnowledge_" );
 }
 
 // -----------------------------------------------------------------------------
@@ -736,8 +713,7 @@ boost::shared_ptr< DEC_Knowledge_Agent > MIL_FragOrder::GetAgentKnowledge() cons
 // -----------------------------------------------------------------------------
 std::vector< boost::shared_ptr< DEC_Knowledge_Object > > MIL_FragOrder::GetObjectKnowledge() const
 {
-    static const std::string parameterName( "objectKnowledge_" );
-    return GetObjectListParameter( parameterName );
+    return GetObjectListParameter( "objectKnowledge_" );
 }
 
 // -----------------------------------------------------------------------------
@@ -746,8 +722,7 @@ std::vector< boost::shared_ptr< DEC_Knowledge_Object > > MIL_FragOrder::GetObjec
 // -----------------------------------------------------------------------------
 const DEC_Decision_ABC* MIL_FragOrder::GetAgent() const
 {
-    static const std::string parameterName( "agent_" );
-    return GetAgentParameter( parameterName );
+    return GetAgentParameter( "agent_" );
 }
 
 // -----------------------------------------------------------------------------
