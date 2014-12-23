@@ -12,6 +12,7 @@
 
 #include "clients_kernel/Positions.h"
 #include "clients_kernel/OptionsObserver_ABC.h"
+#include "Simulation.h"
 #include <tools/Observer_ABC.h>
 
 namespace kernel
@@ -19,8 +20,6 @@ namespace kernel
     class Agent_ABC;
     class Controllers;
 }
-
-class Simulation;
 
 // =============================================================================
 /** @class  SmoothPositions
@@ -31,6 +30,7 @@ class Simulation;
 class SmoothPositions : public kernel::Positions
                       , public kernel::OptionsObserver_ABC
                       , public tools::Observer_ABC
+                      , public tools::ElementObserver_ABC< Simulation::sEndSkip >
                       , private boost::noncopyable
 {
 public:
@@ -49,6 +49,7 @@ public:
     virtual void Accept( kernel::LocationVisitor_ABC& visitor ) const;
     virtual bool CanAggregate() const;
     virtual void Compute();
+    virtual void NotifyUpdated( const Simulation::sEndSkip& );
     //@}
 
 private:
