@@ -565,7 +565,7 @@ class EventsView extends Backbone.View
                     text: xhr.statusText
 
     save_events: =>
-        url = @model.url.replace "/events", "/export"
+        url = @model.url.replace("/events", "/export") + "?" + $.param url_query unless _.isEmpty url_query
         ajax url, "",
             (events) ->
                 events = JSON.stringify events, null, 4
