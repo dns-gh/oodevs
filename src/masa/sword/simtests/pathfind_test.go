@@ -352,9 +352,10 @@ func (s *TestSuite) TestPathfindDeletingUnitsDeletesRelatedPathfinds(c *C) {
 
 // Creates a unit moving like a main battle tank, creates an itinerary with
 // "path" waypoints, asks the unit to move from "from" to "to" using the
-// itinerary and return computed path.
+// itinerary and return computed path. If more than one "path" argument is used
+// following itineraries are bound to the unit.
 func getMoveAlongItinerary(c *C, phydb *phy.PhysicalData, client *swapi.Client,
-	from, to swapi.Point, path []swapi.Point) ([]swapi.Point, []swapi.Point) {
+	from, to swapi.Point, path ...[]swapi.Point) ([]swapi.Point, [][]swapi.Point) {
 
 	moveAlongItinerary := uint32(445949284)
 
@@ -387,11 +388,21 @@ func getMoveAlongItinerary(c *C, phydb *phy.PhysicalData, client *swapi.Client,
 	c.Assert(err, IsNil)
 
 	// Create the path
-	pathfind, err := client.CreatePathfind(unit.Id, path...)
-	c.Assert(err, IsNil)
-	itinerary := []swapi.Point{}
-	for _, p := range pathfind.Result {
-		itinerary = append(itinerary, p.Point)
+	var pathfind *swapi.Pathfind
+	itineraries := [][]swapi.Point{}
+	for i, p := range path {
+		pf, err := client.CreatePathfind(unit.Id, p...)
+		c.Assert(err, IsNil)
+		itinerary := []swapi.Point{}
+		for _, p := range pf.Result {
+			itinerary = append(itinerary, p.Point)
+		}
+		itineraries = append(itineraries, itinerary)
+		if i > 0 {
+			DecBindItinerary(c, client, unit.Id, pf.Id)
+		} else {
+			pathfind = pf
+		}
 	}
 
 	// Make move along the path
@@ -414,7 +425,7 @@ func getMoveAlongItinerary(c *C, phydb *phy.PhysicalData, client *swapi.Client,
 		copy(points, path)
 		return true
 	})
-	return points, itinerary
+	return points, itineraries
 }
 
 type KnownPoint struct {
@@ -448,20 +459,28 @@ func MakeKnownEdge(p1, p2 swapi.Point) KnownEdge {
 	}
 }
 
-// Given a unit actual path and an itinerary passed as argument, getMatchedRatios
-// returns a sequence [r1, r2, ... rn] where each rn represents a slice of
-// itinerary overlapped by path, in percents. The value is positive if matched,
-// negative otherwise.
-// For instance, if the itinerary is matched by the path starting at its first
-// quarter and left at the beginning of its last quarter, the result is:
+type MatchedDistance struct {
+	Id       int
+	Distance float64
+}
+
+// Given a unit actual path and itineraries passed as argument,
+// getMatchedRatios returns a sequence [i1:r1, i2:r2, ... i3:rn] where each rn
+// represents a slice of itinerary overlapped by path, in percents, and in is
+// the 1-based itinerary identifier, 0 being reserved for unmatched segments.
+// The value is positive if matched, negative otherwise.  For instance, if the
+// itinerary is matched by the path starting at its first quarter and left at
+// the beginning of its last quarter, the result is:
 //
-//   [-25, 50, -25]
+//   0:-25%, 1:50%, 0:-25%
 //
-func getMatchedRatio(path, itinerary []swapi.Point) []int {
-	distances := []float64{}
-	edges := map[KnownEdge]bool{}
-	for i := 1; i < len(itinerary); i++ {
-		edges[MakeKnownEdge(itinerary[i-1], itinerary[i])] = true
+func getMatchedRatio(path []swapi.Point, itineraries [][]swapi.Point) string {
+	distances := []*MatchedDistance{}
+	edges := map[KnownEdge]int{}
+	for j, itinerary := range itineraries {
+		for i := 1; i < len(itinerary); i++ {
+			edges[MakeKnownEdge(itinerary[i-1], itinerary[i])] = j + 1
+		}
 	}
 	total := float64(0)
 	for i := 1; i < len(path); i++ {
@@ -474,32 +493,40 @@ func getMatchedRatio(path, itinerary []swapi.Point) []int {
 			continue
 		}
 		total += d
-		matched := edges[MakeKnownEdge(p1, p2)]
+		id, matched := edges[MakeKnownEdge(p1, p2)]
 		if !matched {
 			d = -d
 		}
 		if len(distances) == 0 ||
-			math.Signbit(d) != math.Signbit(distances[len(distances)-1]) {
-			distances = append(distances, d)
+			id != distances[len(distances)-1].Id {
+			distances = append(distances, &MatchedDistance{Id: id, Distance: d})
 		} else {
-			distances[len(distances)-1] += d
+			distances[len(distances)-1].Distance += d
 		}
 	}
-	percents := []int{}
+	percents := []*MatchedDistance{}
 	for _, d := range distances {
-		percent := int(100 * d / total)
+		percent := int(100 * d.Distance / total)
 		if percent == 0 {
 			continue
 		}
 		last := len(percents) - 1
-		if len(percents) == 0 || percent > 0 && percents[last] < 0 ||
-			percent < 0 && percents[last] > 0 {
-			percents = append(percents, percent)
+		if len(percents) == 0 || d.Id != percents[last].Id {
+			percents = append(percents,
+				&MatchedDistance{Id: d.Id, Distance: float64(percent)})
 		} else {
-			percents[last] += percent
+			percents[last].Distance += float64(percent)
 		}
 	}
-	return percents
+
+	result := ""
+	for i, p := range percents {
+		if i > 0 {
+			result += ", "
+		}
+		result += fmt.Sprintf("%d:%d%%", p.Id, int(p.Distance))
+	}
+	return result
 }
 
 func (s *TestSuite) TestMoveAlongItineraryNoBacktrack(c *C) {
@@ -507,7 +534,7 @@ func (s *TestSuite) TestMoveAlongItineraryNoBacktrack(c *C) {
 	sim, client := connectAndWaitModel(c, NewAdminOpts(ExAngersEmpty).RecordUnitPaths())
 	defer stopSimAndClient(c, sim, client)
 
-	points, itinerary := getMoveAlongItinerary(c, phydb, client,
+	points, itineraries := getMoveAlongItinerary(c, phydb, client,
 		swapi.Point{X: -0.4096, Y: 47.4551},
 		swapi.Point{X: 0.0213, Y: 47.2953},
 		[]swapi.Point{
@@ -529,16 +556,16 @@ func (s *TestSuite) TestMoveAlongItineraryNoBacktrack(c *C) {
 			c.Assert(p.X, Greater, limit.X)
 		}
 	}
-	ratios := getMatchedRatio(points, itinerary)
-	c.Assert(ratios, DeepEquals, []int{-32, 39, -23})
+	ratios := getMatchedRatio(points, itineraries)
+	c.Assert(ratios, Equals, "0:-32%, 1:39%, 0:-23%")
 }
 
-func testMoveAlongHorseshoe(c *C, from, to swapi.Point, expectedRatios []int) {
+func testMoveAlongHorseshoe(c *C, from, to swapi.Point, expectedRatios string) {
 	phydb := loadPhysicalData(c, "test")
 	sim, client := connectAndWaitModel(c, NewAdminOpts(ExAngersEmpty).RecordUnitPaths())
 	defer stopSimAndClient(c, sim, client)
 
-	points, itinerary := getMoveAlongItinerary(c, phydb, client,
+	points, itineraries := getMoveAlongItinerary(c, phydb, client,
 		from,
 		to,
 		[]swapi.Point{
@@ -546,8 +573,8 @@ func testMoveAlongHorseshoe(c *C, from, to swapi.Point, expectedRatios []int) {
 			swapi.Point{X: -0.3452, Y: 47.1160},
 			swapi.Point{X: -0.2635, Y: 47.1808},
 		})
-	ratios := getMatchedRatio(points, itinerary)
-	c.Assert(ratios, DeepEquals, expectedRatios)
+	ratios := getMatchedRatio(points, itineraries)
+	c.Assert(ratios, Equals, expectedRatios)
 }
 
 func (s *TestSuite) TestMoveAlongItineraryInsideHorseshoe(c *C) {
@@ -556,7 +583,7 @@ func (s *TestSuite) TestMoveAlongItineraryInsideHorseshoe(c *C) {
 	testMoveAlongHorseshoe(c,
 		swapi.Point{X: -0.3680, Y: 47.1978},
 		swapi.Point{X: -0.3241, Y: 47.1666},
-		[]int{-100})
+		"0:-100%")
 }
 
 func (s *TestSuite) TestMoveAlongItineraryAboveHorseshoe(c *C) {
@@ -565,7 +592,7 @@ func (s *TestSuite) TestMoveAlongItineraryAboveHorseshoe(c *C) {
 	testMoveAlongHorseshoe(c,
 		swapi.Point{X: -0.4539, Y: 47.2720},
 		swapi.Point{X: -0.1441, Y: 47.2920},
-		[]int{-100})
+		"0:-100%")
 }
 
 func (s *TestSuite) TestMoveAlongItineraryOnHorseshoe(c *C) {
@@ -577,7 +604,7 @@ func (s *TestSuite) TestMoveAlongItineraryOnHorseshoe(c *C) {
 	testMoveAlongHorseshoe(c,
 		swapi.Point{X: -0.5126, Y: 47.2098},
 		swapi.Point{X: -0.2476, Y: 47.1829},
-		[]int{-24, 1, -1, 32, -4, 25, -4})
+		"0:-24%, 1:1%, 0:-1%, 1:32%, 0:-4%, 1:25%, 0:-4%")
 }
 
 func testPathEdgeSplit(c *C, client *swapi.Client, unit *swapi.Unit,
