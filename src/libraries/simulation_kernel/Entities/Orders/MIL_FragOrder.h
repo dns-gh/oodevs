@@ -17,6 +17,7 @@ namespace sword
 
 class ActionManager;
 class DEC_Decision_ABC;
+class DEC_Itinerary;
 class DEC_Knowledge_Agent;
 class DEC_Knowledge_Object;
 class DEC_KnowledgeResolver_ABC;
@@ -130,6 +131,7 @@ public:
     int GetPorteeAction() const;
     int GetSiteFranchissementOriginal() const;
     int GetSiteFranchissementVariante() const;
+    boost::shared_ptr< DEC_Itinerary > GetItinerary( const std::string& name ) const;
     //@}
 
 private:

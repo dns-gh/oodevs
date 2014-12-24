@@ -20,6 +20,7 @@
 #include "Decision/DEC_EntityFunctions.h"
 #include "Decision/DEC_FireFunctions.h"
 #include "Decision/DEC_GeometryFunctions.h"
+#include "Decision/DEC_Itinerary.h"
 #include "Decision/DEC_KnowledgeAgentFunctions.h"
 #include "Decision/DEC_KnowledgeFunctions.h"
 #include "Decision/DEC_KnowledgeObjectFunctions.h"
@@ -206,6 +207,9 @@ void RegisterMethods( sword::Brain& brain )
     brain.RegisterFunction( "DEC_AssignMissionListParameter", &MIL_MissionParameterFactory::AssignMissionListParameter );
     brain.RegisterFunction( "_DEC_AssignMissionCrowdParameter", &MIL_MissionParameterFactory::SetCrowdKnowledgeParameter );
     brain.RegisterFunction<boost::shared_ptr<MIL_MissionParameter_ABC>, DEC_Decision_ABC*, int>( "_DEC_AssignMissionCrowdListParameter", &MIL_MissionParameterFactory::CreatePopulationKnowledge );
+
+    // DEC_Itinerary
+    brain.RegisterMethod( "DEC_Itinerary_GetId", &DEC_Itinerary::GetId );
 
     MIL_FragOrder::Register( brain );
 }

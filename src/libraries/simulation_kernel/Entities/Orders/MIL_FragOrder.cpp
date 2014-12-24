@@ -17,6 +17,7 @@
 #include "MIL_OrderContext.h"
 #include "MIL_Report.h"
 #include "Decision/DEC_Representations.h"
+#include "Decision/DEC_Itinerary.h"
 #include "Decision/DEC_Tools.h"
 #include "Decision/Brain.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
@@ -167,6 +168,7 @@ void MIL_FragOrder::Register( sword::Brain& brain )
     brain.RegisterMethod( "GetObjectKnowledge_", &MIL_FragOrder::GetObjectKnowledge );
     brain.RegisterMethod( "GetAgent_", &MIL_FragOrder::GetAgent );
     brain.RegisterMethod( "HasIntegerParameter", &MIL_FragOrder::HasIntegerParameter );
+    brain.RegisterMethod( "GetItinerary", &MIL_FragOrder::GetItinerary );
 }
 
 // -----------------------------------------------------------------------------
@@ -610,6 +612,16 @@ std::vector< boost::shared_ptr< DEC_Knowledge_Object > > MIL_FragOrder::GetObjec
 const DEC_Decision_ABC* MIL_FragOrder::GetAgent() const
 {
     return GetAgentParameter( "agent_" );
+}
+
+boost::shared_ptr< DEC_Itinerary > MIL_FragOrder::GetItinerary( const std::string& name ) const
+{
+    const auto& param = FindParam( name );
+    boost::shared_ptr< DEC_Itinerary > result;
+    sword::Pathfind path;
+    if( param.ToItinerary( path ) )
+        result = boost::make_shared< DEC_Itinerary >( path );
+    return result;
 }
 
 // -----------------------------------------------------------------------------
