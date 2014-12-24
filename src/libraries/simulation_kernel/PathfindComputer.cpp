@@ -397,3 +397,22 @@ std::vector< uint32_t > PathfindComputer::GetEntityPaths( uint32_t entityId ) co
     std::sort( paths.begin(), paths.end() );
     return paths;
 }
+
+std::vector< geometry::Point2f > PathfindToPoints( const sword::Pathfind& pathfind )
+{
+    std::vector< geometry::Point2f > itinerary;
+    if( pathfind.has_result() )
+    {
+        const auto& positions = pathfind.result().points();
+        for( auto i = 0; i < positions.size(); ++i )
+        {
+            MT_Vector2D point;
+            const auto& position = positions.Get( i ).coordinate();
+            TER_World::GetWorld().MosToSimMgrsCoord(
+                    position.latitude(), position.longitude(), point );
+            itinerary.push_back( geometry::Point2f( static_cast< float >( point.rX_ ),
+                                                    static_cast< float >( point.rY_ ) ) );
+        }
+    }
+    return itinerary;
+}

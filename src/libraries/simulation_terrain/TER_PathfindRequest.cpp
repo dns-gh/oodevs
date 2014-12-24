@@ -36,14 +36,15 @@ bool TER_PathfindRequest::IgnoreDynamicObjects() const
     return ignoreDynamicObjects_;
 }
 
-void TER_PathfindRequest::SetItinerary( const TER_PathfindRequest::Itinerary& itinerary )
+void TER_PathfindRequest::AddItinerary( const TER_PathfindRequest::Itinerary& itinerary )
 {
-    itinerary_ = itinerary;
+    if( itinerary.size() > 1 )
+        itineraries_.push_back( itinerary );
 }
 
-const TER_PathfindRequest::Itinerary& TER_PathfindRequest::GetItinerary() const
+const std::vector< TER_PathfindRequest::Itinerary >& TER_PathfindRequest::GetItineraries() const
 {
-    return itinerary_;
+    return itineraries_;
 }
 
 const std::vector< boost::shared_ptr< TER_PathSection > >& TER_PathfindRequest::GetSections()

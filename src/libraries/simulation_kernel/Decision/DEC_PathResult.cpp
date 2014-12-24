@@ -369,7 +369,14 @@ void DEC_PathResult::StartCompute( const std::vector< geometry::Point2f >& itine
 {
     auto& pathfinder = MIL_AgentServer::GetWorkspace().GetPathfindComputer();
     const auto rq = boost::make_shared< TER_PathfindRequest >( callerId_, sections_ );
-    rq->SetItinerary( itinerary );
+    rq->AddItinerary( itinerary );
+    const auto boundItineraries = pathfinder.GetEntityPaths( callerId_ );
+    for( auto it = boundItineraries.begin(); it != boundItineraries.end(); ++it )
+    {
+        const auto path = pathfinder.GetPathfind( *it );
+        if( path )
+            rq->AddItinerary( PathfindToPoints( *path ) );
+    }
     future_ = pathfinder.StartCompute( rq );
 }
 

@@ -31,8 +31,8 @@ public:
 
     bool IgnoreDynamicObjects() const;
     void SetIgnoreDynamicObjects( bool ignore );
-    void SetItinerary( const Itinerary& itinerary );
-    const Itinerary& GetItinerary() const;
+    void AddItinerary( const Itinerary& itinerary );
+    const std::vector< Itinerary >& GetItineraries() const;
 
     std::size_t GetCallerId() const;
     const std::vector< boost::shared_ptr< TER_PathSection > >& GetSections();
@@ -43,7 +43,7 @@ private:
     const size_t callerId_;
     const std::vector< boost::shared_ptr< TER_PathSection > > sections_;
     bool ignoreDynamicObjects_;
-    Itinerary itinerary_;
+    std::vector< Itinerary > itineraries_;
 };
 
 #endif // SIMULATION_TERRAIN_PATHFINDREQUEST_H

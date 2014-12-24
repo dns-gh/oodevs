@@ -335,8 +335,8 @@ void TER_Pathfinder::ProcessRequest( TER_PathFinderThread& data, Request& reques
                 rq->GetCallerId(), dumpDir_, dumpFilter_, pathfinder );
         MT_Profiler profiler;
         profiler.Start();
-        if( rq->GetItinerary().size() > 1 )
-            wrapper = boost::make_shared< TER_PreferedEdgesHeuristic >( wrapper, rq->GetItinerary() );
+        if( !rq->GetItineraries().empty() )
+            wrapper = boost::make_shared< TER_PreferedEdgesHeuristic >( wrapper, rq->GetItineraries() );
         const auto res = TER_PathComputer().Execute( request.id, rq->GetCallerId(),
                 rq->GetSections(), *wrapper, *future, deadline, debugPath_ );
         future->Set( res );

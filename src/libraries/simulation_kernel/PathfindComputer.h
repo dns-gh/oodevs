@@ -10,6 +10,7 @@
 #ifndef __PathfindComputer_h_
 #define __PathfindComputer_h_
 
+#include <geometry/Types.h>
 #include <boost/noncopyable.hpp>
 #include <boost/optional/optional_fwd.hpp>
 
@@ -117,5 +118,8 @@ private:
 };
 
 BOOST_CLASS_EXPORT_KEY( PathfindComputer )
+
+// Converts computed path result to simulation coordinates.
+std::vector< geometry::Point2f > PathfindToPoints( const sword::Pathfind& path );
 
 #endif // __PathfindComputer_h_

@@ -29,8 +29,10 @@ class TER_PreferedEdgesHeuristic : public TER_Pathfinder_ABC
                                  , private boost::noncopyable
 {
 public:
+    typedef std::vector< geometry::Point2f > T_Itinerary;
+
     TER_PreferedEdgesHeuristic( const boost::shared_ptr< TER_Pathfinder_ABC >& pathfinder,
-                                const std::vector< geometry::Point2f >& itinerary );
+                                const std::vector< T_Itinerary >& itineraries );
     
     virtual void SetChoiceRatio( float ratio );
     virtual void SetConfiguration( unsigned refine, unsigned int subdivisions );
@@ -39,7 +41,7 @@ public:
 
 private:
     boost::shared_ptr< TER_Pathfinder_ABC > pathfinder_;
-    std::vector< geometry::Point2f > points_;
+    std::vector< T_Itinerary > itineraries_;
 };
 
 #endif // SIMULATION_TERRAIN_PREFEREDEDGESHEURISTIC_H

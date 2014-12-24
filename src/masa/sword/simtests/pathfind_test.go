@@ -371,6 +371,7 @@ func getMoveAlongItinerary(c *C, phydb *phy.PhysicalData, client *swapi.Client,
 						Type: "VW Combi Rally",
 						Units: []*swrun.Unit{
 							&swrun.Unit{
+								// Ensure unit unicity
 								Name: "unit",
 								Type: "VW Main Battle Combi",
 								Pos:  from,
@@ -605,6 +606,59 @@ func (s *TestSuite) TestMoveAlongItineraryOnHorseshoe(c *C) {
 		swapi.Point{X: -0.5126, Y: 47.2098},
 		swapi.Point{X: -0.2476, Y: 47.1829},
 		"0:-24%, 1:1%, 0:-1%, 1:32%, 0:-4%, 1:25%, 0:-4%")
+}
+
+func testMoveAlongMultipleItineraries(c *C, from, to swapi.Point, expectedRatios string) {
+	phydb := loadPhysicalData(c, "test")
+	sim, client := connectAndWaitModel(c, NewAdminOpts(ExAngersEmpty).RecordUnitPaths())
+	defer stopSimAndClient(c, sim, client)
+
+	points, itineraries := getMoveAlongItinerary(c, phydb, client,
+		from,
+		to,
+		// South of the river
+		[]swapi.Point{
+			swapi.Point{X: -0.3713, Y: 47.3752},
+			swapi.Point{X: -0.3263, Y: 47.3592},
+			swapi.Point{X: -0.3207, Y: 47.4001},
+		},
+		// North of the river
+		[]swapi.Point{
+			swapi.Point{X: -0.3146, Y: 47.4095},
+			swapi.Point{X: -0.2244, Y: 47.4367},
+			swapi.Point{X: -0.3197, Y: 47.4749},
+		})
+	ratios := getMatchedRatio(points, itineraries)
+	c.Assert(ratios, Equals, expectedRatios)
+}
+
+func (s *TestSuite) TestMoveAlongItinerariesMultipleChained(c *C) {
+	// Start near the start point of the first path and move to the end point
+	// of the second path. The unit should use the first itinerary then travel
+	// to the second and use it.
+	testMoveAlongMultipleItineraries(c,
+		swapi.Point{X: -0.3774, Y: 47.3517},
+		swapi.Point{X: -0.3411, Y: 47.4746},
+		"0:-7%, 1:11%, 0:-4%, 1:10%, 0:-3%, 2:29%, 0:-2%, 2:13%, 0:-4%, 2:2%, 0:-5%")
+}
+
+func (s *TestSuite) TestMoveAlongItinerariesMultipleChoice1(c *C) {
+	// Start at the end of the first itinerary and end near the end of
+	// the second itinerary. The unit should use only the second itinerary.
+	testMoveAlongMultipleItineraries(c,
+		swapi.Point{X: -0.3207, Y: 47.4001},
+		swapi.Point{X: -0.3411, Y: 47.4746},
+		"0:-5%, 2:43%, 0:-1%, 2:2%, 0:-3%, 2:20%, 0:-1%, 2:1%, 0:-6%, 2:3%, 0:-8%")
+}
+
+func (s *TestSuite) TestMoveAlongItinerariesMultipleChoice2(c *C) {
+	// Start at the beginning of the second itinerary, end south of the first
+	// one. Should use only the first one.
+	testMoveAlongMultipleItineraries(c,
+		swapi.Point{X: -0.3146, Y: 47.4095},
+		swapi.Point{X: -0.3774, Y: 47.3517},
+		"0:-8%, 1:6%, 0:-1%, 1:18%, 0:-22%, 1:4%, 0:-1%, 1:3%, 0:-2%, 1:3%, "+
+			"0:-1%, 1:3%, 0:-19%")
 }
 
 func testPathEdgeSplit(c *C, client *swapi.Client, unit *swapi.Unit,

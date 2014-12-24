@@ -26,13 +26,13 @@ static const float costMultiplier = 20.f;
 class TER_PreferedEdges : public TerrainRule_ABC
 {
 public:
-    TER_PreferedEdges( const std::vector< geometry::Point2f >& path,
+    TER_PreferedEdges( const std::vector< std::vector< geometry::Point2f > >& paths,
                        TerrainRule_ABC& rule,
                        geometry::Point2f to )
         : rule_( rule )
     {
-        if( !path.empty() )
-            index_.reset( new TER_PathIndex( path, to ) );
+        for( auto it = paths.begin(); it != paths.end(); ++it )
+            indexes_.push_back( std::unique_ptr< TER_PathIndex >( new TER_PathIndex( *it, to ) ));
         const geometry::Point2f p1( 0, 0 );
         const geometry::Point2f p2( 10000, 0 );
         speedFactor_ = rule_.EvaluateCost( p1, p2 ) / p1.Distance( p2 );
@@ -41,14 +41,21 @@ public:
     virtual float EvaluateCost( const geometry::Point2f& from,
                                 const geometry::Point2f& to )
     {
-        const auto cost = rule_.EvaluateCost( from, to );
-        if( !index_ || cost <= 0 )
+        auto cost = rule_.EvaluateCost( from, to );
+        if( cost <= 0 )
             return cost;
-        const auto dist = index_->GetDistanceUsingPath( to );
-        const auto pathCost = costMultiplier*dist.startToPath
-            + dist.alongPath
-            + costMultiplier*dist.pathToDest;
-        return std::min( cost, speedFactor_*pathCost );
+
+        for( auto it = indexes_.begin(); it != indexes_.end(); ++it )
+        {
+            const auto dist = (*it)->GetDistanceUsingPath( to );
+            auto pathCost = costMultiplier*dist.startToPath
+                + dist.alongPath
+                + costMultiplier*dist.pathToDest;
+            pathCost *= speedFactor_;
+            if( pathCost < cost )
+                cost = pathCost;
+        }
+        return cost;
     }
 
     virtual float GetCost( const geometry::Point2f& from,
@@ -60,8 +67,11 @@ public:
         const auto cost = rule_.GetCost( from, to, terrainTo, terrainBetween, reason );
         if( cost < 0 )
             return cost;
-        if( index_->IsPathEdge( from, to )  )
-            return cost;
+        for( auto it = indexes_.begin(); it != indexes_.end(); ++it )
+        {
+            if( (*it)->IsPathEdge( from, to )  )
+                return cost;
+        }
         return costMultiplier*cost;
     }
 
@@ -71,7 +81,7 @@ public:
     }
 
 private:
-    std::unique_ptr< TER_PathIndex > index_;
+    std::vector< std::unique_ptr< TER_PathIndex > > indexes_;
     TerrainRule_ABC& rule_;
     float speedFactor_;
 };
@@ -80,9 +90,9 @@ private:
 
 TER_PreferedEdgesHeuristic::TER_PreferedEdgesHeuristic(
         const boost::shared_ptr< TER_Pathfinder_ABC >& pathfinder,
-        const std::vector< geometry::Point2f >& itinerary )
+        const std::vector< T_Itinerary >& itineraries )
     : pathfinder_( pathfinder )
-    , points_( itinerary )
+    , itineraries_( itineraries )
 {
 }
 
@@ -99,7 +109,7 @@ void TER_PreferedEdgesHeuristic::SetConfiguration( unsigned refine, unsigned int
 PathResultPtr TER_PreferedEdgesHeuristic::ComputePath( const geometry::Point2f& from,
         const geometry::Point2f& to, TerrainRule_ABC& rule )
 {
-    TER_PreferedEdges heuristic( points_, rule, to );
+    TER_PreferedEdges heuristic( itineraries_, rule, to );
     return pathfinder_->ComputePath( from, to, heuristic );
 }
 
