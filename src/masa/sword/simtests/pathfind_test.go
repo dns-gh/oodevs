@@ -10,6 +10,7 @@ package simtests
 
 import (
 	"code.google.com/p/goprotobuf/proto"
+	"fmt"
 	. "launchpad.net/gocheck"
 	"masa/sword/swapi"
 	"masa/sword/swapi/phy"
@@ -17,6 +18,8 @@ import (
 	"masa/sword/swrun"
 	"masa/sword/swtest"
 	"math"
+	"strconv"
+	"strings"
 )
 
 const (
@@ -615,7 +618,7 @@ func (s *TestSuite) TestPathEdgesSplitOnElevationGrid(c *C) {
 	phydb := loadPhysicalData(c, "test")
 	from := swapi.Point{X: -15.9384, Y: 28.220}
 	to := swapi.Point{X: -15.71, Y: from.Y}
-	unit := CreateTestUnit(c, phydb, client, "VW Combi 4x4", from)
+	unit := CreateTestUnit(c, phydb, client, "VW Combi 4x4", "unit", from)
 
 	// Minimum slope with disabled slope computation
 	testPathEdgeSplit(c, client, unit, from, to, false, 14, 0, 0)
@@ -628,4 +631,148 @@ func (s *TestSuite) TestPathEdgesSplitOnElevationGrid(c *C) {
 	from.Y = 28.2603
 	to.Y = 28.2603
 	testPathEdgeSplit(c, client, unit, from, to, true, 19, 16.7, 17.6)
+}
+
+func DecBindItinerary(c *C, client *swapi.Client, unitId, itineraryId uint32) error {
+	script := `function TestFunction()
+		return tostring(DEC_Itinerary_Bind({{.itineraryId}}, {{.entityId}}))
+	end`
+	output, err := client.ExecTemplate(unitId, "TestFunction", script,
+		map[string]interface{}{
+			"itineraryId": itineraryId,
+			"entityId":    unitId,
+		})
+	if err != nil {
+		return err
+	}
+	if output != "true" {
+		return fmt.Errorf("could not bind itinerary")
+	}
+	return nil
+}
+
+func DecUnbindItinerary(c *C, client *swapi.Client, unitId, itineraryId uint32) error {
+	script := `function TestFunction()
+		return tostring(DEC_Itinerary_Unbind({{.itineraryId}}, {{.entityId}}))
+	end`
+	output, err := client.ExecTemplate(unitId, "TestFunction", script,
+		map[string]interface{}{
+			"itineraryId": itineraryId,
+			"entityId":    unitId,
+		})
+	if err != nil {
+		return err
+	}
+	if output != "true" {
+		return fmt.Errorf("could not bind itinerary")
+	}
+	return nil
+}
+
+func DecGetEntityItineraries(c *C, client *swapi.Client, brainId, unitId uint32) ([]uint32, error) {
+	script := `function TestFunction()
+		ids = DEC_Itinerary_GetEntityItineraries({{.entityId}})
+        result = ""
+        for i = 1, #ids do
+            result = result .. tostring(ids[i]) .. "\n"
+        end
+        return result
+	end`
+	output, err := client.ExecTemplate(brainId, "TestFunction", script,
+		map[string]interface{}{
+			"entityId": unitId,
+		})
+	if err != nil {
+		return nil, err
+	}
+	ids := []uint32{}
+	for _, line := range strings.Split(output, "\n") {
+		line = strings.TrimSpace(line)
+		if line == "" {
+			continue
+		}
+		id, err := strconv.ParseUint(line, 10, 32)
+		if err != nil {
+			return nil, err
+		}
+		ids = append(ids, uint32(id))
+	}
+	return ids, nil
+}
+
+func (s *TestSuite) TestItineraryBinding(c *C) {
+	opts := NewAdminOpts(ExGradXYTestEmpty)
+	sim, client := connectAndWaitModel(c, opts)
+	defer stopSimAndClient(c, sim, client)
+
+	phydb := loadPhysicalData(c, "test")
+	from := swapi.Point{X: -15.9384, Y: 28.220}
+	to := swapi.Point{X: -15.71, Y: from.Y}
+	to2 := swapi.Point{X: -15.71, Y: 22.24}
+	unit := CreateTestUnit(c, phydb, client, "VW Combi", "u1", from)
+	unit2 := CreateTestUnit(c, phydb, client, "VW Combi", "u2", from)
+	c.Assert(unit.Id, Lesser, unit2.Id)
+	itinerary1, err := client.CreatePathfind(unit.Id, from, to)
+	c.Assert(err, IsNil)
+	itinerary2, err := client.CreatePathfind(unit.Id, from, to2)
+	c.Assert(err, IsNil)
+	itinerary3, err := client.CreatePathfind(unit.Id, to, to2)
+	c.Assert(err, IsNil)
+
+	// Missing itinerary
+	err = DecBindItinerary(c, client, unit.Id, 12345)
+	c.Assert(err, NotNil)
+	err = DecUnbindItinerary(c, client, unit.Id, 12345)
+	c.Assert(err, NotNil)
+
+	bound, err := DecGetEntityItineraries(c, client, unit.Id, unit.Id)
+	c.Assert(err, IsNil)
+	c.Assert(len(bound), Equals, 0)
+
+	// Valid bindings, one duplicate
+	err = DecBindItinerary(c, client, unit.Id, itinerary1.Id)
+	c.Assert(err, IsNil)
+	err = DecBindItinerary(c, client, unit.Id, itinerary1.Id)
+	c.Assert(err, IsNil)
+	err = DecBindItinerary(c, client, unit.Id, itinerary2.Id)
+	c.Assert(err, IsNil)
+	err = DecBindItinerary(c, client, unit2.Id, itinerary1.Id)
+	c.Assert(err, IsNil)
+	err = DecBindItinerary(c, client, unit2.Id, itinerary3.Id)
+	c.Assert(err, IsNil)
+
+	bound, err = DecGetEntityItineraries(c, client, unit.Id, unit.Id)
+	c.Assert(err, IsNil)
+	c.Assert(bound, DeepEquals, []uint32{itinerary1.Id, itinerary2.Id})
+
+	bound, err = DecGetEntityItineraries(c, client, unit.Id, unit2.Id)
+	c.Assert(err, IsNil)
+	c.Assert(bound, DeepEquals, []uint32{itinerary1.Id, itinerary3.Id})
+
+	// Unbind only from one unit
+	err = DecUnbindItinerary(c, client, unit.Id, itinerary1.Id)
+	c.Assert(err, IsNil)
+
+	bound, err = DecGetEntityItineraries(c, client, unit.Id, unit.Id)
+	c.Assert(err, IsNil)
+	c.Assert(bound, DeepEquals, []uint32{itinerary2.Id})
+
+	bound, err = DecGetEntityItineraries(c, client, unit.Id, unit2.Id)
+	c.Assert(err, IsNil)
+	c.Assert(bound, DeepEquals, []uint32{itinerary1.Id, itinerary3.Id})
+
+	// Destroy one itinerary
+	err = client.DestroyPathfind(itinerary3.Id)
+	c.Assert(err, IsNil)
+	bound, err = DecGetEntityItineraries(c, client, unit.Id, unit2.Id)
+	c.Assert(err, IsNil)
+	c.Assert(bound, DeepEquals, []uint32{itinerary1.Id})
+
+	// Destroy bound unit, itinerary is still bound. We do not care too much
+	// about this case, you are unlikely to move destroyed units.
+	err = client.DeleteUnit(unit2.Id)
+	c.Assert(err, IsNil)
+	bound, err = DecGetEntityItineraries(c, client, unit.Id, unit2.Id)
+	c.Assert(err, IsNil)
+	c.Assert(bound, DeepEquals, []uint32{itinerary1.Id})
 }

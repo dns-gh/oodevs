@@ -11,10 +11,13 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_PathFunctions.h"
+#include "MIL_AgentServer.h"
+#include "PathfindComputer.h"
 #include "Decision/Brain.h"
-#include "Decision/DEC_PathType.h"
 #include "Decision/DEC_Agent_Path.h"
 #include "Decision/DEC_Decision_ABC.h"
+#include "Decision/DEC_Itinerary.h"
+#include "Decision/DEC_PathType.h"
 #include "Entities/Agents/Actions/Moving/PHY_RoleAction_Moving.h"
 #include "Entities/Agents/Actions/Loading/PHY_RoleAction_Loading.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
@@ -41,6 +44,38 @@
 #include <geometry/Types.h>
 #include <boost/smart_ptr/make_shared.hpp>
 
+namespace
+{
+
+boost::shared_ptr< DEC_Itinerary > GetItineraryById( uint32_t id )
+{
+    auto& pathfinder = MIL_AgentServer::GetWorkspace().GetPathfindComputer();
+    boost::shared_ptr< DEC_Itinerary > itinerary;
+    if( auto path = pathfinder.GetPathfind( id ) )
+        itinerary = boost::make_shared< DEC_Itinerary >( *path );
+    return itinerary;
+}
+
+bool BindItineraryToEntity( uint32_t pathId, uint32_t entityId )
+{
+    auto& pathfinder = MIL_AgentServer::GetWorkspace().GetPathfindComputer();
+    return pathfinder.BindPathToEntity( pathId, entityId );
+}
+
+bool UnbindItineraryFromEntity( uint32_t pathId, uint32_t entityId )
+{
+    auto& pathfinder = MIL_AgentServer::GetWorkspace().GetPathfindComputer();
+    return pathfinder.UnbindPathFromEntity( pathId, entityId );
+}
+
+std::vector< uint32_t > GetEntityItineraries( uint32_t entityId )
+{
+    auto& pathfinder = MIL_AgentServer::GetWorkspace().GetPathfindComputer();
+    return pathfinder.GetEntityPaths( entityId );
+}
+
+}  // namespace
+
 void DEC_PathFunctions::Register( sword::Brain& brain )
 {
     brain.RegisterFunction( "_DEC_CreerItineraire", &DEC_PathFunctions::CreatePathToPoint );
@@ -64,6 +99,11 @@ void DEC_PathFunctions::Register( sword::Brain& brain )
     brain.RegisterFunction( "DEC_GetNextRemovableObjectOnPath", &DEC_PathFunctions::GetNextRemovableObjectOnPath );
     brain.RegisterFunction( "DEC_GetClosestPath", &DEC_PathFunctions::GetClosestPath );
 
+    // Itineraries
+    brain.RegisterFunction( "DEC_Itinerary_GetById", &GetItineraryById );
+    brain.RegisterFunction( "DEC_Itinerary_Bind", &BindItineraryToEntity );
+    brain.RegisterFunction( "DEC_Itinerary_Unbind", &UnbindItineraryFromEntity );
+    brain.RegisterFunction( "DEC_Itinerary_GetEntityItineraries", &GetEntityItineraries );
 }
 
 // -----------------------------------------------------------------------------

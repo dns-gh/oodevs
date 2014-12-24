@@ -36,8 +36,6 @@ class DEC_PathFunctions
 public:
     static void Register( sword::Brain& brain );
 
-    //! @name Functions
-    //@{
     static boost::shared_ptr< TER_Path_ABC > CreatePathToPointBM( DEC_Decision_ABC* callerAgent, boost::shared_ptr< MT_Vector2D > end, int pathType );
     static boost::shared_ptr< TER_Path_ABC > CreatePathToPoint( DEC_Decision_ABC* callerAgent, MT_Vector2D* pEnd, int pathType );
     static boost::shared_ptr< TER_Path_ABC > CreatePathToPointList( DEC_Decision_ABC* callerAgent, std::vector< boost::shared_ptr< MT_Vector2D > > listPt, int pathType );
@@ -59,7 +57,6 @@ public:
                                                                            const boost::shared_ptr< MT_Vector2D >& begin,
                                                                            const boost::shared_ptr< MT_Vector2D >& end );
     static boost::shared_ptr< DEC_Knowledge_Object > GetCurrentObjectCollision( DEC_Decision_ABC* callerAgent );
-     //@}
 };
 
 #endif // __DEC_PathFunctions_h_

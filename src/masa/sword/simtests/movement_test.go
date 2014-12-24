@@ -26,7 +26,7 @@ const (
 )
 
 func CreateTestUnit(c *C, phydb *phy.PhysicalData, client *swapi.Client,
-	unitType string, pos swapi.Point) *swapi.Unit {
+	unitType, name string, pos swapi.Point) *swapi.Unit {
 
 	party := &swrun.Party{
 		Name: "party1",
@@ -39,7 +39,7 @@ func CreateTestUnit(c *C, phydb *phy.PhysicalData, client *swapi.Client,
 						Type: "VW Combi Rally",
 						Units: []*swrun.Unit{
 							&swrun.Unit{
-								Name: "unit",
+								Name: name,
 								Type: unitType,
 								Pos:  pos,
 							},
@@ -60,7 +60,7 @@ func CreateTestUnit(c *C, phydb *phy.PhysicalData, client *swapi.Client,
 func CreateCombiVW(c *C, phydb *phy.PhysicalData, client *swapi.Client,
 	pos swapi.Point) *swapi.Unit {
 
-	return CreateTestUnit(c, phydb, client, "VW Combi", pos)
+	return CreateTestUnit(c, phydb, client, "VW Combi", "VW Combi", pos)
 }
 
 func checkSpeed(c *C, phydb *phy.PhysicalData, client *swapi.Client, from,
