@@ -177,14 +177,22 @@ integration.getPositionsAroundObject = function( object, distance )
     return result
 end
 
---- Returns all the object knowledges inside the circle defined by
---- the provided center and radius which type belongs to the list
+--- Returns all object knowledges of a given type inside a circle around the given position
 -- @param position Simulation position, center of the circle
 -- @param distance Float, radius of the circle (in meters)
 -- @param objectTypeList List of strings
 -- @return List of object knowledges
 integration.getKnowledgesObjectsInCircle = function( position, distance, objectTypeList )
     return _DEC_Knowledges_ObjectsInCircle( myself, position, distance, objectTypeList, false )
+end
+
+--- Returns all object knowledges of a given type inside a circle around the caller crowd position
+--- This method must be called by a crowd
+-- @param radius Float, radius of the circle (in meters)
+-- @param objectTypeList List of strings
+-- @return List of object knowledges
+integration.objectKnowledgesInCircle( radius, objectTypeList )
+    return _DEC_ObjectKnowledgesInCircle( myself, radius, objectTypeList )
 end
 
 --- Returns the given object's localisation
@@ -444,7 +452,6 @@ integration.distributeObject = masalife.brain.integration.startStopAction(
             object.actionDistribute = DEC__StopAction( object.actionDistribute )
         end,
     } )
-
 
 ------------------------------------------------------------------
 --- DECLARATIONS ENSURING BACKWARDS COMPATIBILITY
