@@ -191,7 +191,7 @@ end
 -- @param radius Float, radius of the circle (in meters)
 -- @param objectTypeList List of strings
 -- @return List of object knowledges
-integration.objectKnowledgesInCircle( radius, objectTypeList )
+integration.objectKnowledgesInCircle = function( radius, objectTypeList )
     return _DEC_ObjectKnowledgesInCircle( myself, radius, objectTypeList )
 end
 
