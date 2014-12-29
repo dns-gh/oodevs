@@ -512,6 +512,6 @@ end
 -- <ul> <li> 1 : The area has no intersection with the current area of responsibility
 -- <li> 2 : The split is too big </li>
 -- <li> 3 : The splitting was successful </li> </ul> </ul>
-integration.recursiveSplitLocalizationSurface( localization, averageArea )
+integration.recursiveSplitLocalizationSurface = function( localization, averageArea )
     return _DEC_Geometry_RecursiveSplitLocalisationSurface( myself, localization, averageArea )
 end
