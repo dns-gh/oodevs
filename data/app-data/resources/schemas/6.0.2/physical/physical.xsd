@@ -63,6 +63,7 @@
         <xs:element name="mission-sheets-xsl" type="FileReference"/>
         <xs:element name="stages" type="FileReference"/>
         <xs:element name="languages" type="FileReference"/>
+        <xs:element name="physical-extensions" type="FileReference"/>
         <xs:element name="locales-directory" type="PathReference"/>
       </xs:all>
       <xs:attribute name="model-version" type="T_Version"/>
