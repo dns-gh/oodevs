@@ -529,7 +529,7 @@ bool PHY_Human::IsSeriouslyPhysicallyWounded() const
 // -----------------------------------------------------------------------------
 bool PHY_Human::IsUsable() const
 {
-    return !IsDead() && nLocation_ != eHumanLocation_Medical;
+    return !IsDead() && nLocation_ == eHumanLocation_Battlefield;
 }
 
 // -----------------------------------------------------------------------------
