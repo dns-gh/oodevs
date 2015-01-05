@@ -175,6 +175,9 @@ void RegisterMethods( sword::Brain& brain )
     brain.RegisterMethod( "GetType", &DEC_AutomateDecision::GetDIAType );
     brain.RegisterMethod( "GetType", &TER_PathPoint::GetDIAType );
 
+    // DEC_Itinerary
+    brain.RegisterMethod( "DEC_Itinerary_GetId", &DEC_Itinerary::GetId );
+
     // MIL_MissionParameterFactory
     brain.RegisterFunction( "DEC_AssignMissionPionParameter", &MIL_MissionParameterFactory::SetPawnParameter );
     brain.RegisterFunction( "DEC_AssignMissionAutomatParameter", &MIL_MissionParameterFactory::SetAutomatParameter );
@@ -207,9 +210,6 @@ void RegisterMethods( sword::Brain& brain )
     brain.RegisterFunction( "DEC_AssignMissionListParameter", &MIL_MissionParameterFactory::AssignMissionListParameter );
     brain.RegisterFunction( "_DEC_AssignMissionCrowdParameter", &MIL_MissionParameterFactory::SetCrowdKnowledgeParameter );
     brain.RegisterFunction<boost::shared_ptr<MIL_MissionParameter_ABC>, DEC_Decision_ABC*, int>( "_DEC_AssignMissionCrowdListParameter", &MIL_MissionParameterFactory::CreatePopulationKnowledge );
-
-    // DEC_Itinerary
-    brain.RegisterMethod( "DEC_Itinerary_GetId", &DEC_Itinerary::GetId );
 
     MIL_FragOrder::Register( brain );
 }
