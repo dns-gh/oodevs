@@ -221,4 +221,5 @@
     <upgrade schema="schemas/5.5.2/physical/Reports.xsd" apply="schemas/6.0.0/xsl/reports_5.5.2-6.0.0.xsl"/>
   </migration>
   <migration from="6.0.0" to="6.0.1"/>
+  <migration from="6.0.1" to="6.0.2"/>
 </migrations>
