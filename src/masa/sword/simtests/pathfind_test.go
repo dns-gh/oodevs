@@ -713,7 +713,7 @@ func (s *TestSuite) TestPathEdgesSplitOnElevationGrid(c *C) {
 func DecBindItinerary(c *C, client *swapi.Client, unitId, itineraryId uint32) error {
 	script := `function TestFunction()
         local entity = DEC_GetUnitById({{.entityId}})
-		return tostring(DEC_Itinerary_Bind({{.itineraryId}}, entity))
+		return tostring(integration.bindItinerary({{.itineraryId}}, entity))
 	end`
 	output, err := client.ExecTemplate(unitId, "TestFunction", script,
 		map[string]interface{}{
@@ -732,7 +732,7 @@ func DecBindItinerary(c *C, client *swapi.Client, unitId, itineraryId uint32) er
 func DecUnbindItinerary(c *C, client *swapi.Client, unitId, itineraryId uint32) error {
 	script := `function TestFunction()
         local entity = DEC_GetUnitById({{.entityId}})
-		return tostring(DEC_Itinerary_Unbind({{.itineraryId}}, entity))
+		return tostring(integration.unbindItinerary({{.itineraryId}}, entity))
 	end`
 	output, err := client.ExecTemplate(unitId, "TestFunction", script,
 		map[string]interface{}{
