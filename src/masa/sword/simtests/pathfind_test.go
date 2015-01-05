@@ -712,7 +712,8 @@ func (s *TestSuite) TestPathEdgesSplitOnElevationGrid(c *C) {
 
 func DecBindItinerary(c *C, client *swapi.Client, unitId, itineraryId uint32) error {
 	script := `function TestFunction()
-		return tostring(DEC_Itinerary_Bind({{.itineraryId}}, {{.entityId}}))
+        local entity = DEC_GetUnitById({{.entityId}})
+		return tostring(DEC_Itinerary_Bind({{.itineraryId}}, entity))
 	end`
 	output, err := client.ExecTemplate(unitId, "TestFunction", script,
 		map[string]interface{}{
@@ -730,7 +731,8 @@ func DecBindItinerary(c *C, client *swapi.Client, unitId, itineraryId uint32) er
 
 func DecUnbindItinerary(c *C, client *swapi.Client, unitId, itineraryId uint32) error {
 	script := `function TestFunction()
-		return tostring(DEC_Itinerary_Unbind({{.itineraryId}}, {{.entityId}}))
+        local entity = DEC_GetUnitById({{.entityId}})
+		return tostring(DEC_Itinerary_Unbind({{.itineraryId}}, entity))
 	end`
 	output, err := client.ExecTemplate(unitId, "TestFunction", script,
 		map[string]interface{}{
@@ -748,7 +750,8 @@ func DecUnbindItinerary(c *C, client *swapi.Client, unitId, itineraryId uint32) 
 
 func DecGetEntityItineraries(c *C, client *swapi.Client, brainId, unitId uint32) ([]uint32, error) {
 	script := `function TestFunction()
-        local ids = DEC_Itinerary_GetEntityItineraries({{.entityId}})
+        local entity = DEC_GetUnitById({{.entityId}})
+        local ids = DEC_Itinerary_GetEntityItineraries(entity)
         local result = ""
         for i = 1, #ids do
             result = result .. tostring(ids[i]) .. "\n"

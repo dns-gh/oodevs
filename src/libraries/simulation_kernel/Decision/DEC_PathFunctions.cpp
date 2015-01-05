@@ -56,22 +56,28 @@ boost::shared_ptr< DEC_Itinerary > GetItineraryById( uint32_t id )
     return itinerary;
 }
 
-bool BindItineraryToEntity( uint32_t pathId, uint32_t entityId )
+bool BindItineraryToEntity( uint32_t pathId, const DEC_Decision_ABC* entity )
 {
+    if( !entity )
+        return false;
     auto& pathfinder = MIL_AgentServer::GetWorkspace().GetPathfindComputer();
-    return pathfinder.BindPathToEntity( pathId, entityId );
+    return pathfinder.BindPathToEntity( pathId, entity->GetID() );
 }
 
-bool UnbindItineraryFromEntity( uint32_t pathId, uint32_t entityId )
+bool UnbindItineraryFromEntity( uint32_t pathId, const DEC_Decision_ABC* entity )
 {
+    if( !entity )
+        return false;
     auto& pathfinder = MIL_AgentServer::GetWorkspace().GetPathfindComputer();
-    return pathfinder.UnbindPathFromEntity( pathId, entityId );
+    return pathfinder.UnbindPathFromEntity( pathId, entity->GetID() );
 }
 
-std::vector< uint32_t > GetEntityItineraries( uint32_t entityId )
+std::vector< uint32_t > GetEntityItineraries( const DEC_Decision_ABC* entity )
 {
+    if( !entity )
+        return std::vector< uint32_t >();
     auto& pathfinder = MIL_AgentServer::GetWorkspace().GetPathfindComputer();
-    return pathfinder.GetEntityPaths( entityId );
+    return pathfinder.GetEntityPaths( entity->GetID() );
 }
 
 }  // namespace
