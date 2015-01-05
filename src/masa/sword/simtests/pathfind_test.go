@@ -848,11 +848,11 @@ func (s *TestSuite) TestItineraryBinding(c *C) {
 	c.Assert(err, IsNil)
 	c.Assert(bound, DeepEquals, []uint32{itinerary1.Id})
 
-	// Destroy bound unit, itinerary is still bound. We do not care too much
+	// Destroy bound unit, itinerary appears unbound. We do not care too much
 	// about this case, you are unlikely to move destroyed units.
 	err = client.DeleteUnit(unit2.Id)
 	c.Assert(err, IsNil)
 	bound, err = DecGetEntityItineraries(c, client, unit.Id, unit2.Id)
 	c.Assert(err, IsNil)
-	c.Assert(bound, DeepEquals, []uint32{itinerary1.Id})
+	c.Assert(bound, DeepEquals, []uint32{})
 }
