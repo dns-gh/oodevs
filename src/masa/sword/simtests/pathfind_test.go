@@ -395,8 +395,8 @@ func getMoveAlongItinerary(c *C, phydb *phy.PhysicalData, client *swapi.Client,
 		pf, err := client.CreatePathfind(unit.Id, p...)
 		c.Assert(err, IsNil)
 		itinerary := []swapi.Point{}
-		for _, p := range pf.Result {
-			itinerary = append(itinerary, p.Point)
+		for _, point := range pf.Result {
+			itinerary = append(itinerary, point.Point)
 		}
 		itineraries = append(itineraries, itinerary)
 		if i > 0 {
@@ -466,14 +466,13 @@ type MatchedDistance struct {
 }
 
 // Given a unit actual path and itineraries passed as argument,
-// getMatchedRatios returns a sequence [i1:r1, i2:r2, ... i3:rn] where each rn
+// getMatchedRatios returns a sequence [i1:r1, i2:r2, ... in:rn] where each rn
 // represents a slice of itinerary overlapped by path, in percents, and in is
 // the 1-based itinerary identifier, 0 being reserved for unmatched segments.
-// The value is positive if matched, negative otherwise.  For instance, if the
-// itinerary is matched by the path starting at its first quarter and left at
-// the beginning of its last quarter, the result is:
+// For instance, if the itinerary is matched by the path starting at its first
+// quarter and left at the beginning of its last quarter, the result is:
 //
-//   0:-25%, 1:50%, 0:-25%
+//   0:25%, 1:50%, 0:25%
 //
 func getMatchedRatio(path []swapi.Point, itineraries [][]swapi.Point) string {
 	distances := []*MatchedDistance{}
@@ -494,10 +493,7 @@ func getMatchedRatio(path []swapi.Point, itineraries [][]swapi.Point) string {
 			continue
 		}
 		total += d
-		id, matched := edges[MakeKnownEdge(p1, p2)]
-		if !matched {
-			d = -d
-		}
+		id := edges[MakeKnownEdge(p1, p2)]
 		if len(distances) == 0 ||
 			id != distances[len(distances)-1].Id {
 			distances = append(distances, &MatchedDistance{Id: id, Distance: d})
@@ -558,7 +554,7 @@ func (s *TestSuite) TestMoveAlongItineraryNoBacktrack(c *C) {
 		}
 	}
 	ratios := getMatchedRatio(points, itineraries)
-	c.Assert(ratios, Equals, "0:-32%, 1:39%, 0:-23%")
+	c.Assert(ratios, Equals, "0:32%, 1:39%, 0:23%")
 }
 
 func testMoveAlongHorseshoe(c *C, from, to swapi.Point, expectedRatios string) {
@@ -584,7 +580,7 @@ func (s *TestSuite) TestMoveAlongItineraryInsideHorseshoe(c *C) {
 	testMoveAlongHorseshoe(c,
 		swapi.Point{X: -0.3680, Y: 47.1978},
 		swapi.Point{X: -0.3241, Y: 47.1666},
-		"0:-100%")
+		"0:100%")
 }
 
 func (s *TestSuite) TestMoveAlongItineraryAboveHorseshoe(c *C) {
@@ -593,7 +589,7 @@ func (s *TestSuite) TestMoveAlongItineraryAboveHorseshoe(c *C) {
 	testMoveAlongHorseshoe(c,
 		swapi.Point{X: -0.4539, Y: 47.2720},
 		swapi.Point{X: -0.1441, Y: 47.2920},
-		"0:-100%")
+		"0:100%")
 }
 
 func (s *TestSuite) TestMoveAlongItineraryOnHorseshoe(c *C) {
@@ -605,7 +601,7 @@ func (s *TestSuite) TestMoveAlongItineraryOnHorseshoe(c *C) {
 	testMoveAlongHorseshoe(c,
 		swapi.Point{X: -0.5126, Y: 47.2098},
 		swapi.Point{X: -0.2476, Y: 47.1829},
-		"0:-24%, 1:1%, 0:-1%, 1:32%, 0:-4%, 1:25%, 0:-4%")
+		"0:24%, 1:1%, 0:1%, 1:32%, 0:4%, 1:25%, 0:4%")
 }
 
 func testMoveAlongMultipleItineraries(c *C, from, to swapi.Point, expectedRatios string) {
@@ -639,7 +635,7 @@ func (s *TestSuite) TestMoveAlongItinerariesMultipleChained(c *C) {
 	testMoveAlongMultipleItineraries(c,
 		swapi.Point{X: -0.3774, Y: 47.3517},
 		swapi.Point{X: -0.3411, Y: 47.4746},
-		"0:-7%, 1:11%, 0:-4%, 1:10%, 0:-3%, 2:29%, 0:-2%, 2:13%, 0:-4%, 2:2%, 0:-5%")
+		"0:7%, 1:11%, 0:4%, 1:10%, 0:3%, 2:29%, 0:2%, 2:13%, 0:4%, 2:2%, 0:5%")
 }
 
 func (s *TestSuite) TestMoveAlongItinerariesMultipleChoice1(c *C) {
@@ -648,7 +644,7 @@ func (s *TestSuite) TestMoveAlongItinerariesMultipleChoice1(c *C) {
 	testMoveAlongMultipleItineraries(c,
 		swapi.Point{X: -0.3207, Y: 47.4001},
 		swapi.Point{X: -0.3411, Y: 47.4746},
-		"0:-5%, 2:43%, 0:-1%, 2:2%, 0:-3%, 2:20%, 0:-1%, 2:1%, 0:-6%, 2:3%, 0:-8%")
+		"0:5%, 2:43%, 0:1%, 2:2%, 0:3%, 2:20%, 0:1%, 2:1%, 0:6%, 2:3%, 0:8%")
 }
 
 func (s *TestSuite) TestMoveAlongItinerariesMultipleChoice2(c *C) {
@@ -657,8 +653,8 @@ func (s *TestSuite) TestMoveAlongItinerariesMultipleChoice2(c *C) {
 	testMoveAlongMultipleItineraries(c,
 		swapi.Point{X: -0.3146, Y: 47.4095},
 		swapi.Point{X: -0.3774, Y: 47.3517},
-		"0:-8%, 1:6%, 0:-1%, 1:18%, 0:-22%, 1:4%, 0:-1%, 1:3%, 0:-2%, 1:3%, "+
-			"0:-1%, 1:3%, 0:-19%")
+		"0:8%, 1:6%, 0:1%, 1:18%, 0:22%, 1:4%, 0:1%, 1:3%, 0:2%, 1:3%, "+
+			"0:1%, 1:3%, 0:19%")
 }
 
 func testPathEdgeSplit(c *C, client *swapi.Client, unit *swapi.Unit,
