@@ -365,7 +365,7 @@ double PHY_HumansComposante::GetOperationalState() const
         return 1;
     double state = 0;
     for( auto it = humans_.begin(); it != humans_.end(); ++it )
-        if( !(*it)->IsSeriouslyPhysicallyWounded() && !(*it)->IsDead() )
+        if( !(*it)->IsSeriouslyPhysicallyWounded() && (*it)->IsUsable() )
             ++state;
     return state / humans_.size();
 }
@@ -516,7 +516,7 @@ bool PHY_HumansComposante::CanBeUsed() const
 {
     for( auto it = humans_.begin(); it != humans_.end(); ++it )
     {
-        if( (*it)->IsDead() || (*it)->IsSeriouslyPhysicallyWounded() )
+        if( (*it)->IsSeriouslyPhysicallyWounded() || !(*it)->IsUsable() )
             continue;
         else
             return true;
