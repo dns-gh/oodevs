@@ -70,4 +70,6 @@ namespace directia
     void ReleasedByDIA( PHY_Action_ABC* ) {}
     void UsedByDIA( PHY_ResourceNetworkType* ) {}
     void ReleasedByDIA( PHY_ResourceNetworkType* ) {}
+    void UsedByDIA( DEC_Itinerary* ) {}
+    void ReleasedByDIA( DEC_Itinerary* ) {}
 }

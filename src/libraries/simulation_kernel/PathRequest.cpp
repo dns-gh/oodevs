@@ -187,6 +187,16 @@ uint32_t PathRequest::GetUnitId() const
     return request_.unit().id();
 }
 
+std::unique_ptr< sword::Pathfind > PathRequest::GetPathfind() const
+{
+    std::unique_ptr< sword::Pathfind > path( new sword::Pathfind() );
+    path->set_id( id_ );
+    *path->mutable_request() = request_;
+    if( path_ )
+        *path->mutable_result() = *path_;
+    return path;
+}
+
 template< typename Archive >
 void PathRequest::load( Archive& ar, const unsigned int /*version*/ )
 {

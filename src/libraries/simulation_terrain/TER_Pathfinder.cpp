@@ -138,6 +138,13 @@ bool TER_PathFuture::IsCanceled() const
     return canceled_;
 }
 
+struct TER_Pathfinder::Request
+{
+    boost::shared_ptr< TER_PathfindRequest > request;
+    boost::shared_ptr< TER_PathFuture > future;
+    size_t id;
+};
+
 // -----------------------------------------------------------------------------
 // Name: TER_Pathfinder constructor
 // Created: NLD 2003-08-14
@@ -205,21 +212,24 @@ TER_Pathfinder::~TER_Pathfinder()
 // Created: NLD 2003-08-14
 // -----------------------------------------------------------------------------
 boost::shared_ptr< TER_PathFuture > TER_Pathfinder::StartCompute(
-        std::size_t callerId,
-        const std::vector< boost::shared_ptr< TER_PathSection > > sections,
-        const sword::Pathfind& pathfind )
+        const boost::shared_ptr< TER_PathfindRequest >& request )
 {
-    // $$$$$ PMD: storing the callback in the request is not elegant but harmless
-    // for now as the request object is private to the pathfinder. Make a local
-    // struct later.
     const auto future = boost::make_shared< TER_PathFuture >();
-    const auto p = boost::make_shared< TER_PathfindRequest >(
-            queryId_++, callerId, sections, pathfind, future );
+    if( !request )
+    {
+        future->Cancel();
+        return future;
+    }
+    const auto rq = boost::make_shared< Request >();
+    rq->id = queryId_++;
+    rq->future = future;
+    rq->request = request;
+
     boost::mutex::scoped_lock locker( mutex_ );
-    if( p->GetLength() > rDistanceThreshold_ )
-        longRequests_.push_back( p );
+    if( rq->request->GetLength() > rDistanceThreshold_ )
+        longRequests_.push_back( rq );
     else
-        shortRequests_.push_back( p );
+        shortRequests_.push_back( rq );
     condition_.notify_all();
     return future;
 }
@@ -277,9 +287,9 @@ TER_Pathfinder::T_Requests& TER_Pathfinder::GetRequests()
 // Name: TER_Pathfinder::GetMessage
 // Created: AGE 2005-02-25
 // -----------------------------------------------------------------------------
-boost::shared_ptr< TER_PathfindRequest > TER_Pathfinder::GetMessage( unsigned int nThread )
+boost::shared_ptr< TER_Pathfinder::Request > TER_Pathfinder::GetMessage( unsigned int nThread )
 {
-    boost::shared_ptr< TER_PathfindRequest > pRequest;
+    boost::shared_ptr< Request > pRequest;
     boost::mutex::scoped_lock locker( mutex_ );
     if( ( nThread % 2 ) )
     {
@@ -308,38 +318,40 @@ boost::shared_ptr< TER_PathfindRequest > TER_Pathfinder::GetMessage( unsigned in
     return pRequest;
 }
 
-void TER_Pathfinder::ProcessRequest( TER_PathFinderThread& data, TER_PathfindRequest& rq )
+void TER_Pathfinder::ProcessRequest( TER_PathFinderThread& data, Request& request )
 {
     const unsigned int deadline = nMaxComputationDuration_ == std::numeric_limits< unsigned int >::max()
         ? std::numeric_limits< unsigned int >::max()
         : static_cast< unsigned int >( std::time( 0 ) ) + nMaxComputationDuration_;
     double duration = 0;
+    const auto rq = request.request;
+    const auto future = request.future;
     try
     {
         data.ProcessDynamicData();
-        const auto pathfinder = data.GetPathfinder( !rq.IgnoreDynamicObjects() );
+        const auto pathfinder = data.GetPathfinder( !rq->IgnoreDynamicObjects() );
         boost::shared_ptr< TER_Pathfinder_ABC > wrapper =
             boost::make_shared< PathfindDumper >(
-                rq.GetCallerId(), dumpDir_, dumpFilter_, pathfinder );
+                rq->GetCallerId(), dumpDir_, dumpFilter_, pathfinder );
         MT_Profiler profiler;
         profiler.Start();
-        if( rq.IsItinerary() )
-            wrapper = boost::make_shared< TER_PreferedEdgesHeuristic >( wrapper, rq.GetPathfind() );
-        const auto res = TER_PathComputer().Execute( rq.GetQueryId(), rq.GetCallerId(),
-                rq.GetSections(), *wrapper, *rq.GetFuture(), deadline, debugPath_ );
-        rq.GetFuture()->Set( res );
+        if( !rq->GetItineraries().empty() )
+            wrapper = boost::make_shared< TER_PreferedEdgesHeuristic >( wrapper, rq->GetItineraries() );
+        const auto res = TER_PathComputer().Execute( request.id, rq->GetCallerId(),
+                rq->GetSections(), *wrapper, *future, deadline, debugPath_ );
+        future->Set( res );
         duration = profiler.Stop();
     }
     catch( const std::exception& e )
     {
         MT_LOG_ERROR_MSG( "Exception caught in pathfinder thread : "
                 << tools::GetExceptionMsg( e ) );
-        rq.GetFuture()->Cancel();
+        future->Cancel();
     }
     catch( ... )
     {
         MT_LOG_ERROR_MSG( "Unknown exception caught in pathfinder thread" );
-        rq.GetFuture()->Cancel();
+        future->Cancel();
     }
 
     boost::mutex::scoped_lock locker( pathfindTimeMutex_ );
@@ -370,7 +382,7 @@ void TER_Pathfinder::UpdateInSimulationThread()
     while( !stopped_ && ( ! shortRequests_.empty() || ! longRequests_.empty() ) )
     {
         T_Requests& requests = GetRequests();
-        boost::shared_ptr< TER_PathfindRequest > pRequest = requests.front();
+        boost::shared_ptr< Request > pRequest = requests.front();
         requests.pop_front();
         ProcessRequest( *pathfindData_.front(), *pRequest );
         ++treatedRequests_;

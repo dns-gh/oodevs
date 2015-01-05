@@ -12,15 +12,11 @@
 #include "TER_PathSection.h"
 
 TER_PathfindRequest::TER_PathfindRequest(
-        std::size_t queryId, std::size_t callerId,
-        const std::vector< boost::shared_ptr< TER_PathSection > > sections,
-        const sword::Pathfind& pathfind,
-        const boost::shared_ptr< TER_PathFuture >& future )
-    : queryId_( queryId )
-    , callerId_( callerId )
+        std::size_t callerId,
+        const std::vector< boost::shared_ptr< TER_PathSection > > sections )
+    : callerId_( callerId )
     , sections_( sections )
-    , pathfind_( pathfind )
-    , future_( future )
+    , ignoreDynamicObjects_( false )
 {
     // NOTHING
 }
@@ -30,24 +26,25 @@ TER_PathfindRequest::~TER_PathfindRequest()
     // NOTHING
 }
 
+void TER_PathfindRequest::SetIgnoreDynamicObjects( bool ignore )
+{
+    ignoreDynamicObjects_ = ignore;
+}
+
 bool TER_PathfindRequest::IgnoreDynamicObjects() const
 {
-    return pathfind_.request().ignore_dynamic_objects();
+    return ignoreDynamicObjects_;
 }
 
-const sword::Pathfind& TER_PathfindRequest::GetPathfind() const
+void TER_PathfindRequest::AddItinerary( const TER_PathfindRequest::Itinerary& itinerary )
 {
-    return pathfind_;
+    if( itinerary.size() > 1 )
+        itineraries_.push_back( itinerary );
 }
 
-boost::shared_ptr< TER_PathFuture > TER_PathfindRequest::GetFuture()
+const std::vector< TER_PathfindRequest::Itinerary >& TER_PathfindRequest::GetItineraries() const
 {
-    return future_;
-}
-
-bool TER_PathfindRequest::IsItinerary() const
-{
-    return pathfind_.has_result();
+    return itineraries_;
 }
 
 const std::vector< boost::shared_ptr< TER_PathSection > >& TER_PathfindRequest::GetSections()
@@ -66,9 +63,4 @@ double TER_PathfindRequest::GetLength() const
 std::size_t TER_PathfindRequest::GetCallerId() const
 {
     return callerId_;
-}
-
-std::size_t TER_PathfindRequest::GetQueryId() const
-{
-    return queryId_;
 }

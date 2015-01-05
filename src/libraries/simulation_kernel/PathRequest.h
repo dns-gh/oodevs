@@ -15,6 +15,13 @@
 class ActionManager;
 class TER_PathFuture;
 
+namespace sword
+{
+    class Pathfind;
+    class PathfindRequest;
+    class PathfindResult;
+}
+
 // =============================================================================
 /** @class  PathRequest
     @brief  Path request
@@ -51,6 +58,7 @@ public:
     void SendStateToNewClient();
     bool IsPublished() const;
     uint32_t GetUnitId() const;
+    std::unique_ptr< sword::Pathfind > GetPathfind() const;
     //@}
 
 private:

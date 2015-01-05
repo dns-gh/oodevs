@@ -20,6 +20,7 @@
 #include "Decision/DEC_EntityFunctions.h"
 #include "Decision/DEC_FireFunctions.h"
 #include "Decision/DEC_GeometryFunctions.h"
+#include "Decision/DEC_Itinerary.h"
 #include "Decision/DEC_KnowledgeAgentFunctions.h"
 #include "Decision/DEC_KnowledgeFunctions.h"
 #include "Decision/DEC_KnowledgeObjectFunctions.h"
@@ -173,6 +174,9 @@ void RegisterMethods( sword::Brain& brain )
     brain.RegisterMethod( "GetType", &DEC_RolePion_Decision::GetDIAType );
     brain.RegisterMethod( "GetType", &DEC_AutomateDecision::GetDIAType );
     brain.RegisterMethod( "GetType", &TER_PathPoint::GetDIAType );
+
+    // DEC_Itinerary
+    brain.RegisterMethod( "DEC_Itinerary_GetId", &DEC_Itinerary::GetId );
 
     // MIL_MissionParameterFactory
     brain.RegisterFunction( "DEC_AssignMissionPionParameter", &MIL_MissionParameterFactory::SetPawnParameter );

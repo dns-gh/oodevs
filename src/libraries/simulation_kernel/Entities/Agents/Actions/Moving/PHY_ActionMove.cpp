@@ -195,7 +195,7 @@ void PHY_ActionMove::CreateNewPath()
     nextWaypoints.insert( nextWaypoints.begin(), pion_.GetRole< PHY_RoleInterface_Location >().GetPosition() );
     const DEC_PathType& pathType = pMainPath_->GetPathType();
     const auto pNewPath = boost::make_shared< DEC_Agent_Path >( pion_, nextWaypoints, pathType );
-    pNewPath->StartCompute( sword::Pathfind() );
+    pNewPath->StartCompute();
     role_.MoveCanceled( pMainPath_ );
     pMainPath_->Cancel();
     pMainPath_ = pNewPath;

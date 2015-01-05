@@ -10,11 +10,13 @@
 #ifndef __PathfindComputer_h_
 #define __PathfindComputer_h_
 
+#include <geometry/Types.h>
 #include <boost/noncopyable.hpp>
 #include <boost/optional/optional_fwd.hpp>
 
 namespace sword
 {
+    class Pathfind;
     class PathfindRequest;
     class MagicAction;
 }
@@ -25,6 +27,8 @@ class MIL_Population;
 class PathRequest;
 class PHY_ComposanteTypePion;
 class TER_Pathfinder;
+class TER_PathFuture;
+class TER_PathfindRequest;
 class TER_PathSection;
 
 // =============================================================================
@@ -55,6 +59,20 @@ public:
     void OnPathfindRequest           ( const sword::PathfindRequest& message, unsigned int nCtx, unsigned int clientId );
     void DeletePathfindsFromUnit     ( uint32_t unitId );
 
+    // Forward path computation to TER_Pathfinder.
+    boost::shared_ptr< TER_PathFuture > StartCompute(
+            const boost::shared_ptr< TER_PathfindRequest >& request );
+
+    // Returns the pathfind request and optionally its result if it has been
+    // computed for itinerary "id", 0 otherwise.
+    std::unique_ptr< sword::Pathfind > GetPathfind( uint32_t id ) const;
+    // Binds path to entity, returns true if the path exists, false otherwise.
+    bool BindPathToEntity( uint32_t pathId, uint32_t entityId );
+    // Returns true if the path was successfully unbound from the entity.
+    bool UnbindPathFromEntity( uint32_t pathId, uint32_t entityId );
+    // Returns the list of path bound to specified entity.
+    std::vector< uint32_t > GetEntityPaths( uint32_t entityId ) const;
+
     //! @name Serialization
     //@{
     BOOST_SERIALIZATION_SPLIT_MEMBER()
@@ -72,6 +90,7 @@ private:
 
     //! @name Helpers
     //@{
+    bool RemovePath( uint32_t pathfind );
     bool Destroy( uint32_t pathfind );
     void Compute( MIL_AgentPion& pion, const sword::PathfindRequest& message,
                   unsigned int ctx, unsigned int clientId, const boost::optional< uint32_t >& magic );
@@ -93,9 +112,14 @@ private:
     const TER_World& world_;
     uint32_t ids_;
     T_Results results_;
+    // Map entity identifiers to path request identifiers. Pairs are unique.
+    std::multimap< uint32_t, uint32_t > boundItineraries_;
     //@}
 };
 
 BOOST_CLASS_EXPORT_KEY( PathfindComputer )
+
+// Converts computed path result to simulation coordinates.
+std::vector< geometry::Point2f > PathfindToPoints( const sword::Pathfind& path );
 
 #endif // __PathfindComputer_h_

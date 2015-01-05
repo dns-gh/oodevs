@@ -10,6 +10,7 @@ package simtests
 
 import (
 	"code.google.com/p/goprotobuf/proto"
+	"fmt"
 	. "launchpad.net/gocheck"
 	"masa/sword/swapi"
 	"masa/sword/swapi/phy"
@@ -17,6 +18,8 @@ import (
 	"masa/sword/swrun"
 	"masa/sword/swtest"
 	"math"
+	"strconv"
+	"strings"
 )
 
 const (
@@ -349,9 +352,10 @@ func (s *TestSuite) TestPathfindDeletingUnitsDeletesRelatedPathfinds(c *C) {
 
 // Creates a unit moving like a main battle tank, creates an itinerary with
 // "path" waypoints, asks the unit to move from "from" to "to" using the
-// itinerary and return computed path.
+// itinerary and return computed path. If more than one "path" argument is used
+// following itineraries are bound to the unit.
 func getMoveAlongItinerary(c *C, phydb *phy.PhysicalData, client *swapi.Client,
-	from, to swapi.Point, path []swapi.Point) ([]swapi.Point, []swapi.Point) {
+	from, to swapi.Point, path ...[]swapi.Point) ([]swapi.Point, [][]swapi.Point) {
 
 	moveAlongItinerary := uint32(445949284)
 
@@ -367,6 +371,7 @@ func getMoveAlongItinerary(c *C, phydb *phy.PhysicalData, client *swapi.Client,
 						Type: "VW Combi Rally",
 						Units: []*swrun.Unit{
 							&swrun.Unit{
+								// Ensure unit unicity
 								Name: "unit",
 								Type: "VW Main Battle Combi",
 								Pos:  from,
@@ -384,11 +389,21 @@ func getMoveAlongItinerary(c *C, phydb *phy.PhysicalData, client *swapi.Client,
 	c.Assert(err, IsNil)
 
 	// Create the path
-	pathfind, err := client.CreatePathfind(unit.Id, path...)
-	c.Assert(err, IsNil)
-	itinerary := []swapi.Point{}
-	for _, p := range pathfind.Result {
-		itinerary = append(itinerary, p.Point)
+	var pathfind *swapi.Pathfind
+	itineraries := [][]swapi.Point{}
+	for i, p := range path {
+		pf, err := client.CreatePathfind(unit.Id, p...)
+		c.Assert(err, IsNil)
+		itinerary := []swapi.Point{}
+		for _, point := range pf.Result {
+			itinerary = append(itinerary, point.Point)
+		}
+		itineraries = append(itineraries, itinerary)
+		if i > 0 {
+			DecBindItinerary(c, client, unit.Id, pf.Id)
+		} else {
+			pathfind = pf
+		}
 	}
 
 	// Make move along the path
@@ -411,7 +426,7 @@ func getMoveAlongItinerary(c *C, phydb *phy.PhysicalData, client *swapi.Client,
 		copy(points, path)
 		return true
 	})
-	return points, itinerary
+	return points, itineraries
 }
 
 type KnownPoint struct {
@@ -445,20 +460,27 @@ func MakeKnownEdge(p1, p2 swapi.Point) KnownEdge {
 	}
 }
 
-// Given a unit actual path and an itinerary passed as argument, getMatchedRatios
-// returns a sequence [r1, r2, ... rn] where each rn represents a slice of
-// itinerary overlapped by path, in percents. The value is positive if matched,
-// negative otherwise.
+type MatchedDistance struct {
+	Id       int
+	Distance float64
+}
+
+// Given a unit actual path and itineraries passed as argument,
+// getMatchedRatios returns a sequence [i1:r1, i2:r2, ... in:rn] where each rn
+// represents a slice of itinerary overlapped by path, in percents, and in is
+// the 1-based itinerary identifier, 0 being reserved for unmatched segments.
 // For instance, if the itinerary is matched by the path starting at its first
 // quarter and left at the beginning of its last quarter, the result is:
 //
-//   [-25, 50, -25]
+//   0:25%, 1:50%, 0:25%
 //
-func getMatchedRatio(path, itinerary []swapi.Point) []int {
-	distances := []float64{}
-	edges := map[KnownEdge]bool{}
-	for i := 1; i < len(itinerary); i++ {
-		edges[MakeKnownEdge(itinerary[i-1], itinerary[i])] = true
+func getMatchedRatio(path []swapi.Point, itineraries [][]swapi.Point) string {
+	distances := []*MatchedDistance{}
+	edges := map[KnownEdge]int{}
+	for j, itinerary := range itineraries {
+		for i := 1; i < len(itinerary); i++ {
+			edges[MakeKnownEdge(itinerary[i-1], itinerary[i])] = j + 1
+		}
 	}
 	total := float64(0)
 	for i := 1; i < len(path); i++ {
@@ -471,32 +493,37 @@ func getMatchedRatio(path, itinerary []swapi.Point) []int {
 			continue
 		}
 		total += d
-		matched := edges[MakeKnownEdge(p1, p2)]
-		if !matched {
-			d = -d
-		}
+		id := edges[MakeKnownEdge(p1, p2)]
 		if len(distances) == 0 ||
-			math.Signbit(d) != math.Signbit(distances[len(distances)-1]) {
-			distances = append(distances, d)
+			id != distances[len(distances)-1].Id {
+			distances = append(distances, &MatchedDistance{Id: id, Distance: d})
 		} else {
-			distances[len(distances)-1] += d
+			distances[len(distances)-1].Distance += d
 		}
 	}
-	percents := []int{}
+	percents := []*MatchedDistance{}
 	for _, d := range distances {
-		percent := int(100 * d / total)
+		percent := int(100 * d.Distance / total)
 		if percent == 0 {
 			continue
 		}
 		last := len(percents) - 1
-		if len(percents) == 0 || percent > 0 && percents[last] < 0 ||
-			percent < 0 && percents[last] > 0 {
-			percents = append(percents, percent)
+		if len(percents) == 0 || d.Id != percents[last].Id {
+			percents = append(percents,
+				&MatchedDistance{Id: d.Id, Distance: float64(percent)})
 		} else {
-			percents[last] += percent
+			percents[last].Distance += float64(percent)
 		}
 	}
-	return percents
+
+	result := ""
+	for i, p := range percents {
+		if i > 0 {
+			result += ", "
+		}
+		result += fmt.Sprintf("%d:%d%%", p.Id, int(p.Distance))
+	}
+	return result
 }
 
 func (s *TestSuite) TestMoveAlongItineraryNoBacktrack(c *C) {
@@ -504,7 +531,7 @@ func (s *TestSuite) TestMoveAlongItineraryNoBacktrack(c *C) {
 	sim, client := connectAndWaitModel(c, NewAdminOpts(ExAngersEmpty).RecordUnitPaths())
 	defer stopSimAndClient(c, sim, client)
 
-	points, itinerary := getMoveAlongItinerary(c, phydb, client,
+	points, itineraries := getMoveAlongItinerary(c, phydb, client,
 		swapi.Point{X: -0.4096, Y: 47.4551},
 		swapi.Point{X: 0.0213, Y: 47.2953},
 		[]swapi.Point{
@@ -526,16 +553,16 @@ func (s *TestSuite) TestMoveAlongItineraryNoBacktrack(c *C) {
 			c.Assert(p.X, Greater, limit.X)
 		}
 	}
-	ratios := getMatchedRatio(points, itinerary)
-	c.Assert(ratios, DeepEquals, []int{-32, 39, -23})
+	ratios := getMatchedRatio(points, itineraries)
+	c.Assert(ratios, Equals, "0:32%, 1:39%, 0:23%")
 }
 
-func testMoveAlongHorseshoe(c *C, from, to swapi.Point, expectedRatios []int) {
+func testMoveAlongHorseshoe(c *C, from, to swapi.Point, expectedRatios string) {
 	phydb := loadPhysicalData(c, "test")
 	sim, client := connectAndWaitModel(c, NewAdminOpts(ExAngersEmpty).RecordUnitPaths())
 	defer stopSimAndClient(c, sim, client)
 
-	points, itinerary := getMoveAlongItinerary(c, phydb, client,
+	points, itineraries := getMoveAlongItinerary(c, phydb, client,
 		from,
 		to,
 		[]swapi.Point{
@@ -543,8 +570,8 @@ func testMoveAlongHorseshoe(c *C, from, to swapi.Point, expectedRatios []int) {
 			swapi.Point{X: -0.3452, Y: 47.1160},
 			swapi.Point{X: -0.2635, Y: 47.1808},
 		})
-	ratios := getMatchedRatio(points, itinerary)
-	c.Assert(ratios, DeepEquals, expectedRatios)
+	ratios := getMatchedRatio(points, itineraries)
+	c.Assert(ratios, Equals, expectedRatios)
 }
 
 func (s *TestSuite) TestMoveAlongItineraryInsideHorseshoe(c *C) {
@@ -553,7 +580,7 @@ func (s *TestSuite) TestMoveAlongItineraryInsideHorseshoe(c *C) {
 	testMoveAlongHorseshoe(c,
 		swapi.Point{X: -0.3680, Y: 47.1978},
 		swapi.Point{X: -0.3241, Y: 47.1666},
-		[]int{-100})
+		"0:100%")
 }
 
 func (s *TestSuite) TestMoveAlongItineraryAboveHorseshoe(c *C) {
@@ -562,7 +589,7 @@ func (s *TestSuite) TestMoveAlongItineraryAboveHorseshoe(c *C) {
 	testMoveAlongHorseshoe(c,
 		swapi.Point{X: -0.4539, Y: 47.2720},
 		swapi.Point{X: -0.1441, Y: 47.2920},
-		[]int{-100})
+		"0:100%")
 }
 
 func (s *TestSuite) TestMoveAlongItineraryOnHorseshoe(c *C) {
@@ -574,7 +601,60 @@ func (s *TestSuite) TestMoveAlongItineraryOnHorseshoe(c *C) {
 	testMoveAlongHorseshoe(c,
 		swapi.Point{X: -0.5126, Y: 47.2098},
 		swapi.Point{X: -0.2476, Y: 47.1829},
-		[]int{-24, 1, -1, 32, -4, 25, -4})
+		"0:24%, 1:1%, 0:1%, 1:32%, 0:4%, 1:25%, 0:4%")
+}
+
+func testMoveAlongMultipleItineraries(c *C, from, to swapi.Point, expectedRatios string) {
+	phydb := loadPhysicalData(c, "test")
+	sim, client := connectAndWaitModel(c, NewAdminOpts(ExAngersEmpty).RecordUnitPaths())
+	defer stopSimAndClient(c, sim, client)
+
+	points, itineraries := getMoveAlongItinerary(c, phydb, client,
+		from,
+		to,
+		// South of the river
+		[]swapi.Point{
+			swapi.Point{X: -0.3713, Y: 47.3752},
+			swapi.Point{X: -0.3263, Y: 47.3592},
+			swapi.Point{X: -0.3207, Y: 47.4001},
+		},
+		// North of the river
+		[]swapi.Point{
+			swapi.Point{X: -0.3146, Y: 47.4095},
+			swapi.Point{X: -0.2244, Y: 47.4367},
+			swapi.Point{X: -0.3197, Y: 47.4749},
+		})
+	ratios := getMatchedRatio(points, itineraries)
+	c.Assert(ratios, Equals, expectedRatios)
+}
+
+func (s *TestSuite) TestMoveAlongItinerariesMultipleChained(c *C) {
+	// Start near the start point of the first path and move to the end point
+	// of the second path. The unit should use the first itinerary then travel
+	// to the second and use it.
+	testMoveAlongMultipleItineraries(c,
+		swapi.Point{X: -0.3774, Y: 47.3517},
+		swapi.Point{X: -0.3411, Y: 47.4746},
+		"0:7%, 1:11%, 0:4%, 1:10%, 0:3%, 2:29%, 0:2%, 2:13%, 0:4%, 2:2%, 0:5%")
+}
+
+func (s *TestSuite) TestMoveAlongItinerariesMultipleChoice1(c *C) {
+	// Start at the end of the first itinerary and end near the end of
+	// the second itinerary. The unit should use only the second itinerary.
+	testMoveAlongMultipleItineraries(c,
+		swapi.Point{X: -0.3207, Y: 47.4001},
+		swapi.Point{X: -0.3411, Y: 47.4746},
+		"0:5%, 2:43%, 0:1%, 2:2%, 0:3%, 2:20%, 0:1%, 2:1%, 0:6%, 2:3%, 0:8%")
+}
+
+func (s *TestSuite) TestMoveAlongItinerariesMultipleChoice2(c *C) {
+	// Start at the beginning of the second itinerary, end south of the first
+	// one. Should use only the first one.
+	testMoveAlongMultipleItineraries(c,
+		swapi.Point{X: -0.3146, Y: 47.4095},
+		swapi.Point{X: -0.3774, Y: 47.3517},
+		"0:8%, 1:6%, 0:1%, 1:18%, 0:22%, 1:4%, 0:1%, 1:3%, 0:2%, 1:3%, "+
+			"0:1%, 1:3%, 0:19%")
 }
 
 func testPathEdgeSplit(c *C, client *swapi.Client, unit *swapi.Unit,
@@ -615,7 +695,7 @@ func (s *TestSuite) TestPathEdgesSplitOnElevationGrid(c *C) {
 	phydb := loadPhysicalData(c, "test")
 	from := swapi.Point{X: -15.9384, Y: 28.220}
 	to := swapi.Point{X: -15.71, Y: from.Y}
-	unit := CreateTestUnit(c, phydb, client, "VW Combi 4x4", from)
+	unit := CreateTestUnit(c, phydb, client, "VW Combi 4x4", "unit", from)
 
 	// Minimum slope with disabled slope computation
 	testPathEdgeSplit(c, client, unit, from, to, false, 14, 0, 0)
@@ -628,4 +708,151 @@ func (s *TestSuite) TestPathEdgesSplitOnElevationGrid(c *C) {
 	from.Y = 28.2603
 	to.Y = 28.2603
 	testPathEdgeSplit(c, client, unit, from, to, true, 19, 16.7, 17.6)
+}
+
+func DecBindItinerary(c *C, client *swapi.Client, unitId, itineraryId uint32) error {
+	script := `function TestFunction()
+        local entity = DEC_GetUnitById({{.entityId}})
+		return tostring(DEC_Itinerary_Bind({{.itineraryId}}, entity))
+	end`
+	output, err := client.ExecTemplate(unitId, "TestFunction", script,
+		map[string]interface{}{
+			"itineraryId": itineraryId,
+			"entityId":    unitId,
+		})
+	if err != nil {
+		return err
+	}
+	if output != "true" {
+		return fmt.Errorf("could not bind itinerary")
+	}
+	return nil
+}
+
+func DecUnbindItinerary(c *C, client *swapi.Client, unitId, itineraryId uint32) error {
+	script := `function TestFunction()
+        local entity = DEC_GetUnitById({{.entityId}})
+		return tostring(DEC_Itinerary_Unbind({{.itineraryId}}, entity))
+	end`
+	output, err := client.ExecTemplate(unitId, "TestFunction", script,
+		map[string]interface{}{
+			"itineraryId": itineraryId,
+			"entityId":    unitId,
+		})
+	if err != nil {
+		return err
+	}
+	if output != "true" {
+		return fmt.Errorf("could not bind itinerary")
+	}
+	return nil
+}
+
+func DecGetEntityItineraries(c *C, client *swapi.Client, brainId, unitId uint32) ([]uint32, error) {
+	script := `function TestFunction()
+        local entity = DEC_GetUnitById({{.entityId}})
+        local ids = DEC_Itinerary_GetEntityItineraries(entity)
+        local result = ""
+        for i = 1, #ids do
+            result = result .. tostring(ids[i]) .. "\n"
+        end
+        return result
+	end`
+	output, err := client.ExecTemplate(brainId, "TestFunction", script,
+		map[string]interface{}{
+			"entityId": unitId,
+		})
+	if err != nil {
+		return nil, err
+	}
+	ids := []uint32{}
+	for _, line := range strings.Split(output, "\n") {
+		line = strings.TrimSpace(line)
+		if line == "" {
+			continue
+		}
+		id, err := strconv.ParseUint(line, 10, 32)
+		if err != nil {
+			return nil, err
+		}
+		ids = append(ids, uint32(id))
+	}
+	return ids, nil
+}
+
+func (s *TestSuite) TestItineraryBinding(c *C) {
+	opts := NewAdminOpts(ExGradXYTestEmpty)
+	sim, client := connectAndWaitModel(c, opts)
+	defer stopSimAndClient(c, sim, client)
+
+	phydb := loadPhysicalData(c, "test")
+	from := swapi.Point{X: -15.9384, Y: 28.220}
+	to := swapi.Point{X: -15.71, Y: from.Y}
+	to2 := swapi.Point{X: -15.71, Y: 22.24}
+	unit := CreateTestUnit(c, phydb, client, "VW Combi", "u1", from)
+	unit2 := CreateTestUnit(c, phydb, client, "VW Combi", "u2", from)
+	c.Assert(unit.Id, Lesser, unit2.Id)
+	itinerary1, err := client.CreatePathfind(unit.Id, from, to)
+	c.Assert(err, IsNil)
+	itinerary2, err := client.CreatePathfind(unit.Id, from, to2)
+	c.Assert(err, IsNil)
+	itinerary3, err := client.CreatePathfind(unit.Id, to, to2)
+	c.Assert(err, IsNil)
+
+	// Missing itinerary
+	err = DecBindItinerary(c, client, unit.Id, 12345)
+	c.Assert(err, NotNil)
+	err = DecUnbindItinerary(c, client, unit.Id, 12345)
+	c.Assert(err, NotNil)
+
+	bound, err := DecGetEntityItineraries(c, client, unit.Id, unit.Id)
+	c.Assert(err, IsNil)
+	c.Assert(len(bound), Equals, 0)
+
+	// Valid bindings, one duplicate
+	err = DecBindItinerary(c, client, unit.Id, itinerary1.Id)
+	c.Assert(err, IsNil)
+	err = DecBindItinerary(c, client, unit.Id, itinerary1.Id)
+	c.Assert(err, IsNil)
+	err = DecBindItinerary(c, client, unit.Id, itinerary2.Id)
+	c.Assert(err, IsNil)
+	err = DecBindItinerary(c, client, unit2.Id, itinerary1.Id)
+	c.Assert(err, IsNil)
+	err = DecBindItinerary(c, client, unit2.Id, itinerary3.Id)
+	c.Assert(err, IsNil)
+
+	bound, err = DecGetEntityItineraries(c, client, unit.Id, unit.Id)
+	c.Assert(err, IsNil)
+	c.Assert(bound, DeepEquals, []uint32{itinerary1.Id, itinerary2.Id})
+
+	bound, err = DecGetEntityItineraries(c, client, unit.Id, unit2.Id)
+	c.Assert(err, IsNil)
+	c.Assert(bound, DeepEquals, []uint32{itinerary1.Id, itinerary3.Id})
+
+	// Unbind only from one unit
+	err = DecUnbindItinerary(c, client, unit.Id, itinerary1.Id)
+	c.Assert(err, IsNil)
+
+	bound, err = DecGetEntityItineraries(c, client, unit.Id, unit.Id)
+	c.Assert(err, IsNil)
+	c.Assert(bound, DeepEquals, []uint32{itinerary2.Id})
+
+	bound, err = DecGetEntityItineraries(c, client, unit.Id, unit2.Id)
+	c.Assert(err, IsNil)
+	c.Assert(bound, DeepEquals, []uint32{itinerary1.Id, itinerary3.Id})
+
+	// Destroy one itinerary
+	err = client.DestroyPathfind(itinerary3.Id)
+	c.Assert(err, IsNil)
+	bound, err = DecGetEntityItineraries(c, client, unit.Id, unit2.Id)
+	c.Assert(err, IsNil)
+	c.Assert(bound, DeepEquals, []uint32{itinerary1.Id})
+
+	// Destroy bound unit, itinerary is still bound. We do not care too much
+	// about this case, you are unlikely to move destroyed units.
+	err = client.DeleteUnit(unit2.Id)
+	c.Assert(err, IsNil)
+	bound, err = DecGetEntityItineraries(c, client, unit.Id, unit2.Id)
+	c.Assert(err, IsNil)
+	c.Assert(bound, DeepEquals, []uint32{itinerary1.Id})
 }

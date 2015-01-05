@@ -9,6 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_PathResult.h"
+#include "PathfindComputer.h"
 #include "MIL_AgentServer.h"
 #include "Decision/DEC_PathType.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
@@ -22,7 +23,7 @@
 #include "simulation_terrain/TER_GridTools.h"
 #include "simulation_terrain/TER_PathPoint.h"
 #include "simulation_terrain/TER_Pathfinder.h"
-#include "simulation_terrain/TER_Pathfinder_ABC.h"
+#include "simulation_terrain/TER_PathfindRequest.h"
 #include "simulation_terrain/TER_World.h"
 #include <boost/make_shared.hpp>
 
@@ -359,10 +360,24 @@ const DEC_PathType& DEC_PathResult::GetPathType() const
     return pathType_;
 }
 
-void DEC_PathResult::StartCompute( const sword::Pathfind& pathfind )
+void DEC_PathResult::StartCompute()
 {
-    auto& pathfinder = MIL_AgentServer::GetWorkspace().GetPathFindManager();
-    future_ = pathfinder.StartCompute( callerId_, sections_, pathfind );
+    StartCompute( std::vector< geometry::Point2f >() );
+}
+
+void DEC_PathResult::StartCompute( const std::vector< geometry::Point2f >& itinerary )
+{
+    auto& pathfinder = MIL_AgentServer::GetWorkspace().GetPathfindComputer();
+    const auto rq = boost::make_shared< TER_PathfindRequest >( callerId_, sections_ );
+    rq->AddItinerary( itinerary );
+    const auto boundItineraries = pathfinder.GetEntityPaths( callerId_ );
+    for( auto it = boundItineraries.begin(); it != boundItineraries.end(); ++it )
+    {
+        const auto path = pathfinder.GetPathfind( *it );
+        if( path )
+            rq->AddItinerary( PathfindToPoints( *path ) );
+    }
+    future_ = pathfinder.StartCompute( rq );
 }
 
 void DEC_PathResult::Cancel()

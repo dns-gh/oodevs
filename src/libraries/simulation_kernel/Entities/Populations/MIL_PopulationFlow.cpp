@@ -218,9 +218,9 @@ void MIL_PopulationFlow::ComputePathAlong( const std::vector< boost::shared_ptr<
         pTailPath_.reset();
     }
     pHeadPath_ = boost::make_shared< DEC_Population_Path >( GetPopulation(), CreatePositions( GetHeadPosition(), headDestination ) );
-    pHeadPath_->StartCompute( sword::Pathfind() );
+    pHeadPath_->StartCompute();
     pTailPath_ = boost::make_shared< DEC_Population_Path >( GetPopulation(), CreatePositions( GetTailPosition(), tailDestination ) );
-    pTailPath_->StartCompute( sword::Pathfind() );
+    pTailPath_->StartCompute();
 }
 
 // -----------------------------------------------------------------------------

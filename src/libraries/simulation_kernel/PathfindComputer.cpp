@@ -26,6 +26,7 @@
 #include "Network/NET_Publisher_ABC.h"
 #include "simulation_terrain/TER_PathSection.h"
 #include "simulation_terrain/TER_Pathfinder.h"
+#include "simulation_terrain/TER_PathfindRequest.h"
 #include "simulation_terrain/TER_World.h"
 #include "protocol/ClientSenders.h"
 #include "protocol/MessageParameters.h"
@@ -64,7 +65,11 @@ void PathfindComputer::Update( ActionManager& actions )
 {
     for( auto it = results_.begin(); it != results_.end(); )
         if( it->second->Update( actions ) )
-            it = results_.erase( it );
+        {
+            auto next = std::next( it );
+            RemovePath( it->first );
+            it = next;
+        }
         else
             ++it;
 }
@@ -158,10 +163,30 @@ void PathfindComputer::Compute( unsigned int callerId,
 {
     sword::Pathfind pathfind;
     *pathfind.mutable_request() = message;
-    const auto future = manager_.StartCompute( callerId, sections, pathfind );
+    const auto rq = boost::make_shared< TER_PathfindRequest >( callerId, sections );
+    rq->SetIgnoreDynamicObjects( message.ignore_dynamic_objects() );
+    const auto future = manager_.StartCompute( rq );
     const uint32_t id = ++ids_;
     results_[ id ] = boost::make_shared< PathRequest >(
             future, ctx, clientId, id, message, magic );
+}
+
+boost::shared_ptr< TER_PathFuture > PathfindComputer::StartCompute(
+        const boost::shared_ptr< TER_PathfindRequest >& request )
+{
+    return manager_.StartCompute( request );
+}
+
+bool PathfindComputer::RemovePath( uint32_t pathfind )
+{
+    if( !results_.erase( pathfind ) )
+        return false;
+    for( auto it = boundItineraries_.begin(); it != boundItineraries_.end(); )
+        if( it->second == pathfind )
+            it = boundItineraries_.erase( it );
+        else
+            ++it;
+    return true;
 }
 
 // -----------------------------------------------------------------------------
@@ -170,7 +195,7 @@ void PathfindComputer::Compute( unsigned int callerId,
 // -----------------------------------------------------------------------------
 bool PathfindComputer::Destroy( uint32_t pathfind )
 {
-    if( !results_.erase( pathfind ) )
+    if( !RemovePath( pathfind ) )
         return false;
     client::PathfindDestruction msg;
     msg().set_id( pathfind );
@@ -189,6 +214,9 @@ void PathfindComputer::load( Archive& ar, const unsigned int /*version*/ )
 {
     ar >> ids_;
     ar >> results_;
+    // Do not serialize boundItineraries_ for now as decisional code probably
+    // will not fetch them again upon restarting on a checkpoint and paths
+    // will be bound unwittingly.
 }
 
 template< typename Archive >
@@ -323,4 +351,68 @@ void PathfindComputer::DeletePathfindsFromUnit( uint32_t id )
             deletions.push_back( it->first );
     for( auto it = deletions.begin(); it != deletions.end(); ++it )
         Destroy( *it );
+}
+
+std::unique_ptr< sword::Pathfind > PathfindComputer::GetPathfind( uint32_t id ) const
+{
+    const auto it = results_.find( id );
+    if( it == results_.end() )
+        return 0;
+    return it->second->GetPathfind();
+}
+
+bool PathfindComputer::BindPathToEntity( uint32_t pathId, uint32_t entityId )
+{
+    if( results_.count( pathId ) == 0 )
+        return false;
+    const auto range = boundItineraries_.equal_range( entityId );
+    for( auto it = range.first; it != range.second; ++it )
+        if( it->second == pathId )
+            return true;
+    boundItineraries_.insert( std::make_pair( entityId, pathId ) );
+    return true;
+}
+
+bool PathfindComputer::UnbindPathFromEntity( uint32_t pathId, uint32_t entityId )
+{
+    if( results_.count( pathId ) == 0 )
+        return false;
+    const auto range = boundItineraries_.equal_range( entityId );
+    for( auto it = range.first; it != range.second; ++it )
+        if( it->second == pathId )
+        {
+            boundItineraries_.erase( it );
+            return true;
+        }
+    return false;
+}
+
+std::vector< uint32_t > PathfindComputer::GetEntityPaths( uint32_t entityId ) const
+{
+    const auto range = boundItineraries_.equal_range( entityId );
+    std::vector< uint32_t > paths;
+    for( auto it = range.first; it != range.second; ++it )
+        paths.push_back( it->second );
+    // Ensure result does not depend on insertion order.
+    std::sort( paths.begin(), paths.end() );
+    return paths;
+}
+
+std::vector< geometry::Point2f > PathfindToPoints( const sword::Pathfind& pathfind )
+{
+    std::vector< geometry::Point2f > itinerary;
+    if( pathfind.has_result() )
+    {
+        const auto& positions = pathfind.result().points();
+        for( auto i = 0; i < positions.size(); ++i )
+        {
+            MT_Vector2D point;
+            const auto& position = positions.Get( i ).coordinate();
+            TER_World::GetWorld().MosToSimMgrsCoord(
+                    position.latitude(), position.longitude(), point );
+            itinerary.push_back( geometry::Point2f( static_cast< float >( point.rX_ ),
+                                                    static_cast< float >( point.rY_ ) ) );
+        }
+    }
+    return itinerary;
 }

@@ -18,6 +18,7 @@ class DEC_Gen_Object;
 class DEC_Knowledge_Agent;
 class DEC_Knowledge_Object;
 class DEC_Knowledge_Population;
+class DEC_Itinerary;
 class DEC_Objective;
 class MIL_FragOrder;
 class MIL_Fuseau;
@@ -84,6 +85,8 @@ namespace directia
     void ReleasedByDIA( PHY_Action_ABC* );
     void UsedByDIA( PHY_ResourceNetworkType* );
     void ReleasedByDIA( PHY_ResourceNetworkType* );
+    void UsedByDIA( DEC_Itinerary* );
+    void ReleasedByDIA( DEC_Itinerary* );
 }
 
 #endif // __DEC_Tools_h_

@@ -761,6 +761,14 @@ func (s *TestSuite) TestFragOrderParameters(c *C) {
 	unit := CreateUnitInParty(c, client, phydb, "party1", "VW Combi Rally",
 		"VW Direct Fire", pos)
 
+	// Create itinerary
+	positions := []swapi.Point{
+		{X: -15.9170, Y: 28.2645},
+		{X: -15.9200, Y: 28.2645},
+	}
+	pathfind, err := client.CreatePathfind(unit.Id, positions...)
+	c.Assert(err, IsNil)
+
 	// Send frag order
 	params := swapi.MakeParameters(
 		swapi.MakeString("string_value"),
@@ -786,8 +794,9 @@ func (s *TestSuite) TestFragOrderParameters(c *C) {
 				IntValue: proto.Int32(500),
 			},
 		),
+		swapi.MakePathfind(pathfind),
 	)
-	_, err := client.SendUnitFragOrder(unit.Id, FragOrder, params)
+	_, err = client.SendUnitFragOrder(unit.Id, FragOrder, params)
 	c.Assert(err, IsNil)
 
 	// String parameter
@@ -816,4 +825,11 @@ func (s *TestSuite) TestFragOrderParameters(c *C) {
         return result`,
 		"29\n"+
 			"500\n")
+
+	// Itinerary
+	CheckParameter(c, client, unit.Id,
+		`local itinerary = fragorders[ 1 ]:GetItinerary("itinerary_")
+        result = tostring(itinerary:DEC_Itinerary_GetId()) .. "\n"
+        return result`,
+		fmt.Sprintf("%d\n", pathfind.Id))
 }

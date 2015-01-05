@@ -11,10 +11,13 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_PathFunctions.h"
+#include "MIL_AgentServer.h"
+#include "PathfindComputer.h"
 #include "Decision/Brain.h"
-#include "Decision/DEC_PathType.h"
 #include "Decision/DEC_Agent_Path.h"
 #include "Decision/DEC_Decision_ABC.h"
+#include "Decision/DEC_Itinerary.h"
+#include "Decision/DEC_PathType.h"
 #include "Entities/Agents/Actions/Moving/PHY_RoleAction_Moving.h"
 #include "Entities/Agents/Actions/Loading/PHY_RoleAction_Loading.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
@@ -37,8 +40,47 @@
 #include "Tools/MIL_Tools.h"
 #include "OnComponentComputer_ABC.h"
 #include "simulation_terrain/TER_Pathfinder.h"
+#include "simulation_terrain/TER_World.h"
 #include <geometry/Types.h>
 #include <boost/smart_ptr/make_shared.hpp>
+
+namespace
+{
+
+boost::shared_ptr< DEC_Itinerary > GetItineraryById( uint32_t id )
+{
+    auto& pathfinder = MIL_AgentServer::GetWorkspace().GetPathfindComputer();
+    boost::shared_ptr< DEC_Itinerary > itinerary;
+    if( auto path = pathfinder.GetPathfind( id ) )
+        itinerary = boost::make_shared< DEC_Itinerary >( *path );
+    return itinerary;
+}
+
+bool BindItineraryToEntity( uint32_t pathId, const DEC_Decision_ABC* entity )
+{
+    if( !entity )
+        return false;
+    auto& pathfinder = MIL_AgentServer::GetWorkspace().GetPathfindComputer();
+    return pathfinder.BindPathToEntity( pathId, entity->GetID() );
+}
+
+bool UnbindItineraryFromEntity( uint32_t pathId, const DEC_Decision_ABC* entity )
+{
+    if( !entity )
+        return false;
+    auto& pathfinder = MIL_AgentServer::GetWorkspace().GetPathfindComputer();
+    return pathfinder.UnbindPathFromEntity( pathId, entity->GetID() );
+}
+
+std::vector< uint32_t > GetEntityItineraries( const DEC_Decision_ABC* entity )
+{
+    if( !entity )
+        return std::vector< uint32_t >();
+    auto& pathfinder = MIL_AgentServer::GetWorkspace().GetPathfindComputer();
+    return pathfinder.GetEntityPaths( entity->GetID() );
+}
+
+}  // namespace
 
 void DEC_PathFunctions::Register( sword::Brain& brain )
 {
@@ -63,6 +105,11 @@ void DEC_PathFunctions::Register( sword::Brain& brain )
     brain.RegisterFunction( "DEC_GetNextRemovableObjectOnPath", &DEC_PathFunctions::GetNextRemovableObjectOnPath );
     brain.RegisterFunction( "DEC_GetClosestPath", &DEC_PathFunctions::GetClosestPath );
 
+    // Itineraries
+    brain.RegisterFunction( "DEC_Itinerary_GetById", &GetItineraryById );
+    brain.RegisterFunction( "DEC_Itinerary_Bind", &BindItineraryToEntity );
+    brain.RegisterFunction( "DEC_Itinerary_Unbind", &UnbindItineraryFromEntity );
+    brain.RegisterFunction( "DEC_Itinerary_GetEntityItineraries", &GetEntityItineraries );
 }
 
 // -----------------------------------------------------------------------------
@@ -113,21 +160,23 @@ namespace
     {
         const auto path = boost::make_shared< DEC_Agent_Path >( agent, points, pathType );
         if( !IsDestinationTrafficable( agent, points ) )
-            path->Cancel();
-        else
         {
-            sword::Pathfind pathfind;
-            const PHY_RoleInterface_Supply* role = agent.RetrieveRole< PHY_RoleInterface_Supply >();
-            if( role && role->IsConvoy() )
-                role->ToItinerary( pathfind );
-            else
-                FindItinerary( agent.GetRole< DEC_Decision_ABC >(),
-                    [&]( MIL_MissionParameter_ABC& element )
-                    { 
-                        element.ToItinerary( pathfind );
-                    } );
-            path->StartCompute( pathfind );
+            path->Cancel();
+            return path;
         }
+
+        sword::Pathfind pathfind;
+        const PHY_RoleInterface_Supply* role = agent.RetrieveRole< PHY_RoleInterface_Supply >();
+        if( role && role->IsConvoy() )
+            role->ToItinerary( pathfind );
+        else
+            FindItinerary( agent.GetRole< DEC_Decision_ABC >(),
+                [&]( MIL_MissionParameter_ABC& element )
+                { 
+                    element.ToItinerary( pathfind );
+                } );
+
+        path->StartCompute( PathfindToPoints( pathfind ) );
         return path;
     }
 }

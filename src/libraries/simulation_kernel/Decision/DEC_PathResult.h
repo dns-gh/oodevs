@@ -13,6 +13,7 @@
 #include "Knowledge/DEC_Knowledge_Def.h"
 #include "MT_Tools/Mt_Vector2DTypes.h"
 #include "simulation_terrain/TER_Path_ABC.h"
+#include <geometry/Types.h>
 #include <list>
 
 namespace sword
@@ -62,7 +63,8 @@ public:
 
     //! @name Tools
     //@{
-    void StartCompute( const sword::Pathfind& pathfind );
+    void StartCompute();
+    void StartCompute( const std::vector< geometry::Point2f >& itinerary );
     bool IsOnPath( const MT_Vector2D& vPos ) const;
     T_PathPoints::const_iterator GetCurrentKeyOnPath() const;
     MT_Vector2D GetFuturePosition( const MT_Vector2D& vStartPos, double rDist, bool bBoundOnPath ) const;
