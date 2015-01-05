@@ -1002,7 +1002,6 @@ func (s *TestSuite) TestMaintenanceAbortsWhenCrewDies(c *C) {
 	unit := getSomeUnitByName(c, d, "Maintenance Mobile Infantry")
 	tc2Id := getSomeAutomatByName(c, d, "Maintenance Automat 1").Id
 	tc2 := swapi.MakeAutomatTasker(tc2Id)
-	zero := &sword.Tasker{}
 
 	SetManualMaintenance(c, client, tc2Id)
 
@@ -1019,7 +1018,8 @@ func (s *TestSuite) TestMaintenanceAbortsWhenCrewDies(c *C) {
 		checkUpdate("transporter_unloading", tc2),
 		checkUpdateThenApply("waiting_for_diagnosis_team_selection", tc2, true,
 			func(ctx *MaintenanceCheckContext) error {
-				return client.ChangeHumanState(unit.Id,
+                // Kill all crew members
+                err := client.ChangeHumanState(unit.Id,
 					[]*swapi.Human{
 						{
 							Quantity: 1,
@@ -1036,9 +1036,14 @@ func (s *TestSuite) TestMaintenanceAbortsWhenCrewDies(c *C) {
 							Rank:     2,
 							State:    2,
 						},
-					})
+                    })
+                if err != nil {
+                    return err
+                }
+                // Move to next state, whatever it does, it should not crash
+                // https://masagroup.atlassian.net/browse/SWBUG-12260
+                return client.SelectNewLogisticState(ctx.handlingId)
 			}),
-		checkUpdate("finished", zero),
-		MaintenanceDeleteChecker{},
+		checkUpdate("diagnosing", tc2),
 	)
 }
