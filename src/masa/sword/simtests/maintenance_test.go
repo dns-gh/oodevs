@@ -1018,8 +1018,8 @@ func (s *TestSuite) TestMaintenanceAbortsWhenCrewDies(c *C) {
 		checkUpdate("transporter_unloading", tc2),
 		checkUpdateThenApply("waiting_for_diagnosis_team_selection", tc2, true,
 			func(ctx *MaintenanceCheckContext) error {
-                // Kill all crew members
-                err := client.ChangeHumanState(unit.Id,
+				// Kill all crew members
+				err := client.ChangeHumanState(unit.Id,
 					[]*swapi.Human{
 						{
 							Quantity: 1,
@@ -1036,13 +1036,13 @@ func (s *TestSuite) TestMaintenanceAbortsWhenCrewDies(c *C) {
 							Rank:     2,
 							State:    2,
 						},
-                    })
-                if err != nil {
-                    return err
-                }
-                // Move to next state, whatever it does, it should not crash
-                // https://masagroup.atlassian.net/browse/SWBUG-12260
-                return client.SelectNewLogisticState(ctx.handlingId)
+					})
+				if err != nil {
+					return err
+				}
+				// Move to next state, whatever it does, it should not crash
+				// https://masagroup.atlassian.net/browse/SWBUG-12260
+				return client.SelectNewLogisticState(ctx.handlingId)
 			}),
 		checkUpdate("diagnosing", tc2),
 	)
