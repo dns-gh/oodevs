@@ -124,6 +124,9 @@ DO_UPDATE( sword::UnitKnowledgeCreation );
 DO_UPDATE( sword::UrbanCreation );
 DO_UPDATE( sword::UrbanKnowledgeCreation );
 DO_UPDATE( sword::UnitVisionCones );
+DO_UPDATE( sword::AutomatChangeSuperior );
+DO_UPDATE( sword::FormationChangeSuperior );
+DO_UPDATE( sword::UnitChangeSuperior );
 
 // -----------------------------------------------------------------------------
 // Name: ReplaySynchronisations::DoUpdate
