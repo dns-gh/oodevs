@@ -752,8 +752,8 @@ func DecUnbindItinerary(c *C, client *swapi.Client, unitId, itineraryId uint32) 
 
 func DecGetEntityItineraries(c *C, client *swapi.Client, brainId, unitId uint32) ([]uint32, error) {
 	script := `function TestFunction()
-		ids = DEC_Itinerary_GetEntityItineraries({{.entityId}})
-        result = ""
+        local ids = DEC_Itinerary_GetEntityItineraries({{.entityId}})
+        local result = ""
         for i = 1, #ids do
             result = result .. tostring(ids[i]) .. "\n"
         end
