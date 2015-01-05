@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" version="4.8.2">
+	<xs:include schemaLocation="../physical/tools.xsd"/>
+	<xs:element name="volume">
+		<xs:complexType>
+			<xs:attribute name="id" type="T_NonNegativeInteger" use="required"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="vision-volumes">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="volume" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="units">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="agent-knowledge" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="position">
+		<xs:complexType>
+			<xs:attribute name="x" type="T_NonNegativeInteger" use="required"/>
+			<xs:attribute name="y" type="T_NonNegativeInteger" use="required"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="population-knowledge">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="concentration" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element ref="flow" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+			<xs:attribute name="population-known" type="T_NonNegativeInteger" use="optional"/>
+			<xs:attribute name="hacked" type="T_NonNegativeInteger" use="optional"/>
+			<xs:attribute name="critical-intelligence" type="xs:string" use="optional"/>
+			<xs:attribute name="id" type="T_NonNegativeInteger" use="required"/>
+			<xs:attribute name="domination-state" type="xs:double" use="optional"/>
+			<xs:attribute name="is-recon" type="xs:boolean" use="optional"/>
+			<xs:attribute name="recon-attributes-valid" type="T_NonNegativeInteger" use="optional"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="populations">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="population-knowledge" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="objects">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="object-knowledge" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="object-knowledge">
+		<xs:complexType>
+			<xs:attribute name="id" type="T_NonNegativeInteger" use="required"/>
+			<xs:attribute name="name" type="xs:string" use="required"/>
+			<xs:attribute name="object-id" type="T_NonNegativeInteger" use="required"/>
+			<xs:attribute name="type" type="T_NonNegativeInteger" use="optional"/>
+			<xs:attribute name="level" type="T_NonNegativeInteger" use="optional"/>
+			<xs:attribute name="max-level" type="T_NonNegativeInteger" use="optional"/>
+			<xs:attribute name="last-time-update" type="T_NonNegativeInteger" use="required"/>
+			<xs:attribute name="relevance" type="T_ZeroToOneDouble" use="required"/>
+			<xs:attribute name="hacked" type="xs:boolean" use="optional"/>
+			<xs:attribute name="skip-preparation" type="xs:boolean" use="optional"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="knowledges">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="army" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+			<xs:attribute name="model-version" type="T_Version"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="knowledge-groups">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="knowledge-group" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="knowledge-group">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="objects"/>
+				<xs:element ref="populations"/>
+				<xs:element ref="units"/>
+				<xs:element ref="knowledge-group" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+			<xs:attribute name="type" type="xs:string" use="optional"/>
+			<xs:attribute name="name" type="xs:string" use="required"/>
+			<xs:attribute name="id" type="T_NonNegativeInteger" use="required"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="flow-part">
+		<xs:complexType>
+			<xs:attribute name="relevance" type="T_ZeroToOneDouble" use="required"/>
+			<xs:attribute name="last-relevance-sent" type="T_ZeroToOneDouble" use="required"/>
+			<xs:attribute name="last-time-update" type="T_NonNegativeInteger" use="required"/>
+			<xs:attribute name="perceived" type="xs:boolean" use="required"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="flow">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="direction"/>
+				<xs:element ref="flow-part"/>
+			</xs:sequence>
+			<xs:attribute name="id" type="T_NonNegativeInteger" use="required"/>
+			<xs:attribute name="speed" type="T_NonNegativeDouble" use="required"/>
+			<xs:attribute name="alive-humans" type="T_NonNegativeInteger" use="required"/>
+			<xs:attribute name="dead-humans" type="T_NonNegativeInteger" use="required"/>
+			<xs:attribute name="attitude" type="T_NonNegativeInteger" use="optional"/>
+			<xs:attribute name="recon-attributes-valid" type="xs:boolean" use="required"/>
+			<xs:attribute name="perception-level" type="T_NonNegativeInteger" use="optional"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="direction">
+		<xs:complexType>
+			<xs:attribute name="x" type="xs:double" use="required"/>
+			<xs:attribute name="y" type="xs:double" use="required"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="data-recognition">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="composante" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+			<xs:attribute name="time-last-update" type="T_NonNegativeInteger" use="required"/>
+			<xs:attribute name="op-state" type="T_ZeroToOneDouble"/>
+			<xs:attribute name="major-op-state" type="T_ZeroToOneDouble"/>
+			<xs:attribute name="agent-type" type="T_NonNegativeInteger"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="data-detection">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="position"/>
+				<xs:element ref="direction"/>
+				<xs:element ref="vision-volumes"/>
+			</xs:sequence>
+			<xs:attribute name="speed" type="T_NonNegativeDouble" use="required"/>
+			<xs:attribute name="posture-completion" type="T_ZeroToOneDouble" use="required"/>
+			<xs:attribute name="posture" type="T_NonNegativeInteger" use="optional"/>
+			<xs:attribute name="population-density" type="xs:double" use="required"/>
+			<xs:attribute name="surrendered-to" type="T_NonNegativeInteger" use="optional"/>
+			<xs:attribute name="last-time-update" type="T_NonNegativeInteger" use="required"/>
+			<xs:attribute name="altitude" type="xs:double" use="required"/>
+			<xs:attribute name="prisoner" type="xs:boolean" use="optional"/>
+			<xs:attribute name="dead" type="xs:boolean" use="optional"/>
+			<xs:attribute name="refugee-managed" type="xs:boolean" use="optional"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="concentration">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="position"/>
+			</xs:sequence>
+			<xs:attribute name="attitude" type="T_NonNegativeInteger" use="optional"/>
+			<xs:attribute name="relevance" type="T_ZeroToOneDouble" use="required"/>
+			<xs:attribute name="recon-attributes-valid" type="xs:boolean" use="required"/>
+			<xs:attribute name="perception-level" type="T_NonNegativeInteger" use="optional"/>
+			<xs:attribute name="last-time-update" type="T_NonNegativeInteger" use="required"/>
+			<xs:attribute name="id" type="T_NonNegativeInteger" use="required"/>
+			<xs:attribute name="dead-humans" type="T_NonNegativeInteger" use="required"/>
+			<xs:attribute name="alive-humans" type="T_NonNegativeInteger" use="required"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="composante">
+		<xs:complexType>
+			<xs:attribute name="type" type="T_NonNegativeInteger" use="required"/>
+			<xs:attribute name="number" type="T_NonNegativeInteger" use="required"/>
+			<xs:attribute name="major-score" type="T_NonNegativeInteger" use="required"/>
+			<xs:attribute name="major" type="xs:boolean" use="required"/>
+			<xs:attribute name="can-fire" type="xs:boolean" use="required"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="army">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="objects"/>
+				<xs:element ref="knowledge-groups"/>
+			</xs:sequence>
+			<xs:attribute name="name" type="xs:string" use="required"/>
+			<xs:attribute name="id" type="T_NonNegativeInteger" use="required"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="agent-knowledge">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="data-detection"/>
+				<xs:element ref="data-recognition"/>
+			</xs:sequence>
+			<xs:attribute name="relevance" type="T_ZeroToOneDouble" use="required"/>
+			<xs:attribute name="real-unit-type" type="T_NonNegativeInteger" use="required"/>
+			<xs:attribute name="real-unit" type="T_NonNegativeInteger" use="required"/>
+			<xs:attribute name="max-level" type="T_NonNegativeInteger" use="required"/>
+			<xs:attribute name="id" type="T_NonNegativeInteger" use="required"/>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>
