@@ -60,7 +60,7 @@ NodeController::NodeController( cpplog::BaseLogger& log,
     , fs_         ( fs )
     , plugins_    ( plugins )
     , factory_    ( nodes )
-    , root_       ( root / ( type == "cluster" ? tools::ToUtf8( type ).c_str() : "nodes" ) )
+    , root_       ( root / ( type == "cluster" ? tools::Path::FromUTF8( type ) : "nodes" ) )
     , app_        ( app )
     , web_        ( web )
     , licensesDir_( licenses )

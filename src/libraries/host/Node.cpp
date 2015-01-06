@@ -274,7 +274,7 @@ bool Node::Start( const tools::Path& app, const tools::Path& web, const std::str
     if( cfg_.sessions.reset )
         args.push_back( "--reset" );
     T_Process ptr = deps_.runtime.Start( app.ToUTF8(), args, std::string(),
-                                         ( root_ / tools::Path::FromUTF8( tools::ToUtf8( type + ".log" ) ) ).ToUTF8() );
+                                         ( root_ / tools::Path::FromUTF8( type + ".log" ) ).ToUTF8() );
     if( !ptr )
         return previous;
 
@@ -705,5 +705,5 @@ void Node::FilterConfig( web::session::Config& cfg ) const
         cfg.plugins.erase( id );
     BOOST_FOREACH( const web::node::Config::T_Plugins::value_type& value, cfg_.plugins )
         if( !cfg.plugins.count( value ) )
-            cfg.plugins.insert( std::make_pair( value, web::session::PluginConfig( deps_.plugins, tools::Path::FromUTF8( tools::ToUtf8( value ) ) ) ) );
+            cfg.plugins.insert( std::make_pair( value, web::session::PluginConfig( deps_.plugins, tools::Path::FromUTF8( value ) ) ) );
 }
