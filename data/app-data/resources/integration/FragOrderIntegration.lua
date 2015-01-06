@@ -320,6 +320,15 @@ integration.getObjectParameter = function( fragorder, parameterName )
     return fragorder.source:GetObjectParameter( parameterName )
 end
 
+--- Returns the fragmentary order's "Itinerary" parameter with the given name.
+-- Call itinerary:DEC_Itinerary_GetId() to retrieve the itinerary identifier.
+-- @param fragorder DirectIA fragmentary order
+-- @param parameterName String, the name of the parameter
+-- @return Simulation itinerary
+integration.getItineraryParameter = function( fragorder, parameterName )
+    return fragorder.source:GetItinerary( parameterName )
+end
+
 --- Returns the fragmentary order's "Object list" parameter with the given name.
 -- @param fragorder DirectIA fragmentary order
 -- @param parameterName String, the name of the parameter

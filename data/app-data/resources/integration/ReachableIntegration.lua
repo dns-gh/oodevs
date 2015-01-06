@@ -1340,6 +1340,24 @@ removeListElementWithSameLocation = function( position, tab )
     return result
 end
 
+--- Binds an itinerary to an agent.
+-- Bound itineraries are treated as preferred itineraries when computing paths
+-- for the agent.
+-- @param itineraryId Itinerary identifier
+-- @param entity Target agent
+-- @return True if the binding succeeded.
+integration.bindItinerary = function( itineraryId, entity )
+    return DEC_Itinerary_Bind( itineraryId, entity )
+end
+
+-- Unbinds an itinerary from an agent.
+-- @param itineraryId Itinerary identifier
+-- @param entity Target agent
+-- @return True if the binding was undone.
+integration.unbindItinerary = function( itineraryId, entity )
+    return DEC_Itinerary_Unbind( itineraryId, entity )
+end
+
 ------------------------------------------------------------------
 --- DECLARATIONS ENSURING BACKWARDS COMPATIBILITY
 ------------------------------------------------------------------
