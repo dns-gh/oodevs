@@ -25,6 +25,8 @@
 #include <runtime/Pool.h>
 #include <runtime/PropertyTree.h>
 #include <runtime/Runtime_ABC.h>
+#include <tools/Helpers.h>
+#include <tools/Path.h>
 #include <tools/Sql.h>
 #include <web/Client.h>
 #include <web/Controller.h>
@@ -45,9 +47,6 @@
 #include <boost/property_tree/ptree.hpp>
 #include <boost/uuid/string_generator.hpp>
 #include <boost/uuid/nil_generator.hpp>
-
-#include <tools/Helpers.h>
-#include <tools/Path.h>
 
 #include <sqlite/sqlite3.h>
 
@@ -470,7 +469,7 @@ Configuration ParseConfiguration( const runtime::Runtime_ABC& runtime, const Fil
 
     const tools::Path bin = tools::Path( module ).RemoveFilename();
     Configuration cfg;
-    cfg.root                  = tools::Path::FromUTF8( GetTree( tree, "root", root.ToUTF8() ) ); //voir
+    cfg.root                  = tools::Path::FromUTF8( GetTree( tree, "root", root.ToUTF8() ) );
     cfg.ports.period          = GetTree( tree, "ports.period", 12 );
     cfg.ports.min             = GetTree( tree, "ports.min", 12000 );
     cfg.ports.max             = GetTree( tree, "ports.max", 15000 );
