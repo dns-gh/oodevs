@@ -323,7 +323,7 @@ end
 --- Returns the fragmentary order's "Itinerary" parameter with the given name.
 -- @param fragorder DirectIA fragmentary order
 -- @param parameterName String, the name of the parameter
--- @return Simulation object
+-- @return Simulation itinerary
 integration.getItineraryParameter = function( fragorder, parameterName )
     return fragorder.source:GetItinerary( parameterName )
 end
