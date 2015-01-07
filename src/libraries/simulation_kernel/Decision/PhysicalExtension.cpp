@@ -21,10 +21,10 @@ void PhysicalExtension::Initialize( xml::xistream& xis )
     xis >> xml::start( "physical-extensions" )
             >> xml::list( "extension", [&]( xml::xistream& xis )
                 {
-                    const std::string key = xis.attribute< std::string >( "key" );
-                    if( extensions.find( key ) != extensions.end() )
-                        throw MASA_EXCEPTION( xis.context() + "Extension already defined" );
-                    extensions[ key ] = xis.attribute< std::string >( "value" );
+                    const auto key = xis.attribute< std::string >( "key" );
+                    const auto value = xis.attribute< std::string >( "value" );
+                    if( !extensions.insert( std::make_pair( key, value ) ).second )
+                        throw MASA_EXCEPTION( xis.context() + "Extension '" + key + "' already defined" );
                 } )
         >> xml::end;
 }
