@@ -1276,9 +1276,9 @@ bool Session::DownloadLog( web::Chunker_ABC& dst, const std::string& file, int l
 {
     dst.SetName( file );
     auto& sink = dst.OpenWriter();
-    auto input = GetRoot() / tools::Path::FromUTF8( tools::ToUtf8( file) );
+    auto input = GetRoot() / tools::Path::FromUTF8( file );
     if( !deps_.fs.Exists( input  ) )
-        input = GetOutput() / tools::Path::FromUTF8( tools::ToUtf8( file) );
+        input = GetOutput() / tools::Path::FromUTF8( file );
     if( !deps_.fs.Exists( input ) )
         return false;
     deps_.fs.LimitedReadFile( deflate ? *deps_.fs.MakeDeflateFilter( sink ) : sink, input, limit );

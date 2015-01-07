@@ -340,7 +340,7 @@ void FileSystem::LimitedReadFile( io::Writer_ABC& sink, const tools::Path& path,
 // -----------------------------------------------------------------------------
 void FileSystem::Walk( const tools::Path& path, bool recurse, const T_Predicate& predicate ) const
 {
-    path.Apply( [&] ( const tools::Path& path ) -> bool {
+    path.Apply( [&] ( const tools::Path& path ) {
         return !predicate( path );
     }, recurse );
 }

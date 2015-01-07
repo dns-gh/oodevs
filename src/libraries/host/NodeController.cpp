@@ -178,7 +178,7 @@ void NodeController::ReloadNode( const tools::Path& path )
 // -----------------------------------------------------------------------------
 bool NodeController::ReloadDirectory( runtime::Async& reload, const tools::Path& dir )
 {
-    const tools::Path path = dir / ( type_ + ".id" ).c_str();
+    const tools::Path path = dir / tools::Path::FromUTF8( type_ + ".id" );
     if( fs_.IsFile( path ) )
         reload.Post( boost::bind( &NodeController::ReloadNode, this, path ) );
     return true;
@@ -296,7 +296,7 @@ NodeController::T_Node NodeController::Create( const std::string& ident, const w
 // -----------------------------------------------------------------------------
 void NodeController::Save( const Node_ABC& node ) const
 {
-    const tools::Path path = node.GetRoot() / ( type_ + ".id" ).c_str();
+    const tools::Path path = node.GetRoot() / tools::Path::FromUTF8( type_ + ".id" );
     Post( async_, boost::bind( &FileSystem_ABC::WriteFile, &fs_, path, ToJson( node.Save() ) ) );
 }
 
