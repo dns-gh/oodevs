@@ -746,9 +746,10 @@ func (s *TestSuite) TestDecGetPhysicalExtension(c *C) {
 	unit, err := client.CreateUnit(automat.Id, 2, swapi.Point{X: -15.82, Y: 28.34})
 	c.Assert(err, IsNil)
 
+	// calls the integration function
 	script := `
 	function TestFunction()
-		return DEC_GetPhysicalExtension("{{.key}}")
+		return GetPhysicalExtension("{{.key}}")
 	end`
 
 	tests := []struct {

@@ -30,7 +30,7 @@ end )
 -- persistentKnowledgeCache makes sure the knowledge objects remain in memory until the end of the tick.
 -- It is up to the user to keep the knowledge in memory (typically inside self.someparameter of their node).
 ]]
-localStorageVar = masalife.brain.integration.createBrainLocalStorage( 
+localStorageVar = masalife.brain.integration.createBrainLocalStorage(
     function()
         return {
             knowledgeCache = setmetatable( {}, {  __mode ="kv",
@@ -42,7 +42,7 @@ localStorageVar = masalife.brain.integration.createBrainLocalStorage(
                 __index    = function( t, k )    local hash = getmetatable( k ) return rawget( t, (type( hash ) == "function" and hash( k )) or k ) end
             } )
         }
-    end 
+    end
 )
 -- The index stuff is needed for shared pointer objects management
 
@@ -136,7 +136,7 @@ function AppendTaskParameterFunction( params, strKnowledgeType, name, knowledgeS
         if #knowledgeSource > 0 then
             local currentIndex = #params[name]+1
             params[name][currentIndex] = {};
-            local currentParam = params[name][currentIndex] 
+            local currentParam = params[name][currentIndex]
             for i = 1, #knowledgeSource do
               currentParam[#currentParam+1] = CreateKnowledge( strKnowledgeType, knowledgeSource[i] )
             end
@@ -202,13 +202,13 @@ function InitMeAutomat( strKnowledgeType, knowledgeSource, groupName )
 end
 
 --- Displays a given report. If this method is called during multiple
--- consecutive ticks with the same "instance" parameter (and the same report), 
+-- consecutive ticks with the same "instance" parameter (and the same report),
 -- then the report will only be displayed the first time this method was called.
 -- @param instance Any type, the parameter used to determine whether or not to
 -- display reports multiple times over multiple calls.
 -- Any additional parameter will be used as parameters to the report.
-reportOnceAction = masalife.brain.integration.startStopAction( { 
-    start = function( instance, ... ) 
+reportOnceAction = masalife.brain.integration.startStopAction( {
+    start = function( instance, ... )
         reportFunction( ... )
     end
 } )
@@ -269,6 +269,10 @@ CallbackMovingOnPath = function( position )
     if myself.callbackMovingOnPath then
         myself.callbackMovingOnPath( position )
     end
+end
+
+GetPhysicalExtension = function( extension )
+    return DEC_GetPhysicalExtension( extension )
 end
 
 -- Brain debugging
