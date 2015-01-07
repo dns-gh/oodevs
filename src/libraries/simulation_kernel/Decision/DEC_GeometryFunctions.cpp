@@ -1500,7 +1500,9 @@ double DEC_GeometryFunctions::ComputeIntersectionArea( const TER_Localisation& l
 boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeNearestBorder( const MT_Vector2D* position, TER_Localisation* pLocalisation )
 {
     if( !pLocalisation )
-        throw MASA_EXCEPTION( "Invalid location" );
+        throw MASA_EXCEPTION( "Invalid location passed to DEC_Geometrie_ComputeNearestBorder" );
+    if( !position )
+        throw MASA_EXCEPTION( "Invalid position passed to DEC_Geometrie_ComputeNearestBorder" );
 
     boost::shared_ptr< MT_Vector2D > pResult;
     MT_Vector2D vResult;
