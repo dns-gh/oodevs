@@ -171,6 +171,7 @@ void ADN_Project_Data::DataInfos::ReadArchive( xml::xistream& input )
     ReadFile( input, "stages", szStages_ );
     ReadFile( input, "languages", szLanguages_ );
     ReadPath( input, "locales-directory", szLocalesDirectory_ );
+    ReadFile( input, "physical-extensions", szPhysicalExtensions_ );
 
     input >> xml::end;
 }
@@ -235,6 +236,7 @@ void ADN_Project_Data::DataInfos::WriteArchive( xml::xostream& output ) const
     WriteFile( output, "stages", szStages_ );
     WriteFile( output, "languages", szLanguages_ );
     WritePath( output, "locales-directory", szLocalesDirectory_ );
+    WriteFile( output, "physical-extensions", szPhysicalExtensions_ );
     output << xml::end;
 }
 
