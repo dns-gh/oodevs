@@ -154,10 +154,12 @@ std::unique_ptr< xml::xistream > RealFileLoader::LoadFile( const Path& initialIn
     if( !tools::ReadFile( inputFileName, data ) )
     {
         const std::string genericInputFileName = initialInputFileName.FileName().ToUTF8();
+        const std::string genericInputParent = initialInputFileName.Parent().ToUTF8();
         BOOST_FOREACH( const T_AddedFile& addedFile, addedFiles_ )
         {
-            const std::string& match = addedFile.first.ToUTF8();
-            if( genericInputFileName == match )
+            const std::string& matchFileName = addedFile.first.FileName().ToUTF8();
+            const std::string& matchParent = addedFile.first.Parent().ToUTF8();
+            if( genericInputFileName == matchFileName && boost::algorithm::ends_with( genericInputParent, matchParent ) )
             {
                 inputFileName = addedFile.second;
                 break;
