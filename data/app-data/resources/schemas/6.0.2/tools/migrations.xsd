@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" version="4.8.2">
+  <xs:element name="migrations" type="T_Migrations"/>
+
+  <xs:complexType name="T_Migrations">
+    <xs:sequence>
+      <xs:element name="default" type="T_Default"/>
+      <xs:element name="added-files" type="T_AddedFiles"/>
+      <xs:element name="migration" type="T_Migration" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="T_Default">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:element name="match-if">
+        <xs:complexType>
+          <xs:attribute name="non-versioned-schema" type="xs:string" use="optional"/>
+          <xs:attribute name="root-node" type="xs:string" use="optional"/>
+          <xs:attribute name="assign-schema" type="xs:string" use="required"/>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="T_AddedFiles">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:element name="added-file">
+        <xs:complexType>
+          <xs:attribute name="filename" type="xs:string" use="required"/>
+          <xs:attribute name="assign-file" type="xs:string" use="required"/>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="T_Migration">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:element name="upgrade">
+        <xs:complexType>
+          <xs:attribute name="schema" type="xs:string" use="required"/>
+          <xs:attribute name="apply" type="xs:string" use="required"/>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+    <xs:attribute name="from" type="xs:string" use="required"/>
+    <xs:attribute name="to" type="xs:string" use="required"/>
+  </xs:complexType>
+
+</xs:schema>
