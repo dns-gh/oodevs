@@ -20,6 +20,7 @@
 #include "runtime/PropertyTree.h"
 #include "runtime/Runtime_ABC.h"
 #include "runtime/Scoper.h"
+#include <tools/Helpers.h>
 
 #include <boost/assign/list_of.hpp>
 #include <boost/foreach.hpp>
@@ -71,7 +72,7 @@ boost::optional< std::string > GetParameter( const std::string& query, const std
     const int len = mg_get_var( query.c_str(), query.size(), name.c_str(), &buffer[0], buffer.size() );
     if( len == -1 )
         return boost::none;
-    return std::string( &buffer[0] );
+    return tools::ToUtf8( std::string( &buffer[0] ) );
 }
 
 // -----------------------------------------------------------------------------

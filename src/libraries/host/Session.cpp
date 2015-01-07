@@ -149,7 +149,7 @@ Session::T_Process AcquireProcess( const Tree& tree, const std::string& key, con
 
 tools::Path GetPathFrom( const Tree& src, const std::string& key )
 {
-    return tools::Path::FromUTF8( tools::ToUtf8( Get< std::string >( src, key ) ) );
+    return tools::Path::FromUTF8( Get< std::string >( src, key ) );
 }
 
 template< typename T >

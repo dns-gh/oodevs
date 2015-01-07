@@ -20,8 +20,9 @@
 #include <boost/lexical_cast.hpp>
 #include <boost/make_shared.hpp>
 
-#include <tools/Path.h>
 #include <tools/FileWrapper.h>
+#include <tools/Helpers.h>
+#include <tools/Path.h>
 
 #include <stdint.h>
 #include <fcntl.h>

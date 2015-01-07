@@ -138,7 +138,7 @@ Node::Node( const NodeDependencies& deps,
     , sessions_size_   ( 0 )
 {
     const boost::optional< std::string > cache = tree.get_optional< std::string >( "cache" );
-    ParsePackages( cache == boost::none ? tools::Path() : tools::Path::FromUTF8( tools::ToUtf8( *cache ) ) );
+    ParsePackages( cache == boost::none ? tools::Path() : tools::Path::FromUTF8( *cache ) );
 }
 
 // -----------------------------------------------------------------------------

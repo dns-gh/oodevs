@@ -217,6 +217,15 @@ T RequireParameter( const std::string& name, const Request_ABC& request )
     return boost::lexical_cast< T >( *value );
 }
 
+template<>
+std::string RequireParameter< std::string >( const std::string& name, const Request_ABC& request )
+{
+    const boost::optional< std::string > value = request.GetParameter( name );
+    if( value == boost::none )
+        throw HttpException( BAD_REQUEST );
+    return tools::ToUtf8( *value );
+}
+
 // -----------------------------------------------------------------------------
 // Name: RequireParameter
 // Created: BAX 2012-08-27
@@ -229,6 +238,16 @@ T RequireParameter( const std::string& name, const Tree& src )
     if( !found )
         throw HttpException( BAD_REQUEST );
     return dst;
+}
+
+template<>
+std::string RequireParameter< std::string >( const std::string& name, const Tree& src )
+{
+    std::string dst;
+    const bool found = TryRead( dst, src, name );
+    if( !found )
+        throw HttpException( BAD_REQUEST );
+    return tools::ToUtf8( dst );
 }
 
 // -----------------------------------------------------------------------------
@@ -782,7 +801,7 @@ void Controller::DownloadSessionLog( Reply_ABC& rpy, Request_ABC& request )
     if( deflate )
         rpy.SetHeader( "Content-Encoding", "deflate" );
     boost::shared_ptr< Chunker_ABC > chunker = MakeChunker( rpy );
-    const std::string logFile =  tools::ToUtf8( RequireParameter< std::string >( "logfile", request ) );
+    const std::string logFile = RequireParameter< std::string >( "logfile", request );
     const int limitSize = GetParameter( "limitsize", request, 0 );
     agent_.DownloadSessionLog( user, GetId( request ), *chunker, logFile, limitSize, deflate );
 }

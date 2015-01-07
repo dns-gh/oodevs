@@ -90,12 +90,12 @@ boost::shared_ptr< Process_ABC > Runtime::Start( const std::string& cmd,
     try
     {
         std::vector< std::wstring > wargs;
-        wargs.push_back( tools::FromUtf8ToUnicode( tools::ToUtf8( cmd ) ) );
+        wargs.push_back( tools::FromUtf8ToUnicode( cmd ) );
         for( auto it = args.begin(); it != args.end(); ++it )
-            wargs.push_back( tools::FromUtf8ToUnicode( tools::ToUtf8( *it ) ) );
+            wargs.push_back( tools::FromUtf8ToUnicode( *it ) );
         auto wcmd = tools::ArgsToCommandLine( wargs );
-        return MakeProcess( api_, tools::FromUtf8ToUnicode( tools::ToUtf8( cmd ) ),
-            wcmd, tools::FromUtf8ToUnicode( tools::ToUtf8( run ) ), tools::FromUtf8ToUnicode( tools::ToUtf8( log ) ) );
+        return MakeProcess( api_, tools::FromUtf8ToUnicode( cmd ),
+            wcmd, tools::FromUtf8ToUnicode( run ), tools::FromUtf8ToUnicode( log ) );
     }
     catch( const std::runtime_error& err )
     {

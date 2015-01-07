@@ -597,7 +597,7 @@ void Context::StartClient()
     const tools::Path exercise = GetPath( "exercise" );
     if( client.IsEmpty() || model.IsEmpty() || terrain.IsEmpty() || exercise.IsEmpty() )
         return;
-    const tools::Path name = tools::Path::FromUTF8( tools::ToUtf8( Get< std::string >( session_, "exercise.name" ) ) );
+    const tools::Path name = tools::Path::FromUTF8( Get< std::string >( session_, "exercise.name" ) );
     const tools::Path debug = exercise / "exercises" / name / "sessions" / GetTimestamp().c_str();
     WriteConfiguration( fs_, exercise / "exercises" / name, QUtf8( url_.host() ),
         url_.queryItemValue( "tcp" ).toInt(), Get< int >( session_, "timeline.port" ) );

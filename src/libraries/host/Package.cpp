@@ -196,7 +196,7 @@ namespace
             , package_ ( Get< std::string >( tree, "package" ) )
             , version_ ( GetVersion( tree, "version" ) )
             , checksum_( Get< std::string >( tree, "checksum" ) )
-            , tomb_    ( tools::Path::FromUTF8( tools::ToUtf8( Get< std::string >( tree, "tomb" ) ) ) )
+            , tomb_    ( tools::Path::FromUTF8( Get< std::string >( tree, "tomb" ) ) )
             , links_   ( 0 )
             , size_    ( Get< size_t >( tree, "size", 0 ) )
         {
@@ -1200,7 +1200,7 @@ namespace
 {
 void Link( Tree& dst, const Tree& src, const std::string& key, const Package& pkg )
 {
-    const tools::Path root = tools::Path::FromUTF8( tools::ToUtf8( Get< std::string >( src, key + ".root" ) ) );
+    const tools::Path root = tools::Path::FromUTF8( Get< std::string >( src, key + ".root" ) );
     const std::string checksum = Get< std::string >( src, key + ".checksum" );
     Package_ABC::T_Item item = pkg.FindRoot( root, checksum, false );
     if( item )
