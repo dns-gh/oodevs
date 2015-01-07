@@ -223,6 +223,6 @@
   </migration>
   <migration from="6.0.0" to="6.0.1"/>
   <migration from="6.0.1" to="6.0.2">
-    <upgrade schema="schemas/6.0.1/physical/physical.xsd" apply="schemas/6.0.2/xsl/physical_6.0.1-6.0.2.xsl"/>
+    <upgrade schema="schemas/6.0.1/physical/Physical.xsd" apply="schemas/6.0.2/xsl/physical_6.0.1-6.0.2.xsl"/>
   </migration>
 </migrations>
