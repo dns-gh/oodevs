@@ -35,29 +35,31 @@ using runtime::Async;
 
 namespace
 {
-bool BeginWith( const Path& prefix, const Path& path )
+bool BeginWith( const tools::Path& prefix, const tools::Path& path )
 {
-    Path::const_iterator a = prefix.begin();
-    Path::const_iterator b = path.begin();
-    for( ; a != prefix.end(); ++a, ++b )
-        if( b == path.end() )
+    const auto boostPrefix = prefix.ToBoost();
+    const auto boostPath = path.ToBoost();
+    auto a = boostPrefix.begin();
+    auto b = boostPath.begin();
+    for( ; a != boostPrefix.end(); ++a, ++b )
+        if( b == boostPath.end() )
             return false;
         else if( *a != *b )
             return false;
     return true;
 }
 
-bool EndWith( Path suffix, Path path )
+bool EndWith( tools::Path suffix, tools::Path path )
 {
-    for( ; !suffix.empty(); suffix.remove_filename(), path.remove_filename() )
-        if( path.empty() )
+    for( ; !suffix.IsEmpty(); suffix.RemoveFilename(), path.RemoveFilename() )
+        if( path.IsEmpty() )
             return false;
-        else if( suffix.filename() != path.filename() )
+        else if( suffix.FileName() != path.FileName() )
             return false;
     return true;
 }
 
-typedef std::vector< Path > T_Paths;
+typedef std::vector< tools::Path > T_Paths;
 
 std::string MakeExerciseData( const std::string& model, const std::string& terrain )
 {
@@ -110,17 +112,17 @@ struct Fixture
     Package install;
     Package cache;
 
-    std::string GetFileIndex()
+    tools::Path GetFileIndex()
     {
-        return boost::lexical_cast< std::string >( idx++ );
+        return boost::lexical_cast< std::string >( idx++ ).c_str();
     }
 
 
-    void AddItem( T_Paths& dst, bool ref, const Path& root, const Path& prefix, const Path& name, const Path& suffix,
+    void AddItem( T_Paths& dst, bool ref, const tools::Path& root, const tools::Path& prefix, const tools::Path& name, const tools::Path& suffix,
                   const std::string& checksum, const std::string& contents, bool glob )
     {
-        const Path data = prefix.empty() ? root : root / prefix;
-        const Path file = name.empty() ? data / suffix : data / name / suffix;
+        const tools::Path data = prefix.IsEmpty() ? root : root / prefix;
+        const tools::Path file = name.IsEmpty() ? data / suffix : data / name / suffix;
         if( glob )
         {
             MOCK_EXPECT( fs.Walk ).once().with( data, mock::any, boost::bind( &MockFileSystem::Apply, &fs, _1, boost::assign::list_of( file ) ) );
@@ -129,7 +131,7 @@ struct Fixture
         }
         else
         {
-            if( !name.empty() )
+            if( !name.IsEmpty() )
                 MOCK_EXPECT( fs.Walk ).once().with( data, false, boost::bind( &MockFileSystem::Apply, &fs, _1, boost::assign::list_of( data / name ) ) );
             MOCK_EXPECT( fs.IsFile ).once().with( file ).returns( true );
             if( ref )
@@ -146,57 +148,58 @@ struct Fixture
         dst.push_back( file );
     }
 
-    void AddModel( T_Paths& dst, bool ref, const Path& root, const Path& name, const std::string& checksum )
+    void AddModel( T_Paths& dst, bool ref, const tools::Path& root, const tools::Path& name, const std::string& checksum )
     {
         AddItem( dst, ref, root, "data/models", name, "decisional/decisional.xml", checksum, "", false );
         if( gaming )
             MOCK_EXPECT( fs.IsFile ).with( root / "gaming_app.exe" ).returns( false );
     }
 
-    void AddTerrain( T_Paths& dst, bool ref, const Path& root, const Path& name, const std::string& checksum )
+    void AddTerrain( T_Paths& dst, bool ref, const tools::Path& root, const tools::Path& name, const std::string& checksum )
     {
         AddItem( dst, ref, root, "data/terrains", name, "Terrain.xml", checksum, "", true );
         if( gaming )
             MOCK_EXPECT( fs.IsFile ).with( root / "gaming_app.exe" ).returns( false );
     }
 
-    void AddExercise( T_Paths& dst, bool ref, const Path& root, const Path& name, const std::string& checksum, const std::string& model, const std::string& terrain )
+    void AddExercise( T_Paths& dst, bool ref, const tools::Path& root, const tools::Path& name, const std::string& checksum, const std::string& model, const std::string& terrain )
     {
         AddItem( dst, ref, root, "exercises", name, "exercise.xml", checksum, MakeExerciseData( model, terrain ), true );
         if( gaming )
             MOCK_EXPECT( fs.IsFile ).with( root / "gaming_app.exe" ).returns( false );
     }
 
-    void AddClient( T_Paths& dst, bool ref, const Path& root, const std::string& checksum )
+    void AddClient( T_Paths& dst, bool ref, const tools::Path& root, const std::string& checksum )
     {
         AddItem( dst, ref, root, "", "", "gaming_app.exe", checksum, "", false );
         MOCK_EXPECT( fs.Walk ).once().with( root / "exercises", mock::any, mock::any );
     }
 
-    Path Decompose( const Path& path, size_t offset )
+    tools::Path Decompose( const tools::Path& path, size_t offset )
     {
-        Path rpy;
-        for( Path::const_iterator it = path.begin(); it != path.end() && offset; ++it, --offset )
-            rpy = rpy / *it;
+        tools::Path rpy;
+        const auto boostPath = path.ToBoost();
+        for( auto it = boostPath.begin(); it != boostPath.end() && offset; ++it, --offset )
+            rpy = rpy / tools::Path::FromUTF8( it->string() );
         return rpy;
     }
 
     T_Paths GetItemRoots( const T_Paths& src )
     {
         T_Paths rpy;
-        std::set< Path > roots;
-        BOOST_FOREACH( const Path& it, src )
+        std::set< tools::Path > roots;
+        BOOST_FOREACH( const tools::Path& it, src )
         {
-            const Path sub = Decompose( it, 2 );
+            const auto sub = Decompose( it, 2 );
             if( roots.insert( sub ).second )
                 rpy.push_back( sub );
         }
         return rpy;
     }
 
-    void AddPackageDescriptor( const Path& root, const std::string& name, const std::string& description, const std::string& version )
+    void AddPackageDescriptor( const tools::Path& root, const std::string& name, const std::string& description, const std::string& version )
     {
-        const Path content = root / "content.xml";
+        const auto content = root / "content.xml";
         MOCK_EXPECT( fs.IsFile ).with( content ).returns( true );
         Tree next;
         next.put( "content.name", name );
@@ -205,7 +208,7 @@ struct Fixture
         MOCK_EXPECT( fs.ReadFile ).with( content ).returns( ToXml( next ).c_str() );
     }
 
-    Path GetItemRoot( const Path& root, bool ref )
+    tools::Path GetItemRoot( const tools::Path& root, bool ref )
     {
         return ref ? root / GetFileIndex() : root;
     }
@@ -213,7 +216,7 @@ struct Fixture
     void AddSomePackages( const Package_ABC& pkg, bool ref )
     {
         T_Paths dst;
-        const Path root = pkg.GetPath();
+        const tools::Path root = pkg.GetPath();
         if( !ref )
             AddPackageDescriptor( root, "some_name", "some_description", "some_version" );
         AddModel   ( dst, ref, GetItemRoot( root, ref ), "ada", "01234567" );
@@ -280,15 +283,15 @@ struct Fixture
         CheckSomePackages( pkg, reference );
     }
 
-    Path InstallPackage( const Package_ABC& input,
+    tools::Path InstallPackage( const Package_ABC& input,
                          const std::string& type,
                          const std::string& name,
                          const std::string& checksum,
                          const std::string& model = std::string(),
                          const std::string& terrain = std::string() )
     {
-        const Path root = install.GetPath();
-        const Path sub = root / GetFileIndex();
+        const tools::Path root = install.GetPath();
+        const tools::Path sub = root / GetFileIndex();
         MOCK_EXPECT( fs.MakePaths ).with( root );
         MOCK_EXPECT( fs.MakeAnyPath ).once().with( root ).returns( sub );
         MOCK_EXPECT( fs.MakePaths ).once().with( boost::bind( &BeginWith, sub, _1 ) );
@@ -297,17 +300,17 @@ struct Fixture
         size_t idx;
         if( type == "model" )
         {
-            AddModel( dst, true, sub, name, checksum );
+            AddModel( dst, true, sub, name.c_str(), checksum );
             idx = 0;
         }
         else if( type == "terrain" )
         {
-            AddTerrain( dst, true, sub, name, checksum );
+            AddTerrain( dst, true, sub, name.c_str(), checksum );
             idx = 1;
         }
         else if( type == "exercise" )
         {
-            AddExercise( dst, true, sub, name, checksum, model, terrain );
+            AddExercise( dst, true, sub, name.c_str(), checksum, model, terrain );
             idx = 2;
         }
         Async async( pool );
@@ -328,9 +331,9 @@ struct Fixture
         CheckItem( data, "model", "ada", "01234567" );
     }
 
-    void ExpectItemRemoval( const Path& root )
+    void ExpectItemRemoval( const tools::Path& root )
     {
-        const Path sub = root / GetFileIndex();
+        const tools::Path sub = root / GetFileIndex();
         MOCK_EXPECT( fs.MakeAnyPath ).once().with( root ).returns( sub );
         MOCK_EXPECT( fs.Rename ).once().with( boost::bind( &BeginWith, install.GetPath(), _1 ), boost::bind( &BeginWith, sub, _1 ) ).returns( true );
         MOCK_EXPECT( fs.Remove ).with( sub ).returns( true );
@@ -342,9 +345,9 @@ struct Fixture
     {
         T_Paths dst;
         const auto root = install.GetPath();
-        AddModel   ( dst, true, GetItemRoot( root, true ), model, modelChecksum );
-        AddTerrain ( dst, true, GetItemRoot( root, true ), terrain, terrainChecksum );
-        AddExercise( dst, true, GetItemRoot( root, true ), exercise, exerciseChecksum, model, terrain );
+        AddModel   ( dst, true, GetItemRoot( root, true ), model.c_str(), modelChecksum);
+        AddTerrain ( dst, true, GetItemRoot( root, true ), terrain.c_str(), terrainChecksum );
+        AddExercise( dst, true, GetItemRoot( root, true ), exercise.c_str(), exerciseChecksum, model, terrain );
         MOCK_EXPECT( fs.Walk ).once().with( root, false, boost::bind( &MockFileSystem::Apply, &fs, _1, GetItemRoots( dst ) ) );
         install.Parse();
         mock::verify();
@@ -355,7 +358,7 @@ struct Fixture
         InstallWith( "ada", "v1", "ter", "v1", exercise, checksum );
     }
 
-    Path UploadAndInstall( const std::string& exercise, const std::string& checksum )
+    tools::Path UploadAndInstall( const std::string& exercise, const std::string& checksum )
     {
         T_Paths dst;
         Package upload( pool, fs, GetFileIndex(), false, true );
@@ -363,7 +366,7 @@ struct Fixture
         AddPackageDescriptor( root, "upload name", "upload description", "upload version" );
         AddModel   ( dst, false, GetItemRoot( root, false ), "ada", "v1" );
         AddTerrain ( dst, false, GetItemRoot( root, false ), "ter", "v1" );
-        AddExercise( dst, false, GetItemRoot( root, false ), exercise, checksum, "ada", "ter" );
+        AddExercise( dst, false, GetItemRoot( root, false ), exercise.c_str(), checksum.c_str(), "ada", "ter" );
         upload.Parse();
         const auto tomb = InstallPackage( upload, "exercise", exercise, checksum, "ada", "ter" );
         mock::verify();
@@ -391,7 +394,7 @@ BOOST_FIXTURE_TEST_CASE( package_uninstalls, Fixture<> )
 {
     InstallSomePackage();
 
-    const Path dst = GetFileIndex();
+    const tools::Path dst = GetFileIndex();
     Async async( pool );
     install.Uninstall( async, dst, boost::assign::list_of( 42 ) );
 
@@ -416,7 +419,7 @@ BOOST_FIXTURE_TEST_CASE( package_links, Fixture<> )
     const Tree link = install.LinkExercise( "shore" );
     const Tree other = install.LinkItem( link );
 
-    const Path dst = GetFileIndex();
+    const tools::Path dst = GetFileIndex();
     Async async( pool );
     install.Uninstall( async, dst, boost::assign::list_of( 0 ) );
     const Tree data = install.GetProperties();
@@ -467,7 +470,7 @@ void CheckEgypt( bool& sentinel, const Tree& item, size_t size )
     BOOST_CHECK( !sentinel );
     sentinel = true;
     BOOST_CHECK_EQUAL( Get< std::string >( item, ".type" ), "exercise" );
-    BOOST_CHECK_EQUAL( Get< Path >( item, ".name" ), Path( "worldwide/Egypt" ) );
+    BOOST_CHECK_EQUAL( Get< std::string  >( item, ".name" ), "worldwide\\Egypt" );
     BOOST_CHECK_EQUAL( Get< std::string >( item, ".checksum" ), "1A741642" );
     BOOST_CHECK_EQUAL( Get< size_t >( item, ".size" ), size );
 }
@@ -478,7 +481,7 @@ BOOST_AUTO_TEST_CASE( package_checksum_skip_unwanted_data )
     MockPool pool;
     MockLog log;
     runtime::FileSystem fs( log );
-    const Path root = testOptions.GetDataPath( "packages" ).ToBoost();
+    const tools::Path root = testOptions.GetDataPath( "packages" );
     Package pkg( pool, fs, root, true, true );
     pkg.Parse();
 
@@ -534,7 +537,7 @@ BOOST_AUTO_TEST_CASE( package_pack_unpack )
     MockPool pool;
     MockLog log;
     runtime::FileSystem fs( log );
-    const Path root = testOptions.GetDataPath( "packages" ).ToBoost();
+    const tools::Path root = testOptions.GetDataPath( "packages" );
     Package pkg( pool, fs, root, true, true );
     pkg.Parse();
 
@@ -549,9 +552,9 @@ BOOST_AUTO_TEST_CASE( package_pack_unpack )
     pkg.Download( chunker, *item );
 
     // uncompress package to random dir, and check it against source
-    const Path output = fs.MakeAnyPath( testOptions.GetDataPath( "." ).ToBoost() );
+    const tools::Path output = fs.MakeAnyPath( testOptions.GetDataPath( "." ) );
     const auto erase = runtime::Scoper( [&]{ fs.Remove( output ); } );
-    const Path pkgdir = output / "0";
+    const tools::Path pkgdir = output / "0";
     auto unpacker = fs.Unpack( pkgdir, buffer, 0 );
     unpacker->Unpack();
     BOOST_CHECK( fs.IsFile( pkgdir / "signature" ) );

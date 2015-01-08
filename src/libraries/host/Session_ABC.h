@@ -16,14 +16,15 @@
 namespace boost
 {
     template< typename T > class shared_ptr;
-namespace filesystem
-{
-    class path;
-}
 namespace uuids
 {
     struct uuid;
 }
+}
+
+namespace tools
+{
+    class Path;
 }
 
 namespace web
@@ -38,7 +39,6 @@ namespace session
 
 namespace host
 {
-    typedef boost::filesystem::path Path;
     typedef boost::property_tree::ptree Tree;
     typedef boost::uuids::uuid Uuid;
 }
@@ -62,9 +62,9 @@ struct Session_ABC : public boost::noncopyable
     //! @name Methods
     //@{
     virtual Uuid GetId() const = 0;
-    virtual Path GetRoot() const = 0;
+    virtual tools::Path GetRoot() const = 0;
     virtual Uuid GetNode() const = 0;
-    virtual Path GetExercise() const = 0;
+    virtual tools::Path GetExercise() const = 0;
     virtual std::string GetName() const = 0;
     virtual int GetPort() const = 0;
     virtual Tree GetProperties() const = 0;
@@ -83,7 +83,7 @@ struct Session_ABC : public boost::noncopyable
     //! @name Public methods
     //@{
     virtual Tree  Save() const = 0;
-    virtual bool  Start( const Path& cwd, const Path& app, const Path& timeline, const std::string& checkpoint ) = 0;
+    virtual bool  Start( const tools::Path& cwd, const tools::Path& app, const tools::Path& timeline, const std::string& checkpoint ) = 0;
     virtual bool  Stop() = 0;
     virtual bool  Refresh() = 0;
     virtual bool  RefreshSize() = 0;
@@ -119,9 +119,9 @@ struct SessionFactory_ABC : public boost::noncopyable
 
     //! @name Methods
     //@{
-    virtual Session_ABC::T_Ptr Make( const Path& root, const Path& trash, const Uuid& node,
+    virtual Session_ABC::T_Ptr Make( const tools::Path& root, const tools::Path& trash, const Uuid& node,
                                      const web::session::Config& cfg, const std::string& exercise, const web::User& user ) const = 0;
-    virtual Session_ABC::T_Ptr Make( const Path& tag, const Path& trash ) const = 0;
+    virtual Session_ABC::T_Ptr Make( const tools::Path& tag, const tools::Path& trash ) const = 0;
     //@}
 };
 }

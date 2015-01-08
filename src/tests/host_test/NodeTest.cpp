@@ -41,7 +41,7 @@ namespace
     const int defaultPort = 1337;
     const int processPid = 7331;
     const std::string processName = "myProcessName";
-    const std::string defaultRoot = "root";
+    const tools::Path defaultRoot = "root";
 
     struct Fixture
     {

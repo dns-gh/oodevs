@@ -15,7 +15,7 @@
 #include "Container.h"
 #include "runtime/Async.h"
 #include "runtime/Timer_ABC.h"
-#include <boost/filesystem/path.hpp>
+#include <tools/Path.h>
 
 namespace cpplog
 {
@@ -35,7 +35,6 @@ namespace host
     struct PortFactory_ABC;
     struct SessionFactory_ABC;
     struct UuidFactory_ABC;
-    typedef boost::filesystem::path Path;
 
 // =============================================================================
 /** @class  SessionFactory
@@ -53,11 +52,11 @@ public:
                                 const runtime::FileSystem_ABC& fs,
                                 const SessionFactory_ABC& sessions,
                                 const NodeController_ABC& nodes,
-                                const Path& root,
-                                const Path& cwd,
-                                const Path& simulation,
-                                const Path& replayer,
-                                const Path& timeline,
+                                const tools::Path& root,
+                                const tools::Path& cwd,
+                                const tools::Path& simulation,
+                                const tools::Path& replayer,
+                                const tools::Path& timeline,
                                 runtime::Pool_ABC& pool );
     virtual ~SessionController();
     //@}
@@ -89,8 +88,8 @@ public:
 private:
     //! @name Private methods
     //@{
-    void ReloadSession( const Path& path, T_Predicate predicate );
-    bool ReloadDirectory( runtime::Async& reload, const Path& dir, T_Predicate predicate );
+    void ReloadSession( const tools::Path& path, T_Predicate predicate );
+    bool ReloadDirectory( runtime::Async& reload, const tools::Path& dir, T_Predicate predicate );
     void ReloadReplay( Session_ABC& session );
     void Refresh();
     void RefreshSession( T_Session session );
@@ -117,12 +116,12 @@ private:
     const runtime::FileSystem_ABC& fs_;
     const SessionFactory_ABC& factory_;
     const NodeController_ABC& nodes_;
-    const Path root_;
-    const Path trash_;
-    const Path cwd_;
-    const Path simulation_;
-    const Path replayer_;
-    const Path timeline_;
+    const tools::Path root_;
+    const tools::Path trash_;
+    const tools::Path cwd_;
+    const tools::Path simulation_;
+    const tools::Path replayer_;
+    const tools::Path timeline_;
     Container< Session_ABC > sessions_;
     runtime::Timer timer_;
     runtime::Timer sizes_;

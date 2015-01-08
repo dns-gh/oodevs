@@ -18,14 +18,15 @@ namespace boost
 {
     template< typename T > class optional;
     template< typename T > class shared_ptr;
-namespace filesystem
-{
-    class path;
-}
 namespace uuids
 {
     struct uuid;
 }
+}
+
+namespace tools
+{
+    class Path;
 }
 
 namespace io
@@ -45,7 +46,6 @@ namespace node
 namespace host
 {
     struct Node_ABC;
-    typedef boost::filesystem::path Path;
     typedef boost::property_tree::ptree Tree;
     typedef boost::uuids::uuid Uuid;
 }
@@ -71,8 +71,8 @@ struct NodeController_ABC : public boost::noncopyable
     typedef Node_ABC T_Base;
     typedef boost::shared_ptr< T_Base > T_Node;
     typedef std::vector< T_Node > T_Nodes;
-    typedef std::vector< Path > T_Exercises;
-    typedef std::vector< Path > T_Plugins;
+    typedef std::vector< tools::Path > T_Exercises;
+    typedef std::vector< tools::Path > T_Plugins;
     //@}
 
     //! @name Methods

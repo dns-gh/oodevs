@@ -12,7 +12,6 @@
 #include "cpplog/cpplog.hpp"
 #include "runtime/FileSystem.h"
 #include "runtime/PropertyTree.h"
-#include "runtime/Utf8.h"
 #include "web/Agent_ABC.h"
 #include "web/Configs.h"
 #include "web/Controller.h"
@@ -154,12 +153,12 @@ namespace
         ExpectReply( rpy, status, "[" + json.substr( 0, json.size() - 1 ) + "]" );
     }
 
-    void ExpectPaths( MockResponse& rpy, HttpStatus status, const std::vector< Path >& list )
+    void ExpectPaths( MockResponse& rpy, HttpStatus status, const std::vector< tools::Path >& list )
     {
         std::string json;
-        BOOST_FOREACH( const Path& it, list )
+        BOOST_FOREACH( const tools::Path& it, list )
         {
-            std::string item = runtime::Utf8( it );
+            std::string item = it.ToUTF8();
             std::replace( item.begin(), item.end(), '\\', '/' );
             json += "\"" + item + "\",";
         }
@@ -178,7 +177,7 @@ namespace
     {
         Fixture()
             : fs        ( log )
-            , plugins   ( fs, testOptions.GetDataPath( "plugins" ).ToUTF8() )
+            , plugins   ( fs, testOptions.GetDataPath( "plugins" ) )
             , controller( plugins, log, agent, users, secure )
         {
             // NOTHING
@@ -437,8 +436,8 @@ BOOST_FIXTURE_TEST_CASE( controller_list_exercises, Fixture<> )
         ( "offset", "5" )
         ( "limit",  "3" )
     );
-    const Path dummy = "/a/B/c/D";
-    const std::vector< Path > expected = boost::assign::list_of( dummy )( dummy );
+    const tools::Path dummy = "/a/B/c/D";
+    const std::vector< tools::Path > expected = boost::assign::list_of( dummy )( dummy );
     MOCK_EXPECT( agent.ListExercises ).once().with( defaultId, 5, 3 ).returns( expected );
     ExpectPaths( reply, web::OK, expected );
     controller.DoGet( reply, request );

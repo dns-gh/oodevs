@@ -17,6 +17,7 @@
 #include <boost/filesystem/path.hpp>
 #include <boost/property_tree/ptree_fwd.hpp>
 #include <boost/thread/mutex.hpp>
+#include <tools/Path.h>
 
 namespace boost
 {
@@ -40,10 +41,8 @@ namespace web
 {
     struct Client_ABC;
 }
-
 namespace host
 {
-    typedef boost::filesystem::path Path;
     typedef boost::property_tree::ptree Tree;
 namespace proxy
 {
@@ -57,7 +56,7 @@ namespace proxy
 {
 struct Ssl
 {
-    Ssl( bool enabled, const Path& certificate, const Path& key )
+    Ssl( bool enabled, const tools::Path& certificate, const tools::Path& key )
         : enabled    ( enabled )
         , certificate( certificate )
         , key        ( key )
@@ -65,15 +64,15 @@ struct Ssl
         // NOTHING
     }
     bool enabled;
-    const Path certificate;
-    const Path key;
+    const tools::Path certificate;
+    const tools::Path key;
 private:
     Ssl& operator=( const Ssl& );
 };
 
 struct Config
 {
-    Config( const Path& root, const Path& app, int http, int tcp, const Ssl& ssl )
+    Config( const tools::Path& root, const tools::Path& app, int http, int tcp, const Ssl& ssl )
         : root( root )
         , app ( app )
         , http( http )
@@ -82,8 +81,8 @@ struct Config
     {
         // NOTHING
     }
-    const Path root;
-    const Path app;
+    const tools::Path root;
+    const tools::Path app;
     const int http;
     const int tcp;
     const Ssl ssl;
@@ -130,7 +129,7 @@ private:
     //! @name Private methods
     Tree GetProperties() const;
     void Save() const;
-    bool Reload( const Path& path );
+    bool Reload( const tools::Path& path );
     void Start();
     void Stop();
     void Restart();

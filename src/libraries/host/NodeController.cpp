@@ -15,7 +15,6 @@
 #include "Proxy_ABC.h"
 #include "runtime/FileSystem_ABC.h"
 #include "runtime/PropertyTree.h"
-#include "runtime/Utf8.h"
 #include "web/Configs.h"
 #include "web/HttpException.h"
 #include "web/Plugins.h"
@@ -29,10 +28,10 @@
 #include <boost/date_time/posix_time/time_parsers.hpp>
 #include <boost/assign/list_of.hpp>
 #include <boost/filesystem/operations.hpp>
+#include <tools/Helpers.h>
 
 using namespace host;
 using namespace property_tree;
-using runtime::Utf8;
 using runtime::Async;
 using runtime::FileSystem_ABC;
 using runtime::Pool_ABC;
@@ -46,11 +45,11 @@ NodeController::NodeController( cpplog::BaseLogger& log,
                                 const FileSystem_ABC& fs,
                                 const web::Plugins& plugins,
                                 const NodeFactory_ABC& nodes,
-                                const Path& root,
-                                const Path& app,
-                                const Path& web,
-                                const Path& client,
-                                const Path& licenses,
+                                const tools::Path& root,
+                                const tools::Path& app,
+                                const tools::Path& web,
+                                const tools::Path& client,
+                                const tools::Path& licenses,
                                 const std::string& type,
                                 int host,
                                 int tcp,
@@ -61,7 +60,7 @@ NodeController::NodeController( cpplog::BaseLogger& log,
     , fs_         ( fs )
     , plugins_    ( plugins )
     , factory_    ( nodes )
-    , root_       ( root / ( type == "cluster" ? type : "nodes" ) )
+    , root_       ( root / ( type == "cluster" ? tools::Path::FromUTF8( type ) : "nodes" ) )
     , app_        ( app )
     , web_        ( web )
     , licensesDir_( licenses )
@@ -74,18 +73,18 @@ NodeController::NodeController( cpplog::BaseLogger& log,
 {
     fs.MakePaths( root_ );
     if( !fs_.IsFile( app_ ) )
-        throw std::runtime_error( "'" + runtime::Utf8( app_ ) + "' is not a binary" );
+        throw std::runtime_error( "'" + app_.ToUTF8()+ "' is not a binary" );
     if( !fs_.IsDirectory( web_ ) )
-        throw std::runtime_error( "'" + runtime::Utf8( web_ ) + "' is not a directory" );
-    if( !client.empty() )
+        throw std::runtime_error( "'" + web_.ToUTF8() + "' is not a directory" );
+    if( !client.IsEmpty() )
     {
         if( !fs_.IsDirectory( client ) )
-            throw std::runtime_error( "'" + runtime::Utf8( client ) + "' is not a directory" );
+            throw std::runtime_error( "'" + client.ToUTF8() + "' is not a directory" );
         client_ = boost::make_shared< Package >( pool, fs, client, true, true );
         client_->Parse();
     }
     if( !fs_.IsDirectory( licensesDir_ ) )
-        throw std::runtime_error( "'" + runtime::Utf8( licensesDir_ ) + "' is not a directory" );
+        throw std::runtime_error( "'" + licensesDir_.ToUTF8() + "' is not a directory" );
     timer_ = runtime::MakeTimer( pool, boost::posix_time::seconds( 5 ), boost::bind( &NodeController::Refresh, this ) );
     GetAvailableLicences();
 }
@@ -152,7 +151,7 @@ bool HasSameIdent( const std::string& ident, const Node_ABC& node )
 // Name: NodeController::ReloadNode
 // Created: BAX 2012-07-20
 // -----------------------------------------------------------------------------
-void NodeController::ReloadNode( const Path& path )
+void NodeController::ReloadNode( const tools::Path& path )
 {
     try
     {
@@ -169,7 +168,7 @@ void NodeController::ReloadNode( const Path& path )
     catch( const std::exception& err )
     {
         LOG_WARN( log_ ) << "[" << type_ << "] " << err.what();
-        LOG_WARN( log_ ) << "[" << type_ << "] Unable to reload " << Utf8( path );
+        LOG_WARN( log_ ) << "[" << type_ << "] Unable to reload " << path;
     }
 }
 
@@ -177,9 +176,9 @@ void NodeController::ReloadNode( const Path& path )
 // Name: NodeController::ReloadDirectory
 // Created: BAX 2012-08-10
 // -----------------------------------------------------------------------------
-bool NodeController::ReloadDirectory( runtime::Async& reload, const Path& dir )
+bool NodeController::ReloadDirectory( runtime::Async& reload, const tools::Path& dir )
 {
-    const Path path = dir / ( type_ + ".id" );
+    const tools::Path path = dir / tools::Path::FromUTF8( type_ + ".id" );
     if( fs_.IsFile( path ) )
         reload.Post( boost::bind( &NodeController::ReloadNode, this, path ) );
     return true;
@@ -278,7 +277,7 @@ NodeController::T_Node NodeController::Create( const std::string& ident, const w
     if( !IsValid( cfg ) )
         return T_Node();
 
-    const Path output = fs_.MakeAnyPath( root_ );
+    const tools::Path output = fs_.MakeAnyPath( root_ );
     T_Node node = factory_.Make( output, ident, cfg );
     bool valid = nodes_.AttachUnless( node, boost::bind( &HasSameIdent, ident, _1 ) );
     if( !valid )
@@ -297,7 +296,7 @@ NodeController::T_Node NodeController::Create( const std::string& ident, const w
 // -----------------------------------------------------------------------------
 void NodeController::Save( const Node_ABC& node ) const
 {
-    const Path path = node.GetRoot() / ( type_ + ".id" );
+    const tools::Path path = node.GetRoot() / tools::Path::FromUTF8( type_ + ".id" );
     Post( async_, boost::bind( &FileSystem_ABC::WriteFile, &fs_, path, ToJson( node.Save() ) ) );
 }
 
@@ -647,7 +646,7 @@ Tree NodeController::ListLicenses( const Uuid& /*id*/ ) const
 Tree NodeController::UploadLicenses( io::Reader_ABC& src )
 {
     boost::system::error_code ec;
-    const Path output = boost::filesystem::unique_path( Path( licensesDir_ ) / "%%%%%%%%.lic", ec );
+    const tools::Path output = tools::Path::UniquePath( tools::Path( licensesDir_ ) / "%%%%%%%%.lic", ec );
     if( ec )
         return Tree();
     std::string content = fs_.ReadAll( src );
@@ -668,7 +667,7 @@ Tree NodeController::UploadLicenses( io::Reader_ABC& src )
                 try
                 {
                     FlexLmLicense flex( *license );
-                    fs_.WriteFile( licensesDir_ / ( *license + ".lic" ), *it );
+                    fs_.WriteFile( licensesDir_ / ( *license + ".lic" ).c_str(), *it );
                     modified = true;
                 }
                 catch( const FlexLmLicense::LicenseError& err )

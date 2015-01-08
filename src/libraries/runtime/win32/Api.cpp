@@ -8,7 +8,7 @@
 // *****************************************************************************
 #include "Api.h"
 #include "runtime/Scoper.h"
-#include "runtime/Utf8.h"
+#include <tools/Helpers.h>
 #include <cpplog/cpplog.hpp>
 
 #include <stdexcept>
@@ -58,7 +58,7 @@ std::string Api::GetLastError() const
                    reinterpret_cast< LPWSTR >( &buffer ), 0, NULL );
     const std::wstring error( buffer );
     LocalFree( buffer );
-    return Utf8( error );
+    return tools::FromUnicodeToUtf8( error );
 }
 
 // -----------------------------------------------------------------------------

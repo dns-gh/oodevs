@@ -8,11 +8,12 @@
 // *****************************************************************************
 #include "Process.h"
 #include "Api_ABC.h"
-#include <runtime/Utf8.h>
 
 #include <boost/bind.hpp>
 #include <boost/format.hpp>
 #include <boost/static_assert.hpp>
+
+#include <tools/Helpers.h>
 
 #include <windows.h>
 
@@ -51,7 +52,7 @@ namespace
     {
         wchar_t name[MAX_PATH];
         int size = api.GetProcessName( handle.get(), name, sizeof name - 1 );
-        return size ? Utf8( std::wstring( name ) ) : "";
+        return size ? tools::FromUnicodeToUtf8( std::wstring( name ) ) : "";
     }
 }
 

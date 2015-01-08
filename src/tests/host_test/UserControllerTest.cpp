@@ -39,7 +39,7 @@ struct SubFixture
     SubFixture()
         : log( std::cout )
         , fs ( log )
-        , db ( boost::filesystem::unique_path( testOptions.GetDataPath( "%%%%%%%%.db" ).ToBoost() ) )
+        , db ( tools::Path::UniquePath( testOptions.GetDataPath( "%%%%%%%%.db" ) ) )
     {
         // NOTHING
     }
@@ -51,14 +51,14 @@ struct SubFixture
 
     cpplog::OstreamLogger log;
     const FileSystem fs;
-    const boost::filesystem::path db;
+    const tools::Path db;
     const Crypt crypt;
     UuidFactory uuids;
 };
 
 BOOST_FIXTURE_TEST_CASE( user_controller_has_no_user_by_default, SubFixture )
 {
-    tools::Sql sql( tools:: Path::FromUnicode( db.wstring() ) );
+    tools::Sql sql( db );
     UserController users( log, crypt, uuids, sql );
     BOOST_CHECK_EQUAL( 0u, users.CountUsers( boost::uuids::nil_uuid() ) );
 }
@@ -66,7 +66,7 @@ BOOST_FIXTURE_TEST_CASE( user_controller_has_no_user_by_default, SubFixture )
 struct Fixture : SubFixture
 {
     Fixture()
-        : sql  ( tools:: Path::FromUnicode( db.wstring() ) )
+        : sql  ( db )
         , users( log, crypt, uuids, sql )
     {
         users.CreateUser( boost::uuids::nil_uuid(), "admin@masagroup.net", "Default", "admin", web::USER_TYPE_ADMINISTRATOR, false );

@@ -12,7 +12,6 @@
 #include "cpplog/cpplog.hpp"
 #include "runtime/Helpers.h"
 #include "runtime/PropertyTree.h"
-#include "runtime/Utf8.h"
 #include "Agent_ABC.h"
 #include "Chunker_ABC.h"
 #include "Configs.h"
@@ -31,6 +30,7 @@
 #include <boost/xpressive/xpressive.hpp>
 #include <boost/uuid/uuid_generators.hpp>
 #include <boost/uuid/uuid_io.hpp>
+#include <tools/Helpers.h>
 
 using namespace web;
 using namespace property_tree;
@@ -172,12 +172,12 @@ void WriteHttpReply( Reply_ABC& rpy, const std::vector< Tree >& list )
 // Name: WriteHttpReply
 // Created: BAX 2012-07-19
 // -----------------------------------------------------------------------------
-void WriteHttpReply( Reply_ABC& rpy, const std::vector< Path >& list )
+void WriteHttpReply( Reply_ABC& rpy, const std::vector< tools::Path >& list )
 {
     std::ostringstream stream;
-    BOOST_FOREACH( const Path& it, list )
+    BOOST_FOREACH( const tools::Path& it, list )
     {
-        std::string item = runtime::Utf8( it );
+        std::string item = it.ToUTF8();
         std::replace( item.begin(), item.end(), '\\', '/' );
         stream << "\"" << item << "\",";
     }
@@ -217,6 +217,15 @@ T RequireParameter( const std::string& name, const Request_ABC& request )
     return boost::lexical_cast< T >( *value );
 }
 
+template<>
+std::string RequireParameter< std::string >( const std::string& name, const Request_ABC& request )
+{
+    const boost::optional< std::string > value = request.GetParameter( name );
+    if( value == boost::none )
+        throw HttpException( BAD_REQUEST );
+    return tools::ToUtf8( *value );
+}
+
 // -----------------------------------------------------------------------------
 // Name: RequireParameter
 // Created: BAX 2012-08-27
@@ -229,6 +238,16 @@ T RequireParameter( const std::string& name, const Tree& src )
     if( !found )
         throw HttpException( BAD_REQUEST );
     return dst;
+}
+
+template<>
+std::string RequireParameter< std::string >( const std::string& name, const Tree& src )
+{
+    std::string dst;
+    const bool found = TryRead( dst, src, name );
+    if( !found )
+        throw HttpException( BAD_REQUEST );
+    return tools::ToUtf8( dst );
 }
 
 // -----------------------------------------------------------------------------

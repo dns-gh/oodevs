@@ -11,6 +11,7 @@
 #include "runtime/Scoper.h"
 #include <cpplog/cpplog.hpp>
 #include <boost/bind.hpp>
+#include <tools/Helpers.h>
 #include <windows.h>
 
 using namespace runtime;

@@ -14,10 +14,10 @@
 
 #include "runtime/Async.h"
 #include "web/Configs.h"
-#include <boost/filesystem/path.hpp>
 #include <boost/shared_ptr.hpp>
 #include <boost/thread/shared_mutex.hpp>
 #include <boost/uuid/uuid.hpp>
+#include <tools/Path.h>
 
 namespace boost
 {
@@ -100,12 +100,12 @@ public:
     //! @name Constructors/Destructor
     //@{
              Node( const NodeDependencies& deps,
-                   const Path& root,
+                   const tools::Path& root,
                    int min_play_seconds,
                    const std::string& ident,
                    const web::node::Config& cfg );
              Node( const NodeDependencies& deps,
-                   const Path& root,
+                   const tools::Path& root,
                    int min_play_seconds,
                    const Tree& tree );
     virtual ~Node();
@@ -114,7 +114,7 @@ public:
     //! @name Node_ABC methods
     //@{
     virtual Uuid GetId() const;
-    virtual Path GetRoot() const;
+    virtual tools::Path GetRoot() const;
     virtual int  GetPort() const;
     virtual std::string GetIdent() const;
     virtual Tree GetProperties() const;
@@ -123,7 +123,7 @@ public:
     //! @name Public methods
     //@{
     virtual Tree Save() const;
-    virtual bool Start( const Path& app, const Path& web,
+    virtual bool Start( const tools::Path& app, const tools::Path& web,
                         const std::string& type, int http, int tcp, bool weak );
     virtual bool Stop( bool weak );
     virtual void Remove( runtime::Async& async );
@@ -175,7 +175,7 @@ public:
 private:
     //! @name Private methods
     //@{
-    void ParsePackages( const Path& cache );
+    void ParsePackages( const tools::Path& cache );
     Tree GetCommonProperties() const;
     std::pair< T_Process, bool > StopProcess( bool weak );
     //@}
@@ -186,7 +186,7 @@ private:
     const NodeDependencies deps_;
     const Uuid id_;
     const std::string ident_;
-    const Path root_;
+    const tools::Path root_;
     const Port port_;
     const int min_play_seconds_;
     //@}

@@ -12,6 +12,7 @@
 
 #include "runtime/Async.h"
 #include "host/Package_ABC.h"
+#include <tools/Path.h>
 
 #include <boost/filesystem/path.hpp>
 #include <boost/property_tree/ptree.hpp>
@@ -31,9 +32,13 @@ namespace runtime
 namespace gui
 {
     typedef boost::property_tree::ptree Tree;
-    typedef boost::filesystem::path Path;
     struct  Download_ABC;
     class   ItemModel;
+}
+
+namespace tools
+{
+    class Path;
 }
 
 namespace gui
@@ -107,7 +112,7 @@ private:
     void ApplySession();
     void AddItem( const Tree& src, const std::string& type, size_t& idx );
     void OpenDownload( QNetworkReply* rpy );
-    Path GetPath( const QString& type );
+    tools::Path GetPath( const QString& type );
     void StartClient();
 
 private:
@@ -118,7 +123,7 @@ private:
     runtime::Async io_;
     QNetworkAccessManager net_;
     Command cmd_;
-    Path root_;
+    tools::Path root_;
     QUrl url_;
     QReadWriteLock access_;
     T_Package install_;

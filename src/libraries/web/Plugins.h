@@ -22,7 +22,11 @@ namespace runtime
 namespace web
 {
     struct Plugin;
-    typedef boost::filesystem::path Path;
+}
+
+namespace tools
+{
+    class Path;
 }
 
 namespace web
@@ -38,24 +42,24 @@ class Plugins
 public:
     //! @name Constructors/Destructor
     //@{
-     Plugins( const runtime::FileSystem_ABC& fs, const Path& root );
+     Plugins( const runtime::FileSystem_ABC& fs, const tools::Path& root );
     ~Plugins();
     //@}
 
     //! @name Typedef helpers
     //@{
-    typedef std::vector< Path >                  T_Names;
-    typedef std::map< Path, Plugin >             T_Plugins;
+    typedef std::vector< tools::Path >           T_Names;
+    typedef std::map< tools::Path, Plugin >      T_Plugins;
     typedef std::map< std::string, std::string > T_Defaults;
     //@}
 
     //! @name Methods
     //@{
-    size_t     Count      () const;
-    T_Names    GetNames   ( int offset, int limit ) const;
-    bool       Has        ( const std::string& name ) const;
-    T_Defaults GetDefaults( const Path& plugin ) const;
-    Path       GetLibrary ( const Path& plugin ) const;
+    size_t       Count      () const;
+    T_Names      GetNames   ( int offset, int limit ) const;
+    bool         Has        ( const std::string& name ) const;
+    T_Defaults   GetDefaults( const tools::Path& plugin ) const;
+    tools:: Path GetLibrary ( const tools::Path& plugin ) const;
     //@}
 
 private:

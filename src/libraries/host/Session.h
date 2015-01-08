@@ -15,7 +15,6 @@
 #include "web/Configs.h"
 #include "web/User.h"
 
-#include <boost/filesystem/path.hpp>
 #include <boost/property_tree/ptree.hpp>
 #include <boost/thread/locks.hpp>
 #include <boost/thread/shared_mutex.hpp>
@@ -29,6 +28,11 @@ namespace posix_time
 {
     class ptime;
 }
+}
+
+namespace tools
+{
+    class Path;
 }
 
 namespace cpplog
@@ -111,14 +115,14 @@ private:
 // -----------------------------------------------------------------------------
 struct SessionPaths
 {
-    SessionPaths( const Path& root, const Path& trash )
+    SessionPaths( const tools::Path& root, const tools::Path& trash )
         : root ( root )
         , trash( trash )
     {
         // NOTHING
     }
-    Path root;
-    Path trash;
+    tools::Path root;
+    tools::Path trash;
 };
 
 // =============================================================================
@@ -149,9 +153,9 @@ public:
     //! @name Session_ABC methods
     //@{
     virtual Uuid GetId() const;
-    virtual Path GetRoot() const;
+    virtual tools::Path GetRoot() const;
     virtual Uuid GetNode() const;
-    virtual Path GetExercise() const;
+    virtual tools::Path GetExercise() const;
     virtual std::string GetName() const;
     virtual int GetPort() const;
     virtual Tree GetProperties() const;
@@ -164,10 +168,10 @@ public:
 
     //! @name Public methods
     //@{
-    virtual Path  GetPath( const std::string& type ) const;
-    virtual Path  GetOutput() const;
+    virtual tools::Path  GetPath( const std::string& type ) const;
+    virtual tools::Path  GetOutput() const;
     virtual Tree  Save() const;
-    virtual bool  Start( const Path& cwd, const Path& app, const Path& timeline, const std::string& checkpoint );
+    virtual bool  Start( const tools::Path& cwd, const tools::Path& app, const tools::Path& timeline, const std::string& checkpoint );
     virtual bool  Stop();
     virtual bool  Refresh();
     virtual bool  RefreshSize();
@@ -213,16 +217,16 @@ private:
     //@{
     Tree GetProperties( bool save ) const;
     bool StopWith( boost::unique_lock< boost::shared_mutex >& mutex, bool parse, bool error );
-    void ClearOutput( const Path& path );
+    void ClearOutput( const tools::Path& path );
     void ParseCheckpoints();
     void ParseExerciseProperties();
     bool SendStatus( Status next );
     T_Process StartSimulation( const web::session::Config& cfg,
                                const std::string& checkpoint,
                                bool replay,
-                               const Path& output,
-                               const Path& cwd,
-                               const Path& app ) const;
+                               const tools::Path& output,
+                               const tools::Path& cwd,
+                               const tools::Path& app ) const;
     struct PrivateState;
     boost::shared_ptr< PrivateState > PrepareStart( const std::string& checkpoint );
     //@}

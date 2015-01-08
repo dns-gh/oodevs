@@ -16,8 +16,8 @@
 #include "Container.h"
 #include "runtime/Async.h"
 #include "runtime/Timer_ABC.h"
-#include <boost/filesystem/path.hpp>
 #include <boost/property_tree/ptree.hpp>
+#include <tools/Path.h>
 
 namespace cpplog
 {
@@ -42,7 +42,6 @@ namespace host
     struct NodeFactory_ABC;
     struct Package_ABC;
     struct Proxy_ABC;
-    typedef boost::filesystem::path Path;
 }
 
 namespace host
@@ -63,11 +62,11 @@ public:
                              const runtime::FileSystem_ABC& fs,
                              const web::Plugins& plugins,
                              const NodeFactory_ABC& nodes,
-                             const Path& root,
-                             const Path& app,
-                             const Path& web,
-                             const Path& client,
-                             const Path& licenses,
+                             const tools::Path& root,
+                             const tools::Path& app,
+                             const tools::Path& web,
+                             const tools::Path& client,
+                             const tools::Path& licenses,
                              const std::string& type,
                              int host,
                              int tcp,
@@ -149,8 +148,8 @@ public:
 private:
     //! @name Private methods
     //@{
-    void      ReloadNode     ( const Path& path );
-    bool      ReloadDirectory( runtime::Async& reload, const Path& dir );
+    void      ReloadNode     ( const tools::Path& path );
+    bool      ReloadDirectory( runtime::Async& reload, const tools::Path& dir );
     void      Refresh        ();
     void      Save           ( const Node_ABC& node ) const;
     void      Create         ( Node_ABC& node, bool reload );
@@ -169,10 +168,10 @@ private:
     const runtime::FileSystem_ABC& fs_;
     const web::Plugins& plugins_;
     const NodeFactory_ABC& factory_;
-    const Path root_;
-    const Path app_;
-    const Path web_;
-    const Path licensesDir_;
+    const tools::Path root_;
+    const tools::Path app_;
+    const tools::Path web_;
+    const tools::Path licensesDir_;
     const std::string type_;
     const int host_;
     const int tcp_;

@@ -18,7 +18,6 @@
 #include "runtime/PropertyTree.h"
 #include "runtime/Runtime_ABC.h"
 #include "runtime/Scoper.h"
-#include "runtime/Utf8.h"
 #include "web/HttpException.h"
 #include "web/Plugins.h"
 
@@ -28,11 +27,11 @@
 #include <boost/make_shared.hpp>
 #include <boost/thread/lock_guard.hpp>
 #include <boost/uuid/uuid_io.hpp>
+#include <tools/Helpers.h>
 
 using namespace host;
 using namespace property_tree;
 using namespace web::node;
-using runtime::Utf8;
 using runtime::Async;
 using runtime::FileSystem_ABC;
 using runtime::Pool_ABC;
@@ -82,7 +81,7 @@ Config ReadConfig( const Tree& src )
     return cfg;
 }
 
-static const std::string install_directory = "_";
+static const tools::Path install_directory = "_";
 }
 
 // -----------------------------------------------------------------------------
@@ -90,7 +89,7 @@ static const std::string install_directory = "_";
 // Created: BAX 2012-04-17
 // -----------------------------------------------------------------------------
 Node::Node( const NodeDependencies& deps,
-            const Path& root,
+            const tools::Path& root,
             int min_play_seconds,
             const std::string& ident,
             const web::node::Config& cfg )
@@ -118,7 +117,7 @@ Node::Node( const NodeDependencies& deps,
 // Created: BAX 2012-04-17
 // -----------------------------------------------------------------------------
 Node::Node( const NodeDependencies& deps,
-            const Path& root,
+            const tools::Path& root,
             int min_play_seconds,
             const Tree& tree )
     : deps_            ( deps )
@@ -139,7 +138,7 @@ Node::Node( const NodeDependencies& deps,
     , sessions_size_   ( 0 )
 {
     const boost::optional< std::string > cache = tree.get_optional< std::string >( "cache" );
-    ParsePackages( cache == boost::none ? Path() : Utf8( *cache ) );
+    ParsePackages( cache == boost::none ? tools::Path() : tools::Path::FromUTF8( *cache ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -164,7 +163,7 @@ Uuid Node::GetId() const
 // Name: Node::GetRoot
 // Created: BAX 2012-06-04
 // -----------------------------------------------------------------------------
-Path Node::GetRoot() const
+tools::Path Node::GetRoot() const
 {
     return root_;
 }
@@ -227,7 +226,7 @@ Tree Node::Save() const
     Tree tree = GetCommonProperties();
     tree.put( "sessions.num_play", num_play_ );
     if( cache_ )
-        tree.put( "cache", Utf8( cache_->GetPath().filename() ) );
+        tree.put( "cache", cache_->GetPath().FileName().ToUTF8() );
     tree.put( "stopped", stopped_ );
     if( !process_ )
         return tree;
@@ -240,7 +239,7 @@ Tree Node::Save() const
 // Name: Node::Start
 // Created: BAX 2012-04-17
 // -----------------------------------------------------------------------------
-bool Node::Start( const Path& app, const Path& web, const std::string& type,
+bool Node::Start( const tools::Path& app, const tools::Path& web, const std::string& type,
                   int host, int tcp, bool weak )
 {
     // ensure we have a non-exclusive path if current node does not need
@@ -265,7 +264,7 @@ bool Node::Start( const Path& app, const Path& web, const std::string& type,
 #ifdef _DEBUG
         ( "--debug" )
 #endif
-        ( "--www" )( Utf8( web ) )
+        ( "--www" )( web.ToUTF8() )
         ( "--uuid" )( boost::lexical_cast< std::string >( id_ ) )
         ( "--type" )( type )
         ( "--name" )( cfg_.name )
@@ -274,8 +273,8 @@ bool Node::Start( const Path& app, const Path& web, const std::string& type,
         ( "--port" )( boost::lexical_cast< std::string >( port_->Get() ) );
     if( cfg_.sessions.reset )
         args.push_back( "--reset" );
-    T_Process ptr = deps_.runtime.Start( Utf8( app ), args, std::string(),
-                                         Utf8( root_ / ( type + ".log" ) ) );
+    T_Process ptr = deps_.runtime.Start( app.ToUTF8(), args, std::string(),
+                                         ( root_ / tools::Path::FromUTF8( type + ".log" ) ).ToUTF8() );
     if( !ptr )
         return previous;
 
@@ -321,7 +320,7 @@ void Node::SoftKill()
 
 namespace
 {
-void Cleanup( Node::T_Process process, const FileSystem_ABC& fs, const Path& path )
+void Cleanup( Node::T_Process process, const FileSystem_ABC& fs, const tools::Path& path )
 {
     if( process )
         process->Join( 10*1000 );
@@ -358,7 +357,7 @@ bool Node::Update( const Tree& cfg )
 namespace
 {
 template< typename T, typename U >
-void ParseInline( const T& packages, U& dst, const Path& path, U reference = U() )
+void ParseInline( const T& packages, U& dst, const tools::Path& path, U reference = U() )
 {
     U next = packages.Make( path, !reference );
     if( !next->Parse() )
@@ -374,7 +373,7 @@ void ParseInline( const T& packages, U& dst, const Path& path, U reference = U()
 // -----------------------------------------------------------------------------
 void Node::UploadCache( io::Reader_ABC& src )
 {
-    const Path output = deps_.fs.MakeAnyPath( root_ );
+    const tools::Path output = deps_.fs.MakeAnyPath( root_ );
     boost::shared_ptr< Package_ABC > next;
     try
     {
@@ -404,13 +403,13 @@ void Node::UploadCache( io::Reader_ABC& src )
 // Name: Node::ParsePackages
 // Created: BAX 2012-05-24
 // -----------------------------------------------------------------------------
-void Node::ParsePackages( const Path& cache )
+void Node::ParsePackages( const tools::Path& cache )
 {
     boost::lock_guard< boost::shared_mutex > lock( access_ );
     ParseInline( deps_.packages, install_, root_ / install_directory );
     num_exercises_ = install_->CountExercises();
     install_size_ = install_->GetSize();
-    if( cache.empty() )
+    if( cache.IsEmpty() )
         return;
     ParseInline( deps_.packages, cache_, root_ / cache, install_ );
     cache_size_ = cache_->GetSize();
@@ -706,5 +705,5 @@ void Node::FilterConfig( web::session::Config& cfg ) const
         cfg.plugins.erase( id );
     BOOST_FOREACH( const web::node::Config::T_Plugins::value_type& value, cfg_.plugins )
         if( !cfg.plugins.count( value ) )
-            cfg.plugins.insert( std::make_pair( value, web::session::PluginConfig( deps_.plugins, value ) ) );
+            cfg.plugins.insert( std::make_pair( value, web::session::PluginConfig( deps_.plugins, tools::Path::FromUTF8( value ) ) ) );
 }

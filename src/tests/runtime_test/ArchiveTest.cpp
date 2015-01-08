@@ -13,6 +13,7 @@
 #include <runtime/Io.h>
 #include <runtime/Scoper.h>
 #include <tools/BoostTest.h>
+#include <tools/Path.h>
 
 #include <cpplog/cpplog.hpp>
 #include <boost/filesystem.hpp>
@@ -59,21 +60,14 @@ namespace
         std::vector< char > buffer_;
     };
 
-    Path GetSubPath( const Path& root, const Path& path )
+    tools::Path GetSubPath( const tools::Path& root, const tools::Path& path )
     {
-        Path reply;
-        auto a = root.begin();
-        for( auto b = path.begin(); b != path.end(); ++b )
-            if( a != root.end() )
-                ++a;
-            else
-                reply /= *b;
-        return reply;
+        return path.Relative( root );
     }
 
     struct Snapshot
     {
-        std::set< Path > paths;
+        std::set< tools::Path > paths;
         std::string crc;
         size_t size;
     };
@@ -85,11 +79,11 @@ namespace
         BOOST_CHECK_EQUAL_COLLECTIONS( a.paths.begin(), a.paths.end(), b.paths.begin(), b.paths.end() );
     }
 
-    Snapshot MakeSnapshot( const FileSystem_ABC& fs, const Path& src )
+    Snapshot MakeSnapshot( const FileSystem_ABC& fs, const tools::Path& src )
     {
         Snapshot dst;
         dst.size = 0;
-        dst.crc = fs.Checksum( src, [&]( const Path& path ) -> bool {
+        dst.crc = fs.Checksum( src, [&]( const tools::Path& path ) -> bool {
             dst.paths.insert( GetSubPath( src, path ) );
             return true;
         }, dst.size );
@@ -101,13 +95,13 @@ namespace
         MockLog log;
         FileSystem fs( log );
         VirtualDevice dev;
-        const auto input = testOptions.GetDataPath( "archive" ).ToBoost();
-        const auto output = testOptions.GetTempDir().ToBoost() / suffix;
+        const auto input = testOptions.GetDataPath( "archive" );
+        const auto output = testOptions.GetTempDir() / tools::Path::FromUTF8( suffix );
         const Scoper removeOutput = [&](){ fs.Remove( output ); };
         const auto ref = MakeSnapshot( fs, input );
         {
             auto packer = fs.Pack( dev, fmt );
-            packer->Pack( input, []( const Path& path ) {
+            packer->Pack( input, []( const tools::Path& path ) {
                 return path != "echowin32.exe";
             } );
             VirtualDevice file;
@@ -133,8 +127,8 @@ namespace
 {
     void CheckUnpack( const FileSystem_ABC& fs, const std::string& name )
     {
-        const auto path = testOptions.GetDataPath( tools::Path::FromUTF8( name ) ).ToBoost();
-        const auto output = fs.MakeAnyPath( testOptions.GetTempDir().ToBoost() );
+        const auto path = testOptions.GetDataPath( tools::Path::FromUTF8( name ) );
+        const auto output = fs.MakeAnyPath( testOptions.GetTempDir() );
         const Scoper removeOutput = [&](){ fs.Remove( output ); };
         const auto data = fs.ReadFile( path );
         VirtualDevice input;
@@ -160,8 +154,8 @@ BOOST_AUTO_TEST_CASE( fs_copy_directory_is_unicode )
 {
     MockLog log;
     FileSystem fs( log );
-    const auto input = testOptions.GetDataPath( "archive" ).ToBoost();
-    const auto output = fs.MakeAnyPath( testOptions.GetTempDir().ToBoost() );
+    const auto input = testOptions.GetDataPath( "archive" );
+    const auto output = fs.MakeAnyPath( testOptions.GetTempDir() );
     fs.CopyDirectory( input, output );
     Compare( MakeSnapshot( fs, input ), MakeSnapshot( fs, output ) );
     fs.Remove( output );

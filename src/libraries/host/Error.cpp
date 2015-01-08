@@ -11,6 +11,7 @@
 #include "runtime/FileSystem_ABC.h"
 #include <boost/filesystem.hpp>
 #include <boost/xpressive/xpressive.hpp>
+#include <tools/Path.h>
 
 namespace
 {
@@ -31,12 +32,12 @@ namespace
     }
 }
 
-std::string host::GetLastError( const runtime::FileSystem_ABC& fs, const Path& output )
+std::string host::GetLastError( const runtime::FileSystem_ABC& fs, const tools::Path& output )
 {
-    std::set< runtime::Path > logs;
-    fs.Walk( output, false, [&]( const runtime::Path& path ) -> bool
+    std::set< tools::Path > logs;
+    fs.Walk( output, false, [&]( const tools::Path& path ) -> bool
     {
-        const auto file = path.filename().string();
+        const auto file = path.FileName().ToUTF8();
         static const auto regex = boost::xpressive::sregex::compile( "Sim(\\.\\d{8}T\\d{6})?\\.log(\\.\\d+)*" );
         if( boost::xpressive::regex_match( file, regex ) )
             logs.insert( path );

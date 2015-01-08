@@ -21,7 +21,7 @@
 #include "runtime/PropertyTree.h"
 #include "runtime/Runtime_ABC.h"
 #include "runtime/Scoper.h"
-#include "runtime/Utf8.h"
+#include <tools/Helpers.h>
 
 #include "host/Package.h"
 
@@ -34,14 +34,13 @@ using namespace property_tree;
 using runtime::FileSystem_ABC;
 using runtime::Pool_ABC;
 using runtime::Runtime_ABC;
-using runtime::Utf8;
 using host::Package;
 
 namespace
 {
-    const std::string install_dir = "_"; // use short directory names until packages use small paths
-    const std::string tmp_dir     = "0";
-    const std::string trash_dir   = "1";
+    const tools::Path install_dir = "_"; // use short directory names until packages use small paths
+    const tools::Path tmp_dir     = "0";
+    const tools::Path trash_dir   = "1";
     const QString     unique_id   = "B0238E3F-6D3B-4F73-85C1-3B9B423C62BB";
     const QNetworkRequest::Attribute id_attribute = QNetworkRequest::Attribute( QNetworkRequest::User + 0 );
 }
@@ -57,7 +56,7 @@ Context::Context( const Runtime_ABC& runtime, const FileSystem_ABC& fs, Pool_ABC
     , pool_     ( pool )
     , items_    ( items )
     , cmd_      ( CMD_DISPLAY )
-    , root_     ( runtime.GetModuleFilename().remove_filename() )
+    , root_     ( runtime.GetModuleFilename().RemoveFilename() )
     , url_      ()
     , async_    ( async )
     , io_       ( pool )
@@ -125,7 +124,7 @@ void Context::ParseArguments()
     for( QStringList::const_iterator it = list.begin() + 1; it != list.end(); ++it )
         if( *it == "--root" && ++it != list.end() )
         {
-            root_ = Utf8( QUtf8( *it ) );
+            root_ = tools::Path::FromUnicode( it->toStdWString() );
         }
         else if( *it == "--register" )
         {
@@ -204,7 +203,7 @@ void RegisterProtocolHandler( const QString& protocol, const QString& cmd )
 // -----------------------------------------------------------------------------
 void Context::Register()
 {
-    QString app = QUtf8( Utf8( runtime_.GetModuleFilename() ) );
+    QString app = runtime_.GetModuleFilename().ToUTF8().c_str();
     QString cmd = QString( "\"%1\" --run \"%2\"" ).arg( app ).arg( "%1" );
     RegisterProtocolHandler( "sword", cmd );
 }
@@ -329,7 +328,7 @@ void Context::OnGetSession()
 // -----------------------------------------------------------------------------
 void Context::ParseSession( const QByteArray& body )
 {
-    session_ = FromJson( QUtf8( body ) );
+    session_ = FromJson( body.data() );
     QWriteLocker lock( &access_ );
     ApplySession();
 }
@@ -391,9 +390,9 @@ void Context::AddItem( const Tree& src, const std::string& type, size_t& idx )
     {
         next.setPath( "/api/download_install" );
         list.append( qMakePair< QByteArray >( "id",       QUrl::toPercentEncoding( node.c_str() ) ) );
-        list.append( qMakePair< QByteArray >( "type",     QUrl::toPercentEncoding( type.c_str() ) ) );
-        list.append( qMakePair< QByteArray >( "name",     QUrl::toPercentEncoding( name.c_str() ) ) );
-        list.append( qMakePair< QByteArray >( "checksum", QUrl::toPercentEncoding( checksum.c_str() ) ) );
+        list.append( qMakePair< QByteArray >( "type",     QUrl::toPercentEncoding( qtype ) ) );
+        list.append( qMakePair< QByteArray >( "name",     QUrl::toPercentEncoding( qname ) ) );
+        list.append( qMakePair< QByteArray >( "checksum", QUrl::toPercentEncoding( qchecksum ) ) );
     }
     next.setEncodedQueryItems( list );
 
@@ -540,7 +539,7 @@ namespace
 // Name: WriteConfiguration
 // Created: BAX 2012-10-02
 // -----------------------------------------------------------------------------
-void WriteConfiguration( const FileSystem_ABC& fs, Path root,
+void WriteConfiguration( const FileSystem_ABC& fs, tools::Path root,
                          const std::string& host, int port, int timelinePort )
 {
     root /= "sessions";
@@ -556,14 +555,14 @@ void WriteConfiguration( const FileSystem_ABC& fs, Path root,
 // Name: GetPath
 // Created: BAX 2012-10-02
 // -----------------------------------------------------------------------------
-Path Context::GetPath( const QString& type )
+tools::Path Context::GetPath( const QString& type )
 {
     T_Links::const_iterator it = links_.find( type );
     if( it == links_.end() )
     {
         emit StatusMessage( "Missing package of type " + type );
         emit ClearProgress();
-        return Path();
+        return tools::Path();
     }
     return install_->GetRoot( *it.value() );
 }
@@ -592,28 +591,28 @@ namespace
 // -----------------------------------------------------------------------------
 void Context::StartClient()
 {
-    const Path client = GetPath( QString::fromStdString( GetClient() ) );
-    const Path model = GetPath( "model" );
-    const Path terrain = GetPath( "terrain" );
-    const Path exercise = GetPath( "exercise" );
-    if( client.empty() || model.empty() || terrain.empty() || exercise.empty() )
+    const tools::Path client = GetPath( QString::fromStdString( GetClient() ) );
+    const tools::Path model = GetPath( "model" );
+    const tools::Path terrain = GetPath( "terrain" );
+    const tools::Path exercise = GetPath( "exercise" );
+    if( client.IsEmpty() || model.IsEmpty() || terrain.IsEmpty() || exercise.IsEmpty() )
         return;
-    const Path name = Utf8( Get< std::string >( session_, "exercise.name" ) );
-    const Path debug = exercise / "exercises" / name / "sessions" / GetTimestamp();
+    const tools::Path name = tools::Path::FromUTF8( Get< std::string >( session_, "exercise.name" ) );
+    const tools::Path debug = exercise / "exercises" / name / "sessions" / GetTimestamp().c_str();
     WriteConfiguration( fs_, exercise / "exercises" / name, QUtf8( url_.host() ),
         url_.queryItemValue( "tcp" ).toInt(), Get< int >( session_, "timeline.port" ) );
     std::vector< std::string > args = boost::assign::list_of< std::string >
-        ( "--models-dir" )( Utf8( model / "data/models" ) )
-        ( "--terrains-dir" )( Utf8( terrain / "data/terrains" ) )
-        ( "--exercises-dir" )( Utf8( exercise / "exercises" ) )
-        ( "--debug-dir" )( Utf8( debug ) )
-        ( "--exercise" )( Utf8( name ) )
+        ( "--models-dir" )( ( model / "data/models" ).ToUTF8() )
+        ( "--terrains-dir" )( ( terrain / "data/terrains" ).ToUTF8() )
+        ( "--exercises-dir" )( ( exercise / "exercises" ).ToUTF8() )
+        ( "--debug-dir" )( debug.ToUTF8() )
+        ( "--exercise" )( name.ToUTF8() )
         ( "--password" )( GetPassword( url_ ) );
     if( Get< bool >( session_, "mapnik.enabled" ) )
         args.push_back( "--mapnik" );
     try
     {
-        runtime_.Start( Utf8( client / "gaming_app.exe" ), args, Utf8( client ), std::string() );
+        runtime_.Start( ( client / "gaming_app.exe" ).ToUTF8(), args, client.ToUTF8(), std::string() );
         emit Exit();
     }
     catch( const std::exception& err )

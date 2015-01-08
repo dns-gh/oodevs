@@ -11,7 +11,6 @@
 #include "Plugins.h"
 #include "Request_ABC.h"
 #include "runtime/PropertyTree.h"
-#include "runtime/Utf8.h"
 
 #include <boost/algorithm/string.hpp>
 #include <boost/foreach.hpp>
@@ -19,7 +18,6 @@
 
 using namespace web;
 using namespace property_tree;
-using runtime::Utf8;
 using session::RngDistribution;
 
 // -----------------------------------------------------------------------------
@@ -38,7 +36,7 @@ session::RngConfig::RngConfig()
 // Name: PluginConfig::PluginConfig
 // Created: BAX 2012-08-28
 // -----------------------------------------------------------------------------
-session::PluginConfig::PluginConfig( const Plugins& plugins, const Path& path )
+session::PluginConfig::PluginConfig( const Plugins& plugins, const tools::Path& path )
     : enabled   ( false )
     , library   ( plugins.GetLibrary( path ) )
     , parameters( plugins.GetDefaults( path ) )
@@ -369,9 +367,9 @@ bool ReadPluginConfig( session::PluginConfig& dst, const Tree& src, const std::s
 bool ReadPlugins( session::Config::T_Plugins& dst, const Plugins& plugins, const Tree& src )
 {
     bool modified = false;
-    BOOST_FOREACH( const Path& path, plugins.GetNames( 0, INT_MAX ) )
+    BOOST_FOREACH( const tools::Path& path, plugins.GetNames( 0, INT_MAX ) )
     {
-        const std::string name = Utf8( path );
+        const std::string name = path.ToUTF8();
         session::Config::T_Plugins::iterator it = dst.find( name );
         if( it == dst.end() )
             it = dst.insert( std::make_pair( name, session::PluginConfig( plugins, path ) ) ).first;

@@ -14,6 +14,7 @@
 
 #include "runtime/Helpers.h"
 #include "runtime/PropertyTree.h"
+#include <tools/Helpers.h>
 
 #include <boost/foreach.hpp>
 #include <boost/make_shared.hpp>

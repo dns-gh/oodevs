@@ -9,10 +9,10 @@
 
 #include "runtime_test_pch.h"
 #include "Win32MockApi.h"
-#include <runtime/Utf8.h>
 #include <runtime/win32/Api_ABC.h>
 #include <runtime/win32/Process.h>
 #include <boost/bind.hpp>
+#include <tools/Helpers.h>
 
 #define  NOMINMAX
 #include <windows.h>
@@ -72,7 +72,7 @@ BOOST_AUTO_TEST_CASE( process_returns_correct_members )
     MockApi api;
     int pid = 42;
     std::unique_ptr< Process > process = MakeProcess( api, pid, wname );
-    BOOST_CHECK_EQUAL( Utf8( wname ), process->GetName() );
+    BOOST_CHECK_EQUAL( tools::FromUnicodeToUtf8( wname ), process->GetName() );
     BOOST_CHECK_EQUAL( pid, process->GetPid() );
 }
 

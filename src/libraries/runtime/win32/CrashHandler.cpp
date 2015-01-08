@@ -10,6 +10,8 @@
 #include "runtime/CrashHandler.h"
 #include "runtime/Helpers.h"
 
+#include <tools/Helpers.h>
+
 #include <windows.h> // must be included first
 #include <dbghelp.h>
 #include <shlwapi.h>

@@ -41,7 +41,7 @@ public:
                                                     const std::vector< std::string >& args,
                                                     const std::string& run,
                                                     const std::string& log ) const;
-    virtual boost::filesystem::path GetModuleFilename() const;
+    virtual tools::Path GetModuleFilename() const;
     virtual std::string GetLastError() const;
     //@}
 

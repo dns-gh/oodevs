@@ -22,6 +22,11 @@ namespace filesystem
 }
 }
 
+namespace tools
+{
+    class Path;
+}
+
 namespace runtime
 {
     struct Process_ABC;
@@ -47,7 +52,7 @@ struct Runtime_ABC : public boost::noncopyable
                                                     const std::vector< std::string >& args,
                                                     const std::string& run,
                                                     const std::string& log ) const = 0;
-    virtual boost::filesystem::path GetModuleFilename() const = 0;
+    virtual tools::Path GetModuleFilename() const = 0;
     virtual std::string GetLastError() const = 0;
     //@}
 };

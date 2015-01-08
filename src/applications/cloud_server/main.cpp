@@ -25,7 +25,8 @@
 #include <runtime/Pool.h>
 #include <runtime/PropertyTree.h>
 #include <runtime/Runtime_ABC.h>
-#include <runtime/Utf8.h>
+#include <tools/Helpers.h>
+#include <tools/Path.h>
 #include <tools/Sql.h>
 #include <web/Client.h>
 #include <web/Controller.h>
@@ -61,7 +62,7 @@ int wmain( int argc, wchar_t* argv[], wchar_t* /*env*/ )
 {
     std::vector< std::string > args;
     for( int i = 0; i < argc; ++i )
-        args.push_back( Utf8( std::wstring( argv[i] ) ) );
+        args.push_back( tools::FromUnicodeToUtf8( std::wstring( argv[i] ) ) );
     std::vector< const char* > ptrs;
     for( int i = 0; i < argc; ++i )
         ptrs.push_back( args.at( i ).c_str() );
@@ -71,7 +72,6 @@ int wmain( int argc, wchar_t* argv[], wchar_t* /*env*/ )
 
 namespace
 {
-typedef boost::filesystem::path Path;
 typedef boost::property_tree::ptree Tree;
 
 template< typename T >
@@ -95,13 +95,13 @@ bool ReadParameter( T& dst, const std::string& name, int& idx, int argc, const c
 }
 
 template<>
-bool ReadParameter( Path& dst, const std::string& name, int& idx, int argc, const char* argv[] )
+bool ReadParameter( tools::Path& dst, const std::string& name, int& idx, int argc, const char* argv[] )
 {
     if( name != argv[idx] )
         return false;
     if( ++idx >= argc )
         throw std::runtime_error( "missing " + name + " parameter" );
-    dst = Utf8( std::string( argv[idx] ) );
+    dst = tools::Path::FromUTF8( tools::ToUtf8( std::string( argv[idx] ) ) );
     return true;
 }
 
@@ -124,7 +124,7 @@ enum Command
 struct Configuration
 {
     Command command;
-    Path root;
+    tools::Path root;
     struct
     {
         int http;
@@ -139,13 +139,13 @@ struct Configuration
         std::string user;
         std::string display;
         std::string password;
-        Path app;
+        tools::Path app;
     } proxy;
     struct
     {
         bool enabled;
-        Path certificate;
-        Path key;
+        tools::Path certificate;
+        tools::Path key;
     } ssl;
     struct
     {
@@ -153,16 +153,16 @@ struct Configuration
     } cluster;
     struct
     {
-        Path app;
-        Path root;
+        tools::Path app;
+        tools::Path root;
         int min_play_seconds;
     } node;
     struct
     {
-        Path cwd;
-        Path simulation;
-        Path replayer;
-        Path timeline;
+        tools::Path cwd;
+        tools::Path simulation;
+        tools::Path replayer;
+        tools::Path timeline;
     } session;
 
     bool Parse( cpplog::BaseLogger& log, int argc, const char* argv[] )
@@ -229,16 +229,16 @@ struct NodeFactory : public NodeFactory_ABC
         // NOTHING
     }
 
-    Ptr Make( const Path& root, const std::string& ident, const web::node::Config& cfg ) const
+    Ptr Make( const tools::Path& root, const std::string& ident, const web::node::Config& cfg ) const
     {
         NodeDependencies deps( packages, fs, uuids, *observer, runtime, plugins, pool, ports );
         return boost::make_shared< Node >( deps, root, min_play, ident, cfg );
     }
 
-    Ptr Make( const Path& tag ) const
+    Ptr Make( const tools::Path& tag ) const
     {
         NodeDependencies deps( packages, fs, uuids, *observer, runtime, plugins, pool, ports );
-        return boost::make_shared< Node >( deps, Path( tag ).remove_filename(), min_play,
+        return boost::make_shared< Node >( deps, tools::Path( tag ).RemoveFilename(), min_play,
                                            FromJson( deps.fs.ReadFile( tag ) ) );
     }
 
@@ -262,7 +262,7 @@ struct PackageFactory : public PackageFactory_ABC
         // NOTHING
     }
 
-    boost::shared_ptr< Package_ABC > Make( const Path& path, bool reference ) const
+    boost::shared_ptr< Package_ABC > Make( const tools::Path& path, bool reference ) const
     {
         return boost::make_shared< Package >( boost::ref( pool ), fs, path, reference, true );
     }
@@ -287,7 +287,7 @@ struct SessionFactory : public SessionFactory_ABC
         // NOTHING
     }
 
-    Session_ABC::T_Ptr Make( const Path& root, const Path& trash, const Uuid& id, const web::session::Config& cfg, const std::string& exercise, const web::User& owner ) const
+    Session_ABC::T_Ptr Make( const tools::Path& root, const tools::Path& trash, const Uuid& id, const web::session::Config& cfg, const std::string& exercise, const web::User& owner ) const
     {
         NodeController_ABC::T_Node node = deps.nodes.Get( id );
         if( !node )
@@ -296,16 +296,16 @@ struct SessionFactory : public SessionFactory_ABC
         return boost::make_shared< Session >( boost::cref( deps ), node, paths, boost::cref( cfg ), exercise, boost::uuids::nil_uuid(), owner );
     }
 
-    Session_ABC::T_Ptr Make( const Path& tag, const Path& trash ) const
+    Session_ABC::T_Ptr Make( const tools::Path& tag, const tools::Path& trash ) const
     {
         const Tree tree = FromJson( deps.fs.ReadFile( tag ) );
         const boost::optional< std::string > id = tree.get_optional< std::string >( "node" );
         if( id == boost::none )
-            throw std::runtime_error( "missing node id in " + Utf8( tag ) );
+            throw std::runtime_error( "missing node id in " + tag.ToUTF8() );
         NodeController_ABC::T_Node node = deps.nodes.Get( boost::uuids::string_generator()( *id ) );
         if( !node )
             throw std::runtime_error( "unknown node " + *id );
-        SessionPaths paths( Path( tag ).remove_filename(), trash );
+        SessionPaths paths( tools::Path( tag ).RemoveFilename(), trash );
         return boost::make_shared< Session >( boost::cref( deps ), node, paths, tree );
     }
 
@@ -330,7 +330,7 @@ struct Facade : SqlFacade
     Facade( cpplog::BaseLogger& log, const Configuration& cfg )
         : log  ( log )
         , cfg  ( cfg )
-        , db   ( tools::Path::FromUnicode( ( cfg.root / "host" / "host_agent.db" ).wstring() ) )
+        , db   ( tools::Path::FromUnicode( ( cfg.root / "host" / "host_agent.db" ).ToUnicode() ) )
         , users( log, crypt, uuids, db )
     {
         if( users.CountUsers( boost::uuids::nil_uuid() ) == 0 )
@@ -362,15 +362,15 @@ struct Facade : SqlFacade
         Proxy proxy( log, runtime, fs, proxyConfig, client, pool );
         PortFactory ports( cfg.ports.period, cfg.ports.min, cfg.ports.max );
         PackageFactory packages( pool, fs );
-        web::Plugins plugins( fs, Path( cfg.session.simulation ).remove_filename() / "plugins" );
+        web::Plugins plugins( fs, tools::Path( cfg.session.simulation ).RemoveFilename() / "plugins" );
         NodeFactory fnodes( packages, fs, runtime, uuids, plugins, ports, cfg.node.min_play_seconds, pool );
         const Port host = ports.Create();
-        const Path client_root = cfg.root / "client";
+        const tools::Path client_root = cfg.root / "client";
         NodeController nodes( log, runtime, fs, plugins, fnodes, cfg.root, cfg.node.app, cfg.node.root,
-            client_root, cfg.session.simulation.parent_path(), "node", host->Get(), cfg.ports.tcp, pool, proxy );
+            client_root, cfg.session.simulation.Parent(), "node", host->Get(), cfg.ports.tcp, pool, proxy );
         fnodes.observer = &nodes;
         NodeController cluster( log, runtime, fs, plugins, fnodes, cfg.root, cfg.node.app, cfg.node.root,
-            Path(), cfg.session.simulation.parent_path(), "cluster", host->Get(), cfg.ports.tcp, pool, proxy );
+            tools::Path(), cfg.session.simulation.Parent(), "cluster", host->Get(), cfg.ports.tcp, pool, proxy );
         SessionFactory fsessions( fs, runtime, plugins, uuids, nodes, log, ports, client, pool );
         SessionController sessions( log, runtime, fs, fsessions, nodes, cfg.root, cfg.session.cwd,
             cfg.session.simulation, cfg.session.replayer, cfg.session.timeline, pool );
@@ -379,7 +379,7 @@ struct Facade : SqlFacade
         web::Server server( runtime, log, pool, controller, host->Get() );
         server.Listen();
         proxy.Register( "api", "localhost", host->Get() );
-        AddLicensePathToReg( cfg.session.simulation.parent_path().string() );
+        AddLicensePathToReg( cfg.session.simulation.Parent().ToUTF8() );
         waiter();
         return 0;
     }
@@ -409,22 +409,22 @@ struct NullLogger : public cpplog::BaseLogger
     }
 };
 
-Path GetSinglePath( int argc, const char** argv, const std::string& name )
+tools::Path GetSinglePath( int argc, const char** argv, const std::string& name )
 {
-    Path path;
+    tools::Path path;
     for( int i = 0; i < argc; ++i )
         if( ReadParameter( path, name, i, argc, argv ) )
             return path;
     return path;
 }
 
-Path GetRootDir( int argc, const char* argv[] )
+tools::Path GetRootDir( int argc, const char* argv[] )
 {
-    Path path = GetSinglePath( argc, argv, "--root" );
-    if( !path.empty() )
+    tools::Path path = GetSinglePath( argc, argv, "--root" );
+    if( !path.IsEmpty() )
         return path;
     NullLogger nil;
-    return runtime::Factory( nil ).GetRuntime().GetModuleFilename().remove_filename().remove_filename();
+    return runtime::Factory( nil ).GetRuntime().GetModuleFilename().RemoveFilename().RemoveFilename();
 }
 
 void PrintConfiguration( cpplog::BaseLogger& log, const Configuration& cfg )
@@ -454,11 +454,11 @@ void PrintConfiguration( cpplog::BaseLogger& log, const Configuration& cfg )
 }
 
 Configuration ParseConfiguration( const runtime::Runtime_ABC& runtime, const FileSystem_ABC& fs,
-                                  const Path& root, cpplog::BaseLogger& log, int argc, const char* argv[] )
+                                  const tools::Path& root, cpplog::BaseLogger& log, int argc, const char* argv[] )
 {
-    const Path module = runtime.GetModuleFilename();
-    const Path previous = Path( module ).replace_extension( ".config" );
-    const Path config = root / Path( module ).filename().replace_extension( ".config" );
+    const tools::Path module = runtime.GetModuleFilename();
+    const tools::Path previous = tools::Path( module ).ReplaceExtension( ".config" );
+    const tools::Path config = root / tools::Path( module ).FileName().ReplaceExtension( ".config" );
 
     Tree tree;
     const bool hasCurrent = fs.IsFile( config );
@@ -467,9 +467,9 @@ Configuration ParseConfiguration( const runtime::Runtime_ABC& runtime, const Fil
     else if( hasCurrent )
         tree = FromJson( fs.ReadFile( config ) );
 
-    const Path bin = Path( module ).remove_filename();
+    const tools::Path bin = tools::Path( module ).RemoveFilename();
     Configuration cfg;
-    cfg.root                  = Utf8( GetTree( tree, "root", Utf8( root ) ) );
+    cfg.root                  = tools::Path::FromUTF8( GetTree( tree, "root", root.ToUTF8() ) );
     cfg.ports.period          = GetTree( tree, "ports.period", 12 );
     cfg.ports.min             = GetTree( tree, "ports.min", 12000 );
     cfg.ports.max             = GetTree( tree, "ports.max", 15000 );
@@ -477,17 +477,17 @@ Configuration ParseConfiguration( const runtime::Runtime_ABC& runtime, const Fil
     cfg.ports.tcp             = GetTree( tree, "ports.tcp",  cfg.ports.http+1 );
     cfg.cluster.enabled       = GetTree( tree, "cluster.enabled", true );
     cfg.ssl.enabled           = GetTree( tree, "ssl.enabled", false );
-    cfg.ssl.certificate       = Utf8( GetTree( tree, "ssl.certificate", Utf8( bin / "certificate.pem" ) ) );
-    cfg.ssl.key               = Utf8( GetTree( tree, "ssl.key", Utf8( bin / "key.pem" ) ) );
+    cfg.ssl.certificate       = tools::Path::FromUTF8( GetTree( tree, "ssl.certificate", ( bin / "certificate.pem" ).ToUTF8() ) );
+    cfg.ssl.key               = tools::Path::FromUTF8( GetTree( tree, "ssl.key", ( bin / "key.pem" ).ToUTF8() ) );
     cfg.proxy.service         = GetTree( tree, "proxy.service", std::string( "Sword Cloud" ) );
-    cfg.proxy.app             = Utf8( GetTree( tree, "proxy.app", Utf8( bin / "proxy.exe" ) ) );
-    cfg.node.app              = Utf8( GetTree( tree, "node.app", Utf8( bin / "node.exe" ) ) );
-    cfg.node.root             = Utf8( GetTree( tree, "node.root", Utf8( bin / ".." / "www" ) ) );
+    cfg.proxy.app             = tools::Path::FromUTF8( GetTree( tree, "proxy.app", ( bin / "proxy.exe" ).ToUTF8() ) );
+    cfg.node.app              = tools::Path::FromUTF8( GetTree( tree, "node.app", ( bin / "node.exe" ).ToUTF8() ) );
+    cfg.node.root             = tools::Path::FromUTF8( GetTree( tree, "node.root", ( bin / ".." / "www" ).ToUTF8() ) );
     cfg.node.min_play_seconds = GetTree( tree, "node.min_play_s", 5 * 60 );
-    cfg.session.cwd           = Utf8( GetTree( tree, "session.cwd", Utf8( bin ) ) );
-    cfg.session.simulation    = Utf8( GetTree( tree, "session.simulation", Utf8( bin / "simulation_app.exe" ) ) );
-    cfg.session.replayer      = Utf8( GetTree( tree, "session.replayer", Utf8( bin / "replayer_app.exe" ) ) );
-    cfg.session.timeline      = Utf8( GetTree( tree, "session.timeline", Utf8( bin / "timeline_server.exe" ) ) );
+    cfg.session.cwd           = tools::Path::FromUTF8( GetTree( tree, "session.cwd", bin.ToUTF8() ) );
+    cfg.session.simulation    = tools::Path::FromUTF8( GetTree( tree, "session.simulation", ( bin / "simulation_app.exe" ).ToUTF8() ) );
+    cfg.session.replayer      = tools::Path::FromUTF8( GetTree( tree, "session.replayer", ( bin / "replayer_app.exe" ).ToUTF8() ) );
+    cfg.session.timeline      = tools::Path::FromUTF8( GetTree( tree, "session.timeline", ( bin / "timeline_server.exe" ).ToUTF8() ) );
     fs.WriteFile( config, ToJson( tree ) );
 
     bool valid = cfg.Parse( log, argc, argv );
@@ -510,10 +510,10 @@ bool IsCommand( const char* arg )
 
 int StartServer( int argc, const char* argv[] )
 {
-    const Path root = GetRootDir( argc - 1, argv + 1 );
-    boost::filesystem::create_directories( root / "host" );
+    const tools::Path root = GetRootDir( argc - 1, argv + 1 );
+    tools::Path( root / "host" ).CreateDirectories();
     cpplog::TeeLogger tee(
-        new cpplog::FileLogger( ( root / "host" / "host_agent.log" ).string(), true ), true,
+        new cpplog::FileLogger( ( root / "host" / "host_agent.log" ).ToUTF8(), true ), true,
         new cpplog::StdErrLogger(), true );
     cpplog::BackgroundLogger log( tee );
     LOG_INFO( log ) << "Host Agent - (c) copyright MASA Group 2012";

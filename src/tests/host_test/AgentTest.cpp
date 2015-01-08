@@ -11,7 +11,6 @@
 
 #include "host/Agent.h"
 #include "runtime/PropertyTree.h"
-#include "runtime/Utf8.h"
 #include "web/Configs.h"
 #include "web/HttpException.h"
 #include "web/User.h"
@@ -24,6 +23,8 @@
 #include <boost/property_tree/ptree.hpp>
 #include <boost/uuid/uuid_generators.hpp>
 #include <boost/uuid/uuid_io.hpp>
+
+#include <tools/Helpers.h>
 
 #include "MockLog.h"
 #include "MockNode.h"
@@ -109,13 +110,13 @@ namespace
         }
     }
 
-    void CheckPathList( const std::function< std::vector< Path >() >& operand, const std::string& expected, bool valid = true )
+    void CheckPathList( const std::function< std::vector< tools::Path >() >& operand, const std::string& expected, bool valid = true )
     {
         if( valid )
         {
             std::string json;
-            BOOST_FOREACH( const Path& it, operand() )
-                json += "\"" + runtime::Utf8( it ) + "\",";
+            BOOST_FOREACH( const tools::Path& it, operand() )
+                json += "\"" +  it.ToUTF8() + "\",";
             BOOST_CHECK_EQUAL( "[" + json.substr( 0, json.size() - 1 ) + "]", expected );
         }
         else
@@ -339,7 +340,7 @@ BOOST_FIXTURE_TEST_CASE( agent_stop_session, Fixture<> )
 
 BOOST_FIXTURE_TEST_CASE( agent_list_exercises, Fixture<> )
 {
-    const std::vector< Path > list = boost::assign::list_of( "a" )( "b" )( "c" );
+    const std::vector< tools::Path > list = boost::assign::list_of( "a" )( "b" )( "c" );
     MOCK_EXPECT( nodes.GetExercises ).once().returns( list );
     CheckPathList( boost::bind( &Agent_ABC::ListExercises, &agent, defaultNode, 0, 10 ), "[\"a\",\"b\",\"c\"]" );
 }

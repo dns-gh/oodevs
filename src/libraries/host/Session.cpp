@@ -21,7 +21,6 @@
 #include "runtime/PropertyTree.h"
 #include "runtime/Runtime_ABC.h"
 #include "runtime/Scoper.h"
-#include "runtime/Utf8.h"
 #include "web/Agent_ABC.h"
 #include "web/Chunker_ABC.h"
 #include "web/Client_ABC.h"
@@ -39,6 +38,8 @@
 
 #include <cpplog/cpplog.hpp>
 
+#include <tools/Helpers.h>
+
 #ifdef _MSC_VER
 #   pragma warning( push )
 #   pragma warning( disable : 4702 )
@@ -54,7 +55,6 @@ using namespace web::session;
 using runtime::Async;
 using runtime::FileSystem_ABC;
 using runtime::Runtime_ABC;
-using runtime::Utf8;
 using web::Client_ABC;
 
 namespace
@@ -147,9 +147,9 @@ Session::T_Process AcquireProcess( const Tree& tree, const std::string& key, con
     return ptr;
 }
 
-Path GetPathFrom( const Tree& src, const std::string& key )
+tools::Path GetPathFrom( const Tree& src, const std::string& key )
 {
-    return Utf8( Get< std::string >( src, key ) );
+    return tools::Path::FromUTF8( Get< std::string >( src, key ) );
 }
 
 template< typename T >
@@ -292,7 +292,7 @@ Uuid Session::GetId() const
 // Name: Session::GetRoot
 // Created: BAX 2012-06-05
 // -----------------------------------------------------------------------------
-Path Session::GetRoot() const
+tools::Path Session::GetRoot() const
 {
     return paths_.root;
 }
@@ -303,7 +303,7 @@ Path Session::GetRoot() const
 // -----------------------------------------------------------------------------
 void Session::ParseExerciseProperties()
 {
-    const Tree tree = node_->GetExerciseProperties( GetExercise().string() );
+    const Tree tree = node_->GetExerciseProperties( GetExercise().ToUTF8() );
     if( const auto sides = tree.get_child_optional( "sides" ) )
         for( auto it = sides->begin(); it != sides->end(); ++it )
             cfg_.sides.list[ it->first ] = Side( Get< std::string >( it->second, "" ), true );
@@ -326,7 +326,7 @@ Uuid Session::GetNode() const
 // Name: Session::GetExercise
 // Created: BAX 2012-05-24
 // -----------------------------------------------------------------------------
-Path Session::GetExercise() const
+tools::Path Session::GetExercise() const
 {
     return ::GetPathFrom( links_, "exercise.name" );
 }
@@ -384,11 +384,11 @@ bool Session::HasReplays() const
 Tree Session::AvailableLogs() const
 {
     Tree tree;
-    const auto adder = [&]( const runtime::Path& path ) -> bool {
+    const auto adder = [&]( const tools::Path& path ) -> bool {
         if( deps_.fs.IsFile( path ) &&
-            path.extension() == ".log" &&
-            boost::count( path.string(), '.' ) == 1 )
-            tree.put( runtime::Utf8( path.filename() ), true );
+            path.Extension() == ".log" &&
+            boost::count( path.ToUTF8(), '.' ) == 1 )
+            tree.put( path.FileName().ToUTF8(), true );
         return true;
     };
     try
@@ -498,7 +498,7 @@ void WritePlugin( Tree& tree, const std::string& prefix, const web::session::Plu
 {
     if( !cfg.enabled )
         return;
-    tree.put( prefix + "<xmlattr>.library", Utf8( cfg.library ) );
+    tree.put( prefix + "<xmlattr>.library", cfg.library.ToUTF8() );
     for( auto it = cfg.parameters.cbegin(); it != cfg.parameters.cend(); ++it )
         tree.put( prefix + XpathToXml( it->first ), it->second );
 }
@@ -708,18 +708,18 @@ bool Session::Pause()
 Session::T_Process Session::StartSimulation( const web::session::Config& cfg,
                                              const std::string& checkpoint,
                                              bool replay,
-                                             const Path& output,
-                                             const Path& cwd,
-                                             const Path& app ) const
+                                             const tools::Path& output,
+                                             const tools::Path& cwd,
+                                             const tools::Path& app ) const
 {
     deps_.fs.MakePaths( output );
     std::vector< std::string > options = boost::assign::list_of< std::string >
-        ( "--debug-dir" )( Utf8( GetRoot() / "debug" ) )
-        ( "--exercises-dir" )( Utf8( GetPath( "exercise" ) ) )
-        ( "--terrains-dir" )( Utf8( GetPath( "terrain" ) ) )
-        ( "--models-dir" )( Utf8( GetPath( "model" ) ) )
-        ( "--exercise" )( Utf8( GetExercise() ) )
-        ( "--session" )( Utf8( output.filename() ) );
+        ( "--debug-dir" )( ( GetRoot() / "debug" ).ToUTF8() )
+        ( "--exercises-dir" )( ( GetPath( "exercise" ).ToUTF8() ) )
+        ( "--terrains-dir" )( ( GetPath( "terrain" ).ToUTF8() ) )
+        ( "--models-dir" )( ( GetPath( "model" ) ).ToUTF8() )
+        ( "--exercise" )( GetExercise().ToUTF8() )
+        ( "--session" )( output.FileName().ToUTF8() );
     std::string file = "session.xml";
     if( replay )
     {
@@ -728,20 +728,20 @@ Session::T_Process Session::StartSimulation( const web::session::Config& cfg,
         options.push_back( file );
         options.push_back( "--no-log" );
     }
-    deps_.fs.WriteFile( output / file, GetConfiguration( cfg, port_->Get() ) );
+    deps_.fs.WriteFile( output / file.c_str(), GetConfiguration( cfg, port_->Get() ) );
     if( !checkpoint.empty() )
     {
         options.push_back( "--checkpoint" );
         options.push_back( checkpoint );
     }
-    return deps_.runtime.Start( Utf8( app ), options, Utf8( cwd ), "" );
+    return deps_.runtime.Start( app.ToUTF8(), options, cwd.ToUTF8(), "" );
 }
 
 namespace
 {
 void WriteTimelineConfig( const UuidFactory_ABC& uuids,
                           const FileSystem_ABC& fs,
-                          const Path& filename,
+                          const tools::Path& filename,
                           int port,
                           bool autostart )
 {
@@ -794,18 +794,18 @@ void WriteTimelineConfig( const UuidFactory_ABC& uuids,
 }
 
 Session::T_Process StartTimeline( const SessionDependencies& deps,
-                                  const Path& app,
-                                  const Path& root,
+                                  const tools::Path& app,
+                                  const tools::Path& root,
                                   int base,
                                   bool autostart )
 {
-    const Path config = root / "timeline.run";
+    const tools::Path config = root / "timeline.run";
     WriteTimelineConfig( deps.uuids, deps.fs, config, base + DISPATCHER_PORT, autostart );
     const auto options = boost::assign::list_of< std::string >
         ( "--port" )( boost::lexical_cast< std::string >( base + TIMELINE_PORT ) )
-        ( "--run" )( Utf8( config ) );
-    return deps.runtime.Start( Utf8( app ), options,
-        Utf8( Path( app ).remove_filename() ), Utf8( root / "timeline.log" ) );
+        ( "--run" )( config.ToUTF8() );
+    return deps.runtime.Start( app.ToUTF8(), options,
+        tools::Path( app ).RemoveFilename().ToUTF8(), ( root / "timeline.log" ).ToUTF8() );
 }
 }
 
@@ -813,7 +813,7 @@ struct Session::PrivateState
 {
     web::session::Config cfg;
     Node_ABC::T_Token token;
-    Path output;
+    tools::Path output;
     Status next;
     boost::optional< bool > immediate;
     bool replay;
@@ -879,9 +879,9 @@ boost::shared_ptr< Session::PrivateState > Session::PrepareStart( const std::str
 // Name: Session::Start
 // Created: BAX 2012-04-19
 // -----------------------------------------------------------------------------
-bool Session::Start( const Path& cwd,
-                     const Path& app,
-                     const Path& timeline,
+bool Session::Start( const tools::Path& cwd,
+                     const tools::Path& app,
+                     const tools::Path& timeline,
                      const std::string& checkpoint )
 {
     auto data = PrepareStart( checkpoint );
@@ -934,7 +934,7 @@ bool Session::Start( const Path& cwd,
 // Name: Session::GetPath
 // Created: BAX 2012-06-06
 // -----------------------------------------------------------------------------
-Path Session::GetPath( const std::string& type ) const
+tools::Path Session::GetPath( const std::string& type ) const
 {
     if( type == "exercise" )
         return ::GetPathFrom( links_, "exercise.root" ) / "exercises";
@@ -942,17 +942,17 @@ Path Session::GetPath( const std::string& type ) const
         return ::GetPathFrom( links_, "model.root" ) / "data" / "models";
     if( type == "terrain" )
         return ::GetPathFrom( links_, "terrain.root" ) / "data" / "terrains";
-    return Path();
+    return tools::Path();
 }
 
 // -----------------------------------------------------------------------------
 // Name: Session::GetOutput
 // Created: BAX 2012-06-25
 // -----------------------------------------------------------------------------
-Path Session::GetOutput() const
+tools::Path Session::GetOutput() const
 {
     const Uuid& id = IsReplay() ? replay_ : id_;
-    return GetPath( "exercise" ) / GetExercise() / "sessions" / boost::lexical_cast< std::string >( id );
+    return GetPath( "exercise" ) / GetExercise() / "sessions" / boost::lexical_cast< std::string >( id ).c_str();
 }
 
 // -----------------------------------------------------------------------------
@@ -1156,7 +1156,7 @@ bool Session::Restore()
 
 namespace
 {
-    void PackDir( const FileSystem_ABC& fs, runtime::Packer_ABC& packer, const Path& path )
+    void PackDir( const FileSystem_ABC& fs, runtime::Packer_ABC& packer, const tools::Path& path )
     {
         if( fs.IsDirectory( path ) )
             packer.Pack( path, runtime::Packer_ABC::T_Predicate() );
@@ -1185,12 +1185,12 @@ bool Session::Download( web::Chunker_ABC& dst ) const
 // Name: Session::ClearOutput
 // Created: BAX 2012-08-08
 // -----------------------------------------------------------------------------
-void Session::ClearOutput( const Path& path )
+void Session::ClearOutput( const tools::Path& path )
 {
     checkpoints_.clear();
     if( !deps_.fs.IsDirectory( path ) )
         return;
-    const Path output = deps_.fs.MakeAnyPath( paths_.trash );
+    const tools::Path output = deps_.fs.MakeAnyPath( paths_.trash );
     deps_.fs.Rename( path, output / "_" );
     async_.Post( [&, output] { deps_.fs.Remove( output ); } );
 }
@@ -1198,10 +1198,10 @@ void Session::ClearOutput( const Path& path )
 namespace
 {
 template< typename T >
-bool Attach( const FileSystem_ABC& fs, const Path& path, T& items )
+bool Attach( const FileSystem_ABC& fs, const tools::Path& path, T& items )
 {
     if( fs.IsFile( path / "data" ) )
-        items.push_back( runtime::Utf8( path.filename() ) );
+        items.push_back( path.FileName().ToUTF8() );
     return true;
 }
 }
@@ -1220,8 +1220,8 @@ Session::T_Ptr Session::Replay( const web::User& owner )
     web::session::Config cfg = cfg_;
     cfg.name += " replay " + boost::lexical_cast< std::string >( replays_.size() + 1 );
     SessionPaths paths = paths_;
-    paths.root = deps_.fs.MakeAnyPath( paths.root.remove_filename() );
-    T_Ptr next = boost::make_shared< Session >( deps_, node_, paths, cfg, Utf8( GetExercise() ), id_, owner );
+    paths.root = deps_.fs.MakeAnyPath( paths.root.RemoveFilename() );
+    T_Ptr next = boost::make_shared< Session >( deps_, node_, paths, cfg, GetExercise().ToUTF8(), id_, owner );
     replays_.insert( next->GetId() );
     return next;
 }
@@ -1253,7 +1253,7 @@ void Session::DetachReplay( const Session_ABC& replay )
 void Session::ParseCheckpoints()
 {
     checkpoints_.clear();
-    deps_.fs.Walk( GetOutput() / "checkpoints", false, [&]( const runtime::Path& path ) {
+    deps_.fs.Walk( GetOutput() / "checkpoints", false, [&]( const tools::Path& path ) {
         return Attach( deps_.fs, path, checkpoints_ );
     } );
 }
@@ -1276,9 +1276,9 @@ bool Session::DownloadLog( web::Chunker_ABC& dst, const std::string& file, int l
 {
     dst.SetName( file );
     auto& sink = dst.OpenWriter();
-    auto input = GetRoot() / file;
+    auto input = GetRoot() / tools::Path::FromUTF8( file );
     if( !deps_.fs.Exists( input  ) )
-        input = GetOutput() / file;
+        input = GetOutput() / tools::Path::FromUTF8( file );
     if( !deps_.fs.Exists( input ) )
         return false;
     deps_.fs.LimitedReadFile( deflate ? *deps_.fs.MakeDeflateFilter( sink ) : sink, input, limit );

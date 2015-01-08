@@ -25,6 +25,8 @@
 #include <boost/thread/lock_guard.hpp>
 #include <boost/uuid/uuid_io.hpp>
 
+#include <tools/Path.h>
+
 using namespace host;
 using web::HttpException;
 
@@ -483,7 +485,7 @@ void Agent::DownloadSessionLog( const web::User& user, const Uuid& id, web::Chun
 // Name: Agent::ListExercises
 // Created: BAX 2012-03-27
 // -----------------------------------------------------------------------------
-std::vector< Path > Agent::ListExercises( const Uuid& node, int offset, int limit ) const
+std::vector< tools::Path > Agent::ListExercises( const Uuid& node, int offset, int limit ) const
 {
     return nodes_.GetExercises( node, offset, limit );
 }
@@ -501,7 +503,7 @@ size_t Agent::CountExercises( const Uuid& node ) const
 // Name: Agent::ListPlugins
 // Created: BAX 2012-08-23
 // -----------------------------------------------------------------------------
-std::vector< Path > Agent::ListPlugins( int offset, int limit ) const
+std::vector< tools::Path > Agent::ListPlugins( int offset, int limit ) const
 {
     return nodes_.GetPlugins( offset, limit );
 }
