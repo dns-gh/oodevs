@@ -1,6 +1,7 @@
 -------------------------------------------------------------------
 ---- IMPROVABLE INTERFACE IMPLEMENTATION
 -------------------------------------------------------------------
+local integration = integration
 
 ---Informs whether or not the agent has the physical ability to perform the impovement action on the given 'object'.
 -- (see authoring tool, 'Equipement' tab, 'Objects' widget). 
@@ -23,12 +24,20 @@ integration.hasEnoughtDotationForImprovement = function( object )
     return object[ myself ].actionImprovementState ~= eActionObjetManqueDotation
 end
 
----Informs whether or not the agent has the physical ability to perform the impovement action on the given 'object'.
+--- Returns 'true' if this agent has the physical ability to improve the given object, 'false' otherwise.
 -- This method can only be called by an agent.
 -- @param object a DirectIA object knowledge
--- @return Boolean returns 'true' if the agent can improve the object, 'false' otherwise.
+-- @return Boolean
 integration.agentCanImproveObject = function( object )
     return _DEC_Agent_PeutValoriserObjet( myself, object.source )
+end
+
+--- Returns 'true' if this agent (including mounted equipments) has the physical ability to improve the given object, 'false' otherwise.
+-- This method can only be called by an agent.
+-- @param object a DirectIA object knowledge
+-- @return Boolean
+integration.agentCanImproveObjectWithMountedEquipments = function( object )
+    return _DEC_Agent_PeutValoriserObjetAvecComposantesEmbarquees( myself, object.source )
 end
 
 --- Informs if the agent has dotation to improve the provided object. The implementation of this method also

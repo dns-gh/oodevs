@@ -697,9 +697,9 @@ bool PHY_RoleAction_Objects::CanConstructWithoutReinforcement( const std::string
 // Name: PHY_RoleAction_Objects::CanBypassWithReinforcement
 // Created: NLD 2004-10-14
 // -----------------------------------------------------------------------------
-bool PHY_RoleAction_Objects::CanBypassWithReinforcement( const MIL_ObjectType_ABC& object, const TER_Localisation& localisation ) const
+bool PHY_RoleAction_Objects::CanBypassWithReinforcement( const MIL_ObjectType_ABC& object, const TER_Localisation& localisation, bool bWithLoaded ) const
 {
-    PHY_RoleAction_Objects_CapabilityComputer capabilityComputer( *owner_, eBypass, object, &localisation, false );
+    PHY_RoleAction_Objects_CapabilityComputer capabilityComputer( *owner_, eBypass, object, &localisation, bWithLoaded );
     return capabilityComputer.HasCapability();
 }
 
@@ -707,9 +707,9 @@ bool PHY_RoleAction_Objects::CanBypassWithReinforcement( const MIL_ObjectType_AB
 // Name: PHY_RoleAction_Objects::CanDestroyWithReinforcement
 // Created: NLD 2004-10-14
 // -----------------------------------------------------------------------------
-bool PHY_RoleAction_Objects::CanDestroyWithReinforcement( const MIL_ObjectType_ABC& object, const TER_Localisation& localisation ) const
+bool PHY_RoleAction_Objects::CanDestroyWithReinforcement( const MIL_ObjectType_ABC& object, const TER_Localisation& localisation, bool bWithLoaded ) const
 {
-    PHY_RoleAction_Objects_CapabilityComputer capabilityComputer( *owner_, eDestroy, object, &localisation, false );
+    PHY_RoleAction_Objects_CapabilityComputer capabilityComputer( *owner_, eDestroy, object, &localisation, bWithLoaded );
     return capabilityComputer.HasCapability();
 }
 
@@ -717,9 +717,9 @@ bool PHY_RoleAction_Objects::CanDestroyWithReinforcement( const MIL_ObjectType_A
 // Name: PHY_RoleAction_Objects::CanDemineWithReinforcement
 // Created: DDA 2012-03-16
 // -----------------------------------------------------------------------------
-bool PHY_RoleAction_Objects::CanDemineWithReinforcement( const MIL_ObjectType_ABC& object, const TER_Localisation& localisation ) const
+bool PHY_RoleAction_Objects::CanDemineWithReinforcement( const MIL_ObjectType_ABC& object, const TER_Localisation& localisation, bool bWithLoaded ) const
 {
-    PHY_RoleAction_Objects_CapabilityComputer capabilityComputer( *owner_, eDemine, object, &localisation, false );
+    PHY_RoleAction_Objects_CapabilityComputer capabilityComputer( *owner_, eDemine, object, &localisation, bWithLoaded );
     return capabilityComputer.HasCapability();
 }
 
@@ -738,9 +738,9 @@ bool PHY_RoleAction_Objects::CanDemineTypeWithReinforcement( const std::string& 
 // Name: PHY_RoleAction_Objects::CanMineWithReinforcement
 // Created: NLD 2005-09-08
 // -----------------------------------------------------------------------------
-bool PHY_RoleAction_Objects::CanMineWithReinforcement( const MIL_ObjectType_ABC& object, const TER_Localisation& localisation ) const
+bool PHY_RoleAction_Objects::CanMineWithReinforcement( const MIL_ObjectType_ABC& object, const TER_Localisation& localisation, bool bWithLoaded ) const
 {
-    PHY_RoleAction_Objects_CapabilityComputer capabilityComputer( *owner_, eMine, object, &localisation, false );
+    PHY_RoleAction_Objects_CapabilityComputer capabilityComputer( *owner_, eMine, object, &localisation, bWithLoaded );
     return capabilityComputer.HasCapability();
 }
 

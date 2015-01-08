@@ -77,9 +77,13 @@ public:
     static bool CanConstructObjectWithLoadedAndLocalisation( const DEC_Decision_ABC* callerAgent, const std::string& type, const TER_Localisation* location );
     static bool HasDotationForBuilding( DEC_Decision_ABC* callerAgent, const std::string& type );
     static bool CanBypassObject( const DEC_Decision_ABC* callerAgent, boost::shared_ptr< DEC_Knowledge_Object > objectKnowledge );
+    static bool CanBypassObjectWithMountedEquipments( const DEC_Decision_ABC* callerAgent, boost::shared_ptr< DEC_Knowledge_Object > objectKnowledge );
     static bool CanDestroyObject( const DEC_Decision_ABC* callerAgent, boost::shared_ptr< DEC_Knowledge_Object > objectKnowledge );
+    static bool CanDestroyObjectWithMountedEquipments( const DEC_Decision_ABC* callerAgent, boost::shared_ptr< DEC_Knowledge_Object > objectKnowledge );
     static bool CanMineObject( const DEC_Decision_ABC* callerAgent, boost::shared_ptr< DEC_Knowledge_Object > objectKnowledge );
+    static bool CanMineObjectWithMountedEquipments( const DEC_Decision_ABC* callerAgent, boost::shared_ptr< DEC_Knowledge_Object > objectKnowledge );
     static bool CanDemineObject( const DEC_Decision_ABC* callerAgent, boost::shared_ptr< DEC_Knowledge_Object > objectKnowledge );
+    static bool CanDemineObjectWithMountedEquipments( const DEC_Decision_ABC* callerAgent, boost::shared_ptr< DEC_Knowledge_Object > objectKnowledge );
     static bool CanActivateObject( boost::shared_ptr< DEC_Knowledge_Object > objectKnowledge );
     static void EnableDiscreteMode( DEC_Decision_ABC* callerAgent );
     static void DisableDiscreteMode( DEC_Decision_ABC* callerAgent );

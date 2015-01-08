@@ -1,3 +1,4 @@
+
 --- Returns true if the given object is mined (i.e. its improvement
 -- level is strictly greater than 0%), false otherwise.
 -- @param object Object knowledge
@@ -14,12 +15,20 @@ integration.isFullyMined = function( object )
     return DEC_ObjectKnowledge_IsFullMined( object.source ) == eTristate_True
 end
 
---- Returns true if this agent can demine the given object, false otherwise.
+--- Returns 'true' if this agent can demine the given object, 'false' otherwise.
 -- This method can only be called by an agent
 -- @param object Object knowledge
 -- @return Boolean
 integration.canDemineIt = function( object )
     return _DEC_Agent_PeutDevaloriserObjet( myself, object.source )
+end
+
+--- Returns 'true' if this agent (including mounted equipments) can clear of mines the given object, 'false' otherwise.
+-- This method can only be called by an agent
+-- @param object Object knowledge
+-- @return Boolean
+integration.canDemineItWithMountedEquipments = function( object )
+    return _DEC_Agent_PeutDevaloriserObjetAvecComposantesEmbarquees( myself, object.source )
 end
 
 --- Starts demining the given object.
@@ -76,15 +85,29 @@ integration.stopDemineIt = function( object )
     end
 end
 
---- Returns true if this entity can remove the given object, false otherwise.
+--- Returns 'true' if this entity can remove the given object or urban block, 'false' otherwise.
+-- This method returns false if the given knowledge is neither an object nor an urban block.
 -- This method can only be called by an agent.
--- @param object Object knowledge
--- @return Boolean, whether or not this agent can remove the given object.
--- This method returns false if the given knowledge is not an object.
-integration.canRemoveIt = function( object )
-    if masalife.brain.core.class.isOfType( object, integration.ontology.types.object ) then
-        return _DEC_Agent_PeutDetruireObjet( myself, object.source )
-    elseif masalife.brain.core.class.isOfType( object, integration.ontology.types.urbanBlock ) then
+-- @param target Object knowledge or urban block knowledge
+-- @return Boolean, whether or not this agent can remove the given object or urban block.
+integration.canRemoveIt = function( target )
+    if masalife.brain.core.class.isOfType( target, integration.ontology.types.object ) then
+        return _DEC_Agent_PeutDetruireObjet( myself, target.source )
+    elseif masalife.brain.core.class.isOfType( target, integration.ontology.types.urbanBlock ) then
+        return true -- decreasing the structural state of urban blocks doesn't require specific physical ability.
+    end
+    return false
+end
+
+--- Returns 'true' if this entity (including mounted equipments) can remove the given object, 'false' otherwise.
+-- This method returns false if the given knowledge is neither an object nor an urban block.
+-- This method can only be called by an agent.
+-- @param target Object knowledge or urban block knowledge
+-- @return Boolean, whether or not this agent can remove the given object or urban block.
+integration.canRemoveItWithMountedEquipments = function( target )
+    if masalife.brain.core.class.isOfType( target, integration.ontology.types.object ) then
+        return _DEC_Agent_PeutDetruireObjetAvecComposantesEmbarquees( myself, target.source )
+    elseif masalife.brain.core.class.isOfType( target, integration.ontology.types.urbanBlock ) then
         return true -- decreasing the structural state of urban blocks doesn't require specific physical ability.
     end
     return false
