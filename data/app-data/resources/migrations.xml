@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<migrations xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/0.0/exercise/orbat.xsd">
+<migrations xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/6.0.2/tools/migrations.xsd">
   <default>
     <!-- Exercise -->
     <match-if non-versioned-schema="schemas/exercise/weather.xsd" assign-schema="schemas/3.0/exercise/weather.xsd"/>
@@ -81,6 +81,7 @@
     <added-file filename="missionSheets.xslt" assign-file="schemas/5.2.0/added-files/missionSheets.xslt"/>
     <added-file filename="Stages.xml" assign-file="schemas/5.2.0/added-files/Stages.xml"/>
     <added-file filename="Languages.xml" assign-file="schemas/5.3.0/added-files/Languages.xml"/>
+    <added-file filename="PhysicalExtensions.xml" assign-file="schemas/6.0.2/added-files/PhysicalExtensions.xml"/>
   </added-files>
 
   <migration from="3.0" to="4.2.0">
@@ -221,5 +222,7 @@
     <upgrade schema="schemas/5.5.2/physical/Reports.xsd" apply="schemas/6.0.0/xsl/reports_5.5.2-6.0.0.xsl"/>
   </migration>
   <migration from="6.0.0" to="6.0.1"/>
-  <migration from="6.0.1" to="6.0.2"/>
+  <migration from="6.0.1" to="6.0.2">
+    <upgrade schema="schemas/6.0.1/physical/Physical.xsd" apply="schemas/6.0.2/xsl/physical_6.0.1-6.0.2.xsl"/>
+  </migration>
 </migrations>

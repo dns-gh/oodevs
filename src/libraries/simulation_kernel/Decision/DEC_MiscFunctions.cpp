@@ -14,6 +14,7 @@
 #include "Decision/Brain.h"
 #include "Decision/DEC_Representations.h"
 #include "Decision/DEC_Tools.h"
+#include "Decision/PhysicalExtension.h"
 #include "Entities/MIL_Entity_ABC.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Reinforcement/PHY_RoleInterface_Reinforcement.h"
@@ -94,6 +95,9 @@ void DEC_MiscFunctions::Register( sword::Brain& brain, bool isMasalife )
     brain.RegisterFunction( "DEC_RC_TirPion", &DEC_MiscFunctions::ReportTirPion );
     brain.RegisterFunction( "DEC_RC_String", &DEC_MiscFunctions::ReportString );
     brain.RegisterFunction( "DEC_RC_Stage", &DEC_MiscFunctions::ReportStage );
+
+    // Physical extension
+    brain.RegisterFunction( "DEC_GetPhysicalExtension", &DEC_MiscFunctions::GetPhysicalExtension );
 }
 
 // -----------------------------------------------------------------------------
@@ -689,4 +693,9 @@ void DEC_MiscFunctions::DebugDrawPoint( const DEC_Decision_ABC* caller, const MT
         caller->GetEntity().GetID() );
     NET_ASN_Tools::WritePoint( *pPoint, *message().mutable_coordinates()->add_elem() );
     message.Send( NET_Publisher_ABC::Publisher() );
+}
+
+std::string DEC_MiscFunctions::GetPhysicalExtension( const std::string& key )
+{
+    return PhysicalExtension::Find( key );
 }

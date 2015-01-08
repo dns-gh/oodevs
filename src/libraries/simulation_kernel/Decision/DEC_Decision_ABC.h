@@ -156,7 +156,6 @@ public:
     virtual void SetTarget( boost::shared_ptr< MT_Vector2D > ) = 0;
     virtual boost::shared_ptr< MT_Vector2D >  GetTarget() = 0;
 
-    void SetVariableInt( const std::string& name, int value );
     template< typename T > void SetVariable( const std::string& name, T value );
     template< typename T > T GetVariable( const std::string& name );
 

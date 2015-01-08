@@ -72,6 +72,8 @@ public:
     static void ReportTirPion            ( DEC_Decision_ABC& caller, int type, const std::string& reportId, int id );
     static void ReportString             ( DEC_Decision_ABC& caller, int type, const std::string& reportId, const std::string& message );
     static void ReportStage              ( DEC_Decision_ABC& caller, int type, const std::string& reportId, const std::string& message );
+    
+    static std::string GetPhysicalExtension( const std::string& key );
 
     static void Trace( const DEC_Decision_ABC* caller, const std::string& message );
     static void Debug( const DEC_Decision_ABC* caller, const std::string& message );

@@ -63,4 +63,5 @@ static const char* physicalXml =
 "  <stages file=\"Stages.xml\"/>"
 "  <languages file=\"Languages.xml\"/>"
 "  <locales-directory path=\"Locales\"/>"
+"  <physical-extensions file=\"PhysicalExtensions.xml\"/>"
 "</physical>";

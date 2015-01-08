@@ -20,10 +20,9 @@ using namespace tools;
 // Created: NLD 2011-02-28
 // -----------------------------------------------------------------------------
 DefaultLoader::DefaultLoader( RealFileLoaderObserver_ABC& observer )
-    : observer_              ( observer )
+    : observer_( observer )
 {
-
-    Xifstream xis( tools::GeneralConfig::BuildResourceChildFile( "migrations.xml" ) );
+    Xifstream xis( tools::GeneralConfig::BuildResourceChildFile( "migrations.xml" ), xml::internal_grammar() );
     fileLoader_.reset( new RealFileLoader( xis ) );
 }
 

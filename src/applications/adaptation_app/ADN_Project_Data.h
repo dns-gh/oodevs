@@ -81,6 +81,7 @@ public:
         tools::Path szStages_;
         tools::Path szLanguages_;
         tools::Path szLocalesDirectory_;
+        tools::Path szPhysicalExtensions_;
         // $$$$ NLD 2007-01-15: files not loaded!
         tools::Path szPathfinder_;
         tools::Path szObjectNames_;

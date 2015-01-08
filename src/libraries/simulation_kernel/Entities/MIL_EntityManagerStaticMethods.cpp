@@ -62,6 +62,7 @@
 #include "Automates/MIL_AutomateType.h"
 #include "Automates/MIL_Automate.h"
 #include "Decision/DEC_Workspace.h"
+#include "Decision/PhysicalExtension.h"
 #include "Effects/MIL_EffectManager.h"
 #include "Inhabitants/MIL_InhabitantType.h"
 #include "Knowledge/MIL_KnowledgeGroupType.h"
@@ -93,9 +94,9 @@ namespace
     // Created: RPD 2010-02-07
     // -----------------------------------------------------------------------------
     template < typename T >
-    void InitializeType( const tools::PhyLoader& loader, const std::string& strSection )
+    void InitializeType( const tools::PhyLoader& loader, const std::string& section )
     {
-        loader.LoadPhysicalFile( strSection.c_str(), &T::Initialize );
+        loader.LoadPhysicalFile( section.c_str(), &T::Initialize );
     }
 }
 
@@ -149,6 +150,7 @@ void MIL_EntityManagerStaticMethods::Initialize( const tools::PhyLoader& loader,
     InitializeType< PHY_InfrastructureType         >( loader, "urban"              );
     InitializeType< PHY_RoofShapeType              >( loader, "urban"              );
     InitializeType< MIL_Report                     >( loader, "reports"            );
+    InitializeType< PhysicalExtension              >( loader, "physical-extensions" );
     InitializeType< PHY_MaintenanceWorkRate        >( loader, "maintenance"        );
     InitializeType< PHY_MaintenanceResourcesAlarms >( loader, "maintenance"        );
     InitializeType< PHY_Experience                 >( loader, "human-factors"      );

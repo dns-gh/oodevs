@@ -731,6 +731,43 @@ func (s *TestSuite) TestDecGetClosestPath(c *C) {
 	c.Assert(result, Equals, true)
 }
 
+func (s *TestSuite) TestDecGetPhysicalExtension(c *C) {
+	sim, client := connectAndWaitModel(c, NewAdminOpts(ExLandOfStripesEmpty))
+	defer stopSimAndClient(c, sim, client)
+	model := client.Model.GetData()
+
+	// create a unit to execute script function
+	f := getSomeFormation(c, model)
+	kg := getSomeKnowledgeGroup(c, model, f.PartyId)
+	automat, err := client.CreateAutomat(f.Id, 2, kg.Id)
+	c.Assert(err, IsNil)
+	err = client.SetAutomatMode(automat.Id, false)
+	c.Assert(err, IsNil)
+	unit, err := client.CreateUnit(automat.Id, 2, swapi.Point{X: -15.82, Y: 28.34})
+	c.Assert(err, IsNil)
+
+	// calls the integration function
+	script := `
+	function TestFunction()
+		return GetPhysicalExtension("{{.key}}")
+	end`
+
+	tests := []struct {
+		key, expected string
+	}{
+		{"key", "value"},
+		{"unknown", ""},
+	}
+	for _, t := range tests {
+		output, err := client.ExecTemplate(unit.Id, "TestFunction", script,
+			map[string]interface{}{
+				"key": t.key,
+			})
+		c.Assert(err, IsNil)
+		c.Assert(output, Equals, t.expected)
+	}
+}
+
 const (
 	FragOrder = uint32(4)
 )
