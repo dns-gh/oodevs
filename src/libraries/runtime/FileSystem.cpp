@@ -770,9 +770,10 @@ size_t FileSystem::GetDirectorySize( const tools::Path& root ) const
     {
         if( !root.IsDirectory() )
             return 0;
-        root.Apply( [&]( const tools::Path& path ) -> bool {
+        root.Apply( [&]( const tools::Path& path ) -> bool
+        {
             if( path.IsRegularFile() )
-                sum += path.FileSize();
+                sum += static_cast< size_t >( path.FileSize() );
             return false;
         } );
     }
