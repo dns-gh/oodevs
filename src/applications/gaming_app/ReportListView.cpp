@@ -168,7 +168,10 @@ void ReportListView::NotifySelected( const kernel::Entity_ABC* element )
         return;
 
     selected_ = id;
-    SendRequest( simulation_.GetCurrentTick() );
+    if( selected_ )
+        SendRequest( simulation_.GetCurrentTick() );
+    else
+        Purge();
 }
 
 void ReportListView::SendRequest( unsigned int tick )
@@ -181,7 +184,7 @@ void ReportListView::SendRequest( unsigned int tick )
 
 void ReportListView::FillReports( const sword::ListReportsAck& ack )
 {
-    reportModel_.removeRows( 0, reportModel_.rowCount() );
+    Purge();
     if( !selected_ || !isVisible() )
         return;
     reports_.clear();
