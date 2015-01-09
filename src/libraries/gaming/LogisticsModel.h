@@ -51,6 +51,7 @@ class LogSupplyConsign;
 class LogMedicalConsign;
 class LogFuneralConsign;
 class LogisticConsignFactory_ABC;
+class LogisticsConsign_ABC;
 
 // =============================================================================
 /** @class  LogisticsModel
@@ -95,6 +96,8 @@ public:
     virtual kernel::Entity_ABC* FindLogEntity( const sword::ParentEntity& msg );
     virtual void UpdateLogisticHistory( const sword::LogisticHistoryAck& message, unsigned int currentTick );
     void DestroyAgent( unsigned long id );
+
+    LogisticsConsign_ABC* Find( unsigned long id ) const;
     //@}
 
 private:

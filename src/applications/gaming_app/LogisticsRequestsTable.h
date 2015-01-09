@@ -32,6 +32,7 @@ namespace gui
 }
 
 class LogisticsConsign_ABC;
+class LogisticsModel;
 
 // =============================================================================
 /** @class  LogisticsRequestsTable
@@ -59,6 +60,7 @@ public:
                                      const QStringList& horizontalHeaders,
                                      const kernel::Controllers& controllers,
                                      const kernel::Profile_ABC& profile,
+                                     const LogisticsModel& historyModel,
                                      QWidget* parent = 0 );
     virtual ~LogisticsRequestsTable();
     //@}
@@ -80,9 +82,9 @@ public:
 private:
     //! @name Helpers
     //@{
-     int GetRequestRow( const LogisticsConsign_ABC& consign );
+     int GetRequestRow( unsigned int consignId );
      void SetData( int row, int col, QString displayText,
-                   QVariant sortText, const LogisticsConsign_ABC& consign );
+                   QVariant sortText, unsigned int consignId);
      virtual void NotifyUpdated( const kernel::Entity_ABC& element );
     //@}
 
@@ -104,6 +106,7 @@ protected:
     gui::LinkItemDelegate*     linkItemDelegate_;
     const kernel::Controllers& controllers_;
     const kernel::Profile_ABC& profile_;
+    const LogisticsModel& historyModel_;
     T_IsEntityInConsignFunctor isEntityInConsignFunctor_;
     T_RequesterNameExtractor requesterNameExtractor_;
     //@}
