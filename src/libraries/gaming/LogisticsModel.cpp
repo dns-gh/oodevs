@@ -441,3 +441,16 @@ void LogisticsModel::UpdateLogisticHistory( const sword::LogisticHistoryAck& mes
     if( i != j )
         UpdateLogisticHistory( i, j, message.entries(), currentTick );
 }
+
+LogisticsConsign_ABC* LogisticsModel::Find( unsigned long id ) const
+{
+    if( LogisticsConsign_ABC* consign = tools::Resolver< LogFuneralConsign >::Find( id ) )
+        return consign;
+    if( LogisticsConsign_ABC* consign = tools::Resolver< LogMaintenanceConsign >::Find( id ) )
+        return consign;
+    if( LogisticsConsign_ABC* consign = tools::Resolver< LogMedicalConsign >::Find( id ) )
+        return consign;
+    if( LogisticsConsign_ABC* consign = tools::Resolver< LogSupplyConsign >::Find( id ) )
+        return consign;
+    return 0;
+}

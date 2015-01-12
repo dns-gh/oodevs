@@ -20,8 +20,7 @@
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/Profile_ABC.h"
 #include "gaming/LogisticsConsign_ABC.h"
-
-Q_DECLARE_METATYPE( const LogisticsConsign_ABC* )
+#include "gaming/LogisticsModel.h"
 
 // -----------------------------------------------------------------------------
 // Name: LogisticsRequestsTable constructor
@@ -31,10 +30,12 @@ LogisticsRequestsTable::LogisticsRequestsTable( const QString& objectName,
                                                 const QStringList& horizontalHeaders,
                                                 const kernel::Controllers& controllers,
                                                 const kernel::Profile_ABC& profile,
+                                                const LogisticsModel& historyModel,
                                                 QWidget* parent )
     : gui::RichTableView( objectName, parent )
     , controllers_( controllers )
     , profile_( profile )
+    , historyModel_( historyModel )
 {
     requesterNameExtractor_ = []( const LogisticsConsign_ABC& consign ) -> QString {
         auto consumer = consign.GetConsumer();
@@ -104,9 +105,9 @@ void LogisticsRequestsTable::SelectRequest( unsigned int id )
 // Name: LogisticsRequestsTable::GetRequestRow
 // Created: MMC 2013-09-11
 // -----------------------------------------------------------------------------
-int LogisticsRequestsTable::GetRequestRow( const LogisticsConsign_ABC& consign )
+int LogisticsRequestsTable::GetRequestRow( unsigned int consignId )
 {
-    QModelIndexList matches = dataModel_.match( dataModel_.index( 0, 0 ), Qt::UserRole, QVariant::fromValue( &consign )
+    QModelIndexList matches = dataModel_.match( dataModel_.index( 0, 0 ), Qt::UserRole, QVariant( consignId )
                                               , 1, Qt::MatchFlags( Qt::MatchWrap | Qt::MatchExactly ) );
     foreach( const QModelIndex &index, matches )
     {
@@ -148,18 +149,18 @@ void LogisticsRequestsTable::AddRequest( const LogisticsConsign_ABC& consign )
     auto requesterName = requesterNameExtractor_( consign );
     auto state = consign.GetStatusDisplay();
     auto base = logistic_helpers::GetLogisticBase( handler );
-    int rowIndex = GetRequestRow( consign );
     auto id = consign.GetId();
-    SetData( rowIndex, 0, QString::number( id ), id, consign );
-    SetData( rowIndex, 1, requesterName, requesterName, consign );
-    SetData( rowIndex, 2, handlerName, handlerName, consign );
+    int rowIndex = GetRequestRow( id );
+    SetData( rowIndex, 0, QString::number( id ), id, id );
+    SetData( rowIndex, 1, requesterName, requesterName, id );
+    SetData( rowIndex, 2, handlerName, handlerName, id );
     SetData( rowIndex, 3, 
         consign.NeedResolution()
         && base
         && tools::CanOneSubordinateBeOrdered( profile_, *base )
         && controllers_.GetCurrentMode() != eModes_Replay 
             ? CreateLink( state, consign.GetId() ) : state,
-        state, consign );
+        state, id );
 }
 
 // -----------------------------------------------------------------------------
@@ -168,7 +169,7 @@ void LogisticsRequestsTable::AddRequest( const LogisticsConsign_ABC& consign )
 // -----------------------------------------------------------------------------
 void LogisticsRequestsTable::RemoveRequest( const LogisticsConsign_ABC& consign )
 {
-    dataModel_.removeRow( GetRequestRow( consign ) );
+    dataModel_.removeRow( GetRequestRow( consign.GetId() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -176,13 +177,13 @@ void LogisticsRequestsTable::RemoveRequest( const LogisticsConsign_ABC& consign 
 // Created: MMC 2013-09-11
 // -----------------------------------------------------------------------------
 void LogisticsRequestsTable::SetData( int row, int col, QString displayText,
-                                      QVariant sortText, const LogisticsConsign_ABC& consign )
+                                      QVariant sortText, unsigned int consignId )
 {
     QStandardItem* item = dataModel_.item( row, col );
     if( !item )
         item = new QStandardItem();
     item->setFlags( Qt::ItemIsEnabled | Qt::ItemIsSelectable );
-    item->setData( QVariant::fromValue( &consign ), Qt::UserRole );
+    item->setData( QVariant( consignId ), Qt::UserRole );
     item->setData( QVariant( displayText ), Qt::DisplayRole );
     item->setData( sortText, gui::Roles::SortRole );
     item->setTextAlignment( Qt::AlignCenter );
@@ -195,7 +196,7 @@ void LogisticsRequestsTable::SetData( int row, int col, QString displayText,
 // -----------------------------------------------------------------------------
 void LogisticsRequestsTable::SetData( int col, QString text, const LogisticsConsign_ABC& consign )
 {
-    int rowIndex = GetRequestRow( consign );
+    int rowIndex = GetRequestRow( consign.GetId() );
     QStandardItem* item = dataModel_.item( rowIndex, col );
     if( item )
     {
@@ -211,7 +212,7 @@ void LogisticsRequestsTable::SetData( int col, QString text, const LogisticsCons
 const LogisticsConsign_ABC* LogisticsRequestsTable::GetRequest( const QModelIndex& index ) const
 {
     if( model() )
-        return model()->data( index, Qt::UserRole ).value< const LogisticsConsign_ABC* >();
+        return historyModel_.Find( model()->data( index, Qt::UserRole ).value< unsigned int >() );
     return 0;
 }
 
