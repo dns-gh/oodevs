@@ -1,3 +1,13 @@
+--\ Physical management /--
+
+--- Retrieves the value defined in the physical database file PhysicalExtension.xml
+-- @param extension as a string key
+-- @return string, the value defined in the physical database file PhysicalExtension.xml
+-- If the key @extension does not exist, empty string is returned
+integration.GetPhysicalExtension = function( extension )
+    return DEC_GetPhysicalExtension( extension )
+end
+
 ---\ Knowledge management /---
 
 require 'debug'
@@ -269,10 +279,6 @@ CallbackMovingOnPath = function( position )
     if myself.callbackMovingOnPath then
         myself.callbackMovingOnPath( position )
     end
-end
-
-GetPhysicalExtension = function( extension )
-    return DEC_GetPhysicalExtension( extension )
 end
 
 -- Brain debugging
