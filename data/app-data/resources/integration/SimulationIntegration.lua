@@ -1,6 +1,6 @@
----\ Physical management /---
+--\ Physical management /--
 
--- Retrieves the value defined in the physical database file PhysicalExtension.xml
+--- Retrieves the value defined in the physical database file PhysicalExtension.xml
 -- @param extension as a string key
 -- @return string, the value defined in the physical database file PhysicalExtension.xml
 -- If the key @extension does not exist, empty string is returned
