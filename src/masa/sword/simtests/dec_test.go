@@ -749,7 +749,7 @@ func (s *TestSuite) TestDecGetPhysicalExtension(c *C) {
 	// calls the integration function
 	script := `
 	function TestFunction()
-		return GetPhysicalExtension("{{.key}}")
+		return integration.GetPhysicalExtension("{{.key}}")
 	end`
 
 	tests := []struct {
