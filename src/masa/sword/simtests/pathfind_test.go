@@ -554,7 +554,32 @@ func (s *TestSuite) TestMoveAlongItineraryNoBacktrack(c *C) {
 		}
 	}
 	ratios := getMatchedRatio(points, itineraries)
-	c.Assert(ratios, Equals, "0:32%, 1:39%, 0:23%")
+	c.Assert(ratios, Equals, "0:31%, 1:43%, 0:23%")
+}
+
+func (s *TestSuite) TestMoveAlongItineraryInOpenArea(c *C) {
+	phydb := loadPhysicalData(c, "test")
+	sim, client := connectAndWaitModel(c, NewAdminOpts(ExAngersEmpty).RecordUnitPaths().AddGaming())
+	defer stopSimAndClient(c, sim, client)
+
+	// Start and end points are at extremities of an open area. The itinerary
+	// make a curve to the west before coming back and passing below the end
+	// point. This test ensures itinerary points are added to the graph before
+	// computing the path.
+	points, itineraries := getMoveAlongItinerary(c, phydb, client,
+		swapi.Point{X: -0.4220, Y: 47.6404},
+		swapi.Point{X: -0.3852, Y: 47.6831},
+		[]swapi.Point{
+			swapi.Point{X: -0.4202, Y: 47.6398},
+			swapi.Point{X: -0.4103, Y: 47.6435},
+			swapi.Point{X: -0.3963, Y: 47.6458},
+			swapi.Point{X: -0.3722, Y: 47.6535},
+			swapi.Point{X: -0.3660, Y: 47.6727},
+			swapi.Point{X: -0.4220, Y: 47.6831},
+		})
+	ratios := getMatchedRatio(points, itineraries)
+	c.Assert(ratios, Equals, "0:14%, 1:71%, 0:14%")
+	select {}
 }
 
 func testMoveAlongHorseshoe(c *C, from, to swapi.Point, expectedRatios string) {
@@ -601,7 +626,7 @@ func (s *TestSuite) TestMoveAlongItineraryOnHorseshoe(c *C) {
 	testMoveAlongHorseshoe(c,
 		swapi.Point{X: -0.5126, Y: 47.2098},
 		swapi.Point{X: -0.2476, Y: 47.1829},
-		"0:24%, 1:1%, 0:1%, 1:32%, 0:4%, 1:25%, 0:4%")
+		"0:22%, 1:69%, 0:4%")
 }
 
 func testMoveAlongMultipleItineraries(c *C, from, to swapi.Point, expectedRatios string) {
@@ -635,7 +660,7 @@ func (s *TestSuite) TestMoveAlongItinerariesMultipleChained(c *C) {
 	testMoveAlongMultipleItineraries(c,
 		swapi.Point{X: -0.3774, Y: 47.3517},
 		swapi.Point{X: -0.3411, Y: 47.4746},
-		"0:7%, 1:11%, 0:4%, 1:10%, 0:3%, 2:29%, 0:2%, 2:13%, 0:4%, 2:2%, 0:5%")
+		"0:7%, 1:27%, 0:3%, 2:54%, 0:5%")
 }
 
 func (s *TestSuite) TestMoveAlongItinerariesMultipleChoice1(c *C) {
@@ -644,7 +669,7 @@ func (s *TestSuite) TestMoveAlongItinerariesMultipleChoice1(c *C) {
 	testMoveAlongMultipleItineraries(c,
 		swapi.Point{X: -0.3207, Y: 47.4001},
 		swapi.Point{X: -0.3411, Y: 47.4746},
-		"0:5%, 2:43%, 0:1%, 2:2%, 0:3%, 2:20%, 0:1%, 2:1%, 0:6%, 2:3%, 0:8%")
+		"0:5%, 2:70%, 0:1%, 2:12%, 0:8%")
 }
 
 func (s *TestSuite) TestMoveAlongItinerariesMultipleChoice2(c *C) {
@@ -653,7 +678,7 @@ func (s *TestSuite) TestMoveAlongItinerariesMultipleChoice2(c *C) {
 	testMoveAlongMultipleItineraries(c,
 		swapi.Point{X: -0.3146, Y: 47.4095},
 		swapi.Point{X: -0.3774, Y: 47.3517},
-		"0:8%, 1:6%, 0:1%, 1:18%, 0:22%, 1:4%, 0:1%, 1:3%, 0:2%, 1:3%, "+
+		"0:8%, 1:7%, 0:1%, 1:28%, 0:2%, 1:15%, 0:1%, 1:3%, 0:2%, 1:3%, "+
 			"0:1%, 1:3%, 0:19%")
 }
 

@@ -29,6 +29,9 @@ public:
 
 typedef boost::shared_ptr< TER_DynamicData > DynamicDataPtr;
 
+// CreateRawDynamicData creates a raw, unregistered dynamic data of unknown terrain type.
+DynamicDataPtr CreateRawDynamicData( const T_PointVector& points );
+
 // Create a new TER_DynamicData from the input geometry and type, and if the
 // singletons are available, register it. If type is the empty string, use
 // the default type defined in terrain analyzer.

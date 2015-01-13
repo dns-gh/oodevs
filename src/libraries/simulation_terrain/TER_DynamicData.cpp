@@ -57,6 +57,11 @@ private:
 
 }  // namespace
 
+DynamicDataPtr CreateRawDynamicData( const T_PointVector& points )
+{
+    return boost::make_shared< DynamicData >( points, "" );
+}
+
 DynamicDataPtr CreateAndRegisterDynamicData( const T_PointVector& points,
         const std::string& type )
 {

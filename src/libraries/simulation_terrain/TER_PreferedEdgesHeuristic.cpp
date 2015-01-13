@@ -9,8 +9,10 @@
 
 #include "simulation_terrain_pch.h"
 #include "TER_PreferedEdgesHeuristic.h"
+#include "TER_DynamicData.h"
 #include "TER_PathIndex.h"
 #include "TER_PathFinder_ABC.h"
+#include "TER_PathFinderThread.h"
 #include "TER_World.h"
 #include "MT_Tools/MT_Vector2d.h"
 #include <pathfind/TerrainRule_ABC.h>
@@ -90,10 +92,30 @@ private:
 
 TER_PreferedEdgesHeuristic::TER_PreferedEdgesHeuristic(
         const boost::shared_ptr< TER_Pathfinder_ABC >& pathfinder,
-        const std::vector< T_Itinerary >& itineraries )
+        const std::vector< T_Itinerary >& itineraries,
+        TER_PathFinderThread& graph )
     : pathfinder_( pathfinder )
     , itineraries_( itineraries )
+    , graph_( graph )
 {
+    // Edges to be weighted have to exist in the graph in the first place.
+    // Add the itineraries edges to the graph instance used to compute the
+    // path and unregister them when done.
+    for( auto it = itineraries_.begin(); it != itineraries_.end(); ++it )
+    {
+        T_PointVector points;
+        for( auto ip = it->begin(); ip != it->end(); ++ip )
+            points.push_back( MT_Vector2D( ip->X(), ip->Y() ) );
+        const auto data = CreateRawDynamicData( points );
+        graph_.AddDynamicDataToRegister( data );
+        registeredData_.push_back( data );
+    }
+}
+
+TER_PreferedEdgesHeuristic::~TER_PreferedEdgesHeuristic()
+{
+    for( auto it = registeredData_.begin(); it != registeredData_.end(); ++it )
+        graph_.AddDynamicDataToUnregister( *it );
 }
 
 void TER_PreferedEdgesHeuristic::SetChoiceRatio( float ratio )
