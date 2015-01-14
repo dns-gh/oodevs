@@ -27,7 +27,7 @@ namespace sword
 }
 
 // TER_PreferedEdgesHeuristic inserts prefered itineraries edges into the
-// pathfind grpah and adjusts edge costs to lower those of known edges defined
+// pathfind graph and adjusts edge costs to lower those of known edges defined
 // in a path result, and favor such path.
 class TER_PreferedEdgesHeuristic : public TER_Pathfinder_ABC
                                  , private boost::noncopyable
@@ -38,7 +38,7 @@ public:
     TER_PreferedEdgesHeuristic( const boost::shared_ptr< TER_Pathfinder_ABC >& pathfinder,
                                 const std::vector< T_Itinerary >& itineraries,
                                 TER_PathFinderThread& graph );
-    ~TER_PreferedEdgesHeuristic();
+    virtual ~TER_PreferedEdgesHeuristic();
     
     virtual void SetChoiceRatio( float ratio );
     virtual void SetConfiguration( unsigned refine, unsigned int subdivisions );
