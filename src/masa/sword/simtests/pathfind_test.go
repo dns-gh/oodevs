@@ -559,7 +559,7 @@ func (s *TestSuite) TestMoveAlongItineraryNoBacktrack(c *C) {
 
 func (s *TestSuite) TestMoveAlongItineraryInOpenArea(c *C) {
 	phydb := loadPhysicalData(c, "test")
-	sim, client := connectAndWaitModel(c, NewAdminOpts(ExAngersEmpty).RecordUnitPaths().AddGaming())
+	sim, client := connectAndWaitModel(c, NewAdminOpts(ExAngersEmpty).RecordUnitPaths())
 	defer stopSimAndClient(c, sim, client)
 
 	// Start and end points are at extremities of an open area. The itinerary
@@ -579,7 +579,6 @@ func (s *TestSuite) TestMoveAlongItineraryInOpenArea(c *C) {
 		})
 	ratios := getMatchedRatio(points, itineraries)
 	c.Assert(ratios, Equals, "0:14%, 1:71%, 0:14%")
-	select {}
 }
 
 func testMoveAlongHorseshoe(c *C, from, to swapi.Point, expectedRatios string) {
