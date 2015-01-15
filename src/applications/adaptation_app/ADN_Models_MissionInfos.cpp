@@ -65,8 +65,6 @@ void ADN_Models_MissionInfos::ReadArchive( xml::xistream& input )
 {
     input >> xml::attribute( "name", *this );
     ADN_Missions_ABC* mission = ADN_Workspace::GetWorkspace().GetMissions().GetData().FindMission( GetVector(), strName_.GetData() );
-    if( !mission )
-        throw MASA_EXCEPTION( tools::translate( "ADN_Models_MissionInfos", "Doctrine models - Invalid mission '%1'" ).arg( strName_.GetData().c_str() ).toStdString() );
     SetCrossedElement( mission );
     input >> xml::list( "fragorder", *this, &ADN_Models_MissionInfos::ReadFragOrder );
 }
