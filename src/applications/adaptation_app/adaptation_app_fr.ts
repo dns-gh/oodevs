@@ -3210,13 +3210,6 @@ PNG (*.png)
     </message>
 </context>
 <context>
-    <name>ADN_Models_MissionInfos</name>
-    <message>
-        <source>Doctrine models - Invalid mission &apos;%1&apos;</source>
-        <translation>Modèles - Mission invalide &apos;%1&apos;</translation>
-    </message>
-</context>
-<context>
     <name>ADN_Models_ModelInfos</name>
     <message>
         <source>Missions</source>
