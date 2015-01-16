@@ -47,6 +47,7 @@ public:
         if( cost <= 0 )
             return cost;
 
+        cost *= costMultiplier;
         for( auto it = indexes_.begin(); it != indexes_.end(); ++it )
         {
             const auto dist = (*it)->GetDistanceUsingPath( to );
