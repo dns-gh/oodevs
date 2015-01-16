@@ -28,11 +28,16 @@ const float costMultiplier = 20.f;
 const uint16_t itiLinear = 1 << 15;
 const TerrainData itiTerrain = TerrainData( 0, 0, 0, itiLinear );
 
-// FilterItiTerrain returns input terrain without the special itinerary linear bit.
-TerrainData FilterItiTerrain( const TerrainData& t )
+}
+
+// RemoveItineraryBit returns input terrain without the special itinerary linear bit.
+TerrainData RemoveItineraryBit( const TerrainData& t )
 {
     return TerrainData( t.Area(), t.Left(), t.Right(), t.Linear() & ~itiTerrain.Linear() );
 }
+
+namespace
+{
 
 class TER_PreferedEdges : public TerrainRule_ABC
 {
@@ -77,8 +82,8 @@ public:
                            std::ostream* reason )
     {
         bool isIti = ( terrainBetween.Linear() & itiTerrain.Linear() ) == itiTerrain.Linear();
-        const auto filteredBetween = FilterItiTerrain( terrainBetween );
-        const auto filteredTo = FilterItiTerrain( terrainTo );
+        const auto filteredBetween = RemoveItineraryBit( terrainBetween );
+        const auto filteredTo = RemoveItineraryBit( terrainTo );
         if( isIti && reason )
             *reason << "itinerary\n";
         // For some reason probably related to the way the dynamic graph merge

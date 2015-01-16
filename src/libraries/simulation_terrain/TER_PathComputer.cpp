@@ -13,6 +13,7 @@
 #include "TER_PathSection.h"
 #include "TER_Pathfinder.h"
 #include "TER_Pathfinder_ABC.h"
+#include "TER_PreferedEdgesHeuristic.h"
 #include "MT_Tools/MT_Logger.h"
 #include <pathfind/TerrainRule_ABC.h>
 #include <boost/make_shared.hpp>
@@ -176,8 +177,10 @@ void TER_PathComputer::DoExecute(
                 continue;
             const geometry::Point2f p( *ip );
             const auto point = boost::make_shared< TER_PathPoint >(
-                MT_Vector2D( ip->Point().X(), ip->Point().Y() ), ip->DataAtPoint(),
-                ip->DataToNextPoint(), ip == res->points.begin() );
+                MT_Vector2D( ip->Point().X(), ip->Point().Y() ),
+                RemoveItineraryBit( ip->DataAtPoint() ),
+                RemoveItineraryBit( ip->DataToNextPoint() ),
+                ip == res->points.begin() );
             resultList_.push_back( point );
         }
 

@@ -631,6 +631,11 @@ func (s *TestSuite) TestMoveAlongItineraryInOpenArea2(c *C) {
 	c.Assert(ratios1, Equals, "0:14%, 1:4%, 0:1%, 1:60%, 0:17%")
 	ratios2 := getMatchedRatio(points2, itineraries)
 	c.Assert(ratios2, Equals, ratios1)
+
+	// Check unit2 actually reaches its destination
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		return isNearby(data.Units[unit1.Id].Position, to)
+	})
 }
 
 func testMoveAlongHorseshoe(c *C, from, to swapi.Point, expectedRatios string) {

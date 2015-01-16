@@ -12,6 +12,7 @@
 
 #include "TER_Pathfinder_ABC.h"
 #include <geometry/Types.h>
+#include <spatialcontainer/TerrainData.h>
 #include <boost/noncopyable.hpp>
 #include <boost/shared_ptr.hpp>
 #include <vector>
@@ -25,6 +26,8 @@ namespace sword
 {
     class Pathfind;
 }
+
+TerrainData RemoveItineraryBit( const TerrainData& terrain );
 
 // TER_PreferedEdgesHeuristic inserts prefered itineraries edges into the
 // pathfind graph and adjusts edge costs to lower those of known edges defined
