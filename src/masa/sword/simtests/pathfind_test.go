@@ -20,6 +20,7 @@ import (
 	"math"
 	"strconv"
 	"strings"
+	"time"
 )
 
 const (
@@ -350,14 +351,9 @@ func (s *TestSuite) TestPathfindDeletingUnitsDeletesRelatedPathfinds(c *C) {
 	})
 }
 
-// Creates a unit moving like a main battle tank, creates an itinerary with
-// "path" waypoints, asks the unit to move from "from" to "to" using the
-// itinerary and return computed path. If more than one "path" argument is used
-// following itineraries are bound to the unit.
-func getMoveAlongItinerary(c *C, phydb *phy.PhysicalData, client *swapi.Client,
-	from, to swapi.Point, path ...[]swapi.Point) ([]swapi.Point, [][]swapi.Point) {
-
-	moveAlongItinerary := uint32(445949284)
+// createMoveAlongUnits creates a new unit at point suitable for itineraryt tests.
+func createMoveAlongUnit(c *C, phydb *phy.PhysicalData, client *swapi.Client,
+	point swapi.Point) *swapi.Unit {
 
 	// Create test unit
 	party := &swrun.Party{
@@ -372,9 +368,9 @@ func getMoveAlongItinerary(c *C, phydb *phy.PhysicalData, client *swapi.Client,
 						Units: []*swrun.Unit{
 							&swrun.Unit{
 								// Ensure unit unicity
-								Name: "unit",
+								Name: fmt.Sprintf("unit-%s", time.Now()),
 								Type: "VW Main Battle Combi",
-								Pos:  from,
+								Pos:  point,
 							},
 						},
 					},
@@ -387,27 +383,17 @@ func getMoveAlongItinerary(c *C, phydb *phy.PhysicalData, client *swapi.Client,
 	unit := party.Formations[0].Automats[0].Units[0].Entity
 	err = client.SetAutomatMode(unit.AutomatId, false)
 	c.Assert(err, IsNil)
+	return unit
+}
 
-	// Create the path
-	var pathfind *swapi.Pathfind
-	itineraries := [][]swapi.Point{}
-	for i, p := range path {
-		pf, err := client.CreatePathfind(unit.Id, p...)
-		c.Assert(err, IsNil)
-		itinerary := []swapi.Point{}
-		for _, point := range pf.Result {
-			itinerary = append(itinerary, point.Point)
-		}
-		itineraries = append(itineraries, itinerary)
-		if i > 0 {
-			DecBindItinerary(c, client, unit.Id, pf.Id)
-		} else {
-			pathfind = pf
-		}
-	}
+// moveAlongItinerary asks supplied unit to move to "to" along pathfind and
+// return its computed path.
+func moveAlongItinerary(c *C, client *swapi.Client, unit *swapi.Unit,
+	to swapi.Point, pathfind *swapi.Pathfind) []swapi.Point {
 
-	// Make move along the path
-	_, err = client.SendUnitOrder(unit.Id, moveAlongItinerary, swapi.MakeParameters(
+	moveAlongItinerary := uint32(445949284)
+	// Move along the path
+	_, err := client.SendUnitOrder(unit.Id, moveAlongItinerary, swapi.MakeParameters(
 		swapi.MakeHeading(0),
 		nil,
 		nil,
@@ -426,6 +412,38 @@ func getMoveAlongItinerary(c *C, phydb *phy.PhysicalData, client *swapi.Client,
 		copy(points, path)
 		return true
 	})
+	return points
+}
+
+// Creates a unit moving like a main battle tank, creates an itinerary with
+// "path" waypoints, asks the unit to move from "from" to "to" using the
+// itinerary and return computed path. If more than one "path" argument is used
+// following itineraries are bound to the unit.
+func getMoveAlongItinerary(c *C, phydb *phy.PhysicalData, client *swapi.Client,
+	from, to swapi.Point, path ...[]swapi.Point) ([]swapi.Point, [][]swapi.Point) {
+
+	unit := createMoveAlongUnit(c, phydb, client, from)
+
+	// Create the itineraries and optionally bind them
+	var pathfind *swapi.Pathfind
+	itineraries := [][]swapi.Point{}
+	for i, p := range path {
+		pf, err := client.CreatePathfind(unit.Id, p...)
+		c.Assert(err, IsNil)
+		itinerary := []swapi.Point{}
+		for _, point := range pf.Result {
+			itinerary = append(itinerary, point.Point)
+		}
+		itineraries = append(itineraries, itinerary)
+		if i > 0 {
+			DecBindItinerary(c, client, unit.Id, pf.Id)
+		} else {
+			pathfind = pf
+		}
+	}
+
+	// Move along the main itinerary
+	points := moveAlongItinerary(c, client, unit, to, pathfind)
 	return points, itineraries
 }
 
@@ -578,7 +596,42 @@ func (s *TestSuite) TestMoveAlongItineraryInOpenArea(c *C) {
 			swapi.Point{X: -0.4220, Y: 47.6831},
 		})
 	ratios := getMatchedRatio(points, itineraries)
-	c.Assert(ratios, Equals, "0:14%, 1:71%, 0:14%")
+	c.Assert(ratios, Equals, "0:13%, 1:66%, 0:20%")
+}
+
+func (s *TestSuite) TestMoveAlongItineraryInOpenArea2(c *C) {
+	phydb := loadPhysicalData(c, "test")
+	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadSmallTest).RecordUnitPaths())
+	defer stopSimAndClient(c, sim, client)
+
+	// Test two similar units moving along the same itinerary to the same
+	// destination in open terrain. The second mission used to ignore the
+	// itinerary because of complicated dynamic graph data interactions.
+	from := swapi.Point{X: -15.8164, Y: 28.3381}
+	to := swapi.Point{X: -15.8164, Y: 28.3523}
+	path := []swapi.Point{
+		swapi.Point{X: -15.8153, Y: 28.3407},
+		swapi.Point{X: -15.8186, Y: 28.3430},
+		swapi.Point{X: -15.8189, Y: 28.3485},
+		swapi.Point{X: -15.8156, Y: 28.3497},
+	}
+	unit1 := createMoveAlongUnit(c, phydb, client, from)
+	pathfind, err := client.CreatePathfind(unit1.Id, path...)
+	itinerary := []swapi.Point{}
+	for _, p := range pathfind.Result {
+		itinerary = append(itinerary, p.Point)
+	}
+	itineraries := [][]swapi.Point{itinerary}
+	c.Assert(err, IsNil)
+	points1 := moveAlongItinerary(c, client, unit1, to, pathfind)
+	unit2 := createMoveAlongUnit(c, phydb, client, from)
+	points2 := moveAlongItinerary(c, client, unit2, to, pathfind)
+
+	ratios1 := getMatchedRatio(points1, itineraries)
+	c.Assert(ratios1, Equals, "0:14%, 1:4%, 0:1%, 1:60%, 0:17%")
+	ratios2 := getMatchedRatio(points2, itineraries)
+	// TODO: this should be the same than the previous one
+	c.Assert(ratios2, Equals, "0:100%")
 }
 
 func testMoveAlongHorseshoe(c *C, from, to swapi.Point, expectedRatios string) {
@@ -625,7 +678,7 @@ func (s *TestSuite) TestMoveAlongItineraryOnHorseshoe(c *C) {
 	testMoveAlongHorseshoe(c,
 		swapi.Point{X: -0.5126, Y: 47.2098},
 		swapi.Point{X: -0.2476, Y: 47.1829},
-		"0:22%, 1:69%, 0:4%")
+		"0:22%, 1:68%, 0:4%")
 }
 
 func testMoveAlongMultipleItineraries(c *C, from, to swapi.Point, expectedRatios string) {

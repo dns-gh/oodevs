@@ -30,9 +30,9 @@ TerrainData Convert( const std::string& type )
 class DynamicData : public TER_DynamicData
 {
 public:
-    DynamicData( const T_PointVector& points, const std::string& type )
+    DynamicData( const T_PointVector& points, const TerrainData& type )
         : points_     ( points )
-        , terrainData_( Convert( type ))
+        , terrainData_( type )
     {
     }
 
@@ -57,9 +57,10 @@ private:
 
 }  // namespace
 
-DynamicDataPtr CreateRawDynamicData( const T_PointVector& points )
+DynamicDataPtr CreateRawDynamicData( const T_PointVector& points,
+        const TerrainData& terrain  )
 {
-    return boost::make_shared< DynamicData >( points, "" );
+    return boost::make_shared< DynamicData >( points, terrain );
 }
 
 DynamicDataPtr CreateAndRegisterDynamicData( const T_PointVector& points,
@@ -69,7 +70,7 @@ DynamicDataPtr CreateAndRegisterDynamicData( const T_PointVector& points,
     // without having to instanciante all the TER_World machinery.
     auto w = TER_World::GetWorldPtr();
     auto* manager = w ? w->GetPathfinder() : 0;
-    auto data = boost::make_shared< DynamicData >( points, type );
+    auto data = boost::make_shared< DynamicData >( points, Convert( type ) );
     if( !manager )
         return data;
     manager->AddDynamicData( data );

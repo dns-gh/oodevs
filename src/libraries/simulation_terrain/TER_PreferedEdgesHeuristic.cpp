@@ -23,7 +23,16 @@ namespace
 {
 
 // Relative value of actual costs of non-path edges.
-static const float costMultiplier = 20.f;
+const float costMultiplier = 20.f;
+// Declare a new linear type to tag temporary itinerary graph segments 
+const uint16_t itiLinear = 1 << 15;
+const TerrainData itiTerrain = TerrainData( 0, 0, 0, itiLinear );
+
+// FilterItiTerrain returns input terrain without the special itinerary linear bit.
+TerrainData FilterItiTerrain( const TerrainData& t )
+{
+    return TerrainData( t.Area(), t.Left(), t.Right(), t.Linear() & ~itiTerrain.Linear() );
+}
 
 class TER_PreferedEdges : public TerrainRule_ABC
 {
@@ -67,14 +76,23 @@ public:
                            const TerrainData& terrainBetween,
                            std::ostream* reason )
     {
-        const auto cost = rule_.GetCost( from, to, terrainTo, terrainBetween, reason );
-        if( cost < 0 )
-            return cost;
-        for( auto it = indexes_.begin(); it != indexes_.end(); ++it )
+        bool isIti = ( terrainBetween.Linear() & itiTerrain.Linear() ) == itiTerrain.Linear();
+        const auto filteredBetween = FilterItiTerrain( terrainBetween );
+        const auto filteredTo = FilterItiTerrain( terrainTo );
+        if( isIti && reason )
+            *reason << "itinerary\n";
+        // For some reason probably related to the way the dynamic graph merge
+        // linear data, we cannot rely on the itiTerrain to detect itinerary
+        // edges overlapping existing edges with non-zero linear value (ie roads).
+        // Fall back to geometry matching.
+        for( auto it = indexes_.begin(); !isIti && it != indexes_.end(); ++it )
         {
             if( (*it)->IsPathEdge( from, to )  )
-                return cost;
+                isIti = true;
         }
+        const auto cost = rule_.GetCost( from, to, filteredTo, filteredBetween, reason );
+        if( cost < 0 || isIti )
+            return cost;
         return costMultiplier*cost;
     }
 
@@ -107,7 +125,7 @@ TER_PreferedEdgesHeuristic::TER_PreferedEdgesHeuristic(
         T_PointVector points;
         for( auto ip = it->begin(); ip != it->end(); ++ip )
             points.push_back( MT_Vector2D( ip->X(), ip->Y() ) );
-        const auto data = CreateRawDynamicData( points );
+        const auto data = CreateRawDynamicData( points, itiTerrain );
         graph_.AddDynamicDataToRegister( data );
         registeredData_.push_back( data );
     }
