@@ -630,8 +630,7 @@ func (s *TestSuite) TestMoveAlongItineraryInOpenArea2(c *C) {
 	ratios1 := getMatchedRatio(points1, itineraries)
 	c.Assert(ratios1, Equals, "0:14%, 1:4%, 0:1%, 1:60%, 0:17%")
 	ratios2 := getMatchedRatio(points2, itineraries)
-	// TODO: this should be the same than the previous one
-	c.Assert(ratios2, Equals, "0:100%")
+	c.Assert(ratios2, Equals, ratios1)
 }
 
 func testMoveAlongHorseshoe(c *C, from, to swapi.Point, expectedRatios string) {

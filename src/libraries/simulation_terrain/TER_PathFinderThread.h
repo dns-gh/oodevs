@@ -34,6 +34,13 @@ class TER_StaticData;
 // =============================================================================
 class TER_PathFinderThread : private boost::noncopyable
 {
+private:
+    struct Registration
+    {
+        DynamicDataPtr data;
+        bool remove;
+    };
+
 public:
              TER_PathFinderThread( const TER_StaticData& staticData,
                    unsigned int nMaxEndConnections, double rMinEndConnectionLength );
@@ -48,9 +55,8 @@ private:
     boost::shared_ptr< TerrainPathfinder > pathfinder_;
     boost::shared_ptr< TerrainPathfinder > staticPathfinder_;
     std::map< DynamicDataPtr, RetractationPtr > handlers_;
-    boost::mutex                       dynamicDataMutex_;
-    std::vector< DynamicDataPtr >      dynamicDataToRegister_;
-    std::vector< DynamicDataPtr >      dynamicDataToUnregister_;
+    boost::mutex pendingMutex_;
+    std::vector< Registration > pending_;
 };
 
 #endif // __TER_PathFinderThread_h_
