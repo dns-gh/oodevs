@@ -328,7 +328,6 @@ void TER_Pathfinder::ProcessRequest( TER_PathFinderThread& data, Request& reques
     const auto future = request.future;
     try
     {
-        data.ProcessDynamicData();
         const auto pathfinder = data.GetPathfinder( !rq->IgnoreDynamicObjects() );
         boost::shared_ptr< TER_Pathfinder_ABC > wrapper =
             boost::make_shared< PathfindDumper >(
@@ -336,7 +335,11 @@ void TER_Pathfinder::ProcessRequest( TER_PathFinderThread& data, Request& reques
         MT_Profiler profiler;
         profiler.Start();
         if( !rq->GetItineraries().empty() )
-            wrapper = boost::make_shared< TER_PreferedEdgesHeuristic >( wrapper, rq->GetItineraries() );
+            wrapper = boost::make_shared< TER_PreferedEdgesHeuristic >(
+                    wrapper, rq->GetItineraries(), data );
+        // Itineraries are added to the dynamic graph. Process dynamic data
+        // after TER_PreferedEdgesHeuristic creation.
+        data.ProcessDynamicData();
         const auto res = TER_PathComputer().Execute( request.id, rq->GetCallerId(),
                 rq->GetSections(), *wrapper, *future, deadline, debugPath_ );
         future->Set( res );

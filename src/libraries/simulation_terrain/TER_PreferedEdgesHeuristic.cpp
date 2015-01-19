@@ -9,8 +9,10 @@
 
 #include "simulation_terrain_pch.h"
 #include "TER_PreferedEdgesHeuristic.h"
+#include "TER_DynamicData.h"
 #include "TER_PathIndex.h"
 #include "TER_PathFinder_ABC.h"
+#include "TER_PathFinderThread.h"
 #include "TER_World.h"
 #include "MT_Tools/MT_Vector2d.h"
 #include <pathfind/TerrainRule_ABC.h>
@@ -21,7 +23,21 @@ namespace
 {
 
 // Relative value of actual costs of non-path edges.
-static const float costMultiplier = 20.f;
+const float costMultiplier = 20.f;
+// Declare a new linear type to tag temporary itinerary graph segments 
+const uint16_t itineraryLinear = 1 << 15;
+const TerrainData itineraryTerrain = TerrainData( 0, 0, 0, itineraryLinear );
+
+}
+
+// RemoveItineraryBit returns input terrain without the special itinerary linear bit.
+TerrainData RemoveItineraryBit( const TerrainData& t )
+{
+    return TerrainData( t.Area(), t.Left(), t.Right(), t.Linear() & ~itineraryTerrain.Linear() );
+}
+
+namespace
+{
 
 class TER_PreferedEdges : public TerrainRule_ABC
 {
@@ -45,6 +61,7 @@ public:
         if( cost <= 0 )
             return cost;
 
+        cost *= costMultiplier;
         for( auto it = indexes_.begin(); it != indexes_.end(); ++it )
         {
             const auto dist = (*it)->GetDistanceUsingPath( to );
@@ -64,10 +81,20 @@ public:
                            const TerrainData& terrainBetween,
                            std::ostream* reason )
     {
-        const auto cost = rule_.GetCost( from, to, terrainTo, terrainBetween, reason );
-        if( cost < 0 )
+        const bool isIti = ( terrainBetween.Linear() & itineraryTerrain.Linear() )
+            == itineraryTerrain.Linear();
+        const auto filteredBetween = RemoveItineraryBit( terrainBetween );
+        const auto filteredTo = RemoveItineraryBit( terrainTo );
+        if( isIti && reason )
+            *reason << "itinerary\n";
+        const auto cost = rule_.GetCost( from, to, filteredTo, filteredBetween, reason );
+        if( cost < 0 || isIti )
             return cost;
-        for( auto it = indexes_.begin(); it != indexes_.end(); ++it )
+        // For some reason probably related to the way the dynamic graph merges
+        // linear data, we cannot rely on the itineraryTerrain to detect itinerary
+        // edges overlapping existing edges with non-zero linear value (ie roads).
+        // Fall back to geometry matching.
+        for( auto it = indexes_.begin(); !isIti && it != indexes_.end(); ++it )
         {
             if( (*it)->IsPathEdge( from, to )  )
                 return cost;
@@ -90,10 +117,30 @@ private:
 
 TER_PreferedEdgesHeuristic::TER_PreferedEdgesHeuristic(
         const boost::shared_ptr< TER_Pathfinder_ABC >& pathfinder,
-        const std::vector< T_Itinerary >& itineraries )
+        const std::vector< T_Itinerary >& itineraries,
+        TER_PathFinderThread& graph )
     : pathfinder_( pathfinder )
     , itineraries_( itineraries )
+    , graph_( graph )
 {
+    // Edges to be weighted have to exist in the graph in the first place.
+    // Add the itineraries edges to the graph instance used to compute the
+    // path and unregister them when done.
+    for( auto it = itineraries_.begin(); it != itineraries_.end(); ++it )
+    {
+        T_PointVector points;
+        for( auto ip = it->begin(); ip != it->end(); ++ip )
+            points.push_back( MT_Vector2D( ip->X(), ip->Y() ) );
+        const auto data = CreateRawDynamicData( points, itineraryTerrain );
+        graph_.AddDynamicDataToRegister( data );
+        registeredData_.push_back( data );
+    }
+}
+
+TER_PreferedEdgesHeuristic::~TER_PreferedEdgesHeuristic()
+{
+    for( auto it = registeredData_.begin(); it != registeredData_.end(); ++it )
+        graph_.AddDynamicDataToUnregister( *it );
 }
 
 void TER_PreferedEdgesHeuristic::SetChoiceRatio( float ratio )

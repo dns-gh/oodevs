@@ -72,37 +72,33 @@ RetractationPtr CreateDynamicData( TerrainPathfinder& pathfinder, const TER_Dyna
 // -----------------------------------------------------------------------------
 void TER_PathFinderThread::ProcessDynamicData()
 {
-    std::vector< DynamicDataPtr > toRegister, toUnregister;
+    std::vector< Registration > registrations;
     {
-        boost::mutex::scoped_lock locker( dynamicDataMutex_ );
-        toRegister  .swap( dynamicDataToRegister_   );
-        toUnregister.swap( dynamicDataToUnregister_ );
+        boost::mutex::scoped_lock locker( pendingMutex_ );
+        registrations.swap( pending_ );
     }
 
-    if( !toRegister.empty() )
-    {
-        MT_Profiler profiler;
-        profiler.Start();
+    if( registrations.empty() )
+        return;
 
-        for( auto it = toRegister.begin(); it != toRegister.end(); ++it )
+    MT_Profiler profiler;
+    profiler.Start();
+    auto added = registrations.size();
+    for( auto it = registrations.begin(); it != registrations.end(); ++it )
+    {
+        if( !it->remove )
         {
-            RetractationPtr h = CreateDynamicData( *pathfinder_, **it );
-            handlers_[*it] = h;
+            RetractationPtr h = CreateDynamicData( *pathfinder_, *it->data );
+            handlers_[it->data] = h;
         }
-        MT_LOG_INFO_MSG( MT_FormatString( "Register %d dynamic data - %.2f ms",
-                    toRegister.size(), profiler.Stop() ) );
+        else
+        {
+            handlers_.erase( it->data );
+            --added;
+        }
     }
-
-    if( !toUnregister.empty() )
-    {
-        MT_Profiler profiler;
-        profiler.Start();
-
-        for( auto it = toUnregister.begin(); it != toUnregister.end(); ++it )
-            handlers_.erase( *it );
-        MT_LOG_INFO_MSG( MT_FormatString( "Unregister %d dynamic data - %.2f ms",
-                    toUnregister.size(), profiler.Stop() ) );
-    }
+    MT_LOG_INFO_MSG( MT_FormatString( "Dynamic data added: %d, removed: %d, %.2f ms",
+        added, registrations.size() - added, profiler.Stop() ) );
 }
 
 boost::shared_ptr< TerrainPathfinder > TER_PathFinderThread::GetPathfinder( bool dynamic )
@@ -116,8 +112,9 @@ boost::shared_ptr< TerrainPathfinder > TER_PathFinderThread::GetPathfinder( bool
 // -----------------------------------------------------------------------------
 void TER_PathFinderThread::AddDynamicDataToRegister( const DynamicDataPtr& data )
 {
-    boost::mutex::scoped_lock locker( dynamicDataMutex_ );
-    dynamicDataToRegister_.push_back( data );
+    boost::mutex::scoped_lock locker( pendingMutex_ );
+    Registration r = { data, false };
+    pending_.push_back( r );
 }
 
 // -----------------------------------------------------------------------------
@@ -126,6 +123,7 @@ void TER_PathFinderThread::AddDynamicDataToRegister( const DynamicDataPtr& data 
 // -----------------------------------------------------------------------------
 void TER_PathFinderThread::AddDynamicDataToUnregister( const DynamicDataPtr& data )
 {
-    boost::mutex::scoped_lock locker( dynamicDataMutex_ );
-    dynamicDataToUnregister_.push_back( data );
+    boost::mutex::scoped_lock locker( pendingMutex_ );
+    Registration r = { data, true };
+    pending_.push_back( r );
 }
