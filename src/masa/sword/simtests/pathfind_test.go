@@ -351,7 +351,7 @@ func (s *TestSuite) TestPathfindDeletingUnitsDeletesRelatedPathfinds(c *C) {
 	})
 }
 
-// createMoveAlongUnits creates a new unit at point suitable for itineraryt tests.
+// createMoveAlongUnits creates a new unit at point suitable for itinerary tests.
 func createMoveAlongUnit(c *C, phydb *phy.PhysicalData, client *swapi.Client,
 	point swapi.Point) *swapi.Unit {
 
@@ -599,7 +599,7 @@ func (s *TestSuite) TestMoveAlongItineraryInOpenArea(c *C) {
 	c.Assert(ratios, Equals, "0:13%, 1:66%, 0:20%")
 }
 
-func (s *TestSuite) TestMoveAlongItineraryInOpenArea2(c *C) {
+func (s *TestSuite) TestMoveAlongItineraryRepeatedInOpenArea(c *C) {
 	phydb := loadPhysicalData(c, "test")
 	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadSmallTest).RecordUnitPaths())
 	defer stopSimAndClient(c, sim, client)
@@ -617,12 +617,12 @@ func (s *TestSuite) TestMoveAlongItineraryInOpenArea2(c *C) {
 	}
 	unit1 := createMoveAlongUnit(c, phydb, client, from)
 	pathfind, err := client.CreatePathfind(unit1.Id, path...)
+	c.Assert(err, IsNil)
 	itinerary := []swapi.Point{}
 	for _, p := range pathfind.Result {
 		itinerary = append(itinerary, p.Point)
 	}
 	itineraries := [][]swapi.Point{itinerary}
-	c.Assert(err, IsNil)
 	points1 := moveAlongItinerary(c, client, unit1, to, pathfind)
 	unit2 := createMoveAlongUnit(c, phydb, client, from)
 	points2 := moveAlongItinerary(c, client, unit2, to, pathfind)

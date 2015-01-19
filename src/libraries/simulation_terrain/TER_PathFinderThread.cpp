@@ -113,9 +113,7 @@ boost::shared_ptr< TerrainPathfinder > TER_PathFinderThread::GetPathfinder( bool
 void TER_PathFinderThread::AddDynamicDataToRegister( const DynamicDataPtr& data )
 {
     boost::mutex::scoped_lock locker( pendingMutex_ );
-    Registration r;
-    r.data = data;
-    r.remove = false;
+    Registration r = { data, false };
     pending_.push_back( r );
 }
 
@@ -126,8 +124,6 @@ void TER_PathFinderThread::AddDynamicDataToRegister( const DynamicDataPtr& data 
 void TER_PathFinderThread::AddDynamicDataToUnregister( const DynamicDataPtr& data )
 {
     boost::mutex::scoped_lock locker( pendingMutex_ );
-    Registration r;
-    r.data = data;
-    r.remove = true;
+    Registration r = { data, true };
     pending_.push_back( r );
 }

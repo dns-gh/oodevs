@@ -25,15 +25,15 @@ namespace
 // Relative value of actual costs of non-path edges.
 const float costMultiplier = 20.f;
 // Declare a new linear type to tag temporary itinerary graph segments 
-const uint16_t itiLinear = 1 << 15;
-const TerrainData itiTerrain = TerrainData( 0, 0, 0, itiLinear );
+const uint16_t itineraryLinear = 1 << 15;
+const TerrainData itineraryTerrain = TerrainData( 0, 0, 0, itineraryLinear );
 
 }
 
 // RemoveItineraryBit returns input terrain without the special itinerary linear bit.
 TerrainData RemoveItineraryBit( const TerrainData& t )
 {
-    return TerrainData( t.Area(), t.Left(), t.Right(), t.Linear() & ~itiTerrain.Linear() );
+    return TerrainData( t.Area(), t.Left(), t.Right(), t.Linear() & ~itineraryTerrain.Linear() );
 }
 
 namespace
@@ -81,23 +81,24 @@ public:
                            const TerrainData& terrainBetween,
                            std::ostream* reason )
     {
-        bool isIti = ( terrainBetween.Linear() & itiTerrain.Linear() ) == itiTerrain.Linear();
+        const bool isIti = ( terrainBetween.Linear() & itineraryTerrain.Linear() )
+            == itineraryTerrain.Linear();
         const auto filteredBetween = RemoveItineraryBit( terrainBetween );
         const auto filteredTo = RemoveItineraryBit( terrainTo );
         if( isIti && reason )
             *reason << "itinerary\n";
-        // For some reason probably related to the way the dynamic graph merge
-        // linear data, we cannot rely on the itiTerrain to detect itinerary
+        const auto cost = rule_.GetCost( from, to, filteredTo, filteredBetween, reason );
+        if( cost < 0 || isIti )
+            return cost;
+        // For some reason probably related to the way the dynamic graph merges
+        // linear data, we cannot rely on the itineraryTerrain to detect itinerary
         // edges overlapping existing edges with non-zero linear value (ie roads).
         // Fall back to geometry matching.
         for( auto it = indexes_.begin(); !isIti && it != indexes_.end(); ++it )
         {
             if( (*it)->IsPathEdge( from, to )  )
-                isIti = true;
+                return cost;
         }
-        const auto cost = rule_.GetCost( from, to, filteredTo, filteredBetween, reason );
-        if( cost < 0 || isIti )
-            return cost;
         return costMultiplier*cost;
     }
 
@@ -130,7 +131,7 @@ TER_PreferedEdgesHeuristic::TER_PreferedEdgesHeuristic(
         T_PointVector points;
         for( auto ip = it->begin(); ip != it->end(); ++ip )
             points.push_back( MT_Vector2D( ip->X(), ip->Y() ) );
-        const auto data = CreateRawDynamicData( points, itiTerrain );
+        const auto data = CreateRawDynamicData( points, itineraryTerrain );
         graph_.AddDynamicDataToRegister( data );
         registeredData_.push_back( data );
     }
