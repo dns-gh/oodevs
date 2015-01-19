@@ -216,12 +216,14 @@ func (s *TestSuite) TestUnitWaitsOnObject(c *C) {
 		})
 	// unit waits if teleported inside object
 	inside := swapi.Point{X: -15.721507, Y: 28.372396}
-	checkUnitWaitsOnObject(c, phydb, client, unit.Id, from, to,
-		func() {
-			err = client.Teleport(swapi.MakeUnitTasker(unit.Id), inside)
-			c.Assert(err, IsNil)
-			c.Assert(client.Model.GetUnit(unit.Id).Position, IsNearby, inside)
-		})
+	err = client.Teleport(swapi.MakeUnitTasker(unit.Id), inside)
+	c.Assert(err, IsNil)
+	c.Assert(client.Model.GetUnit(unit.Id).Position, IsNearby, inside)
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		return data.Units[unit.Id].Speed == 0
+	})
+	c.Assert(client.Model.GetUnit(unit.Id).Position, Not(IsNearby), from)
+	c.Assert(client.Model.GetUnit(unit.Id).Position, Not(IsNearby), to)
 	// unit waits back on object if teleported outside object
 	checkUnitWaitsOnObject(c, phydb, client, unit.Id, from, to,
 		func() {

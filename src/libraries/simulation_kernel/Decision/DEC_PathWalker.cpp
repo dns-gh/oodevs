@@ -174,7 +174,7 @@ DEC_PathWalker::E_ReturnCode DEC_PathWalker::SetCurrentPath( boost::shared_ptr< 
     bool bCanSendTerrainReport = pPath != pCurrentPath_;
     pCurrentPath_ = pPath;
     pPath->Finalize();
-    collision_.reset();
+    //collision_.reset();
     movingEntity_.NotifyCurrentPathChanged();
     bForcePathCheck_ = false;
     if( pPath->GetResult().empty() )
