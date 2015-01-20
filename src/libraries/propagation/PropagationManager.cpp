@@ -100,9 +100,8 @@ const tools::Path& PropagationManager::GetProjectionFile() const
 tools::Path::T_Paths PropagationManager::GetFiles( const std::string& time ) const
 {
     const boost::posix_time::ptime ptime( boost::posix_time::from_iso_string( time ) );
-    tools::Path::T_Paths files;
-    for( auto it = schedule_.begin(); it != schedule_.end(); ++it )
-        if( ptime >= it->first )
-            files = it->second;
-    return files;
+    auto it = schedule_.upper_bound( ptime );
+    if( schedule_.empty() || it == schedule_.begin() )
+        return tools::Path::T_Paths();
+    return ( --it )->second;
 }
