@@ -10,9 +10,8 @@
 #ifndef Propagation_h
 #define Propagation_h
 
+#include <geometry/Types.h>
 #include <boost/noncopyable.hpp>
-#include <graphics/RGBATextureFactory.h>
-#include <graphics/TextureTree.h>
 
 namespace kernel
 {
@@ -20,7 +19,9 @@ namespace kernel
     class DisasterType;
 }
 
-class PropagationManager;
+class Extractor_ABC;
+class RGBATextureFactory;
+class TextureTree;
 
 // =============================================================================
 /** @class  Propagation
@@ -33,8 +34,9 @@ class Propagation : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-             Propagation( const tools::Path& file, const PropagationManager& manager,
-                          const kernel::CoordinateConverter_ABC& converter, const kernel::DisasterType& disasterType );
+             Propagation( const Extractor_ABC& extractor,
+                          const kernel::CoordinateConverter_ABC& converter,
+                          const kernel::DisasterType& disasterType );
     virtual ~Propagation();
     //@}
 

@@ -70,7 +70,11 @@ void PropagationAttribute::NotifyUpdated( const Simulation::sEndTick& /*tick*/ )
     {
         propagations_.clear();
         for( std::size_t i = 0; i < files.size(); ++i )
-            propagations_.push_back( boost::make_shared< Propagation >( files[ i ], *pManager_, converter_, disasterType_ ) );
+        {
+            const auto extractor = pManager_->CreateExtractor( files[ i ] );
+            propagations_.push_back( boost::make_shared< Propagation >(
+                        *extractor, converter_, disasterType_ ) );
+        }
         files_ = files;
     }
 }
