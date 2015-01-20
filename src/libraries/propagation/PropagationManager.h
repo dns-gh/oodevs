@@ -19,35 +19,30 @@
 
 class Extractor_ABC;
 
-// =============================================================================
-/** @class  PropagationManager
-    @brief  Propagation manager
-*/
-// Created: LGY 2012-11-07
-// =============================================================================
+// PropagationManager handles a collection of propagation data files and the
+// way they are scheduled and projected.
 class PropagationManager : private boost::noncopyable
 {
 public:
-    //! @name Constructors/Destructor
-    //@{
              PropagationManager( const tools::Path& config, const std::string& time );
     virtual ~PropagationManager();
-    //@}
 
-    //! @name Operations
-    //@{
-    boost::shared_ptr< Extractor_ABC > CreateExtractor( const tools::Path& file ) const;
-    tools::Path::T_Paths GetFiles( const std::string& time ) const;
+    // GetProjectionFile returns the path to the propagation data files
+    // projection file.
     const tools::Path& GetProjectionFile() const;
-    //@}
+
+    // GetFiles returns the set of propagation files activated at the closest
+    // date preceding supplied time.
+    tools::Path::T_Paths GetFiles( const std::string& time ) const;
+
+    // CreateExtractor returns a data reader for specified propagation data
+    // file.
+    boost::shared_ptr< Extractor_ABC > CreateExtractor( const tools::Path& file ) const;
 
 private:
-    //! @name Member data
-    //@{
     tools::Path projection_;
     boost::optional< short > timeZone_;
     std::map< boost::posix_time::ptime, tools::Path::T_Paths > schedule_;
-    //@}
 };
 
 #endif // PropagationManager_h
