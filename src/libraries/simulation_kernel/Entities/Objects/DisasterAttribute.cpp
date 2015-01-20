@@ -37,7 +37,6 @@ namespace bpt = boost::posix_time;
 // Created: LGY 2012-10-05
 // -----------------------------------------------------------------------------
 DisasterAttribute::DisasterAttribute()
-    : pManager_( new PropagationManager() )
 {
     // NOTHING
 }
@@ -57,9 +56,8 @@ namespace
 DisasterAttribute::DisasterAttribute( xml::xistream& xis )
     : model_   ( BuildPropagationFile( xis.attribute< tools::Path >( "source" ) ) )
     , date_    ( xis.attribute< std::string >( "date", "" ) )
-    , pManager_( new PropagationManager() )
+    , pManager_( new PropagationManager( model_, date_ ) )
 {
-    pManager_->Initialize( model_, date_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -68,10 +66,9 @@ DisasterAttribute::DisasterAttribute( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 DisasterAttribute::DisasterAttribute( const sword::MissionParameter_Value& attributes )
     : model_   ( BuildPropagationFile( tools::Path::FromUTF8( attributes.list( 1 ).acharstr() ) ) )
-    , pManager_( new PropagationManager() )
+    , date_( attributes.list( 2 ).acharstr() )
+    , pManager_( new PropagationManager( model_, date_ ) )
 {
-    date_ = attributes.list( 2 ).acharstr();
-    pManager_->Initialize( model_, date_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -82,7 +79,7 @@ DisasterAttribute& DisasterAttribute::operator=( const DisasterAttribute& rhs )
 {
     model_ = rhs.model_;
     date_ = rhs.date_;
-    pManager_->Initialize( model_, date_ );
+    pManager_.reset( new PropagationManager( model_, date_ ) );
     return *this;
 }
 
@@ -116,7 +113,7 @@ void DisasterAttribute::load( MIL_CheckPointInArchive& archive, const unsigned i
     archive >> model_;
     archive >> date_;
     archive >> files_;
-    pManager_->Initialize( model_, date_ );
+    pManager_.reset( new PropagationManager( model_, date_ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -152,6 +149,8 @@ namespace
 // -----------------------------------------------------------------------------
 void DisasterAttribute::UpdateLocalisation( MIL_Object_ABC& object, unsigned int time )
 {
+    if( !pManager_ )
+        return;
     const bpt::ptime realTime( bpt::from_time_t( MIL_AgentServer::GetWorkspace().TickToRealTime( time ) ) );
     tools::Path::T_Paths files = pManager_->GetFiles( boost::posix_time::to_iso_string( realTime ) );
     if( files_ != files )
@@ -257,7 +256,7 @@ bool DisasterAttribute::Update( const DisasterAttribute& rhs )
 // -----------------------------------------------------------------------------
 void DisasterAttribute::OnUpdate( const sword::MissionParameter_Value& /*attribute*/ )
 {
-    pManager_->Initialize( model_, date_ );
+    pManager_.reset( new PropagationManager( model_, date_ ) );
     NotifyAttributeUpdated( eOnUpdate );
 }
 

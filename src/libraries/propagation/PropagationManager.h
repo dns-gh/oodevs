@@ -19,11 +19,6 @@
 
 class Extractor_ABC;
 
-namespace xml
-{
-    class xistream;
-}
-
 // =============================================================================
 /** @class  PropagationManager
     @brief  Propagation manager
@@ -35,28 +30,15 @@ class PropagationManager : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-             PropagationManager();
+             PropagationManager( const tools::Path& config, const std::string& time );
     virtual ~PropagationManager();
-    //@}
-
-    //! @name Types
-    //@{
-    typedef std::map< boost::posix_time::ptime, tools::Path::T_Paths > T_Schedule;
     //@}
 
     //! @name Operations
     //@{
-    void Initialize( const tools::Path& config, const std::string& time );
     boost::shared_ptr< Extractor_ABC > CreateExtractor( const tools::Path& file ) const;
-    tools::Path::T_Paths GetFiles( const std::string& time );
+    tools::Path::T_Paths GetFiles( const std::string& time ) const;
     const tools::Path& GetProjectionFile() const;
-    //@}
-
-private:
-    //! @name Helpers
-    //@{
-    void ReadFile( xml::xistream& xis, const tools::Path& path, const boost::posix_time::ptime& startTime, boost::posix_time::time_duration& delta );
-    void ReadColor( xml::xistream& xis );
     //@}
 
 private:
@@ -64,7 +46,7 @@ private:
     //@{
     tools::Path projection_;
     boost::optional< short > timeZone_;
-    T_Schedule schedule_;
+    std::map< boost::posix_time::ptime, tools::Path::T_Paths > schedule_;
     //@}
 };
 

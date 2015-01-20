@@ -54,8 +54,7 @@ namespace
    void readPropagation( const dispatcher::PropagationAttribute& attribute, ObjectPropagationEventListener_ABC::T_DataVector& data, const SimulationTimeManager_ABC& timeManager )
    {
        const tools::Path path = tools::Path::FromUTF8( attribute.GetModel() );
-       ::PropagationManager propMgr;
-       propMgr.Initialize( path, attribute.GetDate() );
+       ::PropagationManager propMgr( path, attribute.GetDate() );
        const tools::Path::T_Paths files = propMgr.GetFiles( !attribute.GetDate().empty() ? attribute.GetDate() : timeManager.getSimulationTime() );
        if( files.empty() )
            return;
