@@ -37,7 +37,7 @@ namespace
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( extract_ascii_grid )
 {
-    CheckData( ASCExtractor( BOOST_RESOLVE( "ascii_test.asc" ) ) );
+    CheckData( ASCExtractor( BOOST_RESOLVE( "ascii_test.asc" ), "" ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -55,7 +55,7 @@ BOOST_AUTO_TEST_CASE( extract_ascii_grid_with_external_prj )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( extract_raster_values )
 {
-    ASCExtractor extractor( BOOST_RESOLVE( "ascii_test.asc" ) );
+    ASCExtractor extractor( BOOST_RESOLVE( "ascii_test.asc" ), "" );
     const geometry::Point2d bottomLeft = extractor.GetExtent().BottomLeft();
     BOOST_CHECK_EQUAL( extractor.GetValue( bottomLeft.X(), bottomLeft.Y() ), 13. );
     const geometry::Point2d topRight = extractor.GetExtent().TopRight();

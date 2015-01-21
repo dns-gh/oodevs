@@ -32,29 +32,6 @@ std::unique_ptr< OGRCoordinateTransformation > CreateCoordinateTransformation(
 
 // -----------------------------------------------------------------------------
 // Name: ASCExtractor constructor
-// Created: LGY 2012-10-03
-// -----------------------------------------------------------------------------
-ASCExtractor::ASCExtractor( const tools::Path& file )
-    : pDataset_       ( 0 )
-    , pBand_          ( 0 )
-    , max_            ( 1. )
-    , noValueData_    ( 0. )
-{
-    GDALAllRegister();
-    pDataset_ = ( GDALDataset* ) GDALOpen( file.ToUTF8().c_str(), GA_ReadOnly );
-    if( pDataset_ == NULL )
-        throw MASA_EXCEPTION( "Unable to open file : " + file.ToUTF8() );
-
-    if( pDataset_->GetRasterCount() != 1 )
-        throw MASA_EXCEPTION( "Format not supported : " + file.ToUTF8() );
-
-    pTransformation_ = CreateCoordinateTransformation( pDataset_->GetProjectionRef() );
-
-    ExtractData();
-}
-
-// -----------------------------------------------------------------------------
-// Name: ASCExtractor constructor
 // Created: LGY 2012-10-12
 // -----------------------------------------------------------------------------
 ASCExtractor::ASCExtractor( const tools::Path& file, const tools::Path& projection )
@@ -72,8 +49,15 @@ ASCExtractor::ASCExtractor( const tools::Path& file, const tools::Path& projecti
         throw MASA_EXCEPTION( "Format not supported : " + file.ToUTF8() );
 
     std::string projString;
-    if( !tools::ReadFile( projection, projString ) )
-        throw MASA_EXCEPTION( "could not read projection file: " + projection.ToUTF8() );
+    if( !projection.IsEmpty() )
+    {
+        if( !tools::ReadFile( projection, projString ) )
+            throw MASA_EXCEPTION( "could not read projection file: " + projection.ToUTF8() );
+    }
+    else
+    {
+        projString = pDataset_->GetProjectionRef();
+    }
     pTransformation_ = CreateCoordinateTransformation( projString );
 
     ExtractData();

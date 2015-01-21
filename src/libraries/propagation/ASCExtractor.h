@@ -32,7 +32,6 @@ class ASCExtractor : public Extractor_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ASCExtractor( const tools::Path& file );
              ASCExtractor( const tools::Path& file, const tools::Path& projection );
     virtual ~ASCExtractor();
     //@}
