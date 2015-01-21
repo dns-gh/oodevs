@@ -60,7 +60,7 @@ private:
     //@{
     GDALDataset* pDataset_;
     GDALRasterBand* pBand_;
-    OGRCoordinateTransformation* pTransformation_;
+    std::unique_ptr< OGRCoordinateTransformation > pTransformation_;
     double noValueData_;
     double max_;
     geometry::Point2d origin_;

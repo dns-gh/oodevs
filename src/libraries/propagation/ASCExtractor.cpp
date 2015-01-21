@@ -8,29 +8,27 @@
 // *****************************************************************************
 
 #include "ASCExtractor.h"
-#include <tools/Path.h>
 #include "tools/FileWrapper.h"
-#include <boost/bind.hpp>
 #include <tools/Exception.h>
+#include <tools/Path.h>
+#include <tools/StdFileWrapper.h>
 
 namespace
 {
-    OGRCoordinateTransformation* CreateCoordinateTransformation( const std::string& projection )
-    {
-        OGRSpatialReference oSourceSRS, oTargetSRS;
-        oTargetSRS.SetFromUserInput( "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs" );
-        oSourceSRS.SetFromUserInput( projection.c_str() );
-        return OGRCreateCoordinateTransformation( &oSourceSRS, &oTargetSRS );
-    }
 
-    std::string ReadProjectionfile( const tools::Path& file )
-    {
-        std::string projection;
-        tools::Ifstream stream( file );
-        while( std::getline( stream, projection ) ) {}
-        return projection;
-    }
+std::unique_ptr< OGRCoordinateTransformation > CreateCoordinateTransformation(
+        const std::string& projection )
+{
+    OGRSpatialReference oSourceSRS, oTargetSRS;
+    oTargetSRS.SetFromUserInput( "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs" );
+    oSourceSRS.SetFromUserInput( projection.c_str() );
+    const auto proj = OGRCreateCoordinateTransformation( &oSourceSRS, &oTargetSRS );
+    if( !proj )
+        throw MASA_EXCEPTION( "invalid projection: " + projection );
+    return std::unique_ptr< OGRCoordinateTransformation >( proj );
 }
+
+}  // namespace
 
 // -----------------------------------------------------------------------------
 // Name: ASCExtractor constructor
@@ -39,7 +37,6 @@ namespace
 ASCExtractor::ASCExtractor( const tools::Path& file )
     : pDataset_       ( 0 )
     , pBand_          ( 0 )
-    , pTransformation_( 0 )
     , max_            ( 1. )
     , noValueData_    ( 0. )
 {
@@ -53,9 +50,6 @@ ASCExtractor::ASCExtractor( const tools::Path& file )
 
     pTransformation_ = CreateCoordinateTransformation( pDataset_->GetProjectionRef() );
 
-    if( !pTransformation_ )
-        throw MASA_EXCEPTION( "Invalid projection" );
-
     ExtractData();
 }
 
@@ -66,7 +60,6 @@ ASCExtractor::ASCExtractor( const tools::Path& file )
 ASCExtractor::ASCExtractor( const tools::Path& file, const tools::Path& projection )
     : pDataset_       ( 0 )
     , pBand_          ( 0 )
-    , pTransformation_( 0 )
     , max_            ( 1. )
     , noValueData_    ( 0. )
 {
@@ -78,10 +71,10 @@ ASCExtractor::ASCExtractor( const tools::Path& file, const tools::Path& projecti
     if( pDataset_->GetRasterCount() != 1 )
         throw MASA_EXCEPTION( "Format not supported : " + file.ToUTF8() );
 
-    pTransformation_ = CreateCoordinateTransformation( ReadProjectionfile( projection ) );
-
-    if( !pTransformation_ )
-        throw MASA_EXCEPTION( "Invalid projection" );
+    std::string projString;
+    if( !tools::ReadFile( projection, projString ) )
+        throw MASA_EXCEPTION( "could not read projection file: " + projection.ToUTF8() );
+    pTransformation_ = CreateCoordinateTransformation( projString );
 
     ExtractData();
 }
