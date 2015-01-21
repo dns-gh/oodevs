@@ -174,7 +174,6 @@ DEC_PathWalker::E_ReturnCode DEC_PathWalker::SetCurrentPath( boost::shared_ptr< 
     bool bCanSendTerrainReport = pPath != pCurrentPath_;
     pCurrentPath_ = pPath;
     pPath->Finalize();
-    collision_.reset();
     movingEntity_.NotifyCurrentPathChanged();
     bForcePathCheck_ = false;
     if( pPath->GetResult().empty() )
@@ -343,10 +342,11 @@ void DEC_PathWalker::ComputeObjectsCollision( const MT_Vector2D& vStart, const M
             {
                 if( !object.IsInside( *itPoint ) )
                     continue;
-                IT_MoveStepSet itMoveStep = moveStepSet.insert( T_MoveStep( *itPoint ) ).first;
+                auto insertion = moveStepSet.insert( T_MoveStep( *itPoint ) );
+                IT_MoveStepSet itMoveStep = insertion.first;
                 const_cast< T_ObjectSet& >( itMoveStep->ponctualObjectsOnSet_ ).insert( &object );
                 // A - C - B ( Le point C ajouté entre A et B contient les mêmes objets que de A -> B)
-                if( itMoveStep != moveStepSet.begin() )
+                if( insertion.second && itMoveStep != moveStepSet.begin() )
                 {
                     IT_MoveStepSet itPrevMoveStep = itMoveStep;
                     const_cast< T_ObjectSet& >( itMoveStep->objectsToNextPointSet_ ) = ( --itPrevMoveStep )->objectsToNextPointSet_;
