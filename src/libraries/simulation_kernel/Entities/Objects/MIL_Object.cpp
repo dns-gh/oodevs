@@ -470,6 +470,8 @@ void MIL_Object::UpdateLocalisation( const TER_Localisation& location )
 // -----------------------------------------------------------------------------
 boost::shared_ptr< DEC_Knowledge_Object > MIL_Object::CreateKnowledge( const MIL_KnowledgeGroup& group )
 {
+    if( IsMarkedForDestruction() )
+        return 0;
     boost::shared_ptr< DEC_Knowledge_Object > pKnowledge( new DEC_Knowledge_Object( group, *this ) );
     InstanciateAttributes( *pKnowledge );
     return pKnowledge;
