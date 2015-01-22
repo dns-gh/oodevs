@@ -32,7 +32,6 @@ class ASCExtractor : public Extractor_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ASCExtractor( const tools::Path& file );
              ASCExtractor( const tools::Path& file, const tools::Path& projection );
     virtual ~ASCExtractor();
     //@}
@@ -60,7 +59,7 @@ private:
     //@{
     GDALDataset* pDataset_;
     GDALRasterBand* pBand_;
-    OGRCoordinateTransformation* pTransformation_;
+    std::unique_ptr< OGRCoordinateTransformation > pTransformation_;
     double noValueData_;
     double max_;
     geometry::Point2d origin_;

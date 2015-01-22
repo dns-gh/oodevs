@@ -30,7 +30,6 @@ PropagationAttribute::PropagationAttribute( Controller& controller, const Coordi
                                             const kernel::Time_ABC& simulation )
     : controller_  ( controller )
     , converter_   ( converter )
-    , pManager_    ( new PropagationManager() )
     , simulation_  ( simulation )
     , disasterType_( disasterTypes.Get( type.GetDisasterType() ) )
 {
@@ -52,11 +51,12 @@ PropagationAttribute::~PropagationAttribute()
 // -----------------------------------------------------------------------------
 void PropagationAttribute::DoUpdate( const sword::ObjectUpdate& message )
 {
-    if( message.attributes().has_propagation() )
-    {
-        sword::ObjectAttributePropagation attribute = message.attributes().propagation();
-        pManager_->Initialize( tools::Path::FromUTF8( attribute.model() ), attribute.has_date() ? attribute.date() : "" );
-    }
+    if( !message.attributes().has_propagation() )
+        return;
+    sword::ObjectAttributePropagation attribute = message.attributes().propagation();
+    const auto date = attribute.has_date() ? attribute.date() : "";
+    const auto model = tools::Path::FromUTF8( attribute.model() );
+    pManager_.reset( new PropagationManager( model, date ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -65,12 +65,18 @@ void PropagationAttribute::DoUpdate( const sword::ObjectUpdate& message )
 // -----------------------------------------------------------------------------
 void PropagationAttribute::NotifyUpdated( const Simulation::sEndTick& /*tick*/ )
 {
+    if( !pManager_ )
+        return;
     tools::Path::T_Paths files = pManager_->GetFiles( simulation_.GetDateTime().toString(  "yyyyMMdd'T'HHmmss" ).toStdString() );
     if( files_ != files )
     {
         propagations_.clear();
         for( std::size_t i = 0; i < files.size(); ++i )
-            propagations_.push_back( boost::make_shared< Propagation >( files[ i ], *pManager_, converter_, disasterType_ ) );
+        {
+            const auto extractor = pManager_->CreateExtractor( files[ i ] );
+            propagations_.push_back( boost::make_shared< Propagation >(
+                        *extractor, converter_, disasterType_ ) );
+        }
         files_ = files;
     }
 }

@@ -27,8 +27,7 @@ namespace
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( extract_information )
 {
-    PropagationManager manager;
-    manager.Initialize( BOOST_RESOLVE( "propagation.xml" ), "" );
+    PropagationManager manager( BOOST_RESOLVE( "propagation.xml" ), "" );
     BOOST_CHECK_EQUAL( manager.GetProjectionFile(), BOOST_RESOLVE( "projection.prj" ) );
 
     BOOST_CHECK( manager.GetFiles( "20100901T121500" ).empty() );
@@ -54,8 +53,7 @@ namespace
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( extract_information_with_a_different_start_time )
 {
-    PropagationManager manager;
-    manager.Initialize( BOOST_RESOLVE( "propagation.xml" ), "20100901T141011" );
+    PropagationManager manager( BOOST_RESOLVE( "propagation.xml" ), "20100901T141011" );
     BOOST_CHECK_EQUAL( manager.GetProjectionFile(), BOOST_RESOLVE( "projection.prj" ) );
 
     BOOST_CHECK( manager.GetFiles( "20100901T141010" ).empty() );
