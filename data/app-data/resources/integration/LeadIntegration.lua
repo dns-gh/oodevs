@@ -238,6 +238,7 @@ integration.findBestsGEN = function( entities, tasks, companyTask , params, nbrF
     local myself = myself
     myself.leadData.nbUnitsByObstacle ={}
     myself.leadData.platoonHasTask = {}
+    myself.leadData.ableEntities = {} -- Save the list of entities that can construct one of obstacles
     local parametersUrbanRatio = integration.computeParametersUrbanRatioForCompany( meKnowledge )
     for _, entity in pairs( entities ) do
         local efficiencyFind = false
@@ -275,6 +276,7 @@ integration.findBestsGEN = function( entities, tasks, companyTask , params, nbrF
                             
                             if hasDotation and canDoIt then
                                 currentMap[#currentMap + 1] = entity.source
+                                myself.leadData.ableEntities[ entity.source ] = true
                                 myself.leadData.nbUnitsByObstacle[ obstacle ] = myself.leadData.nbUnitsByObstacle[ obstacle ] + 1
                             end
                         end
