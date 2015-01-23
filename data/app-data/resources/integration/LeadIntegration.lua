@@ -400,9 +400,11 @@ local manageAddedAndDeletedUnits = function( self, findBestsFunction, disengageT
     myself.leadData.dynamicEntityTasks = myself.leadData.dynamicEntityTasks or {}
     self.listenFrontElementInitialized = false
     local oldEntities = self.parameters.commandingEntities
-    local newEntities = integration.getEntitiesFromAutomatCommunication( meKnowledge, "none", self.params.withPC )
+    local newEntities
     if giveTaskIfHQIsDead and ( not HQUnit or not HQUnit:isOperational() ) then
         newEntities = integration.getEntitiesFromAutomat( meKnowledge, "none", self.params.withPC )
+    else
+        newEntities = integration.getEntitiesFromAutomatCommunication( meKnowledge, "none", self.params.withPC )
     end
     local newOperationnalEntities = integration.getOperationnalEntitiesFromAutomat( meKnowledge, "none", self.params.withPC, giveTaskIfHQIsDead )
 
@@ -817,11 +819,12 @@ integration.leadCreate = function( self, functionsToExecute, findBestsFunction, 
     self.parameters = myself.taskParams
     local HQUnit = integration.query.getPCUnit()
 
-    self.parameters.commandingEntities = integration.getEntitiesFromAutomatCommunication( meKnowledge, "none", self.params.withPC )
     self.operationnalEntities = integration.getOperationnalEntitiesFromAutomat( meKnowledge, "none", self.params.withPC, giveTaskIfHQIsDead )
 
     if giveTaskIfHQIsDead and ( not HQUnit or not HQUnit:isOperational() ) then
         self.parameters.commandingEntities = integration.getEntitiesFromAutomat( meKnowledge, "none", self.params.withPC )
+    else
+        self.parameters.commandingEntities = integration.getEntitiesFromAutomatCommunication( meKnowledge, "none", self.params.withPC )
     end
 
     if #self.operationnalEntities == 0 then
