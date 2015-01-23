@@ -121,7 +121,7 @@ boost::shared_ptr< DEC_Knowledge_Object > DEC_BlackBoard_CanContainKnowledgeObje
     auto it = objectMap_.find( object->GetObjectId() );
     if( it != objectMap_.end() )
         return it->second;
-    if( object->GetObjectKnown()->IsMarkedForDestruction() )
+    if( object->GetObjectKnown() && object->GetObjectKnown()->IsMarkedForDestruction() )
         return 0;
     boost::shared_ptr< DEC_Knowledge_Object > knowledge( new DEC_Knowledge_Object( *object, *pKnowledgeGroup_ ) );
     objectMap_.insert( std::make_pair( object->GetObjectId(), knowledge ) );
