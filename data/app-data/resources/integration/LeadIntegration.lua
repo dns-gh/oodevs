@@ -385,7 +385,7 @@ local isHQTaskUsingRelievingUnit = function( self, hqUnit, unit, param )
     return false
 end
 
-local manageAddedAndDeletedUnits = function( self, findBestsFunction, disengageTask, restartMissionIfTacticallyDestroyed )
+local manageAddedAndDeletedUnits = function( self, findBestsFunction, disengageTask, restartMissionIfTacticallyDestroyed, giveTaskIfHQIsDead )
     local integration = integration
     local myself = myself
     local meKnowledge = meKnowledge
@@ -400,8 +400,13 @@ local manageAddedAndDeletedUnits = function( self, findBestsFunction, disengageT
     myself.leadData.dynamicEntityTasks = myself.leadData.dynamicEntityTasks or {}
     self.listenFrontElementInitialized = false
     local oldEntities = self.parameters.commandingEntities
-    local newEntities = integration.getEntitiesFromAutomatCommunication( meKnowledge, "none", self.params.withPC )
-    local newOperationnalEntities = integration.getOperationnalEntitiesFromAutomat( meKnowledge, "none", self.params.withPC )
+    local newEntities
+    if giveTaskIfHQIsDead and ( not HQUnit or not HQUnit:isOperational() ) then
+        newEntities = integration.getEntitiesFromAutomat( meKnowledge, "none", self.params.withPC )
+    else
+        newEntities = integration.getEntitiesFromAutomatCommunication( meKnowledge, "none", self.params.withPC )
+    end
+    local newOperationnalEntities = integration.getOperationnalEntitiesFromAutomat( meKnowledge, "none", self.params.withPC, giveTaskIfHQIsDead )
 
     local echelons = integration.getPionsInEchelons( newEntities )
     local pionsPE = echelons[1]
@@ -802,17 +807,26 @@ end
 -- @param giveSupportTask : Whether or not the support task should be issued
 -- @param givePEITask : Whether or not the PEI task should be issued
 -- @param giveDefaultTask : Whether or not the default task should be issued
+-- @param giveTaskIfHQIsDead : Whether or not the unit can receive task if the HQ is dead
 -- @author NMI
 -- @release 2013-07-05
 integration.leadCreate = function( self, functionsToExecute, findBestsFunction, disengageTask,
-                                    givePCTask, giveEngineerTask, giveMainTask, giveSupportTask, givePEITask, giveDefaultTask )
+                                    givePCTask, giveEngineerTask, giveMainTask, giveSupportTask, givePEITask, giveDefaultTask, giveTaskIfHQIsDead )
     local integration = integration
     local myself = myself
     integration.initializeListenFrontElement()
     myself.newTask = false
     self.parameters = myself.taskParams
-    self.parameters.commandingEntities = integration.getEntitiesFromAutomatCommunication( meKnowledge, "none", self.params.withPC )
-    self.operationnalEntities = integration.getOperationnalEntitiesFromAutomat( meKnowledge, "none", self.params.withPC )
+    local HQUnit = integration.query.getPCUnit()
+
+    self.operationnalEntities = integration.getOperationnalEntitiesFromAutomat( meKnowledge, "none", self.params.withPC, giveTaskIfHQIsDead )
+
+    if giveTaskIfHQIsDead and ( not HQUnit or not HQUnit:isOperational() ) then
+        self.parameters.commandingEntities = integration.getEntitiesFromAutomat( meKnowledge, "none", self.params.withPC )
+    else
+        self.parameters.commandingEntities = integration.getEntitiesFromAutomatCommunication( meKnowledge, "none", self.params.withPC )
+    end
+
     if #self.operationnalEntities == 0 then
         self.Feedback( self.feedbacks.done )
         return
@@ -892,7 +906,6 @@ integration.leadCreate = function( self, functionsToExecute, findBestsFunction, 
     -- Le pion PC rejoint le meetingPoint
     if givePCTask and self.params.pcTasks and self.params.pcTasks ~= NIL then
         self.parameters.pcObjective = self.params.pcObjective
-        local HQUnit = integration.query.getPCUnit()
         if HQUnit then
             integration.issueMission ( self, self.params.pcTasks, 1, eEtatEchelon_Reserve, { HQUnit }, false, findBestsFunction, disengageTask )
         end
@@ -955,9 +968,10 @@ end
 -- @param findBestsFunction The "find bests" method used to find the best units in integration.issueMission (for example : findBests)
 -- @param manageReinforcement Whether or not the skill should manage reinforcement if one of the subordinate can't perform work on an object (because of dotation or physical restriction).
 -- @param removeSupportingUnits Whether or not the initial supporting units will be removed from the list of second echelon units given to the Support Manager
+-- @param giveTaskIfHQIsDead : Whether or not the unit can receive task if the HQ is dead
 -- @author NMI
 -- @release 2013-07-05
-integration.leadActivate = function( self, findBestsFunction, manageReinforcement, removeSupportingUnits )
+integration.leadActivate = function( self, findBestsFunction, manageReinforcement, removeSupportingUnits, giveTaskIfHQIsDead )
     local integration = integration
     local myself = myself
 
@@ -979,7 +993,7 @@ integration.leadActivate = function( self, findBestsFunction, manageReinforcemen
     end
 
     if self.params.manageAddedAndDeletedUnits ~= false then
-        manageAddedAndDeletedUnits( self, findBestsFunction )
+        manageAddedAndDeletedUnits( self, findBestsFunction, nil, nil, giveTaskIfHQIsDead )
     end
 
     local Activate = Activate
@@ -1056,9 +1070,11 @@ end
 
 --- Specific activate method for LeadDelay skill
 -- @param self: The leading skill
+-- @params disengageTask : the name of the disengage task given to the non operational entities
+-- @param giveTaskIfHQIsDead : Whether or not the unit can receive task if the HQ is dead
 -- @author NMI
 -- @release 2013-07-05
-integration.leadDelayActivate = function( self, disengageTask )  
+integration.leadDelayActivate = function( self, disengageTask, giveTaskIfHQIsDead )  
     local integration = integration
     local myself = myself
     local meKnowledge = meKnowledge
@@ -1070,7 +1086,7 @@ integration.leadDelayActivate = function( self, disengageTask )
         return
     end
 
-    manageAddedAndDeletedUnits( self, findBests, disengageTask, true )
+    manageAddedAndDeletedUnits( self, findBests, disengageTask, true, giveTaskIfHQIsDead )
     
     -- Mis à jour des echelons
     integration.setPionsEchelons( myself.leadData.pionsLima1, eEtatEchelon_First )
