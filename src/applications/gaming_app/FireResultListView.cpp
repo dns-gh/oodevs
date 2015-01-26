@@ -275,15 +275,17 @@ void FireResultListView::UpdateDisplay()
 
 namespace
 {
-    void ExtractExtensions( const kernel::Entity_ABC& entity, std::vector< const Explosions* >& explosions )
+    void ExtractExtensions( const kernel::Entity_ABC& entity, const kernel::Entity_ABC* exclude, std::vector< const Explosions* >& explosions )
     {
+        if( exclude == &entity )
+            return;
         if( const auto* explosion = entity.Retrieve< Explosions >() )
             explosions.push_back( explosion );
         if( auto* hierarchy = entity.Retrieve< kernel::TacticalHierarchies >() )
         {
             auto it = hierarchy->CreateSubordinateIterator();
             while( it.HasMoreElements() )
-                ExtractExtensions( it.NextElement(), explosions );
+                ExtractExtensions( it.NextElement(), exclude, explosions );
         }
     }
 }
@@ -292,11 +294,11 @@ namespace
 // Name: FireResultListView::RebuildModel
 // Created: ABR 2014-08-25
 // -----------------------------------------------------------------------------
-void FireResultListView::RebuildModel()
+void FireResultListView::RebuildModel( const kernel::Entity_ABC* exclude )
 {
     explosions_.clear();
     if( selected_ )
-        ExtractExtensions( *selected_, explosions_ );
+        ExtractExtensions( *selected_, exclude, explosions_ );
     UpdateDisplay();
 }
 
@@ -331,7 +333,7 @@ void FireResultListView::NotifyUpdated( const kernel::Team_ABC& team )
 
 void FireResultListView::NotifyDeleted( const kernel::Team_ABC& team )
 {
-    RebuildModelIfIsInHierarchy( team );
+    RebuildModelIfIsInHierarchy( team, &team );
 }
 
 void FireResultListView::NotifyCreated( const kernel::Formation_ABC& formation )
@@ -346,7 +348,7 @@ void FireResultListView::NotifyUpdated( const kernel::Formation_ABC& formation )
 
 void FireResultListView::NotifyDeleted( const kernel::Formation_ABC& formation )
 {
-    RebuildModelIfIsInHierarchy( formation );
+    RebuildModelIfIsInHierarchy( formation, &formation );
 }
 
 void FireResultListView::NotifyCreated( const kernel::Automat_ABC& automat )
@@ -361,7 +363,7 @@ void FireResultListView::NotifyUpdated( const kernel::Automat_ABC& automat )
 
 void FireResultListView::NotifyDeleted( const kernel::Automat_ABC& automat )
 {
-    RebuildModelIfIsInHierarchy( automat );
+    RebuildModelIfIsInHierarchy( automat, &automat );
 }
 
 void FireResultListView::NotifyCreated( const kernel::Agent_ABC& agent )
@@ -376,7 +378,7 @@ void FireResultListView::NotifyUpdated( const kernel::Agent_ABC& agent )
 
 void FireResultListView::NotifyDeleted( const kernel::Agent_ABC& agent )
 {
-    RebuildModelIfIsInHierarchy( agent );
+    RebuildModelIfIsInHierarchy( agent, &agent );
 }
 
 namespace
@@ -408,10 +410,10 @@ void FireResultListView::UpdateNamesIfIsInHierarchy( const kernel::Entity_ABC& e
     }
 }
 
-void FireResultListView::RebuildModelIfIsInHierarchy( const kernel::Entity_ABC& entity )
+void FireResultListView::RebuildModelIfIsInHierarchy( const kernel::Entity_ABC& entity, const kernel::Entity_ABC* exclude )
 {
     if( selected_ && IsInHierarchy( *selected_, entity ) )
-        RebuildModel();
+        RebuildModel( exclude );
 }
 
 void FireResultListView::Purge()
