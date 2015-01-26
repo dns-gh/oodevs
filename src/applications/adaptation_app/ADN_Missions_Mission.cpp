@@ -91,7 +91,8 @@ ADN_Missions_Mission* ADN_Missions_Mission::CreateCopy()
     newMission->descriptionSpecific_ = descriptionSpecific_.GetData();
     newMission->descriptionComment_ = descriptionComment_.GetData();
     newMission->descriptionMissionEnd_ = descriptionMissionEnd_.GetData();
-    newMission->attachments_ = attachments_;
+    for( auto it = attachments_.begin(); it != attachments_.end(); ++it )
+        newMission->attachments_.AddItem( new ADN_Missions_Attachment( tools::Path::FromUTF8( ( *it )->strName_.GetData() ) ) );
     return newMission;
 }
 
