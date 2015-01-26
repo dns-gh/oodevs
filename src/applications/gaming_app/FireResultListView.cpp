@@ -258,16 +258,18 @@ void FireResultListView::UpdateDisplay()
                                                         << tr( "Firer" )
                                                         << tr( "Target" )
                                                         << "" );
-    std::for_each( explosions_.begin(), explosions_.end(), [&]( const Explosions* explosion ){
-        if( !explosion )
-            return;
-        const auto& agentFires = explosion->GetAgentExplosions();
-        const auto& popFires = explosion->GetPopulationExplosions();
-        for( auto it = agentFires.rbegin(); it != agentFires.rend(); ++it )
-            Display( *it );
-        for( auto it = popFires.rbegin(); it != popFires.rend(); ++it )
-            Display( *it );
-    } );
+    std::for_each( explosions_.begin(), explosions_.end(),
+        [&]( const Explosions* explosion )
+        {
+            if( !explosion )
+                return;
+            const auto& agentFires = explosion->GetAgentExplosions();
+            for( auto it = agentFires.rbegin(); it != agentFires.rend(); ++it )
+                Display( *it );
+            const auto& popFires = explosion->GetPopulationExplosions();
+            for( auto it = popFires.rbegin(); it != popFires.rend(); ++it )
+                Display( *it );
+        } );
     proxy_.setSourceModel( model_[0] );
 }
 
@@ -279,9 +281,9 @@ namespace
             explosions.push_back( explosion );
         if( auto* hierarchy = entity.Retrieve< kernel::TacticalHierarchies >() )
         {
-            auto childIterator = hierarchy->CreateSubordinateIterator();
-            while( childIterator.HasMoreElements() )
-                ExtractExtensions( childIterator.NextElement(), explosions );
+            auto it = hierarchy->CreateSubordinateIterator();
+            while( it.HasMoreElements() )
+                ExtractExtensions( it.NextElement(), explosions );
         }
     }
 }
@@ -381,7 +383,7 @@ namespace
 {
     bool IsInHierarchy( const kernel::Entity_ABC& selected, const kernel::Entity_ABC& entity )
     {
-        auto* hierarchy = entity.Retrieve< kernel::TacticalHierarchies >();
+        const auto* hierarchy = entity.Retrieve< kernel::TacticalHierarchies >();
         return &selected == &entity || hierarchy && hierarchy->IsSubordinateOf( selected );
     }
 }
@@ -392,11 +394,11 @@ void FireResultListView::UpdateNamesIfIsInHierarchy( const kernel::Entity_ABC& e
         return;
     for( int i = 0; i < model_[ 0 ]->rowCount(); ++i )
     {
-        if( auto* firerItem = model_[0]->item( i, 1 ) )
+        if( auto* firerItem = model_[ 0 ]->item( i, 1 ) )
             if( const auto* firer = firerItem->data( Qt::UserRole ).value< const kernel::Entity_ABC* >() )
                 if( firer == &entity )
                     firerItem->setData( GetFirerName( &entity ), Qt::DisplayRole );
-        if( auto* targetItem = model_[0]->item( i, 2 ) )
+        if( auto* targetItem = model_[ 0 ]->item( i, 2 ) )
             if( const auto* target = targetItem->data( Qt::UserRole ).value< const kernel::Entity_ABC* >() )
                 if( target == &entity )
                     if( target->GetTypeName() == kernel::Agent_ABC::typeName_ )

@@ -64,14 +64,16 @@ const boost::ptr_deque< PopulationFireResult >& Explosions::GetPopulationExplosi
 void Explosions::NotifyDeleted( const kernel::Agent_ABC& agent )
 {
     const size_t before = agentExplosions_.size() + populationExplosions_.size();
-    agentExplosions_.erase_if( [&]( const AgentFireResult& result ) -> bool
+    agentExplosions_.erase_if(
+        [&]( const AgentFireResult& result )
         {
             return &result.target_ == &agent || result.firer_ == &agent;
-        });
-    populationExplosions_.erase_if( [&]( const PopulationFireResult& result ) -> bool
+        } );
+    populationExplosions_.erase_if(
+        [&]( const PopulationFireResult& result )
         {
             return result.firer_ == &agent;
-        });
+        } );
     const size_t after = agentExplosions_.size() + populationExplosions_.size();
     if( before != after )
         controller_.Update( *this );
@@ -126,13 +128,13 @@ void Explosions::DoUpdate( const sword::StopCrowdFire& message )
 
 namespace
 {
-    template <typename T>
+    template< typename T >
     void UpdateList( boost::ptr_deque< T >& list, int id, T* result )
     {
         if( id )
         {
             for( auto it = list.begin(); it != list.end(); ++it )
-                if( (*it).id_ == id && &result->target_ == &it->target_ )
+                if( it->id_ == id && &result->target_ == &it->target_ )
                 {
                     list.erase( it );
                     break;
@@ -148,8 +150,7 @@ namespace
 // -----------------------------------------------------------------------------
 void Explosions::Update( const sword::UnitFireDamages& message, const kernel::Entity_ABC* firer, int id )
 {
-    AgentFireResult* result = factory_.CreateFireResult( message, firer, id );
-    if( result )
+    if( AgentFireResult* result = factory_.CreateFireResult( message, firer, id ) )
         UpdateList( agentExplosions_, id, result );
 }
 
@@ -159,8 +160,7 @@ void Explosions::Update( const sword::UnitFireDamages& message, const kernel::En
 // -----------------------------------------------------------------------------
 void Explosions::Update( const sword::CrowdFireDamages& message, const kernel::Entity_ABC* firer, int id )
 {
-    PopulationFireResult* result = factory_.CreateFireResult( message, firer, id );
-    if( result )
+    if( PopulationFireResult* result = factory_.CreateFireResult( message, firer, id ) )
         UpdateList( populationExplosions_, id, result );
 }
 
@@ -172,18 +172,10 @@ void Explosions::Update( const kernel::Entity_ABC* target, const kernel::Entity_
 {
     if( const kernel::Agent_ABC* targetAgent = dynamic_cast< const kernel::Agent_ABC* >( target ) )
     {
-        AgentFireResult* result = factory_.CreateFireResult( targetAgent, firer, id );
-        if( result )
+        if( AgentFireResult* result = factory_.CreateFireResult( targetAgent, firer, id ) )
             UpdateList( agentExplosions_, id, result );
     }
-    else
-    {
-        const kernel::Population_ABC* targetCrowd = dynamic_cast< const kernel::Population_ABC* >( target );
-        if( targetCrowd )
-        {
-            PopulationFireResult* result = factory_.CreateFireResult( *targetCrowd, firer, id );
-            if( result )
-                UpdateList( populationExplosions_, id, result );
-        }
-    }
+    else if( const kernel::Population_ABC* targetCrowd = dynamic_cast< const kernel::Population_ABC* >( target ) )
+        if( PopulationFireResult* result = factory_.CreateFireResult( *targetCrowd, firer, id ) )
+            UpdateList( populationExplosions_, id, result );
 }
