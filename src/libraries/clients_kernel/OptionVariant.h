@@ -10,6 +10,8 @@
 #ifndef __OptionVariant_h_
 #define __OptionVariant_h_
 
+#include <boost/optional.hpp>
+
 namespace kernel
 {
     class Settings_ABC;
@@ -43,6 +45,9 @@ public:
     //@{
     template< typename T >
     T To() const;
+
+    template< typename T >
+    boost::optional< T > TryTo() const;
 
     void Save( Settings_ABC& settings, const std::string& name ) const;
     OptionVariant& operator=( const OptionVariant& rhs );
@@ -119,9 +124,17 @@ OptionVariant::OptionVariant( const T& value )
 template< typename T >
 T OptionVariant::To() const
 {
-    if( ! dynamic_cast< detail::ValueHolder< T >* >( holder_ ) )
-        throw MASA_EXCEPTION( std::string( "OptionVariant : Could not cast from " ) + holder_->Typename() + " to " + typeid( T ).name() );
-    return static_cast< detail::ValueHolder< T >* >( holder_ )->value_;
+    if( auto value = TryTo< T >() )
+        return *value;
+    return T();
+}
+
+template< typename T >
+boost::optional< T > OptionVariant::TryTo() const
+{
+    if( auto holder = dynamic_cast< detail::ValueHolder< T >* >( holder_ ) )
+        return holder->value_;
+    return boost::none;
 }
 
 // -----------------------------------------------------------------------------
