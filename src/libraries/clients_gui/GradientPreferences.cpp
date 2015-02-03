@@ -12,6 +12,7 @@
 #include "Gradient.h"
 #include "clients_kernel/Options.h"
 #include "clients_kernel/OptionVariant.h"
+#include "MT_Tools/MT_Logger.h"
 #include <xeumeuleu/xml.hpp>
 
 using namespace gui;
@@ -57,7 +58,11 @@ void GradientPreferences::Load( const kernel::Options& options )
         if( name.indexOf( "Elevation/Gradients/" ) != 0 )
             return;
         name.remove( "Elevation/Gradients/" );
-        Add( std::make_shared< Gradient >( name, value.To< QString >() ) );
+        auto gradient = value.TryTo< QString >();
+        if( gradient )
+            Add( std::make_shared< Gradient >( name, *gradient ) );
+        else
+            MT_LOG_WARNING_MSG( "Unable to load gradient '" + name + "'" );
     } );
     current_ = GetByName( options.Get( "Elevation/Gradient" ).To< QString >() );
 }
