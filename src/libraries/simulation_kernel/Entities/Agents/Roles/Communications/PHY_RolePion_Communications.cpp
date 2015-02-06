@@ -317,7 +317,7 @@ boost::shared_ptr< MIL_KnowledgeGroup > PHY_RolePion_Communications::GetJammedKn
         return pJammingKnowledgeGroup_;
     else if( owner_->IsDead() ) // if pion is dead, it cannot emit, but it is not jammed
         return owner_->GetAutomate().GetKnowledgeGroup();
-    throw boost::shared_ptr< MIL_KnowledgeGroup >();
+    return boost::shared_ptr< MIL_KnowledgeGroup >();
 }
 
 // -----------------------------------------------------------------------------
