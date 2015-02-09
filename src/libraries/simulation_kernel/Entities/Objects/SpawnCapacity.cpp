@@ -129,8 +129,9 @@ void SpawnCapacity::CreateObject( MIL_Object_ABC& object )
 {
     TER_Localisation location = object.GetLocalisation();
     location.Scale( rActionRange_ );
-    Object* childObject = static_cast< Object* >( MIL_AgentServer::GetWorkspace().GetEntityManager().CreateObject( childType_,
-        object.GetArmy(), location, object.GetID() + 1 ) );
+    Object* childObject = static_cast< Object* >(
+        MIL_AgentServer::GetWorkspace().GetEntityManager().CreateObject(
+            childType_, object.GetArmy(), location, 0 ) );
     if( childObject )
     {
         object.GetAttribute< ChildObjectAttribute >().AddChildObject( *childObject );
@@ -159,7 +160,8 @@ void SpawnCapacity::CreateNBCObject( MIL_Object_ABC& object )
     const NBCAttribute* pNBC = object.RetrieveAttribute< NBCAttribute >();
     if( pNBC && IsGas( *pNBC ) )
     {
-        MIL_Object_ABC* pObject = MIL_AgentServer::GetWorkspace().GetEntityManager().CreateObject( childType_, object.GetArmy(), object.GetLocalisation(), object.GetID() + 1 );
+        MIL_Object_ABC* pObject = MIL_AgentServer::GetWorkspace().GetEntityManager().CreateObject(
+            childType_, object.GetArmy(), object.GetLocalisation(), 0 );
         pObject->GetAttribute< NBCAttribute >().UpdateCloudAttribute( *pNBC );
     }
 }
