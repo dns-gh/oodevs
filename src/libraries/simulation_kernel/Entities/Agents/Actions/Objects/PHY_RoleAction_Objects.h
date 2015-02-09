@@ -94,11 +94,11 @@ public:
     //@{
     bool CanConstructWithReinforcement( const std::string& objectType, const TER_Localisation* localisation, bool bWithLoaded ) const;
     bool CanConstructWithoutReinforcement( const std::string& objectType, const TER_Localisation* localisation, bool bWithLoaded ) const;
-    bool CanBypassWithReinforcement( const MIL_ObjectType_ABC& object, const TER_Localisation& localisation ) const;
-    bool CanDestroyWithReinforcement( const MIL_ObjectType_ABC& object, const TER_Localisation& localisation ) const;
-    bool CanDemineWithReinforcement( const MIL_ObjectType_ABC& object, const TER_Localisation& localisation ) const;
+    bool CanBypassWithReinforcement( const MIL_ObjectType_ABC& object, const TER_Localisation& localisation, bool bWithLoaded = false ) const;
+    bool CanDestroyWithReinforcement( const MIL_ObjectType_ABC& object, const TER_Localisation& localisation, bool bWithLoaded = false ) const;
+    bool CanDemineWithReinforcement( const MIL_ObjectType_ABC& object, const TER_Localisation& localisation, bool bWithLoaded = false ) const;
     bool CanDemineTypeWithReinforcement( const std::string& strType, const TER_Localisation* localisation, bool bWithLoaded ) const;
-    bool CanMineWithReinforcement( const MIL_ObjectType_ABC& object, const TER_Localisation& localisation ) const;
+    bool CanMineWithReinforcement( const MIL_ObjectType_ABC& object, const TER_Localisation& localisation, bool bWithLoaded = false ) const;
     bool EnoughDotationForBuilding( const std::string& objectType, MIL_Agent_ABC& pion, bool bWithLoaded ) const;
     bool CanMineTypeWithReinforcement( const std::string& strType, const TER_Localisation* localisation ) const;
     bool CanDestroyTypeWithReinforcement( const std::string& strType, const TER_Localisation* localisation ) const;

@@ -1324,10 +1324,10 @@ bool PHY_ComposantePion::CanConstruct( const MIL_ObjectType_ABC& objectType, boo
 // Name: PHY_ComposantePion::CanDestroy
 // Created: NLD 2004-09-16
 // -----------------------------------------------------------------------------
-bool PHY_ComposantePion::CanDestroy( const MIL_ObjectType_ABC& objectType ) const
+bool PHY_ComposantePion::CanDestroy( const MIL_ObjectType_ABC& objectType, bool bWithLoaded ) const
 {
     assert( pType_ );
-    return pType_->CanDestroy( objectType ) && CanBeUsed() && pState_->IsUsable();
+    return pType_->CanDestroy( objectType ) && CanBeUsed( bWithLoaded ) && pState_->IsUsable();
 }
 
 // -----------------------------------------------------------------------------
@@ -1344,10 +1344,10 @@ bool PHY_ComposantePion::CanRemoveFromPath( const MIL_ObjectType_ABC& objectType
 // Name: PHY_ComposantePion::CanMine
 // Created: NLD 2004-09-16
 // -----------------------------------------------------------------------------
-bool PHY_ComposantePion::CanMine( const MIL_ObjectType_ABC& objectType ) const
+bool PHY_ComposantePion::CanMine( const MIL_ObjectType_ABC& objectType, bool bWithLoaded ) const
 {
     assert( pType_ );
-    return pType_->CanMine( objectType ) && CanBeUsed() && pState_->IsUsable();
+    return pType_->CanMine( objectType ) && CanBeUsed( bWithLoaded ) && pState_->IsUsable();
 }
 
 // -----------------------------------------------------------------------------
@@ -1374,10 +1374,10 @@ bool PHY_ComposantePion::CanDemine( const MIL_ObjectType_ABC& objectType, bool b
 // Name: PHY_ComposantePion::CanBypass
 // Created: NLD 2004-09-16
 // -----------------------------------------------------------------------------
-bool PHY_ComposantePion::CanBypass( const MIL_ObjectType_ABC& objectType, bool bObjectIsMined ) const
+bool PHY_ComposantePion::CanBypass( const MIL_ObjectType_ABC& objectType, bool bObjectIsMined, bool bWithLoaded ) const
 {
     assert( pType_ );
-    return pType_->CanBypass( objectType, bObjectIsMined ) && CanBeUsed() && pState_->IsUsable();
+    return pType_->CanBypass( objectType, bObjectIsMined ) && CanBeUsed( bWithLoaded ) && pState_->IsUsable();
 }
 
 // -----------------------------------------------------------------------------

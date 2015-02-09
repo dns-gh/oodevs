@@ -124,9 +124,13 @@ void DEC_AgentFunctions::Register( sword::Brain& brain )
     brain.RegisterFunction( "_DEC_Agent_PeutConstruireObjetEmbarque", &DEC_AgentFunctions::CanConstructObjectWithLoaded );
     brain.RegisterFunction( "_DEC_Agent_PeutConstruireObjetEmbarqueAvecLocalisation", &DEC_AgentFunctions::CanConstructObjectWithLoadedAndLocalisation );
     brain.RegisterFunction( "_DEC_Agent_PeutConstruireContournementObjet", &DEC_AgentFunctions::CanBypassObject );
+    brain.RegisterFunction( "_DEC_Agent_PeutConstruireContournementObjetAvecComposantesEmbarquees", &DEC_AgentFunctions::CanBypassObjectWithMountedEquipments );
     brain.RegisterFunction( "_DEC_Agent_PeutDetruireObjet", &DEC_AgentFunctions::CanDestroyObject );
+    brain.RegisterFunction( "_DEC_Agent_PeutDetruireObjetAvecComposantesEmbarquees", &DEC_AgentFunctions::CanDestroyObjectWithMountedEquipments );
     brain.RegisterFunction( "_DEC_Agent_PeutValoriserObjet", &DEC_AgentFunctions::CanMineObject );
+    brain.RegisterFunction( "_DEC_Agent_PeutValoriserObjetAvecComposantesEmbarquees", &DEC_AgentFunctions::CanMineObjectWithMountedEquipments );
     brain.RegisterFunction( "_DEC_Agent_PeutDevaloriserObjet", &DEC_AgentFunctions::CanDemineObject );
+    brain.RegisterFunction( "_DEC_Agent_PeutDevaloriserObjetAvecComposantesEmbarquees", &DEC_AgentFunctions::CanDemineObjectWithMountedEquipments );
     brain.RegisterFunction( "_DEC_Agent_ActiverModeDiscret", &DEC_AgentFunctions::EnableDiscreteMode );
     brain.RegisterFunction( "_DEC_Agent_DesactiverModeDiscret",  &DEC_AgentFunctions::DisableDiscreteMode );
     brain.RegisterFunction( "_DEC_Agent_EstNeutralise",  &DEC_AgentFunctions::IsNeutralized );
@@ -666,12 +670,30 @@ bool DEC_AgentFunctions::CanBypassObject( const DEC_Decision_ABC* callerAgent, b
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::CanBypassObjectWithMountedEquipments
+// Created: NMI 2015-01-08
+// -----------------------------------------------------------------------------
+bool DEC_AgentFunctions::CanBypassObjectWithMountedEquipments( const DEC_Decision_ABC* callerAgent, boost::shared_ptr< DEC_Knowledge_Object > objectKnowledge )
+{
+    return objectKnowledge && objectKnowledge->IsValid() && objectKnowledge->RetrieveAttribute< BypassAttribute >() != 0 && callerAgent->GetPion().GetRole< PHY_RoleAction_Objects >().CanBypassWithReinforcement( objectKnowledge->GetType(), objectKnowledge->GetLocalisation(), true );
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_AgentFunctions::CanDestroyObject
 // Created: NLD 2004-05-07
 // -----------------------------------------------------------------------------
 bool DEC_AgentFunctions::CanDestroyObject( const DEC_Decision_ABC* callerAgent, boost::shared_ptr< DEC_Knowledge_Object > objectKnowledge )
 {
     return objectKnowledge && objectKnowledge->IsValid() && callerAgent->GetPion().GetRole< PHY_RoleAction_Objects >().CanDestroyWithReinforcement( objectKnowledge->GetType(), objectKnowledge->GetLocalisation() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::CanDestroyObjectWithMountedEquipments
+// Created: NMI 2015-01-08
+// -----------------------------------------------------------------------------
+bool DEC_AgentFunctions::CanDestroyObjectWithMountedEquipments( const DEC_Decision_ABC* callerAgent, boost::shared_ptr< DEC_Knowledge_Object > objectKnowledge )
+{
+    return objectKnowledge && objectKnowledge->IsValid() && callerAgent->GetPion().GetRole< PHY_RoleAction_Objects >().CanDestroyWithReinforcement( objectKnowledge->GetType(), objectKnowledge->GetLocalisation(), true );
 }
 
 // -----------------------------------------------------------------------------
@@ -684,12 +706,30 @@ bool DEC_AgentFunctions::CanDemineObject( const DEC_Decision_ABC* callerAgent, b
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::CanDemineObjectWithMountedEquipments
+// Created: NMI 2015-01-08
+// -----------------------------------------------------------------------------
+bool DEC_AgentFunctions::CanDemineObjectWithMountedEquipments( const DEC_Decision_ABC* callerAgent, boost::shared_ptr< DEC_Knowledge_Object > objectKnowledge )
+{
+    return objectKnowledge && objectKnowledge->IsValid() && callerAgent->GetPion().GetRole< PHY_RoleAction_Objects >().CanDemineWithReinforcement( objectKnowledge->GetType(), objectKnowledge->GetLocalisation(), true );
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_AgentFunctions::CanMineObject
 // Created: NLD 2005-09-08
 // -----------------------------------------------------------------------------
 bool DEC_AgentFunctions::CanMineObject( const DEC_Decision_ABC* callerAgent, boost::shared_ptr< DEC_Knowledge_Object > objectKnowledge )
 {
     return objectKnowledge && objectKnowledge->IsValid() && objectKnowledge->IsConstructed() && callerAgent->GetPion().GetRole< PHY_RoleAction_Objects >().CanMineWithReinforcement( objectKnowledge->GetType(), objectKnowledge->GetLocalisation() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::CanMineObjectWithMountedEquipments
+// Created: NMI 2015-01-08
+// -----------------------------------------------------------------------------
+bool DEC_AgentFunctions::CanMineObjectWithMountedEquipments( const DEC_Decision_ABC* callerAgent, boost::shared_ptr< DEC_Knowledge_Object > objectKnowledge )
+{
+    return objectKnowledge && objectKnowledge->IsValid() && objectKnowledge->IsConstructed() && callerAgent->GetPion().GetRole< PHY_RoleAction_Objects >().CanMineWithReinforcement( objectKnowledge->GetType(), objectKnowledge->GetLocalisation(), true );
 }
 
 // -----------------------------------------------------------------------------

@@ -1,15 +1,17 @@
 -------------------------------------------------------------------
 ---- IMPROVABLE INTERFACE IMPLEMENTATION
 -------------------------------------------------------------------
+local _DEC__StopAction = _DEC__StopAction
+local integration = integration
 
 ---Informs whether or not the agent has the physical ability to perform the impovement action on the given 'object'.
--- (see authoring tool, 'Equipement' tab, 'Objects' widget). 
+-- (see authoring tool, 'Equipement' tab, 'Objects' widget).
 -- This method can only be called by an agent.
 -- This implementation refers to the 'integration.startImproveIt'.
 -- @param object a DirectIA object knowledge.
 -- @return Boolean 'true' if the agent can improve the object knowledge.
 integration.canImproveIt = function( object )
-    object[ myself ] = object[ myself ] or {} 
+    object[ myself ] = object[ myself ] or {}
     return object[ myself ].actionImprovementState ~= eActionObjetPasDeCapacite
 end
 
@@ -19,16 +21,24 @@ end
 -- @param object a DirectIA object knowledge.
 -- @return Boolean returns 'true' until the agent has enough dotation to perform the improvement action.
 integration.hasEnoughtDotationForImprovement = function( object )
-    object[ myself ] = object[ myself ] or {} 
+    object[ myself ] = object[ myself ] or {}
     return object[ myself ].actionImprovementState ~= eActionObjetManqueDotation
 end
 
----Informs whether or not the agent has the physical ability to perform the impovement action on the given 'object'.
+--- Returns 'true' if this agent has the physical ability to improve the given object, 'false' otherwise.
 -- This method can only be called by an agent.
 -- @param object a DirectIA object knowledge
--- @return Boolean returns 'true' if the agent can improve the object, 'false' otherwise.
+-- @return Boolean
 integration.agentCanImproveObject = function( object )
     return _DEC_Agent_PeutValoriserObjet( myself, object.source )
+end
+
+--- Returns 'true' if this agent (including mounted equipments) has the physical ability to improve the given object, 'false' otherwise.
+-- This method can only be called by an agent.
+-- @param object a DirectIA object knowledge
+-- @return Boolean
+integration.agentCanImproveObjectWithMountedEquipments = function( object )
+    return _DEC_Agent_PeutValoriserObjetAvecComposantesEmbarquees( myself, object.source )
 end
 
 --- Informs if the agent has dotation to improve the provided object. The implementation of this method also
@@ -55,7 +65,7 @@ end
 --- Informs it the given 'object' can be improved.
 -- This method can only be called by an agent.
 -- @param object a DirectIA knowledge object
--- @return Boolean returns 'true' if the object is an 'Improvable' type of object, 'false' otherwise. 
+-- @return Boolean returns 'true' if the object is an 'Improvable' type of object, 'false' otherwise.
 -- See the 'Object' tab, 'Capacities' section in authoring tool.
 integration.canBeImproved = function( object )
     return DEC_ConnaissanceObjet_PeutEtreValorise( object.source )
@@ -64,7 +74,7 @@ end
 --- Returns the improvement level of the given DirectIA object knowledge.
 -- This method can only be called by an agent.
 -- @param object a DirectIA object knowledge
--- @return Numeric the level of improvement (a percentage). A value of '0' means 'not improved at all', 
+-- @return Numeric the level of improvement (a percentage). A value of '0' means 'not improved at all',
 -- a value of '100' means 'totally improved'.
 integration.improvementLevel = function( object )
     return DEC_ConnaissanceObjet_NiveauValorisation( object.source ) * 100
@@ -74,9 +84,9 @@ end
 -- This method can only be called by an agent.
 -- @param object a DirectIA object knowledge
 integration.startImproveIt = function( object )
-    object[ myself ] = object [myself ] or {} 
+    object[ myself ] = object [myself ] or {}
     object[ myself ].actionImprovement = _DEC_StartValoriserObjet( myself, object.source )
-    actionCallbacks[ object[ myself ].actionImprovement ] = function( arg ) 
+    actionCallbacks[ object[ myself ].actionImprovement ] = function( arg )
         object[ myself ].actionImprovementState = arg
     end
     reportFunction( eRC_DebutValorisation, object.source )
@@ -98,7 +108,7 @@ integration.updateImproveIt = function( object )
 end
 
 --- Informs about the progress of the improvement action. The implementation displays
--- debug traces if the action cannot be performed normally. It returns a boolean 
+-- debug traces if the action cannot be performed normally. It returns a boolean
 -- value upon action termination.
 -- This method can only be called by an agent.
 -- @see integration.startImproveIt method
@@ -109,7 +119,7 @@ integration.updateImproveItWithFeedbacks = function( object )
         _DEC_Trace( myself, "this object cannot be improved" )
         return false
     elseif object[ myself ].actionImprovementState == eActionObjetManqueDotation then
-        _DEC_Trace( myself, "not enough dotation" ) 
+        _DEC_Trace( myself, "not enough dotation" )
         return false
     elseif object[ myself ].actionImprovementState == eActionObjetPasDeCapacite then
         _DEC_Trace( myself, "the agent does not have the capacity to improve the object" )
@@ -124,7 +134,7 @@ end
 -- @param object a DirectIA object knowledge
 -- @see integration.startImproveIt method
 integration.stopImproveIt = function( object )
-    object[ myself ] = object[ myself ] or {} 
+    object[ myself ] = object[ myself ] or {}
     if object[ myself ].actionImprovementState == eActionObjetTerminee then
         reportFunction( eRC_FinValorisation, object.source )
     else

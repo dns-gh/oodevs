@@ -2,12 +2,21 @@
 ---- BYPASSABLE INTERFACE IMPLEMENTATION
 -------------------------------------------------------------------
 
---- Returns true if the unit has the capacity to bypass the selected object knowledge, false otherwise
+
+--- Returns 'true' if this agent has the physical ability to bypass the given object, 'false' otherwise.
 -- This method can only be called by an agent.
 -- @param object Object knowledge
 -- @return Boolean, whether or not unit has the capacity to bypass this object
 integration.canBypassIt = function( object )
     return _DEC_Agent_PeutConstruireContournementObjet( myself, object.source )
+end
+
+--- Returns 'true' if this agent (including mounted equipments) has the physical ability to bypass the given object, 'false' otherwise.
+-- This method can only be called by an agent.
+-- @param object a DirectIA object knowledge
+-- @return Boolean
+integration.canBypassItWithMountedEquipments = function( object )
+    return _DEC_Agent_PeutConstruireContournementObjetAvecComposantesEmbarquees( myself, object.source )
 end
 
 --- Returns true if the object knowledge can be bypassed, false otherwise

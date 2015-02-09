@@ -75,10 +75,10 @@ void PHY_RoleAction_Objects_CapabilityComputer::operator() ( PHY_ComposantePion&
     switch( nOperation_ )
     {
         case eConstruct: bHasCapability_ = composante.CanConstruct( objectType_, bWithLoaded_ ); break;
-        case eDestroy  : bHasCapability_ = composante.CanDestroy( objectType_ ); break;
-        case eMine     : bHasCapability_ = composante.CanMine( objectType_ ); break;
+        case eDestroy  : bHasCapability_ = composante.CanDestroy( objectType_, bWithLoaded_ ); break;
+        case eMine     : bHasCapability_ = composante.CanMine( objectType_, bWithLoaded_ ); break;
         case eDemine   : bHasCapability_ = composante.CanDemine( objectType_, bWithLoaded_ ); break;
-        case eBypass   : bHasCapability_ = composante.CanBypass( objectType_, false ); break;
+        case eBypass   : bHasCapability_ = composante.CanBypass( objectType_, false, bWithLoaded_ ); break;
         case eExtinguish : bHasCapability_ = composante.CanExtinguish( objectType_ ); break;
         default: assert( false );
     }
