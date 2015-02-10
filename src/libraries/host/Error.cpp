@@ -32,13 +32,13 @@ namespace
     }
 }
 
-std::string host::GetLastError( const runtime::FileSystem_ABC& fs, const tools::Path& output )
+std::string host::GetLastError( const runtime::FileSystem_ABC& fs, const tools::Path& output, const std::string& expression )
 {
     std::set< tools::Path > logs;
     fs.Walk( output, false, [&]( const tools::Path& path ) -> bool
     {
         const auto file = path.FileName().ToUTF8();
-        static const auto regex = boost::xpressive::sregex::compile( "Sim(\\.\\d{8}T\\d{6})?\\.log(\\.\\d+)*" );
+        const auto regex = boost::xpressive::sregex::compile( expression );
         if( boost::xpressive::regex_match( file, regex ) )
             logs.insert( path );
         return true;
@@ -53,4 +53,9 @@ std::string host::GetLastError( const runtime::FileSystem_ABC& fs, const tools::
             return "";
     }
     return "";
+}
+
+std::string host::GetLastError( const runtime::FileSystem_ABC& fs, const tools::Path& output )
+{
+    return GetLastError( fs, output, "Sim(\\.\\d{8}T\\d{6})?\\.log(\\.\\d+)*" );
 }

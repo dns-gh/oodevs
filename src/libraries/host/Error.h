@@ -25,6 +25,7 @@ namespace runtime
 namespace host
 {
     std::string GetLastError( const runtime::FileSystem_ABC& fs, const tools::Path& output );
+    std::string GetLastError( const runtime::FileSystem_ABC& fs, const tools::Path& output, const std::string& regex );
 }
 
 #endif // HOST_ERROR_H

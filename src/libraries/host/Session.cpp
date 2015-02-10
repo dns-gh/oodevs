@@ -714,7 +714,7 @@ Session::T_Process Session::StartSimulation( const web::session::Config& cfg,
 {
     deps_.fs.MakePaths( output );
     std::vector< std::string > options = boost::assign::list_of< std::string >
-        ( "--debug-dir" )( ( GetRoot() / "debug" ).ToUTF8() )
+        ( "--debug-dir" )( ( output / "debug" ).ToUTF8() )
         ( "--exercises-dir" )( ( GetPath( "exercise" ).ToUTF8() ) )
         ( "--terrains-dir" )( ( GetPath( "terrain" ).ToUTF8() ) )
         ( "--models-dir" )( ( GetPath( "model" ) ).ToUTF8() )
@@ -907,7 +907,9 @@ bool Session::Start( const tools::Path& cwd,
     if( !deps_.ports.WaitConnected( port_->Get() + DISPATCHER_PORT, [&]() { return sword->IsAlive(); } ) )
     {
         LOG_ERROR( deps_.log ) << "[session] Unable to connect to simulation " << id_;
-        const auto last_error = GetLastError( deps_.fs, GetOutput() );
+        auto last_error = GetLastError( deps_.fs, GetOutput() );
+        if( last_error.empty() )
+            last_error = GetLastError( deps_.fs, GetOutput() / "debug", "simulation.log" );
         boost::lock_guard< boost::shared_mutex > lock( access_ );
         last_error_ = last_error;
         return false;
