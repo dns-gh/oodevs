@@ -55,7 +55,6 @@ public:
     //! @name Static operations
     //@{
     static QColor SelectedColor( const QColor& base );
-    static QColor SuperiorSelectedColor( const QColor& base );
     //@}
 
 private:
