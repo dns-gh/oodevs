@@ -14,7 +14,7 @@ end
 --- Returns 'true' if this agent (including mounted equipments) has the physical ability to bypass the given object, 'false' otherwise.
 -- This method can only be called by an agent.
 -- @param object a DirectIA object knowledge
--- @param agent a Simulation agent
+-- @param agent a Simulation agent (optional)
 -- @return Boolean
 integration.canBypassItWithMountedEquipments = function( object, agent )
     return _DEC_Agent_PeutConstruireContournementObjetAvecComposantesEmbarquees( agent or myself, object.source )
