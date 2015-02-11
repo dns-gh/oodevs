@@ -298,7 +298,7 @@ MainWindow::MainWindow( Controllers& controllers,
     AddToolBar( *this, new gui::GisToolbar( this, controllers, *glProxy_, staticModel_.detection_, dockContainer_->GetTerrainProfiler() ), eModes_Default );
     AddToolBar( *this, new gui::LocationEditorToolbar( this, controllers_, staticModel.coordinateConverter_, *glProxy_, locationsLayer ), eModes_Default );
     addToolBarBreak();
-    AddToolBar( *this, new ReplayerToolbar( this, controllers, simulationController, network_.GetMessageMgr() ), eModes_Default | eModes_Gaming, eModes_Replay );
+    AddToolBar( *this, new ReplayerToolbar( this, controllers, simulationController, network_.GetMessageMgr() ), eModes_Default | eModes_Gaming );
     AddToolBar( *this, new MessagePanel( this, controllers_, network_.GetMessageMgr(), network.GetCommands(), *factory ), eModes_Default );
 
     // Help

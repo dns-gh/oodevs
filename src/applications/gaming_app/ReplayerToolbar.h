@@ -18,6 +18,7 @@ namespace kernel
 {
     class ContextMenu;
     class Controllers;
+    class Profile_ABC;
 }
 
 class Publisher_ABC;
@@ -30,6 +31,7 @@ class SimulationController;
 // Created: AGE 2007-04-11
 // =============================================================================
 class ReplayerToolbar : public gui::RichToolBar
+                      , public tools::ElementObserver_ABC< kernel::Profile_ABC >
                       , public tools::ElementObserver_ABC< Simulation >
                       , public tools::ElementObserver_ABC< Simulation::sTimeTable >
                       , public tools::ElementObserver_ABC< Simulation::sBeginSkip >
@@ -47,6 +49,7 @@ public:
 protected:
     //! @name Operations
     //@{
+    virtual void NotifyUpdated( const kernel::Profile_ABC& profile );
     virtual void NotifyUpdated( const Simulation& simulation );
     virtual void NotifyUpdated( const Simulation::sTimeTable& timeTable );
     virtual void NotifyUpdated( const Simulation::sBeginSkip& );
@@ -80,6 +83,7 @@ private:
     kernel::Controllers& controllers_;
     SimulationController& simulationController_;
     Publisher_ABC& network_;
+    bool timeControl_;
     QLabel* minTime_;
     QSlider* slider_;
     QLabel* maxTime_;

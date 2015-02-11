@@ -14,6 +14,7 @@
 #include "icons.h"
 #include "clients_kernel/ContextMenu.h"
 #include "clients_kernel/Controllers.h"
+#include "clients_kernel/Profile_ABC.h"
 #include "clients_kernel/Tools.h"
 #include "gaming/SimulationController.h"
 #include "protocol/ReplaySenders.h"
@@ -45,6 +46,7 @@ ReplayerToolbar::ReplayerToolbar( QMainWindow* pParent, kernel::Controllers& con
     , controllers_( controllers )
     , simulationController_( simulationController )
     , network_( network )
+    , timeControl_( false )
     , slider_( 0 )
     , lastTickSkip_( 0 )
 {
@@ -121,6 +123,14 @@ ReplayerToolbar::~ReplayerToolbar()
     controllers_.Unregister( *this );
 }
 
+void ReplayerToolbar::NotifyUpdated( const kernel::Profile_ABC& profile )
+{
+    timeControl_ = profile.HasTimeControl();
+    slider_->setEnabled( timeControl_ );
+    SpinBox()->setEnabled( timeControl_ );
+    DateTimeEdit()->setEnabled( timeControl_ );
+}
+
 // -----------------------------------------------------------------------------
 // Name: ReplayerToolbar::NotifyUpdated
 // Created: AGE 2007-04-11
@@ -148,8 +158,8 @@ void ReplayerToolbar::NotifyUpdated( const Simulation& simulation )
     slider_->blockSignals( false );
     SpinBox()->setValue( simulation.GetCurrentTick() );
     DateTimeEdit()->setDateTime( simulation.GetDateTime() );
-    SpinBox()->setEnabled( simulation.IsPaused() );
-    DateTimeEdit()->setEnabled( simulation.IsPaused() );
+    SpinBox()->setEnabled( timeControl_ && simulation.IsPaused() );
+    DateTimeEdit()->setEnabled( timeControl_ && simulation.IsPaused() );
 }
 
 namespace
@@ -273,8 +283,8 @@ void ReplayerToolbar::OnMenuActivated( int index )
     button_->setText( tickMode ? tr( "Ticks" ) : tr( "Time" ) );
     menu_->setItemChecked( 0, tickMode );
     menu_->setItemChecked( 1, !tickMode );
-    SpinBox()->setEnabled( simulationController_.IsPaused() );
-    DateTimeEdit()->setEnabled( simulationController_.IsPaused() );
+    SpinBox()->setEnabled( timeControl_ && simulationController_.IsPaused() );
+    DateTimeEdit()->setEnabled( timeControl_ && simulationController_.IsPaused() );
 }
 
 // -----------------------------------------------------------------------------
