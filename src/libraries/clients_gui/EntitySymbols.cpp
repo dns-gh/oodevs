@@ -68,9 +68,6 @@ const QPixmap& EntitySymbols::GetSymbol(
     case eColorSelected:
         color = SelectionColorModifier::SelectedColor( strategy_.FindColor( entity ) );
         break;
-    case eColorSuperiorSelected:
-        color = SelectionColorModifier::SuperiorSelectedColor( strategy_.FindColor( entity ) );
-        break;
     default:
         break;
     }
@@ -102,7 +99,6 @@ void EntitySymbols::GenerateSymbols( const kernel::Entity_ABC& entity ) const
 
             GetSymbol( child, symbolName, levelName, gui::EntitySymbols::eColorBase );
             GetSymbol( child, symbolName, levelName, gui::EntitySymbols::eColorSelected );
-            GetSymbol( child, symbolName, levelName, gui::EntitySymbols::eColorSuperiorSelected );
         }
     }
 }

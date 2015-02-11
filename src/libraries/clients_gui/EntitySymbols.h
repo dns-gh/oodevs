@@ -40,8 +40,7 @@ public:
     {
         eColorBase,
         eColorWithModifier,
-        eColorSelected,
-        eColorSuperiorSelected
+        eColorSelected
     };
     //@}
 

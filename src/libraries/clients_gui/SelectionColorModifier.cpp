@@ -64,10 +64,8 @@ QColor SelectionColorModifier::Apply( const kernel::Entity_ABC& entity, const QC
     const bool superiorSelected = selectedEntity_ && ( IsSubordinate< kernel::TacticalHierarchies >( entity, *selectedEntity_ )
                                                     || IsSubordinate< kernel::CommunicationHierarchies >( entity, *selectedEntity_ ) );
     tools_.GetCurrentOptions().Select( selected, superiorSelected, profile_.CanBeOrdered( entity ) );
-    if( selected )
+    if( selected || superiorSelected )
         return SelectedColor( base );
-    if( superiorSelected )
-        return SuperiorSelectedColor( base );
     return base;
 }
 
@@ -100,15 +98,6 @@ void SelectionColorModifier::NotifySelected( const kernel::Entity_ABC* element )
 QColor SelectionColorModifier::SelectedColor( const QColor& base )
 {
     return base.light( 150 );
-}
-
-// -----------------------------------------------------------------------------
-// Name: SelectionColorModifier::SuperiorSelectedColor
-// Created: AGE 2008-05-14
-// -----------------------------------------------------------------------------
-QColor SelectionColorModifier::SuperiorSelectedColor( const QColor& base )
-{
-    return base.light( 120 );
 }
 
 // -----------------------------------------------------------------------------
