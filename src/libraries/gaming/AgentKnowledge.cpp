@@ -328,7 +328,7 @@ void AgentKnowledge::Draw( const geometry::Point2f& where,
     const float ratio = nLevel_ ? view.GetCurrentOptions().GetRatio( realAgent_ ) : 1;
     view.DrawUnitSymbol( currentSymbol_, moveSymbol_, staticSymbol_, levelSymbol, isMoving, where, -ratio, direction, width, depth );
     const bool app6 = isMoving ? moveSymbol_.empty() : staticSymbol_.empty();
-    if( app6 && nMaxPerceptionLevel_.IsSet() && nMaxPerceptionLevel_ > eDetection )
+    if( app6 && nMaxPerceptionLevel_.IsSet() && nMaxPerceptionLevel_ > eDetection && IsCommandPost() )
         view.DrawApp6SymbolFixedSize( realAgent_.GetType().GetHQSymbol(), where, -ratio, 0 );
 }
 
