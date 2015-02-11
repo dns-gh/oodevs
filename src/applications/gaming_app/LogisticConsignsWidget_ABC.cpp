@@ -43,8 +43,7 @@ LogisticConsignsWidget_ABC::LogisticConsignsWidget_ABC( QWidget* parent, kernel:
     , historyModel_( model.historyLogistics_ )
     , profile_( profile )
     , selected_( controllers )
-    , needUpdating_( true )
-    , requestSelected_( 0 )
+    , requestSelected_( controllers )
     , simulationController_( simulationController )
 {
     QVBoxLayout* pLayout = new QVBoxLayout( this );
