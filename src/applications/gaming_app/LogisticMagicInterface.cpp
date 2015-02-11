@@ -118,7 +118,7 @@ void LogisticMagicInterface::AddMenuEntries( kernel::ContextMenu& menu, bool has
     subMenu->InsertItem( "Command", tr( "Resupply" ), this, SLOT( OnResupply() ) );
     if( selected_->GetTypeName() == kernel::Automat_ABC::typeName_ )
         subMenu->InsertItem( "Command", tr( "Pull supply flow" ), this, SLOT( OnPullFlow() ) );
-    if( hasFullRights && profile_.IsSupervision() )
+    if( hasFullRights )
     {
         subMenu->InsertItem( "Command",
             selected_->Get< gui::LogisticBase >().IsMaintenanceManual()
