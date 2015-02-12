@@ -114,8 +114,7 @@ protected:
     LogisticsRequestsHistoryTable* historyTable_;
     gui::RichCheckBox* completedCheckbox_;
     kernel::SafePointer< kernel::Entity_ABC > selected_;
-    bool needUpdating_;
-    const LogisticsConsign_ABC* requestSelected_;
+    kernel::SafePointer< LogisticsConsign_ABC > requestSelected_;
     unsigned int lastRequestId_;
     std::unique_ptr< LogisticSelectionDialog_ABC > selectionDialog_;
     //@}

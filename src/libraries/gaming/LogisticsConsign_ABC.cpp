@@ -38,7 +38,7 @@ LogisticsConsign_ABC::LogisticsConsign_ABC( unsigned int nID,  kernel::Controlle
 // -----------------------------------------------------------------------------
 LogisticsConsign_ABC::~LogisticsConsign_ABC()
 {
-    //NOTHING
+    controller_.Delete( *this );
 }
 
 // -----------------------------------------------------------------------------
