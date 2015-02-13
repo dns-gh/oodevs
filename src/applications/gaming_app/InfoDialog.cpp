@@ -143,8 +143,7 @@ void InfoDialog_Base::NotifyUpdated( const kernel::Entity_ABC* element )
 // -----------------------------------------------------------------------------
 void InfoDialog_Base::NotifyUpdated( const gui::LogisticBase& base )
 {
-    if( isVisible() &&
-        selected_ &&
+    if( selected_ &&
         selected_->GetId() == base.GetEntity().GetId() &&
         modeChecker_ )
         UpdateTitle( modeChecker_( base ) );
