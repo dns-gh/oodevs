@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" version="4.8.2">
+	<xs:include schemaLocation="tools.xsd"/>
+	<xs:element name="breakdowns">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="repair-duration-in-man-hours">
+					<xs:complexType>
+						<xs:attribute name="value" type="xs:boolean" use="required"/>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="diagnosis">
+					<xs:complexType>
+						<xs:attribute name="time" type="T_Time" use="required"/>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="category" minOccurs="0" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="breakdown" minOccurs="0" maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="part" minOccurs="0" maxOccurs="unbounded">
+											<xs:complexType>
+												<xs:attribute name="resource" type="xs:string" use="required"/>
+												<xs:attribute name="quantity" type="xs:nonNegativeInteger" use="required"/>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+									<xs:attribute name="name" type="xs:string" use="required"/>
+									<xs:attribute name="type" type="xs:string" use="required"/>
+									<xs:attribute name="id" type="xs:nonNegativeInteger" use="required"/>
+									<xs:attribute name="average-repairing-time" type="T_Time" use="required"/>
+									<xs:attribute name="variance" type="T_Time" use="required"/>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+						<xs:attribute name="name" type="xs:string" use="required"/>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="model-version" type="T_Version"/>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

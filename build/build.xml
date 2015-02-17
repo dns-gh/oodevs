@@ -23,7 +23,7 @@
     <property name="www.dir" value="${src.dir}/masa/timeline/www"/>
 
     <property name="version.project" value="6.0"/>
-    <property name="version.major" value="6.0.2"/>
+    <property name="version.major" value="6.0.3"/>
     <property name="version.version" value="${version.major}.${git.revision}.${git.hash}"/>
     <property name="unicode.extension" value=" ゑ"/>
 

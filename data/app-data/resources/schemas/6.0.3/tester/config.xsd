@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+
+    <xs:element name="configuration" type="T_Configuration"/>
+
+    <xs:complexType name="T_Configuration" >
+        <xs:sequence>
+            <xs:element name="initialization" type="T_Initialization"/>
+            <xs:element name="points"         type="T_Points"/>
+            <xs:element name="filters"        type="T_Filters"/>
+            <xs:element name="magic-actions"  type="T_MagicActions"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="T_Initialization">
+        <xs:attribute name="host"      use="required" type="xs:string"/>
+        <xs:attribute name="port"      use="required" type="xs:nonNegativeInteger"/>
+        <xs:attribute name="login"     use="required" type="xs:string"/>
+        <xs:attribute name="password"  use="required" type="xs:string"/>
+        <xs:attribute name="output"    use="required" type="xs:string"/>
+        <xs:attribute name="scheduler" use="required" type="xs:nonNegativeInteger"/>
+        <xs:attribute name="timeout"   use="required" type="xs:nonNegativeInteger"/>
+        <xs:attribute name="iterator"  use="required" type="T_Iterator" />
+    </xs:complexType>
+
+    <xs:complexType name="T_Points">
+        <xs:attribute name="upper-left-point"  use="required" type="xs:string"/>
+        <xs:attribute name="lower-right-point" use="required" type="xs:string"/>
+    </xs:complexType>
+
+    <xs:complexType name="T_Filters">
+        <xs:attribute name="entity-type" use="required" type="xs:string"/>
+        <xs:attribute name="crowds"      use="required" type="xs:boolean"/>
+        <xs:attribute name="fragorders"  use="required" type="xs:boolean"/>
+    </xs:complexType>
+
+    <xs:complexType name="T_MagicActions">
+        <xs:attribute name="recomplete-delay" use="required" type="xs:nonNegativeInteger"/>
+        <xs:attribute name="teleport-delay"   use="required" type="xs:nonNegativeInteger"/>
+    </xs:complexType>
+    
+    <xs:simpleType name="T_EntityType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="agent"/>
+            <xs:enumeration value="automat"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="T_Iterator">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="sequence" />
+            <xs:enumeration value="random" />
+        </xs:restriction>
+    </xs:simpleType>
+</xs:schema>

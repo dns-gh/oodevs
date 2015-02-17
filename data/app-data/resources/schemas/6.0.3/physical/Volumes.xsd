@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" version="4.8.2">
+	<xs:include schemaLocation="../exercise/common.xsd"/>
+	<xs:element name="volumes">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Data specifying volume for equipments</xs:documentation>
+			<xs:documentation xml:lang="fr">Cette donnée permet de caractériser le volume d’une composante</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="volume" minOccurs="0" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">A given volume category</xs:documentation>
+						<xs:documentation xml:lang="fr">Une catégorie de volume</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:attribute name="name" type="xs:string" use="required">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">Volume category name</xs:documentation>
+								<xs:documentation xml:lang="fr">Nom de la catégorie de volume</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="model-version" type="T_Version"/>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>
