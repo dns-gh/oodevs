@@ -1,7 +1,6 @@
 -------------------------------------------------------------------
 ---- IMPROVABLE INTERFACE IMPLEMENTATION
 -------------------------------------------------------------------
-local _DEC__StopAction = _DEC__StopAction
 local integration = integration
 
 ---Informs whether or not the agent has the physical ability to perform the impovement action on the given 'object'.
