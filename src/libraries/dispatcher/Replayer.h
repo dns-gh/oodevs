@@ -93,7 +93,7 @@ private:
     PluginContainer                                    handler_;
     std::unique_ptr< SimulationPublisher_ABC >         publisher_;
     boost::shared_ptr< plugins::rights::RightsPlugin > rights_;
-    std::unique_ptr< SenderToReceiver >                modelHandler_;
+    boost::shared_ptr< SenderToReceiver >              modelHandler_;
     boost::shared_ptr< ReplayModel_ABC >               synchronizer_;
     std::unique_ptr< Loader >                          loader_;
     boost::shared_ptr< plugins::replay::ReplayPlugin > replay_;

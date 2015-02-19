@@ -72,27 +72,43 @@ namespace
 
 // Forwards all messages to ClientPublisher, except SimToClient messages
 // forwarded to the given PluginContainer.
-struct Replayer::SenderToReceiver : public ClientPublisher_ABC
+struct Replayer::SenderToReceiver : public ClientPublisher_ABC,
+                                    public Plugin_ABC
 {
     SenderToReceiver( ClientPublisher_ABC& publisher,
         const boost::shared_ptr< PluginContainer >& container )
         : publisher_( publisher )
-        , handler_( container )
+        , container_( container )
     {
         container->AddHandler( boost::make_shared< ReceiverToSender >( publisher ) );
     }
+
     virtual void Send( const sword::SimToClient& message )
     {
-        handler_->Receive( message );
+        container_->Receive( message );
     }
+
     virtual void Send( const sword::AuthenticationToClient& message ) { publisher_.Send( message ); }
     virtual void Send( const sword::ReplayToClient&         message ) { publisher_.Send( message ); }
     virtual void Send( const sword::AarToClient&            message ) { publisher_.Send( message ); }
     virtual void Send( const sword::MessengerToClient&      message ) { publisher_.Send( message ); }
     virtual void Send( const sword::DispatcherToClient&     message ) { publisher_.Send( message ); }
+
+    virtual void NotifyClientLeft(
+        dispatcher::ClientPublisher_ABC& client,
+        const std::string& link, bool uncounted )
+    {
+        container_->NotifyClientLeft( client, link, uncounted );
+    }
+
+    virtual void Update()
+    {
+        container_->Update();
+    }
+
 private:
     ClientPublisher_ABC& publisher_;
-    boost::shared_ptr< MessageHandler_ABC > handler_;
+    boost::shared_ptr< PluginContainer > container_;
 };
 
 // -----------------------------------------------------------------------------
@@ -124,6 +140,7 @@ Replayer::Replayer( const Config& config )
     clientsNetworker_->RegisterMessage( MakeLogger( log_, "Dispatcher received: ", *this, &Replayer::ReceiveClientToSim ) );
 
     // Message loader pipeline configuration, with a second vision plugin to also filter vision cones messages
+    handler_.Add( modelHandler_ );
     handler_.AddHandler( model_ );
     auto vision = boost::make_shared< plugins::vision::VisionPlugin >( *model_, *clientsNetworker_, *publisher_, *rights_ );
     vision->AddHandler( clientsNetworker_ );
