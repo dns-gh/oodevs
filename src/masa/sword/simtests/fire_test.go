@@ -565,12 +565,13 @@ func (s *TestSuite) TestIndirectFireWithObjectEffect(c *C) {
 	_, err := DecStartIndirectFire(client, unit.Id, target)
 	c.Assert(err, IsNil)
 
+	// Wait for the first effect to appear. They appear at the same time but
+	// some of them disappear in the same tick.
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		for _, o := range data.Objects {
-			if o.ObjectType == "ammo_object_effect" {
-				return true
-			}
-		}
-		return false
+		return len(data.FireEffects) > 1
 	})
+	client.Model.WaitTicks(3)
+	data := client.Model.GetData()
+	// Only one object should be created, not 4
+	c.Assert(len(data.Objects), Equals, 1)
 }
