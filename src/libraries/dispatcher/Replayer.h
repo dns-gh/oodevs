@@ -90,14 +90,14 @@ private:
     boost::shared_ptr< Model >                         model_;
     dispatcher::CompositeRegistrable                   registrables_;
     boost::shared_ptr< ClientsNetworker >              clientsNetworker_;
-    std::unique_ptr< SenderToReceiver >                modelHandler_;
     PluginContainer                                    handler_;
+    std::unique_ptr< SimulationPublisher_ABC >         publisher_;
+    boost::shared_ptr< plugins::rights::RightsPlugin > rights_;
+    std::unique_ptr< SenderToReceiver >                modelHandler_;
     boost::shared_ptr< ReplayModel_ABC >               synchronizer_;
     std::unique_ptr< Loader >                          loader_;
     boost::shared_ptr< plugins::replay::ReplayPlugin > replay_;
-    std::unique_ptr< SimulationPublisher_ABC >         publisher_;
     bool                                               started_;
-    boost::shared_ptr< plugins::rights::RightsPlugin > rights_;
     bool                                               stopped_;
     tools::Log                                         log_;
     //@}
