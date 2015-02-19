@@ -70,17 +70,20 @@ namespace
     };
 }
 
-// Forwards all messages to ClientPublisher, excepting SimToClient messages
-// forwarded to its children, as a PluginContainer.
+// Forwards all messages to ClientPublisher, except SimToClient messages
+// forwarded to the given PluginContainer.
 struct Replayer::SenderToReceiver : public ClientPublisher_ABC
-                                  , public PluginContainer
 {
     explicit SenderToReceiver( ClientPublisher_ABC& publisher )
         : publisher_( publisher )
     {}
+    void Add( const boost::shared_ptr< MessageHandler_ABC >& handler )
+    {
+        handler_ = handler;
+    }
     virtual void Send( const sword::SimToClient& message )
     {
-        Receive( message );
+        handler_->Receive( message );
     }
     virtual void Send( const sword::AuthenticationToClient& message ) { publisher_.Send( message ); }
     virtual void Send( const sword::ReplayToClient&         message ) { publisher_.Send( message ); }
@@ -89,6 +92,7 @@ struct Replayer::SenderToReceiver : public ClientPublisher_ABC
     virtual void Send( const sword::DispatcherToClient&     message ) { publisher_.Send( message ); }
 private:
     ClientPublisher_ABC& publisher_;
+    boost::shared_ptr< MessageHandler_ABC > handler_;
 };
 
 // -----------------------------------------------------------------------------
