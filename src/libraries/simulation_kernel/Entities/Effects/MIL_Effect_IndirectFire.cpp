@@ -166,7 +166,7 @@ bool MIL_Effect_IndirectFire::Execute()
             }
         }
         else
-            indirectDotationCategory_.GetDotationCategory().ApplyIndirectFireEffect( firer_, vSourcePosition_, *vTargetPosition_, nNbrAmmoFired_, *pFireResult_, this->indirectDotationCategory_, requester_ );
+            indirectDotationCategory_.GetDotationCategory().ApplyIndirectFireEffect( firer_, vSourcePosition_, *vTargetPosition_, nNbrAmmoFired_, *pFireResult_, indirectDotationCategory_, requester_ );
     }
     bArrived_ = true;
     StopFlying();

@@ -302,10 +302,10 @@ void PHY_DotationCategory::ApplyIndirectFireEffect( const MIL_Agent_ABC& firer, 
         (*it)->ApplyEffect( &firer, vSourcePosition, vTargetPosition, rInterventionTypeFired, fireResult, requester );
 }
 
-void PHY_DotationCategory::ApplyIndirectFireEffect( const MIL_Agent_ABC& firer, const MT_Vector2D& vSourcePosition, const MT_Vector2D& vTargetPosition, unsigned int nNbrAmmoFired, PHY_FireResults_ABC& fireResult, const PHY_DotationCategory_IndirectFire_ABC& indirectDotationCategory, const MIL_Agent_ABC* requester ) const
+void PHY_DotationCategory::ApplyIndirectFireEffect( const MIL_Agent_ABC& firer, const MT_Vector2D& vSourcePosition, const MT_Vector2D& vTargetPosition, unsigned int nNbrAmmoFired, PHY_FireResults_ABC& fireResult, const PHY_DotationCategory_IndirectFire_ABC& category, const MIL_Agent_ABC* requester ) const
 {
     const double rInterventionTypeFired = ConvertToInterventionType( nNbrAmmoFired );
-    indirectDotationCategory.ApplyEffect( &firer, vSourcePosition, vTargetPosition, rInterventionTypeFired, fireResult, requester );
+    category.ApplyEffect( &firer, vSourcePosition, vTargetPosition, rInterventionTypeFired, fireResult, requester );
 }
 
 // -----------------------------------------------------------------------------
