@@ -170,3 +170,37 @@ func (s *TestSuite) TestListVisionCones(c *C) {
 	c.Assert(err, IsNil)
 	check(ack, false, nil, 0, 0)
 }
+
+func (s *TestSuite) TestReplayerVisionCones(c *C) {
+	sim, client := connectAndWaitModel(c, NewAllUserOpts(ExCrossroadLog))
+	defer stopSimAndClient(c, sim, client)
+	client.Model.WaitTicks(3)
+	client.Close()
+	sim.Stop()
+	clientOpts := NewAdminOpts("")
+	replay, client := replayAndWaitModel(c, sim.Opts, clientOpts)
+	defer replay.Stop()
+	defer client.Close()
+
+	// For some reason formation/automat/unit are re-created
+	// without first being destroyed. Where is the bug ?
+	client.Model.SetErrorHandler(
+		func(data *swapi.ModelData, msg *swapi.SwordMessage, err error) error {
+			return nil
+		})
+
+	// Enable vision cones
+	err := client.EnableVisionCones(true)
+	c.Assert(err, IsNil)
+	// Skip to end
+	client.SkipToTick(4)
+	// Connect another client
+	client2 := loginAndWaitModel(c, replay, clientOpts)
+	// Enable vision cones
+	err = client2.EnableVisionCones(true)
+	c.Assert(err, IsNil)
+	// Disconnect it
+	client2.Close()
+	// Skip to start
+	client.SkipToTick(1)
+}
