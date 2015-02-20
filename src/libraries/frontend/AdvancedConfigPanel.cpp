@@ -19,7 +19,6 @@
 #include <QtGui/qlabel.h>
 #include <QtGui/qspinbox.h>
 #include <QtCore/qsettings.h>
-#include <limits>
 
 using namespace frontend;
 
@@ -67,14 +66,14 @@ AdvancedConfigPanel::AdvancedConfigPanel( QWidget* parent, const tools::GeneralC
     //---
     stepLabel_ = new QLabel();
     stepSpin_ = new QSpinBox();
-    stepSpin_->setRange( 1, INT_MAX );
+    stepSpin_->setRange( 1, std::numeric_limits< int >::max() );
     stepSpin_->setSingleStep( 1 );
     stepSpin_->setValue( 10 );
 
     //---
     factorLabel_ = new QLabel();
     factorSpin_ = new QSpinBox();
-    factorSpin_->setRange( 1, INT_MAX );
+    factorSpin_->setRange( 1, std::numeric_limits< int >::max() );
     factorSpin_->setSingleStep( 1 );
     factorSpin_->setValue( 10 );
 
