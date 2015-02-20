@@ -103,10 +103,11 @@ end
 -- This method returns false if the given knowledge is neither an object nor an urban block.
 -- This method can only be called by an agent.
 -- @param target Object knowledge or urban block knowledge
+-- @param agent a Simulation agent (optional)
 -- @return Boolean
-integration.canRemoveItWithMountedEquipments = function( target )
+integration.canRemoveItWithMountedEquipments = function( target, agent )
     if masalife.brain.core.class.isOfType( target, integration.ontology.types.object ) then
-        return _DEC_Agent_PeutDetruireObjetAvecComposantesEmbarquees( myself, target.source )
+        return _DEC_Agent_PeutDetruireObjetAvecComposantesEmbarquees( agent or myself, target.source )
     elseif masalife.brain.core.class.isOfType( target, integration.ontology.types.urbanBlock ) then
         return true -- decreasing the structural state of urban blocks doesn't require specific physical ability.
     end
