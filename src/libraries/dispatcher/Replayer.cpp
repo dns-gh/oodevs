@@ -112,11 +112,14 @@ Replayer::Replayer( const Config& config )
                             *model_, *clientsNetworker_, config, *clientsNetworker_,
                             handler_, *clientsNetworker_, registrables_, 0, true ) )
     , stopped_         ( false )
-    , log_             ( config.BuildSessionChildFile( "Protobuf_replay.log" ), config.GetDispatcherProtobufLogFiles(),
-                         config.GetDispatcherProtobufLogSize(), true, config.IsDispatcherProtobufLogInBytes() )
+    , log_             ( new tools::Log(
+                config.BuildSessionChildFile( "Protobuf_replay.log" ),
+                config.GetDispatcherProtobufLogFiles(),
+                config.GetDispatcherProtobufLogSize(), true,
+                config.IsDispatcherProtobufLogInBytes() ) )
 {
-    clientsNetworker_->RegisterMessage( MakeLogger( log_, "Dispatcher received: ", *this, &Replayer::ReceiveClientToReplay ) );
-    clientsNetworker_->RegisterMessage( MakeLogger( log_, "Dispatcher received: ", *this, &Replayer::ReceiveClientToSim ) );
+    clientsNetworker_->RegisterMessage( MakeLogger( *log_, "Dispatcher received: ", *this, &Replayer::ReceiveClientToReplay ) );
+    clientsNetworker_->RegisterMessage( MakeLogger( *log_, "Dispatcher received: ", *this, &Replayer::ReceiveClientToSim ) );
 
     // Model synchronization pipeline configuration, with a first vision plugin to filter vision cones messages
     auto vision = boost::make_shared< plugins::vision::VisionPlugin >( *model_, *clientsNetworker_, *publisher_, *rights_ );

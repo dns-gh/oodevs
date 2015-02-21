@@ -12,7 +12,6 @@
 
 #include "PluginContainer.h"
 #include "CompositeRegistrable.h"
-#include "tools/Log.h"
 #include <boost/shared_ptr.hpp>
 #include <boost/noncopyable.hpp>
 #include <memory>
@@ -37,6 +36,11 @@ namespace rights
 namespace sword
 {
     class ClientToReplay;
+}
+
+namespace tools
+{
+    class Log;
 }
 
 namespace xml
@@ -99,7 +103,7 @@ private:
     bool                                               started_;
     boost::shared_ptr< plugins::rights::RightsPlugin > rights_;
     bool                                               stopped_;
-    tools::Log                                         log_;
+    std::unique_ptr< tools::Log >                      log_;
     //@}
 };
 }
