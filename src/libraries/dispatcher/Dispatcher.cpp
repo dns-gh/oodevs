@@ -34,8 +34,11 @@ Dispatcher::Dispatcher( const Config& config, int maxConnections )
     , handler_            ( new PluginContainer() )
     , registrables_       ( new CompositeRegistrable() )
     , services_           ( new Services() )
-    , log_                ( config.BuildSessionChildFile( "Protobuf.log" ), config.GetDispatcherProtobufLogFiles(),
-                            config.GetDispatcherProtobufLogSize(), true, config.IsDispatcherProtobufLogInBytes() )
+    , log_                ( config.BuildSessionChildFile( "Protobuf.log" ),
+                            config.GetDispatcherProtobufLogFiles(),
+                            config.GetDispatcherProtobufLogSize(),
+                            !config.HasCheckpoint(),
+                            config.IsDispatcherProtobufLogInBytes() )
     , clientsNetworker_   ( new ClientsNetworker( config, *handler_, *services_ ) )
     , simulationNetworker_( new SimulationNetworker( *model_, *clientsNetworker_, *handler_, config, log_ ) )
     , factory_            ( new PluginFactory( config, model_, *staticModel_, *simulationNetworker_, clientsNetworker_, *handler_, *registrables_, *services_, log_, maxConnections ) )
