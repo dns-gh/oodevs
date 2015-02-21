@@ -12,7 +12,7 @@
 
 #include "PluginContainer.h"
 #include "CompositeRegistrable.h"
-#include "Logger.h"
+#include "tools/Log.h"
 #include <boost/shared_ptr.hpp>
 #include <boost/noncopyable.hpp>
 #include <memory>

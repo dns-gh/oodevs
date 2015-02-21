@@ -16,6 +16,7 @@
 #include "SimulationPublisher_ABC.h"
 #include "ReplaySynchronizer.h"
 #include "Loader.h"
+#include "ProtobufLogger.h"
 #include "Services.h"
 #include "StaticModel.h"
 #include "MemoryLogger_ABC.h"

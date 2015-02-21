@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef dispatcher_Logger_h
-#define dispatcher_Logger_h
+#ifndef dispatcher_ProtobufLogger_h
+#define dispatcher_ProtobufLogger_h
 
 #include "tools/Log.h"
 #include "MT_Tools/MT_Logger.h"
@@ -17,14 +17,9 @@
 
 namespace dispatcher
 {
-// =============================================================================
-/** @class  Logger
-    @brief  Logger
-*/
-// Created: MCO 2011-06-27
-// =============================================================================
+
 template< typename T >
-class Logger
+class ProtobufLogger
 {
 public:
     //! @name Types
@@ -36,12 +31,12 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-    Logger( tools::Log& log, const std::string& prefix, T_Callback callback )
+    ProtobufLogger( tools::Log& log, const std::string& prefix, T_Callback callback )
         : log_     ( &log )
         , prefix_  ( prefix )
         , callback_( callback )
     {}
-    Logger( tools::Log& log, const std::string& prefix, T_ConstCallback constCallback )
+    ProtobufLogger( tools::Log& log, const std::string& prefix, T_ConstCallback constCallback )
         : log_          ( &log )
         , prefix_       ( prefix )
         , constCallback_( constCallback )
@@ -100,7 +95,8 @@ std::function< void( const std::string&, const T& ) > MakeConstLogger(
     tools::Log& log, const std::string& prefix,
     C& instance, void (C::*callback)( const std::string&, const T& ) )
 {
-    return Logger< T >( log, prefix, Logger< T >::T_ConstCallback( boost::bind( callback, &instance, _1, _2 ) ) );
+    return ProtobufLogger< T >( log, prefix, ProtobufLogger< T >::T_ConstCallback(
+                boost::bind( callback, &instance, _1, _2 ) ) );
 }
 
 template< typename C, typename T >
@@ -108,9 +104,10 @@ std::function< void( const std::string&, T& ) > MakeLogger(
     tools::Log& log, const std::string& prefix,
     C& instance, void (C::*callback)( const std::string&, T& ) )
 {
-    return Logger< T >( log, prefix, Logger< T >::T_Callback( boost::bind( callback, &instance, _1, _2 ) ) );
+    return ProtobufLogger< T >( log, prefix, ProtobufLogger< T >::T_Callback(
+                boost::bind( callback, &instance, _1, _2 ) ) );
 }
 
 }
 
-#endif // dispatcher_Logger_h
+#endif // dispatcher_ProtobufLogger_h
