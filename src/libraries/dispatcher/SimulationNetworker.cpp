@@ -14,7 +14,7 @@
 #include "Model.h"
 #include "Plugin_ABC.h"
 #include "Config.h"
-#include "Logger.h"
+#include "ProtobufLogger.h"
 #include "protocol/Protocol.h"
 #include "protocol/DispatcherSenders.h"
 #include "MT_Tools/MT_Logger.h"

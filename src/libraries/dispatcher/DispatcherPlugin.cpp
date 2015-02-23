@@ -14,7 +14,7 @@
 #include "Profile_ABC.h"
 #include "OrderResolver_ABC.h"
 #include "Services.h"
-#include "Logger.h"
+#include "ProtobufLogger.h"
 #include "ClientsNetworker.h"
 #include "protocol/Dispatcher.h"
 #include "protocol/SimulationSenders.h"
