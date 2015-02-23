@@ -71,25 +71,45 @@ namespace
     };
 }
 
-// Forwards all messages to ClientPublisher, excepting SimToClient messages
-// forwarded to its children, as a PluginContainer.
-struct Replayer::SenderToReceiver : public ClientPublisher_ABC
-                                  , public PluginContainer
+// Forwards all messages to ClientPublisher, except SimToClient messages
+// forwarded to the given PluginContainer.
+struct Replayer::SenderToReceiver : public ClientPublisher_ABC,
+                                    public Plugin_ABC
 {
-    explicit SenderToReceiver( ClientPublisher_ABC& publisher )
+    SenderToReceiver( ClientPublisher_ABC& publisher,
+        const boost::shared_ptr< PluginContainer >& container )
         : publisher_( publisher )
-    {}
+        , container_( container )
+    {
+        container->AddHandler( boost::make_shared< ReceiverToSender >( publisher ) );
+    }
+
     virtual void Send( const sword::SimToClient& message )
     {
-        Receive( message );
+        container_->Receive( message );
     }
+
     virtual void Send( const sword::AuthenticationToClient& message ) { publisher_.Send( message ); }
     virtual void Send( const sword::ReplayToClient&         message ) { publisher_.Send( message ); }
     virtual void Send( const sword::AarToClient&            message ) { publisher_.Send( message ); }
     virtual void Send( const sword::MessengerToClient&      message ) { publisher_.Send( message ); }
     virtual void Send( const sword::DispatcherToClient&     message ) { publisher_.Send( message ); }
+
+    virtual void NotifyClientLeft(
+        dispatcher::ClientPublisher_ABC& client,
+        const std::string& link, bool uncounted )
+    {
+        container_->NotifyClientLeft( client, link, uncounted );
+    }
+
+    virtual void Update()
+    {
+        container_->Update();
+    }
+
 private:
     ClientPublisher_ABC& publisher_;
+    boost::shared_ptr< PluginContainer > container_;
 };
 
 // -----------------------------------------------------------------------------
@@ -102,15 +122,17 @@ Replayer::Replayer( const Config& config )
     , logger_          ( new ::NullMemoryLogger() )
     , model_           ( new Model( config, *staticModel_, *logger_ ) )
     , clientsNetworker_( new ClientsNetworker( config, handler_, *services_ ) )
-    , modelHandler_    ( new SenderToReceiver( *clientsNetworker_ ) )
-    , synchronizer_    ( new ReplaySynchronizer( *modelHandler_, *model_ ) )
-    , loader_          ( new Loader( *synchronizer_, handler_, config, *clientsNetworker_ ) )
-    , replay_          ( new plugins::replay::ReplayPlugin( *model_, *clientsNetworker_, *clientsNetworker_, *loader_, *synchronizer_ ) )
     , publisher_       ( new NullPublisher() )
-    , started_         ( false )
     , rights_          ( boost::make_shared< plugins::rights::RightsPlugin >(
                             *model_, *clientsNetworker_, config, *clientsNetworker_,
                             handler_, *clientsNetworker_, registrables_, 0, true ) )
+    // Model synchronization pipeline configuration, with a first vision plugin to filter vision cones messages
+    , modelHandler_    ( new SenderToReceiver( *clientsNetworker_,
+                            boost::make_shared< plugins::vision::VisionPlugin >( *model_, *clientsNetworker_, *publisher_, *rights_ ) ) )
+    , synchronizer_    ( new ReplaySynchronizer( *modelHandler_, *model_ ) )
+    , loader_          ( new Loader( *synchronizer_, handler_, config, *clientsNetworker_ ) )
+    , replay_          ( new plugins::replay::ReplayPlugin( *model_, *clientsNetworker_, *clientsNetworker_, *loader_, *synchronizer_ ) )
+    , started_         ( false )
     , stopped_         ( false )
     , log_             ( new tools::Log(
                 config.BuildSessionChildFile( "Protobuf_replay.log" ),
@@ -121,14 +143,10 @@ Replayer::Replayer( const Config& config )
     clientsNetworker_->RegisterMessage( MakeLogger( *log_, "Dispatcher received: ", *this, &Replayer::ReceiveClientToReplay ) );
     clientsNetworker_->RegisterMessage( MakeLogger( *log_, "Dispatcher received: ", *this, &Replayer::ReceiveClientToSim ) );
 
-    // Model synchronization pipeline configuration, with a first vision plugin to filter vision cones messages
-    auto vision = boost::make_shared< plugins::vision::VisionPlugin >( *model_, *clientsNetworker_, *publisher_, *rights_ );
-    vision->AddHandler( boost::make_shared< ReceiverToSender >( *clientsNetworker_ ) );
-    modelHandler_->Add( vision );
-
     // Message loader pipeline configuration, with a second vision plugin to also filter vision cones messages
+    handler_.Add( modelHandler_ );
     handler_.AddHandler( model_ );
-    vision = boost::make_shared< plugins::vision::VisionPlugin >( *model_, *clientsNetworker_, *publisher_, *rights_ );
+    auto vision = boost::make_shared< plugins::vision::VisionPlugin >( *model_, *clientsNetworker_, *publisher_, *rights_ );
     vision->AddHandler( clientsNetworker_ );
     vision->AddHandler( boost::make_shared< SimulationDispatcher >( *clientsNetworker_, *synchronizer_ ) );
     handler_.Add( vision );
