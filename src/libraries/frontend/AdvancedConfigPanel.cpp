@@ -66,14 +66,14 @@ AdvancedConfigPanel::AdvancedConfigPanel( QWidget* parent, const tools::GeneralC
     //---
     stepLabel_ = new QLabel();
     stepSpin_ = new QSpinBox();
-    stepSpin_->setRange( 1, 100 );
+    stepSpin_->setRange( 1, std::numeric_limits< int >::max() );
     stepSpin_->setSingleStep( 1 );
     stepSpin_->setValue( 10 );
 
     //---
     factorLabel_ = new QLabel();
     factorSpin_ = new QSpinBox();
-    factorSpin_->setRange( 1, 100 );
+    factorSpin_->setRange( 1, std::numeric_limits< int >::max() );
     factorSpin_->setSingleStep( 1 );
     factorSpin_->setValue( 10 );
 
