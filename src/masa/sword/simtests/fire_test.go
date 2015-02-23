@@ -528,7 +528,7 @@ func (s *TestSuite) TestDecDirectFireRangeUpdate(c *C) {
 }
 
 // DecStartIndirectFire creates an indirect fire action for a unit on a target
-// position. It has not exactly the same effect than the related magic action.
+// position. Its effect is a bit different than the magic action one.
 func DecStartIndirectFire(client *swapi.Client, unitId uint32, pos swapi.Point) (uint32, error) {
 
 	script := `function TestFunction()
