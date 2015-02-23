@@ -527,24 +527,51 @@ func (s *TestSuite) TestDecDirectFireRangeUpdate(c *C) {
 	c.Assert(firerAfter.Resources[ammo1km], Equals, firerBefore.Resources[ammo1km])
 }
 
+// DecStartIndirectFire creates an indirect fire action for a unit on a target
+// position. Its effect is a bit different than the magic action one.
+func DecStartIndirectFire(client *swapi.Client, unitId uint32, pos swapi.Point) (uint32, error) {
+
+	script := `function TestFunction()
+        unit = DEC_GetUnitById({{.unitId}})
+        pos = DEC_Geometrie_CreerPointLatLong({{.lat}}, {{.long}})
+        -- 4 is the ID for "effect" ammo class
+        ammo = _DEC_Tir_MunitionPourTirIndirect(unit, 4, pos)
+        fire = _DEC_StartTirIndirectSurPosition(unit, ammo, 1, pos)
+        return fire
+	end`
+	output, err := client.ExecTemplate(unitId, "TestFunction", script,
+		map[string]interface{}{
+			"unitId": unitId,
+			"lat":    pos.Y,
+			"long":   pos.X,
+		})
+	if err != nil {
+		return 0, err
+	}
+	id, err := strconv.ParseUint(output, 10, 32)
+	return uint32(id), err
+}
+
 func (s *TestSuite) TestIndirectFireWithObjectEffect(c *C) {
-	phydb := loadPhysical(c, "test")
+	phydb := loadPhysicalData(c, "test")
 
 	sim, client := connectAndWaitModel(c, NewAdminOpts(ExCrossroadSmallTest))
 	defer stopSimAndClient(c, sim, client)
 
 	// Indirect fire with object creation, wait for the object ot appear
-	pos := swapi.Point{X: -15.9268, Y: 28.3453}
-	ammo := getResourceTypeFromName(c, phydb, "ammo with object effect")
-	err := client.CreateFireOnLocation(pos, ammo, 1)
+	target := swapi.Point{X: -15.9268, Y: 28.3453}
+	pos := swapi.Point{X: -15.9068, Y: 28.3453}
+	unit := CreateTestUnit(c, phydb, client, "VW Indirect Fire", "VW Indirect Fire", pos)
+	_, err := DecStartIndirectFire(client, unit.Id, target)
 	c.Assert(err, IsNil)
 
+	// Wait for the first effect to appear. They appear at the same time but
+	// some of them disappear in the same tick.
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		for _, o := range data.Objects {
-			if o.ObjectType == "ammo_object_effect" {
-				return true
-			}
-		}
-		return false
+		return len(data.FireEffects) > 1
 	})
+	client.Model.WaitTicks(3)
+	data := client.Model.GetData()
+	// Only one object should be created, not 4
+	c.Assert(len(data.Objects), Equals, 1)
 }
