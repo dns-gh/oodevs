@@ -586,14 +586,6 @@ Arrêt moteur allumé</translation>
         <translation>Gravité</translation>
     </message>
     <message>
-        <source>Repair duration</source>
-        <translation>Durée de réparation</translation>
-    </message>
-    <message>
-        <source>Repair duration variance</source>
-        <translation>Variance de la durée de réparation</translation>
-    </message>
-    <message>
         <source>Average diagnostic duration</source>
         <translation>Durée moyenne de diagnostic</translation>
     </message>
@@ -604,6 +596,14 @@ Arrêt moteur allumé</translation>
     <message>
         <source>Repair durations expressed in man-hours</source>
         <translation>Durée de réparation exprimée en homme-heures</translation>
+    </message>
+    <message>
+        <source>Minimum repair duration</source>
+        <translation>Durée minimum de réparation</translation>
+    </message>
+    <message>
+        <source>Maximum repair duration</source>
+        <translation>Durée maximum de réparation</translation>
     </message>
 </context>
 <context>

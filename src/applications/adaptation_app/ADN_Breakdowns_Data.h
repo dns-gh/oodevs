@@ -61,8 +61,8 @@ public:
         ADN_Type_Enum< E_BreakdownNTI, eNbrBreakdownNTI > nNTI_;
         ADN_Type_Enum< E_BreakdownType, eNbrBreakdownType > nType_;
         ADN_Type_Int nId_;
-        ADN_Type_Time repairTime_;
-        ADN_Type_Time repairTimeVariance_;
+        ADN_Type_Time minRepairTime_;
+        ADN_Type_Time maxRepairTime_;
         T_RepairPartInfoVector vRepairParts_;
     };
 

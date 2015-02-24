@@ -17,6 +17,7 @@
 #include "ADN_EditLine.h"
 #include "ADN_TimeField.h"
 #include "ADN_Tr.h"
+#include "clients_gui/SignalAdapter.h"
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Breakdowns_GUI constructor
@@ -62,8 +63,14 @@ void ADN_Breakdowns_GUI::Build()
     builder.AddLocalizedField( data_.GetBreakdowns(), pInfoHolder, "name", tr( "Name" ), vInfosConnectors[eName] );
     builder.AddEnumField( pInfoHolder, "type", tr( "Type" ), vInfosConnectors[eType] );
     builder.AddEnumField( pInfoHolder, "seriousness", tr( "Seriousness" ), vInfosConnectors[eNTI] );
-    builder.AddField< ADN_TimeField >( pInfoHolder, "repair-duration", tr( "Repair duration" ), vInfosConnectors[eRepairTime] );
-    builder.AddField< ADN_TimeField >( pInfoHolder, "repair-duration-variance", tr( "Repair duration variance" ), vInfosConnectors[eRepairTimeVariance] );
+    auto* minField = builder.AddField< ADN_TimeField >( pInfoHolder, "min-repair-duration", tr( "Minimum repair duration" ), vInfosConnectors[eMinRepairTime] );
+    auto* maxField = builder.AddField< ADN_TimeField >( pInfoHolder, "max-repair-duration", tr( "Maximum repair duration" ), vInfosConnectors[eMaxRepairTime] );
+    gui::connect( minField, SIGNAL( ValueChanged() ), [=]{
+        maxField->SetMinimumValueInSecond( minField->GetTimeInSecond() );
+    } );
+    gui::connect( maxField, SIGNAL( ValueChanged() ), [=]{
+        minField->SetMaximumValueInSecond( maxField->GetTimeInSecond() );
+    } );
 
     // Parts
     QGroupBox* pPartsGroup = new gui::RichGroupBox( "required-parts", tr( "Required parts" ) );

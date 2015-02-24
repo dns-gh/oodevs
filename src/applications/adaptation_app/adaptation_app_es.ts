@@ -587,14 +587,6 @@ Estacionado y motor encendido</translation>
         <translation>Gravedad</translation>
     </message>
     <message>
-        <source>Repair duration</source>
-        <translation>Duración de la reparación</translation>
-    </message>
-    <message>
-        <source>Repair duration variance</source>
-        <translation>Varianza de la duración de reparación</translation>
-    </message>
-    <message>
         <source>Average diagnostic duration</source>
         <translation>Duración promedio del diagnóstico</translation>
     </message>
@@ -604,6 +596,14 @@ Estacionado y motor encendido</translation>
     </message>
     <message>
         <source>Repair durations expressed in man-hours</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Minimum repair duration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Maximum repair duration</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

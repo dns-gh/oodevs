@@ -105,6 +105,7 @@ ADN_TimeField::~ADN_TimeField()
 void ADN_TimeField::OnValueChanged()
 {
     static_cast< ADN_Connector_String< ADN_TimeField >& >( *pConnector_ ).SetDataChanged( text() );
+    emit ValueChanged();
 }
 
 // -----------------------------------------------------------------------------
@@ -134,6 +135,16 @@ void ADN_TimeField::setText( const QString& strText )
 void ADN_TimeField::SetMinimumValueInSecond( unsigned int value )
 {
     pSpinBox_->setMinimum( value );
+}
+
+void ADN_TimeField::SetMaximumValueInSecond( unsigned int value )
+{
+    pSpinBox_->setMaximum( value );
+}
+
+unsigned int ADN_TimeField::GetTimeInSecond() const
+{
+    return pSpinBox_->value();
 }
 
 // -----------------------------------------------------------------------------

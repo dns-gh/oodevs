@@ -12,6 +12,7 @@
 #include "simulation_kernel_pch.h"
 #include "PHY_BreakdownType.h"
 #include "PHY_MaintenanceLevel.h"
+#include "MIL_Random.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationType.h"
 #include "Tools/MIL_Tools.h"
 #include "tools/Codec.h"
@@ -113,27 +114,25 @@ void PHY_BreakdownType::Terminate()
 // Created: NLD 2004-12-20
 // -----------------------------------------------------------------------------
 PHY_BreakdownType::PHY_BreakdownType( const std::string& strName, const PHY_MaintenanceLevel& maintenanceLevel, E_Type nType, xml::xistream& xis )
-    : strName_           ( strName )
-    , maintenanceLevel_  ( maintenanceLevel )
-    , nType_             ( nType )
-    , nTheoricRepairTime_( 0 )
+    : strName_( strName )
+    , maintenanceLevel_( maintenanceLevel )
+    , nType_( nType )
+    , nID_( xis.attribute< unsigned int >( "id" ) )
+    , theoricRepairTime_( 0u )
+    , minRepairTime_( 0u )
+    , maxRepairTime_( 0u )
 {
-    std::string repairTime, variance;
-    double rVariance;
-    xis >> xml::attribute( "id", nID_ )
-        >> xml::attribute( "average-repairing-time", repairTime )
-        >> xml::attribute( "variance", variance );
-
-    if( !tools::DecodeTime( repairTime, nTheoricRepairTime_ ) || nTheoricRepairTime_ < 0 )
-        throw MASA_EXCEPTION( xis.context() + "average-repairing-time < 0" );
-    nTheoricRepairTime_ = (unsigned int)MIL_Tools::ConvertSecondsToSim( nTheoricRepairTime_ );
-    if( !tools::DecodeTime( variance, rVariance ) )
-        throw MASA_EXCEPTION( xis.context() + "variance < 0" );
-    rVariance = fabs( MIL_Tools::ConvertSecondsToSim( rVariance ) );
-
-    repairTime_ = MT_GaussianRandom( nTheoricRepairTime_, rVariance );
-
-    // Parts
+    if( !tools::ReadTimeAttribute( xis, "average-repairing-time", theoricRepairTime_ ) )
+        throw MASA_EXCEPTION( xis.context() + "invalid average-repairing-time" );
+    theoricRepairTime_ = static_cast< unsigned int >( MIL_Tools::ConvertSecondsToSim( theoricRepairTime_ ) );
+    unsigned int variance = 0u;
+    if( !tools::ReadTimeAttribute( xis, "variance", variance ) )
+        throw MASA_EXCEPTION( xis.context() + "invalid time variance" );
+    variance = static_cast< unsigned int >( MIL_Tools::ConvertSecondsToSim( variance ) );
+    if( variance > theoricRepairTime_ )
+        throw MASA_EXCEPTION( xis.context() + "variance cannot be greater than average-repairing-time" );
+    minRepairTime_ = theoricRepairTime_ - variance;
+    maxRepairTime_ = theoricRepairTime_ + variance;
     xis >> xml::list( "part", *this, &PHY_BreakdownType::ReadPart );
 }
 
@@ -209,7 +208,7 @@ unsigned int PHY_BreakdownType::GetID() const
 // -----------------------------------------------------------------------------
 const PHY_BreakdownType* PHY_BreakdownType::Find( const std::string& strName )
 {
-    CIT_BreakdownMap it = breakdowns_.find( strName );
+    auto it = breakdowns_.find( strName );
     return it == breakdowns_.end() ? 0 :  it->second;
 }
 
@@ -267,7 +266,7 @@ const PHY_BreakdownType::T_PartMap& PHY_BreakdownType::GetParts() const
 // -----------------------------------------------------------------------------
 unsigned int PHY_BreakdownType::ChooseARepairTime() const
 {
-    return (unsigned int)repairTime_.rand();
+    return static_cast< unsigned int >( MIL_Random::rand32_ii( minRepairTime_, maxRepairTime_ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -276,5 +275,5 @@ unsigned int PHY_BreakdownType::ChooseARepairTime() const
 // -----------------------------------------------------------------------------
 unsigned int PHY_BreakdownType::GetTheoricRepairTime() const
 {
-    return nTheoricRepairTime_;
+    return theoricRepairTime_;
 }

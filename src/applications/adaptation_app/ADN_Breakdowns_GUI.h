@@ -30,8 +30,8 @@ public:
         eName,
         eType,
         eNTI,
-        eRepairTime,
-        eRepairTimeVariance,
+        eMinRepairTime,
+        eMaxRepairTime,
         eParts,
         eNbrBreakdownGuiElements
     };

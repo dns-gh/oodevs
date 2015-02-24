@@ -590,20 +590,20 @@ Parked engine running</translation>
         <translation>Severity</translation>
     </message>
     <message>
-        <source>Repair duration</source>
-        <translation>Repair duration</translation>
-    </message>
-    <message>
-        <source>Repair duration variance</source>
-        <translation>Repair duration variance</translation>
-    </message>
-    <message>
         <source>Required parts</source>
         <translation>Required parts</translation>
     </message>
     <message>
         <source>Repair durations expressed in man-hours</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Minimum repair duration</source>
+        <translation>Minimum repair duration</translation>
+    </message>
+    <message>
+        <source>Maximum repair duration</source>
+        <translation>Maximum repair duration</translation>
     </message>
 </context>
 <context>

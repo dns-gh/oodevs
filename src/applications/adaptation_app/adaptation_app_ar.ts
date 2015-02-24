@@ -578,19 +578,19 @@ Parked engine running</source>
         <translation type="unfinished">خطورة</translation>
     </message>
     <message>
-        <source>Repair duration</source>
-        <translation type="unfinished">مدة إصلاح</translation>
-    </message>
-    <message>
-        <source>Repair duration variance</source>
-        <translation type="unfinished">تباين المدة إصلاح</translation>
-    </message>
-    <message>
         <source>Required parts</source>
         <translation type="unfinished">الأجزاء المطلوبة</translation>
     </message>
     <message>
         <source>Repair durations expressed in man-hours</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Minimum repair duration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Maximum repair duration</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
