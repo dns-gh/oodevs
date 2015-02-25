@@ -30,8 +30,18 @@
 									<xs:attribute name="name" type="xs:string" use="required"/>
 									<xs:attribute name="type" type="xs:string" use="required"/>
 									<xs:attribute name="id" type="xs:nonNegativeInteger" use="required"/>
-									<xs:attribute name="average-repairing-time" type="T_Time" use="required"/>
-									<xs:attribute name="variance" type="T_Time" use="required"/>
+									<xs:attribute name="average-repairing-time" type="T_Time" use="required">
+										<xs:annotation>
+											<xs:documentation xml:lang="en">Defines the average repairing time in seconds.</xs:documentation>
+											<xs:documentation xml:lang="fr">Définit la durée moyenne de réparation en secondes.</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+									<xs:attribute name="variance" type="T_Time" use="required">
+										<xs:annotation>
+											<xs:documentation xml:lang="en">Defines the repairing amplitude time in seconds. The distribution is uniform and not normal.</xs:documentation>
+											<xs:documentation xml:lang="fr">Définit l'amplitude de la durée de réparation en secondes. La loi de probabilité est uniforme et non normale.</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
 								</xs:complexType>
 							</xs:element>
 						</xs:sequence>
