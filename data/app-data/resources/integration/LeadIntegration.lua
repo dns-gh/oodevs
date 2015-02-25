@@ -266,7 +266,7 @@ integration.findBestsGEN = function( entities, tasks, companyTask , params, nbrF
                             workMap[obstacle] = workMap[obstacle] or {}
                             local currentMap = workMap[obstacle]
                             local hasDotation = task:hasDotation( entity, obstacle )
-                            local canDoIt = task:canDoIt( entity, obstacle, companyTask, params )
+                            local canDoIt = task:canDoIt( entity, obstacle, companyTask )
 
                             myself.leadData.platoonHasTask[taskName] = myself.leadData.platoonHasTask[taskName] or {}
                             local platoonHasTask = myself.leadData.platoonHasTask[taskName]
