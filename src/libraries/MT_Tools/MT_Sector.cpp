@@ -28,8 +28,8 @@ MT_Sector::MT_Sector( const MT_Vector2D& vOrigin_, const MT_Vector2D& vDirection
     {
         rSemiAngle_ = rSemiAngle_ > 0 ? rSemiAngle_ : -rSemiAngle_;
 
-        double COS = cos( rSemiAngle_ );
-        double SIN = sin( rSemiAngle_ );
+        const double COS = cos( rSemiAngle_ );
+        const double SIN = sin( rSemiAngle_ );
 
         rA1_ = vDirection.rY_ * COS + vDirection.rX_ * SIN;
         rB1_ = vDirection.rY_ * SIN - vDirection.rX_ * COS;
@@ -46,9 +46,7 @@ MT_Sector::MT_Sector( const MT_Vector2D& vOrigin_, const MT_Vector2D& vDirection
 // Created: JVT 2005-04-12
 // -----------------------------------------------------------------------------
 MT_Sector::MT_Sector()
-    : vOrigin_   ()
-    , vDirection_()
-    , rSemiAngle_( 0. )
+    : rSemiAngle_( 0. )
     , rA1_       ( 0. )
     , rB1_       ( 0. )
     , rC1_       ( 0. )
@@ -56,6 +54,7 @@ MT_Sector::MT_Sector()
     , rB2_       ( 0. )
     , rC2_       ( 0. )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -80,8 +79,6 @@ bool MT_Sector::IsInCone( const MT_Vector2D& vPos, double rRadius ) const
         && ( rB1_ * vPos.rY_ + rA1_ * vPos.rX_ + rC1_ >= 0 )            // test 1er demi-plan
         && ( rB2_ * vPos.rY_ + rA2_ * vPos.rX_ + rC2_ <= 0 );           // test 2eme demi-plan  
 }
-
-
 
 //-----------------------------------------------------------------------------
 // Name: MT_Sector::IsInSector
