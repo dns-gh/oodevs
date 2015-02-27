@@ -177,7 +177,7 @@ namespace
     }
     std::string Fill( int number )
     {
-        return ( number  < 10 ? "0" : "" ) + boost::lexical_cast< std::string >( number );
+        return ( number < 10 ? "0" : "" ) + boost::lexical_cast< std::string >( number );
     }
     const QString xmlFormat = "hh:mm";
 }
@@ -274,7 +274,7 @@ QString ADN_Tools::ConvertCentisecondsToDelay( int value )
     const int seconds = value / 100;
     const int centiSeconds = value % 100;
     return ( boost::lexical_cast< std::string >( seconds ) + "." // $$$$ _RC_ SLI 2013-09-18: we always want to save decimal time with US format '.'
-           + boost::lexical_cast< std::string >( centiSeconds ) + "s" ).c_str();
+           + Fill( centiSeconds ) + "s" ).c_str();
 }
 
 // -----------------------------------------------------------------------------

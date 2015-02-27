@@ -125,6 +125,8 @@ void ADN_TimeField::setText( const QString& strText )
 {
     if( strText.isEmpty() )
         return;
+    pSpinBox_->setMinimum( 0 );
+    pSpinBox_->setMaximum( std::numeric_limits< int >::max() );
     pSpinBox_->setValue( ADN_Tools::ConvertDelayToCentiseconds( strText ) );
 }
 
