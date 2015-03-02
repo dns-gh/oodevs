@@ -41,6 +41,7 @@ public:
 protected:
     //! @name Helpers
     //@{
+    virtual void Paint( Viewport_ABC& viewport );
     virtual bool IsSelected( const kernel::Entity_ABC& entity ) const;
     virtual void NotifyDeleted( const kernel::UrbanObject_ABC& object );
     virtual void NotifySelectionChanged( const std::vector< const kernel::UrbanObject_ABC* >& elements );

@@ -12,6 +12,7 @@
 
 #include "DrawVisitor.h"
 #include "GLView_ABC.h"
+#include "PickingSelector.h"
 #include "Viewport_ABC.h"
 #include "clients_kernel/Hierarchies.h"
 #include "clients_kernel/OptionsController.h"
@@ -42,6 +43,13 @@ UrbanLayer::UrbanLayer( kernel::Controllers& controllers,
 UrbanLayer::~UrbanLayer()
 {
     // NOTHING
+}
+
+void UrbanLayer::Paint( Viewport_ABC& viewport )
+{
+    EntityLayer< kernel::UrbanObject_ABC >::Paint( viewport );
+    if( selected_ )
+        Draw( *selected_, viewport, view_.GetPickingSelector().IsPickingMode() );
 }
 
 // -----------------------------------------------------------------------------
