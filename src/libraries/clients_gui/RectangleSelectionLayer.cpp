@@ -23,8 +23,6 @@ using namespace gui;
 // -----------------------------------------------------------------------------
 RectangleSelectionLayer::RectangleSelectionLayer( kernel::Controllers& controllers, gui::GLView_ABC& tools )
     : Layer2D( controllers, tools, eLayerTypes_RectangleSelection )
-    , displaying_   ( false )
-    , firstPointSet_( false )
 {
     // NOTHING
 }
@@ -44,16 +42,16 @@ RectangleSelectionLayer::~RectangleSelectionLayer()
 // -----------------------------------------------------------------------------
 void RectangleSelectionLayer::Paint( const geometry::Rectangle2f& /*viewport*/ )
 {
-    if( !displaying_ )
+    if( !topLeft_ || !bottomRight_ )
         return;
-    const geometry::Point2f topRight( bottomRight_.X(), topLeft_.Y() );
-    const geometry::Point2f bottomLeft( topLeft_.X(), bottomRight_.Y() );
+    const geometry::Point2f topRight( bottomRight_->X(), topLeft_->Y() );
+    const geometry::Point2f bottomLeft( topLeft_->X(), bottomRight_->Y() );
     glPushAttrib( GL_CURRENT_BIT | GL_LINE_BIT );
     glLineWidth( 2.f );
-    view_.DrawStippledLine( topLeft_, topRight );
-    view_.DrawStippledLine( topRight, bottomRight_ );
-    view_.DrawStippledLine( bottomRight_, bottomLeft );
-    view_.DrawStippledLine( bottomLeft, topLeft_ );
+    view_.DrawStippledLine( *topLeft_, topRight );
+    view_.DrawStippledLine( topRight, *bottomRight_ );
+    view_.DrawStippledLine( *bottomRight_, bottomLeft );
+    view_.DrawStippledLine( bottomLeft, *topLeft_ );
     glPopAttrib();
 }
 
@@ -74,11 +72,10 @@ bool RectangleSelectionLayer::HandleMousePress( QMouseEvent* event, const geomet
 {
     if( !controllers_.actions_.HasMultipleSelection() )
         return false;
-    if( event->button() == Qt::LeftButton )
-    {
+    bottomRight_ = boost::none;
+    topLeft_ = boost::none;
+    if( !topLeft_ && event->button() == Qt::LeftButton )
         topLeft_ = point;
-        bottomRight_ = point;
-    }
     return false;
 }
 
@@ -88,14 +85,17 @@ bool RectangleSelectionLayer::HandleMousePress( QMouseEvent* event, const geomet
 // -----------------------------------------------------------------------------
 bool RectangleSelectionLayer::HandleMouseRelease( QMouseEvent* event, const geometry::Point2f& /*point*/ )
 {
-    if( !controllers_.actions_.HasMultipleSelection() )
-        return false;
-    if( event->button() == Qt::LeftButton && event->buttons() == Qt::NoButton && displaying_ )
+    if( controllers_.actions_.HasMultipleSelection() &&
+        event->button() == Qt::LeftButton && event->buttons() == Qt::NoButton &&
+        topLeft_ && bottomRight_ )
     {
-        firstPointSet_ = false;
-        displaying_ = false;
-        controllers_.actions_.NotifyRectangleSelection( topLeft_, bottomRight_, event->modifiers() == Qt::ControlModifier );
+        controllers_.actions_.NotifyRectangleSelection( *topLeft_, *bottomRight_, event->modifiers() == Qt::ControlModifier );
+        bottomRight_ = boost::none;
+        topLeft_ = boost::none;
+        return true;
     }
+    bottomRight_ = boost::none;
+    topLeft_ = boost::none;
     return false;
 }
 
@@ -105,20 +105,10 @@ bool RectangleSelectionLayer::HandleMouseRelease( QMouseEvent* event, const geom
 // -----------------------------------------------------------------------------
 bool RectangleSelectionLayer::HandleMouseMove( QMouseEvent* event, const geometry::Point2f& point )
 {
-    if( !controllers_.actions_.HasMultipleSelection() )
-        return false;
-    if( event->buttons() == Qt::LeftButton )
-    {
-        if( !firstPointSet_ )
-        {
-            topLeft_ = point;
-            firstPointSet_ = true;
-        }
-        else
-            bottomRight_ = point;
-        if( !displaying_ )
-            displaying_ = ( topLeft_.SquareDistance( bottomRight_ ) > 400 );
-        return displaying_;
-    }
-    return false;
+    bottomRight_ = boost::none;
+    if( controllers_.actions_.HasMultipleSelection() &&
+        event->buttons() == Qt::LeftButton &&
+        topLeft_ && topLeft_->SquareDistance( point ) > 40000 )
+        bottomRight_ = point;
+    return bottomRight_;
 }
