@@ -53,8 +53,8 @@ private:
     //@{
     bool displaying_;
     bool firstPointSet_;
-    geometry::Point2f topLeft_;
-    geometry::Point2f bottomRight_;
+    boost::optional< geometry::Point2f > topLeft_;
+    boost::optional< geometry::Point2f > bottomRight_;
     //@}
 };
 

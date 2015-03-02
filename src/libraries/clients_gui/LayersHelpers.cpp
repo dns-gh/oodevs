@@ -61,7 +61,6 @@ const T_LayerTypesVector eventOrder_ = ba::list_of
     ( eLayerTypes_Elevation3d )
     ( eLayerTypes_Metric )
     ( eLayerTypes_TacticalLinesComposite )
-    ( eLayerTypes_RectangleSelection )
     ( eLayerTypes_Urban )
     ( eLayerTypes_ResourceNetworks )
     ( eLayerTypes_ObjectsComposite )
@@ -69,6 +68,7 @@ const T_LayerTypesVector eventOrder_ = ba::list_of
     ( eLayerTypes_CrowdsComposite )
     ( eLayerTypes_UnitsComposite )
     ( eLayerTypes_Parameters )
+    ( eLayerTypes_RectangleSelection )
     ( eLayerTypes_Terrain );
 
 const layers::Descriptor descriptors_[] = {
