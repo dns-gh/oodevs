@@ -40,7 +40,7 @@ public:
     //@{
     const MT_Vector2D& GetDirection() const;
     const MT_Vector2D& GetOrigin   () const;
-          double     GetAngle    () const;
+          double       GetAngle    () const;
     //@}
 
 private:

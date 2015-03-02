@@ -842,12 +842,10 @@ void PHY_RolePion_Perceiver::Update( bool /*bIsDead*/ )
     pPerceptionRecoPoint_->Update();
     pPerceptionRecoLocalisation_->Update();
     pPerceptionRecoObjects_->Update();
-    if( HasChanged() )
-    {
-        if( bRadarStateHasChanged_ )
-            owner_->Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
-        owner_->Apply( &network::VisionConeNotificationHandler_ABC::NotifyVisionConeDataHasChanged );
-    }
+    if( !HasChanged() )
+        return;
+    owner_->Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
+    owner_->Apply( &network::VisionConeNotificationHandler_ABC::NotifyVisionConeDataHasChanged );
 }
 
 // -----------------------------------------------------------------------------
