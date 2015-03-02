@@ -41,8 +41,13 @@ public:
     QString text() const;
     void setText( const QString& strText );
     void SetMinimumValueInSecond( unsigned int value );
+    void SetMaximumValueInSecond( unsigned int value );
     virtual void setObjectName( const QString& name );
+    unsigned int GetTimeInSecond() const;
     //@}
+
+signals:
+    void ValueChanged();
 
 private slots:
     //! @name Internal events

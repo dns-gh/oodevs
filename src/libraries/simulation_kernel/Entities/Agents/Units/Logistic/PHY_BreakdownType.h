@@ -12,7 +12,6 @@
 #ifndef __PHY_BreakdownType_h_
 #define __PHY_BreakdownType_h_
 
-#include "MT_Tools/MT_GaussianRandom.h"
 #include <tools/Map.h>
 
 namespace xml
@@ -67,11 +66,9 @@ private:
         eElectronic,
         eUnknown
     };
+    typedef std::map< std::string, const PHY_BreakdownType* > T_BreakdownMap;
     //@}
 
-    typedef std::map< std::string, const PHY_BreakdownType* > T_BreakdownMap;
-    typedef T_BreakdownMap::const_iterator                  CIT_BreakdownMap;
-    //@}
     //! @name Helpers
     //@{
     static void ReadCategory ( xml::xistream& xis );
@@ -91,11 +88,11 @@ private:
     const std::string           strName_;
     const PHY_MaintenanceLevel& maintenanceLevel_;
     const E_Type                nType_;
-          unsigned int          nID_;
+    const unsigned int          nID_;
           T_PartMap             parts_;
-          unsigned int          nTheoricRepairTime_;
-
-    mutable MT_GaussianRandom repairTime_;
+          unsigned int          theoricRepairTime_;
+          unsigned int          minRepairTime_;
+          unsigned int          maxRepairTime_;
 
 private:
     static T_BreakdownMap breakdowns_;

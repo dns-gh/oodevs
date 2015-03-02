@@ -71,8 +71,8 @@ void ADN_Breakdowns_Data::RepairPartInfo::WriteArchive( xml::xostream& output ) 
 // -----------------------------------------------------------------------------
 ADN_Breakdowns_Data::BreakdownInfo::BreakdownInfo()
     : nId_( ADN_Breakdowns_Data::idManager_.GetNextId() )
-    , repairTime_( "0s" )
-    , repairTimeVariance_( "0s" )
+    , minRepairTime_( "0s" )
+    , maxRepairTime_( "0s" )
 {
     strName_.SetContext( ADN_Workspace::GetWorkspace().GetContext( eBreakdowns, "breakdowns" ) );
 }
@@ -83,8 +83,8 @@ ADN_Breakdowns_Data::BreakdownInfo::BreakdownInfo()
 // -----------------------------------------------------------------------------
 ADN_Breakdowns_Data::BreakdownInfo::BreakdownInfo( unsigned int id )
     : nId_( id )
-    , repairTime_( "0s" )
-    , repairTimeVariance_( "0s" )
+    , minRepairTime_( "0s" )
+    , maxRepairTime_( "0s" )
 {
     strName_.SetContext( ADN_Workspace::GetWorkspace().GetContext( eBreakdowns, "breakdowns" ) );
     ADN_Breakdowns_Data::idManager_.Lock( id );
@@ -108,8 +108,8 @@ ADN_Breakdowns_Data::BreakdownInfo* ADN_Breakdowns_Data::BreakdownInfo::CreateCo
     BreakdownInfo* pCopy = new BreakdownInfo();
     pCopy->nType_ = nType_.GetData();
     pCopy->nNTI_  = nNTI_.GetData();
-    pCopy->repairTime_ = repairTime_.GetData();
-    pCopy->repairTimeVariance_ = repairTimeVariance_.GetData();
+    pCopy->minRepairTime_ = minRepairTime_.GetData();
+    pCopy->maxRepairTime_ = maxRepairTime_.GetData();
 
     for( auto it = vRepairParts_.begin(); it != vRepairParts_.end(); ++it )
         pCopy->vRepairParts_.AddItem( ( *it )->CreateCopy() );
@@ -136,14 +136,19 @@ void ADN_Breakdowns_Data::BreakdownInfo::ReadPart( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Breakdowns_Data::BreakdownInfo::ReadArchive( xml::xistream& input )
 {
+    ADN_Type_Time averageDelay, varianceDelay;
     std::string type;
     input >> xml::attribute( "name", *this )
           >> xml::attribute( "type", type )
-          >> xml::attribute( "average-repairing-time", repairTime_ )
-          >> xml::attribute( "variance", repairTimeVariance_ );
+          >> xml::attribute( "average-repairing-time", averageDelay )
+          >> xml::attribute( "variance", varianceDelay );
     nType_ = ENT_Tr::ConvertToBreakdownType( type );
     if( nType_ == E_BreakdownType( -1 ) )
         throw MASA_EXCEPTION( tools::translate( "Breakdown_Data", "Breakdowns - Invalid breakdown type '%1'" ).arg( type.c_str() ).toStdString() );
+    const int average = ADN_Tools::ConvertDelayToCentiseconds( QString::fromStdString( averageDelay.GetData() ) );
+    const int variance = ADN_Tools::ConvertDelayToCentiseconds( QString::fromStdString( varianceDelay.GetData() ) );
+    minRepairTime_ = ADN_Tools::ConvertCentisecondsToDelay( average - variance ).toStdString();
+    maxRepairTime_ = ADN_Tools::ConvertCentisecondsToDelay( average + variance ).toStdString();
     input >> xml::list( "part", *this, &ADN_Breakdowns_Data::BreakdownInfo::ReadPart );
 }
 
@@ -153,12 +158,16 @@ void ADN_Breakdowns_Data::BreakdownInfo::ReadArchive( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Breakdowns_Data::BreakdownInfo::WriteArchive( xml::xostream& output ) const
 {
+    const int min = ADN_Tools::ConvertDelayToCentiseconds( QString::fromStdString( minRepairTime_.GetData() ) );
+    const int max = ADN_Tools::ConvertDelayToCentiseconds( QString::fromStdString( maxRepairTime_.GetData() ) );
+    ADN_Type_Time averageDelay = ADN_Tools::ConvertCentisecondsToDelay( ( min + max ) / 2 ).toStdString();
+    ADN_Type_Time varianceDelay = ADN_Tools::ConvertCentisecondsToDelay( ( max - min ) / 2 ).toStdString();
     output << xml::start( "breakdown" )
            << xml::attribute( "name", *this )
            << xml::attribute( "id", nId_ )
            << xml::attribute( "type", nType_.Convert() )
-           << xml::attribute( "average-repairing-time", repairTime_ )
-           << xml::attribute( "variance", repairTimeVariance_ );
+           << xml::attribute( "average-repairing-time", averageDelay )
+           << xml::attribute( "variance", varianceDelay );
     for( auto it = vRepairParts_.begin(); it != vRepairParts_.end(); ++it )
         ( *it )->WriteArchive( output );
     output << xml::end;
