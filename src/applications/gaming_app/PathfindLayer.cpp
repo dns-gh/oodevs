@@ -495,8 +495,10 @@ void PathfindLayer::ProcessEvents()
     }
 }
 
-void PathfindLayer::StopEdition() const
+void PathfindLayer::StopEdition()
 {
+    edited_.reset();
+    lock_ = false;
     const kernel::SafePointer< kernel::Entity_ABC > selected( controllers_, selectedPathfind_ ? selectedPathfind_.ConstCast() : selectedEntity_.ConstCast() );
     controllers_.ChangeMode( eModes_Gaming );
     if( selected )
@@ -510,7 +512,6 @@ void PathfindLayer::OnAcceptEdit()
     if( HasValidPathfind() )
         actions_.PublishCreatePathfind( GetUnitId(), *target_, edited_->GetDots(), edited_->GetName().toStdString() );
     ClearPositions();
-    edited_.reset();
     StopEdition();
 }
 
@@ -521,7 +522,6 @@ bool PathfindLayer::OnRejectEdit()
     ClearPositions();
     if( selectedPathfind_ )
         selectedPathfind_.ConstCast()->SetVisible( true );
-    edited_.reset();
     StopEdition();
     return true;
 }
