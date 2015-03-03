@@ -99,10 +99,10 @@ private:
     virtual void NotifyDeleted( const kernel::Agent_ABC& agent );
 
     void UpdateNamesIfIsInHierarchy( const kernel::Entity_ABC& entity );
-    void RebuildModelIfIsInHierarchy( const kernel::Entity_ABC& entity );
+    void RebuildModelIfIsInHierarchy( const kernel::Entity_ABC& entity, const kernel::Entity_ABC* exclude = 0 );
 
     void UpdateDisplay();
-    void RebuildModel();
+    void RebuildModel( const kernel::Entity_ABC* exclude = 0 );
     void Display( const AgentFireResult& result );
     void Display( const PopulationFireResult& result );
     void Display( const Equipment& equipment, QStandardItem& parent );
