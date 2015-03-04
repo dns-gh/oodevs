@@ -92,7 +92,8 @@ local isApplyFireOrder = function( order )
     end
     if orderType == "platoon.combat.support.art.tasks.AppliquerFeux" 
         or orderType == "Rep_OrderConduite_Pion_AppliquerFeux" 
-        or orderType == "france.military.platoon.combat.support.art.tasks.AppliquerFeux" then
+        or orderType == "france.military.platoon.combat.support.art.tasks.AppliquerFeux"
+        or orderType == "france.military.platoon.combat.support.art.tasks.AppliquerFeuxLineaire" then
         return true
     end
     return false
@@ -104,6 +105,7 @@ end
 -- <ul> <li> "platoon.combat.support.art.tasks.AppliquerFeux" </li>
 -- <li> "Rep_OrderConduite_Pion_AppliquerFeux" </li>
 -- <li> "france.military.platoon.combat.support.art.tasks.AppliquerFeux" </li> </ul>
+-- <li> "france.military.platoon.combat.support.art.tasks.AppliquerFeuxLineaire" </li> </ul>
 -- Returns nil if no fire fragmentary order was retrieved
 -- @return Table with "entities", "munition" and "interventionType" as keys,
 -- or nil if no fire fragmentary order was retrieved
@@ -115,7 +117,11 @@ integration.query.getFirstFireOrder = function( )
             local res = CreateKnowledge( integration.ontology.types.fragOrder, x )
             _DEC_RemoveFromOrdersCategory( myself, x )
             _DEC_DeleteRepresentation( myself, x )
-            return res:getParameters()
+            if integration.getAnyType( x ) == "france.military.platoon.combat.support.art.tasks.AppliquerFeuxLineaire" then
+                return res:getLinearParameters()
+            else
+                return res:getParameters()
+            end
         end
     end
 
