@@ -132,7 +132,7 @@ private:
     void ProcessEvents();
     bool HasValidPathfind() const;
     uint32_t GetUnitId() const;
-    void StopEdition() const;
+    void StopEdition();
 
 private:
     //! @name Member data
