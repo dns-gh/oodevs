@@ -532,6 +532,25 @@ integration.getFireParameters = function( fragOrder )
     return params
 end
 
+--- Returns a table containing all parameters to be used to apply the 'Linear Fires' fragmentary order.
+-- See the 'Linear Fires' fragmentary order in authoring tool.
+-- @see integration.getMunitionParameter
+-- @see integration.getRequesterParameter
+-- @param fragorder the linear fire fragmentary order (a directia fragmentary order)
+-- @return a simulation object
+integration.getLinearFireParameters = function( fragOrder )
+    local params = {}
+    local pointsList = {}
+    pointsList[ 1 ] = integration.getPointParameter( fragOrder, "pointCibleDebut" )
+    pointsList[ 2 ] = integration.getPointParameter( fragOrder, "pointCibleFin" )
+    local nbTir = integration.getIntegerParameter( fragOrder, "nbTir" )
+    params.interventionType = 1
+    params.munition = integration.getMunitionParameter( fragOrder )
+    params.requester = integration.getRequesterParameter( fragOrder, "demandeur_" )
+    params.entities = integration.splitListPoints( pointsList, nbTir )
+    return params
+end
+
 --- Create a fragmentary order of the given type.
 -- @param fragOrderType the type of the fragmentary order to create
 -- @return a simulation fragmentary order

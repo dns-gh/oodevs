@@ -515,3 +515,17 @@ end
 integration.recursiveSplitLocalizationSurface = function( localization, averageArea )
     return _DEC_Geometry_RecursiveSplitLocalisationSurface( myself, localization, averageArea )
 end
+
+--- Splits the given list of points into the provided number of points,
+-- and returns the resulting list of points knowledges
+-- @param pointsList Simulation list of points, represents a segment, fires will be apply on position on this list of points
+-- @param nbrPoints Integer, the number of positions we want to use as a target for the linear fires 
+-- @return List of point knowledges
+integration.splitListPoints = function( pointsList, nbrPoints )
+    local result = {}
+    local splitList = DEC_Geometrie_DecouperListePoints( pointsList, nbrPoints - 1 )
+    for i = 1, #splitList do
+        result[ #result + 1 ] = CreateKnowledge( integration.ontology.types.point, splitList[ i ] )
+    end
+    return result
+end
