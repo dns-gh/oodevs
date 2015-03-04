@@ -68,7 +68,7 @@ local getPositionTranslatedDirFromFriend = function( friendToSupport, firingType
         local mission = DEC_GetRawMission( meKnowledge.source )
         local dir = integration.getDangerousDirection( mission )
         local friendPos = friendToSupport:getPosition()
-        return CreateKnowledge( integration.ontology.types.point, DEC_Geometrie_PositionTranslateDir( friendPos, dir, - rangeDistance ) )
+        return DEC_Geometrie_PositionTranslateDir( friendPos, dir, - rangeDistance )
     end
     return nil
 end
@@ -85,7 +85,7 @@ end
 -- @return Point knowledge, or nil if this entity has no mission
 integration.getPositionToSupportFriend = function( friendToSupport, firingTypeEnumeration, ph )
     if firingTypeEnumeration then
-        return getPositionTranslatedDirFromFriend( friendToSupport, firingTypeEnumeration, ph )
+        return CreateKnowledge( integration.ontology.types.point, getPositionTranslatedDirFromFriend( friendToSupport, firingTypeEnumeration, ph ) )
     else -- backward compatibility
         local integration = integration
         local rangeDistance = integration.getMaxRangeIndirectFireWithoutSelectAmmo() / 2  -- indirect fire case
