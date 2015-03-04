@@ -516,10 +516,11 @@ integration.recursiveSplitLocalizationSurface = function( localization, averageA
     return _DEC_Geometry_RecursiveSplitLocalisationSurface( myself, localization, averageArea )
 end
 
---- Splits the given polylin into the provided number of points,
+--- Splits the given list of points into the provided number of points,
 -- and returns the resulting list of points knowledges
--- @param pointsList Simulation list of points, represents a segment, fires will be apply on position on this polylign
--- @param nbrPoints Integer, the number of positions we wants to use as a target for the linear fires 
+-- @param pointsList Simulation list of points, represents a segment, fires will be apply on position on this list of points
+-- @param nbrPoints Integer, the number of positions we want to use as a target for the linear fires 
+-- @return List of point knowledges
 integration.splitListPoints = function( pointsList, nbrPoints )
     local result = {}
     local splitList = DEC_Geometrie_DecouperListePoints( pointsList, nbrPoints - 1 )

@@ -104,7 +104,7 @@ end
 -- The fragmentary orders with the following DIA types are considered fire orders :
 -- <ul> <li> "platoon.combat.support.art.tasks.AppliquerFeux" </li>
 -- <li> "Rep_OrderConduite_Pion_AppliquerFeux" </li>
--- <li> "france.military.platoon.combat.support.art.tasks.AppliquerFeux" </li> </ul>
+-- <li> "france.military.platoon.combat.support.art.tasks.AppliquerFeux" </li> 
 -- <li> "france.military.platoon.combat.support.art.tasks.AppliquerFeuxLineaire" </li> </ul>
 -- Returns nil if no fire fragmentary order was retrieved
 -- @return Table with "entities", "munition" and "interventionType" as keys,
