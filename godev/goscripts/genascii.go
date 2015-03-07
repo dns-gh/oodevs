@@ -11,7 +11,7 @@ import (
 func main() {
 
 	//relativeFilePathPtr := flag.String("rpath", "", "relative file path to the test dir")
-	stepPtr := flag.Float64("step", 0.2, "step of the grid")
+	stepPtr := flag.Float64("step", math.Pi/2, "step of the grid")
 	freqPtr := flag.Float64("freq", 1.0, "sinusoidal frequency at the begining of the generation")
 	freqEndPtr := flag.Float64("lastfreq", 1.0, "sinusoidal frequency at the end of the generation")
 	//randNoisePtr := flag.Float64("noise", 0.0, "randomn noise from 0 to 1 (completly noised)")
@@ -48,7 +48,7 @@ func main() {
 	}
 
 	// create file to save results in ascii format
-	f, err := os.Create("data/tests/testdata/sinus-multiple-freq/asciigrid/sinusGrid.asc")
+	f, err := os.Create("sinusGrid.asc")
     check(err)
     defer f.Close()
 
