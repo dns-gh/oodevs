@@ -13,7 +13,7 @@ func main() {
 	//relativeFilePathPtr := flag.String("rpath", "", "relative file path to the test dir")
 	stepPtr := flag.Float64("step", 0.002, "step of the grid")
 	freqPtr := flag.Float64("freq", 1.0, "sinusoidal frequency")
-	randNoisePtr := flag.Float64("noise", 0.0, "randomn noise from 0 to 1 (completly noised)")
+	//randNoisePtr := flag.Float64("noise", 0.0, "randomn noise from 0 to 1 (completly noised)")
 	
 	flag.Parse()
 	fmt.Println("Generating ASCII grid...")
