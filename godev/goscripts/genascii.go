@@ -19,22 +19,22 @@ func main() {
 	stepPtr := flag.Float64("step", math.Pi/2, "step of the grid")
 	freqPtr := flag.Float64("freq", 1.0, "sinusoidal frequency at the begining of the generation")
 	freqEndPtr := flag.Float64("lastfreq", 1.0, "sinusoidal frequency at the end of the generation")
+	xllPtr := flag.Float64("xll", 0, "xllcorner value")
+	yllPtr := flag.Float64("yll", 0, "yllcorner value")
+	cellsizePtr := flag.Float64("cell", 100, "cellsize")
+	nodataPtr := flag.Int64("nodata", -30000, "nodata value")
+	verbose := flag.Bool("v", false, "verbose mode")
 	//randNoisePtr := flag.Float64("noise", 0.0, "randomn noise from 0 to 1 (completly noised)")
 	
 	flag.Parse()
 	fmt.Println("Generating ASCII grid...")
-	step := *stepPtr
-	freq := *freqPtr
-	freqEnd := * freqEndPtr
-	fmt.Println("step : ", step)
-	fmt.Println("freq : ", freq)
 
-	tabSize := int(2.0*math.Pi/step)
+	tabSize := int(2.0*math.Pi/ *stepPtr)
 	dataTab := make([][]float64, 1, 1000)
 
 	valueTab := make([]float64, 0, 1000)
 	for i := 0; i < tabSize; i++ {
-		valueTab = append(valueTab, step * float64(i))
+		valueTab = append(valueTab, *stepPtr * float64(i))
 	}
 
 	// linear interpolation between the first frequence and the last
@@ -47,26 +47,37 @@ func main() {
 	for i := 0; i < tabSize; i++ {
 		dataTab[i] = make([]float64, 0)
 		for j := 0; j < tabSize; j++ {
-			dataTab[i] = append(dataTab[i], 500 * math.Sin( valueTab[i] * (linearPoly[i]*freqEnd + (1 - linearPoly[i])*freq ) ) + 500 )
+			dataTab[i] = append(dataTab[i], 500 * math.Sin( valueTab[i] * (linearPoly[i]**freqEndPtr + (1 - linearPoly[i])**freqPtr ) ) + 500 )
 		}
 		dataTab = append(dataTab, make([]float64, 0))
 	}
 
+	if *verbose {
+		fmt.Println(" - step : ", *stepPtr)
+		fmt.Println(" - freq : ", *freqPtr)
+		fmt.Println(" - ncols : ", tabSize)
+		fmt.Println(" - nrows : ", tabSize)
+		fmt.Println(" - xllcorner ", *xllPtr)
+	    fmt.Println(" - yllcorner ", *yllPtr)
+	    fmt.Println(" - CELLSIZE ", *cellsizePtr)
+	    fmt.Println(" - NODATA_VALUE ", *nodataPtr)
+	}
+
 	// create file to save results in ascii format
+	fmt.Println("Creating file... ")
 	f, err := os.Create("sinusGrid.asc")
     check(err)
     defer f.Close()
+    fmt.Println("File created at ", "./sinusGrid.asc")
 
 	w := bufio.NewWriter(f)
 
-	fmt.Println("ncols : ", tabSize)
-	fmt.Println("nrows : ", tabSize)
     fmt.Fprintf(w, "ncols %d\n", tabSize)
     fmt.Fprintf(w, "nrows %d\n", tabSize)
-	fmt.Fprintf(w, "xllcorner %d\n", 0)
-    fmt.Fprintf(w, "yllcorner %d\n", 0)
-    fmt.Fprintf(w, "CELLSIZE %d\n", 100)
-    fmt.Fprintf(w, "NODATA_VALUE %d\n", -30000)
+	fmt.Fprintf(w, "xllcorner %6.2f\n", *xllPtr)
+    fmt.Fprintf(w, "yllcorner %6.2f\n", *yllPtr)
+    fmt.Fprintf(w, "CELLSIZE %6.2f\n", *cellsizePtr)
+    fmt.Fprintf(w, "NODATA_VALUE %d\n", *nodataPtr)
 
     for i := 0; i < tabSize; i++ {
 		for j := 0; j < tabSize; j++ {
@@ -77,7 +88,7 @@ func main() {
 
 	w.Flush()
 
-	fmt.Println("ASCII grid generated...")
+	fmt.Println("ASCII grid generated")
 }
 
 func check(e error) {
