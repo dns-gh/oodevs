@@ -23,7 +23,7 @@ func main() {
 	yllPtr := flag.Float64("yll", 0, "yllcorner value")
 	cellsizePtr := flag.Float64("cell", 100, "cellsize")
 	nodataPtr := flag.Int64("nodata", -30000, "nodata value")
-	verbose := flag.Bool("v", false, "verbose mode")
+	verbosePtr := flag.Bool("v", false, "verbose mode")
 	filenamePtr := flag.String("filename", "sinusGrid.asc", "name of the data file (extension has to be provided.asc)")
 	//randNoisePtr := flag.Float64("noise", 0.0, "randomn noise from 0 to 1 (completly noised)")
 	
@@ -53,7 +53,7 @@ func main() {
 		dataTab = append(dataTab, make([]float64, 0))
 	}
 
-	if *verbose {
+	if *verbosePtr {
 		fmt.Println(" - step : ", *stepPtr)
 		fmt.Println(" - freq : ", *freqPtr)
 		fmt.Println(" - ncols : ", tabSize)
