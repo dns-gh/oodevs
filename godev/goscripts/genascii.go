@@ -11,7 +11,6 @@ import (
 // TODO
 // add generation of nodata values of different types : bands, noise, holes
 // add filepath management/option/flag
-// add flags relative to exported fields : xllcorner, yllcorner, CELLSIZE and NODATA_VALUE
 
 func main() {
 
