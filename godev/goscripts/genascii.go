@@ -1,6 +1,7 @@
 package main
 
 import (
+	s "strings"
 	"flag"
 	"fmt"
 	"math"
@@ -23,6 +24,7 @@ func main() {
 	cellsizePtr := flag.Float64("cell", 100, "cellsize")
 	nodataPtr := flag.Int64("nodata", -30000, "nodata value")
 	verbose := flag.Bool("v", false, "verbose mode")
+	filenamePtr := flag.String("filename", "sinusGrid.asc", "name of the data file (extension has to be provided.asc)")
 	//randNoisePtr := flag.Float64("noise", 0.0, "randomn noise from 0 to 1 (completly noised)")
 	
 	flag.Parse()
@@ -64,10 +66,11 @@ func main() {
 
 	// create file to save results in ascii format
 	fmt.Println("Creating file... ")
-	f, err := os.Create("sinusGrid.asc")
+	filePath := s.Join([]string{"./", *filenamePtr}, "")
+	f, err := os.Create(filePath)
     check(err)
     defer f.Close()
-    fmt.Println("File created at ", "./sinusGrid.asc")
+    fmt.Println("File created at ", filePath)
 
 	w := bufio.NewWriter(f)
 
