@@ -26,6 +26,7 @@ func main() {
 	verbosePtr := flag.Bool("v", false, "verbose mode")
 	filenamePtr := flag.String("filename", "sinusGrid.asc", "name of the data file (.asc)")
 	nodatatypePtr := flag.String("nodatatype", "none", "type of the nodata region")
+	nodatamoduloPtr := flag.Int64("modulo", 2, "nodata band modulo")
 	//randNoisePtr := flag.Float64("noise", 0.0, "randomn noise from 0 to 1 (completly noised)")
 	
 	flag.Parse()
@@ -50,7 +51,7 @@ func main() {
 		dataTab[i] = make([]float64, 0)
 		
 		for j := 0; j < tabSize; j++ {
-			if *nodatatypePtr != string("none")	&& i%3 == 0 {
+			if *nodatatypePtr != string("none")	&& j%int(*nodatamoduloPtr) == 0 {
 				dataTab[i] = append(dataTab[i], float64(*nodataPtr))		
 			} else {
 				dataTab[i] = append(dataTab[i], 500 * math.Sin( valueTab[i] * (linearPoly[i]**freqEndPtr + (1 - linearPoly[i])**freqPtr ) ) + 500 )
