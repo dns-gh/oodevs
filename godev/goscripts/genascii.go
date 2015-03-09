@@ -25,6 +25,7 @@ func main() {
 	nodataPtr := flag.Int64("nodata", -30000, "nodata value")
 	verbosePtr := flag.Bool("v", false, "verbose mode")
 	filenamePtr := flag.String("filename", "sinusGrid.asc", "name of the data file (.asc)")
+	nodatatypePtr := flag.String("nodatatype", "none", "type of the nodata region")
 	//randNoisePtr := flag.Float64("noise", 0.0, "randomn noise from 0 to 1 (completly noised)")
 	
 	flag.Parse()
@@ -47,8 +48,13 @@ func main() {
 	// fill the grid
 	for i := 0; i < tabSize; i++ {
 		dataTab[i] = make([]float64, 0)
+		
 		for j := 0; j < tabSize; j++ {
-			dataTab[i] = append(dataTab[i], 500 * math.Sin( valueTab[i] * (linearPoly[i]**freqEndPtr + (1 - linearPoly[i])**freqPtr ) ) + 500 )
+			if *nodatatypePtr != string("none")	&& i%3 == 0 {
+				dataTab[i] = append(dataTab[i], float64(*nodataPtr))		
+			} else {
+				dataTab[i] = append(dataTab[i], 500 * math.Sin( valueTab[i] * (linearPoly[i]**freqEndPtr + (1 - linearPoly[i])**freqPtr ) ) + 500 )
+			}
 		}
 		dataTab = append(dataTab, make([]float64, 0))
 	}
@@ -56,12 +62,15 @@ func main() {
 	if *verbosePtr {
 		fmt.Println(" - step : ", *stepPtr)
 		fmt.Println(" - freq : ", *freqPtr)
+		fmt.Println(" - freqEnd : ", *freqEndPtr)
 		fmt.Println(" - ncols : ", tabSize)
 		fmt.Println(" - nrows : ", tabSize)
 		fmt.Println(" - xllcorner ", *xllPtr)
 	    fmt.Println(" - yllcorner ", *yllPtr)
 	    fmt.Println(" - CELLSIZE ", *cellsizePtr)
 	    fmt.Println(" - NODATA_VALUE ", *nodataPtr)
+	    fmt.Println(" - nodata type ", *nodatatypePtr)
+	    fmt.Println(" - save filepath", *filenamePtr)
 	}
 
 	// create file to save results in ascii format
