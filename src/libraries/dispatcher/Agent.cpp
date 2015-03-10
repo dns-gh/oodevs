@@ -146,6 +146,8 @@ void Agent::DoUpdate( const sword::UnitCreation& msg )
         it->second.currentLevel_ = sword::UnitVisibility_Level_invisible;
         it->second.maxLevel_ = sword::UnitVisibility_Level_invisible;
     }
+    for( auto it = objectDetections_.begin(); it != objectDetections_.end(); ++it )
+        it->second = sword::UnitVisibility_Level_invisible;
 }
 
 // -----------------------------------------------------------------------------
