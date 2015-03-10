@@ -141,6 +141,11 @@ void Agent::DoUpdate( const sword::UnitCreation& msg )
     decisionalInfos_.Clear();
     reinforcements_.Clear();
     transportedAgents_.Clear();
+    for( auto it = unitDetections_.begin(); it != unitDetections_.end(); ++it )
+    {
+        it->second.currentLevel_ = sword::UnitVisibility_Level_invisible;
+        it->second.maxLevel_ = sword::UnitVisibility_Level_invisible;
+    }
 }
 
 // -----------------------------------------------------------------------------
