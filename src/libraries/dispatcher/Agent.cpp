@@ -545,7 +545,7 @@ void Agent::SendFullUpdate( ClientPublisher_ABC& publisher ) const
         asn().set_speed( nSpeed_ );
         asn().set_raw_operational_state( nOperationalStateValue_ );
         for( auto it = reinforcements_.CreateIterator(); it.HasMoreElements(); )
-            asn().mutable_reinforced_unit()->set_id( it.NextElement().GetId() );
+            asn().mutable_reinforcements()->add_elem()->set_id( it.NextElement().GetId() );
         asn().mutable_reinforced_unit()->set_id( pReinforced_ ? pReinforced_->GetId() : 0 );
         asn().set_dead( bDead_ );
         asn().set_neutralized( bNeutralized_ );
