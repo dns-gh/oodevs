@@ -11,6 +11,7 @@
 #define __Options_h_
 
 #include "ENT/ENT_Enums.h"
+#include <boost/container/flat_map.hpp>
 
 namespace kernel
 {
@@ -74,7 +75,7 @@ private:
 
     //! @name Types
     //@{
-    typedef std::map< std::string, std::pair< OptionVariant, bool > > T_Options;
+    typedef boost::container::flat_map< std::string, std::pair< OptionVariant, bool > > T_Options;
     //@}
 
 private:
