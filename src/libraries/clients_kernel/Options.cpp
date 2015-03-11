@@ -18,6 +18,7 @@
 #include "tools/GeneralConfig.h"
 #include "MT_Tools/MT_Logger.h"
 #include <boost/assign.hpp>
+#include <boost/range/algorithm_ext/erase.hpp>
 #include <tools/Path.h>
 
 using namespace kernel;
@@ -49,6 +50,19 @@ Options::~Options()
     // NOTHING
 }
 
+namespace
+{
+    const auto allowedDynamicKeys = boost::assign::map_list_of( "Elevation/Gradients/", true );
+    // first = IsDynamicKey, second = IsInPreferencePanel
+    std::pair< bool, bool > IsDynamicKey( const std::string& name )
+    {
+        for( auto it = allowedDynamicKeys.begin(); it != allowedDynamicKeys.end(); ++it )
+        if( name.find( it->first ) == 0 )
+            return std::make_pair( true, it->second );
+        return std::make_pair( false, false );
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: Options::Copy
 // Created: ABR 2014-07-25
@@ -56,34 +70,25 @@ Options::~Options()
 void Options::Copy( const Options& other, bool onlyPreferences )
 {
     if( onlyPreferences )
-        other.Apply( [&]( const std::string& name, const OptionVariant& value, bool isPreference )
-        {
-            if( isPreference )
+    {
+        PurgeDynamicOptions();
+        other.Apply( [&]( const std::string& name, const OptionVariant& value, bool isPreference ) {
+            if( !isPreference )
+                return;
+            if( Has( name ) )
                 Set( name, value );
+            else if( IsDynamicKey( name ).first )
+                Create( name, value, true );
         } );
+    }
     else
         options_ = other.options_;
-}
-
-namespace
-{
-    // Temporary solution to ignore old registry entries: we list the keys where
-    // the user can create options dynamically, so we can ignore others.
-    // The boolean value below is the 'isPreference' parameter.
-    const std::map< std::string, bool > allowedDynamicKeys = boost::assign::map_list_of( "/Elevation/Gradients/", true );
 }
 
 void Options::PurgeDynamicOptions()
 {
     for( auto it = allowedDynamicKeys.begin(); it != allowedDynamicKeys.end(); ++it )
-        for( auto itOption = options_.begin(); itOption != options_.end(); )
-            if( itOption->first.find( "allowedDynamicKeys" ) == 0 )
-            {
-                auto copy = itOption++;
-                options_.erase( copy );
-            }
-            else
-                ++itOption;
+        Remove( it->first );
 }
 
 // -----------------------------------------------------------------------------
@@ -138,7 +143,10 @@ const OptionVariant& Options::Get( const std::string& name ) const
 // -----------------------------------------------------------------------------
 void Options::Remove( const std::string& name )
 {
-    options_.erase( name );
+    boost::remove_erase_if( options_, [&]( const T_Options::value_type& pair )
+    {
+        return pair.first.find( name ) == 0;
+    } );
 }
 
 // -----------------------------------------------------------------------------
