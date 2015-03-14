@@ -16,7 +16,8 @@ import (
 func main() {
 
 	//relativeFilePathPtr := flag.String("rpath", "", "relative file path to the test dir")
-	stepPtr := flag.Float64("step", math.Pi/2, "step of the grid")
+	xstepPtr := flag.Float64("xstep", math.Pi/2, "x step of the grid")
+	ystepPtr := flag.Float64("ystep", math.Pi/2, "y step of the grid")
 	freqPtr := flag.Float64("freq", 1.0, "sinusoidal frequency at the begining of the generation")
 	freqEndPtr := flag.Float64("lastfreq", 1.0, "sinusoidal frequency at the end of the generation")
 	xllPtr := flag.Float64("xll", 0, "xllcorner value")
@@ -32,25 +33,26 @@ func main() {
 	flag.Parse()
 	fmt.Println("Generating ASCII grid...")
 
-	tabSize := int(2.0*math.Pi/ *stepPtr)
+	tabSizeX := int(2.0*math.Pi/ *xstepPtr)
+	tabSizeY := int(2.0*math.Pi/ *ystepPtr)
 	dataTab := make([][]float64, 1, 1000)
 
 	valueTab := make([]float64, 0, 1000)
-	for i := 0; i < tabSize; i++ {
-		valueTab = append(valueTab, *stepPtr * float64(i))
+	for i := 0; i < tabSizeX; i++ {
+		valueTab = append(valueTab, *xstepPtr * float64(i))
 	}
 
 	// linear interpolation between the first frequence and the last
 	linearPoly := make([]float64, 0, 1000)
-	for i := 0; i < tabSize; i++ {
-		linearPoly = append(linearPoly, float64(i)/float64(tabSize - 1))
+	for i := 0; i < tabSizeY; i++ {
+		linearPoly = append(linearPoly, float64(i)/float64(tabSizeY - 1))
 	}
 
 	// fill the grid
-	for i := 0; i < tabSize; i++ {
+	for i := 0; i < tabSizeX; i++ {
 		dataTab[i] = make([]float64, 0)
 		
-		for j := 0; j < tabSize; j++ {
+		for j := 0; j < tabSizeY; j++ {
 			if *nodatatypePtr != string("none")	&& j%int(*nodatamoduloPtr) == 0 {
 				dataTab[i] = append(dataTab[i], float64(*nodataPtr))		
 			} else {
@@ -61,11 +63,12 @@ func main() {
 	}
 
 	if *verbosePtr {
-		fmt.Println(" - step : ", *stepPtr)
+		fmt.Println(" - x step : ", *xstepPtr)
+		fmt.Println(" - y step : ", *ystepPtr)
 		fmt.Println(" - freq : ", *freqPtr)
 		fmt.Println(" - freqEnd : ", *freqEndPtr)
-		fmt.Println(" - ncols : ", tabSize)
-		fmt.Println(" - nrows : ", tabSize)
+		fmt.Println(" - ncols : ", tabSizeX)
+		fmt.Println(" - nrows : ", tabSizeY)
 		fmt.Println(" - xllcorner ", *xllPtr)
 	    fmt.Println(" - yllcorner ", *yllPtr)
 	    fmt.Println(" - CELLSIZE ", *cellsizePtr)
@@ -84,15 +87,15 @@ func main() {
 
 	w := bufio.NewWriter(f)
 
-    fmt.Fprintf(w, "ncols %d\n", tabSize)
-    fmt.Fprintf(w, "nrows %d\n", tabSize)
+    fmt.Fprintf(w, "ncols %d\n", tabSizeY)
+    fmt.Fprintf(w, "nrows %d\n", tabSizeX)
 	fmt.Fprintf(w, "xllcorner %6.2f\n", *xllPtr)
     fmt.Fprintf(w, "yllcorner %6.2f\n", *yllPtr)
     fmt.Fprintf(w, "CELLSIZE %6.2f\n", *cellsizePtr)
     fmt.Fprintf(w, "NODATA_VALUE %d\n", *nodataPtr)
 
-    for i := 0; i < tabSize; i++ {
-		for j := 0; j < tabSize; j++ {
+    for i := 0; i < tabSizeX; i++ {
+		for j := 0; j < tabSizeY; j++ {
 			fmt.Fprintf(w, "%6.2f ", dataTab[i][j])
 		}
 		fmt.Fprintf(w, "\n")
