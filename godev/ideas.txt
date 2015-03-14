@@ -1,0 +1,2 @@
+Some ideas :
+- add a script to generate an image from an ascii grid
