@@ -1,3 +1,0 @@
-hello
-go
-This is it !
