@@ -8,16 +8,17 @@ import (
     "os"
     "bufio"
     "strconv"
+    "strings"
 )
 
 type asciiData struct {
-	ncols int64
-	nrows int64
+	ncols int
+	nrows int
 	xllcorner float64
 	yllcorner float64
 	CELLSIZE float64
 	NODATA_VALUE int64
-	asciiRect [][]float64
+	asciiTab [][]float64
 }
 
 func main() {
@@ -31,13 +32,34 @@ func main() {
     }
     
 	var rdata asciiData
-	rdata.ncols, err = strconv.ParseInt(lines[0][6:], 0, 64)
-	rdata.nrows, err = strconv.ParseInt(lines[1][6:], 0, 64)
+  var tempValue int64
+	tempValue, err = strconv.ParseInt(lines[0][6:], 0, 16)
+  rdata.ncols = int(tempValue)
+	tempValue, err = strconv.ParseInt(lines[1][6:], 0, 16)
+  rdata.nrows = int(tempValue)
 	rdata.xllcorner, err = strconv.ParseFloat(lines[2][10:], 64)
 	rdata.yllcorner, err = strconv.ParseFloat(lines[3][10:], 64)
 	rdata.CELLSIZE, err = strconv.ParseFloat(lines[4][9:], 64)
 	rdata.NODATA_VALUE, err = strconv.ParseInt(lines[5][13:], 0, 64)
+  fmt.Println(rdata.ncols)
+  fmt.Println(rdata.nrows)
+  fmt.Println(rdata.xllcorner)
+  fmt.Println(rdata.yllcorner)
 	fmt.Println(rdata.CELLSIZE)
+  fmt.Println(rdata.NODATA_VALUE)
+
+  asciiTab := make([][]float64, 1, 1000)
+  for i := 0; i < rdata.nrows; i++ {
+    asciiTab[i] = make([]float64, 0)
+    splitedRow := strings.Split(lines[6+i], " ")
+    for j := 0; j < rdata.ncols; j++ {
+      var nextFloat float64
+      nextFloat, err = strconv.ParseFloat(splitedRow[j],64)
+      asciiTab[i] = append(asciiTab[i], nextFloat)
+    }
+    asciiTab = append(asciiTab, make([]float64, 0))
+  }
+
 	// Create a PNG file from data
     imageFile, err := os.Create("test.png")
     if err != nil {
@@ -45,10 +67,10 @@ func main() {
 		os.Exit(1)
     }
 
-    rgbaData := image.NewNRGBA(image.Rectangle{Min: image.Point{0, 0}, Max: image.Point{256, 256}})
-    for y := 0; y < 256; y++ {
-        for x := 0; x < 256; x++ {
-                rgbaData.SetNRGBA(x, y, color.NRGBA{uint8(x), uint8((x + y) / 2), uint8(y), 215})
+    rgbaData := image.NewNRGBA(image.Rectangle{Min: image.Point{0, 0}, Max: image.Point{rdata.ncols, rdata.nrows}})
+    for i := 0; i < rdata.nrows; i++ {
+        for j := 0; j < rdata.ncols; j++ {
+                rgbaData.SetNRGBA(j, i, color.NRGBA{uint8(asciiTab[i][j]), 0, 0, 215})
         }
     }
 
