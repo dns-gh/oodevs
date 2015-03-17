@@ -73,6 +73,20 @@ func main() {
     fmt.Println("")
   }
 
+  // Get min and max val of the valueTab
+  minVal := asciiTab[0][0]
+  maxVal := asciiTab[0][0]
+  for i := 0; i < rdata.nrows; i++ {
+    for j := 0; j < rdata.ncols; j++ {
+      if asciiTab[i][j] < minVal {
+        minVal = asciiTab[i][j]
+      }
+      if asciiTab[i][j] > maxVal {
+        maxVal = asciiTab[i][j]
+      }
+    }
+  }
+
 	// Create a PNG file from data
     imageFile, err := os.Create("test.png")
     if err != nil {
@@ -83,7 +97,7 @@ func main() {
     rgbaData := image.NewNRGBA(image.Rectangle{Min: image.Point{0, 0}, Max: image.Point{rdata.ncols, rdata.nrows}})
     for i := 0; i < rdata.ncols; i++ {
         for j := 0; j < rdata.nrows; j++ {
-                rgbaData.SetNRGBA(i, j, color.NRGBA{uint8(asciiTab[j][i]), 0, 0, 215})
+                rgbaData.SetNRGBA(i, j, color.NRGBA{uint8((asciiTab[j][i]-minVal)*255/(maxVal-minVal)), 0, 0, 255})
         }
     }
 
