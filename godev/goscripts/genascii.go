@@ -44,8 +44,8 @@ func main() {
 
 	// linear interpolation between the first frequence and the last
 	linearPoly := make([]float64, 0, 1000)
-	for i := 0; i < tabSizeY; i++ {
-		linearPoly = append(linearPoly, float64(i)/float64(tabSizeY - 1))
+	for i := 0; i < tabSizeX; i++ {
+		linearPoly = append(linearPoly, float64(i)/float64(tabSizeX - 1))
 	}
 
 	// fill the grid
