@@ -60,6 +60,19 @@ func main() {
     asciiTab = append(asciiTab, make([]float64, 0))
   }
 
+  for i := 0; i < rdata.nrows; i++ {
+    if i > 10 {
+      break
+    }
+    for j := 0; j < rdata.ncols; j++ {
+      if j > 10 {
+        break
+      }
+      fmt.Print(asciiTab[i][j]," ")
+    }
+    fmt.Println("")
+  }
+
 	// Create a PNG file from data
     imageFile, err := os.Create("test.png")
     if err != nil {
@@ -68,9 +81,9 @@ func main() {
     }
 
     rgbaData := image.NewNRGBA(image.Rectangle{Min: image.Point{0, 0}, Max: image.Point{rdata.ncols, rdata.nrows}})
-    for i := 0; i < rdata.nrows; i++ {
-        for j := 0; j < rdata.ncols; j++ {
-                rgbaData.SetNRGBA(j, i, color.NRGBA{uint8(asciiTab[i][j]), 0, 0, 215})
+    for i := 0; i < rdata.ncols; i++ {
+        for j := 0; j < rdata.nrows; j++ {
+                rgbaData.SetNRGBA(i, j, color.NRGBA{uint8(asciiTab[j][i]), 0, 0, 215})
         }
     }
 
