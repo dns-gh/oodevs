@@ -6,7 +6,7 @@ import (
     "image/png"
     "fmt"
     "os"
-    "bufio"
+    "io/ioutil"
     "strconv"
     "strings"
 )
@@ -25,22 +25,38 @@ func main() {
 	// Read ASCII data
 	// TODO
 	var lines []string
-	lines, err := readLines("test.asc")
-	if err != nil {
-        fmt.Println(err)
-		os.Exit(1)
+	lines = readLines("test.asc")
+  
+  numLines := 0
+  for _, _ = range lines {
+    numLines += 1
+  }
+  fmt.Println("numlines : ", numLines)
+  for idx, line := range lines {
+    if idx < 6 {
+      fmt.Println(line)
     }
-    
+  }
+
 	var rdata asciiData
-  var tempValue int64
-	tempValue, err = strconv.ParseInt(lines[0][6:], 0, 16)
+  var splitedRow []string
+  //var tempValue int64
+  splitedRow = SplitMD(lines[0])
+	tempValue, err := strconv.ParseInt(splitedRow[1], 10, 0)
   rdata.ncols = int(tempValue)
-	tempValue, err = strconv.ParseInt(lines[1][6:], 0, 16)
+  splitedRow = SplitMD(lines[1])
+	tempValue, err = strconv.ParseInt(splitedRow[1], 10, 0)
   rdata.nrows = int(tempValue)
-	rdata.xllcorner, err = strconv.ParseFloat(lines[2][10:], 64)
-	rdata.yllcorner, err = strconv.ParseFloat(lines[3][10:], 64)
-	rdata.CELLSIZE, err = strconv.ParseFloat(lines[4][9:], 64)
-	rdata.NODATA_VALUE, err = strconv.ParseInt(lines[5][13:], 0, 64)
+
+  splitedRow = SplitMD(lines[2])
+	rdata.xllcorner, err = strconv.ParseFloat(splitedRow[1], 16)
+  splitedRow = SplitMD(lines[3])
+	rdata.yllcorner, _ = strconv.ParseFloat(splitedRow[1], 16)
+  splitedRow = SplitMD(lines[4])
+	rdata.CELLSIZE, _ = strconv.ParseFloat(splitedRow[1], 16)
+  splitedRow = SplitMD(lines[5])
+	rdata.NODATA_VALUE, _ = strconv.ParseInt(splitedRow[1], 10, 0)
+
   fmt.Println(rdata.ncols)
   fmt.Println(rdata.nrows)
   fmt.Println(rdata.xllcorner)
@@ -48,13 +64,20 @@ func main() {
 	fmt.Println(rdata.CELLSIZE)
   fmt.Println(rdata.NODATA_VALUE)
 
-  asciiTab := make([][]float64, 1, 1000)
+  splitData := SplitMD(lines[6])
+  for i := 7; i < numLines; i++ {
+    splitedLine := SplitMD(lines[i])
+    for j := 0; j < len(splitedLine); j++ {
+      splitData = append(splitData, splitedLine[j])
+    }
+  }
+
+  asciiTab := make([][]float64, 1, 10000)
   for i := 0; i < rdata.nrows; i++ {
     asciiTab[i] = make([]float64, 0)
-    splitedRow := strings.Split(lines[6+i], " ")
     for j := 0; j < rdata.ncols; j++ {
       var nextFloat float64
-      nextFloat, err = strconv.ParseFloat(splitedRow[j],64)
+      nextFloat, _ = strconv.ParseFloat(splitData[i*rdata.ncols+j],16)
       asciiTab[i] = append(asciiTab[i], nextFloat)
     }
     asciiTab = append(asciiTab, make([]float64, 0))
@@ -97,29 +120,33 @@ func main() {
     rgbaData := image.NewNRGBA(image.Rectangle{Min: image.Point{0, 0}, Max: image.Point{rdata.ncols, rdata.nrows}})
     for i := 0; i < rdata.ncols; i++ {
         for j := 0; j < rdata.nrows; j++ {
-                rgbaData.SetNRGBA(i, j, color.NRGBA{uint8((asciiTab[j][i]-minVal)*255/(maxVal-minVal)), 0, 0, 255})
+          rgbaData.SetNRGBA(i, j, color.NRGBA{uint8((asciiTab[j][i]-minVal)*255/(maxVal-minVal)), 0, 0, 255})
         }
     }
 
     if err = png.Encode(imageFile, rgbaData); err != nil {
-        fmt.Println(err)
-		os.Exit(1)
+      fmt.Println(err)
+		  os.Exit(1)
     }
 }
 
-func readLines(path string) ([]string, error) {
-  file, err := os.Open(path)
-  if err != nil {
-    return nil, err
-  }
-  defer file.Close()
+func readLines(path string) ([]string) {
 
-  var lines []string
-  scanner := bufio.NewScanner(file)
-  for scanner.Scan() {
-    lines = append(lines, scanner.Text())
-  }
-  return lines, scanner.Err()
+  buff, err := ioutil.ReadFile(path)
+  check(err)
+  s := string(buff)
+  return strings.Split(s, "\n")
+}
+
+// Split with multiple delimiters
+func SplitMD(s string) ([]string) {
+  return strings.FieldsFunc(s, func(r rune) bool {
+      switch r {
+      case ' ', '\r', '\n':
+        return true
+      }
+      return false
+    })
 }
 
 func check(e error) {
