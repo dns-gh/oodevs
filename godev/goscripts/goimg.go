@@ -9,6 +9,7 @@ import (
     "io/ioutil"
     "strconv"
     "strings"
+    "math"
 )
 
 type asciiData struct {
@@ -19,6 +20,45 @@ type asciiData struct {
 	CELLSIZE float64
 	NODATA_VALUE int64
 	asciiTab [][]float64
+}
+
+// http://en.wikipedia.org/wiki/HSL_and_HSV
+func hslToRgb(h, s, l float64) (r, g, b float64) {
+	C := (1-math.Abs(2*l-1))*s
+	hprime := h/60
+	X:= C*(1-math.Abs(math.Mod(hprime,2.0)-1))
+	var r1,g1,b1 float64
+	switch {
+    case 0 <= hprime && hprime < 1:
+        r1, g1, b1 = C, X, 0
+    case 1 <= hprime && hprime < 2:
+        r1, g1, b1 = X, C, 0
+    case 2 <= hprime && hprime < 3:
+        r1, g1, b1 = 0, C, X
+    case 3 <= hprime && hprime < 4:
+        r1, g1, b1 = 0, X, C
+    case 4 <= hprime && hprime < 5:
+        r1, g1, b1 = X, 0, C
+	case 5 <= hprime && hprime < 6:
+        r1, g1, b1 = C, 0, X
+    }
+    m := l - 0.5*C
+    r,g,b =r1+m,g1+m,b1+m
+    return
+}
+
+func getRGB(v float64) (r, g, b float64) {
+	h := 360 * v
+	s := 1.0
+	l := 0.5 * v
+	r, g, b = hslToRgb(h, s, l)
+	return
+}
+
+// Get an rgba color from v in [0,1]
+func getColor(v float64) color.RGBA {
+	r, g, b := getRGB(v)
+	return color.RGBA{uint8(255*r), uint8(255*g), uint8(255*b), 255}
 }
 
 func main() {
@@ -38,7 +78,7 @@ func main() {
     }
   }
 
-	var rdata asciiData
+var rdata asciiData
   var splitedRow []string
   //var tempValue int64
   splitedRow = SplitMD(lines[0])
@@ -120,7 +160,8 @@ func main() {
     rgbaData := image.NewNRGBA(image.Rectangle{Min: image.Point{0, 0}, Max: image.Point{rdata.ncols, rdata.nrows}})
     for i := 0; i < rdata.ncols; i++ {
         for j := 0; j < rdata.nrows; j++ {
-          rgbaData.SetNRGBA(i, j, color.NRGBA{uint8((asciiTab[j][i]-minVal)*255/(maxVal-minVal)), 0, 0, 255})
+       	  r ,g, b := getRGB((asciiTab[j][i]-minVal)/(maxVal-minVal))
+          rgbaData.SetNRGBA(i, j, color.NRGBA{uint8(255*r), uint8(255*g), uint8(255*b), 255})
         }
     }
 
