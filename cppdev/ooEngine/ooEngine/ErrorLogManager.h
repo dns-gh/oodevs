@@ -44,9 +44,6 @@ class ErrorLogManager : public EngineObject
 	friend ErrorLogManager* SingletonTemplate< ErrorLogManager >::GetInstance();
 	friend void SingletonTemplate< ErrorLogManager >::Kill();
 public:
-    std::stringstream logBuffer_;
-    std::ofstream logFile_;
-
     void CreateLogFile( std::string filename );
     void Flush();
     void Close();
@@ -58,6 +55,9 @@ private:
 	ErrorLogManager& operator=(const ErrorLogManager&){};
 	ErrorLogManager(){};
 	virtual ~ErrorLogManager(){};
+
+    std::stringstream logBuffer_;
+    std::ofstream logFile_;
 };
 
 #endif // ErrorLogManager.h

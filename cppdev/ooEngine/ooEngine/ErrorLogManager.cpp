@@ -24,7 +24,7 @@ const char* cException::what() const
 
 void ErrorLogManager::CreateLogFile( std::string filename )
 {
-    logFile_.open( filename.c_str() );
+    logFile_.open( filename.c_str(), std::ios::app );
 }
 
 void ErrorLogManager::Flush()
@@ -43,7 +43,8 @@ void ErrorLogManager::Close()
 
 void ErrorLogManager::LogException( const cException& e )
 {
-    logBuffer_ << GetTimeStr() << " - " << e.what();
+    logBuffer_ << "**error** ";
+    logBuffer_ << GetTimeStr() << " :\n" << e.what();
     Flush();
 }
 

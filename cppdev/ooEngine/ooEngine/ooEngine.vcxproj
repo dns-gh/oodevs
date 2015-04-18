@@ -72,6 +72,7 @@
     <ClInclude Include="EngineObject.h" />
     <ClInclude Include="ErrorLogManager.h" />
     <ClInclude Include="SingletonTemplate.h" />
+    <ClInclude Include="tools.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -9,5 +9,13 @@
     <ClInclude Include="EngineObject.h" />
     <ClInclude Include="ErrorLogManager.h" />
     <ClInclude Include="SingletonTemplate.h" />
+    <ClInclude Include="tools.h">
+      <Filter>tools</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="tools">
+      <UniqueIdentifier>{283965d4-2b16-4140-aa74-b52cdcdfd7bd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>
