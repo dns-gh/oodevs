@@ -1,11 +1,15 @@
 
 #include "tools.h"
 #include "ErrorLogManager.h"
+#include "ResourceManager.h"
 
 void main()
 {
     ErrorLogManager* errorManager = ErrorLogManager::GetInstance();
     errorManager->CreateLogFile( tools::GetModulePath( ) + std::string( "logError.txt" ) );
+
+    ResourceManager* resourceManager = new ResourceManager();
+    delete resourceManager;
 
     try
     {

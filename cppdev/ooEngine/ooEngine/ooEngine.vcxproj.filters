@@ -4,12 +4,20 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="EngineObject.cpp" />
     <ClCompile Include="ErrorLogManager.cpp" />
+    <ClCompile Include="ResourceManager.cpp" />
+    <ClCompile Include="tinyxml2.cpp">
+      <Filter>tools</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EngineObject.h" />
     <ClInclude Include="ErrorLogManager.h" />
     <ClInclude Include="SingletonTemplate.h" />
     <ClInclude Include="tools.h">
+      <Filter>tools</Filter>
+    </ClInclude>
+    <ClInclude Include="ResourceManager.h" />
+    <ClInclude Include="tinyxml2.h">
       <Filter>tools</Filter>
     </ClInclude>
   </ItemGroup>
