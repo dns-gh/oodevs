@@ -2,6 +2,8 @@
 
 using namespace tinyxml2;
 
+// TODO : add of a memory budget to allow caching of resources from multiple scopes
+
 ResourceManager::ResourceManager()
 {
     currentScope_ = 0;
