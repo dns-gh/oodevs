@@ -1,13 +1,13 @@
 #ifndef _RESOURCEMANAGER_H
 #define _RESOURCEMANAGER_H
 
+#include "tools.h"
 #include "EngineObject.h"
 #include "ErrorLogManager.h"
 #include <iostream>
 #include <list>
 #include <map>
 #include <string>
-#include "tinyxml2.h"
 
 typedef enum {
     RESOURCE_NUL = 0,

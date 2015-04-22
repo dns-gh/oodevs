@@ -1,4 +1,5 @@
 #include "ResourceManager.h"
+#include "tinyxml2.h"
 
 using namespace tinyxml2;
 
@@ -10,14 +11,9 @@ ResourceManager::ResourceManager()
     resourceCount_ = 0;
 }
 
-unsigned int ResourceManager::GetResourceCount() const
-{
-    return resourceCount_;
-}
-
 bool ResourceManager::LoadFromXMLFile( const std::string& filename )
 {
-    XMLDocument doc;
+    tinyxml2::XMLDocument doc;
     if( doc.LoadFile( filename.c_str( ) ) == XMLError::XML_SUCCESS )
     {
         XMLNode* tree = doc.FirstChildElement( "resources" );
@@ -80,4 +76,48 @@ bool ResourceManager::LoadFromXMLFile( const std::string& filename )
         }
     }
     return false;
+}
+
+void ResourceManager::SetCurrentScope( unsigned int scope )
+{
+    currentScope_ = scope;
+}
+
+Resource* ResourceManager::FindResourceByID( const unsigned int& id ) const
+{
+    for( auto it = resourceByScope_.begin(); it != resourceByScope_.end(); it++ )
+    {
+        if( !( *it ).second.empty() )
+        {
+            for( auto listIt = ( *it ).second.begin(); listIt != ( *it ).second.end(); listIt++ )
+            {
+                if( ( *listIt )->GetResourceID( ) != id )
+                    return *listIt;
+            }
+        }
+    }
+    return NULL;
+}
+
+unsigned int ResourceManager::GetResourceCount() const
+{
+    return resourceCount_;
+}
+
+void ResourceManager::Clear()
+{
+    for( auto it = resourceByScope_.begin(); it != resourceByScope_.end(); it++ )
+    {
+        if( !( *it ).second.empty( ) )
+        {
+            for( auto listIt = ( *it ).second.begin( ); listIt != ( *it ).second.end( ); listIt++ )
+            {
+                ( *listIt )->UnLoad();
+                OODELETE( *listIt );
+            }
+            ( *it ).second.clear();
+        }
+    }
+    resourceByScope_.clear();
+    resourceCount_ = 0;
 }
