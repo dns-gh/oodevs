@@ -18,7 +18,7 @@ bool ResourceManager::LoadFromXMLFile( const std::string& filename )
     XMLDocument doc;
     if( doc.LoadFile( filename.c_str( ) ) == XMLError::XML_SUCCESS )
     {
-        XMLNode* tree = doc.FirstChildElement( "Resources" );
+        XMLNode* tree = doc.FirstChildElement( "resources" );
         if( tree )
         {
             for( XMLNode* child = tree->FirstChild(); child; child->NextSibling() )
@@ -29,11 +29,11 @@ bool ResourceManager::LoadFromXMLFile( const std::string& filename )
                     Resource* resource = NULL;
                     for( const XMLAttribute* att = elem->FirstAttribute(); att; att->Next() )
                     {
-                        std::string attName = att->Name( );
-                        std::string attValue = att->Value( );
+                        std::string attName = att->Name();
+                        std::string attValue = att->Value();
                         if( attName == "type" )
                         {
-                            if( attValue == "Graphic" )
+                            if( attValue == "graphic" )
                             {
                                 // load of the resource by the graphic manager
                                 // resource = RenderManager->LoadResourceFromXML( elem );
@@ -50,20 +50,20 @@ bool ResourceManager::LoadFromXMLFile( const std::string& filename )
                             unsigned int id = -1;
                             unsigned int scope = -1;
                             std::string filename;
-                            if( attName == "ID" )
+                            if( attName == "id" )
                             {
                                 id = std::atoi( attValue.c_str() );
                             }
-                            else if( attName == "SceneScope" )
+                            else if( attName == "scenescope" )
                             {
                                 scope = std::atoi( attValue.c_str( ) );
                             }
-                            else if( attName == "SceneScope" )
+                            else if( attName == "filename" )
                             {
                                 filename = attValue;
                             }
                             if( !resource->Initialize( id, scope, filename ) )
-                                OOTHROW( 2, "Error when loading a resource from an XML file" );
+                                OOTHROW( 2, "Error when loading a resource from " + filename + " XML file");
                         }
                     }
                     
