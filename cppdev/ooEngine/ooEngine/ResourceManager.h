@@ -32,6 +32,8 @@ public:
             return true;
         return false;
     }
+    unsigned int GetResourceID() const { return id_; }
+    unsigned int GetResourceScope( ) const { return scope_; }
     virtual ~Resource(){};
     virtual void Load(){};
     virtual void UnLoad(){};

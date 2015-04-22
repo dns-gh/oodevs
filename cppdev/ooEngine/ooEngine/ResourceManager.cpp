@@ -67,11 +67,15 @@ bool ResourceManager::LoadFromXMLFile( const std::string& filename )
                         }
                     }
                     
-                    
+                    if( resource )
+                    {
+                        resourceByScope_[ resource->GetResourceScope() ].push_back( resource );
+                        resourceCount_++;
+                    }
                 }
             }
+            return true;
         }
-        return true;
     }
     return false;
 }
