@@ -80,7 +80,18 @@ bool ResourceManager::LoadFromXMLFile( const std::string& filename )
 
 void ResourceManager::SetCurrentScope( unsigned int scope )
 {
+    if( currentScope_ != 0 ) // different from game scope
+    {
+        for( auto it = resourceByScope_[ currentScope_ ].begin( ); it != resourceByScope_[ currentScope_ ].end( ); it++ )
+        {
+            ( *it )->UnLoad();
+        }
+    }
     currentScope_ = scope;
+    for( auto it = resourceByScope_[ currentScope_ ].begin( ); it != resourceByScope_[ currentScope_ ].end( ); it++ )
+    {
+        ( *it )->Load( );
+    }
 }
 
 Resource* ResourceManager::FindResourceByID( const unsigned int& id ) const
