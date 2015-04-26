@@ -8,6 +8,9 @@
     <ClCompile Include="tinyxml2.cpp">
       <Filter>tools</Filter>
     </ClCompile>
+    <ClCompile Include="SDL2DRenderManager.cpp">
+      <Filter>sdlrendering</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EngineObject.h" />
@@ -20,10 +23,26 @@
     <ClInclude Include="tinyxml2.h">
       <Filter>tools</Filter>
     </ClInclude>
+    <ClInclude Include="Resource.h" />
+    <ClInclude Include="RenderResource.h">
+      <Filter>sdlrendering</Filter>
+    </ClInclude>
+    <ClInclude Include="SDLRenderObject.h">
+      <Filter>sdlrendering</Filter>
+    </ClInclude>
+    <ClInclude Include="SpriteObject.h">
+      <Filter>sdlrendering</Filter>
+    </ClInclude>
+    <ClInclude Include="SDL2DRenderManager.h">
+      <Filter>sdlrendering</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="tools">
       <UniqueIdentifier>{283965d4-2b16-4140-aa74-b52cdcdfd7bd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="sdlrendering">
+      <UniqueIdentifier>{c8148401-fc2d-41e1-861c-fa4cc284c985}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

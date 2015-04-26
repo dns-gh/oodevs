@@ -1,0 +1,3 @@
+- Add a 2DRenderManager interface for SDL2DRenderManager
+- Create a list of error number to use with the ErrorLogManager
+- Add a (multiple?) propre OOLOGs to report what's going on when the app is loading/running/leaving

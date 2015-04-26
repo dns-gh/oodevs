@@ -2,15 +2,13 @@
 #include "tools.h"
 #include "ErrorLogManager.h"
 #include "ResourceManager.h"
+#include "SDL2DRenderManager.h"
 
-void main()
+int main(int, char**)
 {
     ErrorLogManager* errorManager = ErrorLogManager::GetInstance();
     errorManager->CreateLogFile( tools::GetModulePath() + std::string( "logError.txt" ) );
-
-    ResourceManager* resourceManager = new ResourceManager();
-    delete resourceManager;
-
+     
     try
     {
         OOTHROW( 1, "Test error message" );
@@ -21,4 +19,12 @@ void main()
         errorManager->LogException( e );
         errorManager->Flush();
     }
+
+    ResourceManager* resourceManager = new ResourceManager();
+    delete resourceManager;
+    SDL2DRenderManager* sdlRenderManager = SDL2DRenderManager::GetInstance();
+    sdlRenderManager->Initialize();
+    SDL_Delay( 4000 );
+
+    return 1;
 }
