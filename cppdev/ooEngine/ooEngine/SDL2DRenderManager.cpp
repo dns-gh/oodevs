@@ -28,9 +28,12 @@ void SDL2DRenderManager::Initialize( unsigned int width, unsigned int height, bo
     if( !renderer_ )
         OOTHROW( 1, "Error when trying to create a renderer : " + std::string( SDL_GetError( ) ) );
 
-    // get some info about the renderer
-    SDL_RendererInfo info;
-    SDL_GetRendererInfo( renderer_, &info );
+    // Get some info about the renderer
+    /* SDL_RendererInfo info;
+    SDL_GetRendererInfo( renderer_, &info );*/
+
+    // Set the rendered default draw color to white
+    SDL_SetRenderDrawColor( renderer_, 255, 255, 255, 0);
 
     SDL_SetHint( SDL_HINT_RENDER_SCALE_QUALITY, "linear" );
     SDL_RenderSetLogicalSize( renderer_, width, height );

@@ -35,7 +35,7 @@ private:
 private:
     SDL_Window* renderWindow_;
     SDL_Renderer *renderer_;
-    std::stringstream videoInfos_;
+    //std::stringstream videoInfos_;
     std::list< SDLRenderObject* > renderObjects_;
 };
 
