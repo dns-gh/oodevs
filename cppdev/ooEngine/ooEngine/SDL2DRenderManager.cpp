@@ -47,3 +47,8 @@ bool SDL2DRenderManager::Update()
     SDL_RenderPresent( renderer_ );
     return true;
 }
+
+Resource* SDL2DRenderManager::CreateRenderResource()
+{
+    return new RenderResource();
+}

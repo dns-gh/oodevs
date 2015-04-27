@@ -1,2 +1,6 @@
-<resource id="0" type="text" filename="game.cfg" scenscope="0">
-</resource>
+<resources>
+	<resource id="0" type="text" filename="game.cfg" scenescope="0">
+	</resource>
+	<resource id="1" type="graphic" filename="splashscreen.jpg" scenescope="0">
+	</resource>
+</resources>

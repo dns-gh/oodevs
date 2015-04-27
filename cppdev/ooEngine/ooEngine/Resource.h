@@ -12,7 +12,7 @@ typedef enum {
 class Resource : public EngineObject
 {
 public:
-    Resource( )
+    Resource()
     {
         id_ = -1;
         scope_ = -1;
@@ -27,11 +27,11 @@ public:
             return true;
         return false;
     }
-    unsigned int GetResourceID( ) const { return id_; }
-    unsigned int GetResourceScope( ) const { return scope_; }
-    virtual ~Resource( ){};
-    virtual void Load( ){};
-    virtual void UnLoad( ){};
+    unsigned int GetResourceID() const { return id_; }
+    unsigned int GetResourceScope() const { return scope_; }
+    virtual ~Resource(){};
+    virtual void Load(){};
+    virtual void UnLoad(){};
 
 private:
     unsigned int id_;

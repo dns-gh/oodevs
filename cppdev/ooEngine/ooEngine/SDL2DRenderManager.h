@@ -3,7 +3,7 @@
 
 //#include "RenderManager.h"
 #include "SingletonTemplate.h"
-#include "Resource.h"
+#include "RenderResource.h"
 #include "SDL.h"
 #include "SDLRenderObject.h"
 #include "tinyxml2.h"
@@ -23,7 +23,7 @@ public:
     void Free();
     bool Update();
     void toggleFullScreen();
-    Resource* LoadResourceFromXML( tinyxml2::XMLElement* element );
+    Resource* CreateRenderResource(); //LoadResourceFromXML ? Is there any more data in an xml file that could be useful in that class ?
     void RenderAllObjects();
 private:
 

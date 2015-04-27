@@ -7,9 +7,9 @@
 class RenderResource : public Resource
 {
 public:
-    virtual ~RenderResource();
-    virtual void Load();
-    virtual void UnLoad();
+    virtual ~RenderResource(){};
+    virtual void Load(){};
+    virtual void UnLoad(){};
 
 private:
     SDL_Surface* surface_;
