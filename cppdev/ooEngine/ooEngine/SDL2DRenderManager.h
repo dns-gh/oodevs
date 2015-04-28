@@ -3,7 +3,7 @@
 
 //#include "RenderManager.h"
 #include "SingletonTemplate.h"
-#include "RenderResource.h"
+#include "Resource.h"
 #include "RenderManager_ABC.h"
 
 #include "tinyxml2.h"
@@ -29,6 +29,9 @@ public:
     virtual void toggleFullScreen(){};
     virtual Resource* CreateRenderResource(); //LoadResourceFromXML ? Is there any more data in an xml file that could be useful in that class ?
     virtual void RenderAllObjects(){};
+
+    // Helpers
+    SDL_Renderer* GetRenderer() const;
 
 private:
 

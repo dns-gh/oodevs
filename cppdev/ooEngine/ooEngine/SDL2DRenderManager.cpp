@@ -1,7 +1,9 @@
 #include "SDL2DRenderManager.h"
+#include "SDLRenderResource.h"
 #include "ErrorLogManager.h"
 #include "SDL_hints.h"
 #include "SDL_error.h"
+#include "SDL_image.h"
 
 SDL2DRenderManager::~SDL2DRenderManager( )
 {
@@ -35,6 +37,11 @@ void SDL2DRenderManager::Initialize( unsigned int width, unsigned int height, bo
     // Set the rendered default draw color to white
     SDL_SetRenderDrawColor( renderer_, 255, 255, 255, 0);
 
+    //Initialize PNG loading
+    int imgFlags = IMG_INIT_PNG;
+    if( !( IMG_Init( imgFlags ) & imgFlags ) )
+        OOTHROW( 1, "Error when trying initialize the SDL Image lib : " + std::string( IMG_GetError( ) ) );
+
     SDL_SetHint( SDL_HINT_RENDER_SCALE_QUALITY, "linear" );
     SDL_RenderSetLogicalSize( renderer_, width, height );
 }
@@ -50,5 +57,10 @@ bool SDL2DRenderManager::Update()
 
 Resource* SDL2DRenderManager::CreateRenderResource()
 {
-    return new RenderResource();
+    return new SDLRenderResource();
+}
+
+SDL_Renderer* SDL2DRenderManager::GetRenderer() const
+{
+    return renderer_;
 }

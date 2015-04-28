@@ -11,6 +11,7 @@
     <ClCompile Include="SDL2DRenderManager.cpp">
       <Filter>sdlrendering</Filter>
     </ClCompile>
+    <ClCompile Include="SDLRenderResource.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EngineObject.h" />
@@ -24,9 +25,6 @@
       <Filter>tools</Filter>
     </ClInclude>
     <ClInclude Include="Resource.h" />
-    <ClInclude Include="RenderResource.h">
-      <Filter>sdlrendering</Filter>
-    </ClInclude>
     <ClInclude Include="SDLRenderObject.h">
       <Filter>sdlrendering</Filter>
     </ClInclude>
@@ -37,6 +35,9 @@
       <Filter>sdlrendering</Filter>
     </ClInclude>
     <ClInclude Include="RenderManager_ABC.h" />
+    <ClInclude Include="SDLRenderResource.h">
+      <Filter>sdlrendering</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="tools">

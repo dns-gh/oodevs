@@ -2,7 +2,7 @@
 #define _SDLRENDEROBJECT_H
 
 #include "EngineObject.h"
-#include "RenderResource.h"
+#include "SDLRenderResource.h"
 #include "SDL_rect.h"
 #include "SDL_pixels.h"
 
@@ -10,11 +10,11 @@ class SDLRenderObject : public EngineObject
 {
 public:
     SDLRenderObject();
-    void setResourceObject( RenderResource* renderResource );
+    void setResourceObject( SDLRenderResource* renderResource );
     virtual void Update(){};
 
 private:
-    RenderResource* renderResource_;
+    SDLRenderResource* renderResource_;
     SDL_Rect renderRect_;
     float posX_;
     float posY_;
