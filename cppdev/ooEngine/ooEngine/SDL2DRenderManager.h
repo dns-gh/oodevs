@@ -4,27 +4,32 @@
 //#include "RenderManager.h"
 #include "SingletonTemplate.h"
 #include "RenderResource.h"
+#include "RenderManager_ABC.h"
+
+#include "tinyxml2.h"
 #include "SDL.h"
 #include "SDLRenderObject.h"
-#include "tinyxml2.h"
 #include "SDL_video.h"
 #include "SDL_render.h"
+
 #include <sstream>
 #include <list>
 
 class SDL2DRenderManager : public EngineObject
-                         , public SingletonTemplate< SDL2DRenderManager > // : public RenderManager
+                         , public RenderManager_ABC
+                         , public SingletonTemplate< SDL2DRenderManager >
 {
     friend SDL2DRenderManager* SingletonTemplate< SDL2DRenderManager >::GetInstance( );
     friend void SingletonTemplate< SDL2DRenderManager >::Kill( );
 
 public:
-    void Initialize( unsigned int width = 800, unsigned int height = 600, bool fullscreen = false, char* windowTitle = 0 );
-    void Free();
-    bool Update();
-    void toggleFullScreen();
-    Resource* CreateRenderResource(); //LoadResourceFromXML ? Is there any more data in an xml file that could be useful in that class ?
-    void RenderAllObjects();
+    virtual void Initialize( unsigned int width = 800, unsigned int height = 600, bool fullscreen = false, char* windowTitle = 0 );
+    virtual void Free(){};
+    virtual bool Update();
+    virtual void toggleFullScreen(){};
+    virtual Resource* CreateRenderResource(); //LoadResourceFromXML ? Is there any more data in an xml file that could be useful in that class ?
+    virtual void RenderAllObjects(){};
+
 private:
 
     SDL2DRenderManager( const SDL2DRenderManager& ){};

@@ -36,6 +36,7 @@
     <ClInclude Include="SDL2DRenderManager.h">
       <Filter>sdlrendering</Filter>
     </ClInclude>
+    <ClInclude Include="RenderManager_ABC.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="tools">
