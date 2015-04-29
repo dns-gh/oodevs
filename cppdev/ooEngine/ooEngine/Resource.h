@@ -27,8 +27,15 @@ public:
             return true;
         return false;
     }
+    void Reset()
+    {
+        id_ = -1;
+        scope_ = -1;
+        type_ = RESOURCE_NUL;
+    }
     unsigned int GetResourceID() const { return id_; }
     unsigned int GetResourceScope() const { return scope_; }
+    std::string GetResourceFilename() const { return filename_; }
     virtual ~Resource(){};
     virtual void Load(){};
     virtual void UnLoad(){};

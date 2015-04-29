@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 3 3" width="300" height="300">
+<path d="M0,0h1v1H0" fill="#fe8484"/>
+<path d="M1,0h1v1H1" fill="#530000"/>
+<path d="M2,0h1v1H2" fill="#fe2020"/>
+<path d="M0,1h1v1H0" fill="#ba0000"/>
+<path d="M1,1h1v1H1" fill="#fe5c5c"/>
+<path d="M2,1h1v1H2" fill="#db0000"/>	
+<path d="M0,2h1v1H0" fill="#6b0000"/>
+<path d="M1,2h1v1H1" fill="#fe3939"/>
+<path d="M2,2h1v1H2" fill="#fe4d4d"/>
+</svg>
