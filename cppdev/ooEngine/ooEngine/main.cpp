@@ -7,42 +7,40 @@
 int main(int, char**)
 {
     ErrorLogManager* errorManager = ErrorLogManager::GetInstance();
-    errorManager->CreateLogFile( tools::GetModulePath() + std::string( "logError.txt" ) );
+    errorManager->CreateLogFile( tools::GetModulePath() + std::string( "/logError.txt" ) );
      
     try
     {
-        OOTHROW( 1, "Test error message" );
+        ResourceManager* resourceManager = new ResourceManager();
+        delete resourceManager;
+        SDL2DRenderManager* sdlRenderManager = SDL2DRenderManager::GetInstance();
+        sdlRenderManager->Initialize();
+
+        SDLRenderResource* imageTest = new SDLRenderResource();
+        imageTest->Initialize( 0, 0, tools::GetModulePath() + std::string( "/../../data/graphic/bluesky.jpg" ) );
+        imageTest->Load();
+
+        //While application is running
+        bool quit = false;
+        //Event handler
+        SDL_Event e;
+        while( !quit )
+        {
+            //Handle events on queue
+            while( SDL_PollEvent( &e ) != 0 )
+            {
+                //User requests quit
+                if( e.type == SDL_QUIT )
+                    quit = true;
+            }
+            sdlRenderManager->Update();
+        }
     }
     catch( cException& e )
     {
         MessageBox( NULL, e.what(), "", MB_OK );
         errorManager->LogException( e );
         errorManager->Flush();
-    }
-
-    ResourceManager* resourceManager = new ResourceManager();
-    delete resourceManager;
-    SDL2DRenderManager* sdlRenderManager = SDL2DRenderManager::GetInstance();
-    sdlRenderManager->Initialize();
-
-    SDLRenderResource* imageTest = new SDLRenderResource();
-    imageTest->Initialize( 0, 0, tools::GetModulePath( ) + std::string( "/../../data/graphic/blue.png" ) );
-    imageTest->Load();
-    
-    //While application is running
-    bool quit = false;
-    //Event handler
-    SDL_Event e;
-    while( !quit )
-    {
-        //Handle events on queue
-        while( SDL_PollEvent( &e ) != 0 )
-        {
-            //User requests quit
-            if( e.type == SDL_QUIT )
-                quit = true;
-        }
-        sdlRenderManager->Update( );
     }
 
     return 1;
