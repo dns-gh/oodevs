@@ -37,11 +37,11 @@ void SDL2DRenderManager::Initialize( unsigned int width, unsigned int height, bo
     // Set the rendered default draw color to white
     SDL_SetRenderDrawColor( renderer_, 255, 255, 255, 0);
 
-    //Initialize PNG loading
-    int imgFlags = IMG_INIT_PNG;
+    //Initialize PNG loading (useful ?)
+    /*int imgFlags = IMG_INIT_PNG;
     if( !( IMG_Init( imgFlags ) & imgFlags ) )
         OOTHROW( 1, "Error when trying initialize the SDL Image lib : " + std::string( IMG_GetError( ) ) );
-
+        */
     SDL_SetHint( SDL_HINT_RENDER_SCALE_QUALITY, "linear" );
     SDL_RenderSetLogicalSize( renderer_, width, height );
 }
@@ -58,6 +58,12 @@ bool SDL2DRenderManager::Update()
 Resource* SDL2DRenderManager::CreateRenderResource()
 {
     return new SDLRenderResource();
+}
+
+void SDL2DRenderManager::PushBackRenderObject( EngineObject* object )
+{
+    if( object )
+        renderObjects_.push_back( object );
 }
 
 SDL_Renderer* SDL2DRenderManager::GetRenderer() const

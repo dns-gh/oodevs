@@ -29,6 +29,7 @@ public:
     virtual void toggleFullScreen(){};
     virtual Resource* CreateRenderResource(); //LoadResourceFromXML ? Is there any more data in an xml file that could be useful in that class ?
     virtual void RenderAllObjects(){};
+    virtual void PushBackRenderObject( EngineObject* object );
 
     // Helpers
     SDL_Renderer* GetRenderer() const;
@@ -44,7 +45,7 @@ private:
     SDL_Window* renderWindow_;
     SDL_Renderer *renderer_;
     //std::stringstream videoInfos_;
-    std::list< SDLRenderObject* > renderObjects_;
+    std::list< EngineObject* > renderObjects_;
 };
 
 #endif // SDL2DRenderManager.h
