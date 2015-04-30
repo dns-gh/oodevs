@@ -12,6 +12,8 @@ public:
     virtual void Load();
     virtual void UnLoad();
 
+    void RenderTextureAtPos( int x, int y );
+
 private:
     SDL_Texture* texture_;
 };

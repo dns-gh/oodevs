@@ -26,7 +26,8 @@ void SDL2DRenderManager::Initialize( unsigned int width, unsigned int height, bo
     if( !renderWindow_ )
         OOTHROW( 1, "Error when trying to create a window : " + std::string( SDL_GetError() ) );
 
-    renderer_ = SDL_CreateRenderer( renderWindow_, -1, 0 ); // Use of SDL_CreateWindowAndRenderer possible
+    renderer_ = SDL_CreateRenderer( renderWindow_, -1, 
+                                    SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC ); // Use of SDL_CreateWindowAndRenderer possible
     if( !renderer_ )
         OOTHROW( 1, "Error when trying to create a renderer : " + std::string( SDL_GetError( ) ) );
 

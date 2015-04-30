@@ -2,3 +2,4 @@
 - Add a (multiple?) propre OOLOGs to report what's going on when the app is loading/running/leaving
 or as a tool for debugging
 - Make automatic the move of the dll files needed for the exe into the right folder
+- Create a package delivery system containing all the dll, exe and data files needed to launch

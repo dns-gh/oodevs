@@ -10,7 +10,7 @@ class SDLRenderObject : public EngineObject
 {
 public:
     SDLRenderObject();
-    void setResourceObject( SDLRenderResource* renderResource );
+    void SetResourceObject( SDLRenderResource* renderResource );
     virtual void Update(){};
 
 private:

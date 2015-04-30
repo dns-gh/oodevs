@@ -11,14 +11,17 @@ int main(int, char**)
      
     try
     {
-        ResourceManager* resourceManager = new ResourceManager();
+        auto resourceManager = new ResourceManager();
         delete resourceManager;
-        SDL2DRenderManager* sdlRenderManager = SDL2DRenderManager::GetInstance();
+        auto sdlRenderManager = SDL2DRenderManager::GetInstance();
         sdlRenderManager->Initialize();
 
-        SDLRenderResource* imageTest = new SDLRenderResource();
+        auto imageTest = new SDLRenderResource();
         imageTest->Initialize( 0, 0, tools::GetModulePath() + std::string( "/../../data/graphic/bluesky.jpg" ) );
         imageTest->Load();
+        imageTest->RenderTextureAtPos( 10, 10 );
+        imageTest->RenderTextureAtPos( 100, 100 );
+        imageTest->UnLoad();
 
         //While application is running
         bool quit = false;
@@ -33,7 +36,8 @@ int main(int, char**)
                 if( e.type == SDL_QUIT )
                     quit = true;
             }
-            sdlRenderManager->Update();
+            if( !sdlRenderManager->Update() )
+                OOTHROW( 1, "No rendering context to drawn in" );
         }
     }
     catch( cException& e )
