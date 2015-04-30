@@ -49,11 +49,31 @@ void SDL2DRenderManager::Initialize( unsigned int width, unsigned int height, bo
 
 bool SDL2DRenderManager::Update()
 {
+    //Event handler
+    SDL_Event event;
+    while( SDL_PollEvent( &event ) != 0 )
+    {
+        switch( event.type )
+        {
+            case SDL_QUIT:
+                return false;
+            case SDL_KEYDOWN:
+            {
+                if( event.key.keysym.sym == SDLK_ESCAPE )
+                    return false;
+            }
+        }
+    }
+
     if( !renderer_ )
-        return false;
+        OOTHROW( 1, "No rendering context to drawn in" );
+
+    SDL_RenderClear( renderer_ );
+    RenderAllObjects();
 
     SDL_RenderPresent( renderer_ );
     return true;
+
 }
 
 Resource* SDL2DRenderManager::CreateRenderResource()
@@ -61,13 +81,32 @@ Resource* SDL2DRenderManager::CreateRenderResource()
     return new SDLRenderResource();
 }
 
-void SDL2DRenderManager::PushBackRenderObject( EngineObject* object )
+void SDL2DRenderManager::RenderAllObjects()
 {
-    if( object )
-        renderObjects_.push_back( object );
+    for( auto it = renderObjects_.begin(); it != renderObjects_.end(); ++it )
+    {
+        if( ( *it )->IsVisible() )
+        {
+            if( !( *it )->GetRenderResource( )->GetTexture( ) )
+                continue;
+            ( *it )->Update();
+            SDL_Rect rect = ( *it )->GetRenderRect();
+            rect.x = static_cast< int >( ( *it )->X() );
+            rect.y = static_cast< int >( ( *it )->Y() );
+            // no use since w and h are already set when GetRenderRect is called.
+            //SDL_QueryTexture( ( *it )->GetRenderResource( )->GetTexture( ), NULL, NULL, &rect.w, &rect.h );
+            SDL_RenderCopy( renderer_, ( *it )->GetRenderResource()->GetTexture(), NULL, &rect );
+        }
+    }
 }
 
 SDL_Renderer* SDL2DRenderManager::GetRenderer() const
 {
     return renderer_;
+}
+
+void SDL2DRenderManager::PushBackRenderObject( SDLRenderObject* object )
+{
+    if( object )
+        renderObjects_.push_back( object );
 }

@@ -11,7 +11,13 @@ class SDLRenderObject : public EngineObject
 public:
     SDLRenderObject();
     void SetResourceObject( SDLRenderResource* renderResource );
-    virtual void Update(){};
+    virtual void Update();
+
+    SDLRenderResource* GetRenderResource() const;
+    SDL_Rect GetRenderRect() const;
+    float X() const;
+    float Y() const;
+    bool IsVisible() const;
 
 private:
     SDLRenderResource* renderResource_;
@@ -19,8 +25,9 @@ private:
     float posX_;
     float posY_;
     bool visible_;
-    SDL_Color colorKey_;
+    /*SDL_Color colorKey_;
     bool colorKeyEnabled_;
+    */
 };
 
 #endif // SDLRenderObject.h

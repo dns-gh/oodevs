@@ -39,10 +39,10 @@ private:
 
 // Manager for error and logging
 class ErrorLogManager : public EngineObject
-					  , public SingletonTemplate< ErrorLogManager >
+                      , public SingletonTemplate< ErrorLogManager >
 {
-	friend ErrorLogManager* SingletonTemplate< ErrorLogManager >::GetInstance();
-	friend void SingletonTemplate< ErrorLogManager >::Kill();
+    friend ErrorLogManager* SingletonTemplate< ErrorLogManager >::GetInstance();
+    friend void SingletonTemplate< ErrorLogManager >::Kill();
 public:
     void CreateLogFile( std::string filename );
     void Flush();
@@ -51,10 +51,10 @@ public:
     std::string GetTimeStr();
 
 private:
-	ErrorLogManager(const ErrorLogManager&){};
-	ErrorLogManager& operator=(const ErrorLogManager&){};
-	ErrorLogManager(){};
-	virtual ~ErrorLogManager(){};
+    ErrorLogManager(const ErrorLogManager&){};
+    ErrorLogManager& operator=(const ErrorLogManager&){};
+    ErrorLogManager(){};
+    virtual ~ErrorLogManager(){};
 
     std::stringstream logBuffer_;
     std::ofstream logFile_;

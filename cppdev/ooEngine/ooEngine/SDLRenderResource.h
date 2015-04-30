@@ -13,7 +13,7 @@ public:
     virtual void UnLoad();
 
     void RenderTextureAtPos( int x, int y );
-
+    SDL_Texture* GetTexture() const { return texture_; };
 private:
     SDL_Texture* texture_;
 };

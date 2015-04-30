@@ -19,7 +19,7 @@ class SDL2DRenderManager : public EngineObject
                          , public RenderManager_ABC
                          , public SingletonTemplate< SDL2DRenderManager >
 {
-    friend SDL2DRenderManager* SingletonTemplate< SDL2DRenderManager >::GetInstance( );
+    friend SDL2DRenderManager* SingletonTemplate< SDL2DRenderManager >::GetInstance();
     friend void SingletonTemplate< SDL2DRenderManager >::Kill( );
 
 public:
@@ -28,14 +28,13 @@ public:
     virtual bool Update();
     virtual void toggleFullScreen(){};
     virtual Resource* CreateRenderResource(); //LoadResourceFromXML ? Is there any more data in an xml file that could be useful in that class ?
-    virtual void RenderAllObjects(){};
-    virtual void PushBackRenderObject( EngineObject* object );
+    virtual void RenderAllObjects();
 
     // Helpers
     SDL_Renderer* GetRenderer() const;
+    virtual void PushBackRenderObject( SDLRenderObject* object );
 
 private:
-
     SDL2DRenderManager( const SDL2DRenderManager& ){};
     SDL2DRenderManager& operator=( const SDL2DRenderManager& ){};
     SDL2DRenderManager(){};
@@ -45,7 +44,7 @@ private:
     SDL_Window* renderWindow_;
     SDL_Renderer *renderer_;
     //std::stringstream videoInfos_;
-    std::list< EngineObject* > renderObjects_;
+    std::list< SDLRenderObject* > renderObjects_;
 };
 
 #endif // SDL2DRenderManager.h

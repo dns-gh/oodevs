@@ -1,4 +1,5 @@
 #include "ResourceManager.h"
+#include "SDL2DRenderManager.h"
 #include "tinyxml2.h"
 
 using namespace tinyxml2;
@@ -7,6 +8,13 @@ using namespace tinyxml2;
 
 ResourceManager::ResourceManager()
 {
+    currentScope_ = 0;
+    resourceCount_ = 0;
+}
+
+ResourceManager::~ResourceManager( )
+{
+    Clear();
     currentScope_ = 0;
     resourceCount_ = 0;
 }
@@ -33,8 +41,8 @@ bool ResourceManager::LoadFromXMLFile( const std::string& filename )
                         {
                             if( attValue == "graphic" )
                             {
-                                // load of the resource by the graphic manager
-                                // resource = RenderManager->LoadResourceFromXML( elem );
+                                // Create a resource by the graphic manager
+                                resource = SDL2DRenderManager::GetInstance()->CreateRenderResource();
                             }
                             else if( attValue == "text" )
                             {

@@ -21,8 +21,8 @@ protected:
     SingletonTemplate< T >(){};
     SingletonTemplate< T >( const T& rhs ){};
     T& operator=( const T& rhs ){};
-	virtual ~SingletonTemplate< T >(){};
-	static T* instance_;
+    virtual ~SingletonTemplate< T >(){};
+    static T* instance_;
 };
 
 template< typename T > T* SingletonTemplate< T >::instance_ = 0;

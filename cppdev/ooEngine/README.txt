@@ -9,4 +9,4 @@ using : PATH=%PATH%;$(ProjectDir)\..\externallibs\SDL2-2.0.3\lib\x64;$(ProjectDi
 Pick  SDL2_image-devel-2.0.0-VC and follow the same steps as for the SDL2 lib
 
 # Info
-Early dev is actually available under x64 platform only (Debug or release mode)
+Early dev is actually available under x64 platform only (Debug or Release mode)

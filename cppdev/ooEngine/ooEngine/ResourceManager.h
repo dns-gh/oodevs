@@ -13,6 +13,7 @@ class ResourceManager : public EngineObject
 {
 public:
     ResourceManager();
+    ~ResourceManager();
 
     bool LoadFromXMLFile( const std::string& filename );
     void SetCurrentScope( unsigned int scope );

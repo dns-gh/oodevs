@@ -128,6 +128,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="SDL2DRenderManager.cpp" />
+    <ClCompile Include="SDLRenderObject.cpp" />
     <ClCompile Include="SDLRenderResource.cpp" />
     <ClCompile Include="tinyxml2.cpp" />
   </ItemGroup>
