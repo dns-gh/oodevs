@@ -27,55 +27,35 @@ bool ResourceManager::LoadFromXMLFile( const std::string& filename )
         XMLNode* tree = doc.FirstChildElement( "resources" );
         if( tree )
         {
-            for( XMLNode* child = tree->FirstChild(); child; child->NextSibling() )
+            for( XMLNode* child = tree->FirstChild( ); child; child = child->NextSibling( ) )
             {
                 XMLElement* elem = child->ToElement();
                 if( elem )
                 {
                     Resource* resource = NULL;
-                    for( const XMLAttribute* att = elem->FirstAttribute(); att; att->Next() )
+                    std::string attValue = elem->Attribute( "type" );
+                    RESOURCE_TYPE type;
+                    if( attValue == "graphic" )
                     {
-                        std::string attName = att->Name();
-                        std::string attValue = att->Value();
-                        if( attName == "type" )
-                        {
-                            if( attValue == "graphic" )
-                            {
-                                // Create a resource by the graphic manager
-                                resource = SDL2DRenderManager::GetInstance()->CreateRenderResource();
-                            }
-                            else if( attValue == "text" )
-                            {
-                                // load of the resource by the config manager
-                                // resource = ConfigManager->LoadResourceFromXML( elem );
-                            }
-                        }
-
-                        if( resource )
-                        {
-                            unsigned int id = -1;
-                            unsigned int scope = -1;
-                            std::string filename;
-                            if( attName == "id" )
-                            {
-                                id = std::atoi( attValue.c_str() );
-                            }
-                            else if( attName == "scenescope" )
-                            {
-                                scope = std::atoi( attValue.c_str( ) );
-                            }
-                            else if( attName == "filename" )
-                            {
-                                filename = attValue;
-                            }
-                            if( !resource->Initialize( id, scope, filename ) )
-                                OOTHROW( 2, "Error when loading a resource from " + filename + " XML file");
-                        }
+                        // Create a resource by the graphic manager
+                        resource = SDL2DRenderManager::GetInstance()->CreateRenderResource();
+                        type = RESOURCE_GRAPHIC;
                     }
-                    
+                    else if( attValue == "text" )
+                    {
+                        // load of the resource by the config manager
+                        // resource = ConfigManager->LoadResourceFromXML( elem );
+                    }
+
                     if( resource )
                     {
-                        resourceByScope_[ resource->GetResourceScope() ].push_back( resource );
+                        unsigned int id = std::atoi( elem->Attribute( "id" ) );
+                        unsigned int scope = std::atoi( elem->Attribute( "scenescope" ) );
+                        std::string filename = elem->Attribute( "filename" );
+                        std::string filepath = tools::GetModulePath() + std::string( "/../../data/graphic/" ) + filename;
+                        if( !resource->Initialize( id, scope, filepath, type ) )
+                            OOTHROW( 2, "Error when loading a resource from " + filepath + " XML file" );
+                        resourceByScope_[ resource->GetResourceScope( ) ].push_back( resource );
                         resourceCount_++;
                     }
                 }
@@ -98,7 +78,7 @@ void ResourceManager::SetCurrentScope( unsigned int scope )
     currentScope_ = scope;
     for( auto it = resourceByScope_[ currentScope_ ].begin( ); it != resourceByScope_[ currentScope_ ].end( ); it++ )
     {
-        ( *it )->Load( );
+        ( *it )->Load();
     }
 }
 
@@ -110,12 +90,12 @@ Resource* ResourceManager::FindResourceByID( const unsigned int& id ) const
         {
             for( auto listIt = ( *it ).second.begin(); listIt != ( *it ).second.end(); listIt++ )
             {
-                if( ( *listIt )->GetResourceID( ) != id )
+                if( ( *listIt )->GetResourceID() == id )
                     return *listIt;
             }
         }
     }
-    return NULL;
+    return 0;
 }
 
 unsigned int ResourceManager::GetResourceCount() const

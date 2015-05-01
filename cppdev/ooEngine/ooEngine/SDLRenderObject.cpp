@@ -1,14 +1,26 @@
 #include "SDLRenderObject.h"
 
-void SDLRenderObject::SetResourceObject( SDLRenderResource* renderResource )
+SDLRenderObject::~SDLRenderObject()
 {
-    if( !renderResource )
+    renderResource_->UnLoad();
+}
+
+void SDLRenderObject::SetResourceObject( Resource* renderResource )
+{
+    if( !renderResource || renderResource->GetResourceType() != RESOURCE_GRAPHIC )
         return;
 
     renderResource_ = renderResource;
-    SDL_QueryTexture( renderResource->GetTexture(), NULL, NULL, &renderRect_.w, &renderRect_.h );
+    renderResource_->Load();
+    SDL_QueryTexture( dynamic_cast< SDLRenderResource* >( renderResource )->GetTexture(), NULL, NULL, &renderRect_.w, &renderRect_.h );
     
     // TODO Color Keying
+}
+
+void SDLRenderObject::SetPosition( float x, float y )
+{
+    posX_ = x;
+    posY_ = y;
 }
 
 SDL_Rect SDLRenderObject::GetRenderRect() const
@@ -16,7 +28,7 @@ SDL_Rect SDLRenderObject::GetRenderRect() const
     return renderRect_;
 }
 
-SDLRenderResource* SDLRenderObject::GetRenderResource( ) const
+Resource* SDLRenderObject::GetRenderResource( ) const
 {
     return renderResource_;
 }

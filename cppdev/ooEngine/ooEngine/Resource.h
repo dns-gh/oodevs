@@ -18,12 +18,13 @@ public:
         scope_ = -1;
         type_ = RESOURCE_NUL;
     }
-    bool Initialize( unsigned id, unsigned scope, std::string filename )
+    bool Initialize( unsigned id, unsigned scope, std::string filename, RESOURCE_TYPE type )
     {
         id_ = id;
         scope_ = scope;
         filename_ = filename;
-        if( id != -1 && scope != -1 && filename != "" )
+        type_ = type;
+        if( id != -1 && scope != -1 && filename != "" && type != RESOURCE_NUL )
             return true;
         return false;
     }
@@ -36,6 +37,7 @@ public:
     unsigned int GetResourceID() const { return id_; }
     unsigned int GetResourceScope() const { return scope_; }
     std::string GetResourceFilename() const { return filename_; }
+    RESOURCE_TYPE GetResourceType() const { return type_; };
     virtual ~Resource(){};
     virtual void Load(){};
     virtual void UnLoad(){};

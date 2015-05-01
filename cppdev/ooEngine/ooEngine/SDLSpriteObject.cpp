@@ -7,9 +7,18 @@ SDLSpriteObject::SDLSpriteObject()
     // NOTHING
 }
 
+SDLSpriteObject::SDLSpriteObject( unsigned imgNum, unsigned imgPRows, unsigned imgPCol, unsigned long timeBImg )
+    : imageNumber_( imgNum )
+    , imagesPerRow_( imgPRows )
+    , imagesPerColumn_( imgPCol )
+    , timeBetweenImages_( timeBImg )
+{
+    visible_ = true;
+}
+
 void SDLSpriteObject::Update()
 {
-    unsigned long timeSinceLastFrame = tools::GetCurrenTime() - lastFrameTime_;
+    unsigned long timeSinceLastFrame = tools::GetCurrentTime( ) - lastFrameTime_;
 
     if( timeSinceLastFrame >= timeBetweenImages_ )
     {
@@ -17,22 +26,25 @@ void SDLSpriteObject::Update()
         if( currentImage_ >= imageNumber_ )
             currentImage_ = startImage_;
         SetRenderRect( currentImage_ );
-        lastFrameTime_ = tools::GetCurrenTime();
+        lastFrameTime_ = tools::GetCurrentTime( );
     }
 }
 
 void SDLSpriteObject::Play( unsigned int startImage = -1 )
 {
+    if( !renderResource_ )
+        return;
+
     SDL_Rect rect;
-    SDL_QueryTexture( renderResource_->GetTexture(), NULL, NULL, &rect.w, &rect.h );
+    SDL_QueryTexture( dynamic_cast< SDLRenderResource* >( renderResource_ )->GetTexture(), NULL, NULL, &rect.w, &rect.h );
     imageWidth_ = rect.w / imagesPerRow_;
     imageHeight_ = rect.h / imagesPerColumn_;
     if( startImage < 0 || startImage >= imageNumber_ )
         currentImage_ = startImage_;
     else
-        startImage_ = startImage;
+        currentImage_ = startImage;
     SetRenderRect( currentImage_ );
-    lastFrameTime_ = tools::GetCurrenTime();
+    lastFrameTime_ = tools::GetCurrentTime();
 }
 
 void SDLSpriteObject::SetRenderRect( int imageNumber )

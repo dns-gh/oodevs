@@ -7,6 +7,7 @@ class SDLSpriteObject : public SDLRenderObject
 {
 public:
     SDLSpriteObject();
+    SDLSpriteObject( unsigned imgNum, unsigned imgPRows, unsigned imgPCol, unsigned long timeBImg );
     virtual void Update();
     void Play( unsigned int startFrame );
     void Stop();

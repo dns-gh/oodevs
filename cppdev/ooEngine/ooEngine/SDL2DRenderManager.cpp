@@ -27,7 +27,7 @@ void SDL2DRenderManager::Initialize( unsigned int width, unsigned int height, bo
         OOTHROW( 1, "Error when trying to create a window : " + std::string( SDL_GetError() ) );
 
     renderer_ = SDL_CreateRenderer( renderWindow_, -1, 
-                                    SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC ); // Use of SDL_CreateWindowAndRenderer possible
+                                    SDL_RENDERER_ACCELERATED ); // Use of SDL_CreateWindowAndRenderer possible
     if( !renderer_ )
         OOTHROW( 1, "Error when trying to create a renderer : " + std::string( SDL_GetError( ) ) );
 
@@ -43,7 +43,7 @@ void SDL2DRenderManager::Initialize( unsigned int width, unsigned int height, bo
     if( !( IMG_Init( imgFlags ) & imgFlags ) )
         OOTHROW( 1, "Error when trying initialize the SDL Image lib : " + std::string( IMG_GetError( ) ) );
         */
-    SDL_SetHint( SDL_HINT_RENDER_SCALE_QUALITY, "linear" );
+    //SDL_SetHint( SDL_HINT_RENDER_SCALE_QUALITY, "linear" );
     SDL_RenderSetLogicalSize( renderer_, width, height );
 }
 
@@ -70,10 +70,8 @@ bool SDL2DRenderManager::Update()
 
     SDL_RenderClear( renderer_ );
     RenderAllObjects();
-
     SDL_RenderPresent( renderer_ );
     return true;
-
 }
 
 Resource* SDL2DRenderManager::CreateRenderResource()
@@ -87,16 +85,17 @@ void SDL2DRenderManager::RenderAllObjects()
     {
         if( ( *it )->IsVisible() )
         {
-            if( !( *it )->GetRenderResource( )->GetTexture( ) )
+            if( !dynamic_cast< SDLRenderResource* >( ( *it )->GetRenderResource() )->GetTexture( ) )
                 continue;
             // Update of the SDLRenderObject. In case of a sprite object, it sets the image to the correct one if need be.
             ( *it )->Update();
             SDL_Rect rect = ( *it )->GetRenderRect();
-            rect.x = static_cast< int >( ( *it )->X() );
-            rect.y = static_cast< int >( ( *it )->Y() );
-            // no use since w and h are already set when GetRenderRect is called.
-            //SDL_QueryTexture( ( *it )->GetRenderResource( )->GetTexture( ), NULL, NULL, &rect.w, &rect.h );
-            SDL_RenderCopy( renderer_, ( *it )->GetRenderResource()->GetTexture(), NULL, &rect );
+            SDL_Rect dst;
+            dst.x = static_cast< int >( ( *it )->X( ) );
+            dst.y = static_cast< int >( ( *it )->Y( ) );
+            dst.w = rect.w;
+            dst.h = rect.h;
+            SDL_RenderCopy( renderer_, dynamic_cast< SDLRenderResource* >( ( *it )->GetRenderResource( ) )->GetTexture( ), &rect, &dst );
         }
     }
 }
@@ -106,7 +105,7 @@ SDL_Renderer* SDL2DRenderManager::GetRenderer() const
     return renderer_;
 }
 
-void SDL2DRenderManager::PushBackRenderObject( SDLRenderObject* object )
+void SDL2DRenderManager::InsertRenderObject( SDLRenderObject* object )
 {
     if( object )
         renderObjects_.push_back( object );

@@ -9,17 +9,22 @@
 class SDLRenderObject : public EngineObject
 {
 public:
-    void SetResourceObject( SDLRenderResource* renderResource );
+    virtual ~SDLRenderObject();
+    void SetResourceObject( Resource* renderResource );
     virtual void Update(){};
 
-    SDLRenderResource* GetRenderResource() const;
+    // Getters
+    Resource* GetRenderResource( ) const;
     SDL_Rect GetRenderRect() const;
     float X() const;
     float Y() const;
     bool IsVisible() const;
 
+    // Setters
+    void SetPosition( float x, float y );
+
 protected:
-    SDLRenderResource* renderResource_;
+    Resource* renderResource_;
     SDL_Rect renderRect_;
     float posX_;
     float posY_;

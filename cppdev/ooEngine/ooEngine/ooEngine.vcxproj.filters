@@ -46,6 +46,7 @@
     <ClInclude Include="SDLSpriteObject.h">
       <Filter>sdlrendering</Filter>
     </ClInclude>
+    <ClInclude Include="RenderResource.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="tools">

@@ -32,7 +32,7 @@ public:
 
     // Helpers
     SDL_Renderer* GetRenderer() const;
-    virtual void PushBackRenderObject( SDLRenderObject* object );
+    virtual void InsertRenderObject( SDLRenderObject* object );
 
 private:
     SDL2DRenderManager( const SDL2DRenderManager& ){};
