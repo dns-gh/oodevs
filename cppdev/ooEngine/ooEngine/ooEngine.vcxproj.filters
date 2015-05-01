@@ -17,6 +17,9 @@
     <ClCompile Include="SDLRenderObject.cpp">
       <Filter>sdlrendering</Filter>
     </ClCompile>
+    <ClCompile Include="SDLSpriteObject.cpp">
+      <Filter>sdlrendering</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EngineObject.h" />
@@ -33,14 +36,14 @@
     <ClInclude Include="SDLRenderObject.h">
       <Filter>sdlrendering</Filter>
     </ClInclude>
-    <ClInclude Include="SpriteObject.h">
-      <Filter>sdlrendering</Filter>
-    </ClInclude>
     <ClInclude Include="SDL2DRenderManager.h">
       <Filter>sdlrendering</Filter>
     </ClInclude>
     <ClInclude Include="RenderManager_ABC.h" />
     <ClInclude Include="SDLRenderResource.h">
+      <Filter>sdlrendering</Filter>
+    </ClInclude>
+    <ClInclude Include="SDLSpriteObject.h">
       <Filter>sdlrendering</Filter>
     </ClInclude>
   </ItemGroup>

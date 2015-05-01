@@ -4,6 +4,7 @@
 #include <windows.h>
 #include <string>
 #include <iostream>
+#include <chrono>
 
 #ifndef OODELETE
 #define OODELETE( p ) { delete( p ); ( p ) = NULL; };
@@ -17,6 +18,11 @@ namespace tools
         GetModuleFileName( NULL, buffer, MAX_PATH );
         std::string::size_type pos = std::string( buffer ).find_last_of( "\\/" );
         return std::string( buffer ).substr( 0, pos );
+    }
+
+    static unsigned long GetCurrenTime( )
+    {
+        return static_cast< unsigned long >( std::chrono::duration_cast< std::chrono::milliseconds >( std::chrono::system_clock::now().time_since_epoch() ).count() );
     }
 }
 

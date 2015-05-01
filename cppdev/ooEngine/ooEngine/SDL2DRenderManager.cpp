@@ -89,6 +89,7 @@ void SDL2DRenderManager::RenderAllObjects()
         {
             if( !( *it )->GetRenderResource( )->GetTexture( ) )
                 continue;
+            // Update of the SDLRenderObject. In case of a sprite object, it sets the image to the correct one if need be.
             ( *it )->Update();
             SDL_Rect rect = ( *it )->GetRenderRect();
             rect.x = static_cast< int >( ( *it )->X() );

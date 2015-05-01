@@ -9,9 +9,8 @@
 class SDLRenderObject : public EngineObject
 {
 public:
-    SDLRenderObject();
     void SetResourceObject( SDLRenderResource* renderResource );
-    virtual void Update();
+    virtual void Update(){};
 
     SDLRenderResource* GetRenderResource() const;
     SDL_Rect GetRenderRect() const;
@@ -19,7 +18,7 @@ public:
     float Y() const;
     bool IsVisible() const;
 
-private:
+protected:
     SDLRenderResource* renderResource_;
     SDL_Rect renderRect_;
     float posX_;
