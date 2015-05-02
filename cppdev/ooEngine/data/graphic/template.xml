@@ -1,6 +1,6 @@
 <resources>
-	<resource id="0" type="text" filename="game.cfg" scenescope="0">
-	</resource>
-	<resource id="1" type="graphic" filename="spriteTest.png" scenescope="0">
-	</resource>
+	<resource id="0" type="text" filename="game.cfg" scenescope="0"></resource>
+	<resource id="1" type="graphic" filename="spriteTest.png" scenescope="0"></resource>
+	<resource id="2" type="graphic" filename="spriteTestBlack.png" scenescope="0"></resource>
+	<resource id="3" type="graphic" filename="bluesky.jpg" scenescope="0"></resource>
 </resources>

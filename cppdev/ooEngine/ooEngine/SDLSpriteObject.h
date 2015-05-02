@@ -9,8 +9,11 @@ public:
     SDLSpriteObject();
     SDLSpriteObject( unsigned imgNum, unsigned imgPRows, unsigned imgPCol, unsigned long timeBImg );
     virtual void Update();
-    void Play( unsigned int startFrame );
-    void Stop();
+    void Play( unsigned int startFrame = -1 );
+    void Pause();
+    void Resume(unsigned int resumeFrame = -1 );
+
+    bool IsPaused() const;
 
 private:
     unsigned int imageNumber_;
@@ -18,6 +21,8 @@ private:
     unsigned int imagesPerColumn_;
     unsigned int currentImage_;
     unsigned int startImage_;
+    bool paused_;
+    bool playedOnce_;
 
     unsigned long timeBetweenImages_;
     unsigned int imageWidth_;

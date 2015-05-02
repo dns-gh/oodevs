@@ -9,6 +9,7 @@
 class SDLRenderObject : public EngineObject
 {
 public:
+    SDLRenderObject();
     virtual ~SDLRenderObject();
     void SetResourceObject( Resource* renderResource );
     virtual void Update(){};
@@ -22,6 +23,8 @@ public:
 
     // Setters
     void SetPosition( float x, float y );
+    void SetVisible( bool visibility );
+    void SetColorKeying( bool enable, unsigned int r = 0, unsigned int g = 0, unsigned int b = 0 ); // color keying is black by default
 
 protected:
     Resource* renderResource_;
@@ -29,9 +32,8 @@ protected:
     float posX_;
     float posY_;
     bool visible_;
-    /*SDL_Color colorKey_;
+    SDL_Color colorKey_;
     bool colorKeyEnabled_;
-    */
 };
 
 #endif // SDLRenderObject.h

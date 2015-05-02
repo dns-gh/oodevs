@@ -12,12 +12,17 @@ SDLSpriteObject::SDLSpriteObject( unsigned imgNum, unsigned imgPRows, unsigned i
     , imagesPerRow_( imgPRows )
     , imagesPerColumn_( imgPCol )
     , timeBetweenImages_( timeBImg )
+    , paused_( true )
+    , playedOnce_( false )
 {
-    visible_ = true;
+    // NOTHING
 }
 
 void SDLSpriteObject::Update()
 {
+    if( paused_ )
+        return;
+
     unsigned long timeSinceLastFrame = tools::GetCurrentTime( ) - lastFrameTime_;
 
     if( timeSinceLastFrame >= timeBetweenImages_ )
@@ -30,10 +35,13 @@ void SDLSpriteObject::Update()
     }
 }
 
-void SDLSpriteObject::Play( unsigned int startImage = -1 )
+void SDLSpriteObject::Play( unsigned int startImage )
 {
     if( !renderResource_ )
         return;
+
+    if( playedOnce_ && paused_ )
+        return Resume( startImage );
 
     SDL_Rect rect;
     SDL_QueryTexture( dynamic_cast< SDLRenderResource* >( renderResource_ )->GetTexture(), NULL, NULL, &rect.w, &rect.h );
@@ -43,8 +51,35 @@ void SDLSpriteObject::Play( unsigned int startImage = -1 )
         currentImage_ = startImage_;
     else
         currentImage_ = startImage;
+
     SetRenderRect( currentImage_ );
     lastFrameTime_ = tools::GetCurrentTime();
+    playedOnce_ = true;
+    paused_ = false;
+    visible_ = true;
+}
+
+void SDLSpriteObject::Pause()
+{
+    paused_ = true;
+}
+
+void SDLSpriteObject::Resume( unsigned int resumeFrame )
+{
+    if( !playedOnce_ )
+        return Play( resumeFrame );
+
+    if( resumeFrame >= 0 && resumeFrame < imageNumber_ )
+        currentImage_ = resumeFrame;
+
+    SetRenderRect( currentImage_ );
+    lastFrameTime_ = tools::GetCurrentTime( );
+    paused_ = false;
+}
+
+bool SDLSpriteObject::IsPaused( ) const
+{
+    return paused_;
 }
 
 void SDLSpriteObject::SetRenderRect( int imageNumber )

@@ -49,22 +49,6 @@ void SDL2DRenderManager::Initialize( unsigned int width, unsigned int height, bo
 
 bool SDL2DRenderManager::Update()
 {
-    //Event handler
-    SDL_Event event;
-    while( SDL_PollEvent( &event ) != 0 )
-    {
-        switch( event.type )
-        {
-            case SDL_QUIT:
-                return false;
-            case SDL_KEYDOWN:
-            {
-                if( event.key.keysym.sym == SDLK_ESCAPE )
-                    return false;
-            }
-        }
-    }
-
     if( !renderer_ )
         OOTHROW( 1, "No rendering context to drawn in" );
 
