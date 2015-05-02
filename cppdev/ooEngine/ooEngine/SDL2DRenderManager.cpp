@@ -69,7 +69,10 @@ void SDL2DRenderManager::RenderAllObjects()
     {
         if( ( *it )->IsVisible() )
         {
-            if( !dynamic_cast< SDLRenderResource* >( ( *it )->GetRenderResource() )->GetTexture( ) )
+            SDLRenderResource* renderResource = dynamic_cast< SDLRenderResource* >( ( *it )->GetRenderResource() );
+            if( !renderResource )
+                OOTHROW( 1, "No derived class for the given Resource" );
+            if( !renderResource->GetTexture() )
                 continue;
             // Update of the SDLRenderObject. In case of a sprite object, it sets the image to the correct one if need be.
             ( *it )->Update();
@@ -79,7 +82,7 @@ void SDL2DRenderManager::RenderAllObjects()
             dst.y = static_cast< int >( ( *it )->Y( ) );
             dst.w = rect.w;
             dst.h = rect.h;
-            SDL_RenderCopy( renderer_, dynamic_cast< SDLRenderResource* >( ( *it )->GetRenderResource( ) )->GetTexture( ), &rect, &dst );
+            SDL_RenderCopy( renderer_, renderResource->GetTexture( ), &rect, &dst );
         }
     }
 }

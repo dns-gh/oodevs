@@ -1,5 +1,6 @@
 #include "SDLSpriteObject.h"
 
+#include "ErrorLogManager.h"
 #include "tools.h"
 
 SDLSpriteObject::SDLSpriteObject()
@@ -44,7 +45,10 @@ void SDLSpriteObject::Play( unsigned int startImage )
         return Resume( startImage );
 
     SDL_Rect rect;
-    SDL_QueryTexture( dynamic_cast< SDLRenderResource* >( renderResource_ )->GetTexture(), NULL, NULL, &rect.w, &rect.h );
+    SDLRenderResource* renderResource = dynamic_cast< SDLRenderResource* >( renderResource_ );
+    if( !renderResource )
+        OOTHROW( 1, "No derived class for the given Resource" );
+    SDL_QueryTexture( renderResource->GetTexture( ), NULL, NULL, &rect.w, &rect.h );
     imageWidth_ = rect.w / imagesPerRow_;
     imageHeight_ = rect.h / imagesPerColumn_;
     if( startImage < 0 || startImage >= imageNumber_ )
