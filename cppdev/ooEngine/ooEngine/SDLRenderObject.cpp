@@ -17,7 +17,7 @@ SDLRenderObject::~SDLRenderObject()
     renderResource_->UnLoad();
 }
 
-void SDLRenderObject::SetResourceObject( Resource* resource )
+void SDLRenderObject::SetResourceObject( Resource_ABC* resource )
 {
     if( !resource || resource->GetResourceType( ) != RESOURCE_GRAPHIC )
         return;
@@ -64,7 +64,7 @@ SDL_Rect SDLRenderObject::GetRenderRect() const
     return renderRect_;
 }
 
-Resource* SDLRenderObject::GetRenderResource( ) const
+Resource_ABC* SDLRenderObject::GetRenderResource( ) const
 {
     return renderResource_;
 }

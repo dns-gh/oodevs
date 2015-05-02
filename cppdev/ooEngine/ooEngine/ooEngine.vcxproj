@@ -137,7 +137,7 @@
     <ClInclude Include="EngineObject.h" />
     <ClInclude Include="ErrorLogManager.h" />
     <ClInclude Include="RenderManager_ABC.h" />
-    <ClInclude Include="Resource.h" />
+    <ClInclude Include="Resource_ABC.h" />
     <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="SDL2DRenderManager.h" />
     <ClInclude Include="SDLRenderObject.h" />

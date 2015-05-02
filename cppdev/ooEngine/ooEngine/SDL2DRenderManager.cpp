@@ -58,7 +58,7 @@ bool SDL2DRenderManager::Update()
     return true;
 }
 
-Resource* SDL2DRenderManager::CreateRenderResource()
+Resource_ABC* SDL2DRenderManager::CreateRenderResource( )
 {
     return new SDLRenderResource();
 }

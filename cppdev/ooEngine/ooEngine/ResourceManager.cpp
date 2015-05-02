@@ -32,7 +32,7 @@ bool ResourceManager::LoadFromXMLFile( const std::string& filename )
                 XMLElement* elem = child->ToElement();
                 if( elem )
                 {
-                    Resource* resource = NULL;
+                    Resource_ABC* resource = NULL;
                     std::string attValue = elem->Attribute( "type" );
                     RESOURCE_TYPE type;
                     if( attValue == "graphic" )
@@ -82,7 +82,7 @@ void ResourceManager::SetCurrentScope( unsigned int scope )
     }
 }
 
-Resource* ResourceManager::FindResourceByID( const unsigned int& id ) const
+Resource_ABC* ResourceManager::FindResourceByID( const unsigned int& id ) const
 {
     for( auto it = resourceByScope_.begin(); it != resourceByScope_.end(); it++ )
     {

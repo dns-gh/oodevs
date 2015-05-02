@@ -32,7 +32,6 @@
     <ClInclude Include="tinyxml2.h">
       <Filter>tools</Filter>
     </ClInclude>
-    <ClInclude Include="Resource.h" />
     <ClInclude Include="SDLRenderObject.h">
       <Filter>sdlrendering</Filter>
     </ClInclude>
@@ -46,6 +45,7 @@
     <ClInclude Include="SDLSpriteObject.h">
       <Filter>sdlrendering</Filter>
     </ClInclude>
+    <ClInclude Include="Resource_ABC.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="tools">

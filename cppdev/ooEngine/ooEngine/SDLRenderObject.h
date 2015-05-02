@@ -11,11 +11,11 @@ class SDLRenderObject : public EngineObject
 public:
     SDLRenderObject();
     virtual ~SDLRenderObject();
-    void SetResourceObject( Resource* renderResource );
+    void SetResourceObject( Resource_ABC* renderResource );
     virtual void Update(){};
 
     // Getters
-    Resource* GetRenderResource( ) const;
+    Resource_ABC* GetRenderResource( ) const;
     SDL_Rect GetRenderRect() const;
     float X() const;
     float Y() const;
@@ -27,7 +27,7 @@ public:
     void SetColorKeying( bool enable, unsigned int r = 0, unsigned int g = 0, unsigned int b = 0 ); // color keying is black by default
 
 protected:
-    Resource* renderResource_;
+    Resource_ABC* renderResource_;
     SDL_Rect renderRect_;
     float posX_;
     float posY_;

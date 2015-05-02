@@ -1,5 +1,5 @@
-#ifndef _RESOURCE_H
-#define _RESOURCE_H
+#ifndef _RESOURCE_ABC_H
+#define _RESOURCE_ABC_H
 
 #include "EngineObject.h"
 #include <string>
@@ -9,10 +9,10 @@ typedef enum {
     RESOURCE_GRAPHIC = 1,
 }RESOURCE_TYPE;
 
-class Resource : public EngineObject
+class Resource_ABC : public EngineObject
 {
 public:
-    Resource()
+    Resource_ABC( )
     {
         id_ = -1;
         scope_ = -1;
@@ -38,9 +38,9 @@ public:
     unsigned int GetResourceScope() const { return scope_; }
     std::string GetResourceFilename() const { return filename_; }
     RESOURCE_TYPE GetResourceType() const { return type_; };
-    virtual ~Resource(){};
-    virtual void Load(){};
-    virtual void UnLoad(){};
+    virtual ~Resource_ABC(){};
+    virtual void Load() = 0;
+    virtual void UnLoad() = 0;
 
 private:
     unsigned int id_;
@@ -49,4 +49,4 @@ private:
     RESOURCE_TYPE type_;
 };
 
-#endif // Resource.h
+#endif // Resource_ABC.h

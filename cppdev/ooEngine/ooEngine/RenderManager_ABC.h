@@ -1,7 +1,7 @@
 #ifndef _RENDERMANAGER_ABC_H
 #define _RENDERMANAGER_ABC_H
 
-#include "Resource.h"
+#include "Resource_ABC.h"
 
 class RenderManager_ABC
 {
@@ -10,7 +10,7 @@ public:
     virtual void Free() = 0;
     virtual bool Update() = 0;
     virtual void toggleFullScreen() = 0;
-    virtual Resource* CreateRenderResource() = 0;
+    virtual Resource_ABC* CreateRenderResource( ) = 0;
     virtual void RenderAllObjects() = 0;
 
 protected:

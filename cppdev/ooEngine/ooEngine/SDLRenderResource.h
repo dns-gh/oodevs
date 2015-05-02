@@ -1,11 +1,11 @@
 #ifndef _SDLRENDERRESOURCE_H
 #define _SDLRENDERRESOURCE_H
 
-#include "Resource.h"
+#include "Resource_ABC.h"
 #include "SDL_render.h"
 #include "SDL_pixels.h"
 
-class SDLRenderResource : public Resource
+class SDLRenderResource : public Resource_ABC
 {
 public:
     SDLRenderResource();
