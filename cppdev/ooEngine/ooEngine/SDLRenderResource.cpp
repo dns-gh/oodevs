@@ -25,20 +25,6 @@ void SDLRenderResource::UpdateTexture( SDL_Surface* surface )
     texture_ = SDL_CreateTextureFromSurface( renderer, surface_ );
 }
 
-void SDLRenderResource::RenderTextureAtPos( int x, int y )
-{
-    // Position of the texture to be drawn
-    SDL_Rect dst;
-    dst.x = x;
-    dst.y = y;
-    // Get width and height of the texture
-    SDL_QueryTexture( texture_, NULL, NULL, &dst.w, &dst.h );
-    SDL_Renderer* renderer = SDL2DRenderManager::GetInstance()->GetRenderer();
-    if( !renderer )
-        OOTHROW( 0, "Error when trying to render a texture in a rendering context" );
-    SDL_RenderCopy( renderer, texture_, NULL, &dst );
-}
-
 void SDLRenderResource::Load()
 {
     UnLoad();

@@ -46,6 +46,9 @@
       <Filter>sdlrendering</Filter>
     </ClInclude>
     <ClInclude Include="Resource_ABC.h" />
+    <ClInclude Include="SDLRenderResource_ABC.h">
+      <Filter>sdlrendering</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="tools">

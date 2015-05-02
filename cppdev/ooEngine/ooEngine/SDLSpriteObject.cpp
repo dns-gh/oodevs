@@ -45,10 +45,7 @@ void SDLSpriteObject::Play( unsigned int startImage )
         return Resume( startImage );
 
     SDL_Rect rect;
-    SDLRenderResource* renderResource = dynamic_cast< SDLRenderResource* >( renderResource_ );
-    if( !renderResource )
-        OOTHROW( 1, "No derived class for the given Resource" );
-    SDL_QueryTexture( renderResource->GetTexture( ), NULL, NULL, &rect.w, &rect.h );
+    SDL_QueryTexture( renderResource_->GetTexture( ), NULL, NULL, &rect.w, &rect.h );
     imageWidth_ = rect.w / imagesPerRow_;
     imageHeight_ = rect.h / imagesPerColumn_;
     if( startImage < 0 || startImage >= imageNumber_ )

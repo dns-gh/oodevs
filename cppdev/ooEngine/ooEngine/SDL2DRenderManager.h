@@ -6,7 +6,6 @@
 #include "Resource_ABC.h"
 #include "RenderManager_ABC.h"
 
-#include "tinyxml2.h"
 #include "SDL.h"
 #include "SDLRenderObject.h"
 #include "SDL_video.h"
@@ -24,7 +23,7 @@ class SDL2DRenderManager : public EngineObject
 
 public:
     virtual void Initialize( unsigned int width = 800, unsigned int height = 600, bool fullscreen = false, char* windowTitle = 0 );
-    virtual void Free(){};
+    virtual void Clear( );
     virtual bool Update();
     virtual void toggleFullScreen(){};
     virtual Resource_ABC* CreateRenderResource( ); //LoadResourceFromXML ? Is there any more data in an xml file that could be useful in that class ?

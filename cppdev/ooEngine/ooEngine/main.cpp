@@ -37,15 +37,6 @@ int main(int, char**)
         spriteTest2->SetResourceObject( resourceManager->FindResourceByID( 2 ) );
         spriteTest2->SetColorKeying( true, 0, 0, 0 );
         sdlRenderManager->InsertRenderObject( spriteTest2 );
-         
-        // Rendering test
-        /*auto imageTest = new SDLRenderResource();
-        imageTest->Initialize( 0, 0, tools::GetModulePath() + std::string( "/../../data/graphic/bluesky.jpg" ) );
-        imageTest->Load();
-        imageTest->RenderTextureAtPos( 10, 10 );
-        imageTest->RenderTextureAtPos( 100, 100 );
-        imageTest->UnLoad();
-        */
 
         bool quit = false;
         while( !quit )
@@ -59,7 +50,7 @@ int main(int, char**)
                 switch( event.type )
                 {
                     case SDL_QUIT:
-                        return false;
+                        quit = true;
                     case SDL_KEYDOWN:
                     {
                         if( event.key.keysym.sym == SDLK_p )
@@ -73,11 +64,12 @@ int main(int, char**)
                             spriteTest2->Resume( );
                         }
                         if( event.key.keysym.sym == SDLK_ESCAPE )
-                            return false;
+                            quit = true;
                     }
                 }
             }
         }
+        delete resourceManager;
     }
     catch( cException& e )
     {

@@ -1,12 +1,15 @@
 #include "SDL2DRenderManager.h"
 #include "SDLRenderResource.h"
 #include "ErrorLogManager.h"
+#include "tools.h"
+
 #include "SDL_hints.h"
 #include "SDL_error.h"
 #include "SDL_image.h"
 
 SDL2DRenderManager::~SDL2DRenderManager( )
 {
+    Clear();
     SDL_DestroyRenderer( renderer_ );
     SDL_DestroyWindow( renderWindow_ );
     SDL_Quit();
@@ -47,6 +50,12 @@ void SDL2DRenderManager::Initialize( unsigned int width, unsigned int height, bo
     SDL_RenderSetLogicalSize( renderer_, width, height );
 }
 
+void SDL2DRenderManager::Clear()
+{
+    for( auto it = renderObjects_.begin(); it != renderObjects_.end(); ++it )
+        OODELETE( *it );
+}
+
 bool SDL2DRenderManager::Update()
 {
     if( !renderer_ )
@@ -69,10 +78,7 @@ void SDL2DRenderManager::RenderAllObjects()
     {
         if( ( *it )->IsVisible() )
         {
-            SDLRenderResource* renderResource = dynamic_cast< SDLRenderResource* >( ( *it )->GetRenderResource() );
-            if( !renderResource )
-                OOTHROW( 1, "No derived class for the given Resource" );
-            if( !renderResource->GetTexture() )
+            if( !( *it )->GetRenderResource()->GetTexture() )
                 continue;
             // Update of the SDLRenderObject. In case of a sprite object, it sets the image to the correct one if need be.
             ( *it )->Update();
@@ -82,7 +88,7 @@ void SDL2DRenderManager::RenderAllObjects()
             dst.y = static_cast< int >( ( *it )->Y( ) );
             dst.w = rect.w;
             dst.h = rect.h;
-            SDL_RenderCopy( renderer_, renderResource->GetTexture( ), &rect, &dst );
+            SDL_RenderCopy( renderer_, ( *it )->GetRenderResource()->GetTexture(), &rect, &dst );
         }
     }
 }

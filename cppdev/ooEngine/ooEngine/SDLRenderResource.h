@@ -1,11 +1,10 @@
 #ifndef _SDLRENDERRESOURCE_H
 #define _SDLRENDERRESOURCE_H
 
-#include "Resource_ABC.h"
+#include "SDLRenderResource_ABC.h"
 #include "SDL_render.h"
-#include "SDL_pixels.h"
 
-class SDLRenderResource : public Resource_ABC
+class SDLRenderResource : public SDLRenderResource_ABC
 {
 public:
     SDLRenderResource();
@@ -13,10 +12,9 @@ public:
     virtual void Load();
     virtual void UnLoad();
 
-    void UpdateTexture( SDL_Surface* surface );
-    void RenderTextureAtPos( int x, int y );
-    SDL_Texture* GetTexture() const { return texture_; };
-    SDL_Surface* GetSurface() const { return surface_; };
+    virtual void UpdateTexture( SDL_Surface* surface );
+    virtual SDL_Texture* GetTexture( ) const { return texture_; };
+    virtual SDL_Surface* GetSurface( ) const { return surface_; };
 private:
     SDL_Texture* texture_;
     SDL_Surface* surface_;
