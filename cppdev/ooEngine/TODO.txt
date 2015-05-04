@@ -1,4 +1,5 @@
-- Put the resource manager as a singleton
+- Try to get rid of the singleton
+	* in particular the SLD2DRenderManager that holds a window and a renderer : what if we have multiple windows ?
 - Make a map to store resource in the Resource manager. it will decrease search time :
 	* std::map< unsigned int,  std::map< std::string, Resource*> > resourceByScope_; (for example)
 	* no search by id but by name. or put the index as an id...
