@@ -1,20 +1,25 @@
 
 #include "tools.h"
 #include "ErrorLogManager.h"
+#include "LogTools.h"
 #include "ResourceManager.h"
 #include "SDL2DRenderManager.h"
 #include "SDLSpriteObject.h"
 
 int main(int, char**)
 {
-    ErrorLogManager* errorManager = ErrorLogManager::GetInstance();
-    errorManager->CreateLogFile( tools::GetModulePath() + std::string( "/logError.txt" ) );
-     
+    ErrorLogManager* errorManager = ErrorLogManager::GetInstance( );
+    errorManager->CreateLogFile( tools::GetModulePath( ) + std::string( "logError.txt" ) );
+
     try
     {
+        LogTools* logger = new LogTools( tools::GetModulePath( ) );
+        bool isRegistered = logger->RegisterLog( FILE_INFOS, "infos.txt" );
+        logger->OOLOG( FILE_INFOS ) << OOSTREAM( LOG_MESSAGE, " Test : " << 1 << std::endl << " Test " << 2 );
+
         // Initialization of managers
         auto resourceManager = new ResourceManager();
-        resourceManager->LoadFromXMLFile( tools::GetModulePath() + std::string( "/../../data/graphic/template.xml" ) );
+        resourceManager->LoadFromXMLFile( tools::GetModulePath() + std::string( "../../data/graphic/template.xml" ) );
         auto sdlRenderManager = SDL2DRenderManager::GetInstance();
         sdlRenderManager->Initialize();
 
@@ -70,6 +75,7 @@ int main(int, char**)
             }
         }
         delete resourceManager;
+        delete logger;
     }
     catch( cException& e )
     {

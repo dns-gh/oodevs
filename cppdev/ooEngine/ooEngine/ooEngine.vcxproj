@@ -129,6 +129,7 @@
   <ItemGroup>
     <ClCompile Include="EngineObject.cpp" />
     <ClCompile Include="ErrorLogManager.cpp" />
+    <ClCompile Include="LogTools.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="SDL2DRenderManager.cpp" />
@@ -140,6 +141,7 @@
   <ItemGroup>
     <ClInclude Include="EngineObject.h" />
     <ClInclude Include="ErrorLogManager.h" />
+    <ClInclude Include="LogTools.h" />
     <ClInclude Include="RenderManager_ABC.h" />
     <ClInclude Include="SDLRenderResource_ABC.h" />
     <ClInclude Include="Resource_ABC.h" />

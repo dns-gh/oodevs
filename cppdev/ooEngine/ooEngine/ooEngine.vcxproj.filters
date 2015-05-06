@@ -20,6 +20,9 @@
     <ClCompile Include="SDLSpriteObject.cpp">
       <Filter>sdlrendering</Filter>
     </ClCompile>
+    <ClCompile Include="LogTools.cpp">
+      <Filter>tools</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EngineObject.h" />
@@ -48,6 +51,9 @@
     <ClInclude Include="Resource_ABC.h" />
     <ClInclude Include="SDLRenderResource_ABC.h">
       <Filter>sdlrendering</Filter>
+    </ClInclude>
+    <ClInclude Include="LogTools.h">
+      <Filter>tools</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
