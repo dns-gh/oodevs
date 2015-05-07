@@ -32,7 +32,7 @@ bool ResourceManager::LoadFromXMLFile( const std::string& filename )
                 XMLElement* elem = child->ToElement();
                 if( elem )
                 {
-                    Resource_ABC* resource = NULL;
+                    std::shared_ptr< Resource_ABC > resource;
                     std::string attValue = elem->Attribute( "type" );
                     RESOURCE_TYPE type;
                     if( attValue == "graphic" )
@@ -82,7 +82,7 @@ void ResourceManager::SetCurrentScope( unsigned int scope )
     }
 }
 
-Resource_ABC* ResourceManager::FindResourceByID( const unsigned int& id ) const
+std::shared_ptr< Resource_ABC > ResourceManager::FindResourceByID( const unsigned int& id ) const
 {
     for( auto it = resourceByScope_.begin(); it != resourceByScope_.end(); it++ )
     {
@@ -112,7 +112,6 @@ void ResourceManager::Clear()
             for( auto listIt = ( *it ).second.begin( ); listIt != ( *it ).second.end( ); listIt++ )
             {
                 ( *listIt )->UnLoad();
-                OODELETE( *listIt );
             }
             ( *it ).second.clear();
         }

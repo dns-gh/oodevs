@@ -8,6 +8,7 @@
 #include <list>
 #include <map>
 #include <string>
+#include <memory>
 
 class ResourceManager : public EngineObject
 {
@@ -17,14 +18,14 @@ public:
 
     bool LoadFromXMLFile( const std::string& filename );
     void SetCurrentScope( unsigned int scope );
-    Resource_ABC* FindResourceByID( const unsigned int& id ) const;
+    std::shared_ptr< Resource_ABC > FindResourceByID( const unsigned int& id ) const;
     unsigned int GetResourceCount() const;
     void Clear();
 
 private:
     unsigned int currentScope_;
     unsigned int resourceCount_;
-    std::map< unsigned int, std::list< Resource_ABC* > > resourceByScope_;
+    std::map< unsigned int, std::list< std::shared_ptr< Resource_ABC > > > resourceByScope_;
 };
 
 #endif

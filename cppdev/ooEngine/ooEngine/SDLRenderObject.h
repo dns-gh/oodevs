@@ -6,12 +6,14 @@
 #include "SDL_rect.h"
 #include "SDL_pixels.h"
 
+#include <memory>
+
 class SDLRenderObject : public EngineObject
 {
 public:
     SDLRenderObject();
     virtual ~SDLRenderObject();
-    void SetResourceObject( Resource_ABC* renderResource );
+    void SetResourceObject( std::shared_ptr< Resource_ABC > renderResource );
     virtual void Update(){};
 
     // Getters

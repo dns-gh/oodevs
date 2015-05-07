@@ -17,12 +17,12 @@ SDLRenderObject::~SDLRenderObject()
     renderResource_->UnLoad();
 }
 
-void SDLRenderObject::SetResourceObject( Resource_ABC* resource )
+void SDLRenderObject::SetResourceObject( std::shared_ptr< Resource_ABC > resource )
 {
     if( !resource || resource->GetResourceType( ) != RESOURCE_GRAPHIC )
         return;
 
-    renderResource_ = dynamic_cast< SDLRenderResource_ABC* >( resource );
+    renderResource_ = dynamic_cast< SDLRenderResource_ABC* >( &*resource );
     if( !renderResource_ )
         OOTHROW( 1, "Cannot retrieve derived class for the given Resource" );
     renderResource_->Load();

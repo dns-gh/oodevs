@@ -10,7 +10,7 @@
 	* Sprite tests : (rough one done)
 - add of an Input Manager to deals with inputs and events in a generic way
 	* support of keyboard, mouse, 360 xbox
-- use of unique and shared pointers when possible (for the Resource in the ResourceManager..)
+- (in progress) use of unique and shared pointers when possible (for the Resource in the ResourceManager..)
 - Create a list of error number to use with the ErrorLogManager
 - Improve the first version of OOLOG
 - Make automatic the move of the dll files needed for the exe into the right folder

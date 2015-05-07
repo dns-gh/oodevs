@@ -2,6 +2,7 @@
 #define _RENDERMANAGER_ABC_H
 
 #include "Resource_ABC.h"
+#include <memory>
 
 class RenderManager_ABC
 {
@@ -10,7 +11,7 @@ public:
     virtual void Clear() = 0;
     virtual bool Update() = 0;
     virtual void toggleFullScreen() = 0;
-    virtual Resource_ABC* CreateRenderResource( ) = 0;
+    virtual std::shared_ptr< Resource_ABC > CreateRenderResource( ) = 0;
     virtual void RenderAllObjects() = 0;
 
 protected:

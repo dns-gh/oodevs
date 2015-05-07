@@ -7,6 +7,8 @@
 #include "SDL_error.h"
 #include "SDL_image.h"
 
+#include <memory>
+
 SDL2DRenderManager::~SDL2DRenderManager( )
 {
     Clear();
@@ -67,9 +69,11 @@ bool SDL2DRenderManager::Update()
     return true;
 }
 
-Resource_ABC* SDL2DRenderManager::CreateRenderResource( )
+std::shared_ptr< Resource_ABC > SDL2DRenderManager::CreateRenderResource()
 {
-    return new SDLRenderResource();
+    std::shared_ptr< SDLRenderResource > sharedResource;
+    sharedResource.reset( new SDLRenderResource() );
+    return std::dynamic_pointer_cast< Resource_ABC >( sharedResource );
 }
 
 void SDL2DRenderManager::RenderAllObjects()

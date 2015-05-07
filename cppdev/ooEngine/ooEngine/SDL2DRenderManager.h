@@ -26,7 +26,7 @@ public:
     virtual void Clear( );
     virtual bool Update();
     virtual void toggleFullScreen(){};
-    virtual Resource_ABC* CreateRenderResource( ); //LoadResourceFromXML ? Is there any more data in an xml file that could be useful in that class ?
+    virtual std::shared_ptr< Resource_ABC > CreateRenderResource( ); //LoadResourceFromXML ? Is there any more data in an xml file that could be useful in that class ?
     virtual void RenderAllObjects();
 
     // Helpers
