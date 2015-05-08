@@ -6,19 +6,20 @@
 #include "SDL2DRenderManager.h"
 #include "SDLSpriteObject.h"
 
+#include <memory>
+
 int main(int, char**)
 {
-    ErrorLogManager* errorManager = ErrorLogManager::GetInstance( );
-    errorManager->CreateLogFile( tools::GetModulePath( ) + std::string( "logError.txt" ) );
+    auto logger = std::make_shared< LogTools >( tools::GetModulePath( ) );
+    bool isRegistered = logger->RegisterLog( FILE_INFOS, "infos.txt" );
+    if( !isRegistered )
+        return 0;
+    logger->OOLOG( FILE_INFOS ) << OOSTREAM( LOG_MESSAGE, " Test : " << 1 << std::endl << " Test " << 2 );
 
     try
     {
-        LogTools* logger = new LogTools( tools::GetModulePath( ) );
-        bool isRegistered = logger->RegisterLog( FILE_INFOS, "infos.txt" );
-        logger->OOLOG( FILE_INFOS ) << OOSTREAM( LOG_MESSAGE, " Test : " << 1 << std::endl << " Test " << 2 );
-
         // Initialization of managers
-        auto resourceManager = new ResourceManager();
+        auto resourceManager = std::make_shared< ResourceManager>();
         resourceManager->LoadFromXMLFile( tools::GetModulePath() + std::string( "../../data/graphic/template.xml" ) );
         auto sdlRenderManager = SDL2DRenderManager::GetInstance();
         sdlRenderManager->Initialize();
@@ -74,14 +75,11 @@ int main(int, char**)
                 }
             }
         }
-        delete resourceManager;
-        delete logger;
     }
     catch( cException& e )
     {
         MessageBox( NULL, e.what(), "", MB_OK );
-        errorManager->LogException( e );
-        errorManager->Flush();
+        logger->OOLOG( FILE_INFOS ) << OOSTREAM( LOG_FATALERROR, e.what( ) );
     }
 
     return 1;

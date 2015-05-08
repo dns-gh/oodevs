@@ -24,10 +24,6 @@ public:
     const char* what( ) const;
 
 private:
-    int errorNumber_;
-    std::string errorDescription_;
-    std::string srcFilename_;
-    int lineNumber_;
     std::string errorText_;
 };
 

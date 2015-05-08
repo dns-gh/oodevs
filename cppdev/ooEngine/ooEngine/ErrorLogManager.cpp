@@ -2,18 +2,13 @@
 
 cException::cException( int errorNum, std::string errorDesc, std::string srcFilename, int lineNum )
 {
-    // set exception properties
-    errorNumber_ = errorNum;
-    errorDescription_ = errorDesc;
-    srcFilename_ = srcFilename;
-    lineNumber_ = lineNum;
-
     // write data into a specific format
     std::stringstream errss;
-    errss << "Error number : " << errorNumber_ << std::endl;
-    errss << "Error description : " << errorDescription_ << std::endl;
-    errss << "Source filename : " << srcFilename_ << std::endl;
-    errss << "Line number : " << lineNumber_ << std::endl;
+    errss << "Error " << errorNum;
+    errss << "; ln " << lineNum;
+    errss << "; desc " << errorDesc;
+    errss << "; src " << srcFilename;
+
     errorText_ = errss.str();
 }
 

@@ -88,8 +88,8 @@ void SDL2DRenderManager::RenderAllObjects()
             ( *it )->Update();
             SDL_Rect rect = ( *it )->GetRenderRect();
             SDL_Rect dst;
-            dst.x = static_cast< int >( ( *it )->X( ) );
-            dst.y = static_cast< int >( ( *it )->Y( ) );
+            dst.x = static_cast< int >( ( *it )->X() );
+            dst.y = static_cast< int >( ( *it )->Y() );
             dst.w = rect.w;
             dst.h = rect.h;
             SDL_RenderCopy( renderer_, ( *it )->GetRenderResource()->GetTexture(), &rect, &dst );
