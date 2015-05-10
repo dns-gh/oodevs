@@ -20,7 +20,7 @@ namespace tools
         return std::string( buffer ).substr( 0, pos ) + std::string("\\");
     }
 
-    static unsigned long GetCurrentTime( )
+    static unsigned long GetCurrentTime()
     {
         return static_cast< unsigned long >( std::chrono::duration_cast< std::chrono::milliseconds >( std::chrono::system_clock::now().time_since_epoch() ).count() );
     }

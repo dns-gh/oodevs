@@ -1,7 +1,6 @@
 #ifndef _RESOURCE_ABC_H
 #define _RESOURCE_ABC_H
 
-#include "EngineObject.h"
 #include <string>
 
 typedef enum {
@@ -9,10 +8,10 @@ typedef enum {
     RESOURCE_GRAPHIC = 1,
 }RESOURCE_TYPE;
 
-class Resource_ABC : public EngineObject
+class Resource_ABC
 {
 public:
-    Resource_ABC( )
+    Resource_ABC()
     {
         id_ = -1;
         scope_ = -1;

@@ -71,8 +71,7 @@ bool SDL2DRenderManager::Update()
 
 std::shared_ptr< Resource_ABC > SDL2DRenderManager::CreateRenderResource()
 {
-    std::shared_ptr< SDLRenderResource > sharedResource;
-    sharedResource.reset( new SDLRenderResource() );
+    std::shared_ptr< SDLRenderResource > sharedResource( new SDLRenderResource() );
     return std::dynamic_pointer_cast< Resource_ABC >( sharedResource );
 }
 
@@ -82,6 +81,8 @@ void SDL2DRenderManager::RenderAllObjects()
     {
         if( ( *it )->IsVisible() )
         {
+            if( !( *it )->GetRenderResource() )
+                continue;
             if( !( *it )->GetRenderResource()->GetTexture() )
                 continue;
             // Update of the SDLRenderObject. In case of a sprite object, it sets the image to the correct one if need be.
@@ -95,6 +96,11 @@ void SDL2DRenderManager::RenderAllObjects()
             SDL_RenderCopy( renderer_, ( *it )->GetRenderResource()->GetTexture(), &rect, &dst );
         }
     }
+}
+
+void SDL2DRenderManager::SetSceneManager2D( std::shared_ptr< SceneManager2D_ABC >& manager )
+{
+    sceneManager_ = std::dynamic_pointer_cast< SDL2DSceneManager >( manager );
 }
 
 SDL_Renderer* SDL2DRenderManager::GetRenderer() const

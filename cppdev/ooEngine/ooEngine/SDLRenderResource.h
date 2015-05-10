@@ -1,10 +1,12 @@
 #ifndef _SDLRENDERRESOURCE_H
 #define _SDLRENDERRESOURCE_H
 
+#include "EngineObject.h"
 #include "SDLRenderResource_ABC.h"
 #include "SDL_render.h"
 
 class SDLRenderResource : public SDLRenderResource_ABC
+                        , public EngineObject
 {
 public:
     SDLRenderResource();

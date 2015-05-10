@@ -2,6 +2,7 @@
 #define _SDLRENDEROBJECT_H
 
 #include "EngineObject.h"
+#include "SceneObject_ABC.h"
 #include "SDLRenderResource.h"
 #include "SDL_rect.h"
 #include "SDL_pixels.h"
@@ -9,6 +10,7 @@
 #include <memory>
 
 class SDLRenderObject : public EngineObject
+                      , public SceneObject_ABC
 {
 public:
     SDLRenderObject();

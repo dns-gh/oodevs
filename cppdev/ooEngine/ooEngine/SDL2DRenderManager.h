@@ -5,6 +5,7 @@
 #include "SingletonTemplate.h"
 #include "Resource_ABC.h"
 #include "RenderManager_ABC.h"
+#include "SDL2DSceneManager.h"
 
 #include "SDL.h"
 #include "SDLRenderObject.h"
@@ -19,7 +20,7 @@ class SDL2DRenderManager : public EngineObject
                          , public SingletonTemplate< SDL2DRenderManager >
 {
     friend SDL2DRenderManager* SingletonTemplate< SDL2DRenderManager >::GetInstance();
-    friend void SingletonTemplate< SDL2DRenderManager >::Kill( );
+    friend void SingletonTemplate< SDL2DRenderManager >::Kill();
 
 public:
     virtual void Initialize( unsigned int width = 800, unsigned int height = 600, bool fullscreen = false, char* windowTitle = 0 );
@@ -28,6 +29,7 @@ public:
     virtual void toggleFullScreen(){};
     virtual std::shared_ptr< Resource_ABC > CreateRenderResource( ); //LoadResourceFromXML ? Is there any more data in an xml file that could be useful in that class ?
     virtual void RenderAllObjects();
+    virtual void SetSceneManager2D( std::shared_ptr< SceneManager2D_ABC >& manager );
 
     // Helpers
     SDL_Renderer* GetRenderer() const;
@@ -41,9 +43,10 @@ private:
 
 private:
     SDL_Window* renderWindow_;
-    SDL_Renderer *renderer_;
+    SDL_Renderer* renderer_;
     //std::stringstream videoInfos_;
     std::list< SDLRenderObject* > renderObjects_;
+    std::shared_ptr< SDL2DSceneManager > sceneManager_;
 };
 
 #endif // SDL2DRenderManager.h

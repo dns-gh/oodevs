@@ -4,6 +4,7 @@
 #include "LogTools.h"
 #include "ResourceManager.h"
 #include "SDL2DRenderManager.h"
+#include "SDL2DSceneManager.h"
 #include "SDLSpriteObject.h"
 
 #include <memory>
@@ -23,6 +24,7 @@ int main(int, char**)
         resourceManager->LoadFromXMLFile( tools::GetModulePath() + std::string( "../../data/graphic/template.xml" ) );
         auto sdlRenderManager = SDL2DRenderManager::GetInstance();
         sdlRenderManager->Initialize();
+        auto sceneManager = std::make_shared< SDL2DSceneManager >();
 
         // Default image in the back
         SDLRenderObject* back = new SDLRenderObject();
