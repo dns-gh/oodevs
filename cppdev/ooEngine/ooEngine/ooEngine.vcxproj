@@ -144,6 +144,7 @@
     <ClInclude Include="Layer2D.h" />
     <ClInclude Include="EngineObject.h" />
     <ClInclude Include="ErrorLogManager.h" />
+    <ClInclude Include="ListenerTest.h" />
     <ClInclude Include="LogTools.h" />
     <ClInclude Include="RenderManager_ABC.h" />
     <ClInclude Include="SceneListener_ABC.h" />

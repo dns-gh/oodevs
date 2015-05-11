@@ -65,6 +65,7 @@ bool SDL2DRenderManager::Update()
 
     SDL_RenderClear( renderer_ );
     RenderAllObjects();
+    RenderScene();
     SDL_RenderPresent( renderer_ );
     return true;
 }
@@ -87,13 +88,7 @@ void SDL2DRenderManager::RenderAllObjects()
                 continue;
             // Update of the SDLRenderObject. In case of a sprite object, it sets the image to the correct one if need be.
             ( *it )->Update();
-            SDL_Rect rect = ( *it )->GetRenderRect();
-            SDL_Rect dst;
-            dst.x = static_cast< int >( ( *it )->X() );
-            dst.y = static_cast< int >( ( *it )->Y() );
-            dst.w = rect.w;
-            dst.h = rect.h;
-            SDL_RenderCopy( renderer_, ( *it )->GetRenderResource()->GetTexture(), &rect, &dst );
+            RenderAtPosition( **it, ( *it )->X(), ( *it )->Y() );
         }
     }
 }
@@ -101,6 +96,39 @@ void SDL2DRenderManager::RenderAllObjects()
 void SDL2DRenderManager::SetSceneManager2D( std::shared_ptr< SceneManager2D_ABC >& manager )
 {
     sceneManager_ = std::dynamic_pointer_cast< SDL2DSceneManager >( manager );
+}
+
+void SDL2DRenderManager::RenderScene()
+{
+    if( sceneManager_ )
+    {
+        for( auto it = sceneManager_->GetLayers().begin(); it != sceneManager_->GetLayers().end(); ++it )
+        {
+            auto layer = *it;
+            if( !layer->IsVisible() )
+                continue;
+
+            for( auto objectIt = layer->GetSceneObjects().begin(); objectIt != layer->GetSceneObjects().end(); ++objectIt )
+            {
+                auto object = *objectIt;
+                if( !object->IsVisible() )
+                    continue;
+                object->Update();
+                RenderAtPosition( *object, layer->X() + object->X(), layer->Y() + object->Y() );
+            }
+        }
+    }
+}
+
+void SDL2DRenderManager::RenderAtPosition( const SceneObject_ABC& object, const float& x, const float& y )
+{
+    SDL_Rect rect = object.GetRenderRect();
+    SDL_Rect dst;
+    dst.x = static_cast< int >( x );
+    dst.y = static_cast< int >( y );
+    dst.w = rect.w;
+    dst.h = rect.h;
+    SDL_RenderCopy( renderer_, object.GetRenderResource()->GetTexture(), &rect, &dst );
 }
 
 SDL_Renderer* SDL2DRenderManager::GetRenderer() const

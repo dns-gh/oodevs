@@ -13,8 +13,14 @@ class Layer2D : public EngineObject
 public :
     Layer2D( std::string );
     void Update();
-    std::string GetName() const;
+    float X() const;
+    float Y() const;
+    const std::string& GetName() const;
     unsigned int GetZOrder() const;
+    bool IsVisible() const;
+    const std::list< std::shared_ptr< SceneObject_ABC > > GetSceneObjects() const;
+
+    void SetVisible( bool visibility );
 
 private:
     bool isVisible_;

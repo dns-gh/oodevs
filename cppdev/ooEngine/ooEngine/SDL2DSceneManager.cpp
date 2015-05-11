@@ -13,7 +13,7 @@ std::shared_ptr< Layer2D > SDL2DSceneManager::CreateLayer( std::string name )
     return layer;
 }
 
-std::shared_ptr< Layer2D > SDL2DSceneManager::FindLayer( std::string name )
+std::shared_ptr< Layer2D > SDL2DSceneManager::FindLayer( std::string name ) const
 {
     for( auto it = layers_.begin(); it != layers_.end(); ++it )
     {
@@ -21,6 +21,11 @@ std::shared_ptr< Layer2D > SDL2DSceneManager::FindLayer( std::string name )
             return *it;
     }
     return 0;
+}
+
+const std::list< std::shared_ptr< Layer2D > >& SDL2DSceneManager::GetLayers() const
+{
+    return layers_;
 }
 
 void SDL2DSceneManager::RemoveLayer( std::string name )
@@ -62,5 +67,22 @@ void SDL2DSceneManager::AddListener( SceneListener_ABC* listener )
 
 void SDL2DSceneManager::Update( )
 {
+    checkTimerExpiration();
+}
 
+void SDL2DSceneManager::checkTimerExpiration()
+{
+    for( auto it = timers_.begin(); it != timers_.end(); ++it )
+    {
+        ( *it )->Update();
+        if( !( *it )->IsExpired() )
+            continue;
+        for( auto lit = listeners_.begin(); lit != listeners_.end(); ++lit )
+        {
+            if( ( *lit )->listenFor_ != TIMER_EXPIRED )
+                continue;
+            ( *lit )->Event( *this, NULL );
+            ( *it )->Start();
+        }
+    }
 }

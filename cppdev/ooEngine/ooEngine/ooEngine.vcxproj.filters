@@ -77,6 +77,7 @@
     <ClInclude Include="SceneManager2D_ABC.h">
       <Filter>Scene Management</Filter>
     </ClInclude>
+    <ClInclude Include="ListenerTest.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="SDL Rendering">

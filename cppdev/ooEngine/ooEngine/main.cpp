@@ -6,6 +6,7 @@
 #include "SDL2DRenderManager.h"
 #include "SDL2DSceneManager.h"
 #include "SDLSpriteObject.h"
+#include "ListenerTest.h"
 
 #include <memory>
 
@@ -24,7 +25,8 @@ int main(int, char**)
         resourceManager->LoadFromXMLFile( tools::GetModulePath() + std::string( "../../data/graphic/template.xml" ) );
         auto sdlRenderManager = SDL2DRenderManager::GetInstance();
         sdlRenderManager->Initialize();
-        auto sceneManager = std::make_shared< SDL2DSceneManager >();
+        std::shared_ptr< SceneManager2D_ABC > sceneManager = std::make_shared< SDL2DSceneManager >( );
+        sdlRenderManager->SetSceneManager2D( sceneManager );
 
         // Default image in the back
         SDLRenderObject* back = new SDLRenderObject();
@@ -46,9 +48,15 @@ int main(int, char**)
         spriteTest2->SetColorKeying( true, 0, 0, 0 );
         sdlRenderManager->InsertRenderObject( spriteTest2 );
 
+        // Test listener
+         sceneManager->AddListener( new TestListener() );
+         sceneManager->AddTimer( 10000 );
+
         bool quit = false;
         while( !quit )
         {
+            if( sceneManager )
+                sceneManager->Update();
             if( !SDL2DRenderManager::GetInstance()->Update() )
                 quit = true;
 

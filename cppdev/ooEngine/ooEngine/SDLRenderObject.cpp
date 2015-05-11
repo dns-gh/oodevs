@@ -8,6 +8,8 @@
 SDLRenderObject::SDLRenderObject()
     : visible_( false )
     , colorKeyEnabled_( false )
+    , x_( 0 )
+    , y_( 0 )
 {
     // NOTHING
 }
@@ -31,8 +33,8 @@ void SDLRenderObject::SetResourceObject( std::shared_ptr< Resource_ABC > resourc
 
 void SDLRenderObject::SetPosition( float x, float y )
 {
-    posX_ = x;
-    posY_ = y;
+    x_ = x;
+    y_ = y;
 }
 
 void SDLRenderObject::SetVisible( bool visibility )
@@ -60,22 +62,22 @@ SDL_Rect SDLRenderObject::GetRenderRect() const
     return renderRect_;
 }
 
-SDLRenderResource_ABC* SDLRenderObject::GetRenderResource( ) const
+SDLRenderResource_ABC* SDLRenderObject::GetRenderResource() const
 {
     return renderResource_;
 }
 
-float  SDLRenderObject::X( ) const
+float  SDLRenderObject::X() const
 {
-    return posX_;
+    return x_;
 }
 
-float  SDLRenderObject::Y( ) const
+float  SDLRenderObject::Y() const
 {
-    return posY_;
+    return y_;
 }
 
-bool  SDLRenderObject::IsVisible( ) const
+bool  SDLRenderObject::IsVisible() const
 {
     return visible_;
 }

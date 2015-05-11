@@ -30,6 +30,11 @@ public:
             expired_ = true;
     }
 
+    bool IsExpired() const
+    {
+        return expired_;
+    }
+
 private:
     unsigned long startTime_;
     unsigned long interval_;

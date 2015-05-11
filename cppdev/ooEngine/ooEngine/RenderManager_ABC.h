@@ -17,6 +17,7 @@ public:
     virtual std::shared_ptr< Resource_ABC > CreateRenderResource() = 0;
     virtual void RenderAllObjects() = 0;
     virtual void SetSceneManager2D( std::shared_ptr< SceneManager2D_ABC >& manager ) = 0;
+    virtual void RenderScene() = 0;
 
 protected:
     virtual ~RenderManager_ABC(){};

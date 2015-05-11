@@ -1,3 +1,9 @@
+- Remove dependance of SceneObject_ABC from SDL library
+- Remove the _ABC of SceneManager2D_ABC and delete SDL2DSceneManager
+- Scenes
+	* Add rotation property on scene objects
+	* Add opacity property to affect transparency of all scene objects from a given layer
+	* Add Export To Xml method to the Scene Manager : export objects and layers in a xml file ?
 - Try to get rid of the singleton
 	* in particular the SLD2DRenderManager that holds a window and a renderer : what if we have multiple windows ?
 - Make a map to store resource in the Resource manager. it will decrease search time :
@@ -12,6 +18,5 @@
 	* support of keyboard, mouse, 360 xbox
 - (in progress) use of unique and shared pointers when possible (for the Resource in the ResourceManager..)
 - Create a list of error number to use with the ErrorLogManager
-- Improve the first version of OOLOG
 - Make automatic the move of the dll files needed for the exe into the right folder
 - Create a package delivery system containing all the dll, exe and data files needed to launch

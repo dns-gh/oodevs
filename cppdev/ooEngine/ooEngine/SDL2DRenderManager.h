@@ -24,14 +24,15 @@ class SDL2DRenderManager : public EngineObject
 
 public:
     virtual void Initialize( unsigned int width = 800, unsigned int height = 600, bool fullscreen = false, char* windowTitle = 0 );
-    virtual void Clear( );
+    virtual void Clear();
     virtual bool Update();
     virtual void toggleFullScreen(){};
     virtual std::shared_ptr< Resource_ABC > CreateRenderResource( ); //LoadResourceFromXML ? Is there any more data in an xml file that could be useful in that class ?
     virtual void RenderAllObjects();
     virtual void SetSceneManager2D( std::shared_ptr< SceneManager2D_ABC >& manager );
+    virtual void RenderScene();
 
-    // Helpers
+    void RenderAtPosition( const SceneObject_ABC& object, const float& x, const float& y );
     SDL_Renderer* GetRenderer() const;
     virtual void InsertRenderObject( SDLRenderObject* object );
 
