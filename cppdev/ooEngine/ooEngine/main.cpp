@@ -21,11 +21,13 @@ int main(int, char**)
     try
     {
         // Initialization of managers
-        auto resourceManager = std::make_shared< ResourceManager>();
-        resourceManager->LoadFromXMLFile( tools::GetModulePath() + std::string( "../../data/graphic/template.xml" ) );
-        auto sdlRenderManager = SDL2DRenderManager::GetInstance();
+        RenderManager_ABC* sdlRenderManager = SDL2DRenderManager::GetInstance();
         sdlRenderManager->Initialize();
-        std::shared_ptr< SceneManager2D > sceneManager = std::make_shared< SceneManager2D >();
+
+        auto resourceManager = std::make_shared< ResourceManager>( *sdlRenderManager );
+        resourceManager->LoadFromXMLFile( tools::GetModulePath() + std::string( "../../data/graphic/template.xml" ) );
+
+        std::shared_ptr< SceneManager2D > sceneManager = std::make_shared< SceneManager2D >( resourceManager );
         sdlRenderManager->SetSceneManager2D( sceneManager );
 
         // Default image in the back

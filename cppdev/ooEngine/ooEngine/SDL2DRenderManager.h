@@ -27,14 +27,14 @@ public:
     virtual void Clear();
     virtual bool Update();
     virtual void toggleFullScreen(){};
-    virtual std::shared_ptr< Resource_ABC > CreateRenderResource( ); //LoadResourceFromXML ? Is there any more data in an xml file that could be useful in that class ?
+    virtual std::shared_ptr< Resource_ABC > CreateRenderResource() const; //LoadResourceFromXML ? Is there any more data in an xml file that could be useful in that class ?
     virtual void RenderAllObjects();
     virtual void SetSceneManager2D( std::shared_ptr< SceneManager2D >& manager );
     virtual void RenderScene();
 
     void RenderAtPosition( const SceneObject_ABC& object, const float& x, const float& y );
     SDL_Renderer* GetRenderer() const;
-    virtual void InsertRenderObject( SDLRenderObject* object );
+    virtual void InsertRenderObject( SceneObject_ABC* object );
 
 private:
     SDL2DRenderManager( const SDL2DRenderManager& ){};

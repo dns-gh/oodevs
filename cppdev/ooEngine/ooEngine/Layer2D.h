@@ -11,7 +11,8 @@
 class Layer2D : public EngineObject
 {
 public :
-    Layer2D( std::string );
+    Layer2D();
+    Layer2D( bool visible, unsigned int zorder, float x, float y, std::string name );
     void Update();
     float X() const;
     float Y() const;
@@ -21,6 +22,7 @@ public :
     const std::list< std::shared_ptr< SceneObject_ABC > > GetSceneObjects() const;
 
     void SetVisible( bool visibility );
+    void InsertSceneObject( const std::shared_ptr< SceneObject_ABC >& object );
 
 private:
     bool isVisible_;

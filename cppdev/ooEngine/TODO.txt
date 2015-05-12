@@ -1,3 +1,4 @@
+- Add logs througout the process of loading, rendering,...
 - Scenes
 	* Add rotation property on scene objects
 	* Add opacity property to affect transparency of all scene objects from a given layer

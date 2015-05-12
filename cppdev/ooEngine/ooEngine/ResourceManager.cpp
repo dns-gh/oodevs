@@ -6,7 +6,8 @@ using namespace tinyxml2;
 
 // TODO : add of a memory budget to allow caching of resources from multiple scopes
 
-ResourceManager::ResourceManager()
+ResourceManager::ResourceManager( const RenderManager_ABC& renderManager )
+    : renderManager_( renderManager )
 {
     currentScope_ = 0;
     resourceCount_ = 0;
@@ -29,6 +30,8 @@ bool ResourceManager::LoadFromXMLFile( const std::string& filename )
         {
             for( XMLNode* child = tree->FirstChild( ); child; child = child->NextSibling( ) )
             {
+                if( std::string( child->Value() ) != "resource" )
+                    continue;
                 XMLElement* elem = child->ToElement();
                 if( elem )
                 {
@@ -38,7 +41,7 @@ bool ResourceManager::LoadFromXMLFile( const std::string& filename )
                     if( attValue == "graphic" )
                     {
                         // Create a resource by the graphic manager
-                        resource = SDL2DRenderManager::GetInstance()->CreateRenderResource();
+                        resource = renderManager_.CreateRenderResource();
                         type = RESOURCE_GRAPHIC;
                     }
                     else if( attValue == "text" )
@@ -49,6 +52,8 @@ bool ResourceManager::LoadFromXMLFile( const std::string& filename )
 
                     if( resource )
                     {
+                        if( !elem->Attribute( "id" ) || !elem->Attribute( "scenescope" ) || !elem->Attribute( "filename" ) )
+                            OOTHROW( 2, "Error when loading a resource, no id, scenescope or filename provided" );
                         unsigned int id = std::atoi( elem->Attribute( "id" ) );
                         unsigned int scope = std::atoi( elem->Attribute( "scenescope" ) );
                         std::string filename = elem->Attribute( "filename" );

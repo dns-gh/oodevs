@@ -6,7 +6,7 @@
 
 SDLRenderResource::SDLRenderResource()
 {
-
+    // NOTHING
 }
 
 SDLRenderResource::~SDLRenderResource()
@@ -21,7 +21,7 @@ void SDLRenderResource::UpdateTexture( SDL_Surface* surface )
 
     if( texture_ )
         SDL_DestroyTexture( texture_ );
-    SDL_Renderer* renderer = SDL2DRenderManager::GetInstance( )->GetRenderer( );
+    SDL_Renderer* renderer = SDL2DRenderManager::GetInstance()->GetRenderer();
     texture_ = SDL_CreateTextureFromSurface( renderer, surface_ );
 }
 

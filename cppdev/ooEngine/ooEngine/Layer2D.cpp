@@ -1,7 +1,11 @@
 #include "Layer2D.h"
 
-Layer2D::Layer2D( std::string name )
-    : name_( name )
+Layer2D::Layer2D( bool visible, unsigned int zorder, float x, float y, std::string name )
+    : isVisible_( visible )
+    , zOrder_( zorder )
+    , x_( x )
+    , y_( y )
+    , name_( name )
 {
     // NOTHING
 }
@@ -39,4 +43,10 @@ const std::list< std::shared_ptr< SceneObject_ABC > > Layer2D::GetSceneObjects( 
 void Layer2D::SetVisible( bool visibility )
 {
     isVisible_ = visibility;
+}
+
+void Layer2D::InsertSceneObject( const std::shared_ptr< SceneObject_ABC >& object )
+{
+    if( object )
+        sceneObjects_.push_back( object );
 }

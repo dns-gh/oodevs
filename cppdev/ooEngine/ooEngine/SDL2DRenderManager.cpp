@@ -70,7 +70,7 @@ bool SDL2DRenderManager::Update()
     return true;
 }
 
-std::shared_ptr< Resource_ABC > SDL2DRenderManager::CreateRenderResource()
+std::shared_ptr< Resource_ABC > SDL2DRenderManager::CreateRenderResource() const
 {
     std::shared_ptr< SDLRenderResource > sharedResource( new SDLRenderResource() );
     return std::dynamic_pointer_cast< Resource_ABC >( sharedResource );
@@ -140,8 +140,8 @@ SDL_Renderer* SDL2DRenderManager::GetRenderer() const
     return renderer_;
 }
 
-void SDL2DRenderManager::InsertRenderObject( SDLRenderObject* object )
+void SDL2DRenderManager::InsertRenderObject( SceneObject_ABC* object )
 {
     if( object )
-        renderObjects_.push_back( object );
+        renderObjects_.push_back( dynamic_cast< SDLRenderObject* >( object ) );
 }
