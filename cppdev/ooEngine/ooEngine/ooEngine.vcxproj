@@ -134,7 +134,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="SDL2DRenderManager.cpp" />
-    <ClCompile Include="SDL2DSceneManager.cpp" />
+    <ClCompile Include="SceneManager2D.cpp" />
     <ClCompile Include="SDLRenderObject.cpp" />
     <ClCompile Include="SDLRenderResource.cpp" />
     <ClCompile Include="SDLSpriteObject.cpp" />
@@ -149,9 +149,8 @@
     <ClInclude Include="LogTools.h" />
     <ClInclude Include="RenderManager_ABC.h" />
     <ClInclude Include="SceneListener_ABC.h" />
-    <ClInclude Include="SceneManager2D_ABC.h" />
+    <ClInclude Include="SceneManager2D.h" />
     <ClInclude Include="SceneObject_ABC.h" />
-    <ClInclude Include="SDL2DSceneManager.h" />
     <ClInclude Include="SDLRenderResource_ABC.h" />
     <ClInclude Include="Resource_ABC.h" />
     <ClInclude Include="ResourceManager.h" />

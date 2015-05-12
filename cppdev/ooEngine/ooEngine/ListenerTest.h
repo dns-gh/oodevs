@@ -11,7 +11,7 @@ public:
         listenFor_ = TIMER_EXPIRED;
     }
 
-    virtual void Event( const SceneManager2D_ABC& manager, void* customData ) const
+    virtual void Event( const SceneManager2D& manager, void* customData ) const
     {
         auto layer = manager.FindLayer( "LayerTest" );
         if( layer )

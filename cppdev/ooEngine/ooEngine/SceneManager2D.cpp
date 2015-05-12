@@ -1,7 +1,7 @@
-#include "SDL2DSceneManager.h"
+#include "SceneManager2D.h"
 #include "SceneListener_ABC.h"
 
-std::shared_ptr< Layer2D > SDL2DSceneManager::CreateLayer( std::string name )
+std::shared_ptr< Layer2D > SceneManager2D::CreateLayer( std::string name )
 {
     std::shared_ptr< Layer2D > layer = FindLayer( name );
 
@@ -13,7 +13,7 @@ std::shared_ptr< Layer2D > SDL2DSceneManager::CreateLayer( std::string name )
     return layer;
 }
 
-std::shared_ptr< Layer2D > SDL2DSceneManager::FindLayer( std::string name ) const
+std::shared_ptr< Layer2D > SceneManager2D::FindLayer( std::string name ) const
 {
     for( auto it = layers_.begin(); it != layers_.end(); ++it )
     {
@@ -23,12 +23,12 @@ std::shared_ptr< Layer2D > SDL2DSceneManager::FindLayer( std::string name ) cons
     return 0;
 }
 
-const std::list< std::shared_ptr< Layer2D > >& SDL2DSceneManager::GetLayers() const
+const std::list< std::shared_ptr< Layer2D > >& SceneManager2D::GetLayers() const
 {
     return layers_;
 }
 
-void SDL2DSceneManager::RemoveLayer( std::string name )
+void SceneManager2D::RemoveLayer( std::string name )
 {
     for( auto it = layers_.begin( ); it != layers_.end( ); ++it )
     {
@@ -37,7 +37,7 @@ void SDL2DSceneManager::RemoveLayer( std::string name )
     }
 }
 
-void SDL2DSceneManager::SortLayer()
+void SceneManager2D::SortLayer()
 {
     layers_.sort( 
         []( std::shared_ptr< Layer2D > lhs, std::shared_ptr< Layer2D >  rhs )
@@ -47,12 +47,12 @@ void SDL2DSceneManager::SortLayer()
 }
 
 
-bool SDL2DSceneManager::LoadFromXMLFile( std::string )
+bool SceneManager2D::LoadFromXMLFile( std::string )
 {
     return true;
 }
 
-unsigned int SDL2DSceneManager::AddTimer( unsigned long interval )
+unsigned int SceneManager2D::AddTimer( unsigned long interval )
 {
     std::shared_ptr< OOTimer > timer = std::make_shared< OOTimer >( interval );
     timers_.push_back( timer );
@@ -60,17 +60,17 @@ unsigned int SDL2DSceneManager::AddTimer( unsigned long interval )
     return timer->GetID();
 }
 
-void SDL2DSceneManager::AddListener( SceneListener_ABC* listener )
+void SceneManager2D::AddListener( SceneListener_ABC* listener )
 {
     listeners_.push_back( listener );
 }
 
-void SDL2DSceneManager::Update( )
+void SceneManager2D::Update()
 {
     checkTimerExpiration();
 }
 
-void SDL2DSceneManager::checkTimerExpiration()
+void SceneManager2D::checkTimerExpiration()
 {
     for( auto it = timers_.begin(); it != timers_.end(); ++it )
     {

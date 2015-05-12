@@ -1,4 +1,3 @@
-- Remove the _ABC of SceneManager2D_ABC and delete SDL2DSceneManager
 - Scenes
 	* Add rotation property on scene objects
 	* Add opacity property to affect transparency of all scene objects from a given layer

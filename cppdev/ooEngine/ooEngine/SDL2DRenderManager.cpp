@@ -94,9 +94,9 @@ void SDL2DRenderManager::RenderAllObjects()
     }
 }
 
-void SDL2DRenderManager::SetSceneManager2D( std::shared_ptr< SceneManager2D_ABC >& manager )
+void SDL2DRenderManager::SetSceneManager2D( std::shared_ptr< SceneManager2D >& manager )
 {
-    sceneManager_ = std::dynamic_pointer_cast< SDL2DSceneManager >( manager );
+    sceneManager_ = manager;
 }
 
 void SDL2DRenderManager::RenderScene()

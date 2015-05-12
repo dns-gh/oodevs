@@ -26,7 +26,7 @@
     <ClCompile Include="Layer2D.cpp">
       <Filter>Scene Management</Filter>
     </ClCompile>
-    <ClCompile Include="SDL2DSceneManager.cpp">
+    <ClCompile Include="SceneManager2D.cpp">
       <Filter>Scene Management</Filter>
     </ClCompile>
   </ItemGroup>
@@ -68,18 +68,15 @@
     <ClInclude Include="SceneObject_ABC.h">
       <Filter>Scene Management</Filter>
     </ClInclude>
-    <ClInclude Include="SDL2DSceneManager.h">
-      <Filter>Scene Management</Filter>
-    </ClInclude>
     <ClInclude Include="Layer2D.h">
-      <Filter>Scene Management</Filter>
-    </ClInclude>
-    <ClInclude Include="SceneManager2D_ABC.h">
       <Filter>Scene Management</Filter>
     </ClInclude>
     <ClInclude Include="ListenerTest.h" />
     <ClInclude Include="Geometry.h">
       <Filter>Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneManager2D.h">
+      <Filter>Scene Management</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

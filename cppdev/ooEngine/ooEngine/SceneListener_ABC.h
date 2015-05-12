@@ -18,7 +18,7 @@ public:
     }
     virtual ~SceneListener_ABC(){}
     SCENE_EVENT_TYPE listenFor_;
-    virtual void Event( const SceneManager2D_ABC& manager, void* customData ) const = 0;
+    virtual void Event( const SceneManager2D& manager, void* customData ) const = 0;
 };
 
 
