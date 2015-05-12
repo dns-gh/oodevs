@@ -78,6 +78,9 @@
       <Filter>Scene Management</Filter>
     </ClInclude>
     <ClInclude Include="ListenerTest.h" />
+    <ClInclude Include="Geometry.h">
+      <Filter>Geometry</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="SDL Rendering">
@@ -88,6 +91,9 @@
     </Filter>
     <Filter Include="Tools">
       <UniqueIdentifier>{283965d4-2b16-4140-aa74-b52cdcdfd7bd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Geometry">
+      <UniqueIdentifier>{d00f0873-dc73-4a80-8721-61efcef677b0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

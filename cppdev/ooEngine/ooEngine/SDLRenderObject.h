@@ -2,12 +2,17 @@
 #define _SDLRENDEROBJECT_H
 
 #include "EngineObject.h"
+#include "Geometry.h"
+#include "Resource_ABC.h"
 #include "SceneObject_ABC.h"
+
 #include "SDLRenderResource.h"
 #include "SDL_rect.h"
 #include "SDL_pixels.h"
 
 #include <memory>
+
+using namespace RenderGeometry;
 
 class SDLRenderObject : public EngineObject
                       , public SceneObject_ABC
@@ -17,8 +22,8 @@ public:
     virtual ~SDLRenderObject();
     void SetResourceObject( std::shared_ptr< Resource_ABC > renderResource );
     virtual void Update(){};
-    virtual SDLRenderResource_ABC* GetRenderResource() const;
-    virtual SDL_Rect GetRenderRect() const;
+    virtual Resource_ABC* GetRenderResource() const;
+    virtual RenderRect GetRenderRect() const;
     virtual float X() const;
     virtual float Y() const;
     virtual bool IsVisible() const;

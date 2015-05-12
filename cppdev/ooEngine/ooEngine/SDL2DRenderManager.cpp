@@ -84,7 +84,8 @@ void SDL2DRenderManager::RenderAllObjects()
         {
             if( !( *it )->GetRenderResource() )
                 continue;
-            if( !( *it )->GetRenderResource()->GetTexture() )
+            SDLRenderResource_ABC* resource = dynamic_cast< SDLRenderResource_ABC* >( ( *it )->GetRenderResource() );
+            if( !resource->GetTexture() )
                 continue;
             // Update of the SDLRenderObject. In case of a sprite object, it sets the image to the correct one if need be.
             ( *it )->Update();
@@ -122,13 +123,16 @@ void SDL2DRenderManager::RenderScene()
 
 void SDL2DRenderManager::RenderAtPosition( const SceneObject_ABC& object, const float& x, const float& y )
 {
-    SDL_Rect rect = object.GetRenderRect();
+    SDL_Rect src;
+    RenderGeometry::RenderRect rect = object.GetRenderRect();
+    memcpy( &src, &rect, sizeof( rect ) );
     SDL_Rect dst;
     dst.x = static_cast< int >( x );
     dst.y = static_cast< int >( y );
-    dst.w = rect.w;
-    dst.h = rect.h;
-    SDL_RenderCopy( renderer_, object.GetRenderResource()->GetTexture(), &rect, &dst );
+    dst.w = src.w;
+    dst.h = src.h;
+    SDLRenderResource_ABC* resource = dynamic_cast< SDLRenderResource_ABC* >( object.GetRenderResource() );
+    SDL_RenderCopy( renderer_, resource->GetTexture(), &src, &dst );
 }
 
 SDL_Renderer* SDL2DRenderManager::GetRenderer() const

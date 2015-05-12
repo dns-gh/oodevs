@@ -57,12 +57,14 @@ void SDLRenderObject::SetColorKeying( bool enable, unsigned int r, unsigned int 
     renderResource_->UpdateTexture( surface );
 }
 
-SDL_Rect SDLRenderObject::GetRenderRect() const
+RenderRect SDLRenderObject::GetRenderRect() const
 {
-    return renderRect_;
+    RenderRect rect;
+    memcpy( &rect, &renderRect_, sizeof( rect ) );
+    return rect;
 }
 
-SDLRenderResource_ABC* SDLRenderObject::GetRenderResource() const
+Resource_ABC* SDLRenderObject::GetRenderResource() const
 {
     return renderResource_;
 }

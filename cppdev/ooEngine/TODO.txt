@@ -1,4 +1,3 @@
-- Remove dependance of SceneObject_ABC from SDL library
 - Remove the _ABC of SceneManager2D_ABC and delete SDL2DSceneManager
 - Scenes
 	* Add rotation property on scene objects

@@ -141,6 +141,7 @@
     <ClCompile Include="tinyxml2.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Geometry.h" />
     <ClInclude Include="Layer2D.h" />
     <ClInclude Include="EngineObject.h" />
     <ClInclude Include="ErrorLogManager.h" />
