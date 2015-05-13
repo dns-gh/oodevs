@@ -23,6 +23,7 @@ public:
     bool IsVisible() const;
 
     virtual void SetResourceObject( const std::shared_ptr< Resource_ABC >& renderResource );
+    virtual void SetColorKeying( bool enable, unsigned int r = 0, unsigned int g = 0, unsigned int b = 0 ){};
     void SetPosition( float x, float y );
     void SetVisible( bool visibility );
 

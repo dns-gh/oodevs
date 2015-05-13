@@ -2,6 +2,8 @@
 #include "SceneListener_ABC.h"
 #include "ErrorLogManager.h"
 
+#include "SDLRenderObject.h" // TOREMOVE
+
 using namespace tinyxml2;
 
 SceneManager2D::SceneManager2D( const std::shared_ptr< ResourceManager >& resourceManager )
@@ -71,7 +73,7 @@ bool SceneManager2D::LoadFromXMLFile( std::string filename )
             continue;
 
         std::shared_ptr< Layer2D > layer;
-        if( !elem->Attribute( "name" ) || elem->Attribute( "zorder" ) || elem->Attribute( "x" ) || elem->Attribute( "y" ) )
+        if( !elem->Attribute( "name" ) || !elem->Attribute( "zorder" ) || !elem->Attribute( "x" ) || !elem->Attribute( "y" ) )
             OOTHROW( 2, "Error when loading a layer, no name, zorder, x or y position provided" );
         bool visible = false;
         if( elem->Attribute( "visible" ) )
@@ -81,14 +83,15 @@ bool SceneManager2D::LoadFromXMLFile( std::string filename )
         float x = static_cast< float >( std::atof( elem->Attribute( "x" ) ) );
         float y = static_cast< float >( std::atof( elem->Attribute( "y" ) ) );
         layer.reset( new Layer2D( visible, zorder, x, y, name ) );
-        for( XMLNode* objects = child->FirstChild( ); objects; objects->NextSibling( ) )
+        for( XMLNode* objects = child->FirstChild( ); objects; objects = objects->NextSibling( ) )
         {
             if( std::string( objects->Value( ) ) != "objects" )
                 continue;
 
-            for( XMLNode* obj = objects->FirstChild(); obj; obj->NextSibling() )
+            for( XMLNode* obj = objects->FirstChild( ); obj; obj = obj->NextSibling( ) )
                 AddLayerObject( layer, obj->ToElement() );
         }
+        layers_.push_back( layer );
     }
     return true;
 }
@@ -97,19 +100,39 @@ void SceneManager2D::AddLayerObject( std::shared_ptr< Layer2D >& layer, tinyxml2
 {
     if( elem->Value() != std::string( "object" ) )
         return;
-    std::shared_ptr< SceneObject > object;
-    for( const XMLAttribute* att = elem->FirstAttribute(); att; att->Next() )
-    {
-        std::string attName = att->Name();
-        std::string attValue = att->Value();
+    std::shared_ptr< SceneObject > object( new SDLRenderObject() );
 
-        if( attName == "id" )
-        {
-            auto resource = resourceManager_->FindResourceByID( std::atoi( attValue.c_str() ) );
-            if( !resource )
-                OOTHROW( 2, "Error when searching a resource from its id" );
-        }
+    if( !elem->Attribute( "id" ) )
+        OOTHROW( 2, "No id provided for the loading of the object in the layer" );
+    
+    auto resource = resourceManager_->FindResourceByID( std::atoi( elem->Attribute( "id" ) ) );
+    if( !resource )
+        OOTHROW( 2, "Error when searching a resource from its id" );
+    object->SetResourceObject( resource );
+    
+    if( elem->Attribute( "x" ) && elem->Attribute( "y" ) )
+        object->SetPosition( static_cast< float >( std::atof( elem->Attribute( "x" ) ) ), static_cast< float >( std::atof( elem->Attribute( "y" ) ) ) );
+
+    bool colorkey = false;
+    if( elem->Attribute( "colorkey" ) == "true" )
+    {
+        colorkey = true;
+    } // colorkey false by default
+        
+    if( elem->Attribute( "visible" ) == "true" )
+    {
+        object->SetVisible( true );
+    } // not visible by default
+    
+    int r = 0, g = 0, b = 0;
+    if( elem->Attribute( "r" ) && elem->Attribute( "g" ) && elem->Attribute( "b" ) )
+    {
+        r = std::atoi( elem->Attribute( "r" ) );
+        g = std::atoi( elem->Attribute( "g" ) );
+        b = std::atoi( elem->Attribute( "b" ) );
     }
+    object->SetColorKeying( colorkey, r, g, b );
+    layer->InsertSceneObject( object );
 }
 
 unsigned int SceneManager2D::AddTimer( unsigned long interval )

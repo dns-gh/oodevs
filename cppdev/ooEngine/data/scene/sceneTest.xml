@@ -1,5 +1,5 @@
 <scene>
-	<layer name="layer1" zorder="0" x="0" y="0" visible="true">
+	<layer name="layer1" zorder="0" x="0" y="0" visible="false">
 		<objects>
 			<object id="1" name="square1" x="0" y="100" visible="true" colorkey="false"></object>
 			<object id="1" name="square2" x="0" y="200" visible="true" colorkey="false"></object>
@@ -7,7 +7,7 @@
 			<object id="1" name="square4" x="0" y="400" visible="true" colorkey="false"></object>
 		</objects>
 	</layer>
-	<layer name="layer2" zorder="1" x="50" y="50" visible="true">
+	<layer name="layer2" zorder="1" x="50" y="50" visible="false">
 		<objects>
 			<object id="1" name="circle1" x="100" y="0" visible="true" colorkey="false"></object>
 			<object id="2" name="circle2" x="200" y="0" visible="true" colorkey="true" r="0" g="0" b="0"></object>

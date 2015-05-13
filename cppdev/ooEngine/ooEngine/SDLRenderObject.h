@@ -22,7 +22,7 @@ public:
     virtual ~SDLRenderObject();
 
     virtual void SetResourceObject( const std::shared_ptr< Resource_ABC >& renderResource );
-    void SetColorKeying( bool enable, unsigned int r = 0, unsigned int g = 0, unsigned int b = 0 ); // color keying is black by default
+    virtual void SetColorKeying( bool enable, unsigned int r = 0, unsigned int g = 0, unsigned int b = 0 ); // color keying is black by default
 
 protected:
     SDL_Color colorKey_;
