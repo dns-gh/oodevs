@@ -2,7 +2,7 @@
 #define _RENDERMANAGER_ABC_H
 
 #include "Resource_ABC.h"
-#include "SceneObject_ABC.h"
+#include "SceneObject.h"
 
 #include <memory>
 
@@ -19,7 +19,7 @@ public:
     virtual void RenderAllObjects() = 0;
     virtual void SetSceneManager2D( std::shared_ptr< SceneManager2D >& manager ) = 0;
     virtual void RenderScene() = 0;
-    virtual void InsertRenderObject( SceneObject_ABC* object ) = 0;
+    virtual void InsertRenderObject( SceneObject* object ) = 0;
 
 protected:
     virtual ~RenderManager_ABC(){};

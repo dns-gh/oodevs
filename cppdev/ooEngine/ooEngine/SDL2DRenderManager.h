@@ -32,9 +32,9 @@ public:
     virtual void SetSceneManager2D( std::shared_ptr< SceneManager2D >& manager );
     virtual void RenderScene();
 
-    void RenderAtPosition( const SceneObject_ABC& object, const float& x, const float& y );
+    void RenderAtPosition( const SceneObject& object, const float& x, const float& y );
     SDL_Renderer* GetRenderer() const;
-    virtual void InsertRenderObject( SceneObject_ABC* object );
+    virtual void InsertRenderObject( SceneObject* object );
 
 private:
     SDL2DRenderManager( const SDL2DRenderManager& ){};

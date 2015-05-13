@@ -72,8 +72,8 @@ bool SDL2DRenderManager::Update()
 
 std::shared_ptr< Resource_ABC > SDL2DRenderManager::CreateRenderResource() const
 {
-    std::shared_ptr< SDLRenderResource > sharedResource( new SDLRenderResource() );
-    return std::dynamic_pointer_cast< Resource_ABC >( sharedResource );
+    std::shared_ptr< Resource_ABC > sharedResource( new SDLRenderResource() );
+    return sharedResource;
 }
 
 void SDL2DRenderManager::RenderAllObjects()
@@ -84,8 +84,8 @@ void SDL2DRenderManager::RenderAllObjects()
         {
             if( !( *it )->GetRenderResource() )
                 continue;
-            SDLRenderResource_ABC* resource = dynamic_cast< SDLRenderResource_ABC* >( ( *it )->GetRenderResource() );
-            if( !resource->GetTexture() )
+            auto sdlResource = std::dynamic_pointer_cast< SDLRenderResource_ABC >( ( *it )->GetRenderResource() );
+            if( !sdlResource->GetTexture() )
                 continue;
             // Update of the SDLRenderObject. In case of a sprite object, it sets the image to the correct one if need be.
             ( *it )->Update();
@@ -121,7 +121,7 @@ void SDL2DRenderManager::RenderScene()
     }
 }
 
-void SDL2DRenderManager::RenderAtPosition( const SceneObject_ABC& object, const float& x, const float& y )
+void SDL2DRenderManager::RenderAtPosition( const SceneObject& object, const float& x, const float& y )
 {
     SDL_Rect src;
     RenderGeometry::RenderRect rect = object.GetRenderRect();
@@ -131,8 +131,8 @@ void SDL2DRenderManager::RenderAtPosition( const SceneObject_ABC& object, const 
     dst.y = static_cast< int >( y );
     dst.w = src.w;
     dst.h = src.h;
-    SDLRenderResource_ABC* resource = dynamic_cast< SDLRenderResource_ABC* >( object.GetRenderResource() );
-    SDL_RenderCopy( renderer_, resource->GetTexture(), &src, &dst );
+    auto sdlResource = std::dynamic_pointer_cast< SDLRenderResource_ABC >( object.GetRenderResource() );
+    SDL_RenderCopy( renderer_, sdlResource->GetTexture(), &src, &dst );
 }
 
 SDL_Renderer* SDL2DRenderManager::GetRenderer() const
@@ -140,7 +140,7 @@ SDL_Renderer* SDL2DRenderManager::GetRenderer() const
     return renderer_;
 }
 
-void SDL2DRenderManager::InsertRenderObject( SceneObject_ABC* object )
+void SDL2DRenderManager::InsertRenderObject( SceneObject* object )
 {
     if( object )
         renderObjects_.push_back( dynamic_cast< SDLRenderObject* >( object ) );

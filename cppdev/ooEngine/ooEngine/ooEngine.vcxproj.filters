@@ -29,6 +29,9 @@
     <ClCompile Include="SceneManager2D.cpp">
       <Filter>Scene Management</Filter>
     </ClCompile>
+    <ClCompile Include="SceneObject.cpp">
+      <Filter>Scene Management</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EngineObject.h" />
@@ -65,9 +68,6 @@
     <ClInclude Include="SceneListener_ABC.h">
       <Filter>Scene Management</Filter>
     </ClInclude>
-    <ClInclude Include="SceneObject_ABC.h">
-      <Filter>Scene Management</Filter>
-    </ClInclude>
     <ClInclude Include="Layer2D.h">
       <Filter>Scene Management</Filter>
     </ClInclude>
@@ -76,6 +76,9 @@
       <Filter>Geometry</Filter>
     </ClInclude>
     <ClInclude Include="SceneManager2D.h">
+      <Filter>Scene Management</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneObject.h">
       <Filter>Scene Management</Filter>
     </ClInclude>
   </ItemGroup>

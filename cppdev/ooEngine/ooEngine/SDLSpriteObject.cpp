@@ -45,7 +45,8 @@ void SDLSpriteObject::Play( unsigned int startImage )
         return Resume( startImage );
 
     SDL_Rect rect;
-    SDL_QueryTexture( renderResource_->GetTexture( ), NULL, NULL, &rect.w, &rect.h );
+    auto sdlResource = std::dynamic_pointer_cast< SDLRenderResource_ABC >( renderResource_ );
+    SDL_QueryTexture( sdlResource->GetTexture(), NULL, NULL, &rect.w, &rect.h );
     imageWidth_ = rect.w / imagesPerRow_;
     imageHeight_ = rect.h / imagesPerColumn_;
     if( startImage < 0 || startImage >= imageNumber_ )

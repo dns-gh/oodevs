@@ -2,7 +2,7 @@
 #define _LAYER2D_H_
 
 #include "EngineObject.h"
-#include "SceneObject_ABC.h"
+#include "SceneObject.h"
 
 #include <list>
 #include <string>
@@ -19,10 +19,10 @@ public :
     const std::string& GetName() const;
     unsigned int GetZOrder() const;
     bool IsVisible() const;
-    const std::list< std::shared_ptr< SceneObject_ABC > > GetSceneObjects() const;
+    const std::list< std::shared_ptr< SceneObject > > GetSceneObjects() const;
 
     void SetVisible( bool visibility );
-    void InsertSceneObject( const std::shared_ptr< SceneObject_ABC >& object );
+    void InsertSceneObject( const std::shared_ptr< SceneObject >& object );
 
 private:
     bool isVisible_;
@@ -30,7 +30,7 @@ private:
     float x_;
     float y_;
     std::string name_;
-    std::list< std::shared_ptr< SceneObject_ABC > > sceneObjects_;
+    std::list< std::shared_ptr< SceneObject > > sceneObjects_;
 };
 
 #endif // Layer2D.h

@@ -35,7 +35,7 @@ bool Layer2D::IsVisible() const
     return isVisible_;
 }
 
-const std::list< std::shared_ptr< SceneObject_ABC > > Layer2D::GetSceneObjects( ) const
+const std::list< std::shared_ptr< SceneObject > > Layer2D::GetSceneObjects() const
 {
     return sceneObjects_;
 }
@@ -45,7 +45,7 @@ void Layer2D::SetVisible( bool visibility )
     isVisible_ = visibility;
 }
 
-void Layer2D::InsertSceneObject( const std::shared_ptr< SceneObject_ABC >& object )
+void Layer2D::InsertSceneObject( const std::shared_ptr< SceneObject >& object )
 {
     if( object )
         sceneObjects_.push_back( object );

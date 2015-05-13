@@ -97,7 +97,7 @@ void SceneManager2D::AddLayerObject( std::shared_ptr< Layer2D >& layer, tinyxml2
 {
     if( elem->Value() != std::string( "object" ) )
         return;
-    //std::shared_ptr< SceneObject_ABC > object = std::make_shared<  >;
+    std::shared_ptr< SceneObject > object;
     for( const XMLAttribute* att = elem->FirstAttribute(); att; att->Next() )
     {
         std::string attName = att->Name();
@@ -105,7 +105,9 @@ void SceneManager2D::AddLayerObject( std::shared_ptr< Layer2D >& layer, tinyxml2
 
         if( attName == "id" )
         {
-            // TODO
+            auto resource = resourceManager_->FindResourceByID( std::atoi( attValue.c_str() ) );
+            if( !resource )
+                OOTHROW( 2, "Error when searching a resource from its id" );
         }
     }
 }

@@ -1,3 +1,6 @@
+- Add CreateRenderObject to the sdl2drenderManager ?
+- Use of an SDLEntityFactory to create render, and object resource ? inherits from EntityFactory_ABC ?
+- too much use of dynamic_pointer_cast...
 - Add logs througout the process of loading, rendering,...
 - Scenes
 	* Add rotation property on scene objects
