@@ -1,3 +1,5 @@
+- Add a collision detection algorithm in 2D
+- Add dynamic zordering for 2D objects in the scene. Use collision and bouding boxes. What about layer management then ?
 - Add CreateRenderObject to the sdl2drenderManager ?
 - Use of an SDLEntityFactory to create render, and object resource ? inherits from EntityFactory_ABC ?
 - too much use of dynamic_pointer_cast...
