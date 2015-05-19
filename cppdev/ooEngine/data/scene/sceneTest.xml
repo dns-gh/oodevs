@@ -9,8 +9,9 @@
 	</layer>
 	<layer name="layer2" zorder="1" x="50" y="50" visible="true">
 		<objects>
-			<object id="1" name="circle1" x="100" y="0" visible="true" colorkey="false"></object>
-			<object id="2" name="circle2" x="200" y="0" visible="true" colorkey="true" r="0" g="0" b="0"></object>
+			<object id="1" name="circle1" x="100" y="0" visible="true" colorkey="false"
+				sprite="true" sprite_num="48" sprite_rows="8" sprite_cols="6" sprite_time="125" ></object>
+			<object id="2" name="circle2" x="200" y="0" visible="false" colorkey="true" r="0" g="0" b="0"></object>
 			<object id="1" name="circle3" x="300" y="0" visible="false" colorkey="false"></object>
 			<object id="1" name="circle4" x="400" y="0" visible="false" colorkey="false"></object>
 		</objects>

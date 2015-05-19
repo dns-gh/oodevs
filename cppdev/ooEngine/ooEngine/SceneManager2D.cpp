@@ -2,7 +2,8 @@
 #include "SceneListener_ABC.h"
 #include "ErrorLogManager.h"
 
-#include "SDLRenderObject.h" // TOREMOVE
+#include "SDLRenderObject.h" // TOREMOVE (use of a factory ?)
+#include "SDLSpriteObject.h" // TOREMOVE (use of a factory ?)
 
 using namespace tinyxml2;
 
@@ -100,7 +101,29 @@ void SceneManager2D::AddLayerObject( std::shared_ptr< Layer2D >& layer, tinyxml2
 {
     if( elem->Value() != std::string( "object" ) )
         return;
-    std::shared_ptr< SceneObject > object( new SDLRenderObject() );
+    std::shared_ptr< SceneObject > object;
+
+    bool sprite = false;
+    if( elem->Attribute( "sprite" ) )
+        elem->QueryBoolAttribute( "sprite", &sprite );
+
+    if( sprite )
+    {
+        int num, rows, cols, time;
+        if( elem->Attribute( "sprite_num" ) && elem->Attribute( "sprite_rows" )
+            && elem->Attribute( "sprite_cols" ) && elem->Attribute( "sprite_time" ) )
+        {
+            num = std::atoi( elem->Attribute( "sprite_num" ) );
+            rows = std::atoi( elem->Attribute( "sprite_rows" ) );
+            cols = std::atoi( elem->Attribute( "sprite_cols" ) );
+            time = std::atoi( elem->Attribute( "sprite_time" ) );
+        }
+        else
+            OOTHROW( 2, "Missing data for the sprite object to be loaded" );
+        object.reset( new SDLSpriteObject(num, rows, cols, time) );
+    }
+    else
+        object.reset( new SDLRenderObject() );
 
     if( !elem->Attribute( "id" ) )
         OOTHROW( 2, "No id provided for the loading of the object in the layer" );
