@@ -77,7 +77,7 @@ bool SceneManager2D::LoadFromXMLFile( std::string filename )
             OOTHROW( 2, "Error when loading a layer, no name, zorder, x or y position provided" );
         bool visible = false;
         if( elem->Attribute( "visible" ) )
-            visible = elem->Attribute( "visible" ) == "true";
+            elem->QueryBoolAttribute( "visible", &visible );
         std::string name = elem->Attribute( "name" );
         unsigned int zorder = std::atoi( elem->Attribute( "zorder" ) );
         float x = static_cast< float >( std::atof( elem->Attribute( "x" ) ) );
@@ -114,15 +114,13 @@ void SceneManager2D::AddLayerObject( std::shared_ptr< Layer2D >& layer, tinyxml2
         object->SetPosition( static_cast< float >( std::atof( elem->Attribute( "x" ) ) ), static_cast< float >( std::atof( elem->Attribute( "y" ) ) ) );
 
     bool colorkey = false;
-    if( elem->Attribute( "colorkey" ) == "true" )
-    {
-        colorkey = true;
-    } // colorkey false by default
-        
-    if( elem->Attribute( "visible" ) == "true" )
-    {
-        object->SetVisible( true );
-    } // not visible by default
+    if( elem->Attribute( "colorkey" ) )
+        elem->QueryBoolAttribute( "colorkey", &colorkey );
+
+    bool visible = false;
+    if( elem->Attribute( "visible" ) )
+        elem->QueryBoolAttribute( "visible", &visible );
+    object->SetVisible( visible );
     
     int r = 0, g = 0, b = 0;
     if( elem->Attribute( "r" ) && elem->Attribute( "g" ) && elem->Attribute( "b" ) )

@@ -31,10 +31,11 @@ int main(int, char**)
         sdlRenderManager->SetSceneManager2D( sceneManager );
 
         // Default image in the back
-        SDLRenderObject* back = new SDLRenderObject();
+        /*SDLRenderObject* back = new SDLRenderObject();
         back->SetResourceObject( resourceManager->FindResourceByID( 3 ) );
         sdlRenderManager->InsertRenderObject( back );
         back->SetVisible( true );
+        */
 
         // Sprites test
         SDLSpriteObject* spriteTest = new SDLSpriteObject( 48, 8, 6, 125 );

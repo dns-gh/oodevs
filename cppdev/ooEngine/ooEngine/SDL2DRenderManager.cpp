@@ -109,7 +109,8 @@ void SDL2DRenderManager::RenderScene()
             if( !layer->IsVisible() )
                 continue;
 
-            for( auto objectIt = layer->GetSceneObjects().begin(); objectIt != layer->GetSceneObjects().end(); ++objectIt )
+            auto& objects = layer->GetSceneObjects();
+            for( auto objectIt = objects.begin(); objectIt != objects.end(); ++objectIt )
             {
                 auto object = *objectIt;
                 if( !object->IsVisible() )
