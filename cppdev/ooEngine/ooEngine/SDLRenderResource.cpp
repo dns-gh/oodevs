@@ -4,7 +4,8 @@
 
 #include "SDL_image.h"
 
-SDLRenderResource::SDLRenderResource()
+SDLRenderResource::SDLRenderResource( const SDL2DRenderManager& sdlRenderManager )
+: sdlRenderManager_( sdlRenderManager )
 {
     // NOTHING
 }
@@ -21,14 +22,14 @@ void SDLRenderResource::UpdateTexture( SDL_Surface* surface )
 
     if( texture_ )
         SDL_DestroyTexture( texture_ );
-    SDL_Renderer* renderer = SDL2DRenderManager::GetInstance()->GetRenderer();
+    SDL_Renderer* renderer = sdlRenderManager_.GetRenderer();
     texture_ = SDL_CreateTextureFromSurface( renderer, surface_ );
 }
 
 void SDLRenderResource::Load()
 {
     UnLoad();
-    SDL_Renderer* renderer = SDL2DRenderManager::GetInstance()->GetRenderer();
+    SDL_Renderer* renderer = sdlRenderManager_.GetRenderer();
     if( !renderer )
         OOTHROW( 0, "Error when creating a texture from a file. There is no renderer available at this time." );
 

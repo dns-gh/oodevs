@@ -72,7 +72,7 @@ bool SDL2DRenderManager::Update()
 
 std::shared_ptr< Resource_ABC > SDL2DRenderManager::CreateRenderResource() const
 {
-    std::shared_ptr< Resource_ABC > sharedResource( new SDLRenderResource() );
+    std::shared_ptr< Resource_ABC > sharedResource( new SDLRenderResource( *this ) );
     return sharedResource;
 }
 

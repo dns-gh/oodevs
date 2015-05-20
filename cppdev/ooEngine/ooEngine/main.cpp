@@ -22,7 +22,7 @@ int main(int, char**)
     try
     {
         // Initialization of managers
-        RenderManager_ABC* sdlRenderManager = SDL2DRenderManager::GetInstance();
+        std::shared_ptr< RenderManager_ABC > sdlRenderManager = std::make_shared< SDL2DRenderManager >();
         sdlRenderManager->Initialize();
 
         auto resourceManager = std::make_shared< ResourceManager >( *sdlRenderManager );
@@ -64,7 +64,7 @@ int main(int, char**)
         {
             if( sceneManager )
                 sceneManager->Update();
-            if( !SDL2DRenderManager::GetInstance()->Update() )
+            if( !sdlRenderManager->Update() )
                 quit = true;
 
             SDL_Event event;

@@ -17,12 +17,11 @@
 
 class SDL2DRenderManager : public EngineObject
                          , public RenderManager_ABC
-                         , public SingletonTemplate< SDL2DRenderManager >
 {
-    friend SDL2DRenderManager* SingletonTemplate< SDL2DRenderManager >::GetInstance();
-    friend void SingletonTemplate< SDL2DRenderManager >::Kill();
-
 public:
+    SDL2DRenderManager(){};
+    virtual ~SDL2DRenderManager();
+
     virtual void Initialize( unsigned int width = 800, unsigned int height = 600, bool fullscreen = false, char* windowTitle = 0 );
     virtual void Clear();
     virtual bool Update();
@@ -35,12 +34,6 @@ public:
     void RenderAtPosition( const SceneObject& object, const float& x, const float& y );
     SDL_Renderer* GetRenderer() const;
     virtual void InsertRenderObject( SceneObject* object );
-
-private:
-    SDL2DRenderManager( const SDL2DRenderManager& ){};
-    SDL2DRenderManager& operator=( const SDL2DRenderManager& ){};
-    SDL2DRenderManager(){};
-    virtual ~SDL2DRenderManager();
 
 private:
     SDL_Window* renderWindow_;
