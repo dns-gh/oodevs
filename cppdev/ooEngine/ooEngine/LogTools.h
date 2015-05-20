@@ -23,7 +23,7 @@ enum LOGTYPE
 };
 
 #define OOSTREAM( type, msg ) static_cast< std::stringstream& >( std::stringstream() << \
-    "Log Type " << type << " | " << msg << std::endl )
+    "log " << type << ": " << msg << std::endl )
 
 class LogTools
 {

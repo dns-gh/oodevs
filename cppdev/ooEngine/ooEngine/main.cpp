@@ -13,11 +13,11 @@
 
 int main(int, char**)
 {
+    // init of a logger
     auto logger = std::make_shared< LogTools >( tools::GetModulePath( ) );
-    bool isRegistered = logger->RegisterLog( FILE_INFOS, "infos.txt" );
+    bool isRegistered = logger->RegisterLog( FILE_INFOS, "infos.log" );
     if( !isRegistered )
         return 0;
-    logger->OOLOG( FILE_INFOS ) << OOSTREAM( LOG_MESSAGE, " Test : " << 1 << std::endl << " Test " << 2 );
 
     try
     {
@@ -25,7 +25,7 @@ int main(int, char**)
         RenderManager_ABC* sdlRenderManager = SDL2DRenderManager::GetInstance();
         sdlRenderManager->Initialize();
 
-        auto resourceManager = std::make_shared< ResourceManager>( *sdlRenderManager );
+        auto resourceManager = std::make_shared< ResourceManager >( *sdlRenderManager );
         resourceManager->LoadFromXMLFile( tools::GetModulePath() + std::string( "../../data/graphic/template.xml" ) );
 
         auto entityFactory = std::make_shared< SDLEntityFactory >();
@@ -34,11 +34,11 @@ int main(int, char**)
         sdlRenderManager->SetSceneManager2D( sceneManager );
 
         // Default image in the back
-        /*SDLRenderObject* back = new SDLRenderObject();
+        SDLRenderObject* back = new SDLRenderObject();
         back->SetResourceObject( resourceManager->FindResourceByID( 3 ) );
         sdlRenderManager->InsertRenderObject( back );
         back->SetVisible( true );
-        */
+        
 
         // Sprites test
         SDLSpriteObject* spriteTest = new SDLSpriteObject( 48, 8, 6, 125 );
