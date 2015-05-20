@@ -4,10 +4,11 @@ cException::cException( int errorNum, std::string errorDesc, std::string srcFile
 {
     // write data into a specific format
     std::stringstream errss;
-    errss << "Error " << errorNum;
-    errss << "; ln " << lineNum;
-    errss << "; desc " << errorDesc;
-    errss << "; src " << srcFilename;
+    errss << "error " << errorNum;
+    errss << "; " << srcFilename;
+    errss << ":" << lineNum;
+    errss << "; " << errorDesc;
+
 
     errorText_ = errss.str();
 }
@@ -39,7 +40,7 @@ void ErrorLogManager::Close()
 void ErrorLogManager::LogException( const cException& e )
 {
     logBuffer_ << "**error** ";
-    logBuffer_ << GetTimeStr() << " :\n" << e.what();
+    logBuffer_ << GetTimeStr() << " : " << e.what();
     Flush();
 }
 

@@ -55,9 +55,9 @@ int main(int, char**)
         sdlRenderManager->InsertRenderObject( spriteTest2 );
 
         // Test listener
-         sceneManager->AddListener( new TestListener() );
-         sceneManager->AddTimer( 10000 );
-         sceneManager->LoadFromXMLFile( tools::GetModulePath() + std::string( "../../data/scene/sceneTest.xml" ) );
+        sceneManager->AddListener( new TestListener() );
+        sceneManager->AddTimer( 10000 );
+        sceneManager->LoadFromXMLFile( tools::GetModulePath() + std::string( "../../data/scene/sceneTest.xml" ) );
 
         bool quit = false;
         while( !quit )
