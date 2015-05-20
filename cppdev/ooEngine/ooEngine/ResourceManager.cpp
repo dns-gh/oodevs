@@ -1,5 +1,4 @@
 #include "ResourceManager.h"
-#include "SDL2DRenderManager.h"
 #include "tinyxml2.h"
 
 using namespace tinyxml2;

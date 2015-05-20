@@ -136,6 +136,7 @@
     <ClCompile Include="SceneObject.cpp" />
     <ClCompile Include="SDL2DRenderManager.cpp" />
     <ClCompile Include="SceneManager2D.cpp" />
+    <ClCompile Include="SDLEntityFactory.cpp" />
     <ClCompile Include="SDLRenderObject.cpp" />
     <ClCompile Include="SDLRenderResource.cpp" />
     <ClCompile Include="SDLSpriteObject.cpp" />
@@ -149,9 +150,11 @@
     <ClInclude Include="ListenerTest.h" />
     <ClInclude Include="LogTools.h" />
     <ClInclude Include="RenderManager_ABC.h" />
+    <ClInclude Include="EntityFactory_ABC.h" />
     <ClInclude Include="SceneListener_ABC.h" />
     <ClInclude Include="SceneManager2D.h" />
     <ClInclude Include="SceneObject.h" />
+    <ClInclude Include="SDLEntityFactory.h" />
     <ClInclude Include="SDLRenderResource_ABC.h" />
     <ClInclude Include="Resource_ABC.h" />
     <ClInclude Include="ResourceManager.h" />

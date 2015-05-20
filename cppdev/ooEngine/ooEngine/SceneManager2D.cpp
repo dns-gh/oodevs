@@ -2,13 +2,11 @@
 #include "SceneListener_ABC.h"
 #include "ErrorLogManager.h"
 
-#include "SDLRenderObject.h" // TOREMOVE (use of a factory ?)
-#include "SDLSpriteObject.h" // TOREMOVE (use of a factory ?)
-
 using namespace tinyxml2;
 
-SceneManager2D::SceneManager2D( const std::shared_ptr< ResourceManager >& resourceManager )
-: resourceManager_( resourceManager )
+SceneManager2D::SceneManager2D( const ResourceManager& resourceManager, const EntityFactory_ABC& entityFactory )
+    : resourceManager_( resourceManager )
+    , entityFactory_( entityFactory )
 {
     // NOTHING
 }
@@ -120,15 +118,15 @@ void SceneManager2D::AddLayerObject( std::shared_ptr< Layer2D >& layer, tinyxml2
         }
         else
             OOTHROW( 2, "Missing data for the sprite object to be loaded" );
-        object.reset( new SDLSpriteObject(num, rows, cols, time) );
+        object = entityFactory_.CreateSpriteObject( num, rows, cols, time );
     }
     else
-        object.reset( new SDLRenderObject() );
+        object = entityFactory_.CreateRenderObject();
 
     if( !elem->Attribute( "id" ) )
         OOTHROW( 2, "No id provided for the loading of the object in the layer" );
     
-    auto resource = resourceManager_->FindResourceByID( std::atoi( elem->Attribute( "id" ) ) );
+    auto resource = resourceManager_.FindResourceByID( std::atoi( elem->Attribute( "id" ) ) );
     if( !resource )
         OOTHROW( 2, "Error when searching a resource from its id" );
     object->SetResourceObject( resource );

@@ -5,6 +5,7 @@
 #include "Layer2D.h"
 #include "OOTimer.h"
 #include "ResourceManager.h"
+#include "EntityFactory_ABC.h"
 
 #include "tinyxml2.h"
 
@@ -15,7 +16,7 @@ class SceneListener_ABC;
 class SceneManager2D : public EngineObject
 {
 public:
-    SceneManager2D( const std::shared_ptr< ResourceManager >& resourceManager );
+    SceneManager2D( const ResourceManager& resourceManager, const EntityFactory_ABC& entityFactory );
     virtual ~SceneManager2D(){};
     std::shared_ptr< Layer2D > CreateLayer( std::string );
     std::shared_ptr< Layer2D > FindLayer( std::string ) const;
@@ -34,7 +35,8 @@ private:
     std::list< std::shared_ptr< Layer2D > > layers_;
     std::list< std::shared_ptr< OOTimer > > timers_;
     std::list< SceneListener_ABC* > listeners_;
-    const std::shared_ptr< ResourceManager >& resourceManager_;
+    const ResourceManager& resourceManager_;
+    const EntityFactory_ABC& entityFactory_;
 };
 
 #endif // SceneManager2D.h

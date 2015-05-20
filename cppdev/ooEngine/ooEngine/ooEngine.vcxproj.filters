@@ -8,18 +8,6 @@
     <ClCompile Include="tinyxml2.cpp">
       <Filter>Tools</Filter>
     </ClCompile>
-    <ClCompile Include="SDL2DRenderManager.cpp">
-      <Filter>SDL Rendering</Filter>
-    </ClCompile>
-    <ClCompile Include="SDLRenderResource.cpp">
-      <Filter>SDL Rendering</Filter>
-    </ClCompile>
-    <ClCompile Include="SDLRenderObject.cpp">
-      <Filter>SDL Rendering</Filter>
-    </ClCompile>
-    <ClCompile Include="SDLSpriteObject.cpp">
-      <Filter>SDL Rendering</Filter>
-    </ClCompile>
     <ClCompile Include="LogTools.cpp">
       <Filter>Tools</Filter>
     </ClCompile>
@@ -31,6 +19,21 @@
     </ClCompile>
     <ClCompile Include="SceneObject.cpp">
       <Filter>Scene Management</Filter>
+    </ClCompile>
+    <ClCompile Include="SDL2DRenderManager.cpp">
+      <Filter>SDL Rendering\rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="SDLRenderObject.cpp">
+      <Filter>SDL Rendering\rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="SDLRenderResource.cpp">
+      <Filter>SDL Rendering\rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="SDLSpriteObject.cpp">
+      <Filter>SDL Rendering\rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="SDLEntityFactory.cpp">
+      <Filter>SDL Rendering\creation</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -44,23 +47,8 @@
     <ClInclude Include="tinyxml2.h">
       <Filter>Tools</Filter>
     </ClInclude>
-    <ClInclude Include="SDLRenderObject.h">
-      <Filter>SDL Rendering</Filter>
-    </ClInclude>
-    <ClInclude Include="SDL2DRenderManager.h">
-      <Filter>SDL Rendering</Filter>
-    </ClInclude>
     <ClInclude Include="RenderManager_ABC.h" />
-    <ClInclude Include="SDLRenderResource.h">
-      <Filter>SDL Rendering</Filter>
-    </ClInclude>
-    <ClInclude Include="SDLSpriteObject.h">
-      <Filter>SDL Rendering</Filter>
-    </ClInclude>
     <ClInclude Include="Resource_ABC.h" />
-    <ClInclude Include="SDLRenderResource_ABC.h">
-      <Filter>SDL Rendering</Filter>
-    </ClInclude>
     <ClInclude Include="LogTools.h">
       <Filter>Tools</Filter>
     </ClInclude>
@@ -81,6 +69,25 @@
     <ClInclude Include="SceneObject.h">
       <Filter>Scene Management</Filter>
     </ClInclude>
+    <ClInclude Include="EntityFactory_ABC.h" />
+    <ClInclude Include="SDL2DRenderManager.h">
+      <Filter>SDL Rendering\rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="SDLRenderObject.h">
+      <Filter>SDL Rendering\rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="SDLRenderResource.h">
+      <Filter>SDL Rendering\rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="SDLRenderResource_ABC.h">
+      <Filter>SDL Rendering\rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="SDLSpriteObject.h">
+      <Filter>SDL Rendering\rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="SDLEntityFactory.h">
+      <Filter>SDL Rendering\creation</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="SDL Rendering">
@@ -94,6 +101,12 @@
     </Filter>
     <Filter Include="Geometry">
       <UniqueIdentifier>{d00f0873-dc73-4a80-8721-61efcef677b0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SDL Rendering\rendering">
+      <UniqueIdentifier>{287b4105-76dc-499c-a0e2-6bed67b735f1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SDL Rendering\creation">
+      <UniqueIdentifier>{866fb660-366a-4440-8d21-9764295e7ed6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

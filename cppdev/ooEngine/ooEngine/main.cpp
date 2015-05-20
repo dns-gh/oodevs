@@ -2,8 +2,9 @@
 #include "tools.h"
 #include "ErrorLogManager.h"
 #include "LogTools.h"
-#include "ResourceManager.h"
 #include "SDL2DRenderManager.h"
+#include "ResourceManager.h"
+#include "SDLEntityFactory.h"
 #include "SceneManager2D.h"
 #include "SDLSpriteObject.h"
 #include "ListenerTest.h"
@@ -27,7 +28,9 @@ int main(int, char**)
         auto resourceManager = std::make_shared< ResourceManager>( *sdlRenderManager );
         resourceManager->LoadFromXMLFile( tools::GetModulePath() + std::string( "../../data/graphic/template.xml" ) );
 
-        std::shared_ptr< SceneManager2D > sceneManager = std::make_shared< SceneManager2D >( resourceManager );
+        auto entityFactory = std::make_shared< SDLEntityFactory >();
+
+        std::shared_ptr< SceneManager2D > sceneManager = std::make_shared< SceneManager2D >( *resourceManager, *entityFactory );
         sdlRenderManager->SetSceneManager2D( sceneManager );
 
         // Default image in the back
