@@ -6,6 +6,7 @@
 #include "Resource_ABC.h"
 #include "RenderManager_ABC.h"
 #include "SceneManager2D.h"
+#include "LogTools.h"
 
 #include "SDL.h"
 #include "SDLRenderObject.h"
@@ -19,7 +20,7 @@ class SDL2DRenderManager : public EngineObject
                          , public RenderManager_ABC
 {
 public:
-    SDL2DRenderManager(){};
+    SDL2DRenderManager( LogTools& logger );
     virtual ~SDL2DRenderManager();
 
     virtual void Initialize( unsigned int width = 800, unsigned int height = 600, bool fullscreen = false, char* windowTitle = 0 );
@@ -41,6 +42,7 @@ private:
     //std::stringstream videoInfos_;
     std::list< SDLRenderObject* > renderObjects_;
     std::shared_ptr< SceneManager2D > sceneManager_;
+    LogTools& logger_;
 };
 
 #endif // SDL2DRenderManager.h

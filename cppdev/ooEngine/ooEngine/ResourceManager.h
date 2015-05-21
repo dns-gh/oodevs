@@ -2,6 +2,7 @@
 #define _RESOURCEMANAGER_H
 
 #include "tools.h"
+#include "LogTools.h"
 #include "Resource_ABC.h"
 #include "RenderManager_ABC.h"
 #include "ErrorLogManager.h"
@@ -14,7 +15,7 @@
 class ResourceManager : public EngineObject
 {
 public:
-    ResourceManager( const RenderManager_ABC& renderManager );
+    ResourceManager( const RenderManager_ABC& renderManager, LogTools& logger );
     ~ResourceManager();
 
     bool LoadFromXMLFile( const std::string& filename );
@@ -28,6 +29,7 @@ private:
     unsigned int resourceCount_;
     std::map< unsigned int, std::list< std::shared_ptr< Resource_ABC > > > resourceByScope_;
     const RenderManager_ABC& renderManager_;
+    LogTools& logger_;
 };
 
 #endif

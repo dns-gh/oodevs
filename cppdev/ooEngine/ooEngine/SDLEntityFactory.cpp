@@ -1,6 +1,12 @@
 #include "SDLEntityFactory.h"
 #include "SDLSpriteObject.h"
 
+SDLEntityFactory::SDLEntityFactory( LogTools& logger )
+    : logger_( logger )
+{
+    logger_.OOLOG( FILE_INFOS ) << OOSTREAM( LOG_MESSAGE, "SDL 2D: creation of the entity factory" );
+}
+
 std::shared_ptr< SceneObject > SDLEntityFactory::CreateRenderObject() const
 {
     std::shared_ptr< SceneObject > object( new SDLRenderObject() );

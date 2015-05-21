@@ -3,7 +3,7 @@
 
 #include "EngineObject.h"
 #include "Layer2D.h"
-#include "OOTimer.h"
+#include "Timer.h"
 #include "ResourceManager.h"
 #include "EntityFactory_ABC.h"
 
@@ -33,7 +33,7 @@ private:
     void checkTimerExpiration();
 
     std::list< std::shared_ptr< Layer2D > > layers_;
-    std::list< std::shared_ptr< OOTimer > > timers_;
+    std::list< std::shared_ptr< Timer > > timers_;
     std::list< SceneListener_ABC* > listeners_;
     const ResourceManager& resourceManager_;
     const EntityFactory_ABC& entityFactory_;

@@ -52,7 +52,6 @@
     <ClInclude Include="LogTools.h">
       <Filter>Tools</Filter>
     </ClInclude>
-    <ClInclude Include="OOTimer.h" />
     <ClInclude Include="SceneListener_ABC.h">
       <Filter>Scene Management</Filter>
     </ClInclude>
@@ -88,6 +87,7 @@
     <ClInclude Include="SDLEntityFactory.h">
       <Filter>SDL Rendering\creation</Filter>
     </ClInclude>
+    <ClInclude Include="Timer.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="SDL Rendering">

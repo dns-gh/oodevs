@@ -22,13 +22,13 @@ int main(int, char**)
     try
     {
         // Initialization of managers
-        std::shared_ptr< RenderManager_ABC > sdlRenderManager = std::make_shared< SDL2DRenderManager >();
+        std::shared_ptr< RenderManager_ABC > sdlRenderManager = std::make_shared< SDL2DRenderManager >( *logger );
         sdlRenderManager->Initialize();
 
-        auto resourceManager = std::make_shared< ResourceManager >( *sdlRenderManager );
+        auto resourceManager = std::make_shared< ResourceManager >( *sdlRenderManager, *logger );
         resourceManager->LoadFromXMLFile( tools::GetModulePath() + std::string( "../../data/graphic/template.xml" ) );
 
-        auto entityFactory = std::make_shared< SDLEntityFactory >();
+        auto entityFactory = std::make_shared< SDLEntityFactory >( *logger );
 
         std::shared_ptr< SceneManager2D > sceneManager = std::make_shared< SceneManager2D >( *resourceManager, *entityFactory );
         sdlRenderManager->SetSceneManager2D( sceneManager );

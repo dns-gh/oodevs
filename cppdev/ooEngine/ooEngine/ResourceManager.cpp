@@ -5,18 +5,20 @@ using namespace tinyxml2;
 
 // TODO : add of a memory budget to allow caching of resources from multiple scopes
 
-ResourceManager::ResourceManager( const RenderManager_ABC& renderManager )
+ResourceManager::ResourceManager( const RenderManager_ABC& renderManager, LogTools& logger )
     : renderManager_( renderManager )
+    , logger_( logger )
 {
     currentScope_ = 0;
     resourceCount_ = 0;
 }
 
-ResourceManager::~ResourceManager( )
+ResourceManager::~ResourceManager()
 {
     Clear();
     currentScope_ = 0;
     resourceCount_ = 0;
+    logger_.OOLOG( FILE_INFOS ) << OOSTREAM( LOG_MESSAGE, "Resource Manager: clear resources" );
 }
 
 bool ResourceManager::LoadFromXMLFile( const std::string& filename )
@@ -64,6 +66,7 @@ bool ResourceManager::LoadFromXMLFile( const std::string& filename )
                     }
                 }
             }
+            logger_.OOLOG( FILE_INFOS ) << OOSTREAM( LOG_MESSAGE, "Resource Manager: load data from XML file: " << filename );
             return true;
         }
     }

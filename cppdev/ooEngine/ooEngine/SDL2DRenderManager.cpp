@@ -9,7 +9,14 @@
 
 #include <memory>
 
-SDL2DRenderManager::~SDL2DRenderManager( )
+SDL2DRenderManager::SDL2DRenderManager( LogTools& logger )
+    : logger_( logger )
+{
+    // NOTHING
+}
+
+
+SDL2DRenderManager::~SDL2DRenderManager()
 {
     Clear();
     SDL_DestroyRenderer( renderer_ );
@@ -21,12 +28,14 @@ void SDL2DRenderManager::Initialize( unsigned int width, unsigned int height, bo
 {
     if( SDL_Init( SDL_INIT_VIDEO ) < 0 )
         OOTHROW( 1, "Error when trying to initialize the SDL lib : " + std::string( SDL_GetError( ) ) );
+    logger_.OOLOG( FILE_INFOS ) << OOSTREAM( LOG_MESSAGE, "SDL 2D : initialization of the render manager" );
 
     renderWindow_ = SDL_CreateWindow( windowTitle,
         SDL_WINDOWPOS_UNDEFINED,
         SDL_WINDOWPOS_UNDEFINED,
         width, height,
         fullScreen ? SDL_WINDOW_FULLSCREEN : SDL_WINDOW_RESIZABLE );
+    logger_.OOLOG( FILE_INFOS ) << OOSTREAM( LOG_MESSAGE, "SDL 2D : creation of the window" );
 
     if( !renderWindow_ )
         OOTHROW( 1, "Error when trying to create a window : " + std::string( SDL_GetError() ) );
@@ -35,13 +44,17 @@ void SDL2DRenderManager::Initialize( unsigned int width, unsigned int height, bo
                                     SDL_RENDERER_ACCELERATED ); // Use of SDL_CreateWindowAndRenderer possible
     if( !renderer_ )
         OOTHROW( 1, "Error when trying to create a renderer : " + std::string( SDL_GetError( ) ) );
+    logger_.OOLOG( FILE_INFOS ) << OOSTREAM( LOG_MESSAGE, "SDL 2D : creation of the renderer" );
 
     // Get some info about the renderer
     /* SDL_RendererInfo info;
     SDL_GetRendererInfo( renderer_, &info );*/
 
     // Set the rendered default draw color to white
-    SDL_SetRenderDrawColor( renderer_, 255, 255, 255, 0);
+    const int color = 255;
+    const int alpha = 0;
+    SDL_SetRenderDrawColor( renderer_, color, color, color, alpha );
+    logger_.OOLOG( FILE_INFOS ) << OOSTREAM( LOG_MESSAGE, "SDL 2D: set render draw default color: " << "[" << color << "," << color << "," << color << "," << alpha << "]" );
 
     //Initialize PNG loading (useful ?)
     /*int imgFlags = IMG_INIT_PNG;
@@ -50,12 +63,14 @@ void SDL2DRenderManager::Initialize( unsigned int width, unsigned int height, bo
         */
     //SDL_SetHint( SDL_HINT_RENDER_SCALE_QUALITY, "linear" );
     SDL_RenderSetLogicalSize( renderer_, width, height );
+    logger_.OOLOG( FILE_INFOS ) << OOSTREAM( LOG_MESSAGE, "SDL 2D: set render logical size: " << width << "," << height );
 }
 
 void SDL2DRenderManager::Clear()
 {
     for( auto it = renderObjects_.begin(); it != renderObjects_.end(); ++it )
         OODELETE( *it );
+    logger_.OOLOG( FILE_INFOS ) << OOSTREAM( LOG_MESSAGE, "SDL 2D: clear all render objects" );
 }
 
 bool SDL2DRenderManager::Update()
@@ -97,6 +112,7 @@ void SDL2DRenderManager::RenderAllObjects()
 void SDL2DRenderManager::SetSceneManager2D( std::shared_ptr< SceneManager2D >& manager )
 {
     sceneManager_ = manager;
+    logger_.OOLOG( FILE_INFOS ) << OOSTREAM( LOG_MESSAGE, "SDL 2D: set 2D scene manager" );
 }
 
 void SDL2DRenderManager::RenderScene()

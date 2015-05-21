@@ -163,7 +163,7 @@
     <ClInclude Include="SDLRenderResource.h" />
     <ClInclude Include="SingletonTemplate.h" />
     <ClInclude Include="SDLSpriteObject.h" />
-    <ClInclude Include="OOTimer.h" />
+    <ClInclude Include="Timer.h" />
     <ClInclude Include="tinyxml2.h" />
     <ClInclude Include="tools.h" />
   </ItemGroup>

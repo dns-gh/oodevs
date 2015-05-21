@@ -1,13 +1,13 @@
-#ifndef _OOTIMER_H
-#define _OOTIMER_H
+#ifndef _TIMER_H
+#define _TIMER_H
 
 #include "EngineObject.h"
 #include "tools.h"
 
-class OOTimer : public EngineObject
+class Timer : public EngineObject
 {
 public:
-    OOTimer( unsigned long interval )
+    Timer( unsigned long interval )
         : startTime_( 0 )
         , interval_( interval )
         , expired_( false )
@@ -41,4 +41,4 @@ private:
     bool expired_;
 };
 
-#endif // OOTimer.h
+#endif // Timer.h

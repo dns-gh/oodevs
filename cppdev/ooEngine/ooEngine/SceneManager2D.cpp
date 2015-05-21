@@ -156,7 +156,7 @@ void SceneManager2D::AddLayerObject( std::shared_ptr< Layer2D >& layer, tinyxml2
 
 unsigned int SceneManager2D::AddTimer( unsigned long interval )
 {
-    std::shared_ptr< OOTimer > timer = std::make_shared< OOTimer >( interval );
+    std::shared_ptr< Timer > timer = std::make_shared< Timer >( interval );
     timers_.push_back( timer );
     timer->Start();
     return timer->GetID();
