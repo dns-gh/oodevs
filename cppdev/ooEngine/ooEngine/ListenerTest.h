@@ -13,7 +13,7 @@ public:
 
     virtual void Event( const SceneManager2D& manager, void* customData ) const
     {
-        auto layer = manager.FindLayer( "LayerTest" );
+        auto layer = manager.FindLayer( "layer2" );
         if( layer )
             layer->SetVisible( !layer->IsVisible() );
     }

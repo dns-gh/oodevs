@@ -56,7 +56,7 @@ int main(int, char**)
 
         // Test listener
         sceneManager->AddListener( new TestListener() );
-        sceneManager->AddTimer( 10000 );
+        sceneManager->AddTimer( 2000 );
         sceneManager->LoadFromXMLFile( tools::GetModulePath() + std::string( "../../data/scene/sceneTest.xml" ) );
 
         bool quit = false;
