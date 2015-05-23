@@ -8,6 +8,7 @@
 #include "SceneManager2D.h"
 #include "SDLSpriteObject.h"
 #include "ListenerTest.h"
+#include "InputManager.h"
 
 #include <memory>
 
@@ -59,6 +60,12 @@ int main(int, char**)
         sceneManager->AddTimer( 2000 );
         sceneManager->LoadFromXMLFile( tools::GetModulePath() + std::string( "../../data/scene/sceneTest.xml" ) );
 
+        // Test input manager
+        logger->OOLOG( FILE_INFOS ) << OOSTREAM( 0, "Input Manager test" );
+        auto inputManager = std::make_shared< InputManager >();
+        inputManager->Bind( 0, SDL_SCANCODE_0 );
+        inputManager->Bind( 1, SDL_SCANCODE_1 );
+
         bool quit = false;
         while( !quit )
         {
@@ -66,10 +73,15 @@ int main(int, char**)
                 sceneManager->Update();
             if( !sdlRenderManager->Update() )
                 quit = true;
+            if( inputManager->PerformAction( 0 ) )
+                logger->OOLOG( FILE_INFOS ) << OOSTREAM( 0, "Action 0" );
+            if( inputManager->PerformAction( 1 ) )
+                logger->OOLOG( FILE_INFOS ) << OOSTREAM( 0, "Action 1" );
 
             SDL_Event event;
             while( SDL_PollEvent( &event ) != 0 )
             {
+                inputManager->Update();
                 switch( event.type )
                 {
                     case SDL_QUIT:

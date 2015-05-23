@@ -129,6 +129,7 @@
   <ItemGroup>
     <ClCompile Include="EngineObject.cpp" />
     <ClCompile Include="ErrorLogManager.cpp" />
+    <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="Layer2D.cpp" />
     <ClCompile Include="LogTools.cpp" />
     <ClCompile Include="main.cpp" />
@@ -144,6 +145,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Geometry.h" />
+    <ClInclude Include="InputManager.h" />
     <ClInclude Include="Layer2D.h" />
     <ClInclude Include="EngineObject.h" />
     <ClInclude Include="ErrorLogManager.h" />

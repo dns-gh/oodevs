@@ -6,107 +6,109 @@
     <ClCompile Include="ErrorLogManager.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="tinyxml2.cpp">
-      <Filter>Tools</Filter>
+      <Filter>tools</Filter>
     </ClCompile>
     <ClCompile Include="LogTools.cpp">
-      <Filter>Tools</Filter>
+      <Filter>tools</Filter>
     </ClCompile>
     <ClCompile Include="Layer2D.cpp">
-      <Filter>Scene Management</Filter>
+      <Filter>scene</Filter>
     </ClCompile>
     <ClCompile Include="SceneManager2D.cpp">
-      <Filter>Scene Management</Filter>
+      <Filter>scene</Filter>
     </ClCompile>
     <ClCompile Include="SceneObject.cpp">
-      <Filter>Scene Management</Filter>
+      <Filter>scene</Filter>
     </ClCompile>
     <ClCompile Include="SDL2DRenderManager.cpp">
-      <Filter>SDL Rendering\rendering</Filter>
+      <Filter>sdlrendering\rendering</Filter>
     </ClCompile>
     <ClCompile Include="SDLRenderObject.cpp">
-      <Filter>SDL Rendering\rendering</Filter>
+      <Filter>sdlrendering\rendering</Filter>
     </ClCompile>
     <ClCompile Include="SDLRenderResource.cpp">
-      <Filter>SDL Rendering\rendering</Filter>
+      <Filter>sdlrendering\rendering</Filter>
     </ClCompile>
     <ClCompile Include="SDLSpriteObject.cpp">
-      <Filter>SDL Rendering\rendering</Filter>
+      <Filter>sdlrendering\rendering</Filter>
     </ClCompile>
     <ClCompile Include="SDLEntityFactory.cpp">
-      <Filter>SDL Rendering\creation</Filter>
+      <Filter>sdlrendering\creation</Filter>
     </ClCompile>
+    <ClCompile Include="InputManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EngineObject.h" />
     <ClInclude Include="ErrorLogManager.h" />
     <ClInclude Include="SingletonTemplate.h" />
     <ClInclude Include="tools.h">
-      <Filter>Tools</Filter>
+      <Filter>tools</Filter>
     </ClInclude>
     <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="tinyxml2.h">
-      <Filter>Tools</Filter>
+      <Filter>tools</Filter>
     </ClInclude>
     <ClInclude Include="RenderManager_ABC.h" />
     <ClInclude Include="Resource_ABC.h" />
     <ClInclude Include="LogTools.h">
-      <Filter>Tools</Filter>
+      <Filter>tools</Filter>
     </ClInclude>
     <ClInclude Include="SceneListener_ABC.h">
-      <Filter>Scene Management</Filter>
+      <Filter>scene</Filter>
     </ClInclude>
     <ClInclude Include="Layer2D.h">
-      <Filter>Scene Management</Filter>
+      <Filter>scene</Filter>
     </ClInclude>
     <ClInclude Include="ListenerTest.h" />
     <ClInclude Include="Geometry.h">
-      <Filter>Geometry</Filter>
+      <Filter>geometry</Filter>
     </ClInclude>
     <ClInclude Include="SceneManager2D.h">
-      <Filter>Scene Management</Filter>
+      <Filter>scene</Filter>
     </ClInclude>
     <ClInclude Include="SceneObject.h">
-      <Filter>Scene Management</Filter>
+      <Filter>scene</Filter>
     </ClInclude>
     <ClInclude Include="EntityFactory_ABC.h" />
     <ClInclude Include="SDL2DRenderManager.h">
-      <Filter>SDL Rendering\rendering</Filter>
+      <Filter>sdlrendering\rendering</Filter>
     </ClInclude>
     <ClInclude Include="SDLRenderObject.h">
-      <Filter>SDL Rendering\rendering</Filter>
+      <Filter>sdlrendering\rendering</Filter>
     </ClInclude>
     <ClInclude Include="SDLRenderResource.h">
-      <Filter>SDL Rendering\rendering</Filter>
+      <Filter>sdlrendering\rendering</Filter>
     </ClInclude>
     <ClInclude Include="SDLRenderResource_ABC.h">
-      <Filter>SDL Rendering\rendering</Filter>
+      <Filter>sdlrendering\rendering</Filter>
     </ClInclude>
     <ClInclude Include="SDLSpriteObject.h">
-      <Filter>SDL Rendering\rendering</Filter>
+      <Filter>sdlrendering\rendering</Filter>
     </ClInclude>
     <ClInclude Include="SDLEntityFactory.h">
-      <Filter>SDL Rendering\creation</Filter>
+      <Filter>sdlrendering\creation</Filter>
     </ClInclude>
     <ClInclude Include="Timer.h" />
+    <ClInclude Include="InputManager.h" />
   </ItemGroup>
   <ItemGroup>
-    <Filter Include="SDL Rendering">
-      <UniqueIdentifier>{c8148401-fc2d-41e1-861c-fa4cc284c985}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Scene Management">
-      <UniqueIdentifier>{1b8e64ee-4af7-4ce1-a5c4-310a60a0db99}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Tools">
+    <Filter Include="tools">
       <UniqueIdentifier>{283965d4-2b16-4140-aa74-b52cdcdfd7bd}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Geometry">
-      <UniqueIdentifier>{d00f0873-dc73-4a80-8721-61efcef677b0}</UniqueIdentifier>
+    <Filter Include="sdlrendering">
+      <UniqueIdentifier>{c8148401-fc2d-41e1-861c-fa4cc284c985}</UniqueIdentifier>
     </Filter>
-    <Filter Include="SDL Rendering\rendering">
+    <Filter Include="sdlrendering\rendering">
       <UniqueIdentifier>{287b4105-76dc-499c-a0e2-6bed67b735f1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="SDL Rendering\creation">
+    <Filter Include="sdlrendering\creation">
       <UniqueIdentifier>{866fb660-366a-4440-8d21-9764295e7ed6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="scene">
+      <UniqueIdentifier>{1b8e64ee-4af7-4ce1-a5c4-310a60a0db99}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="geometry">
+      <UniqueIdentifier>{d00f0873-dc73-4a80-8721-61efcef677b0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
