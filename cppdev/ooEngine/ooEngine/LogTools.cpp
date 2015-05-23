@@ -38,3 +38,15 @@ LogTools& LogTools::operator << ( std::stringstream& msg )
     }
     return *this;
 }
+
+const std::string LogTools::ToString( LOGTYPE type )
+{
+    switch( type )
+    {
+    case LOG_FATALERROR:   return "FATAL_ERROR";
+    case LOG_ERROR:        return "ERROR";
+    case LOG_WARNING:      return "WARNING";
+    case LOG_MESSAGE:      return "MESSAGE";
+    default:      return "Unknown Log type";
+    }
+}

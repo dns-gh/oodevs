@@ -2,7 +2,6 @@
 - Add dynamic zordering for 2D objects in the scene. Use collision and bouding boxes. What about layer management then ?
 - Add CreateRenderObject to the sdl2drenderManager ?
 - too much use of dynamic_pointer_cast...
-- Add logs througout the process of loading, rendering,...
 - Scenes
 	* Add rotation property on scene objects
 	* Add opacity property to affect transparency of all scene objects from a given layer

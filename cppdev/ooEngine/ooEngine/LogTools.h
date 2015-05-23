@@ -8,6 +8,8 @@
 #include <memory>
 #include <iostream>
 
+#include "tools.h"
+
 enum FILETYPE
 {
     FILE_RESOURCE = 0,
@@ -24,17 +26,17 @@ enum LOGTYPE
 };
 
 #define OOSTREAM( type, msg ) static_cast< std::stringstream& >( std::stringstream() << \
-    "log " << type << ": " << msg << std::endl )
+    LogTools::ToString( type ) << " " << tools::GetTimeStr() << ": " << msg << std::endl )
 
 class LogTools
 {
 public:
     LogTools( std::string basePath );
-
     LogTools& OOLOG( unsigned int type );
     bool RegisterLog( unsigned int type, const std::string& filename );
-
     LogTools& operator<< ( std::stringstream& msg );
+
+    static const std::string ToString( LOGTYPE type );
 
 private:
     std::map< unsigned int, std::unique_ptr< std::ofstream > > fileMap_;

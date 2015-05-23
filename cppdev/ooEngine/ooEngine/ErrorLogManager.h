@@ -7,10 +7,8 @@
 #include <exception>
 #include <fstream>
 #include <iostream>
-#include <iomanip>
 #include <string>
 #include <sstream>
-#include <time.h>
 
 // ------------------
 // Exception handling
@@ -44,7 +42,6 @@ public:
     void Flush();
     void Close();
     void LogException( const cException& e );
-    std::string GetTimeStr();
 
 private:
     ErrorLogManager(const ErrorLogManager&){};

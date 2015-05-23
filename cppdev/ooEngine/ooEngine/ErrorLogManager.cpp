@@ -1,5 +1,7 @@
 #include "ErrorLogManager.h"
 
+#include "tools.h"
+
 cException::cException( int errorNum, std::string errorDesc, std::string srcFilename, int lineNum )
 {
     // write data into a specific format
@@ -40,22 +42,6 @@ void ErrorLogManager::Close()
 void ErrorLogManager::LogException( const cException& e )
 {
     logBuffer_ << "**error** ";
-    logBuffer_ << GetTimeStr() << " : " << e.what();
+    logBuffer_ << tools::GetTimeStr() << " : " << e.what();
     Flush();
-}
-
-std::string ErrorLogManager::GetTimeStr()
-{
-    std::stringstream timess;
-
-    struct tm pTime;
-    time_t ctTime;
-    time( &ctTime );
-    localtime_s( &pTime, &ctTime );
-
-    timess << std::setw( 2 ) << std::setfill( '0' ) << pTime.tm_hour << ":";
-    timess << std::setw( 2 ) << std::setfill( '0' ) << pTime.tm_min << ":";
-    timess << std::setw( 2 ) << std::setfill( '0' ) << pTime.tm_sec;
-
-    return timess.str();
 }
