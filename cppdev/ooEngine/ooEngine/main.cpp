@@ -63,8 +63,9 @@ int main(int, char**)
         // Test input manager
         logger->OOLOG( FILE_INFOS ) << OOSTREAM( LOG_MESSAGE, "Input Manager: test" );
         auto inputManager = std::make_shared< InputManager >( *logger );
-        inputManager->Bind( 0, SDL_SCANCODE_0 );
-        inputManager->Bind( 1, SDL_SCANCODE_1 );
+        inputManager->Bind( 0, SDL_SCANCODE_KP_0 );
+        inputManager->Bind( 0, SDL_SCANCODE_KP_1 );
+        inputManager->Bind( 1, SDL_SCANCODE_KP_1 );
 
         bool quit = false;
         while( !quit )

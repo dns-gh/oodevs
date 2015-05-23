@@ -5,6 +5,7 @@
 #include "SDL_Keycode.h"
 #include "LogTools.h"
 #include <map>
+#include <vector>
 
 class InputManager
 {
@@ -12,8 +13,10 @@ public:
     InputManager( LogTools& logger );
     ~InputManager();
     void Bind( int, int );
+    void UnBind( int, int ){}
     bool PerformAction( int );
     void Update();
+
 private:
     struct KeyState
     {
@@ -25,7 +28,13 @@ private:
             key_ = key;
         }
     };
-    std::map< int, KeyState* > keyboardBinding_;
+
+private:
+    // helpers
+    bool isKeyInStateList( int key, const std::vector< KeyState* >& list );
+
+private:
+    std::map< int, std::vector< KeyState* > > keyboardBinding_;
     LogTools& logger_;
 };
 
