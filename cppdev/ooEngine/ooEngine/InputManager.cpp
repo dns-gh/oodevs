@@ -42,7 +42,7 @@ bool InputManager::PerformAction( int action )
 
 void InputManager::Update()
 {
-    //SDL_PumpEvents();
+    SDL_PumpEvents(); // done implicitly by SDL_PollEvent
     const Uint8 *keys = SDL_GetKeyboardState( NULL );
     for( auto& kb : keyboardBinding_ )
     {

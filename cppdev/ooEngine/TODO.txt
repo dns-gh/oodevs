@@ -1,3 +1,5 @@
+- Add mouse and joystick support in the input manager
+- Add the support of every event such as application events via keycodes in SDL_events.h
 - Add a collision detection algorithm in 2D
 - Add dynamic zordering for 2D objects in the scene. Use collision and bouding boxes. What about layer management then ?
 - Add CreateRenderObject to the sdl2drenderManager ?

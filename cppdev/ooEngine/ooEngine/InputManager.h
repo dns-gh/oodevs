@@ -12,8 +12,9 @@ class InputManager
 public:
     InputManager( LogTools& logger );
     ~InputManager();
+    // Bind action (int) with a combination of SDL_SCANCODE (layout independant, keyboard only)
     void Bind( int, int );
-    void UnBind( int, int ){}
+    void UnBind( int, int ){} // TODO
     bool PerformAction( int );
     void Update();
 

@@ -66,42 +66,46 @@ int main(int, char**)
         inputManager->Bind( 0, SDL_SCANCODE_KP_0 );
         inputManager->Bind( 0, SDL_SCANCODE_KP_1 );
         inputManager->Bind( 1, SDL_SCANCODE_KP_1 );
+        inputManager->Bind( 2, SDL_SCANCODE_ESCAPE );
+        inputManager->Bind( 3, SDL_SCANCODE_R );
+        inputManager->Bind( 4, SDL_SCANCODE_P );
 
         bool quit = false;
         while( !quit )
         {
             if( sceneManager )
                 sceneManager->Update();
-            if( !sdlRenderManager->Update() )
-                quit = true;
+            if( sdlRenderManager )
+                if( !sdlRenderManager->Update() )
+                    quit = true;
+            if( inputManager )
+                inputManager->Update( );
+
             if( inputManager->PerformAction( 0 ) )
                 logger->OOLOG( FILE_INFOS ) << OOSTREAM( LOG_MESSAGE, "Action 0" );
             if( inputManager->PerformAction( 1 ) )
                 logger->OOLOG( FILE_INFOS ) << OOSTREAM( LOG_MESSAGE, "Action 1" );
+            if( inputManager->PerformAction( 2 ) )
+                quit = true;
+
+            if( inputManager->PerformAction( 3 ) ) // resume or play
+            {
+                spriteTest->Resume( );
+                spriteTest2->Resume( );
+            }
+            if( inputManager->PerformAction( 4 ) )
+            {
+                spriteTest->Pause( );
+                spriteTest2->Pause( );
+            }
 
             SDL_Event event;
             while( SDL_PollEvent( &event ) != 0 )
             {
-                inputManager->Update();
                 switch( event.type )
                 {
                     case SDL_QUIT:
                         quit = true;
-                    case SDL_KEYDOWN:
-                    {
-                        if( event.key.keysym.sym == SDLK_p )
-                        {
-                            spriteTest->Pause( );
-                            spriteTest2->Pause( );
-                        }
-                        if( event.key.keysym.sym == SDLK_r ) // resume or play
-                        {
-                            spriteTest->Resume( );
-                            spriteTest2->Resume( );
-                        }
-                        if( event.key.keysym.sym == SDLK_ESCAPE )
-                            quit = true;
-                    }
                 }
             }
         }
