@@ -66,6 +66,8 @@ int main(int, char**)
         inputManager->Bind( 0, SDL_SCANCODE_KP_0 );
         inputManager->Bind( 0, SDL_SCANCODE_KP_1 );
         inputManager->Bind( 1, SDL_SCANCODE_KP_1 );
+        inputManager->UnBind( 0, SDL_SCANCODE_KP_0 );
+        inputManager->UnBind( 0, SDL_SCANCODE_KP_1 );
         inputManager->Bind( 2, SDL_SCANCODE_ESCAPE );
         inputManager->Bind( 3, SDL_SCANCODE_R );
         inputManager->Bind( 4, SDL_SCANCODE_P );
@@ -79,7 +81,7 @@ int main(int, char**)
                 if( !sdlRenderManager->Update() )
                     quit = true;
             if( inputManager )
-                inputManager->Update( );
+                inputManager->Update();
 
             if( inputManager->PerformAction( 0 ) )
                 logger->OOLOG( FILE_INFOS ) << OOSTREAM( LOG_MESSAGE, "Action 0" );
@@ -90,13 +92,13 @@ int main(int, char**)
 
             if( inputManager->PerformAction( 3 ) ) // resume or play
             {
-                spriteTest->Resume( );
-                spriteTest2->Resume( );
+                spriteTest->Resume();
+                spriteTest2->Resume();
             }
             if( inputManager->PerformAction( 4 ) )
             {
-                spriteTest->Pause( );
-                spriteTest2->Pause( );
+                spriteTest->Pause();
+                spriteTest2->Pause();
             }
 
             SDL_Event event;

@@ -14,7 +14,7 @@ public:
     ~InputManager();
     // Bind action (int) with a combination of SDL_SCANCODE (layout independant, keyboard only)
     void Bind( int, int );
-    void UnBind( int, int ){} // TODO
+    void UnBind( int, int );
     bool PerformAction( int );
     void Update();
 
