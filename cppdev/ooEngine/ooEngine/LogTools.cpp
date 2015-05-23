@@ -6,6 +6,10 @@ LogTools::LogTools( std::string base )
     currentLogger_ = -1;
 }
 
+// Register a logger with a specific type
+// /!\ They can be only one logger with a given file type
+// The user may want to instance multiple loggers to log into 
+// different files with the same file type filter
 bool LogTools::RegisterLog( unsigned int type, const std::string& filename )
 {
     auto it = fileMap_.find( type );

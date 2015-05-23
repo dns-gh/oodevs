@@ -11,6 +11,7 @@ ResourceManager::ResourceManager( const RenderManager_ABC& renderManager, LogToo
 {
     currentScope_ = 0;
     resourceCount_ = 0;
+    logger_.OOLOG( FILE_INFOS ) << OOSTREAM( LOG_MESSAGE, "Resource Manager: creation" );
 }
 
 ResourceManager::~ResourceManager()
@@ -18,7 +19,7 @@ ResourceManager::~ResourceManager()
     Clear();
     currentScope_ = 0;
     resourceCount_ = 0;
-    logger_.OOLOG( FILE_INFOS ) << OOSTREAM( LOG_MESSAGE, "Resource Manager: clear resources" );
+    logger_.OOLOG( FILE_INFOS ) << OOSTREAM( LOG_MESSAGE, "Resource Manager: clear resources for each scope & destruction" );
 }
 
 bool ResourceManager::LoadFromXMLFile( const std::string& filename )

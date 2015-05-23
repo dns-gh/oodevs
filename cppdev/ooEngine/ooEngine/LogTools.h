@@ -12,6 +12,7 @@ enum FILETYPE
 {
     FILE_RESOURCE = 0,
     FILE_INFOS,
+    FILE_GAMELOOP,    
 };
 
 enum LOGTYPE

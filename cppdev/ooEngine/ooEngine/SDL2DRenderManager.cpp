@@ -28,14 +28,14 @@ void SDL2DRenderManager::Initialize( unsigned int width, unsigned int height, bo
 {
     if( SDL_Init( SDL_INIT_VIDEO ) < 0 )
         OOTHROW( 1, "Error when trying to initialize the SDL lib : " + std::string( SDL_GetError( ) ) );
-    logger_.OOLOG( FILE_INFOS ) << OOSTREAM( LOG_MESSAGE, "SDL 2D : initialization of the render manager" );
+    logger_.OOLOG( FILE_INFOS ) << OOSTREAM( LOG_MESSAGE, "SDL 2D: initialization of the render manager" );
 
     renderWindow_ = SDL_CreateWindow( windowTitle,
         SDL_WINDOWPOS_UNDEFINED,
         SDL_WINDOWPOS_UNDEFINED,
         width, height,
         fullScreen ? SDL_WINDOW_FULLSCREEN : SDL_WINDOW_RESIZABLE );
-    logger_.OOLOG( FILE_INFOS ) << OOSTREAM( LOG_MESSAGE, "SDL 2D : creation of the window" );
+    logger_.OOLOG( FILE_INFOS ) << OOSTREAM( LOG_MESSAGE, "SDL 2D: creation of the window" );
 
     if( !renderWindow_ )
         OOTHROW( 1, "Error when trying to create a window : " + std::string( SDL_GetError() ) );
@@ -44,7 +44,7 @@ void SDL2DRenderManager::Initialize( unsigned int width, unsigned int height, bo
                                     SDL_RENDERER_ACCELERATED ); // Use of SDL_CreateWindowAndRenderer possible
     if( !renderer_ )
         OOTHROW( 1, "Error when trying to create a renderer : " + std::string( SDL_GetError( ) ) );
-    logger_.OOLOG( FILE_INFOS ) << OOSTREAM( LOG_MESSAGE, "SDL 2D : creation of the renderer" );
+    logger_.OOLOG( FILE_INFOS ) << OOSTREAM( LOG_MESSAGE, "SDL 2D: creation of the renderer" );
 
     // Get some info about the renderer
     /* SDL_RendererInfo info;
@@ -112,7 +112,7 @@ void SDL2DRenderManager::RenderAllObjects()
 void SDL2DRenderManager::SetSceneManager2D( std::shared_ptr< SceneManager2D >& manager )
 {
     sceneManager_ = manager;
-    logger_.OOLOG( FILE_INFOS ) << OOSTREAM( LOG_MESSAGE, "SDL 2D: set 2D scene manager" );
+    logger_.OOLOG( FILE_INFOS ) << OOSTREAM( LOG_MESSAGE, "SDL 2D: set the 2D scene manager to the sdl render manager" );
 }
 
 void SDL2DRenderManager::RenderScene()

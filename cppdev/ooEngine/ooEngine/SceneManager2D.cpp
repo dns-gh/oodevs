@@ -4,11 +4,17 @@
 
 using namespace tinyxml2;
 
-SceneManager2D::SceneManager2D( const ResourceManager& resourceManager, const EntityFactory_ABC& entityFactory )
+SceneManager2D::SceneManager2D( const ResourceManager& resourceManager, const EntityFactory_ABC& entityFactory, LogTools& logger )
     : resourceManager_( resourceManager )
     , entityFactory_( entityFactory )
+    , logger_( logger )
 {
-    // NOTHING
+    logger_.OOLOG( FILE_INFOS ) << OOSTREAM( LOG_MESSAGE, "Scene manager 2D: creation" );
+}
+
+SceneManager2D::~SceneManager2D()
+{
+    logger_.OOLOG( FILE_INFOS ) << OOSTREAM( LOG_MESSAGE, "Scene manager: clear layers, timers, listeners & destruction" );
 }
 
 std::shared_ptr< Layer2D > SceneManager2D::CreateLayer( std::string name )
@@ -57,13 +63,20 @@ void SceneManager2D::SortLayer()
 
 bool SceneManager2D::LoadFromXMLFile( std::string filename )
 {
+    logger_.OOLOG( FILE_INFOS ) << OOSTREAM( LOG_MESSAGE, "Scene manager 2D: loading data from xml file: " << filename );
     tinyxml2::XMLDocument doc;
     if( doc.LoadFile( filename.c_str() ) != XMLError::XML_SUCCESS )
+    {
+        logger_.OOLOG( FILE_INFOS ) << OOSTREAM( LOG_MESSAGE, "Scene manager 2D: error in loading the file..." );
         return false;
+    }
 
     XMLNode* tree = doc.FirstChildElement( "scene" );
     if( !tree )
+    {
+        logger_.OOLOG( FILE_INFOS ) << OOSTREAM( LOG_MESSAGE, "Scene manager 2D: error in loading the file... <scene> node dosen't exists" );
         return false;
+    }
 
     for( XMLNode* child = tree->FirstChild(); child; child = child->NextSibling() )
     {
@@ -92,6 +105,7 @@ bool SceneManager2D::LoadFromXMLFile( std::string filename )
         }
         layers_.push_back( layer );
     }
+    logger_.OOLOG( FILE_INFOS ) << OOSTREAM( LOG_MESSAGE, "Scene manager 2D: loaded successfully" );
     return true;
 }
 

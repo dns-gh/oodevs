@@ -2,6 +2,17 @@
 #include "SDL_events.h"
 #include <utility>
 
+InputManager::InputManager( LogTools& logger )
+    : logger_( logger )
+{
+    logger_.OOLOG( FILE_INFOS ) << OOSTREAM( LOG_MESSAGE, "Input Manager: creation" );
+}
+
+InputManager::~InputManager()
+{
+    logger_.OOLOG( FILE_INFOS ) << OOSTREAM( LOG_MESSAGE, "Input Manager: destruction" );
+}
+
 void InputManager::Bind( int action, int key )
 {
     keyboardBinding_[ action ] = new KeyState( key );    
