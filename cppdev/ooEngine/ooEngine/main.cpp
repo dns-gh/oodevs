@@ -24,7 +24,10 @@ int main(int, char**)
     {
         // Initialization of managers
         std::shared_ptr< RenderManager_ABC > sdlRenderManager = std::make_shared< SDL2DRenderManager >( *logger );
-        sdlRenderManager->Initialize();
+        sdlRenderManager->Initialize( 800, 600, false, "window 1"  );
+
+        std::shared_ptr< RenderManager_ABC > sdlRenderManager2 = std::make_shared< SDL2DRenderManager >( *logger );
+        sdlRenderManager2->Initialize( 800, 600, false, "window 2" );
 
         auto resourceManager = std::make_shared< ResourceManager >( *sdlRenderManager, *logger );
         resourceManager->LoadFromXMLFile( tools::GetModulePath() + std::string( "../../data/graphic/template.xml" ) );

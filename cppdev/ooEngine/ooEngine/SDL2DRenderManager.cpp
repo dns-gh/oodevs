@@ -35,7 +35,7 @@ void SDL2DRenderManager::Initialize( unsigned int width, unsigned int height, bo
         SDL_WINDOWPOS_UNDEFINED,
         width, height,
         fullScreen ? SDL_WINDOW_FULLSCREEN : SDL_WINDOW_RESIZABLE );
-    logger_.OOLOG( FILE_INFOS ) << OOSTREAM( LOG_MESSAGE, "SDL 2D: creation of the window" );
+    logger_.OOLOG( FILE_INFOS ) << OOSTREAM( LOG_MESSAGE, "SDL 2D: creation of the window: " << windowTitle );
 
     if( !renderWindow_ )
         OOTHROW( 1, "Error when trying to create a window : " + std::string( SDL_GetError() ) );
