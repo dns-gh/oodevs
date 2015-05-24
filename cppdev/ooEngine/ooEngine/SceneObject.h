@@ -2,13 +2,14 @@
 #define _SCENEOBJECT_H
 
 #include "Resource_ABC.h"
+#include "EngineObject.h"
 #include "Geometry2D.h"
 
 #include <memory>
 
 using namespace Geometry2D;
 
-class SceneObject
+class SceneObject : public EngineObject
 {
 public:
     SceneObject();

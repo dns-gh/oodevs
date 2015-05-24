@@ -1,7 +1,6 @@
 #ifndef _SDLRENDEROBJECT_H
 #define _SDLRENDEROBJECT_H
 
-#include "EngineObject.h"
 #include "Geometry2D.h"
 #include "Resource_ABC.h"
 #include "SceneObject.h"
@@ -14,8 +13,7 @@
 
 using namespace Geometry2D;
 
-class SDLRenderObject : public EngineObject
-                      , public SceneObject
+class SDLRenderObject : public SceneObject
 {
 public:
     SDLRenderObject();

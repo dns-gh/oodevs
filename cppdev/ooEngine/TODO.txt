@@ -3,6 +3,8 @@
 - Add a collision detection algorithm in 2D : circle collision or line projection
 - Handle events for a specific window
 - Add 2D Physics
+- Add a tiny configuration file usable for each game project
+	* the load of assets will then not look like Load( GetPath() + ... )
 - Add dynamic zordering for 2D objects in the scene. Use collision and bounding boxes. What about layer management then ?
 - Add CreateRenderObject to the sdl2drenderManager ?
 - too much use of dynamic_pointer_cast...
