@@ -60,9 +60,6 @@
       <Filter>scene</Filter>
     </ClInclude>
     <ClInclude Include="ListenerTest.h" />
-    <ClInclude Include="Geometry.h">
-      <Filter>geometry</Filter>
-    </ClInclude>
     <ClInclude Include="SceneManager2D.h">
       <Filter>scene</Filter>
     </ClInclude>
@@ -90,6 +87,9 @@
     </ClInclude>
     <ClInclude Include="Timer.h" />
     <ClInclude Include="InputManager.h" />
+    <ClInclude Include="Geometry2D.h">
+      <Filter>geometry</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="tools">

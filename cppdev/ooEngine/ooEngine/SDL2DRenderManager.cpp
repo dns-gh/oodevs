@@ -141,7 +141,7 @@ void SDL2DRenderManager::RenderScene()
 void SDL2DRenderManager::RenderAtPosition( const SceneObject& object, const float& x, const float& y )
 {
     SDL_Rect src;
-    RenderGeometry::RenderRect rect = object.GetRenderRect();
+    Geometry2D::RenderRect rect = object.GetRenderRect( );
     memcpy( &src, &rect, sizeof( rect ) );
     SDL_Rect dst;
     dst.x = static_cast< int >( x );

@@ -2,11 +2,11 @@
 #define _SCENEOBJECT_H
 
 #include "Resource_ABC.h"
-#include "Geometry.h"
+#include "Geometry2D.h"
 
 #include <memory>
 
-using namespace RenderGeometry;
+using namespace Geometry2D;
 
 class SceneObject
 {

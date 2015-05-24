@@ -2,7 +2,7 @@
 #define _SDLRENDEROBJECT_H
 
 #include "EngineObject.h"
-#include "Geometry.h"
+#include "Geometry2D.h"
 #include "Resource_ABC.h"
 #include "SceneObject.h"
 
@@ -12,7 +12,7 @@
 
 #include <memory>
 
-using namespace RenderGeometry;
+using namespace Geometry2D;
 
 class SDLRenderObject : public EngineObject
                       , public SceneObject
