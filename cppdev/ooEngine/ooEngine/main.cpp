@@ -3,6 +3,7 @@
 #include "ErrorLogManager.h"
 #include "LogTools.h"
 
+#include "SDL_Rect.h"
 #include "SDL2DRenderManager.h"
 #include "SDLEntityFactory.h"
 #include "SDLSpriteObject.h"
@@ -31,7 +32,7 @@ int main(int, char**)
     try
     {
         // Initialization of managers
-        std::shared_ptr< RenderManager_ABC > sdlRenderManager = std::make_shared< SDL2DRenderManager >( *logger );
+        auto sdlRenderManager = std::make_shared< SDL2DRenderManager >( *logger );
         sdlRenderManager->Initialize( 800, 600, false, "window 1"  );
 
         /*std::shared_ptr< RenderManager_ABC > sdlRenderManager2 = std::make_shared< SDL2DRenderManager >( *logger );
@@ -65,6 +66,13 @@ int main(int, char**)
         spriteTest2->SetResourceObject( resourceManager->FindResourceByID( 2 ) );
         spriteTest2->SetColorKeying( true, 0, 0, 0 );
         sdlRenderManager->InsertRenderObject( spriteTest2 );
+
+        // Debug boxes
+        SDL_Rect* rect = new SDL_Rect();
+        rect->x = 120;
+        rect->y = 200;
+        rect->w = rect->h = 180;
+        sdlRenderManager->InsertDrawingDebugBox( rect );
 
         // Test listener
         /*sceneManager->AddListener( new TestListener() );

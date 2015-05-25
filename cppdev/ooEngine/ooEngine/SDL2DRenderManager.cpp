@@ -50,8 +50,8 @@ void SDL2DRenderManager::Initialize( unsigned int width, unsigned int height, bo
     /* SDL_RendererInfo info;
     SDL_GetRendererInfo( renderer_, &info );*/
 
-    // Set the rendered default draw color to white
-    const int color = 255;
+    // Set the rendered default draw color to grey
+    const int color = 188;
     const int alpha = 0;
     SDL_SetRenderDrawColor( renderer_, color, color, color, alpha );
     logger_.OOLOG( FILE_INFOS ) << OOSTREAM( LOG_MESSAGE, "SDL 2D: set render draw default color: " << "[" << color << "," << color << "," << color << "," << alpha << "]" );
@@ -68,8 +68,10 @@ void SDL2DRenderManager::Initialize( unsigned int width, unsigned int height, bo
 
 void SDL2DRenderManager::Clear()
 {
-    for( auto it = renderObjects_.begin(); it != renderObjects_.end(); ++it )
-        OODELETE( *it );
+    for( auto it : renderObjects_ )
+        OODELETE( it );
+    for( auto it : debugRects_ )
+        OODELETE( it );
     logger_.OOLOG( FILE_INFOS ) << OOSTREAM( LOG_MESSAGE, "SDL 2D: clear all render objects" );
 }
 
@@ -81,6 +83,7 @@ bool SDL2DRenderManager::Update()
     SDL_RenderClear( renderer_ );
     RenderAllObjects();
     RenderScene();
+    DrawDebugBoxes();
     SDL_RenderPresent( renderer_ );
     return true;
 }
@@ -161,4 +164,15 @@ void SDL2DRenderManager::InsertRenderObject( SceneObject* object )
 {
     if( object )
         renderObjects_.push_back( dynamic_cast< SDLRenderObject* >( object ) );
+}
+
+void SDL2DRenderManager::InsertDrawingDebugBox( SDL_Rect* rect )
+{
+    debugRects_.push_back( rect );
+}
+
+void SDL2DRenderManager::DrawDebugBoxes()
+{
+    for( auto it : debugRects_ )
+        SDL_RenderDrawRect( renderer_, it );
 }
