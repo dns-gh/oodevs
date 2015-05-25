@@ -4,8 +4,9 @@
 
 using namespace tinyxml2;
 
-SceneManager2D::SceneManager2D( const ResourceManager& resourceManager, const EntityFactory_ABC& entityFactory, LogTools& logger )
+SceneManager2D::SceneManager2D( const ResourceManager& resourceManager, const CollisionSolver& solver, const EntityFactory_ABC& entityFactory, LogTools& logger )
     : resourceManager_( resourceManager )
+    , collisionSolver_( solver )
     , entityFactory_( entityFactory )
     , logger_( logger )
 {
@@ -113,7 +114,7 @@ void SceneManager2D::AddLayerObject( std::shared_ptr< Layer2D >& layer, tinyxml2
 {
     if( elem->Value() != std::string( "object" ) )
         return;
-    std::shared_ptr< SceneObject > object;
+    std::shared_ptr< SceneObject > object = std::make_shared< SceneObject >( this ) ;
 
     bool sprite = false;
     if( elem->Attribute( "sprite" ) )
@@ -184,6 +185,19 @@ void SceneManager2D::AddListener( SceneListener_ABC* listener )
 void SceneManager2D::Update()
 {
     checkTimerExpiration();
+}
+
+bool SceneManager2D::CheckCollisions( const Circle& circle ) const
+{
+    for( auto& layer : layers_ )
+    {
+        for( auto& object : layer->GetSceneObjects() )
+        {
+            if( collisionSolver_.CollisionBetween( circle, object->GetCollisionCircle() ) )
+                return true;
+        }
+    }
+    return false;
 }
 
 void SceneManager2D::checkTimerExpiration()

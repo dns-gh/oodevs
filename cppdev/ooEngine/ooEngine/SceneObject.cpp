@@ -1,11 +1,22 @@
 #include "SceneObject.h"
+#include "SceneManager2D.h"
 #include "Resource_ABC.h"
 #include "ErrorLogManager.h"
 
 #include <memory>
 
+SceneObject::SceneObject( const SceneManager2D* sceneManager )
+    : sceneManager_( sceneManager )
+    , visible_( false )
+    , x_( 0 )
+    , y_( 0 )
+{
+
+}
+
 SceneObject::SceneObject()
-    : visible_( false )
+    : sceneManager_( 0 )
+    , visible_( false )
     , x_( 0 )
     , y_( 0 )
 {
@@ -37,6 +48,11 @@ bool  SceneObject::IsVisible() const
     return visible_;
 }
 
+const Circle& SceneObject::GetCollisionCircle() const
+{
+    return collisionCircle_;
+}
+
 void SceneObject::SetResourceObject( const std::shared_ptr< Resource_ABC >& resource )
 {
     OOTHROW( 2, "SetResourceObject should have a proper body" );
@@ -60,7 +76,20 @@ void SceneObject::SetCollisionCircle( Circle circle)
 
 void SceneObject::Move( const Geometry2D::Vector2D& dir )
 {
-    x_ += dir.x_;
-    y_ += dir.y_;
-    collisionCircle_.center_ += dir;
+    Vector2D pos( x_ + dir.x_, y_ + dir.y_ );
+    Circle newCircle( pos, collisionCircle_.radius_ );
+    if( sceneManager_ )
+    {
+        if( !sceneManager_->CheckCollisions( newCircle ) )
+        {
+            x_ = pos.x_;
+            y_ = pos.y_;
+            collisionCircle_ = newCircle;
+            return;
+        }
+        return;
+    }
+    x_ = pos.x_;
+    y_ = pos.y_;
+    collisionCircle_ = newCircle;
 }

@@ -9,9 +9,12 @@
 
 using namespace Geometry2D;
 
+class SceneManager2D;
+
 class SceneObject : public EngineObject
 {
 public:
+    SceneObject( const SceneManager2D* sceneManager );
     SceneObject();
     virtual ~SceneObject(){};
 
@@ -22,6 +25,7 @@ public:
     float X() const;
     float Y() const;
     bool IsVisible() const;
+    const Circle& GetCollisionCircle() const;
 
     virtual void SetResourceObject( const std::shared_ptr< Resource_ABC >& renderResource );
     virtual void SetColorKeying( bool enable, unsigned int r = 0, unsigned int g = 0, unsigned int b = 0 ){};
@@ -31,6 +35,7 @@ public:
     void Move( const Geometry2D::Vector2D& dir );
 
 protected:
+    const SceneManager2D* sceneManager_;
     std::shared_ptr< Resource_ABC > renderResource_;
     RenderRect renderRect_;
     float x_;

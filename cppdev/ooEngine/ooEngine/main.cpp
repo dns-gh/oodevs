@@ -46,8 +46,9 @@ int main(int, char**)
         resourceManager->LoadFromXMLFile( tools::GetModulePath() + std::string( "../../data/graphic/template.xml" ) );
 
         auto entityFactory = std::make_shared< SDLEntityFactory >( *logger );
+        auto collisionSolver = std::make_shared< CollisionSolver >( *logger );
 
-        auto sceneManager = std::make_shared< SceneManager2D >( *resourceManager, *entityFactory, *logger );
+        auto sceneManager = std::make_shared< SceneManager2D >( *resourceManager, *collisionSolver, *entityFactory, *logger );
         sdlRenderManager->SetSceneManager2D( sceneManager );
 
         // Default image in the back

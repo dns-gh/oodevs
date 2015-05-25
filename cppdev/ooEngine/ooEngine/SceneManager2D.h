@@ -5,6 +5,7 @@
 #include "Layer2D.h"
 #include "Timer.h"
 #include "ResourceManager.h"
+#include "CollisionSolver.h"
 #include "EntityFactory_ABC.h"
 #include "LogTools.h"
 
@@ -17,7 +18,7 @@ class SceneListener_ABC;
 class SceneManager2D : public EngineObject
 {
 public:
-    SceneManager2D( const ResourceManager& resourceManager, const EntityFactory_ABC& entityFactory, LogTools& logger );
+    SceneManager2D( const ResourceManager& resourceManager, const CollisionSolver& solver, const EntityFactory_ABC& entityFactory, LogTools& logger );
     virtual ~SceneManager2D();
     std::shared_ptr< Layer2D > CreateLayer( std::string );
     std::shared_ptr< Layer2D > FindLayer( std::string ) const;
@@ -28,6 +29,7 @@ public:
     unsigned int AddTimer( unsigned long interval ); // return the EngineObject id
     void AddListener( SceneListener_ABC* listener );
     void Update();
+    bool CheckCollisions( const Circle& circle ) const;
 
 private:
     void AddLayerObject( std::shared_ptr< Layer2D >& layer, tinyxml2::XMLElement* element );
@@ -37,6 +39,7 @@ private:
     std::list< std::shared_ptr< Timer > > timers_;
     std::list< SceneListener_ABC* > listeners_;
     const ResourceManager& resourceManager_;
+    const CollisionSolver& collisionSolver_;
     const EntityFactory_ABC& entityFactory_;
     LogTools& logger_;
 };
