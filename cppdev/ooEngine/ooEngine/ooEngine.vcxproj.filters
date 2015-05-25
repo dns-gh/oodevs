@@ -36,6 +36,15 @@
       <Filter>sdlrendering\creation</Filter>
     </ClCompile>
     <ClCompile Include="InputManager.cpp" />
+    <ClCompile Include="CollisionSolver.cpp">
+      <Filter>collisions</Filter>
+    </ClCompile>
+    <ClCompile Include="Vector2D.cpp">
+      <Filter>geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="Geometry2D.cpp">
+      <Filter>geometry</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EngineObject.h" />
@@ -90,6 +99,9 @@
     <ClInclude Include="Geometry2D.h">
       <Filter>geometry</Filter>
     </ClInclude>
+    <ClInclude Include="CollisionSolver.h">
+      <Filter>collisions</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="tools">
@@ -109,6 +121,9 @@
     </Filter>
     <Filter Include="geometry">
       <UniqueIdentifier>{d00f0873-dc73-4a80-8721-61efcef677b0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="collisions">
+      <UniqueIdentifier>{44f827cf-b3da-4c92-b51c-129e631889b3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

@@ -127,8 +127,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="CollisionSolver.cpp" />
     <ClCompile Include="EngineObject.cpp" />
     <ClCompile Include="ErrorLogManager.cpp" />
+    <ClCompile Include="Geometry2D.cpp" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="Layer2D.cpp" />
     <ClCompile Include="LogTools.cpp" />
@@ -142,8 +144,10 @@
     <ClCompile Include="SDLRenderResource.cpp" />
     <ClCompile Include="SDLSpriteObject.cpp" />
     <ClCompile Include="tinyxml2.cpp" />
+    <ClCompile Include="Vector2D.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CollisionSolver.h" />
     <ClInclude Include="Geometry2D.h" />
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="Layer2D.h" />

@@ -7,7 +7,7 @@
 InputManager::InputManager( LogTools& logger )
     : logger_( logger )
 {
-    logger_.OOLOG( FILE_INFOS ) << OOSTREAM( LOG_MESSAGE, "Input Manager: creation" );
+    logger_.OOLOG( FILE_INFOS ) << OOSTREAM( LOG_MESSAGE, "Input Manager: creation (id:" << GetID() << ")" );
 }
 
 InputManager::~InputManager()

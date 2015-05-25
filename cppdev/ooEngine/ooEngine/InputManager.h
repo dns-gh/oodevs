@@ -1,13 +1,16 @@
 #ifndef _INPUTMANAGER_
 #define _INPUTMANAGER_
 
+#include "EngineObject.h"
+#include "LogTools.h"
+
 #include "SDL_keyboard.h"
 #include "SDL_Keycode.h"
-#include "LogTools.h"
+
 #include <map>
 #include <vector>
 
-class InputManager
+class InputManager : EngineObject
 {
 public:
     InputManager( LogTools& logger );

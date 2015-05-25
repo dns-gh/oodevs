@@ -11,7 +11,7 @@ ResourceManager::ResourceManager( const RenderManager_ABC& renderManager, LogToo
 {
     currentScope_ = 0;
     resourceCount_ = 0;
-    logger_.OOLOG( FILE_INFOS ) << OOSTREAM( LOG_MESSAGE, "Resource Manager: creation" );
+    logger_.OOLOG( FILE_INFOS ) << OOSTREAM( LOG_MESSAGE, "Resource Manager: creation (id:" << GetID() << ")" );
 }
 
 ResourceManager::~ResourceManager()

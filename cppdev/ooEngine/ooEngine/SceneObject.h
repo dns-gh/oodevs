@@ -27,6 +27,7 @@ public:
     virtual void SetColorKeying( bool enable, unsigned int r = 0, unsigned int g = 0, unsigned int b = 0 ){};
     void SetPosition( float x, float y );
     void SetVisible( bool visibility );
+    void SetCollisionCircle( Circle circle );
 
 protected:
     std::shared_ptr< Resource_ABC > renderResource_;
@@ -34,6 +35,7 @@ protected:
     float x_;
     float y_;
     bool visible_;
+    Circle collisionCircle_;
 };
 
 #endif // SceneObject.h

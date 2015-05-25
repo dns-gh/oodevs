@@ -12,7 +12,7 @@
 SDL2DRenderManager::SDL2DRenderManager( LogTools& logger )
     : logger_( logger )
 {
-    // NOTHING
+    logger_.OOLOG( FILE_INFOS ) << OOSTREAM( LOG_MESSAGE, "SDL 2D: creation of a render manager (id:" << GetID() << ")" );
 }
 
 

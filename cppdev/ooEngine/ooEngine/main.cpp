@@ -36,7 +36,7 @@ int main(int, char**)
 
         auto entityFactory = std::make_shared< SDLEntityFactory >( *logger );
 
-        std::shared_ptr< SceneManager2D > sceneManager = std::make_shared< SceneManager2D >( *resourceManager, *entityFactory, *logger );
+        auto sceneManager = std::make_shared< SceneManager2D >( *resourceManager, *entityFactory, *logger );
         sdlRenderManager->SetSceneManager2D( sceneManager );
 
         // Default image in the back
@@ -60,8 +60,9 @@ int main(int, char**)
         sdlRenderManager->InsertRenderObject( spriteTest2 );
 
         // Test listener
-        sceneManager->AddListener( new TestListener() );
+        /*sceneManager->AddListener( new TestListener() );
         sceneManager->AddTimer( 2000 );
+        */
         sceneManager->LoadFromXMLFile( tools::GetModulePath() + std::string( "../../data/scene/sceneTest.xml" ) );
 
         // Test input manager

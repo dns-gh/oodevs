@@ -53,3 +53,7 @@ void SceneObject::SetVisible( bool visibility )
     visible_ = visibility;
 }
 
+void SceneObject::SetCollisionCircle( Circle circle)
+{
+    collisionCircle_ = circle;
+}

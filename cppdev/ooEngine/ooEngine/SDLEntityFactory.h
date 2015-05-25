@@ -4,7 +4,8 @@
 #include "EntityFactory_ABC.h"
 #include "LogTools.h"
 
-class SDLEntityFactory : public EntityFactory_ABC
+class SDLEntityFactory : public EngineObject
+                       , public EntityFactory_ABC
 {
 public:
     SDLEntityFactory( LogTools& logger );

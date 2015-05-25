@@ -12,7 +12,6 @@ public:
     void Play( unsigned int startFrame = -1 );
     void Pause();
     void Resume(unsigned int resumeFrame = -1 );
-
     bool IsPaused() const;
 
 private:
