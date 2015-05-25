@@ -20,8 +20,11 @@ SDL2DRenderManager::~SDL2DRenderManager()
 {
     Clear();
     SDL_DestroyRenderer( renderer_ );
+    logger_.OOLOG( FILE_INFOS ) << OOSTREAM( LOG_MESSAGE, "SDL 2D: destroy renderer" );
     SDL_DestroyWindow( renderWindow_ );
+    logger_.OOLOG( FILE_INFOS ) << OOSTREAM( LOG_MESSAGE, "SDL 2D: destroy window" );
     SDL_Quit();
+    logger_.OOLOG( FILE_INFOS ) << OOSTREAM( LOG_MESSAGE, "SDL 2D: sdl quit" );
 }
 
 void SDL2DRenderManager::Initialize( unsigned int width, unsigned int height, bool fullScreen, char* windowTitle )
@@ -68,9 +71,7 @@ void SDL2DRenderManager::Initialize( unsigned int width, unsigned int height, bo
 
 void SDL2DRenderManager::Clear()
 {
-    for( auto it : renderObjects_ )
-        OODELETE( it );
-    logger_.OOLOG( FILE_INFOS ) << OOSTREAM( LOG_MESSAGE, "SDL 2D: clear all render objects" );
+    // NOTHING
 }
 
 bool SDL2DRenderManager::Update()
@@ -80,7 +81,6 @@ bool SDL2DRenderManager::Update()
 
     SDL_RenderClear( renderer_ );
     RenderAllObjects();
-    RenderScene();
     DrawDebugBoxes();
     SDL_RenderPresent( renderer_ );
     return true;
@@ -94,26 +94,16 @@ std::shared_ptr< Resource_ABC > SDL2DRenderManager::CreateRenderResource() const
 
 void SDL2DRenderManager::RenderAllObjects()
 {
-    for( auto it = renderObjects_.begin(); it != renderObjects_.end(); ++it )
-    {
-        if( ( *it )->IsVisible() )
-        {
-            if( !( *it )->GetRenderResource() )
-                continue;
-            auto sdlResource = std::dynamic_pointer_cast< SDLRenderResource_ABC >( ( *it )->GetRenderResource() );
-            if( !sdlResource->GetTexture() )
-                continue;
-            // Update of the SDLRenderObject. In case of a sprite object, it sets the image to the correct one if need be.
-            ( *it )->Update();
-            RenderAtPosition( **it, ( *it )->X(), ( *it )->Y() );
-        }
-    }
+    RenderScene();
 }
 
 void SDL2DRenderManager::SetSceneManager2D( std::shared_ptr< SceneManager2D >& manager )
 {
     sceneManager_ = manager;
     logger_.OOLOG( FILE_INFOS ) << OOSTREAM( LOG_MESSAGE, "SDL 2D: set the 2D scene manager to the sdl render manager" );
+    // Create a default layer
+    if( sceneManager_ )
+        sceneManager_->CreateLayer( "defaultLayer" );
 }
 
 void SDL2DRenderManager::RenderScene()
@@ -158,10 +148,21 @@ SDL_Renderer* SDL2DRenderManager::GetRenderer() const
     return renderer_;
 }
 
-void SDL2DRenderManager::InsertRenderObject( SceneObject* object )
+void SDL2DRenderManager::InsertSceneObject( const std::shared_ptr< SceneObject>& object, std::string layerName /* "" */ )
 {
-    if( object )
-        renderObjects_.push_back( dynamic_cast< SDLRenderObject* >( object ) );
+    if( sceneManager_ )
+    {
+        object->SetSceneManager( &*sceneManager_ );
+        auto layer = sceneManager_->FindLayer( layerName );
+        if( layer )
+        {        
+            if( object )
+                layer->InsertSceneObject( object );
+            return;
+        }
+        logger_.OOLOG( FILE_INFOS ) << OOSTREAM( LOG_WARNING, "SDL Render Manager: no layer found of the name: " << layerName );
+    }
+    logger_.OOLOG( FILE_INFOS ) << OOSTREAM( LOG_WARNING, "SDL Render Manager: scene manager not set for the sdl renderer" );
 }
 
 void SDL2DRenderManager::AttachDrawingDebugBox( SDL_Rect* rect, SceneObject* object /* = 0 */ )

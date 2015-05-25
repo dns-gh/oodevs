@@ -32,23 +32,23 @@ public:
     virtual std::shared_ptr< Resource_ABC > CreateRenderResource() const; //LoadResourceFromXML ? Is there any more data in an xml file that could be useful in that class ?
     virtual void RenderAllObjects();
     virtual void SetSceneManager2D( std::shared_ptr< SceneManager2D >& manager );
-    virtual void RenderScene();
-
+    
     void RenderAtPosition( const SceneObject& object, const float& x, const float& y );
     SDL_Renderer* GetRenderer() const;
-    virtual void InsertRenderObject( SceneObject* object );
+    // Insert a scene object into the default layer
+    virtual void InsertSceneObject( const std::shared_ptr< SceneObject>& object, std::string layerName = "" );
 
     // Debug helpers
     void AttachDrawingDebugBox( SDL_Rect* rect, SceneObject* object = nullptr );
 
 private:
+    void RenderScene();
     void DrawDebugBoxes();
 
 private:
     SDL_Window* renderWindow_;
     SDL_Renderer* renderer_;
     //std::stringstream videoInfos_;
-    std::list< SDLRenderObject* > renderObjects_;
     std::shared_ptr< SceneManager2D > sceneManager_;
     LogTools& logger_;
 

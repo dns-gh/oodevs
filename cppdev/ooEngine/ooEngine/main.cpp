@@ -52,37 +52,39 @@ int main(int, char**)
         sdlRenderManager->SetSceneManager2D( sceneManager );
 
         // Default image in the back
-        SDLRenderObject* back = new SDLRenderObject();
+        std::shared_ptr< SDLRenderObject> back( new SDLRenderObject() );
         back->SetResourceObject( resourceManager->FindResourceByID( 3 ) );
-        sdlRenderManager->InsertRenderObject( back );
+        sdlRenderManager->InsertSceneObject( back, "defaultLayer" );
         back->SetVisible( true );     
 
         // Sprites test
-        SDLSpriteObject* spriteTest = new SDLSpriteObject( 48, 8, 6, 125 );
+        std::shared_ptr< SDLSpriteObject > spriteTest( new SDLSpriteObject( 48, 8, 6, 125 ) );
         spriteTest->SetPosition( 300, 200 );
+        spriteTest->SetVisible( true );
         spriteTest->SetResourceObject( resourceManager->FindResourceByID( 2 ) );
         //spriteTest->SetColorKeying( true, 0, 0, 0 );
         Vector2D pos( 300,200 );
         Circle cc( pos, 90 );
         spriteTest->SetCollisionCircle( cc );
-        sdlRenderManager->InsertRenderObject( spriteTest );
+        sdlRenderManager->InsertSceneObject( spriteTest, "defaultLayer" );
 
         // Sprites test
-        SDLSpriteObject* spriteTest2 = new SDLSpriteObject( 48, 8, 6, 125 );
+        std::shared_ptr< SDLSpriteObject > spriteTest2( new SDLSpriteObject( 48, 8, 6, 125 ) );
         spriteTest2->SetPosition( 120, 200 );
+        spriteTest2->SetVisible( true );
         spriteTest2->SetResourceObject( resourceManager->FindResourceByID( 2 ) );
         spriteTest2->SetColorKeying( true, 0, 0, 0 );
         cc.center_.x_ = 120;
         spriteTest2->SetCollisionCircle( cc );
-        sdlRenderManager->InsertRenderObject( spriteTest2 );
+        sdlRenderManager->InsertSceneObject( spriteTest2, "defaultLayer" );
 
         // Debug boxes
         SDL_Rect rect;
         rect.x = 120;
         rect.y = 200;
         rect.w = rect.h = 180;
-        sdlRenderManager->AttachDrawingDebugBox( &rect, spriteTest );
-        sdlRenderManager->AttachDrawingDebugBox( &rect, spriteTest2 );
+        sdlRenderManager->AttachDrawingDebugBox( &rect, &*spriteTest );
+        sdlRenderManager->AttachDrawingDebugBox( &rect, &*spriteTest2 );
 
         // Test listener
         /*sceneManager->AddListener( new TestListener() );

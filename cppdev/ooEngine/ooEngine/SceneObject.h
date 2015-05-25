@@ -32,6 +32,7 @@ public:
     void SetPosition( float x, float y );
     void SetVisible( bool visibility );
     void SetCollisionCircle( Circle circle );
+    void SetSceneManager( const SceneManager2D* sceneManager );
     void Move( const Geometry2D::Vector2D& dir );
 
 protected:

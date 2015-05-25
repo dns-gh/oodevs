@@ -21,11 +21,11 @@ SceneManager2D::~SceneManager2D()
 std::shared_ptr< Layer2D > SceneManager2D::CreateLayer( std::string name )
 {
     std::shared_ptr< Layer2D > layer = FindLayer( name );
-
     if( !layer )
-        return 0;
-    layer.reset( new Layer2D( false, 0, 0, 0, name ) );
-    layers_.push_back( layer );
+    {
+        layer.reset( new Layer2D( true, 0, 0, 0, name ) );
+        layers_.push_back( layer );
+    }
     return layer;
 }
 

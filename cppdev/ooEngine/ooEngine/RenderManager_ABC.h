@@ -18,8 +18,7 @@ public:
     virtual std::shared_ptr< Resource_ABC > CreateRenderResource() const = 0;
     virtual void RenderAllObjects() = 0;
     virtual void SetSceneManager2D( std::shared_ptr< SceneManager2D >& manager ) = 0;
-    virtual void RenderScene() = 0;
-    virtual void InsertRenderObject( SceneObject* object ) = 0;
+    virtual void InsertSceneObject( const std::shared_ptr< SceneObject >& object, std::string layerName ) = 0;
 
 protected:
     virtual ~RenderManager_ABC(){};
