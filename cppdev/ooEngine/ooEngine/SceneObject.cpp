@@ -57,3 +57,10 @@ void SceneObject::SetCollisionCircle( Circle circle)
 {
     collisionCircle_ = circle;
 }
+
+void SceneObject::Move( const Geometry2D::Vector2D& dir )
+{
+    x_ += dir.x_;
+    y_ += dir.y_;
+    collisionCircle_.center_ += dir;
+}

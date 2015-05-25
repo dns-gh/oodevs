@@ -13,6 +13,13 @@
 
 #include <memory>
 
+enum Actions {
+    RightMove = 10,
+    LeftMove,
+    UpMove,
+    DownMove,
+};
+
 int main(int, char**)
 {
     // init of a logger
@@ -77,6 +84,11 @@ int main(int, char**)
         inputManager->Bind( 3, SDL_SCANCODE_R );
         inputManager->Bind( 4, SDL_SCANCODE_P );
 
+        inputManager->Bind( Actions::RightMove, SDL_SCANCODE_RIGHT );
+        inputManager->Bind( Actions::LeftMove, SDL_SCANCODE_LEFT );
+        inputManager->Bind( Actions::UpMove, SDL_SCANCODE_UP );
+        inputManager->Bind( Actions::DownMove, SDL_SCANCODE_DOWN );
+
         bool quit = false;
         while( !quit )
         {
@@ -105,6 +117,16 @@ int main(int, char**)
                 spriteTest->Pause();
                 spriteTest2->Pause();
             }
+
+            Geometry2D::Vector2D dirX(1,0), dirY(0,1);
+            if( inputManager->PerformAction( Actions::RightMove ) )
+                spriteTest->Move( dirX * 0.01f );
+            if( inputManager->PerformAction( Actions::LeftMove ) )
+                spriteTest->Move( -dirX * 0.01f );
+            if( inputManager->PerformAction( Actions::UpMove ) )
+                spriteTest->Move( -dirY * 0.01f );
+            if( inputManager->PerformAction( Actions::DownMove ) )
+                spriteTest->Move( dirY * 0.01f );
 
             SDL_Event event;
             while( SDL_PollEvent( &event ) != 0 )

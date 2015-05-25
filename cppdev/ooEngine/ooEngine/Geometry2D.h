@@ -1,16 +1,10 @@
 #ifndef _GEOMETRY2D_H_
 #define _GEOMETRY2D_H_
 
+#include "Vector2D.h"
+
 namespace Geometry2D
 {
-    typedef struct Vector2D
-    {
-        Vector2D(){};
-        Vector2D( float x, float y );
-        float x_;
-        float y_;
-    }Vector2D;
-
     typedef struct RectangleInt
     {
         int x, y;

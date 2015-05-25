@@ -102,6 +102,9 @@
     <ClInclude Include="CollisionSolver.h">
       <Filter>collisions</Filter>
     </ClInclude>
+    <ClInclude Include="Vector2D.h">
+      <Filter>geometry</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="tools">

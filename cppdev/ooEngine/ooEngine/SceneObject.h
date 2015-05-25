@@ -28,6 +28,7 @@ public:
     void SetPosition( float x, float y );
     void SetVisible( bool visibility );
     void SetCollisionCircle( Circle circle );
+    void Move( const Geometry2D::Vector2D& dir );
 
 protected:
     std::shared_ptr< Resource_ABC > renderResource_;
