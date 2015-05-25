@@ -15,6 +15,9 @@
 #include <memory>
 
 enum Actions {
+    Quit = 0,
+    Resume = 1,
+    Pause,
     RightMove = 10,
     LeftMove,
     UpMove,
@@ -58,6 +61,9 @@ int main(int, char**)
         spriteTest->SetPosition( 300, 200 );
         spriteTest->SetResourceObject( resourceManager->FindResourceByID( 2 ) );
         //spriteTest->SetColorKeying( true, 0, 0, 0 );
+        Vector2D pos( 300,200 );
+        Circle cc( pos, 90 );
+        spriteTest->SetCollisionCircle( cc );
         sdlRenderManager->InsertRenderObject( spriteTest );
 
         // Sprites test
@@ -65,14 +71,17 @@ int main(int, char**)
         spriteTest2->SetPosition( 120, 200 );
         spriteTest2->SetResourceObject( resourceManager->FindResourceByID( 2 ) );
         spriteTest2->SetColorKeying( true, 0, 0, 0 );
+        cc.center_.x_ = 120;
+        spriteTest2->SetCollisionCircle( cc );
         sdlRenderManager->InsertRenderObject( spriteTest2 );
 
         // Debug boxes
-        SDL_Rect* rect = new SDL_Rect();
-        rect->x = 120;
-        rect->y = 200;
-        rect->w = rect->h = 180;
-        sdlRenderManager->InsertDrawingDebugBox( rect );
+        SDL_Rect rect;
+        rect.x = 120;
+        rect.y = 200;
+        rect.w = rect.h = 180;
+        sdlRenderManager->AttachDrawingDebugBox( &rect, spriteTest );
+        sdlRenderManager->AttachDrawingDebugBox( &rect, spriteTest2 );
 
         // Test listener
         /*sceneManager->AddListener( new TestListener() );
@@ -83,14 +92,15 @@ int main(int, char**)
         // Test input manager
         logger->OOLOG( FILE_INFOS ) << OOSTREAM( LOG_MESSAGE, "Input Manager: test" );
         auto inputManager = std::make_shared< InputManager >( *logger );
-        inputManager->Bind( 0, SDL_SCANCODE_KP_0 );
+        /*inputManager->Bind( 0, SDL_SCANCODE_KP_0 );
         inputManager->Bind( 0, SDL_SCANCODE_KP_1 );
         inputManager->Bind( 1, SDL_SCANCODE_KP_1 );
         inputManager->UnBind( 0, SDL_SCANCODE_KP_0 );
         inputManager->UnBind( 0, SDL_SCANCODE_KP_1 );
-        inputManager->Bind( 2, SDL_SCANCODE_ESCAPE );
-        inputManager->Bind( 3, SDL_SCANCODE_R );
-        inputManager->Bind( 4, SDL_SCANCODE_P );
+        */
+        inputManager->Bind( Actions::Quit, SDL_SCANCODE_ESCAPE );
+        inputManager->Bind( Actions::Resume, SDL_SCANCODE_R );
+        inputManager->Bind( Actions::Pause, SDL_SCANCODE_P );
 
         inputManager->Bind( Actions::RightMove, SDL_SCANCODE_RIGHT );
         inputManager->Bind( Actions::LeftMove, SDL_SCANCODE_LEFT );
@@ -108,19 +118,15 @@ int main(int, char**)
             if( inputManager )
                 inputManager->Update();
 
-            if( inputManager->PerformAction( 0 ) )
-                logger->OOLOG( FILE_INFOS ) << OOSTREAM( LOG_MESSAGE, "Action 0" );
-            if( inputManager->PerformAction( 1 ) )
-                logger->OOLOG( FILE_INFOS ) << OOSTREAM( LOG_MESSAGE, "Action 1" );
-            if( inputManager->PerformAction( 2 ) )
+            if( inputManager->PerformAction( Actions::Quit ) )
                 quit = true;
 
-            if( inputManager->PerformAction( 3 ) ) // resume or play
+            if( inputManager->PerformAction( Actions::Resume ) ) // resume or play
             {
                 spriteTest->Resume();
                 spriteTest2->Resume();
             }
-            if( inputManager->PerformAction( 4 ) )
+            if( inputManager->PerformAction( Actions::Pause ) )
             {
                 spriteTest->Pause();
                 spriteTest2->Pause();

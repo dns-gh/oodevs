@@ -16,6 +16,7 @@
 #include <sstream>
 #include <vector>
 #include <list>
+#include <utility>
 
 class SDL2DRenderManager : public EngineObject
                          , public RenderManager_ABC
@@ -38,7 +39,7 @@ public:
     virtual void InsertRenderObject( SceneObject* object );
 
     // Debug helpers
-    void InsertDrawingDebugBox( SDL_Rect* rect );
+    void AttachDrawingDebugBox( SDL_Rect* rect, SceneObject* object = nullptr );
 
 private:
     void DrawDebugBoxes();
@@ -52,7 +53,7 @@ private:
     LogTools& logger_;
 
     // debug infos
-    std::vector< SDL_Rect* > debugRects_;
+    std::vector< std::pair< SDL_Rect*, SceneObject* > > debugRects_;
 };
 
 #endif // SDL2DRenderManager.h

@@ -70,8 +70,6 @@ void SDL2DRenderManager::Clear()
 {
     for( auto it : renderObjects_ )
         OODELETE( it );
-    for( auto it : debugRects_ )
-        OODELETE( it );
     logger_.OOLOG( FILE_INFOS ) << OOSTREAM( LOG_MESSAGE, "SDL 2D: clear all render objects" );
 }
 
@@ -166,13 +164,21 @@ void SDL2DRenderManager::InsertRenderObject( SceneObject* object )
         renderObjects_.push_back( dynamic_cast< SDLRenderObject* >( object ) );
 }
 
-void SDL2DRenderManager::InsertDrawingDebugBox( SDL_Rect* rect )
+void SDL2DRenderManager::AttachDrawingDebugBox( SDL_Rect* rect, SceneObject* object /* = 0 */ )
 {
-    debugRects_.push_back( rect );
+    auto pair = std::make_pair( rect, object );
+    debugRects_.push_back( pair );
 }
 
 void SDL2DRenderManager::DrawDebugBoxes()
 {
     for( auto it : debugRects_ )
-        SDL_RenderDrawRect( renderer_, it );
+    {
+        if( it.second )
+        {
+            it.first->x = static_cast< int >( it.second->X() );
+            it.first->y = static_cast< int >( it.second->Y() );
+        }
+        SDL_RenderDrawRect( renderer_, it.first );
+    }
 }
