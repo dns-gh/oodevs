@@ -63,7 +63,7 @@ int main(int, char**)
         spriteTest->SetVisible( true );
         spriteTest->SetResourceObject( resourceManager->FindResourceByID( 2 ) );
         //spriteTest->SetColorKeying( true, 0, 0, 0 );
-        Vector2D pos( 300,200 );
+        Vector2D pos( 390,290 );
         Circle cc( pos, 90 );
         spriteTest->SetCollisionCircle( cc );
         sdlRenderManager->InsertSceneObject( spriteTest, "defaultLayer" );
@@ -74,7 +74,7 @@ int main(int, char**)
         spriteTest2->SetVisible( true );
         spriteTest2->SetResourceObject( resourceManager->FindResourceByID( 2 ) );
         spriteTest2->SetColorKeying( true, 0, 0, 0 );
-        cc.center_.x_ = 120;
+        cc.center_.x_ = 200;
         spriteTest2->SetCollisionCircle( cc );
         sdlRenderManager->InsertSceneObject( spriteTest2, "defaultLayer" );
 

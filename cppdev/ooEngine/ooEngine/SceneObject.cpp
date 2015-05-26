@@ -82,10 +82,10 @@ void SceneObject::SetSceneManager( const SceneManager2D* sceneManager )
 void SceneObject::Move( const Geometry2D::Vector2D& dir )
 {
     Vector2D pos( x_ + dir.x_, y_ + dir.y_ );
-    Circle newCircle( pos, collisionCircle_.radius_ );
+    Circle newCircle( collisionCircle_.center_ + dir, collisionCircle_.radius_ );
     if( sceneManager_ )
     {
-        if( !sceneManager_->CheckCollisions( newCircle ) )
+        if( !sceneManager_->CheckCollisions( *this, newCircle ) )
         {
             x_ = pos.x_;
             y_ = pos.y_;

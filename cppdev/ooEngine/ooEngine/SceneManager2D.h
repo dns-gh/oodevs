@@ -29,7 +29,7 @@ public:
     unsigned int AddTimer( unsigned long interval ); // return the EngineObject id
     void AddListener( SceneListener_ABC* listener );
     void Update();
-    bool CheckCollisions( const Circle& circle ) const;
+    bool CheckCollisions( const SceneObject& object, const Circle& circle ) const;
 
 private:
     void AddLayerObject( std::shared_ptr< Layer2D >& layer, tinyxml2::XMLElement* element );

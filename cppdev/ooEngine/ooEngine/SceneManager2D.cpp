@@ -187,13 +187,13 @@ void SceneManager2D::Update()
     checkTimerExpiration();
 }
 
-bool SceneManager2D::CheckCollisions( const Circle& circle ) const
+bool SceneManager2D::CheckCollisions( const SceneObject& object, const Circle& circle ) const
 {
     for( auto& layer : layers_ )
     {
-        for( auto& object : layer->GetSceneObjects() )
+        for( auto& it : layer->GetSceneObjects() )
         {
-            if( collisionSolver_.CollisionBetween( circle, object->GetCollisionCircle() ) )
+            if( &object != &*it && collisionSolver_.CollisionBetween( circle, it->GetCollisionCircle() ) )
                 return true;
         }
     }

@@ -29,3 +29,10 @@ Vector2D& Vector2D::operator* ( float scale )
     y_ *= scale;
     return *this;
 }
+
+Vector2D& Vector2D::operator+ ( const Vector2D& vec )
+{
+    x_ += vec.x_;
+    y_ += vec.y_;
+    return *this;
+}
