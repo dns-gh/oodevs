@@ -66,6 +66,7 @@ int main(int, char**)
         Vector2D pos( 390,290 );
         Circle cc( pos, 90 );
         spriteTest->SetCollisionCircle( cc );
+        sdlRenderManager->AttachDrawingDebugCircle( &cc, &*spriteTest );
         sdlRenderManager->InsertSceneObject( spriteTest, "defaultLayer" );
 
         // Sprites test

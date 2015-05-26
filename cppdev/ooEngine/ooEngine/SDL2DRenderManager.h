@@ -2,6 +2,7 @@
 #define _SDL2DRENDERMANAGER_H
 
 //#include "RenderManager.h"
+#include "Geometry2D.h"
 #include "SingletonTemplate.h"
 #include "Resource_ABC.h"
 #include "RenderManager_ABC.h"
@@ -39,7 +40,9 @@ public:
     virtual void InsertSceneObject( const std::shared_ptr< SceneObject>& object, std::string layerName = "" );
 
     // Debug helpers
+    void DrawCircle( const Circle& circle );
     void AttachDrawingDebugBox( SDL_Rect* rect, SceneObject* object = nullptr );
+    void AttachDrawingDebugCircle( Geometry2D::Circle* circle, SceneObject* object = nullptr );
 
 private:
     void RenderScene();
@@ -54,6 +57,7 @@ private:
 
     // debug infos
     std::vector< std::pair< SDL_Rect*, SceneObject* > > debugRects_;
+    std::vector< std::pair< Geometry2D::Circle*, SceneObject* > > debugCircles_;
 };
 
 #endif // SDL2DRenderManager.h

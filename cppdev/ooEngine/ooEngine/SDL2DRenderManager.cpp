@@ -171,6 +171,26 @@ void SDL2DRenderManager::AttachDrawingDebugBox( SDL_Rect* rect, SceneObject* obj
     debugRects_.push_back( pair );
 }
 
+void SDL2DRenderManager::AttachDrawingDebugCircle( Circle* circle, SceneObject* object /* = 0 */)
+{
+    auto pair = std::make_pair( circle, object );
+    debugCircles_.push_back( pair );
+}
+
+void SDL2DRenderManager::DrawCircle( const Circle& circle )
+{
+    int sampling = static_cast< int >( circle.radius_ );
+    int center = static_cast< int >( circle.center_.x_ );
+    SDL_Point* points = new SDL_Point[ 2 * sampling + 1 ];
+    for( int i = -sampling; i <= sampling; ++i )
+    {
+        int posx = i + center;
+        points[i].x = posx;
+        points[i].y = static_cast< int >( sqrt( pow( sampling, 2.0 ) - pow( posx, 2.0 ) ) );
+    }
+    SDL_RenderDrawLines( renderer_, points, 2 * sampling + 1 );
+}
+
 void SDL2DRenderManager::DrawDebugBoxes()
 {
     for( auto it : debugRects_ )
@@ -181,5 +201,15 @@ void SDL2DRenderManager::DrawDebugBoxes()
             it.first->y = static_cast< int >( it.second->Y() );
         }
         SDL_RenderDrawRect( renderer_, it.first );
+    }
+
+    for( auto it : debugCircles_ )
+    {
+        if( it.second )
+        {
+            it.first->center_.x_ = it.second->X();
+            it.first->center_.y_ = it.second->Y();
+        }
+        DrawCircle( *it.first );
     }
 }
