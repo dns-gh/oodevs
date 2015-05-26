@@ -64,18 +64,18 @@ void SceneManager2D::SortLayer()
 
 bool SceneManager2D::LoadFromXMLFile( std::string filename )
 {
-    logger_.OOLOG( FILE_INFOS ) << OOSTREAM( LOG_MESSAGE, "Scene manager 2D: loading data from xml file: " << filename );
+    logger_.OOLOG( FILE_INFOS ) << OOSTREAM( LOG_ERROR, "Scene manager 2D: loading data from xml file: " << filename );
     tinyxml2::XMLDocument doc;
     if( doc.LoadFile( filename.c_str() ) != XMLError::XML_SUCCESS )
     {
-        logger_.OOLOG( FILE_INFOS ) << OOSTREAM( LOG_MESSAGE, "Scene manager 2D: error in loading the file..." );
+        logger_.OOLOG( FILE_INFOS ) << OOSTREAM( LOG_ERROR, "Scene manager 2D: error in loading the file..." );
         return false;
     }
 
     XMLNode* tree = doc.FirstChildElement( "scene" );
     if( !tree )
     {
-        logger_.OOLOG( FILE_INFOS ) << OOSTREAM( LOG_MESSAGE, "Scene manager 2D: error in loading the file... <scene> node dosen't exists" );
+        logger_.OOLOG( FILE_INFOS ) << OOSTREAM( LOG_ERROR, "Scene manager 2D: error in loading the file... <scene> node dosen't exists" );
         return false;
     }
 
