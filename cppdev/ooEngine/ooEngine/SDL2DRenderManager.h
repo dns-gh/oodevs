@@ -42,7 +42,7 @@ public:
     // Debug helpers
     void DrawCircle( const Circle& circle );
     void AttachDrawingDebugBox( SDL_Rect* rect, SceneObject* object = nullptr );
-    void AttachDrawingDebugCircle( Geometry2D::Circle* circle, SceneObject* object = nullptr );
+    void DrawDebugCircle( SceneObject* object );
 
 private:
     void RenderScene();
@@ -57,7 +57,7 @@ private:
 
     // debug infos
     std::vector< std::pair< SDL_Rect*, SceneObject* > > debugRects_;
-    std::vector< std::pair< Geometry2D::Circle*, SceneObject* > > debugCircles_;
+    std::vector< SceneObject* > debugCircles_;
 };
 
 #endif // SDL2DRenderManager.h

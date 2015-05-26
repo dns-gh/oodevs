@@ -64,7 +64,7 @@ void SceneManager2D::SortLayer()
 
 bool SceneManager2D::LoadFromXMLFile( std::string filename )
 {
-    logger_.OOLOG( FILE_INFOS ) << OOSTREAM( LOG_ERROR, "Scene manager 2D: loading data from xml file: " << filename );
+    logger_.OOLOG( FILE_INFOS ) << OOSTREAM( LOG_MESSAGE, "Scene manager 2D: loading data from xml file: " << filename );
     tinyxml2::XMLDocument doc;
     if( doc.LoadFile( filename.c_str() ) != XMLError::XML_SUCCESS )
     {

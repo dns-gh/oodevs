@@ -85,6 +85,8 @@ void SceneObject::Move( const Geometry2D::Vector2D& dir )
     Circle newCircle( collisionCircle_.center_ + dir, collisionCircle_.radius_ );
     if( sceneManager_ )
     {
+        // if there is no collision, update the position 
+        // of the object and the collision circle
         if( !sceneManager_->CheckCollisions( *this, newCircle ) )
         {
             x_ = pos.x_;

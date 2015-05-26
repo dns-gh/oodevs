@@ -16,23 +16,17 @@ Vector2D& Vector2D::operator+= ( const Vector2D& rhs )
     return *this;
 }
 
-Vector2D& Vector2D::operator- ()
+Vector2D Vector2D::operator- () const
 {
-    x_ = -x_;
-    y_ = -y_;
-    return *this;
+    return Vector2D( -x_, -y_ );
 }
 
-Vector2D& Vector2D::operator* ( float scale )
+Vector2D Vector2D::operator* ( float scale ) const
 {
-    x_ *= scale;
-    y_ *= scale;
-    return *this;
+    return Vector2D( x_ * scale, y_ * scale );
 }
 
-Vector2D& Vector2D::operator+ ( const Vector2D& vec )
+Vector2D Vector2D::operator+ ( const Vector2D& vec ) const
 {
-    x_ += vec.x_;
-    y_ += vec.y_;
-    return *this;
+    return Vector2D( x_ + vec.x_, y_ + vec.y_ );
 }
