@@ -13,6 +13,8 @@ public:
     void Pause();
     void Resume(unsigned int resumeFrame = -1 );
     bool IsPaused() const;
+    // Update image data to the given frame
+    void GoToFrame( unsigned int imgNumber );
 
 private:
     unsigned int imageNumber_;

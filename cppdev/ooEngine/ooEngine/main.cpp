@@ -62,6 +62,7 @@ int main(int, char**)
         spriteTest->SetPosition( 300, 200 );
         spriteTest->SetVisible( true );
         spriteTest->SetResourceObject( resourceManager->FindResourceByID( 2 ) );
+        spriteTest->GoToFrame( 0 );
         //spriteTest->SetColorKeying( true, 0, 0, 0 );
         Vector2D pos( 390,290 );
         Circle cc( pos, 90 );
@@ -75,6 +76,7 @@ int main(int, char**)
         spriteTest2->SetVisible( true );
         spriteTest2->SetResourceObject( resourceManager->FindResourceByID( 2 ) );
         spriteTest2->SetColorKeying( true, 0, 0, 0 );
+        spriteTest2->GoToFrame( 0 );
         cc.center_.x_ = 210;
         spriteTest2->SetCollisionCircle( cc );
         sdlRenderManager->DrawDebugCircle( &*spriteTest2 );
@@ -139,13 +141,13 @@ int main(int, char**)
 
             Geometry2D::Vector2D dirX(1,0), dirY(0,1);
             if( inputManager->PerformAction( Actions::RightMove ) )
-                spriteTest->Move( dirX * 0.01f );
+                spriteTest->Move( dirX * 0.1f );
             if( inputManager->PerformAction( Actions::LeftMove ) )
-                spriteTest->Move( -dirX * 0.01f );
+                spriteTest->Move( -dirX * 0.1f );
             if( inputManager->PerformAction( Actions::UpMove ) )
-                spriteTest->Move( -dirY * 0.01f );
+                spriteTest->Move( -dirY * 0.1f );
             if( inputManager->PerformAction( Actions::DownMove ) )
-                spriteTest->Move( dirY * 0.01f );
+                spriteTest->Move( dirY * 0.1f );
 
             SDL_Event event;
             while( SDL_PollEvent( &event ) != 0 )

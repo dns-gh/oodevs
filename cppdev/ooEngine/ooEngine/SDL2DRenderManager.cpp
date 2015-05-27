@@ -152,7 +152,7 @@ void SDL2DRenderManager::InsertSceneObject( const std::shared_ptr< SceneObject>&
 {
     if( sceneManager_ )
     {
-        object->SetSceneManager( &*sceneManager_ );
+        object->SetSceneManager2D( &*sceneManager_ );
         auto layer = sceneManager_->FindLayer( layerName );
         if( layer )
         {        

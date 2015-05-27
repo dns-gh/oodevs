@@ -200,6 +200,11 @@ bool SceneManager2D::CheckCollisions( const SceneObject& object, const Circle& c
     return false;
 }
 
+void SceneManager2D::Log( const std::string& msg ) const
+{
+    logger_.OOLOG( FILE_INFOS ) << OOSTREAM( LOG_MESSAGE, msg.c_str() );
+}
+
 void SceneManager2D::checkTimerExpiration()
 {
     for( auto it = timers_.begin(); it != timers_.end(); ++it )

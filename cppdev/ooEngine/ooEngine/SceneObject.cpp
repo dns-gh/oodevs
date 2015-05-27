@@ -74,7 +74,7 @@ void SceneObject::SetCollisionCircle( Circle circle)
     collisionCircle_ = circle;
 }
 
-void SceneObject::SetSceneManager( const SceneManager2D* sceneManager )
+void SceneObject::SetSceneManager2D( const SceneManager2D* sceneManager )
 {
     sceneManager_ = sceneManager;
 }

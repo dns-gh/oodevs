@@ -1,5 +1,6 @@
 #include "SDLSpriteObject.h"
 
+#include "SceneManager2D.h"
 #include "ErrorLogManager.h"
 #include "tools.h"
 
@@ -36,25 +37,34 @@ void SDLSpriteObject::Update()
     }
 }
 
-void SDLSpriteObject::Play( unsigned int startImage )
+void SDLSpriteObject::GoToFrame( unsigned int imgNumber )
 {
     if( !renderResource_ )
+    {
+        if( sceneManager_ )
+            sceneManager_->Log( "SDLSpriteObject: the render resource is not yet set for the sprite" );
         return;
-
-    if( playedOnce_ && paused_ )
-        return Resume( startImage );
+    }        
 
     SDL_Rect rect;
     auto sdlResource = std::dynamic_pointer_cast< SDLRenderResource_ABC >( renderResource_ );
     SDL_QueryTexture( sdlResource->GetTexture(), NULL, NULL, &rect.w, &rect.h );
     imageWidth_ = rect.w / imagesPerRow_;
     imageHeight_ = rect.h / imagesPerColumn_;
-    if( startImage < 0 || startImage >= imageNumber_ )
+    if( imgNumber < 0 || imgNumber >= imageNumber_ )
         currentImage_ = startImage_;
     else
-        currentImage_ = startImage;
-
+        currentImage_ = imgNumber;
     SetRenderRect( currentImage_ );
+}
+
+void SDLSpriteObject::Play( unsigned int startImage )
+{
+    if( playedOnce_ && paused_ )
+        return Resume( startImage );
+
+    GoToFrame( startImage );
+
     lastFrameTime_ = tools::GetCurrentTime();
     playedOnce_ = true;
     paused_ = false;

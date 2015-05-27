@@ -30,6 +30,7 @@ public:
     void AddListener( SceneListener_ABC* listener );
     void Update();
     bool CheckCollisions( const SceneObject& object, const Circle& circle ) const;
+    void Log( const std::string& msg ) const;
 
 private:
     void AddLayerObject( std::shared_ptr< Layer2D >& layer, tinyxml2::XMLElement* element );
