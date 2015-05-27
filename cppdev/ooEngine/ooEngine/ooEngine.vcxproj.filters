@@ -45,6 +45,10 @@
     <ClCompile Include="Geometry2D.cpp">
       <Filter>geometry</Filter>
     </ClCompile>
+    <ClCompile Include="CollisionFilter.cpp">
+      <Filter>collisions</Filter>
+    </ClCompile>
+    <ClCompile Include="CollisionProperty.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EngineObject.h" />
@@ -104,6 +108,12 @@
     </ClInclude>
     <ClInclude Include="Vector2D.h">
       <Filter>geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionFilter.h">
+      <Filter>collisions</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionProperty.h">
+      <Filter>collisions</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -1,6 +1,7 @@
 #ifndef _SCENEOBJECT_H
 #define _SCENEOBJECT_H
 
+#include "CollisionProperty.h"
 #include "Resource_ABC.h"
 #include "EngineObject.h"
 #include "Geometry2D.h"
@@ -12,6 +13,7 @@ using namespace Geometry2D;
 class SceneManager2D;
 
 class SceneObject : public EngineObject
+                  , public CollisionProperty
 {
 public:
     SceneObject( const SceneManager2D* sceneManager );
