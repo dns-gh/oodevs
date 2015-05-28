@@ -211,6 +211,6 @@ void SDL2DRenderManager::DrawDebugBoxes()
 
     for( auto it : debugCircles_ )
     {
-        DrawCircle( it->GetCollisionCircle() );
+        DrawCircle( it->GetCircleCollisionShape() );
     }
 }

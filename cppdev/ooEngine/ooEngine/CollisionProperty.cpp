@@ -1,8 +1,8 @@
 #include "CollisionProperty.h"
 
-Geometry2D::Circle CollisionProperty::GetShape() const
+Geometry2D::Circle CollisionProperty::GetCircleCollisionShape() const
 {
-    return shape_;
+    return circleShape_;
 }
 
 CollisionFilter CollisionProperty::GetFilter() const
@@ -10,9 +10,9 @@ CollisionFilter CollisionProperty::GetFilter() const
     return filter_;
 }
 
-void CollisionProperty::SetCollisionShape( const Geometry2D::Circle& circle )
+void CollisionProperty::SetCircleCollisionShape( const Geometry2D::Circle& circle )
 {
-    shape_ = circle;
+    circleShape_ = circle;
 }
 
 void CollisionProperty::SetCollisionFilter( const CollisionFilter& filter )

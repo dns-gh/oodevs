@@ -7,15 +7,15 @@
 class CollisionProperty
 {
 public:
-    Geometry2D::Circle GetShape() const;
+    Geometry2D::Circle GetCircleCollisionShape() const;
     CollisionFilter GetFilter() const;
 
-    void SetCollisionShape( const Geometry2D::Circle& circle );
+    void SetCircleCollisionShape( const Geometry2D::Circle& circle );
     void SetCollisionFilter( const CollisionFilter& filter );
 
 private:
     CollisionFilter filter_;
-    Geometry2D::Circle shape_;
+    Geometry2D::Circle circleShape_;
 };
 
 #endif // CollisionProperty.h
