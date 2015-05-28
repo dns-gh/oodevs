@@ -1,3 +1,7 @@
+#include "ResourceManager.h"
+#include "SceneManager2D.h"
+#include "InputManager.h"
+#include "ListenerTest.h"
 
 #include "tools.h"
 #include "ErrorLogManager.h"
@@ -7,10 +11,6 @@
 #include "SDL2DRenderManager.h"
 #include "SDLEntityFactory.h"
 #include "SDLSpriteObject.h"
-#include "ResourceManager.h"
-#include "SceneManager2D.h"
-#include "InputManager.h"
-#include "ListenerTest.h"
 
 #include <memory>
 

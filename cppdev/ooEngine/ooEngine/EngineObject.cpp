@@ -7,7 +7,7 @@ EngineObject::EngineObject()
 	id_ = uniqueid_++;
 }
 
-unsigned int EngineObject::GetID()
+unsigned int EngineObject::GetID() const
 {
 	return id_;
 }

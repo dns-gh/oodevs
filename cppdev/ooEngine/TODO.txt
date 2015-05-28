@@ -10,7 +10,7 @@
 	* the load of assets will then not look like Load( GetPath() + ... )
 - Add dynamic zordering for 2D objects in the scene. Use collision and bounding boxes. What about layer management then ?
 - Add CreateRenderObject to the sdl2drenderManager ?
-- too much use of dynamic_pointer_cast...
+- too much use of dynamic_pointer_cast ?
 - Scenes
 	* Add rotation property on scene objects
 	* Add opacity property to affect transparency of all scene objects from a given layer
@@ -25,9 +25,8 @@
 	* Correct loads of resources
 	* Corrent draw of an image at screen by picking specified pixels at given positions and testing its color
 	* Sprite tests : (rough one done)
-- add of an Input Manager to deals with inputs and events in a generic way
-	* support of keyboard, mouse, 360 xbox
 - (in progress) use of unique and shared pointers when possible (for the Resource in the ResourceManager..)
 - Create a list of error number to use with the ErrorLogManager
 - Make automatic the move of the dll files needed for the exe into the right folder
 - Create a package delivery system containing all the dll, exe and data files needed to launch
+- Supports json data format

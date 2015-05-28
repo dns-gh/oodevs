@@ -2,13 +2,15 @@
 
 CollisionFilter::CollisionFilter()
 {
-    category_ = CollisionGroup::Default;
-    collisionMask_ = CollisionGroup::Default;
+    category_ = CollisionCategory::Default;
+    collisionMask_ = CollisionCategory::Default;
+    groupIndex_ = 0;
 }
 
-CollisionFilter::CollisionFilter( unsigned int category, unsigned int mask )
+CollisionFilter::CollisionFilter( unsigned int category, unsigned int mask, unsigned int groupeIndex )
     : category_( category )
     , collisionMask_( mask )
+    , groupIndex_( groupeIndex )
 {
     // NOTHING
 }
@@ -34,4 +36,9 @@ unsigned int CollisionFilter::GetCategory() const
 unsigned int CollisionFilter::GetCollisionMask() const
 {
     return collisionMask_;
+}
+
+unsigned int CollisionFilter::GetGroupIndex() const
+{
+    return groupIndex_;
 }
