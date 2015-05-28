@@ -48,7 +48,9 @@
     <ClCompile Include="CollisionFilter.cpp">
       <Filter>collisions</Filter>
     </ClCompile>
-    <ClCompile Include="CollisionProperty.cpp" />
+    <ClCompile Include="CollisionProperty.cpp">
+      <Filter>collisions</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EngineObject.h" />

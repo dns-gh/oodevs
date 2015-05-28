@@ -6,7 +6,7 @@
 
 class CollisionProperty
 {
-protected:
+public:
     Geometry2D::Circle GetShape() const;
     CollisionFilter GetFilter() const;
 

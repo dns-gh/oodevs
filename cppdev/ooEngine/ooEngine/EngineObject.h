@@ -5,7 +5,7 @@ class EngineObject
 {
 public:
 	EngineObject();
-	unsigned int GetID();
+	unsigned int GetID() const;
 
 private:
 	static unsigned int uniqueid_;

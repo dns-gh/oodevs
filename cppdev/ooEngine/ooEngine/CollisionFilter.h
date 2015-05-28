@@ -1,7 +1,7 @@
 #ifndef _COLLISION_FILTER_H_
 #define _COLLISION_FILTER_H_
 
-enum CollisionGroup
+enum CollisionCategory
 {
     Default  = 0x00,
     Groupe1  = 0x01,
@@ -17,16 +17,17 @@ class CollisionFilter
 {
 public:
     CollisionFilter();
-    CollisionFilter( unsigned int category, unsigned int mask ); 
+    CollisionFilter( unsigned int category, unsigned int mask, unsigned int groupeIndex ); 
     void UpdateCategory( unsigned int );
     void UpdateCollisionMask( unsigned int );
     unsigned int GetCategory() const;
     unsigned int GetCollisionMask() const;
+    unsigned int GetGroupIndex() const;
 
 private:
     unsigned int category_;
     unsigned int collisionMask_;
-    // TODO group index
+    unsigned int groupIndex_; // 0 means no collisions at all
 };
 
 #endif // CollisionFilter.h

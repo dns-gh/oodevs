@@ -193,7 +193,15 @@ bool SceneManager2D::CheckCollisions( const SceneObject& object, const Circle& c
     {
         for( auto& it : layer->GetSceneObjects() )
         {
-            if( &object != &*it && collisionSolver_.CollisionBetween( circle, it->GetCollisionCircle() ) )
+            if( object.GetFilter().GetGroupIndex() == 0 || it->GetFilter().GetGroupIndex() == 0 )
+                return false;
+
+            bool collision = ( ( it->GetFilter().GetCategory() & object.GetFilter().GetCollisionMask() ) != 0 ) &&
+                             ( ( object.GetFilter().GetCategory() & it->GetFilter().GetCollisionMask() ) != 0 );
+            if( !collision )
+                return false;
+                
+            if( object.GetID() != it->GetID() && collisionSolver_.CollisionBetween( circle, it->GetCollisionCircle() ) )
                 return true;
         }
     }
