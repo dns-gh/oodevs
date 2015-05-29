@@ -2,7 +2,6 @@
 - Add the support of every event such as application events via keycodes in SDL_events.h
 - Add a collision detection algorithm in 2D : line projection with rectangles
 - Add collision info for circle collisions
-- Add collisions filtering
 - Add collision info for line projection collisions
 - Handle events for a specific window
 - Add 2D Physics

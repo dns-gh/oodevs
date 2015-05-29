@@ -48,11 +48,6 @@ bool  SceneObject::IsVisible() const
     return visible_;
 }
 
-const Circle& SceneObject::GetCollisionCircle() const
-{
-    return collisionCircle_;
-}
-
 void SceneObject::SetResourceObject( const std::shared_ptr< Resource_ABC >& resource )
 {
     OOTHROW( 2, "SetResourceObject should have a proper body" );
@@ -69,11 +64,6 @@ void SceneObject::SetVisible( bool visibility )
     visible_ = visibility;
 }
 
-void SceneObject::SetCollisionCircle( Circle circle)
-{
-    collisionCircle_ = circle;
-}
-
 void SceneObject::SetSceneManager2D( const SceneManager2D* sceneManager )
 {
     sceneManager_ = sceneManager;
@@ -82,7 +72,7 @@ void SceneObject::SetSceneManager2D( const SceneManager2D* sceneManager )
 void SceneObject::Move( const Geometry2D::Vector2D& dir )
 {
     Vector2D pos( x_ + dir.x_, y_ + dir.y_ );
-    Circle newCircle( collisionCircle_.center_ + dir, collisionCircle_.radius_ );
+    Circle newCircle( GetCircleCollisionShape().center_ + dir, GetCircleCollisionShape().radius_ );
     if( sceneManager_ )
     {
         // if there is no collision, update the position 
@@ -91,12 +81,12 @@ void SceneObject::Move( const Geometry2D::Vector2D& dir )
         {
             x_ = pos.x_;
             y_ = pos.y_;
-            collisionCircle_ = newCircle;
+            SetCircleCollisionShape( newCircle );
             return;
         }
         return;
     }
     x_ = pos.x_;
     y_ = pos.y_;
-    collisionCircle_ = newCircle;
+    SetCircleCollisionShape( newCircle );
 }

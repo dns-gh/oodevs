@@ -66,7 +66,9 @@ int main(int, char**)
         //spriteTest->SetColorKeying( true, 0, 0, 0 );
         Vector2D pos( 390,290 );
         Circle cc( pos, 90 );
-        spriteTest->SetCollisionCircle( cc );
+        spriteTest->SetCircleCollisionShape( cc );
+        CollisionFilter filter( CollisionCategory::Groupe2, CollisionCategory::Groupe1, 0 );
+        spriteTest->SetCollisionFilter( filter );
         sdlRenderManager->DrawDebugCircle( &*spriteTest );
         sdlRenderManager->InsertSceneObject( spriteTest, "defaultLayer" );
 
@@ -78,7 +80,9 @@ int main(int, char**)
         spriteTest2->SetColorKeying( true, 0, 0, 0 );
         spriteTest2->GoToFrame( 0 );
         cc.center_.x_ = 210;
-        spriteTest2->SetCollisionCircle( cc );
+        spriteTest2->SetCircleCollisionShape( cc );
+        CollisionFilter filter2( CollisionCategory::Groupe1, CollisionCategory::Groupe2, 0 );
+        spriteTest2->SetCollisionFilter( filter2 );
         sdlRenderManager->DrawDebugCircle( &*spriteTest2 );
         sdlRenderManager->InsertSceneObject( spriteTest2, "defaultLayer" );
 

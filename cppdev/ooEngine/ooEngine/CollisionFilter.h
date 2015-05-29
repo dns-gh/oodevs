@@ -24,10 +24,13 @@ public:
     unsigned int GetCollisionMask() const;
     unsigned int GetGroupIndex() const;
 
+    // Filters
+    bool Filters( const CollisionFilter& filter );
+
 private:
     unsigned int category_;
     unsigned int collisionMask_;
-    unsigned int groupIndex_; // 0 means no collisions at all
+    unsigned int groupIndex_; // 0 means no collisions at all and 1 means collision to everyone except group 0
 };
 
 #endif // CollisionFilter.h

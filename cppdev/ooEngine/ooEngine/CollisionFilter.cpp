@@ -42,3 +42,24 @@ unsigned int CollisionFilter::GetGroupIndex() const
 {
     return groupIndex_;
 }
+
+// returns if a collision is possible
+bool CollisionFilter::Filters( const CollisionFilter& filter )
+{
+    // group index overrides categories and filters
+    if( groupIndex_ == 0 || filter.GetGroupIndex() == 0 )
+        return false;
+
+    if( groupIndex_ == 1 || filter.GetGroupIndex() == 1 )
+        return true;
+
+    if( ( groupIndex_ & filter.GetGroupIndex() ) != 0 )
+        return true;
+
+    // category and mask filters
+    bool collision = ( ( filter.GetCategory() & collisionMask_ ) != 0 ) &&
+                        ( ( category_ & filter.GetCollisionMask() ) != 0 );
+    if( !collision )
+        return false;
+    return true;
+}
