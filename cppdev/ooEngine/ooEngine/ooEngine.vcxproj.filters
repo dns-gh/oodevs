@@ -2,9 +2,6 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="EngineObject.cpp" />
-    <ClCompile Include="ErrorLogManager.cpp" />
-    <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="tinyxml2.cpp">
       <Filter>tools</Filter>
     </ClCompile>
@@ -35,7 +32,6 @@
     <ClCompile Include="SDLEntityFactory.cpp">
       <Filter>sdlrendering\creation</Filter>
     </ClCompile>
-    <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="CollisionSolver.cpp">
       <Filter>collisions</Filter>
     </ClCompile>
@@ -51,20 +47,29 @@
     <ClCompile Include="CollisionProperty.cpp">
       <Filter>collisions</Filter>
     </ClCompile>
+    <ClCompile Include="InputManager.cpp">
+      <Filter>sdlinput</Filter>
+    </ClCompile>
+    <ClCompile Include="EngineObject.cpp">
+      <Filter>scene</Filter>
+    </ClCompile>
+    <ClCompile Include="ErrorLogManager.cpp">
+      <Filter>tools</Filter>
+    </ClCompile>
+    <ClCompile Include="ResourceManager.cpp">
+      <Filter>engine</Filter>
+    </ClCompile>
+    <ClCompile Include="ooEngine.cpp">
+      <Filter>engine</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="EngineObject.h" />
-    <ClInclude Include="ErrorLogManager.h" />
-    <ClInclude Include="SingletonTemplate.h" />
     <ClInclude Include="tools.h">
       <Filter>tools</Filter>
     </ClInclude>
-    <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="tinyxml2.h">
       <Filter>tools</Filter>
     </ClInclude>
-    <ClInclude Include="RenderManager_ABC.h" />
-    <ClInclude Include="Resource_ABC.h" />
     <ClInclude Include="LogTools.h">
       <Filter>tools</Filter>
     </ClInclude>
@@ -81,7 +86,6 @@
     <ClInclude Include="SceneObject.h">
       <Filter>scene</Filter>
     </ClInclude>
-    <ClInclude Include="EntityFactory_ABC.h" />
     <ClInclude Include="SDL2DRenderManager.h">
       <Filter>sdlrendering\rendering</Filter>
     </ClInclude>
@@ -100,8 +104,6 @@
     <ClInclude Include="SDLEntityFactory.h">
       <Filter>sdlrendering\creation</Filter>
     </ClInclude>
-    <ClInclude Include="Timer.h" />
-    <ClInclude Include="InputManager.h" />
     <ClInclude Include="Geometry2D.h">
       <Filter>geometry</Filter>
     </ClInclude>
@@ -117,10 +119,55 @@
     <ClInclude Include="CollisionProperty.h">
       <Filter>collisions</Filter>
     </ClInclude>
+    <ClInclude Include="InputManager.h">
+      <Filter>sdlinput</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineObject.h">
+      <Filter>scene</Filter>
+    </ClInclude>
+    <ClInclude Include="ErrorLogManager.h">
+      <Filter>tools</Filter>
+    </ClInclude>
+    <ClInclude Include="EntityFactory_ABC.h">
+      <Filter>engine</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderManager_ABC.h">
+      <Filter>engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource_ABC.h">
+      <Filter>engine</Filter>
+    </ClInclude>
+    <ClInclude Include="ResourceManager.h">
+      <Filter>engine</Filter>
+    </ClInclude>
+    <ClInclude Include="SingletonTemplate.h">
+      <Filter>tools</Filter>
+    </ClInclude>
+    <ClInclude Include="Timer.h">
+      <Filter>engine</Filter>
+    </ClInclude>
+    <ClInclude Include="ooEngine.h">
+      <Filter>engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Manager_ABC.h">
+      <Filter>engine</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="tools">
       <UniqueIdentifier>{283965d4-2b16-4140-aa74-b52cdcdfd7bd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="scene">
+      <UniqueIdentifier>{1b8e64ee-4af7-4ce1-a5c4-310a60a0db99}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="geometry">
+      <UniqueIdentifier>{d00f0873-dc73-4a80-8721-61efcef677b0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="collisions">
+      <UniqueIdentifier>{44f827cf-b3da-4c92-b51c-129e631889b3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="sdlinput">
+      <UniqueIdentifier>{c8e03808-cf54-4d96-aea1-30e06e3bd7b9}</UniqueIdentifier>
     </Filter>
     <Filter Include="sdlrendering">
       <UniqueIdentifier>{c8148401-fc2d-41e1-861c-fa4cc284c985}</UniqueIdentifier>
@@ -131,14 +178,8 @@
     <Filter Include="sdlrendering\creation">
       <UniqueIdentifier>{866fb660-366a-4440-8d21-9764295e7ed6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="scene">
-      <UniqueIdentifier>{1b8e64ee-4af7-4ce1-a5c4-310a60a0db99}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="geometry">
-      <UniqueIdentifier>{d00f0873-dc73-4a80-8721-61efcef677b0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="collisions">
-      <UniqueIdentifier>{44f827cf-b3da-4c92-b51c-129e631889b3}</UniqueIdentifier>
+    <Filter Include="engine">
+      <UniqueIdentifier>{5a57795d-3c87-4bb4-b938-f604f61f88ba}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

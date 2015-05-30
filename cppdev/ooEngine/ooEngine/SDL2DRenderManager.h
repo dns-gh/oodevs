@@ -42,7 +42,7 @@ public:
     // Debug helpers
     void DrawCircle( const Circle& circle );
     void AttachDrawingDebugBox( SDL_Rect* rect, SceneObject* object = nullptr );
-    void DrawDebugCircle( SceneObject* object );
+    virtual void AttachDebugCircle( SceneObject* object );
 
 private:
     void RenderScene();

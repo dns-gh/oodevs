@@ -48,6 +48,11 @@ void InputManager::UnBind( int action, int key )
     }
 }
 
+void InputManager::Register( int action, std::function<void()> callback )
+{
+    callbacks_[ action ] = callback;
+}
+
 bool InputManager::PerformAction( int action )
 {
     auto it = keyboardBinding_.find( action );
@@ -64,6 +69,13 @@ bool InputManager::PerformAction( int action )
     return false;
 }
 
+void InputManager::ExecuteCallbacks()
+{
+    for( auto it : callbacks_ )
+        if( PerformAction( it.first ) )
+            it.second();
+}
+
 void InputManager::Update()
 {
     SDL_PumpEvents(); // done implicitly by SDL_PollEvent
@@ -78,6 +90,7 @@ void InputManager::Update()
                 key->pressed_ = false;
         }
     }
+    ExecuteCallbacks();
 }
 
 bool InputManager::isKeyInStateList( int key, const std::vector< KeyState* >& list )

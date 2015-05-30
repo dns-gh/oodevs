@@ -9,6 +9,7 @@
 
 #include <map>
 #include <vector>
+#include <functional>
 
 class InputManager : EngineObject
 {
@@ -18,7 +19,7 @@ public:
     // Bind action (int) with a combination of SDL_SCANCODE (layout independant, keyboard only)
     void Bind( int, int );
     void UnBind( int, int );
-    bool PerformAction( int );
+    void Register( int, std::function<void()> );
     void Update();
 
 private:
@@ -35,10 +36,13 @@ private:
 
 private:
     // helpers
+    bool PerformAction( int );
+    void ExecuteCallbacks();
     bool isKeyInStateList( int key, const std::vector< KeyState* >& list );
 
 private:
     std::map< int, std::vector< KeyState* > > keyboardBinding_;
+    std::map< int, std::function<void()> > callbacks_;
     LogTools& logger_;
 };
 

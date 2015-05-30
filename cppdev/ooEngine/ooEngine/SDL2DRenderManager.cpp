@@ -171,7 +171,7 @@ void SDL2DRenderManager::AttachDrawingDebugBox( SDL_Rect* rect, SceneObject* obj
     debugRects_.push_back( pair );
 }
 
-void SDL2DRenderManager::DrawDebugCircle( SceneObject* object )
+void SDL2DRenderManager::AttachDebugCircle( SceneObject* object )
 {
     if( object )
         debugCircles_.push_back( object );

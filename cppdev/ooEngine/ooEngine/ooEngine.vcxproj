@@ -137,6 +137,7 @@
     <ClCompile Include="Layer2D.cpp" />
     <ClCompile Include="LogTools.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="ooEngine.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="SceneObject.cpp" />
     <ClCompile Include="SDL2DRenderManager.cpp" />
@@ -159,6 +160,8 @@
     <ClInclude Include="ErrorLogManager.h" />
     <ClInclude Include="ListenerTest.h" />
     <ClInclude Include="LogTools.h" />
+    <ClInclude Include="Manager_ABC.h" />
+    <ClInclude Include="ooEngine.h" />
     <ClInclude Include="RenderManager_ABC.h" />
     <ClInclude Include="EntityFactory_ABC.h" />
     <ClInclude Include="SceneListener_ABC.h" />

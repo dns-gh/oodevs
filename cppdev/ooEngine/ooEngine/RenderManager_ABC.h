@@ -3,14 +3,16 @@
 
 #include "Resource_ABC.h"
 #include "SceneObject.h"
+#include "Manager_ABC.h"
 
 #include <memory>
 
 class SceneManager2D;
 
-class RenderManager_ABC
+class RenderManager_ABC : public Manager_ABC
 {
 public:
+    virtual ~RenderManager_ABC(){};
     virtual void Initialize( unsigned int width = 800, unsigned int height = 600, bool fullscreen = false, char* windowTitle = 0 ) = 0;
     virtual void Clear() = 0;
     virtual bool Update() = 0;
@@ -19,10 +21,7 @@ public:
     virtual void RenderAllObjects() = 0;
     virtual void SetSceneManager2D( std::shared_ptr< SceneManager2D >& manager ) = 0;
     virtual void InsertSceneObject( const std::shared_ptr< SceneObject >& object, std::string layerName ) = 0;
-
-protected:
-    virtual ~RenderManager_ABC(){};
-
+    virtual void AttachDebugCircle( SceneObject* object ) = 0;
 };
 
 #endif // RenderManager_ABC.h

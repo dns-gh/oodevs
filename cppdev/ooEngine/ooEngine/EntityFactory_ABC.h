@@ -7,6 +7,7 @@
 class EntityFactory_ABC
 {
 public:
+    virtual ~EntityFactory_ABC(){};
     virtual std::shared_ptr< SceneObject > CreateRenderObject() const = 0;
     virtual std::shared_ptr< SceneObject > CreateSpriteObject( unsigned imgNum, unsigned imgPRows, unsigned imgPCol, unsigned long timeBImg ) const = 0;
 };
