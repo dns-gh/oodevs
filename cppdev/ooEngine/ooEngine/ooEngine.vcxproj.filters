@@ -79,7 +79,6 @@
     <ClInclude Include="Layer2D.h">
       <Filter>scene</Filter>
     </ClInclude>
-    <ClInclude Include="ListenerTest.h" />
     <ClInclude Include="SceneManager2D.h">
       <Filter>scene</Filter>
     </ClInclude>
@@ -150,6 +149,14 @@
       <Filter>engine</Filter>
     </ClInclude>
     <ClInclude Include="Manager_ABC.h">
+      <Filter>engine</Filter>
+    </ClInclude>
+    <ClInclude Include="TestListener.h" />
+    <ClInclude Include="TestObserver.h" />
+    <ClInclude Include="Observer.h">
+      <Filter>engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Subject.h">
       <Filter>engine</Filter>
     </ClInclude>
   </ItemGroup>

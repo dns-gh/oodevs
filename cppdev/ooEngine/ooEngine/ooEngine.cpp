@@ -4,6 +4,7 @@
 #include "ErrorLogManager.h"
 #include "SceneManager2D.h"
 #include "InputManager.h"
+#include "tools.h"
 
 #include "SDL2DRenderManager.h"
 #include "SDLEntityFactory.h"
@@ -95,6 +96,7 @@ void ooEngine::Stop()
 
 void ooEngine::MainLoop()
 {
+    double previous = GetCurrentTime();
     while( running_ )
     {
         if( paused_ )

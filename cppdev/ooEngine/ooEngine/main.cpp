@@ -1,8 +1,9 @@
+#include "InputManager.h"
+#include "TestListener.h"
+#include "TestObserver.h"
+#include "ooEngine.h"
 #include "ResourceManager.h"
 #include "SceneManager2D.h"
-#include "InputManager.h"
-#include "ListenerTest.h"
-#include "ooEngine.h"
 
 #include "tools.h"
 #include "ErrorLogManager.h"
@@ -48,10 +49,13 @@ int main(int, char**)
         Vector2D pos( 390,290 );
         Circle cc( pos, 90 );
         spriteTest->SetCircleCollisionShape( cc );
-        CollisionFilter filter( CollisionCategory::Groupe2, CollisionCategory::Groupe1, 0 );
+        CollisionFilter filter( CollisionCategory::Groupe2, CollisionCategory::Groupe1, 1 );
         spriteTest->SetCollisionFilter( filter );
-        engine->GetRenderManager2D()->AttachDebugCircle( &*spriteTest );
+        engine->GetRenderManager2D()->AttachDebugCircle( spriteTest.get() );
         engine->GetRenderManager2D()->InsertSceneObject( spriteTest, "defaultLayer" );
+        std::shared_ptr< Observer< SceneObject > > obs( new TestObserver() );
+        spriteTest->AddObserver( obs );
+        //spriteTest->RemoveObserver( obs );
 
         // Sprites test
         std::shared_ptr< SDLSpriteObject > spriteTest2( new SDLSpriteObject( 48, 8, 6, 125 ) );
@@ -62,9 +66,9 @@ int main(int, char**)
         spriteTest2->GoToFrame( 0 );
         cc.center_.x_ = 210;
         spriteTest2->SetCircleCollisionShape( cc );
-        CollisionFilter filter2( CollisionCategory::Groupe1, CollisionCategory::Groupe2, 0 );
+        CollisionFilter filter2( CollisionCategory::Groupe1, CollisionCategory::Groupe2, 1 );
         spriteTest2->SetCollisionFilter( filter2 );
-        engine->GetRenderManager2D()->AttachDebugCircle( &*spriteTest2 );
+        engine->GetRenderManager2D()->AttachDebugCircle( spriteTest2.get() );
         engine->GetRenderManager2D()->InsertSceneObject( spriteTest2, "defaultLayer" );
 
         // Debug boxes

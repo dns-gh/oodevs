@@ -71,6 +71,7 @@ void SceneObject::SetSceneManager2D( const SceneManager2D* sceneManager )
 
 void SceneObject::Move( const Geometry2D::Vector2D& dir )
 {
+    Notify( *this, 0 );
     Vector2D pos( x_ + dir.x_, y_ + dir.y_ );
     Circle newCircle( GetCircleCollisionShape().center_ + dir, GetCircleCollisionShape().radius_ );
     if( sceneManager_ )

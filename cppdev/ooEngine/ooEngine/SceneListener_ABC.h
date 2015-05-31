@@ -1,6 +1,8 @@
 #ifndef _SCENELISTENER_ABC_H
 #define _SCENELISTENER_ABC_H
 
+#include "SceneManager2D.h"
+
 class RenderManager_ABC;
 
 enum SCENE_EVENT_TYPE

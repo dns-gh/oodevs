@@ -2,9 +2,10 @@
 #define _SCENEOBJECT_H
 
 #include "CollisionProperty.h"
-#include "Resource_ABC.h"
 #include "EngineObject.h"
 #include "Geometry2D.h"
+#include "Resource_ABC.h"
+#include "Subject.h"
 
 #include <memory>
 
@@ -14,6 +15,7 @@ class SceneManager2D;
 
 class SceneObject : public EngineObject
                   , public CollisionProperty
+                  , public Subject< SceneObject >
 {
 public:
     SceneObject( const SceneManager2D* sceneManager );

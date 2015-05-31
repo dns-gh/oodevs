@@ -158,9 +158,10 @@
     <ClInclude Include="Layer2D.h" />
     <ClInclude Include="EngineObject.h" />
     <ClInclude Include="ErrorLogManager.h" />
-    <ClInclude Include="ListenerTest.h" />
+    <ClInclude Include="TestListener.h" />
     <ClInclude Include="LogTools.h" />
     <ClInclude Include="Manager_ABC.h" />
+    <ClInclude Include="Observer.h" />
     <ClInclude Include="ooEngine.h" />
     <ClInclude Include="RenderManager_ABC.h" />
     <ClInclude Include="EntityFactory_ABC.h" />
@@ -176,6 +177,8 @@
     <ClInclude Include="SDLRenderResource.h" />
     <ClInclude Include="SingletonTemplate.h" />
     <ClInclude Include="SDLSpriteObject.h" />
+    <ClInclude Include="Subject.h" />
+    <ClInclude Include="TestObserver.h" />
     <ClInclude Include="Timer.h" />
     <ClInclude Include="tinyxml2.h" />
     <ClInclude Include="tools.h" />
