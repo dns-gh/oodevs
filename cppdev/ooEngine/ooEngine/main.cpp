@@ -28,7 +28,7 @@ enum Actions {
 
 int main(int, char**)
 {
-    std::unique_ptr< ooEngine > engine( new ooEngine() );
+    auto engine = ooEngine::CreateEngine();
     try
     {
         engine->GetResourceManager()->LoadFromXMLFile( tools::GetModulePath() + std::string( "../../data/graphic/template.xml" ) );

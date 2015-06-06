@@ -12,34 +12,20 @@
 #include <memory>
 
 ooEngine::ooEngine() // TODO: put Config class as input
-    : running_( false )
-    , paused_( false )
 {
-    // Init of a logger
-    logger_ = std::make_shared< LogTools >( tools::GetModulePath( ) );
-    logger_->RegisterLog( FILE_INFOS, "ooEngine.log" );
-
-    logger_->OOLOG( FILE_INFOS ) << OOSTREAM( LOG_MESSAGE, "------------------------------" );
-    logger_->OOLOG( FILE_INFOS ) << OOSTREAM( LOG_MESSAGE, "-- ooEngine: initialization --" );
-    logger_->OOLOG( FILE_INFOS ) << OOSTREAM( LOG_MESSAGE, "------------------------------" );
-
-    // Initialization of the render manager
-    renderManager2D_ = std::make_shared< SDL2DRenderManager >( *logger_ );
-    renderManager2D_->Initialize( 800, 600, false, "window 1"  );
-
-    resourcesManager_ = std::make_shared< ResourceManager >( *renderManager2D_, *logger_ );
-
-    entityFactory_ = std::make_shared< SDLEntityFactory >( *logger_ );
-    auto collisionSolver = std::make_shared< CollisionSolver >( *logger_ );
-    sceneManager2D_ = std::make_shared< SceneManager2D >( *resourcesManager_, *collisionSolver, *entityFactory_, *logger_ );
-    renderManager2D_->SetSceneManager2D( sceneManager2D_ );
-
-    inputManager_ = std::make_shared< InputManager >( *logger_ );
+    // NOTHING
 }
 
 ooEngine::~ooEngine()
 {
     // NOTHING
+}
+
+std::shared_ptr< ooEngine > ooEngine::CreateEngine()
+{
+    auto engine = std::shared_ptr< ooEngine >( new ooEngine() );
+    engine->Initialize();
+    return engine;
 }
 
 std::shared_ptr< LogTools > ooEngine::GetLogger() const
@@ -108,4 +94,31 @@ void ooEngine::MainLoop()
         if( inputManager_ )
             inputManager_->Update();
     }
+}
+
+void ooEngine::Initialize()
+{
+    running_ = false;
+    paused_ = false;
+
+    // Init of a logger
+    logger_ = std::make_shared< LogTools >( tools::GetModulePath( ) );
+    logger_->RegisterLog( FILE_INFOS, "ooEngine.log" );
+
+    logger_->OOLOG( FILE_INFOS ) << OOSTREAM( LOG_MESSAGE, "------------------------------" );
+    logger_->OOLOG( FILE_INFOS ) << OOSTREAM( LOG_MESSAGE, "-- ooEngine: initialization --" );
+    logger_->OOLOG( FILE_INFOS ) << OOSTREAM( LOG_MESSAGE, "------------------------------" );
+
+    // Initialization of the render manager
+    renderManager2D_ = std::make_shared< SDL2DRenderManager >( *logger_ );
+    renderManager2D_->Initialize( 800, 600, false, "window 1"  );
+
+    resourcesManager_ = std::make_shared< ResourceManager >( *renderManager2D_, *logger_ );
+
+    entityFactory_ = std::make_shared< SDLEntityFactory >( *logger_ );
+    auto collisionSolver = std::make_shared< CollisionSolver >( *logger_ );
+    sceneManager2D_ = std::make_shared< SceneManager2D >( *resourcesManager_, *collisionSolver, *entityFactory_, *logger_ );
+    renderManager2D_->SetSceneManager2D( sceneManager2D_ );
+
+    inputManager_ = std::make_shared< InputManager >( *logger_ );
 }

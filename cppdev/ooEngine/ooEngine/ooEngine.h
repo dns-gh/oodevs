@@ -17,7 +17,8 @@ class ooEngine
 {
 public:
     ooEngine();
-    ~ooEngine();
+    virtual ~ooEngine();
+    static std::shared_ptr< ooEngine > CreateEngine();
 
     // -- API --
     void Run();
@@ -34,6 +35,7 @@ public:
 private:
     // main loop
     void MainLoop();
+    void Initialize();
 
 private:
     bool running_;
