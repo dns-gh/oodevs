@@ -7,6 +7,7 @@ import (
 	"os"
 	"path"
 	"runtime"
+	"strconv"
 	"strings"
 )
 
@@ -49,6 +50,20 @@ func CheckStrings(lhs, rhs string) {
 	}
 	if !strings.Contains(lhs, rhs) {
 		PrintError(errors.New(lhs+" != "+rhs), 2)
+		ExitFailure()
+	}
+}
+
+func CheckInt64(lhs, rhs int64) {
+	if lhs != rhs {
+		PrintError(errors.New(string(lhs)+" != "+string(rhs)), 2)
+		ExitFailure()
+	}
+}
+
+func CheckFloat64(lhs, rhs float64) {
+	if lhs != rhs {
+		PrintError(errors.New(strconv.FormatFloat(lhs, 'f', 6, 64)+" != "+strconv.FormatFloat(rhs, 'f', 6, 64)), 2)
 		ExitFailure()
 	}
 }
