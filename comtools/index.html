@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+        <style>
+            #login_area strong {
+                color: white;
+                background-color: grey;
+                padding: 2px;
+            }
+        </style>
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script src="js/bootstrap.min.js"></script>
+    </head>
+ 
+    <body>
+        <div class="container">
+            <div class="starter-template">
+                <h1>simple chat for fun!</h1>
+                <p class="lead">Use this chat to communicate with friends & collegues simply and quickly.<br> All you get to do is pick up a login a type messages</p>
+            </div>
+
+            <form action="/" method="post" id="input_message_holder" class="navbar-form">
+                <div class="form-group">
+                    <input type="text" id="input_message" placeholder="...type here..." size="75" autofocus />
+                </div>
+                <input type="submit" id="send_form" value="Submit" />
+            </form>
+
+            <div class="input-group">
+                <section id="login_area" class="navbar-form navbar-left">
+                </section>
+            </div>
+
+            <script src="/socket.io/socket.io.js"></script>
+            <script>
+                var socket = io.connect('http://localhost:8080');
+                var login = prompt('Choose a login...');
+                socket.emit('new_client', login);
+                document.title = login + ' - ' + document.title;
+
+                socket.on('message', function(data) {
+                    pushMessage(data.login, data.message)
+                })
+
+                socket.on('new_client', function(login) {
+                    $('#login_area').prepend('<p><em>' + login + ' joined the chat.</em></p>');
+                })
+
+                $('#input_message_holder').submit(function () {
+                    var message = $('#input_message').val();
+                    socket.emit('message', message);
+                    $('#input_message').val('').focus();
+                    return false;
+                });
+                
+                function pushMessage(login, message) {
+                    $('#login_area').prepend('<p><strong>' + login + '</strong> ' + message + '</p>');
+                }
+            </script>
+        </div>        
+    </body>
+</html>
