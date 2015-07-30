@@ -24,33 +24,37 @@
             <div class="starter-template">
                 <h1>simple chat for fun!</h1>
                 <p class="lead">Use this chat to communicate with friends & collegues simply and quickly.<br> All you get to do is pick up a login a type messages</p>
+                <section id="info_area">
+                </section>
             </div>
-
             <form action="/" method="post" id="input_message_holder" class="navbar-form">
                 <div class="form-group">
                     <input type="text" id="input_message" placeholder="...type here..." size="75" autofocus />
                 </div>
                 <input type="submit" id="send_form" value="Submit" />
             </form>
-
             <div class="input-group">
                 <section id="login_area" class="navbar-form navbar-left">
                 </section>
             </div>
-
+            
             <script src="/socket.io/socket.io.js"></script>
             <script>
                 var socket = io.connect('http://localhost:8080');
                 var login = prompt('Choose a login...');
+                var logged = false
                 socket.emit('new_client', login);
-                document.title = login + ' - ' + document.title;
-
+                console.log("Login: " + login)
                 socket.on('message', function(data) {
                     pushMessage(data.login, data.message)
                 })
 
-                socket.on('new_client', function(login) {
-                    $('#login_area').prepend('<p><em>' + login + ' joined the chat.</em></p>');
+                socket.on('new_client', function(other) {
+                    if ( login == other && !logged) {
+                        logged = true
+                        $('#info_area').prepend('<div class="alert alert-success" size="75" role="alert">'+ "You logged in successfully! [" +  other +"]" +'</div>');
+                    };
+                    $('#login_area').prepend('<p><em>' + other + ' joined the chat.</em></p>');
                 })
 
                 $('#input_message_holder').submit(function () {

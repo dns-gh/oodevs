@@ -1,3 +1,5 @@
+chats = require("./array_api");
+
 var app = require('express')(),
     server = require('http').createServer(app),
     io = require('socket.io').listen(server),
@@ -24,6 +26,7 @@ io.sockets.on('connection', function (socket, login) {
     });
 
     socket.on('message', function (message) {
+        chats.PushElement(message);
         message = ent.encode(message);
         socket.emit('message', {login: socket.login, message: message});
         socket.broadcast.emit('message', {login: socket.login, message: message});
