@@ -15,6 +15,9 @@ app.get('/js/bootstrap.min.js', function (req, res) {
 app.get('/css/bootstrap.min.css', function (req, res) {
   res.sendFile(__dirname + '/node_modules/bootstrap/dist/css/bootstrap.min.css');
 });
+app.get('/css/blog-like.css', function (req, res) {
+  res.sendFile(__dirname + '/css/blog-like.css');
+});
 
 io.sockets.on('connection', function (socket, login) {
     

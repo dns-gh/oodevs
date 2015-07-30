@@ -6,6 +6,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+        <link href="/css/blog-like.css" rel="stylesheet" type="text/css">
         <style>
             #login_area strong {
                 color: white;
@@ -21,24 +22,36 @@
  
     <body>
         <div class="container">
-            <div class="starter-template">
-                <h1>simple chat for fun!</h1>
-                <p class="lead">Use this chat to communicate with friends & collegues simply and quickly.<br> All you get to do is pick up a login a type messages</p>
-                <section id="info_area">
-                </section>
-            </div>
-            <form action="/" method="post" id="input_message_holder" class="navbar-form">
-                <div class="form-group">
-                    <input type="text" id="input_message" placeholder="...type here..." size="75" autofocus />
+            <div class="row">
+                <div class="col-sm-8 blog-main">
+                    <div class="starter-template blog-title">
+                        <h2>simple chat for fun!</h2>
+                        <p class="lead blog-description">Use this chat to communicate with friends & collegues simply and quickly.<br> All you get to do is pick up a login a type messages</p>
+                        <section id="info_area">
+                        </section>
+                    </div>
+                    <form action="/" method="post" id="input_message_holder" class="navbar-form">
+                        <div class="form-group">
+                            <input type="text" id="input_message" placeholder="...type here..." size="50" autofocus />
+                        </div>
+                        <input type="submit" id="send_form" value="Submit" />
+                    </form>
+                    <div class="input-group">
+                        <section id="login_area" class="navbar-form navbar-left">
+                        </section>
+                    </div>
                 </div>
-                <input type="submit" id="send_form" value="Submit" />
-            </form>
-            <div class="input-group">
-                <section id="login_area" class="navbar-form navbar-left">
-                </section>
+                <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
+                <div class="sidebar-module sidebar-module-inset">
+                    <h4>Users logged in...</h4>
+                    <ol class="list-unstyled">
+                    </ol>
+                    </div>
+                </div>
             </div>
-            
-            <script src="/socket.io/socket.io.js"></script>
+        </div>
+
+        <script src="/socket.io/socket.io.js"></script>
             <script>
                 var socket = io.connect('http://localhost:8080');
                 var login = prompt('Choose a login...');
@@ -52,7 +65,7 @@
                 socket.on('new_client', function(other) {
                     if ( login == other && !logged) {
                         logged = true
-                        $('#info_area').prepend('<div class="alert alert-success" size="75" role="alert">'+ "You logged in successfully! [" +  other +"]" +'</div>');
+                        $('#info_area').prepend('<div class="alert alert-success" role="alert">'+ "You logged in successfully! <strong>[" +  other +"]</strong>" +'</div>');
                     };
                     $('#login_area').prepend('<p><em>' + other + ' joined the chat.</em></p>');
                 })
@@ -67,7 +80,6 @@
                 function pushMessage(login, message) {
                     $('#login_area').prepend('<p><strong>' + login + '</strong> ' + message + '</p>');
                 }
-            </script>
-        </div>        
+            </script>      
     </body>
 </html>
