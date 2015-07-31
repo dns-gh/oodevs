@@ -44,7 +44,7 @@
                 <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
                 <div class="sidebar-module sidebar-module-inset">
                     <h4>Users logged in...</h4>
-                    <ol class="list-unstyled">
+                    <ol class="list-unstyled" id="user_list">
                     </ol>
                     </div>
                 </div>
@@ -68,6 +68,7 @@
                         logged = true
                         $('#info_area').prepend('<div class="alert alert-success" role="alert">'+ "You logged in successfully! <strong>[" +  other +"]</strong>" +'</div>');
                     };
+                    $('#user_list').prepend('<li id ='+other+'>'+other+'</li>');
                     $('#login_area').prepend('<p><em>' + other + ' joined the chat.</em></p>');
                 })
 
@@ -76,6 +77,9 @@
                 })
 
                 socket.on('user_disconnect', function(other) {
+                    var parent = document.getElementById("user_list");
+                    var child = document.getElementById(other);
+                    parent.removeChild(child);
                     $('#login_area').prepend('<p><em>' + other + ' logged out.</em></p>');
                 })
 
