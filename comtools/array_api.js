@@ -23,6 +23,21 @@ module.exports.GetLastElements = function(num) {
     return last;
 }
 
+module.exports.RemoveElement = function(elem) {
+    index = elements.indexOf(elem);
+    if (index > -1) {
+        elements = elements.splice(index, 1);
+    }
+}
+
+module.exports.Contains = function(elem) {
+    index = elements.indexOf(elem);
+    if (index > -1) {
+        return true;
+    }
+    return false;
+}
+
 module.exports.PushElement = function(elem) {
     elements.push(elem)
 }

@@ -55,19 +55,28 @@
             <script>
                 var socket = io.connect('http://localhost:8080');
                 var login = prompt('Choose a login...');
-                var logged = false
-                socket.emit('new_client', login);
-                console.log("Login: " + login)
+                var logged = false;
+                socket.emit('user_login', login);
+                
                 socket.on('message', function(data) {
-                    pushMessage(data.login, data.message)
+                    pushMessage(data.login, data.message);
                 })
 
-                socket.on('new_client', function(other) {
+                socket.on('user_login', function(other) {
                     if ( login == other && !logged) {
+                        console.log("Logged in with: " + login);
                         logged = true
                         $('#info_area').prepend('<div class="alert alert-success" role="alert">'+ "You logged in successfully! <strong>[" +  other +"]</strong>" +'</div>');
                     };
                     $('#login_area').prepend('<p><em>' + other + ' joined the chat.</em></p>');
+                })
+
+                socket.on('user_login_failed', function(other) {
+                    socket.emit('user_login', prompt('Login '+other+' not available for the moment. Choose another login...'));
+                })
+
+                socket.on('user_disconnect', function(other) {
+                    $('#login_area').prepend('<p><em>' + other + ' logged out.</em></p>');
                 })
 
                 $('#input_message_holder').submit(function () {
@@ -80,6 +89,7 @@
                 function pushMessage(login, message) {
                     $('#login_area').prepend('<p><strong>' + login + '</strong> ' + message + '</p>');
                 }
+
             </script>      
     </body>
 </html>
