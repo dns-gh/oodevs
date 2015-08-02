@@ -22,7 +22,7 @@
     </head>
  
     <body>
-        <div class="container">
+        <div class="container" id="chat_container">
             <div class="row">
                 <div class="col-sm-8 blog-main">
                     <div class="starter-template blog-title">
@@ -55,6 +55,7 @@
         <script src="/socket.io/socket.io.js"></script>
             <script>
                 var socket = io.connect('http://localhost:8080');
+                $('#chat_container').hide();
                 var user_list = document.getElementById("user_list");
                 var login = prompt('Choose a login...');
                 var logged = false;
@@ -68,6 +69,7 @@
                     if ( login == other && !logged) {
                         console.log("Logged in with: " + login);
                         logged = true
+                        $('#chat_container').show();
                         $('#info_area').prepend('<div id ="info_alert" class="alert alert-success" role="alert">'+ "You logged in successfully! <strong>[" +  other +"]</strong>" +'</div>');
                     }
                     else
