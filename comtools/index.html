@@ -5,6 +5,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>OOChat</title>
         <link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css">
         <link href="/css/blog-like.css" rel="stylesheet" type="text/css">
         <style>
@@ -54,37 +55,56 @@
         <script src="/socket.io/socket.io.js"></script>
             <script>
                 var socket = io.connect('http://localhost:8080');
+                var user_list = document.getElementById("user_list");
                 var login = prompt('Choose a login...');
                 var logged = false;
                 socket.emit('user_login', login);
                 
                 socket.on('message', function(data) {
                     pushMessage(data.login, data.message);
-                })
+                });
 
                 socket.on('user_login', function(other) {
                     if ( login == other && !logged) {
                         console.log("Logged in with: " + login);
                         logged = true
-                        $('#info_area').prepend('<div class="alert alert-success" role="alert">'+ "You logged in successfully! <strong>[" +  other +"]</strong>" +'</div>');
-                    };
-                    $('#user_list').prepend('<li id ='+other+'>'+other+'</li>');
+                        $('#info_area').prepend('<div id ="info_alert" class="alert alert-success" role="alert">'+ "You logged in successfully! <strong>[" +  other +"]</strong>" +'</div>');
+                    }
+                    else
+                    {
+                        $('#user_list').prepend('<li id ='+other+'>'+other+'</li>');
+                    }
                     $('#login_area').prepend('<p><em>' + other + ' joined the chat.</em></p>');
-                })
+                });
+
+                socket.on('users_list', function(list) {
+                    for (i = list.length - 1; i >= 0; --i) { 
+                        $('#user_list').prepend('<li id ='+list[i]+'>'+list[i]+'</li>');
+                    }
+                });
 
                 socket.on('user_login_failed', function(other) {
-                    socket.emit('user_login', prompt('Login '+other+' not available for the moment. Choose another login...'));
+                    socket.emit('user_login', prompt('Login '+other+' not available. Choose another login...'));
+                });
+
+                socket.on('last_chats_list', function(list) {
+                    for (i = list.length - 1; i >= 0; --i) { 
+                        $('#login_area').prepend('<p><strong>' + list[i].login + '</strong> ' + list[i].message + '</p>');
+                    }
                 })
 
                 socket.on('user_disconnect', function(other) {
-                    var parent = document.getElementById("user_list");
                     var child = document.getElementById(other);
-                    parent.removeChild(child);
+                    if (child == null)
+                        return;
+                    user_list.removeChild(child);
                     $('#login_area').prepend('<p><em>' + other + ' logged out.</em></p>');
-                })
+                });
 
                 $('#input_message_holder').submit(function () {
                     var message = $('#input_message').val();
+                    if (message == "")
+                        return false;
                     socket.emit('message', message);
                     $('#input_message').val('').focus();
                     return false;
