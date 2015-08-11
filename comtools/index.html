@@ -80,7 +80,7 @@
                 });
 
                 socket.on('users_list', function(list) {
-                    for (i = list.length - 1; i >= 0; --i) { 
+                    for (i = 0; i < list.length; ++i) { 
                         $('#user_list').prepend('<li id ='+list[i]+'>'+list[i]+'</li>');
                     }
                 });

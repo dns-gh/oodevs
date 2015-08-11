@@ -55,6 +55,7 @@ io.sockets.on('connection', function (socket) {
         socket.emit('users_list', users);
         socket.emit('last_chats_list', GetLastElements(chats,10));
         socket.broadcast.emit('user_login', encoded_login);
+        console.log(socket.login, " connected")
     });
 
     socket.on('disconnect', function(other) {
