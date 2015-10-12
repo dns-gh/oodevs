@@ -8,6 +8,7 @@ import (
 	"net/http/cookiejar"
 	"net/http/httputil"
 	"net/url"
+	"strconv"
 	"strings"
 )
 
@@ -16,10 +17,24 @@ type Page struct {
 	content  string
 }
 
+type Resources struct {
+	Metal     int
+	Crystal   int
+	Deuterium int
+}
+
+type Planet struct {
+	Name        string
+	Coordinates string
+	Resources   Resources
+}
+
 type GameData struct {
-	metal     int
-	cristal   int
-	deuterium int
+	planets map[string]Planet
+}
+
+func (g *GameData) print() {
+	fmt.Printf("%+v\n", g)
 }
 
 type OGBot struct {
@@ -145,12 +160,77 @@ func (b *OGBot) login(login, pass, universe, lang string) error {
 	if err != nil {
 		return err
 	}
+
 	b.current.pageType = "overview"
 	b.current.content = string(contents)
 	if !b.isLoggedIn(b.current.content) {
 		return fmt.Errorf("Not logged in.\n")
 	}
 	return nil
+}
+
+func getResourceValue(resource, page string) int {
+	value, err := getTagValue(resource, page)
+	if err != nil {
+		fmt.Println(err.Error())
+		return -1
+	}
+	val, _ := strconv.Atoi(value)
+	return val
+}
+
+// remove spaces, dots and carriage returns
+func removeNoise(value string) string {
+	temp := strings.Replace(value, " ", "", -1)
+	temp = strings.Replace(temp, ".", "", -1)
+	return strings.Replace(temp, "\n", "", -1)
+}
+
+func getTagValue(tag, page string) (string, error) {
+	split := strings.Split(page, tag)
+	if len(split) != 2 {
+		return "", fmt.Errorf("too many %s tags (%d)", tag, len(split)-1)
+	}
+	splitValue := strings.Split(split[1], ">")
+	lastSplit := strings.Split(splitValue[1], "<")
+	return removeNoise(lastSplit[0]), nil
+}
+
+func getMetaOGame(page, suffix string) string {
+	split := strings.Split(page, "ogame-"+suffix)
+	split = strings.Split(split[1], "\"")
+	return split[2]
+}
+
+func listAvailablePlanetIds(page string) []string {
+	split := strings.Split(page, "id=\"planet-")
+	var list []string
+	for _, value := range split[1:] {
+		temp := strings.Split(value, "\"")
+		list = append(list, temp[0])
+	}
+	return list
+}
+
+func getCurrentPlanet(page string) (string, string, string) {
+	id := getMetaOGame(page, "planet-id")
+	name := getMetaOGame(page, "planet-name")
+	coord := getMetaOGame(page, "planet-coordinates")
+	return id, name, coord
+}
+
+func (b *OGBot) UpdatePlanetData() {
+	id, name, coord := getCurrentPlanet(b.current.content)
+	b.data.planets[id] = Planet{
+		Name:        name,
+		Coordinates: coord,
+		Resources: Resources{
+			Metal:     getResourceValue("resources_metal", b.current.content),
+			Crystal:   getResourceValue("resources_crystal", b.current.content),
+			Deuterium: getResourceValue("resources_deuterium", b.current.content),
+		},
+	}
+	fmt.Printf("%+v\n", b.data.planets)
 }
 
 func main() {
@@ -160,11 +240,17 @@ func main() {
 	lang := flag.String("lang", "", "language. Ex: en, fr...")
 	flag.Parse()
 
-	b := &OGBot{}
+	b := &OGBot{
+		data: GameData{
+			planets: make(map[string]Planet),
+		},
+	}
 	err := b.login(*login, *pass, *universe, *lang)
 	if err != nil {
 		fmt.Printf("%s", err.Error())
 	}
+	b.UpdatePlanetData()
+
 	countWords("overview", b.current.content)
 	countWords("resources_metal", b.current.content)
 	countWords("resourceSettings", b.current.content)
