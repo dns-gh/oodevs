@@ -1,14 +1,13 @@
 package main
 
 import (
-	"bufio"
+	"flag"
 	"fmt"
 	"io/ioutil"
 	"net/http"
 	"net/http/cookiejar"
 	"net/http/httputil"
 	"net/url"
-	"os"
 	"strings"
 )
 
@@ -154,17 +153,15 @@ func (b *OGBot) login(login, pass, universe, lang string) error {
 	return nil
 }
 
-func readPwd() string {
-	reader := bufio.NewReader(os.Stdin)
-	fmt.Print("Please enter password: ")
-	text, _ := reader.ReadString('\n')
-	return text
-}
-
 func main() {
+	login := flag.String("login", "", "login")
+	pass := flag.String("pass", "", "password")
+	universe := flag.String("uni", "", "universe. Ex: s131, s132...")
+	lang := flag.String("lang", "", "language. Ex: en, fr...")
+	flag.Parse()
+
 	b := &OGBot{}
-	pass := readPwd()
-	err := b.login("Goolpi", pass[0:len(pass)-1], "s131", "en")
+	err := b.login(*login, *pass, *universe, *lang)
 	if err != nil {
 		fmt.Printf("%s", err.Error())
 	}
