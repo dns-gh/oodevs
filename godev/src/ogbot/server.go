@@ -37,10 +37,19 @@ func (g *GameData) print() {
 	fmt.Printf("%+v\n", g)
 }
 
+type MetaData struct {
+	login string
+	pass  string
+	uni   string
+	lang  string
+}
+
 type OGBot struct {
+	meta         MetaData
 	data         GameData
 	current      Page
 	cookieHeader []string
+	client       *http.Client
 }
 
 func countWords(word, content string) int {
@@ -118,7 +127,7 @@ func makeLoginRequest(login, pass, universe, lang string) *http.Request {
 	data.Add("uni", universe+"-"+lang+".ogame.gameforge.com")
 	data.Add("login", login)
 	data.Add("pass", pass)
-	req, _ := http.NewRequest("POST", "http://en.ogame.gameforge.com/main/login",
+	req, _ := http.NewRequest("POST", "http://"+lang+".ogame.gameforge.com/main/login",
 		strings.NewReader(data.Encode()))
 	// set up basic header
 	req.Header.Add("Content-Type", "application/x-www-form-urlencoded")
@@ -133,26 +142,25 @@ func makeLoginRequest(login, pass, universe, lang string) *http.Request {
 }
 
 func (b *OGBot) makePageRequest(page string) *http.Request {
-	req, _ := http.NewRequest("GET", "http://s131-en.ogame.gameforge.com/game/index.php?page="+page, nil)
+	req, _ := http.NewRequest("GET", "http://"+b.meta.uni+"-"+b.meta.lang+".ogame.gameforge.com/game/index.php?page="+page, nil)
 	// set up basic header
 	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
 	req.Header["Cookie"] = b.cookieHeader
 	return req
 }
 
-func (b *OGBot) login(login, pass, universe, lang string) error {
-	client := makeHttpClient()
+func (b *OGBot) login() error {
 	// make the login request
-	req := makeLoginRequest(login, pass, universe, lang)
+	req := makeLoginRequest(b.meta.login, b.meta.pass, b.meta.uni, b.meta.lang)
 	logMark("Login request...")
-	resp, _ := client.Do(req)
+	resp, _ := b.client.Do(req)
 	dumpResponse(resp)
 	b.cookieHeader = resp.Header["Set-Cookie"]
 
 	// make the overview request
 	req = b.makePageRequest("overview")
 	logMark("Overview panel request...")
-	resp, _ = client.Do(req)
+	resp, _ = b.client.Do(req)
 	dumpResponse(resp)
 
 	defer resp.Body.Close()
@@ -233,6 +241,30 @@ func (b *OGBot) UpdatePlanetData() {
 	fmt.Printf("%+v\n", b.data.planets)
 }
 
+func (b *OGBot) Run() {
+	err := b.login()
+	if err != nil {
+		fmt.Printf("%s", err.Error())
+		return
+	}
+	b.UpdatePlanetData()
+}
+
+func makeOGBot(login, pass, uni, lang string) *OGBot {
+	return &OGBot{
+		meta: MetaData{
+			login: login,
+			pass:  pass,
+			uni:   uni,
+			lang:  lang,
+		},
+		data: GameData{
+			planets: make(map[string]Planet),
+		},
+		client: makeHttpClient(),
+	}
+}
+
 func main() {
 	login := flag.String("login", "", "login")
 	pass := flag.String("pass", "", "password")
@@ -240,16 +272,8 @@ func main() {
 	lang := flag.String("lang", "", "language. Ex: en, fr...")
 	flag.Parse()
 
-	b := &OGBot{
-		data: GameData{
-			planets: make(map[string]Planet),
-		},
-	}
-	err := b.login(*login, *pass, *universe, *lang)
-	if err != nil {
-		fmt.Printf("%s", err.Error())
-	}
-	b.UpdatePlanetData()
+	b := makeOGBot(*login, *pass, *universe, *lang)
+	b.Run()
 
 	countWords("overview", b.current.content)
 	countWords("resources_metal", b.current.content)
