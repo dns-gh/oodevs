@@ -3,14 +3,22 @@ package main
 import (
 	"flag"
 	"fmt"
+	"io"
 	"io/ioutil"
+	"log"
 	"net/http"
 	"net/http/cookiejar"
 	"net/http/httputil"
 	"net/url"
+	"os"
+	"runtime"
 	"strconv"
 	"strings"
 )
+
+type Logger interface {
+	Printf(format string, a ...interface{})
+}
 
 type Page struct {
 	pageType string
@@ -50,6 +58,7 @@ type OGBot struct {
 	current      Page
 	cookieHeader []string
 	client       *http.Client
+	logger       Logger
 }
 
 func countWords(word, content string) int {
@@ -58,38 +67,38 @@ func countWords(word, content string) int {
 	return count
 }
 
-func (b *OGBot) isLoggedIn(page string) bool {
-	if countWords("login", page) > 1 {
-		return false
+func isLogginPage(page string) bool {
+	if strings.Contains(page, "loginForm") {
+		return true
 	}
-	return true
+	return false
 }
 
-func logMark(mark string) {
-	fmt.Println("------------------------------------------------")
-	fmt.Println(mark)
-	fmt.Println("------------------------------------------------")
+func logMark(mark string, logger Logger) {
+	logger.Printf("------------------------------------------------\n")
+	logger.Printf("%s\n", mark)
+	logger.Printf("------------------------------------------------\n")
 }
 
-func dumpResponse(resp *http.Response) {
+func dumpResponse(resp *http.Response, logger Logger) {
 	dump, err := httputil.DumpResponse(resp, false)
 	if err != nil {
-		fmt.Printf("dumpResponse err: ", err.Error())
+		logger.Printf("dumpResponse err: %s\n", err.Error())
 		return
 	}
-	fmt.Println("Response dump: \n", string(dump))
+	logger.Printf("Response dump: %s\n", string(dump))
 }
 
-func dumpRequest(req *http.Request) {
+func dumpRequest(req *http.Request, logger Logger) {
 	dump, err := httputil.DumpRequestOut(req, false)
 	if err != nil {
-		fmt.Printf("dumpRequest err: ", err.Error())
+		logger.Printf("dumpRequest err: %s", err.Error())
 		return
 	}
-	fmt.Println("Request dump: \n", string(dump))
+	logger.Printf("Request dump: %s\n", string(dump))
 }
 
-func makeHttpClient() *http.Client {
+func makeHttpClient(logger Logger) *http.Client {
 	// set basic cookie jar
 	jar, _ := cookiejar.New(nil)
 	var cookies []*http.Cookie
@@ -108,19 +117,19 @@ func makeHttpClient() *http.Client {
 	// in order to get the response header that contains cookie information
 	// vital to make further requests
 	client.CheckRedirect = func(req *http.Request, via []*http.Request) error {
-		logMark("Redirection...")
-		fmt.Println("URL: ", req.URL.String())
+		logMark("Redirection...", logger)
+		logger.Printf("URL: %s\n", req.URL.String())
 		if countWords("PHPSESSID", req.URL.String()) > 0 {
-			logMark("Stop redirection...")
+			logMark("Stop redirection...", logger)
 			return fmt.Errorf("stop redirect")
 		}
-		dumpRequest(req)
+		dumpRequest(req, logger)
 		return nil
 	}
 	return client
 }
 
-func makeLoginRequest(login, pass, universe, lang string) *http.Request {
+func makeLoginRequest(login, pass, universe, lang string, logger Logger) *http.Request {
 	// fill in login form
 	data := &url.Values{}
 	data.Add("kid", "")
@@ -137,7 +146,7 @@ func makeLoginRequest(login, pass, universe, lang string) *http.Request {
 	req.Header.Add("Pragma", "no-cache")
 	req.Header.Add("Cache-Control", "no-cache")
 	req.Proto = "HTTP/1.0"
-	dumpRequest(req)
+	dumpRequest(req, logger)
 	return req
 }
 
@@ -151,17 +160,17 @@ func (b *OGBot) makePageRequest(page string) *http.Request {
 
 func (b *OGBot) login() error {
 	// make the login request
-	req := makeLoginRequest(b.meta.login, b.meta.pass, b.meta.uni, b.meta.lang)
-	logMark("Login request...")
+	req := makeLoginRequest(b.meta.login, b.meta.pass, b.meta.uni, b.meta.lang, b.logger)
+	logMark("Login request...", b.logger)
 	resp, _ := b.client.Do(req)
-	dumpResponse(resp)
+	dumpResponse(resp, b.logger)
 	b.cookieHeader = resp.Header["Set-Cookie"]
 
 	// make the overview request
 	req = b.makePageRequest("overview")
-	logMark("Overview panel request...")
+	logMark("Overview panel request...", b.logger)
 	resp, _ = b.client.Do(req)
-	dumpResponse(resp)
+	dumpResponse(resp, b.logger)
 
 	defer resp.Body.Close()
 	contents, err := ioutil.ReadAll(resp.Body)
@@ -171,20 +180,10 @@ func (b *OGBot) login() error {
 
 	b.current.pageType = "overview"
 	b.current.content = string(contents)
-	if !b.isLoggedIn(b.current.content) {
-		return fmt.Errorf("Not logged in.\n")
+	if isLogginPage(b.current.content) {
+		return fmt.Errorf("Not logged in...\n")
 	}
 	return nil
-}
-
-func getResourceValue(resource, page string) int {
-	value, err := getTagValue(resource, page)
-	if err != nil {
-		fmt.Println(err.Error())
-		return -1
-	}
-	val, _ := strconv.Atoi(value)
-	return val
 }
 
 // remove spaces, dots and carriage returns
@@ -202,6 +201,16 @@ func getTagValue(tag, page string) (string, error) {
 	splitValue := strings.Split(split[1], ">")
 	lastSplit := strings.Split(splitValue[1], "<")
 	return removeNoise(lastSplit[0]), nil
+}
+
+func getResourceValue(resource, page string) int {
+	value, err := getTagValue(resource, page)
+	if err != nil {
+		fmt.Println(err.Error())
+		return -1
+	}
+	val, _ := strconv.Atoi(value)
+	return val
 }
 
 func getMetaOGame(page, suffix string) string {
@@ -244,13 +253,13 @@ func (b *OGBot) UpdatePlanetData() {
 func (b *OGBot) Run() {
 	err := b.login()
 	if err != nil {
-		fmt.Printf("%s", err.Error())
+		b.logger.Printf("%s", err.Error())
 		return
 	}
 	b.UpdatePlanetData()
 }
 
-func makeOGBot(login, pass, uni, lang string) *OGBot {
+func makeOGBot(login, pass, uni, lang string, logger Logger) *OGBot {
 	return &OGBot{
 		meta: MetaData{
 			login: login,
@@ -261,7 +270,8 @@ func makeOGBot(login, pass, uni, lang string) *OGBot {
 		data: GameData{
 			planets: make(map[string]Planet),
 		},
-		client: makeHttpClient(),
+		client: makeHttpClient(logger),
+		logger: logger,
 	}
 }
 
@@ -270,9 +280,28 @@ func main() {
 	pass := flag.String("pass", "", "password")
 	universe := flag.String("uni", "", "universe. Ex: s131, s132...")
 	lang := flag.String("lang", "", "language. Ex: en, fr...")
+	logFile := flag.String("log", "", "optional log filename")
 	flag.Parse()
+	runtime.GOMAXPROCS(runtime.NumCPU())
 
-	b := makeOGBot(*login, *pass, *universe, *lang)
+	logger := log.New(os.Stderr, "", log.LstdFlags)
+	if len(*logFile) > 0 {
+		file, err := os.Create(*logFile)
+		if err != nil {
+			log.Fatalln("unable to create file", *logFile)
+		}
+		defer file.Close()
+		logger = log.New(io.MultiWriter(file, os.Stderr), "", log.LstdFlags)
+	}
+	logger.Println("login", *login)
+	logger.Println("pass", "*n/a*")
+	logger.Println("uni", *universe)
+	logger.Println("lang", *lang)
+	if len(*logFile) > 0 {
+		logger.Println("log", *logFile)
+	}
+
+	b := makeOGBot(*login, *pass, *universe, *lang, logger)
 	b.Run()
 
 	countWords("overview", b.current.content)
