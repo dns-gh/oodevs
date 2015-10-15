@@ -14,6 +14,7 @@ import (
 	"runtime"
 	"strconv"
 	"strings"
+	"time"
 )
 
 type Logger interface {
@@ -59,11 +60,11 @@ type OGBot struct {
 	cookieHeader []string
 	client       *http.Client
 	logger       Logger
+	dump         bool
 }
 
 func countWords(word, content string) int {
 	count := strings.Count(content, word)
-	fmt.Printf("'%s' appears %d time\n", word, count)
 	return count
 }
 
@@ -75,9 +76,7 @@ func isLogginPage(page string) bool {
 }
 
 func logMark(mark string, logger Logger) {
-	logger.Printf("------------------------------------------------\n")
-	logger.Printf("%s\n", mark)
-	logger.Printf("------------------------------------------------\n")
+	logger.Printf("// %s\n", mark)
 }
 
 func dumpResponse(resp *http.Response, logger Logger) {
@@ -98,7 +97,7 @@ func dumpRequest(req *http.Request, logger Logger) {
 	logger.Printf("Request dump: %s\n", string(dump))
 }
 
-func makeHttpClient(logger Logger) *http.Client {
+func makeHttpClient(logger Logger, dump bool) *http.Client {
 	// set basic cookie jar
 	jar, _ := cookiejar.New(nil)
 	var cookies []*http.Cookie
@@ -118,18 +117,19 @@ func makeHttpClient(logger Logger) *http.Client {
 	// vital to make further requests
 	client.CheckRedirect = func(req *http.Request, via []*http.Request) error {
 		logMark("Redirection...", logger)
-		logger.Printf("URL: %s\n", req.URL.String())
 		if countWords("PHPSESSID", req.URL.String()) > 0 {
 			logMark("Stop redirection...", logger)
 			return fmt.Errorf("stop redirect")
 		}
-		dumpRequest(req, logger)
+		if dump {
+			dumpRequest(req, logger)
+		}
 		return nil
 	}
 	return client
 }
 
-func makeLoginRequest(login, pass, universe, lang string, logger Logger) *http.Request {
+func makeLoginRequest(login, pass, universe, lang string, logger Logger, dump bool) *http.Request {
 	// fill in login form
 	data := &url.Values{}
 	data.Add("kid", "")
@@ -146,7 +146,9 @@ func makeLoginRequest(login, pass, universe, lang string, logger Logger) *http.R
 	req.Header.Add("Pragma", "no-cache")
 	req.Header.Add("Cache-Control", "no-cache")
 	req.Proto = "HTTP/1.0"
-	dumpRequest(req, logger)
+	if dump {
+		dumpRequest(req, logger)
+	}
 	return req
 }
 
@@ -158,32 +160,39 @@ func (b *OGBot) makePageRequest(page string) *http.Request {
 	return req
 }
 
-func (b *OGBot) login() error {
-	// make the login request
-	req := makeLoginRequest(b.meta.login, b.meta.pass, b.meta.uni, b.meta.lang, b.logger)
-	logMark("Login request...", b.logger)
-	resp, _ := b.client.Do(req)
-	dumpResponse(resp, b.logger)
-	b.cookieHeader = resp.Header["Set-Cookie"]
-
+func (b *OGBot) goToPage(label string) {
 	// make the overview request
-	req = b.makePageRequest("overview")
-	logMark("Overview panel request...", b.logger)
-	resp, _ = b.client.Do(req)
-	dumpResponse(resp, b.logger)
+	req := b.makePageRequest(label)
+	logMark(label+" page request...", b.logger)
+	resp, _ := b.client.Do(req)
+	if b.dump {
+		dumpResponse(resp, b.logger)
+	}
 
 	defer resp.Body.Close()
 	contents, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
-		return err
+		b.logger.Printf("%s\n", err.Error())
+		return
 	}
-
-	b.current.pageType = "overview"
+	b.current.pageType = label
 	b.current.content = string(contents)
-	if isLogginPage(b.current.content) {
-		return fmt.Errorf("Not logged in...\n")
+}
+
+func (b *OGBot) login() {
+	// make the login request
+	req := makeLoginRequest(b.meta.login, b.meta.pass, b.meta.uni, b.meta.lang, b.logger, b.dump)
+	logMark("Login request...", b.logger)
+	resp, _ := b.client.Do(req)
+	if b.dump {
+		dumpResponse(resp, b.logger)
 	}
-	return nil
+	b.cookieHeader = resp.Header["Set-Cookie"]
+
+	b.goToPage("overview")
+	if isLogginPage(b.current.content) {
+		b.logger.Printf("not logged in\n")
+	}
 }
 
 // remove spaces, dots and carriage returns
@@ -247,19 +256,27 @@ func (b *OGBot) UpdatePlanetData() {
 			Deuterium: getResourceValue("resources_deuterium", b.current.content),
 		},
 	}
-	fmt.Printf("%+v\n", b.data.planets)
 }
 
 func (b *OGBot) Run() {
-	err := b.login()
-	if err != nil {
-		b.logger.Printf("%s", err.Error())
-		return
-	}
+	b.login()
 	b.UpdatePlanetData()
+
+	// checks frequently we are logged in
+	ticker := time.NewTicker(30 * time.Second)
+	defer ticker.Stop()
+	for _ = range ticker.C {
+		b.logger.Printf("checks if still logged in...")
+		b.goToPage("overview")
+		if isLogginPage(b.current.content) {
+			b.logger.Printf("no more logged in... trying to reconnect...")
+			b.login()
+		}
+		b.UpdatePlanetData()
+	}
 }
 
-func makeOGBot(login, pass, uni, lang string, logger Logger) *OGBot {
+func makeOGBot(login, pass, uni, lang string, logger Logger, dump bool) *OGBot {
 	return &OGBot{
 		meta: MetaData{
 			login: login,
@@ -270,8 +287,9 @@ func makeOGBot(login, pass, uni, lang string, logger Logger) *OGBot {
 		data: GameData{
 			planets: make(map[string]Planet),
 		},
-		client: makeHttpClient(logger),
+		client: makeHttpClient(logger, dump),
 		logger: logger,
+		dump:   dump,
 	}
 }
 
@@ -281,6 +299,7 @@ func main() {
 	universe := flag.String("uni", "", "universe. Ex: s131, s132...")
 	lang := flag.String("lang", "", "language. Ex: en, fr...")
 	logFile := flag.String("log", "", "optional log filename")
+	dump := flag.Bool("dump", false, "dump http requests and responses")
 	flag.Parse()
 	runtime.GOMAXPROCS(runtime.NumCPU())
 
@@ -301,11 +320,6 @@ func main() {
 		logger.Println("log", *logFile)
 	}
 
-	b := makeOGBot(*login, *pass, *universe, *lang, logger)
+	b := makeOGBot(*login, *pass, *universe, *lang, logger, *dump)
 	b.Run()
-
-	countWords("overview", b.current.content)
-	countWords("resources_metal", b.current.content)
-	countWords("resourceSettings", b.current.content)
-	countWords("solarscroll", b.current.content)
 }
