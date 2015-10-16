@@ -152,17 +152,17 @@ func makeLoginRequest(login, pass, universe, lang string, logger Logger, dump bo
 	return req
 }
 
-func (b *OGBot) makePageRequest(page string) *http.Request {
-	req, _ := http.NewRequest("GET", "http://"+b.meta.uni+"-"+b.meta.lang+".ogame.gameforge.com/game/index.php?page="+page, nil)
+func (b *OGBot) makePageRequest(page, args string) *http.Request {
+	req, _ := http.NewRequest("GET", "http://"+b.meta.uni+"-"+b.meta.lang+".ogame.gameforge.com/game/index.php?page="+page+args, nil)
 	// set up basic header
 	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
 	req.Header["Cookie"] = b.cookieHeader
 	return req
 }
 
-func (b *OGBot) goToPage(label string) {
+func (b *OGBot) goToPage(label, args string) {
 	// make the overview request
-	req := b.makePageRequest(label)
+	req := b.makePageRequest(label, args)
 	logMark(label+" page request...", b.logger)
 	resp, _ := b.client.Do(req)
 	if b.dump {
@@ -179,6 +179,10 @@ func (b *OGBot) goToPage(label string) {
 	b.current.content = string(contents)
 }
 
+func (b *OGBot) goToPlanet(id string) {
+	b.goToPage("overview", "&cp="+id)
+}
+
 func (b *OGBot) login() {
 	// make the login request
 	req := makeLoginRequest(b.meta.login, b.meta.pass, b.meta.uni, b.meta.lang, b.logger, b.dump)
@@ -189,7 +193,7 @@ func (b *OGBot) login() {
 	}
 	b.cookieHeader = resp.Header["Set-Cookie"]
 
-	b.goToPage("overview")
+	b.goToPage("overview", "")
 	if isLogginPage(b.current.content) {
 		b.logger.Printf("not logged in\n")
 	}
@@ -258,21 +262,29 @@ func (b *OGBot) UpdatePlanetData() {
 	}
 }
 
+func (b *OGBot) UpdatePlanetsData() {
+	planets := listAvailablePlanetIds(b.current.content)
+	for _, v := range planets {
+		b.goToPlanet(v)
+		b.UpdatePlanetData()
+	}
+}
+
 func (b *OGBot) Run() {
 	b.login()
-	b.UpdatePlanetData()
+	b.UpdatePlanetsData()
 
 	// checks frequently we are logged in
 	ticker := time.NewTicker(30 * time.Second)
 	defer ticker.Stop()
 	for _ = range ticker.C {
 		b.logger.Printf("checks if still logged in...")
-		b.goToPage("overview")
+		b.goToPage("overview", "")
 		if isLogginPage(b.current.content) {
 			b.logger.Printf("no more logged in... trying to reconnect...")
 			b.login()
 		}
-		b.UpdatePlanetData()
+		b.UpdatePlanetsData()
 	}
 }
 
