@@ -53,6 +53,24 @@ type MetaData struct {
 	lang  string
 }
 
+const (
+	AttackMovement    = 1
+	TransportMovement = 3
+	SpyMovement       = 6
+)
+
+type FleetMovement struct {
+	id      string
+	from    string
+	to      string
+	move    int // MovementType
+	hostile bool
+}
+
+func (f *FleetMovement) print() {
+	fmt.Printf("%+v\n", f)
+}
+
 type OGBot struct {
 	meta         MetaData
 	data         GameData
@@ -61,6 +79,13 @@ type OGBot struct {
 	client       *http.Client
 	logger       Logger
 	dump         bool
+	fleets       []*FleetMovement
+}
+
+func (b *OGBot) printFleets() {
+	for _, v := range b.fleets {
+		v.print()
+	}
 }
 
 func countWords(word, content string) int {
@@ -179,6 +204,50 @@ func (b *OGBot) goToPage(label, args string) {
 	b.current.content = string(contents)
 }
 
+func getAttributeValue(att, content string) string {
+	split := strings.Split(content, att+"=\"")
+	if len(split) < 2 {
+		return ""
+	}
+	final := strings.Split(split[1], "\"")
+	return final[0]
+}
+
+func getCoordValue(att, content string) string {
+	split := strings.Split(content, att)
+	second := strings.Split(split[1], "[")
+	final := strings.Split(second[1], "]")
+	return final[0]
+}
+
+func getFleetMovementInfo(content string) *FleetMovement {
+	move := &FleetMovement{}
+	move.hostile = strings.Contains(content, "countDown hostile")
+
+	move.id = getAttributeValue("id", content)
+	mission, err := strconv.Atoi(getAttributeValue("data-mission-type", content))
+	if err != nil {
+		return nil
+	}
+	move.move = mission
+	move.from = getCoordValue("coordsOrigin", content)
+	move.to = getCoordValue("destCoords", content)
+	return move
+}
+
+func (b *OGBot) ChecksFleetMovements() {
+	b.goToPage("eventList", "&ajax=1")
+	split := strings.Split(b.current.content, "eventFleet")
+	if len(split) == 0 {
+		b.fleets = nil
+		return
+	}
+	b.fleets = make([]*FleetMovement, 0)
+	for _, v := range split[1:] {
+		b.fleets = append(b.fleets, getFleetMovementInfo(v))
+	}
+}
+
 func (b *OGBot) goToPlanet(id string) {
 	b.goToPage("overview", "&cp="+id)
 }
@@ -270,6 +339,15 @@ func (b *OGBot) UpdatePlanetsData() {
 	}
 }
 
+func (b *OGBot) ChecksReconnect() {
+	b.logger.Printf("checks if still logged in...")
+	b.goToPage("overview", "")
+	if isLogginPage(b.current.content) {
+		b.logger.Printf("no more logged in... trying to reconnect...")
+		b.login()
+	}
+}
+
 func (b *OGBot) Run() {
 	b.login()
 	b.UpdatePlanetsData()
@@ -278,13 +356,11 @@ func (b *OGBot) Run() {
 	ticker := time.NewTicker(30 * time.Second)
 	defer ticker.Stop()
 	for _ = range ticker.C {
-		b.logger.Printf("checks if still logged in...")
-		b.goToPage("overview", "")
-		if isLogginPage(b.current.content) {
-			b.logger.Printf("no more logged in... trying to reconnect...")
-			b.login()
-		}
+		b.ChecksReconnect()
 		b.UpdatePlanetsData()
+		b.ChecksFleetMovements()
+		b.data.print()
+		b.printFleets()
 	}
 }
 
