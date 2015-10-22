@@ -6,6 +6,7 @@ import (
 	"io"
 	"io/ioutil"
 	"log"
+	"math/rand"
 	"net/http"
 	"net/http/cookiejar"
 	"net/http/httputil"
@@ -236,6 +237,7 @@ func getFleetMovementInfo(content string) *FleetMovement {
 }
 
 func (b *OGBot) ChecksFleetMovements() {
+	b.sleep(100)
 	b.goToPage("eventList", "&ajax=1")
 	split := strings.Split(b.current.content, "eventFleet")
 	if len(split) == 0 {
@@ -334,6 +336,7 @@ func (b *OGBot) UpdatePlanetData() {
 func (b *OGBot) UpdatePlanetsData() {
 	planets := listAvailablePlanetIds(b.current.content)
 	for _, v := range planets {
+		b.sleep(20)
 		b.goToPlanet(v)
 		b.UpdatePlanetData()
 	}
@@ -348,14 +351,21 @@ func (b *OGBot) ChecksReconnect() {
 	}
 }
 
+func (b *OGBot) sleep(amount int) {
+	random := rand.Intn(amount)
+	b.logger.Printf("Random sleep: %+v", random)
+	time.Sleep(time.Second * time.Duration(random))
+}
+
 func (b *OGBot) Run() {
 	b.login()
 	b.UpdatePlanetsData()
 
 	// checks frequently we are logged in
-	ticker := time.NewTicker(30 * time.Second)
+	ticker := time.NewTicker(1789 * time.Second)
 	defer ticker.Stop()
 	for _ = range ticker.C {
+		b.sleep(1000)
 		b.ChecksReconnect()
 		b.UpdatePlanetsData()
 		b.ChecksFleetMovements()
