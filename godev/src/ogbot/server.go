@@ -65,11 +65,17 @@ type FleetMovement struct {
 	from    string
 	to      string
 	move    int // MovementType
+	arrival string
 	hostile bool
 }
 
-func (f *FleetMovement) print() {
-	fmt.Printf("%+v\n", f)
+func (f *FleetMovement) print(logger Logger) {
+	var hostile string
+	if f.hostile {
+		hostile = "/!\\"
+	}
+	logger.Printf("(%s) at %s [%s] -> [%s] (%s) %s", f.id, f.arrival,
+		f.from, f.to, strconv.Itoa(f.move), hostile)
 }
 
 type OGBot struct {
@@ -84,8 +90,9 @@ type OGBot struct {
 }
 
 func (b *OGBot) printFleets() {
+	b.logger.Printf("%v fleet(s) movement(s)", len(b.fleets))
 	for _, v := range b.fleets {
-		v.print()
+		v.print(b.logger)
 	}
 }
 
@@ -214,10 +221,10 @@ func getAttributeValue(att, content string) string {
 	return final[0]
 }
 
-func getCoordValue(att, content string) string {
+func getFleetDataValue(att, content, sep1, sep2 string) string {
 	split := strings.Split(content, att)
-	second := strings.Split(split[1], "[")
-	final := strings.Split(second[1], "]")
+	second := strings.Split(split[1], sep1)
+	final := strings.Split(second[1], sep2)
 	return final[0]
 }
 
@@ -225,14 +232,17 @@ func getFleetMovementInfo(content string) *FleetMovement {
 	move := &FleetMovement{}
 	move.hostile = strings.Contains(content, "countDown hostile")
 
-	move.id = getAttributeValue("id", content)
+	eventRowId := getAttributeValue("id", content)
+	split := strings.Split(eventRowId, "-")
+	move.id = split[1]
 	mission, err := strconv.Atoi(getAttributeValue("data-mission-type", content))
 	if err != nil {
 		return nil
 	}
 	move.move = mission
-	move.from = getCoordValue("coordsOrigin", content)
-	move.to = getCoordValue("destCoords", content)
+	move.from = getFleetDataValue("coordsOrigin", content, "[", "]")
+	move.to = getFleetDataValue("destCoords", content, "[", "]")
+	move.arrival = getFleetDataValue("arrivalTime", content, ">", " ")
 	return move
 }
 
@@ -353,7 +363,7 @@ func (b *OGBot) ChecksReconnect() {
 
 func (b *OGBot) sleep(amount int) {
 	random := rand.Intn(amount)
-	b.logger.Printf("Random sleep: %+v", random)
+	b.logger.Printf("Random sleep: %+v seconds", random)
 	time.Sleep(time.Second * time.Duration(random))
 }
 
