@@ -37,14 +37,23 @@ type Planet struct {
 	Name        string
 	Coordinates string
 	Resources   Resources
+	//204 -> 10 means 10 ships of type 204
+	DockedFleet map[string]int
 }
 
 type GameData struct {
 	planets map[string]Planet
 }
 
-func (g *GameData) print() {
-	fmt.Printf("%+v\n", g)
+func (g *GameData) print(logger Logger) {
+	for k, v := range g.planets {
+		numShips := 0
+		for _, num := range v.DockedFleet {
+			numShips += num
+		}
+		logger.Printf("(%s) Planet [%s]: %dM, %dC, %dD. %d ships docked", k, v.Coordinates, v.Resources.Metal,
+			v.Resources.Crystal, v.Resources.Deuterium, numShips)
+	}
 }
 
 type MetaData struct {
@@ -247,7 +256,7 @@ func getFleetMovementInfo(content string) *FleetMovement {
 }
 
 func (b *OGBot) ChecksFleetMovements() {
-	b.sleep(100)
+	b.sleep(20)
 	b.goToPage("eventList", "&ajax=1")
 	split := strings.Split(b.current.content, "eventFleet")
 	if len(split) == 0 {
@@ -260,8 +269,9 @@ func (b *OGBot) ChecksFleetMovements() {
 	}
 }
 
+// get planet data: planet info, ressources and docked ships
 func (b *OGBot) goToPlanet(id string) {
-	b.goToPage("overview", "&cp="+id)
+	b.goToPage("fleet1", "&cp="+id)
 }
 
 func (b *OGBot) login() {
@@ -330,6 +340,22 @@ func getCurrentPlanet(page string) (string, string, string) {
 	return id, name, coord
 }
 
+func getDockedFleet(content string) map[string]int {
+	dockedFleet := make(map[string]int)
+	split := strings.Split(content, "#shipsChosen")
+	for _, v := range split[1:] {
+		shipData := strings.Split(v, ",")
+		shipId := removeNoise(shipData[1])
+		splitnumber := strings.Split(shipData[2], ")")
+		number, err := strconv.Atoi(splitnumber[0])
+		if err != nil {
+			return nil
+		}
+		dockedFleet[shipId] = number
+	}
+	return dockedFleet
+}
+
 func (b *OGBot) UpdatePlanetData() {
 	id, name, coord := getCurrentPlanet(b.current.content)
 	b.data.planets[id] = Planet{
@@ -340,6 +366,7 @@ func (b *OGBot) UpdatePlanetData() {
 			Crystal:   getResourceValue("resources_crystal", b.current.content),
 			Deuterium: getResourceValue("resources_deuterium", b.current.content),
 		},
+		DockedFleet: getDockedFleet(b.current.content),
 	}
 }
 
@@ -379,7 +406,7 @@ func (b *OGBot) Run() {
 		b.ChecksReconnect()
 		b.UpdatePlanetsData()
 		b.ChecksFleetMovements()
-		b.data.print()
+		b.data.print(b.logger)
 		b.printFleets()
 	}
 }
