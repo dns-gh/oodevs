@@ -54,6 +54,33 @@ const (
 	SpyMovement       = 6
 )
 
+func getMovementType(move int) string {
+	switch {
+	case move == 1:
+		return "Attack"
+	case move == 2:
+		return "Grouped Attack"
+	case move == 3:
+		return "Transport"
+	case move == 4:
+		return "Deployment"
+	case move == 5:
+		return "Defend"
+	case move == 6:
+		return "Espionage"
+	case move == 7:
+		return "Colonisation"
+	case move == 8:
+		return "Exploit"
+	case move == 9:
+		return "Moon destruction"
+	case move == 15:
+		return "Expedition"
+	default:
+		return "Unknown"
+	}
+}
+
 type FleetMovement struct {
 	id      string
 	from    string
@@ -69,7 +96,7 @@ func (f *FleetMovement) Print(logger helpers.Logger) {
 		hostile = "/!\\"
 	}
 	logger.Printf("(%s) at %s [%s] -> [%s] (%s) %s", f.id, f.arrival,
-		f.from, f.to, strconv.Itoa(f.move), hostile)
+		f.from, f.to, getMovementType(f.move), hostile)
 }
 
 func getAttributeValue(att, content string) string {
