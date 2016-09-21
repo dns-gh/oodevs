@@ -1,0 +1,10 @@
+cppdev/ooEngine/externallibs/
+comtools/node_modules
+*.sln
+*.suo
+*.exe
+*.log
+*.orig
+*.tlog
+*.sdf
+*.idb
