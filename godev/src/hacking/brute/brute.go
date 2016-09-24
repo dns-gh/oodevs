@@ -3,6 +3,7 @@ package main
 import (
 	"flag"
 	"fmt"
+	"hacking/algorithms"
 	"log"
 	"os"
 	"runtime"
@@ -53,8 +54,8 @@ Options:
 	log.Println("length (-l)", *length)
 	log.Println("cpu (-c)", *cpu)
 	log.Println("charset (-s)", *charset)
-	runtime.GOMAXPROCS(*cpu)
-	err := Brute(*length, *charset, func(candidate string) bool {
+	log.Println("running brute force...")
+	err := algorithms.BruteForce(*length, *cpu, *charset, func(candidate string) bool {
 		log.Println(candidate)
 		return false
 	})

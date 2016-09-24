@@ -1,8 +1,8 @@
-package main
+package algorithms
 
 import (
 	"fmt"
-	"log"
+	"runtime"
 )
 
 type State struct {
@@ -56,16 +56,15 @@ func (s *State) next() string {
 	return s.candidate
 }
 
-func Brute(maxLength int, charset string, operand func(string) bool) error {
-	log.Println("running brute force...")
+func BruteForce(maxLength, cpu int, charset string, operand func(string) bool) error {
+	runtime.GOMAXPROCS(cpu)
 	state := makeState(charset, maxLength)
 	candidate := state.first()
 	for {
 		if len(candidate) > maxLength {
-			return fmt.Errorf("brute force failed")
+			return fmt.Errorf("brute force ended")
 		}
 		if operand(candidate) {
-			log.Println("brute force success:", candidate)
 			return nil
 		}
 		candidate = state.next()

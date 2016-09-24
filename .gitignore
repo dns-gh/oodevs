@@ -8,3 +8,4 @@ comtools/node_modules
 *.tlog
 *.sdf
 *.idb
+*.a
