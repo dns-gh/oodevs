@@ -45,7 +45,10 @@ Options:
 	charset := flag.String("s", asciiCharset, "charset, default to ascii")
 	flag.Parse()
 	if *length <= 0 {
-		log.Fatalf("password length must be strictly positive")
+		log.Fatalf("password length (-l) must be strictly positive")
+	}
+	if len(*charset) <= 0 {
+		log.Fatalf("charset (-s) must contain at least one character")
 	}
 	log.Println("length (-l)", *length)
 	log.Println("cpu (-c)", *cpu)

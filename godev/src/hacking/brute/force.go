@@ -16,16 +16,14 @@ func replaceAt(str string, replacement string, index int) string {
 	return str[:index] + replacement + str[index+1:]
 }
 
-func makeState(charset string, maxLength int) (*State, error) {
-	if len(charset) > 0 {
-		return &State{
-			charset:   charset,
-			candidate: charset[0:1],
-			indexes:   make([]int, maxLength),
-			maxLength: maxLength,
-		}, nil
+func makeState(charset string, maxLength int) *State {
+	return &State{
+		charset:   charset,
+		candidate: charset[0:1],
+		indexes:   make([]int, maxLength),
+		maxLength: maxLength,
 	}
-	return nil, fmt.Errorf("charset must contain at least one character")
+
 }
 
 func (s *State) incremente(index int) {
@@ -60,10 +58,7 @@ func (s *State) next() string {
 
 func Brute(maxLength int, charset string, operand func(string) bool) error {
 	log.Println("running brute force...")
-	state, err := makeState(charset, maxLength)
-	if err != nil {
-		return err
-	}
+	state := makeState(charset, maxLength)
 	candidate := state.first()
 	for {
 		if len(candidate) > maxLength {
