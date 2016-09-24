@@ -8,6 +8,10 @@ import (
 	"runtime"
 )
 
+const (
+	asciiCharset = " !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~."
+)
+
 func main() {
 	flag.Usage = func() {
 		fmt.Fprintf(os.Stderr, ""+
@@ -25,18 +29,33 @@ func main() {
 
 Usage:
 
-  brute -l 16
+  brute -l 16 -c 8 -s "abcd"
 
-starts "brute.exe" with password length of 16 character.
+starts "brute.exe"
+ - for a password length of 16 characters
+ - using 8 cpu
+ - using a charset composed with the "abcd" characters.
 
 Options:
 `)
 		flag.PrintDefaults()
 	}
 	length := flag.Int("l", 8, "password length")
+	cpu := flag.Int("c", runtime.NumCPU(), "number of cpu (max cap set by your machine)")
+	charset := flag.String("s", asciiCharset, "charset, default to ascii")
 	flag.Parse()
+	if *length <= 0 {
+		log.Fatalf("password length must be strictly positive")
+	}
 	log.Println("length (-l)", *length)
-	cpu := runtime.NumCPU()
-	runtime.GOMAXPROCS(cpu)
-	log.Printf("Running brute force with %d CPUs...\n", cpu)
+	log.Println("cpu (-c)", *cpu)
+	log.Println("charset (-s)", *charset)
+	runtime.GOMAXPROCS(*cpu)
+	err := Brute(*length, *charset, func(candidate string) bool {
+		log.Println(candidate)
+		return false
+	})
+	if err != nil {
+		log.Println(err.Error())
+	}
 }
