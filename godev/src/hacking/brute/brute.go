@@ -51,6 +51,9 @@ Options:
 	if len(*charset) <= 0 {
 		log.Fatalf("charset (-s) must contain at least one character")
 	}
+	if *cpu <= 0 {
+		*cpu = 1
+	}
 	log.Println("length (-l)", *length)
 	log.Println("cpu (-c)", *cpu)
 	log.Println("charset (-s)", *charset)
