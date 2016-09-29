@@ -49,7 +49,7 @@ func MakeLoginRequest(meta ogdata.MetaData, logger helpers.Logger, dump bool) *h
 	data.Add("uni", meta.Uni+"-"+meta.Lang+".ogame.gameforge.com")
 	data.Add("login", meta.Login)
 	data.Add("pass", meta.Pass)
-	req, _ := http.NewRequest("POST", "http://"+meta.Lang+".ogame.gameforge.com/main/login",
+	req, _ := http.NewRequest("POST", "https://"+meta.Lang+".ogame.gameforge.com/main/login",
 		strings.NewReader(data.Encode()))
 	// set up basic header
 	req.Header.Add("Content-Type", "application/x-www-form-urlencoded")
