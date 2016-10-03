@@ -2,7 +2,7 @@
   "manifest_version": 2,
 
   "name": "Remove AdBlock restrictions",
-  "description": "This extension shows removes adBlock restrictions on websites",
+  "description": "This extension removes adBlock restrictions on websites",
   "version": "1.0",
 
   "browser_action": {

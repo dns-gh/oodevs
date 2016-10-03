@@ -25,8 +25,10 @@ function removeRestrictions() {
 	}
 	if(removed) {
 		clearInterval(interval);
+		chrome.runtime.sendMessage({removedElements: toRemove.length.toString()});
 	}
-	console.log(window.location.host)
+	console.log("host: "+window.location.host)
 }
 
+chrome.runtime.sendMessage({removedElements: ""});
 var interval = setInterval(removeRestrictions, 2000);
