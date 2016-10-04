@@ -1,4 +1,7 @@
 # ooEngine
+
+The ooEngine is a c++ basic 2d game engine using the SDL library. There is still a lot to do. Some steps/ideas are listed in the TODO file.
+
 ## Steps to use the ooEngine
 1.  Add a folder next to the ooEngine.sln file named `externallibs`
 2.  The SDL2 library :
