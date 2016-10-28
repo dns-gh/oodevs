@@ -15,6 +15,7 @@ const (
 
 func main() {
 	flag.Usage = func() {
+		// http://patorjk.com/software/taag/#p=display&f=Big
 		fmt.Fprintf(os.Stderr, ""+
 			`brute [OPTIONS]
 
