@@ -29,16 +29,19 @@ func zipFile(source, path string, writer *zip.Writer) error {
 	return err
 }
 
-func Zip(source string) error {
-	_, err := os.Stat(source)
+func Zip(source string) (string, error) {
+	info, err := os.Stat(source)
 	if os.IsNotExist(err) {
-		return fmt.Errorf("the specified directory doesn't exist: %s", source)
+		return "", fmt.Errorf("the specified directory doesn't exist: %s", source)
 	} else if err != nil {
-		return err
+		return "", err
+	} else if !info.IsDir() {
+		return "", fmt.Errorf("the specified input is not a directory: %s", source)
 	}
-	zipped, err := os.Create(source + ".zip")
+	target := source + ".zip"
+	zipped, err := os.Create(target)
 	if err != nil {
-		return err
+		return "", err
 	}
 	defer zipped.Close()
 	writer := zip.NewWriter(zipped)
@@ -59,7 +62,7 @@ func Zip(source string) error {
 		}
 		return nil
 	})
-	return err
+	return target, err
 }
 
 func makeExt(index int) string {
@@ -92,40 +95,41 @@ func makeFolder(folder string) (string, error) {
 	return target, nil
 }
 
-func Unzip(archive string) error {
+func Unzip(archive string) (string, error) {
 	reader, err := zip.OpenReader(archive)
 	if err != nil {
-		return err
+		return "", err
 	}
+	defer reader.Close()
 
 	target, err := makeFolder(archive)
 	if err != nil {
-		return err
+		return "", err
 	}
 
 	if err = os.MkdirAll(target, 0755); err != nil {
-		return err
+		return "", err
 	}
 
 	for _, file := range reader.File {
 		path := filepath.Join(target, file.Name)
 		os.MkdirAll(filepath.Dir(path), os.ModeDir)
 
-		reader, err := file.Open()
+		fileReader, err := file.Open()
 		if err != nil {
-			return err
+			return "", err
 		}
-		defer reader.Close()
+		defer fileReader.Close()
 
 		targetFile, err := os.OpenFile(path, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, file.Mode())
 		if err != nil {
-			return err
+			return "", err
 		}
 		defer targetFile.Close()
 
-		if _, err := io.Copy(targetFile, reader); err != nil {
-			return err
+		if _, err := io.Copy(targetFile, fileReader); err != nil {
+			return "", err
 		}
 	}
-	return nil
+	return target, nil
 }

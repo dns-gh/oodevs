@@ -43,8 +43,9 @@ Options:
 		log.Fatalf("you must specify a folder to zip")
 	}
 	log.Println("directory (-d)", *dir)
-	err := compress.Zip(*dir)
+	dst, err := compress.Zip(*dir)
 	if err != nil {
 		log.Fatalf(err.Error())
 	}
+	log.Println("zipped to", dst)
 }

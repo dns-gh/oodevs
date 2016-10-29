@@ -43,8 +43,9 @@ Options:
 		log.Fatalf("you must specify a file to unzip")
 	}
 	log.Println("file (-f)", *file)
-	err := compress.Unzip(*file)
+	dst, err := compress.Unzip(*file)
 	if err != nil {
 		log.Fatalf(err.Error())
 	}
+	log.Println("unzipped to", dst)
 }
