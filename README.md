@@ -9,8 +9,4 @@ I'm doing this by curiosity and fun. Feel free to join my efforts and share new 
 
 [Various tools](godev/src/tools/README.md)
 
-[OGame bot](godev/src/ogbot/README.md)
-
 [Simple Chat server](comtools/README.md)
-
-[Killer anti AdBlock](kaab/README.md)
