@@ -1,2 +1,0 @@
-- tool to add copyrights automatically (when there is none) to code files
-	* checks timestamp and add the name of the author given in argument
